@@ -22,6 +22,7 @@ pub enum ListStreamComputeAggregation {
     EARLIEST,
     LATEST,
     MOST_FREQUENT,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for ListStreamComputeAggregation {
@@ -42,6 +43,7 @@ impl ToString for ListStreamComputeAggregation {
             Self::EARLIEST => String::from("earliest"),
             Self::LATEST => String::from("latest"),
             Self::MOST_FREQUENT => String::from("most_frequent"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -52,6 +54,7 @@ impl Serialize for ListStreamComputeAggregation {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -79,12 +82,9 @@ impl<'de> Deserialize<'de> for ListStreamComputeAggregation {
             "earliest" => Self::EARLIEST,
             "latest" => Self::LATEST,
             "most_frequent" => Self::MOST_FREQUENT,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

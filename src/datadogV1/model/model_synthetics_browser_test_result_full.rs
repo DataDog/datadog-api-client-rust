@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// Object returned describing a browser test result.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SyntheticsBrowserTestResultFull {
     /// Object describing the browser test configuration.
     #[serde(rename = "check")]
@@ -33,6 +35,9 @@ pub struct SyntheticsBrowserTestResultFull {
     /// * `2` for no data
     #[serde(rename = "status")]
     pub status: Option<crate::datadogV1::model::SyntheticsTestMonitorStatus>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl SyntheticsBrowserTestResultFull {
@@ -45,6 +50,7 @@ impl SyntheticsBrowserTestResultFull {
             result: None,
             result_id: None,
             status: None,
+            _unparsed: false,
         }
     }
 
@@ -93,5 +99,110 @@ impl SyntheticsBrowserTestResultFull {
 impl Default for SyntheticsBrowserTestResultFull {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for SyntheticsBrowserTestResultFull {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct SyntheticsBrowserTestResultFullVisitor;
+        impl<'a> Visitor<'a> for SyntheticsBrowserTestResultFullVisitor {
+            type Value = SyntheticsBrowserTestResultFull;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut check: Option<
+                    crate::datadogV1::model::SyntheticsBrowserTestResultFullCheck,
+                > = None;
+                let mut check_time: Option<f64> = None;
+                let mut check_version: Option<i64> = None;
+                let mut probe_dc: Option<String> = None;
+                let mut result: Option<crate::datadogV1::model::SyntheticsBrowserTestResultData> =
+                    None;
+                let mut result_id: Option<String> = None;
+                let mut status: Option<crate::datadogV1::model::SyntheticsTestMonitorStatus> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "check" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            check = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "check_time" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            check_time = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "check_version" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            check_version =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "probe_dc" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            probe_dc = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "result" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            result = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "result_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            result_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "status" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _status) = status {
+                                match _status {
+                                    crate::datadogV1::model::SyntheticsTestMonitorStatus::UnparsedObject(_status) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        &_ => {}
+                    }
+                }
+
+                let content = SyntheticsBrowserTestResultFull {
+                    check,
+                    check_time,
+                    check_version,
+                    probe_dc,
+                    result,
+                    result_id,
+                    status,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(SyntheticsBrowserTestResultFullVisitor)
     }
 }

@@ -13,6 +13,7 @@ pub enum SecurityMonitoringRuleNewValueOptionsForgetAfter {
     TWO_WEEKS,
     THREE_WEEKS,
     FOUR_WEEKS,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl Serialize for SecurityMonitoringRuleNewValueOptionsForgetAfter {
@@ -21,6 +22,7 @@ impl Serialize for SecurityMonitoringRuleNewValueOptionsForgetAfter {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             Self::ONE_DAY => serializer.serialize_i32(1),
             Self::TWO_DAYS => serializer.serialize_i32(2),
             Self::ONE_WEEK => serializer.serialize_i32(7),
@@ -44,12 +46,9 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleNewValueOptionsForgetAfter 
             14 => Self::TWO_WEEKS,
             21 => Self::THREE_WEEKS,
             28 => Self::FOUR_WEEKS,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::Number(s.into()),
+            }),
         })
     }
 }

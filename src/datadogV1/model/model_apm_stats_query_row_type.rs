@@ -10,6 +10,7 @@ pub enum ApmStatsQueryRowType {
     SERVICE,
     RESOURCE,
     SPAN,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for ApmStatsQueryRowType {
@@ -18,6 +19,7 @@ impl ToString for ApmStatsQueryRowType {
             Self::SERVICE => String::from("service"),
             Self::RESOURCE => String::from("resource"),
             Self::SPAN => String::from("span"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -28,6 +30,7 @@ impl Serialize for ApmStatsQueryRowType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -43,12 +46,9 @@ impl<'de> Deserialize<'de> for ApmStatsQueryRowType {
             "service" => Self::SERVICE,
             "resource" => Self::RESOURCE,
             "span" => Self::SPAN,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

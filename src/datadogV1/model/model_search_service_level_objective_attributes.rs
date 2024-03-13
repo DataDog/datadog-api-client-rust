@@ -1,14 +1,16 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// A service level objective object includes a service level indicator, thresholds
 /// for one or more timeframes, and metadata (`name`, `description`, and `tags`).
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SearchServiceLevelObjectiveAttributes {
     /// A list of tags associated with this service level objective.
     /// Always included in service level objective responses (but may be empty).
@@ -83,6 +85,9 @@ pub struct SearchServiceLevelObjectiveAttributes {
     /// objective object.
     #[serde(rename = "thresholds")]
     pub thresholds: Option<Vec<crate::datadogV1::model::SearchSLOThreshold>>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl SearchServiceLevelObjectiveAttributes {
@@ -104,6 +109,7 @@ impl SearchServiceLevelObjectiveAttributes {
             status: None,
             team_tags: None,
             thresholds: None,
+            _unparsed: false,
         }
     }
 
@@ -194,5 +200,169 @@ impl SearchServiceLevelObjectiveAttributes {
 impl Default for SearchServiceLevelObjectiveAttributes {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for SearchServiceLevelObjectiveAttributes {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct SearchServiceLevelObjectiveAttributesVisitor;
+        impl<'a> Visitor<'a> for SearchServiceLevelObjectiveAttributesVisitor {
+            type Value = SearchServiceLevelObjectiveAttributes;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut all_tags: Option<Vec<String>> = None;
+                let mut created_at: Option<i64> = None;
+                let mut creator: Option<Option<crate::datadogV1::model::SLOCreator>> = None;
+                let mut description: Option<Option<String>> = None;
+                let mut env_tags: Option<Vec<String>> = None;
+                let mut groups: Option<Option<Vec<String>>> = None;
+                let mut modified_at: Option<i64> = None;
+                let mut monitor_ids: Option<Option<Vec<i64>>> = None;
+                let mut name: Option<String> = None;
+                let mut overall_status: Option<Vec<crate::datadogV1::model::SLOOverallStatuses>> =
+                    None;
+                let mut query: Option<Option<crate::datadogV1::model::SearchSLOQuery>> = None;
+                let mut service_tags: Option<Vec<String>> = None;
+                let mut slo_type: Option<crate::datadogV1::model::SLOType> = None;
+                let mut status: Option<crate::datadogV1::model::SLOStatus> = None;
+                let mut team_tags: Option<Vec<String>> = None;
+                let mut thresholds: Option<Vec<crate::datadogV1::model::SearchSLOThreshold>> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "all_tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            all_tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "created_at" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "creator" => {
+                            creator = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "description" => {
+                            description =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "env_tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            env_tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "groups" => {
+                            groups = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "modified_at" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            modified_at =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "monitor_ids" => {
+                            monitor_ids =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "overall_status" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            overall_status =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "query" => {
+                            query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "service_tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            service_tags =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "slo_type" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            slo_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _slo_type) = slo_type {
+                                match _slo_type {
+                                    crate::datadogV1::model::SLOType::UnparsedObject(_slo_type) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "status" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "team_tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            team_tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "thresholds" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            thresholds = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+
+                let content = SearchServiceLevelObjectiveAttributes {
+                    all_tags,
+                    created_at,
+                    creator,
+                    description,
+                    env_tags,
+                    groups,
+                    modified_at,
+                    monitor_ids,
+                    name,
+                    overall_status,
+                    query,
+                    service_tags,
+                    slo_type,
+                    status,
+                    team_tags,
+                    thresholds,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(SearchServiceLevelObjectiveAttributesVisitor)
     }
 }

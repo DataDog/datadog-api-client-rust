@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum MetricsDataSource {
     METRICS,
     CLOUD_COST,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for MetricsDataSource {
@@ -16,6 +17,7 @@ impl ToString for MetricsDataSource {
         match self {
             Self::METRICS => String::from("metrics"),
             Self::CLOUD_COST => String::from("cloud_cost"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -26,6 +28,7 @@ impl Serialize for MetricsDataSource {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -40,12 +43,9 @@ impl<'de> Deserialize<'de> for MetricsDataSource {
         Ok(match s.as_str() {
             "metrics" => Self::METRICS,
             "cloud_cost" => Self::CLOUD_COST,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// Dashboard definition.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DashboardSummaryDefinition {
     /// Identifier of the dashboard author.
     #[serde(rename = "author_handle")]
@@ -40,6 +42,9 @@ pub struct DashboardSummaryDefinition {
     /// URL of the dashboard.
     #[serde(rename = "url")]
     pub url: Option<String>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl DashboardSummaryDefinition {
@@ -54,6 +59,7 @@ impl DashboardSummaryDefinition {
             modified_at: None,
             title: None,
             url: None,
+            _unparsed: false,
         }
     }
 
@@ -106,5 +112,124 @@ impl DashboardSummaryDefinition {
 impl Default for DashboardSummaryDefinition {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for DashboardSummaryDefinition {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct DashboardSummaryDefinitionVisitor;
+        impl<'a> Visitor<'a> for DashboardSummaryDefinitionVisitor {
+            type Value = DashboardSummaryDefinition;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut author_handle: Option<String> = None;
+                let mut created_at: Option<String> = None;
+                let mut description: Option<Option<String>> = None;
+                let mut id: Option<String> = None;
+                let mut is_read_only: Option<bool> = None;
+                let mut layout_type: Option<crate::datadogV1::model::DashboardLayoutType> = None;
+                let mut modified_at: Option<String> = None;
+                let mut title: Option<String> = None;
+                let mut url: Option<String> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "author_handle" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            author_handle =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "created_at" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "description" => {
+                            description =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "is_read_only" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            is_read_only =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "layout_type" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            layout_type =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _layout_type) = layout_type {
+                                match _layout_type {
+                                    crate::datadogV1::model::DashboardLayoutType::UnparsedObject(_layout_type) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "modified_at" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            modified_at =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "title" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "url" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            url = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+
+                let content = DashboardSummaryDefinition {
+                    author_handle,
+                    created_at,
+                    description,
+                    id,
+                    is_read_only,
+                    layout_type,
+                    modified_at,
+                    title,
+                    url,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(DashboardSummaryDefinitionVisitor)
     }
 }

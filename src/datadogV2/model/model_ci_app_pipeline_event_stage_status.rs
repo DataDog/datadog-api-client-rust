@@ -11,6 +11,7 @@ pub enum CIAppPipelineEventStageStatus {
     ERROR,
     CANCELED,
     SKIPPED,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for CIAppPipelineEventStageStatus {
@@ -20,6 +21,7 @@ impl ToString for CIAppPipelineEventStageStatus {
             Self::ERROR => String::from("error"),
             Self::CANCELED => String::from("canceled"),
             Self::SKIPPED => String::from("skipped"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -30,6 +32,7 @@ impl Serialize for CIAppPipelineEventStageStatus {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -46,12 +49,9 @@ impl<'de> Deserialize<'de> for CIAppPipelineEventStageStatus {
             "error" => Self::ERROR,
             "canceled" => Self::CANCELED,
             "skipped" => Self::SKIPPED,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

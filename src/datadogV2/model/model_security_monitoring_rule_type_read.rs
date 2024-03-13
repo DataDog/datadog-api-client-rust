@@ -12,6 +12,7 @@ pub enum SecurityMonitoringRuleTypeRead {
     WORKLOAD_SECURITY,
     CLOUD_CONFIGURATION,
     APPLICATION_SECURITY,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SecurityMonitoringRuleTypeRead {
@@ -22,6 +23,7 @@ impl ToString for SecurityMonitoringRuleTypeRead {
             Self::WORKLOAD_SECURITY => String::from("workload_security"),
             Self::CLOUD_CONFIGURATION => String::from("cloud_configuration"),
             Self::APPLICATION_SECURITY => String::from("application_security"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -32,6 +34,7 @@ impl Serialize for SecurityMonitoringRuleTypeRead {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -49,12 +52,9 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleTypeRead {
             "workload_security" => Self::WORKLOAD_SECURITY,
             "cloud_configuration" => Self::CLOUD_CONFIGURATION,
             "application_security" => Self::APPLICATION_SECURITY,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

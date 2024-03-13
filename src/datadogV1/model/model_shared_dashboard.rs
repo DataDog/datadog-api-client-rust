@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// The metadata object associated with how a dashboard has been/will be shared.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SharedDashboard {
     /// User who shared the dashboard.
     #[serde(rename = "author")]
@@ -59,6 +61,9 @@ pub struct SharedDashboard {
     /// A unique token assigned to the shared dashboard.
     #[serde(rename = "token")]
     pub token: Option<String>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl SharedDashboard {
@@ -78,6 +83,7 @@ impl SharedDashboard {
             share_list: None,
             share_type: None,
             token: None,
+            _unparsed: false,
         }
     }
 
@@ -130,5 +136,146 @@ impl SharedDashboard {
     pub fn token(mut self, value: String) -> Self {
         self.token = Some(value);
         self
+    }
+}
+
+impl<'de> Deserialize<'de> for SharedDashboard {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct SharedDashboardVisitor;
+        impl<'a> Visitor<'a> for SharedDashboardVisitor {
+            type Value = SharedDashboard;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut author: Option<crate::datadogV1::model::SharedDashboardAuthor> = None;
+                let mut created_at: Option<String> = None;
+                let mut dashboard_id: Option<String> = None;
+                let mut dashboard_type: Option<crate::datadogV1::model::DashboardType> = None;
+                let mut global_time: Option<crate::datadogV1::model::DashboardGlobalTime> = None;
+                let mut global_time_selectable_enabled: Option<Option<bool>> = None;
+                let mut public_url: Option<String> = None;
+                let mut selectable_template_vars: Option<
+                    Option<Vec<crate::datadogV1::model::SelectableTemplateVariableItems>>,
+                > = None;
+                let mut share_list: Option<Option<Vec<String>>> = None;
+                let mut share_type: Option<Option<crate::datadogV1::model::DashboardShareType>> =
+                    None;
+                let mut token: Option<String> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "author" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            author = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "created_at" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "dashboard_id" => {
+                            dashboard_id =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "dashboard_type" => {
+                            dashboard_type =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _dashboard_type) = dashboard_type {
+                                match _dashboard_type {
+                                    crate::datadogV1::model::DashboardType::UnparsedObject(
+                                        _dashboard_type,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "global_time" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            global_time =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "global_time_selectable_enabled" => {
+                            global_time_selectable_enabled =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "public_url" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            public_url = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "selectable_template_vars" => {
+                            selectable_template_vars =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "share_list" => {
+                            share_list = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "share_type" => {
+                            share_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _share_type) = share_type {
+                                match _share_type {
+                                    Some(
+                                        crate::datadogV1::model::DashboardShareType::UnparsedObject(
+                                            _share_type,
+                                        ),
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "token" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            token = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+                let dashboard_id =
+                    dashboard_id.ok_or_else(|| M::Error::missing_field("dashboard_id"))?;
+                let dashboard_type =
+                    dashboard_type.ok_or_else(|| M::Error::missing_field("dashboard_type"))?;
+
+                let content = SharedDashboard {
+                    author,
+                    created_at,
+                    dashboard_id,
+                    dashboard_type,
+                    global_time,
+                    global_time_selectable_enabled,
+                    public_url,
+                    selectable_template_vars,
+                    share_list,
+                    share_type,
+                    token,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(SharedDashboardVisitor)
     }
 }

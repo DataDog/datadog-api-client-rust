@@ -128,6 +128,7 @@ pub enum MonthlyUsageAttributionSupportedMetrics {
     SIEM_INGESTED_BYTES_USAGE,
     SIEM_INGESTED_BYTES_PERCENTAGE,
     ALL,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for MonthlyUsageAttributionSupportedMetrics {
@@ -296,6 +297,7 @@ impl ToString for MonthlyUsageAttributionSupportedMetrics {
             Self::SIEM_INGESTED_BYTES_USAGE => String::from("siem_ingested_bytes_usage"),
             Self::SIEM_INGESTED_BYTES_PERCENTAGE => String::from("siem_ingested_bytes_percentage"),
             Self::ALL => String::from("*"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -306,6 +308,7 @@ impl Serialize for MonthlyUsageAttributionSupportedMetrics {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -445,12 +448,9 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionSupportedMetrics {
             "siem_ingested_bytes_usage" => Self::SIEM_INGESTED_BYTES_USAGE,
             "siem_ingested_bytes_percentage" => Self::SIEM_INGESTED_BYTES_PERCENTAGE,
             "*" => Self::ALL,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

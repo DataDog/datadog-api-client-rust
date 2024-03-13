@@ -12,6 +12,7 @@ pub enum TeamPermissionSettingValue {
     ORGANIZATION,
     USER_ACCESS_MANAGE,
     TEAMS_MANAGE,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for TeamPermissionSettingValue {
@@ -22,6 +23,7 @@ impl ToString for TeamPermissionSettingValue {
             Self::ORGANIZATION => String::from("organization"),
             Self::USER_ACCESS_MANAGE => String::from("user_access_manage"),
             Self::TEAMS_MANAGE => String::from("teams_manage"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -32,6 +34,7 @@ impl Serialize for TeamPermissionSettingValue {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -49,12 +52,9 @@ impl<'de> Deserialize<'de> for TeamPermissionSettingValue {
             "organization" => Self::ORGANIZATION,
             "user_access_manage" => Self::USER_ACCESS_MANAGE,
             "teams_manage" => Self::TEAMS_MANAGE,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

@@ -1,14 +1,16 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// The object containing all signal attributes and their
 /// associated values.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SecurityMonitoringSignalAttributes {
     /// A JSON object of attributes in the security signal.
     #[serde(rename = "custom")]
@@ -24,6 +26,9 @@ pub struct SecurityMonitoringSignalAttributes {
     pub timestamp: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl SecurityMonitoringSignalAttributes {
@@ -34,6 +39,7 @@ impl SecurityMonitoringSignalAttributes {
             tags: None,
             timestamp: None,
             additional_properties: std::collections::BTreeMap::new(),
+            _unparsed: false,
         }
     }
 
@@ -69,5 +75,84 @@ impl SecurityMonitoringSignalAttributes {
 impl Default for SecurityMonitoringSignalAttributes {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for SecurityMonitoringSignalAttributes {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct SecurityMonitoringSignalAttributesVisitor;
+        impl<'a> Visitor<'a> for SecurityMonitoringSignalAttributesVisitor {
+            type Value = SecurityMonitoringSignalAttributes;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut custom: Option<std::collections::BTreeMap<String, serde_json::Value>> =
+                    None;
+                let mut message: Option<String> = None;
+                let mut tags: Option<Vec<String>> = None;
+                let mut timestamp: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "custom" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            custom = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "message" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "timestamp" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            timestamp = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
+                    }
+                }
+
+                let content = SecurityMonitoringSignalAttributes {
+                    custom,
+                    message,
+                    tags,
+                    timestamp,
+                    additional_properties,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(SecurityMonitoringSignalAttributesVisitor)
     }
 }

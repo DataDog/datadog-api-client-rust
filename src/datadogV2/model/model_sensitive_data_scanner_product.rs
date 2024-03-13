@@ -11,6 +11,7 @@ pub enum SensitiveDataScannerProduct {
     RUM,
     EVENTS,
     APM,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SensitiveDataScannerProduct {
@@ -20,6 +21,7 @@ impl ToString for SensitiveDataScannerProduct {
             Self::RUM => String::from("rum"),
             Self::EVENTS => String::from("events"),
             Self::APM => String::from("apm"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -30,6 +32,7 @@ impl Serialize for SensitiveDataScannerProduct {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -46,12 +49,9 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerProduct {
             "rum" => Self::RUM,
             "events" => Self::EVENTS,
             "apm" => Self::APM,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

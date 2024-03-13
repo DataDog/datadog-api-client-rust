@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// Object containing indexed logs usage aggregated across organizations and months for a retention period.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LogsRetentionAggSumUsage {
     /// Total indexed logs for this retention period.
     #[serde(rename = "logs_indexed_logs_usage_agg_sum")]
@@ -21,6 +23,9 @@ pub struct LogsRetentionAggSumUsage {
     /// The retention period in days or "custom" for all custom retention periods.
     #[serde(rename = "retention")]
     pub retention: Option<String>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl LogsRetentionAggSumUsage {
@@ -30,6 +35,7 @@ impl LogsRetentionAggSumUsage {
             logs_live_indexed_logs_usage_agg_sum: None,
             logs_rehydrated_indexed_logs_usage_agg_sum: None,
             retention: None,
+            _unparsed: false,
         }
     }
 
@@ -57,5 +63,77 @@ impl LogsRetentionAggSumUsage {
 impl Default for LogsRetentionAggSumUsage {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for LogsRetentionAggSumUsage {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct LogsRetentionAggSumUsageVisitor;
+        impl<'a> Visitor<'a> for LogsRetentionAggSumUsageVisitor {
+            type Value = LogsRetentionAggSumUsage;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut logs_indexed_logs_usage_agg_sum: Option<i64> = None;
+                let mut logs_live_indexed_logs_usage_agg_sum: Option<i64> = None;
+                let mut logs_rehydrated_indexed_logs_usage_agg_sum: Option<i64> = None;
+                let mut retention: Option<String> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "logs_indexed_logs_usage_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_indexed_logs_usage_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs_live_indexed_logs_usage_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_live_indexed_logs_usage_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs_rehydrated_indexed_logs_usage_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_rehydrated_indexed_logs_usage_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "retention" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            retention = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+
+                let content = LogsRetentionAggSumUsage {
+                    logs_indexed_logs_usage_agg_sum,
+                    logs_live_indexed_logs_usage_agg_sum,
+                    logs_rehydrated_indexed_logs_usage_agg_sum,
+                    retention,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(LogsRetentionAggSumUsageVisitor)
     }
 }

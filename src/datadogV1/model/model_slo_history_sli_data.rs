@@ -1,14 +1,16 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// An object that holds an SLI value and its associated data. It can represent an SLO's overall SLI value.
 /// This can also represent the SLI value for a specific monitor in multi-monitor SLOs, or a group in grouped SLOs.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SLOHistorySLIData {
     /// A mapping of threshold `timeframe` to the remaining error budget.
     #[serde(rename = "error_budget_remaining")]
@@ -52,6 +54,9 @@ pub struct SLOHistorySLIData {
     #[deprecated]
     #[serde(rename = "uptime", default, with = "::serde_with::rust::double_option")]
     pub uptime: Option<Option<f64>>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl SLOHistorySLIData {
@@ -70,6 +75,7 @@ impl SLOHistorySLIData {
             sli_value: None,
             span_precision: None,
             uptime: None,
+            _unparsed: false,
         }
     }
 
@@ -155,5 +161,139 @@ impl SLOHistorySLIData {
 impl Default for SLOHistorySLIData {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for SLOHistorySLIData {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct SLOHistorySLIDataVisitor;
+        impl<'a> Visitor<'a> for SLOHistorySLIDataVisitor {
+            type Value = SLOHistorySLIData;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut error_budget_remaining: Option<std::collections::BTreeMap<String, f64>> =
+                    None;
+                let mut errors: Option<
+                    Vec<crate::datadogV1::model::SLOHistoryResponseErrorWithType>,
+                > = None;
+                let mut group: Option<String> = None;
+                let mut history: Option<Vec<Vec<f64>>> = None;
+                let mut monitor_modified: Option<i64> = None;
+                let mut monitor_type: Option<String> = None;
+                let mut name: Option<String> = None;
+                let mut precision: Option<std::collections::BTreeMap<String, f64>> = None;
+                let mut preview: Option<bool> = None;
+                let mut sli_value: Option<Option<f64>> = None;
+                let mut span_precision: Option<f64> = None;
+                let mut uptime: Option<Option<f64>> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "error_budget_remaining" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            error_budget_remaining =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "errors" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            errors = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "group" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            group = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "history" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            history = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "monitor_modified" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            monitor_modified =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "monitor_type" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            monitor_type =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "precision" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            precision = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "preview" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            preview = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "sli_value" => {
+                            sli_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "span_precision" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            span_precision =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "uptime" => {
+                            uptime = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+
+                let content = SLOHistorySLIData {
+                    error_budget_remaining,
+                    errors,
+                    group,
+                    history,
+                    monitor_modified,
+                    monitor_type,
+                    name,
+                    precision,
+                    preview,
+                    sli_value,
+                    span_precision,
+                    uptime,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(SLOHistorySLIDataVisitor)
     }
 }

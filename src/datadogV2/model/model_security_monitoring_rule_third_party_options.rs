@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// Options on third party rules.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SecurityMonitoringRuleThirdPartyOptions {
     /// Notification targets for the logs that do not correspond to any of the cases.
     #[serde(rename = "defaultNotifications")]
@@ -21,6 +23,9 @@ pub struct SecurityMonitoringRuleThirdPartyOptions {
     /// A template for the signal title; if omitted, the title is generated based on the case name.
     #[serde(rename = "signalTitleTemplate")]
     pub signal_title_template: Option<String>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl SecurityMonitoringRuleThirdPartyOptions {
@@ -30,6 +35,7 @@ impl SecurityMonitoringRuleThirdPartyOptions {
             default_status: None,
             root_queries: None,
             signal_title_template: None,
+            _unparsed: false,
         }
     }
 
@@ -63,5 +69,90 @@ impl SecurityMonitoringRuleThirdPartyOptions {
 impl Default for SecurityMonitoringRuleThirdPartyOptions {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for SecurityMonitoringRuleThirdPartyOptions {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct SecurityMonitoringRuleThirdPartyOptionsVisitor;
+        impl<'a> Visitor<'a> for SecurityMonitoringRuleThirdPartyOptionsVisitor {
+            type Value = SecurityMonitoringRuleThirdPartyOptions;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut default_notifications: Option<Vec<String>> = None;
+                let mut default_status: Option<
+                    crate::datadogV2::model::SecurityMonitoringRuleSeverity,
+                > = None;
+                let mut root_queries: Option<
+                    Vec<crate::datadogV2::model::SecurityMonitoringThirdPartyRootQuery>,
+                > = None;
+                let mut signal_title_template: Option<String> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "defaultNotifications" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            default_notifications =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "defaultStatus" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            default_status =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _default_status) = default_status {
+                                match _default_status {
+                                    crate::datadogV2::model::SecurityMonitoringRuleSeverity::UnparsedObject(_default_status) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "rootQueries" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            root_queries =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "signalTitleTemplate" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            signal_title_template =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+
+                let content = SecurityMonitoringRuleThirdPartyOptions {
+                    default_notifications,
+                    default_status,
+                    root_queries,
+                    signal_title_template,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(SecurityMonitoringRuleThirdPartyOptionsVisitor)
     }
 }

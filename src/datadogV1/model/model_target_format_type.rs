@@ -11,6 +11,7 @@ pub enum TargetFormatType {
     STRING,
     INTEGER,
     DOUBLE,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for TargetFormatType {
@@ -20,6 +21,7 @@ impl ToString for TargetFormatType {
             Self::STRING => String::from("string"),
             Self::INTEGER => String::from("integer"),
             Self::DOUBLE => String::from("double"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -30,6 +32,7 @@ impl Serialize for TargetFormatType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -46,12 +49,9 @@ impl<'de> Deserialize<'de> for TargetFormatType {
             "string" => Self::STRING,
             "integer" => Self::INTEGER,
             "double" => Self::DOUBLE,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

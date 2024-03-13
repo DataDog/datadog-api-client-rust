@@ -17,6 +17,7 @@ pub enum SecurityMonitoringRuleKeepAlive {
     TWO_HOURS,
     THREE_HOURS,
     SIX_HOURS,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl Serialize for SecurityMonitoringRuleKeepAlive {
@@ -25,6 +26,7 @@ impl Serialize for SecurityMonitoringRuleKeepAlive {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             Self::ZERO_MINUTES => serializer.serialize_i32(0),
             Self::ONE_MINUTE => serializer.serialize_i32(60),
             Self::FIVE_MINUTES => serializer.serialize_i32(300),
@@ -56,12 +58,9 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleKeepAlive {
             7200 => Self::TWO_HOURS,
             10800 => Self::THREE_HOURS,
             21600 => Self::SIX_HOURS,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::Number(s.into()),
+            }),
         })
     }
 }

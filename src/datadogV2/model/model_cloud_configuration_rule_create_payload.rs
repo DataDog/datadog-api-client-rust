@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// Create a new cloud configuration rule.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CloudConfigurationRuleCreatePayload {
     /// Description of generated findings and signals (severity and channels to be notified in case of a signal). Must contain exactly one item.
     ///
@@ -38,6 +40,9 @@ pub struct CloudConfigurationRuleCreatePayload {
     /// The rule type.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::CloudConfigurationRuleType>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl CloudConfigurationRuleCreatePayload {
@@ -59,6 +64,7 @@ impl CloudConfigurationRuleCreatePayload {
             options,
             tags: None,
             type_: None,
+            _unparsed: false,
         }
     }
 
@@ -78,5 +84,118 @@ impl CloudConfigurationRuleCreatePayload {
     pub fn type_(mut self, value: crate::datadogV2::model::CloudConfigurationRuleType) -> Self {
         self.type_ = Some(value);
         self
+    }
+}
+
+impl<'de> Deserialize<'de> for CloudConfigurationRuleCreatePayload {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct CloudConfigurationRuleCreatePayloadVisitor;
+        impl<'a> Visitor<'a> for CloudConfigurationRuleCreatePayloadVisitor {
+            type Value = CloudConfigurationRuleCreatePayload;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut cases: Option<
+                    Vec<crate::datadogV2::model::CloudConfigurationRuleCaseCreate>,
+                > = None;
+                let mut compliance_signal_options: Option<
+                    crate::datadogV2::model::CloudConfigurationRuleComplianceSignalOptions,
+                > = None;
+                let mut filters: Option<Vec<crate::datadogV2::model::SecurityMonitoringFilter>> =
+                    None;
+                let mut is_enabled: Option<bool> = None;
+                let mut message: Option<String> = None;
+                let mut name: Option<String> = None;
+                let mut options: Option<crate::datadogV2::model::CloudConfigurationRuleOptions> =
+                    None;
+                let mut tags: Option<Vec<String>> = None;
+                let mut type_: Option<crate::datadogV2::model::CloudConfigurationRuleType> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "cases" => {
+                            cases = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "complianceSignalOptions" => {
+                            compliance_signal_options =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "filters" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            filters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "isEnabled" => {
+                            is_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "message" => {
+                            message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "name" => {
+                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "options" => {
+                            options = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "type" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _type_) = type_ {
+                                match _type_ {
+                                    crate::datadogV2::model::CloudConfigurationRuleType::UnparsedObject(_type_) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        &_ => {}
+                    }
+                }
+                let cases = cases.ok_or_else(|| M::Error::missing_field("cases"))?;
+                let compliance_signal_options = compliance_signal_options
+                    .ok_or_else(|| M::Error::missing_field("compliance_signal_options"))?;
+                let is_enabled = is_enabled.ok_or_else(|| M::Error::missing_field("is_enabled"))?;
+                let message = message.ok_or_else(|| M::Error::missing_field("message"))?;
+                let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
+                let options = options.ok_or_else(|| M::Error::missing_field("options"))?;
+
+                let content = CloudConfigurationRuleCreatePayload {
+                    cases,
+                    compliance_signal_options,
+                    filters,
+                    is_enabled,
+                    message,
+                    name,
+                    options,
+                    tags,
+                    type_,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(CloudConfigurationRuleCreatePayloadVisitor)
     }
 }

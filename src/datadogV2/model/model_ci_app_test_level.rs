@@ -11,6 +11,7 @@ pub enum CIAppTestLevel {
     MODULE,
     SUITE,
     TEST,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for CIAppTestLevel {
@@ -20,6 +21,7 @@ impl ToString for CIAppTestLevel {
             Self::MODULE => String::from("module"),
             Self::SUITE => String::from("suite"),
             Self::TEST => String::from("test"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -30,6 +32,7 @@ impl Serialize for CIAppTestLevel {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -46,12 +49,9 @@ impl<'de> Deserialize<'de> for CIAppTestLevel {
             "module" => Self::MODULE,
             "suite" => Self::SUITE,
             "test" => Self::TEST,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

@@ -10,6 +10,7 @@ pub enum WidgetVerticalAlign {
     CENTER,
     TOP,
     BOTTOM,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetVerticalAlign {
@@ -18,6 +19,7 @@ impl ToString for WidgetVerticalAlign {
             Self::CENTER => String::from("center"),
             Self::TOP => String::from("top"),
             Self::BOTTOM => String::from("bottom"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -28,6 +30,7 @@ impl Serialize for WidgetVerticalAlign {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -43,12 +46,9 @@ impl<'de> Deserialize<'de> for WidgetVerticalAlign {
             "center" => Self::CENTER,
             "top" => Self::TOP,
             "bottom" => Self::BOTTOM,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

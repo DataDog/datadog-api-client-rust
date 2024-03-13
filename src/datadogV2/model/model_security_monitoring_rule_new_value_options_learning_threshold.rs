@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum SecurityMonitoringRuleNewValueOptionsLearningThreshold {
     ZERO_OCCURRENCES,
     ONE_OCCURRENCE,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl Serialize for SecurityMonitoringRuleNewValueOptionsLearningThreshold {
@@ -17,6 +18,7 @@ impl Serialize for SecurityMonitoringRuleNewValueOptionsLearningThreshold {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             Self::ZERO_OCCURRENCES => serializer.serialize_i32(0),
             Self::ONE_OCCURRENCE => serializer.serialize_i32(1),
         }
@@ -32,12 +34,9 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleNewValueOptionsLearningThre
         Ok(match s {
             0 => Self::ZERO_OCCURRENCES,
             1 => Self::ONE_OCCURRENCE,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::Number(s.into()),
+            }),
         })
     }
 }

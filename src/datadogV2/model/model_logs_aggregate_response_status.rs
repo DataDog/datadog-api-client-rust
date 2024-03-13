@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum LogsAggregateResponseStatus {
     DONE,
     TIMEOUT,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for LogsAggregateResponseStatus {
@@ -16,6 +17,7 @@ impl ToString for LogsAggregateResponseStatus {
         match self {
             Self::DONE => String::from("done"),
             Self::TIMEOUT => String::from("timeout"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -26,6 +28,7 @@ impl Serialize for LogsAggregateResponseStatus {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -40,12 +43,9 @@ impl<'de> Deserialize<'de> for LogsAggregateResponseStatus {
         Ok(match s.as_str() {
             "done" => Self::DONE,
             "timeout" => Self::TIMEOUT,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

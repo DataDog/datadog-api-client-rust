@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// List of the different monitor threshold available.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MonitorThresholds {
     /// The monitor `CRITICAL` threshold.
     #[serde(rename = "critical")]
@@ -43,6 +45,9 @@ pub struct MonitorThresholds {
         with = "::serde_with::rust::double_option"
     )]
     pub warning_recovery: Option<Option<f64>>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl MonitorThresholds {
@@ -54,6 +59,7 @@ impl MonitorThresholds {
             unknown: None,
             warning: None,
             warning_recovery: None,
+            _unparsed: false,
         }
     }
 
@@ -91,5 +97,77 @@ impl MonitorThresholds {
 impl Default for MonitorThresholds {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for MonitorThresholds {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct MonitorThresholdsVisitor;
+        impl<'a> Visitor<'a> for MonitorThresholdsVisitor {
+            type Value = MonitorThresholds;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut critical: Option<f64> = None;
+                let mut critical_recovery: Option<Option<f64>> = None;
+                let mut ok: Option<Option<f64>> = None;
+                let mut unknown: Option<Option<f64>> = None;
+                let mut warning: Option<Option<f64>> = None;
+                let mut warning_recovery: Option<Option<f64>> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "critical" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            critical = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "critical_recovery" => {
+                            critical_recovery =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "ok" => {
+                            ok = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "unknown" => {
+                            unknown = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "warning" => {
+                            warning = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "warning_recovery" => {
+                            warning_recovery =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+
+                let content = MonitorThresholds {
+                    critical,
+                    critical_recovery,
+                    ok,
+                    unknown,
+                    warning,
+                    warning_recovery,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(MonitorThresholdsVisitor)
     }
 }

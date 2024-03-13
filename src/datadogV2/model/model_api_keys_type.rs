@@ -8,12 +8,14 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum APIKeysType {
     API_KEYS,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for APIKeysType {
     fn to_string(&self) -> String {
         match self {
             Self::API_KEYS => String::from("api_keys"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -24,6 +26,7 @@ impl Serialize for APIKeysType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -37,12 +40,9 @@ impl<'de> Deserialize<'de> for APIKeysType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "api_keys" => Self::API_KEYS,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

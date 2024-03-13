@@ -8,12 +8,14 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum GCPSTSDelegateAccountType {
     GCP_STS_DELEGATE,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for GCPSTSDelegateAccountType {
     fn to_string(&self) -> String {
         match self {
             Self::GCP_STS_DELEGATE => String::from("gcp_sts_delegate"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -24,6 +26,7 @@ impl Serialize for GCPSTSDelegateAccountType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -37,12 +40,9 @@ impl<'de> Deserialize<'de> for GCPSTSDelegateAccountType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "gcp_sts_delegate" => Self::GCP_STS_DELEGATE,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

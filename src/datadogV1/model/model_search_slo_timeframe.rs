@@ -10,6 +10,7 @@ pub enum SearchSLOTimeframe {
     SEVEN_DAYS,
     THIRTY_DAYS,
     NINETY_DAYS,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SearchSLOTimeframe {
@@ -18,6 +19,7 @@ impl ToString for SearchSLOTimeframe {
             Self::SEVEN_DAYS => String::from("7d"),
             Self::THIRTY_DAYS => String::from("30d"),
             Self::NINETY_DAYS => String::from("90d"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -28,6 +30,7 @@ impl Serialize for SearchSLOTimeframe {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -43,12 +46,9 @@ impl<'de> Deserialize<'de> for SearchSLOTimeframe {
             "7d" => Self::SEVEN_DAYS,
             "30d" => Self::THIRTY_DAYS,
             "90d" => Self::NINETY_DAYS,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

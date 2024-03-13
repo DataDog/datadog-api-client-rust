@@ -12,6 +12,7 @@ pub enum SyntheticsBrowserVariableType {
     GLOBAL,
     JAVASCRIPT,
     TEXT,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsBrowserVariableType {
@@ -22,6 +23,7 @@ impl ToString for SyntheticsBrowserVariableType {
             Self::GLOBAL => String::from("global"),
             Self::JAVASCRIPT => String::from("javascript"),
             Self::TEXT => String::from("text"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -32,6 +34,7 @@ impl Serialize for SyntheticsBrowserVariableType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -49,12 +52,9 @@ impl<'de> Deserialize<'de> for SyntheticsBrowserVariableType {
             "global" => Self::GLOBAL,
             "javascript" => Self::JAVASCRIPT,
             "text" => Self::TEXT,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

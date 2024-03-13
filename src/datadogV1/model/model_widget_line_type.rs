@@ -10,6 +10,7 @@ pub enum WidgetLineType {
     DASHED,
     DOTTED,
     SOLID,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetLineType {
@@ -18,6 +19,7 @@ impl ToString for WidgetLineType {
             Self::DASHED => String::from("dashed"),
             Self::DOTTED => String::from("dotted"),
             Self::SOLID => String::from("solid"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -28,6 +30,7 @@ impl Serialize for WidgetLineType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -43,12 +46,9 @@ impl<'de> Deserialize<'de> for WidgetLineType {
             "dashed" => Self::DASHED,
             "dotted" => Self::DOTTED,
             "solid" => Self::SOLID,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

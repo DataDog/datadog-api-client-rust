@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum EventsDataSource {
     LOGS,
     RUM,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for EventsDataSource {
@@ -16,6 +17,7 @@ impl ToString for EventsDataSource {
         match self {
             Self::LOGS => String::from("logs"),
             Self::RUM => String::from("rum"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -26,6 +28,7 @@ impl Serialize for EventsDataSource {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -40,12 +43,9 @@ impl<'de> Deserialize<'de> for EventsDataSource {
         Ok(match s.as_str() {
             "logs" => Self::LOGS,
             "rum" => Self::RUM,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

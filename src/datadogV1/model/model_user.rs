@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// Create, edit, and disable users.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct User {
     /// The access role of the user. Options are **st** (standard user), **adm** (admin user), or **ro** (read-only user).
     #[serde(
@@ -34,6 +36,9 @@ pub struct User {
     /// Whether or not the user logged in Datadog at least once.
     #[serde(rename = "verified")]
     pub verified: Option<bool>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl User {
@@ -46,6 +51,7 @@ impl User {
             icon: None,
             name: None,
             verified: None,
+            _unparsed: false,
         }
     }
 
@@ -88,5 +94,106 @@ impl User {
 impl Default for User {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for User {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct UserVisitor;
+        impl<'a> Visitor<'a> for UserVisitor {
+            type Value = User;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut access_role: Option<Option<crate::datadogV1::model::AccessRole>> = None;
+                let mut disabled: Option<bool> = None;
+                let mut email: Option<String> = None;
+                let mut handle: Option<String> = None;
+                let mut icon: Option<String> = None;
+                let mut name: Option<String> = None;
+                let mut verified: Option<bool> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "access_role" => {
+                            access_role =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _access_role) = access_role {
+                                match _access_role {
+                                    Some(crate::datadogV1::model::AccessRole::UnparsedObject(
+                                        _access_role,
+                                    )) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "disabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            disabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "email" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            email = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "handle" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            handle = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "icon" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            icon = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "verified" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            verified = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+
+                let content = User {
+                    access_role,
+                    disabled,
+                    email,
+                    handle,
+                    icon,
+                    name,
+                    verified,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(UserVisitor)
     }
 }

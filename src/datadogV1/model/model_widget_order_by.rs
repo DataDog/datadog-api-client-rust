@@ -11,6 +11,7 @@ pub enum WidgetOrderBy {
     NAME,
     PRESENT,
     PAST,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetOrderBy {
@@ -20,6 +21,7 @@ impl ToString for WidgetOrderBy {
             Self::NAME => String::from("name"),
             Self::PRESENT => String::from("present"),
             Self::PAST => String::from("past"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -30,6 +32,7 @@ impl Serialize for WidgetOrderBy {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -46,12 +49,9 @@ impl<'de> Deserialize<'de> for WidgetOrderBy {
             "name" => Self::NAME,
             "present" => Self::PRESENT,
             "past" => Self::PAST,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

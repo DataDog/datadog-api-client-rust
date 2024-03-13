@@ -15,6 +15,7 @@ pub enum SecurityMonitoringRuleQueryAggregation {
     GEO_DATA,
     EVENT_COUNT,
     NONE,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SecurityMonitoringRuleQueryAggregation {
@@ -28,6 +29,7 @@ impl ToString for SecurityMonitoringRuleQueryAggregation {
             Self::GEO_DATA => String::from("geo_data"),
             Self::EVENT_COUNT => String::from("event_count"),
             Self::NONE => String::from("none"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -38,6 +40,7 @@ impl Serialize for SecurityMonitoringRuleQueryAggregation {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -58,12 +61,9 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleQueryAggregation {
             "geo_data" => Self::GEO_DATA,
             "event_count" => Self::EVENT_COUNT,
             "none" => Self::NONE,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// Your Google Cloud Platform Account.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct GCPAccount {
     /// Should be `<https://www.googleapis.com/oauth2/v1/certs`.>
     #[serde(rename = "auth_provider_x509_cert_url")]
@@ -59,6 +61,9 @@ pub struct GCPAccount {
     /// The value for service_account found in your JSON service account key.
     #[serde(rename = "type")]
     pub type_: Option<String>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl GCPAccount {
@@ -80,6 +85,7 @@ impl GCPAccount {
             resource_collection_enabled: None,
             token_uri: None,
             type_: None,
+            _unparsed: false,
         }
     }
 
@@ -167,5 +173,179 @@ impl GCPAccount {
 impl Default for GCPAccount {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for GCPAccount {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct GCPAccountVisitor;
+        impl<'a> Visitor<'a> for GCPAccountVisitor {
+            type Value = GCPAccount;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut auth_provider_x509_cert_url: Option<String> = None;
+                let mut auth_uri: Option<String> = None;
+                let mut automute: Option<bool> = None;
+                let mut client_email: Option<String> = None;
+                let mut client_id: Option<String> = None;
+                let mut client_x509_cert_url: Option<String> = None;
+                let mut errors: Option<Vec<String>> = None;
+                let mut host_filters: Option<String> = None;
+                let mut is_cspm_enabled: Option<bool> = None;
+                let mut is_security_command_center_enabled: Option<bool> = None;
+                let mut private_key: Option<String> = None;
+                let mut private_key_id: Option<String> = None;
+                let mut project_id: Option<String> = None;
+                let mut resource_collection_enabled: Option<bool> = None;
+                let mut token_uri: Option<String> = None;
+                let mut type_: Option<String> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "auth_provider_x509_cert_url" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            auth_provider_x509_cert_url =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "auth_uri" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            auth_uri = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "automute" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            automute = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "client_email" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            client_email =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "client_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            client_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "client_x509_cert_url" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            client_x509_cert_url =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "errors" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            errors = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "host_filters" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            host_filters =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "is_cspm_enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            is_cspm_enabled =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "is_security_command_center_enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            is_security_command_center_enabled =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "private_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            private_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "private_key_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            private_key_id =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "project_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            project_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "resource_collection_enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            resource_collection_enabled =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "token_uri" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            token_uri = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "type" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+
+                let content = GCPAccount {
+                    auth_provider_x509_cert_url,
+                    auth_uri,
+                    automute,
+                    client_email,
+                    client_id,
+                    client_x509_cert_url,
+                    errors,
+                    host_filters,
+                    is_cspm_enabled,
+                    is_security_command_center_enabled,
+                    private_key,
+                    private_key_id,
+                    project_id,
+                    resource_collection_enabled,
+                    token_uri,
+                    type_,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(GCPAccountVisitor)
     }
 }

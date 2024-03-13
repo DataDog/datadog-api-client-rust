@@ -14,6 +14,7 @@ pub enum FormulaAndFunctionApmDependencyStatName {
     PCT_EXEC_TIME,
     PCT_OF_TRACES,
     TOTAL_TRACES_COUNT,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for FormulaAndFunctionApmDependencyStatName {
@@ -26,6 +27,7 @@ impl ToString for FormulaAndFunctionApmDependencyStatName {
             Self::PCT_EXEC_TIME => String::from("pct_exec_time"),
             Self::PCT_OF_TRACES => String::from("pct_of_traces"),
             Self::TOTAL_TRACES_COUNT => String::from("total_traces_count"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -36,6 +38,7 @@ impl Serialize for FormulaAndFunctionApmDependencyStatName {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -55,12 +58,9 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionApmDependencyStatName {
             "pct_exec_time" => Self::PCT_EXEC_TIME,
             "pct_of_traces" => Self::PCT_OF_TRACES,
             "total_traces_count" => Self::TOTAL_TRACES_COUNT,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

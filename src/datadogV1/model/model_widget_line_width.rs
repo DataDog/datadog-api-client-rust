@@ -10,6 +10,7 @@ pub enum WidgetLineWidth {
     NORMAL,
     THICK,
     THIN,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetLineWidth {
@@ -18,6 +19,7 @@ impl ToString for WidgetLineWidth {
             Self::NORMAL => String::from("normal"),
             Self::THICK => String::from("thick"),
             Self::THIN => String::from("thin"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -28,6 +30,7 @@ impl Serialize for WidgetLineWidth {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -43,12 +46,9 @@ impl<'de> Deserialize<'de> for WidgetLineWidth {
             "normal" => Self::NORMAL,
             "thick" => Self::THICK,
             "thin" => Self::THIN,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

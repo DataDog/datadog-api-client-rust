@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// An updated geomap widget.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct GeomapWidgetRequest {
     /// Widget columns.
     #[serde(rename = "columns")]
@@ -36,6 +38,9 @@ pub struct GeomapWidgetRequest {
     /// The log query.
     #[serde(rename = "security_query")]
     pub security_query: Option<crate::datadogV1::model::LogQueryDefinition>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl GeomapWidgetRequest {
@@ -50,6 +55,7 @@ impl GeomapWidgetRequest {
             response_format: None,
             rum_query: None,
             security_query: None,
+            _unparsed: false,
         }
     }
 
@@ -108,5 +114,128 @@ impl GeomapWidgetRequest {
 impl Default for GeomapWidgetRequest {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for GeomapWidgetRequest {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct GeomapWidgetRequestVisitor;
+        impl<'a> Visitor<'a> for GeomapWidgetRequestVisitor {
+            type Value = GeomapWidgetRequest;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut columns: Option<Vec<crate::datadogV1::model::ListStreamColumn>> = None;
+                let mut formulas: Option<Vec<crate::datadogV1::model::WidgetFormula>> = None;
+                let mut log_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
+                let mut q: Option<String> = None;
+                let mut queries: Option<
+                    Vec<crate::datadogV1::model::FormulaAndFunctionQueryDefinition>,
+                > = None;
+                let mut query: Option<crate::datadogV1::model::ListStreamQuery> = None;
+                let mut response_format: Option<
+                    crate::datadogV1::model::FormulaAndFunctionResponseFormat,
+                > = None;
+                let mut rum_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
+                let mut security_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "columns" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            columns = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "formulas" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            formulas = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "log_query" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            log_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "q" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            q = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "queries" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            queries = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "query" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "response_format" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            response_format =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _response_format) = response_format {
+                                match _response_format {
+                                    crate::datadogV1::model::FormulaAndFunctionResponseFormat::UnparsedObject(_response_format) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "rum_query" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "security_query" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            security_query =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+
+                let content = GeomapWidgetRequest {
+                    columns,
+                    formulas,
+                    log_query,
+                    q,
+                    queries,
+                    query,
+                    response_format,
+                    rum_query,
+                    security_query,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(GeomapWidgetRequestVisitor)
     }
 }

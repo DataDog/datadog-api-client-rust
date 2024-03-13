@@ -12,6 +12,7 @@ pub enum DashboardType {
     INTEGRATION_SCREENBOARD,
     INTEGRATION_TIMEBOARD,
     HOST_TIMEBOARD,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for DashboardType {
@@ -22,6 +23,7 @@ impl ToString for DashboardType {
             Self::INTEGRATION_SCREENBOARD => String::from("integration_screenboard"),
             Self::INTEGRATION_TIMEBOARD => String::from("integration_timeboard"),
             Self::HOST_TIMEBOARD => String::from("host_timeboard"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -32,6 +34,7 @@ impl Serialize for DashboardType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -49,12 +52,9 @@ impl<'de> Deserialize<'de> for DashboardType {
             "integration_screenboard" => Self::INTEGRATION_SCREENBOARD,
             "integration_timeboard" => Self::INTEGRATION_TIMEBOARD,
             "host_timeboard" => Self::HOST_TIMEBOARD,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

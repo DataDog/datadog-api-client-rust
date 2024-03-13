@@ -13,6 +13,7 @@ pub enum ApplicationKeysSort {
     LAST4_DESCENDING,
     NAME_ASCENDING,
     NAME_DESCENDING,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for ApplicationKeysSort {
@@ -24,6 +25,7 @@ impl ToString for ApplicationKeysSort {
             Self::LAST4_DESCENDING => String::from("-last4"),
             Self::NAME_ASCENDING => String::from("name"),
             Self::NAME_DESCENDING => String::from("-name"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -34,6 +36,7 @@ impl Serialize for ApplicationKeysSort {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -52,12 +55,9 @@ impl<'de> Deserialize<'de> for ApplicationKeysSort {
             "-last4" => Self::LAST4_DESCENDING,
             "name" => Self::NAME_ASCENDING,
             "-name" => Self::NAME_DESCENDING,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

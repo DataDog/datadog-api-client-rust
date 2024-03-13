@@ -15,6 +15,7 @@ pub enum APIKeysSort {
     MODIFIED_AT_DESCENDING,
     NAME_ASCENDING,
     NAME_DESCENDING,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for APIKeysSort {
@@ -28,6 +29,7 @@ impl ToString for APIKeysSort {
             Self::MODIFIED_AT_DESCENDING => String::from("-modified_at"),
             Self::NAME_ASCENDING => String::from("name"),
             Self::NAME_DESCENDING => String::from("-name"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -38,6 +40,7 @@ impl Serialize for APIKeysSort {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -58,12 +61,9 @@ impl<'de> Deserialize<'de> for APIKeysSort {
             "-modified_at" => Self::MODIFIED_AT_DESCENDING,
             "name" => Self::NAME_ASCENDING,
             "-name" => Self::NAME_DESCENDING,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

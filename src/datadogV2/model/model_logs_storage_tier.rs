@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum LogsStorageTier {
     INDEXES,
     ONLINE_ARCHIVES,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for LogsStorageTier {
@@ -16,6 +17,7 @@ impl ToString for LogsStorageTier {
         match self {
             Self::INDEXES => String::from("indexes"),
             Self::ONLINE_ARCHIVES => String::from("online-archives"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -26,6 +28,7 @@ impl Serialize for LogsStorageTier {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -40,12 +43,9 @@ impl<'de> Deserialize<'de> for LogsStorageTier {
         Ok(match s.as_str() {
             "indexes" => Self::INDEXES,
             "online-archives" => Self::ONLINE_ARCHIVES,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }
