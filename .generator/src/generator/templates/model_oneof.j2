@@ -14,7 +14,7 @@ pub enum {{name}} {
 	{{attributeName}}(Box<{{dataType}}>),
 	{%- endif %}
     {%- endfor%}
-	UnparsedObject(crate::datadog::UnparsedObejct),
+	UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for {{ name }} {
@@ -42,6 +42,6 @@ impl<'de> Deserialize<'de> for {{ name }} {
 
 		{%- endfor%}
 	
-        return Ok({{ name }}::UnparsedObject(crate::datadog::UnparsedObejct { value }));
+        return Ok({{ name }}::UnparsedObject(crate::datadog::UnparsedObject { value }));
     }
 }

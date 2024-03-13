@@ -12,7 +12,7 @@ pub enum NotebookMetadataType {
     INVESTIGATION,
     DOCUMENTATION,
     REPORT,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for NotebookMetadataType {
@@ -52,7 +52,7 @@ impl<'de> Deserialize<'de> for NotebookMetadataType {
             "investigation" => Self::INVESTIGATION,
             "documentation" => Self::DOCUMENTATION,
             "report" => Self::REPORT,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

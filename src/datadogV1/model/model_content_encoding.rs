@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum ContentEncoding {
     GZIP,
     DEFLATE,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for ContentEncoding {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for ContentEncoding {
         Ok(match s.as_str() {
             "gzip" => Self::GZIP,
             "deflate" => Self::DEFLATE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

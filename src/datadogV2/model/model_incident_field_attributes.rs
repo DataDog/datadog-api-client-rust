@@ -14,7 +14,7 @@ pub enum IncidentFieldAttributes {
     IncidentFieldAttributesMultipleValue(
         Box<crate::datadogV2::model::IncidentFieldAttributesMultipleValue>,
     ),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for IncidentFieldAttributes {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for IncidentFieldAttributes {
         }
 
         return Ok(IncidentFieldAttributes::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

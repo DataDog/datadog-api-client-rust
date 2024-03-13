@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum FormulaAndFunctionProcessQueryDataSource {
     PROCESS,
     CONTAINER,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for FormulaAndFunctionProcessQueryDataSource {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionProcessQueryDataSource {
         Ok(match s.as_str() {
             "process" => Self::PROCESS,
             "container" => Self::CONTAINER,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

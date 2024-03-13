@@ -10,7 +10,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 pub enum ApplicationKeyResponseIncludedItem {
     User(Box<crate::datadogV2::model::User>),
     Role(Box<crate::datadogV2::model::Role>),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for ApplicationKeyResponseIncludedItem {
@@ -33,7 +33,7 @@ impl<'de> Deserialize<'de> for ApplicationKeyResponseIncludedItem {
         }
 
         return Ok(ApplicationKeyResponseIncludedItem::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

@@ -11,7 +11,7 @@ pub enum SLOState {
     WARNING,
     OK,
     NO_DATA,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SLOState {
@@ -49,7 +49,7 @@ impl<'de> Deserialize<'de> for SLOState {
             "warning" => Self::WARNING,
             "ok" => Self::OK,
             "no_data" => Self::NO_DATA,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

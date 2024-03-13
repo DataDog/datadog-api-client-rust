@@ -10,7 +10,7 @@ pub enum MetricContentEncoding {
     DEFLATE,
     ZSTD1,
     GZIP,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for MetricContentEncoding {
@@ -46,7 +46,7 @@ impl<'de> Deserialize<'de> for MetricContentEncoding {
             "deflate" => Self::DEFLATE,
             "zstd1" => Self::ZSTD1,
             "gzip" => Self::GZIP,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

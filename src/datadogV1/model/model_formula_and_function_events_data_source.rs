@@ -17,7 +17,7 @@ pub enum FormulaAndFunctionEventsDataSource {
     EVENTS,
     CI_TESTS,
     CI_PIPELINES,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for FormulaAndFunctionEventsDataSource {
@@ -67,7 +67,7 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionEventsDataSource {
             "events" => Self::EVENTS,
             "ci_tests" => Self::CI_TESTS,
             "ci_pipelines" => Self::CI_PIPELINES,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

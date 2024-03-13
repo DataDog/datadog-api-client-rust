@@ -15,7 +15,7 @@ pub enum WidgetTimeWindows {
     MONTH_TO_DATE,
     PREVIOUS_MONTH,
     GLOBAL_TIME,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetTimeWindows {
@@ -61,7 +61,7 @@ impl<'de> Deserialize<'de> for WidgetTimeWindows {
             "month_to_date" => Self::MONTH_TO_DATE,
             "previous_month" => Self::PREVIOUS_MONTH,
             "global_time" => Self::GLOBAL_TIME,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

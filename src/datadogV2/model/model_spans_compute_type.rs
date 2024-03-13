@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum SpansComputeType {
     TIMESERIES,
     TOTAL,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SpansComputeType {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for SpansComputeType {
         Ok(match s.as_str() {
             "timeseries" => Self::TIMESERIES,
             "total" => Self::TOTAL,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

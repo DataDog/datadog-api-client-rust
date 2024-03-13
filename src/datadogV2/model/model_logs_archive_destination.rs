@@ -11,7 +11,7 @@ pub enum LogsArchiveDestination {
     LogsArchiveDestinationAzure(Box<crate::datadogV2::model::LogsArchiveDestinationAzure>),
     LogsArchiveDestinationGCS(Box<crate::datadogV2::model::LogsArchiveDestinationGCS>),
     LogsArchiveDestinationS3(Box<crate::datadogV2::model::LogsArchiveDestinationS3>),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for LogsArchiveDestination {
@@ -46,7 +46,7 @@ impl<'de> Deserialize<'de> for LogsArchiveDestination {
         }
 
         return Ok(LogsArchiveDestination::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

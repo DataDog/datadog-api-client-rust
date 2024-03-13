@@ -11,7 +11,7 @@ pub enum SLOCorrectionCategory {
     OUTSIDE_BUSINESS_HOURS,
     DEPLOYMENT,
     OTHER,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SLOCorrectionCategory {
@@ -49,7 +49,7 @@ impl<'de> Deserialize<'de> for SLOCorrectionCategory {
             "Outside Business Hours" => Self::OUTSIDE_BUSINESS_HOURS,
             "Deployment" => Self::DEPLOYMENT,
             "Other" => Self::OTHER,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum LogsStorageTier {
     INDEXES,
     ONLINE_ARCHIVES,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for LogsStorageTier {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for LogsStorageTier {
         Ok(match s.as_str() {
             "indexes" => Self::INDEXES,
             "online-archives" => Self::ONLINE_ARCHIVES,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

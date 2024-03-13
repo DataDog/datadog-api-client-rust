@@ -10,7 +10,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 pub enum IncidentTodoAssignee {
     IncidentTodoAssigneeHandle(String),
     IncidentTodoAnonymousAssignee(Box<crate::datadogV2::model::IncidentTodoAnonymousAssignee>),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for IncidentTodoAssignee {
@@ -32,7 +32,7 @@ impl<'de> Deserialize<'de> for IncidentTodoAssignee {
         }
 
         return Ok(IncidentTodoAssignee::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

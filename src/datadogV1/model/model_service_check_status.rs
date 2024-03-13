@@ -11,7 +11,7 @@ pub enum ServiceCheckStatus {
     WARNING,
     CRITICAL,
     UNKNOWN,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl Serialize for ServiceCheckStatus {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for ServiceCheckStatus {
             1 => Self::WARNING,
             2 => Self::CRITICAL,
             3 => Self::UNKNOWN,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::Number(s.into()),
             }),
         })

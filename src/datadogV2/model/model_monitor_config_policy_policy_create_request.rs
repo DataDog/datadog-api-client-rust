@@ -11,7 +11,7 @@ pub enum MonitorConfigPolicyPolicyCreateRequest {
     MonitorConfigPolicyTagPolicyCreateRequest(
         Box<crate::datadogV2::model::MonitorConfigPolicyTagPolicyCreateRequest>,
     ),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for MonitorConfigPolicyPolicyCreateRequest {
@@ -30,7 +30,7 @@ impl<'de> Deserialize<'de> for MonitorConfigPolicyPolicyCreateRequest {
         }
 
         return Ok(MonitorConfigPolicyPolicyCreateRequest::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

@@ -11,7 +11,7 @@ pub enum SpansGroupByTotal {
     SpansGroupByTotalBoolean(bool),
     SpansGroupByTotalString(String),
     SpansGroupByTotalNumber(f64),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for SpansGroupByTotal {
@@ -31,7 +31,7 @@ impl<'de> Deserialize<'de> for SpansGroupByTotal {
         }
 
         return Ok(SpansGroupByTotal::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

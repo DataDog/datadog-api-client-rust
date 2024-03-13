@@ -10,7 +10,7 @@ pub enum WidgetVerticalAlign {
     CENTER,
     TOP,
     BOTTOM,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetVerticalAlign {
@@ -46,7 +46,7 @@ impl<'de> Deserialize<'de> for WidgetVerticalAlign {
             "center" => Self::CENTER,
             "top" => Self::TOP,
             "bottom" => Self::BOTTOM,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

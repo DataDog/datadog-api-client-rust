@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum EventsDataSource {
     LOGS,
     RUM,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for EventsDataSource {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for EventsDataSource {
         Ok(match s.as_str() {
             "logs" => Self::LOGS,
             "rum" => Self::RUM,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

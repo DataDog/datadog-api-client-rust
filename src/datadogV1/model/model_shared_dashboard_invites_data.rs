@@ -12,7 +12,7 @@ pub enum SharedDashboardInvitesData {
         Box<crate::datadogV1::model::SharedDashboardInvitesDataObject>,
     ),
     SharedDashboardInvitesDataList(Vec<crate::datadogV1::model::SharedDashboardInvitesDataObject>),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for SharedDashboardInvitesData {
@@ -39,7 +39,7 @@ impl<'de> Deserialize<'de> for SharedDashboardInvitesData {
         }
 
         return Ok(SharedDashboardInvitesData::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

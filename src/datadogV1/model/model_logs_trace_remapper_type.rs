@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum LogsTraceRemapperType {
     TRACE_ID_REMAPPER,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for LogsTraceRemapperType {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for LogsTraceRemapperType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "trace-id-remapper" => Self::TRACE_ID_REMAPPER,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

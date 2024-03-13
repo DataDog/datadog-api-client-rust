@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum SecurityMonitoringRuleNewValueOptionsLearningMethod {
     DURATION,
     THRESHOLD,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SecurityMonitoringRuleNewValueOptionsLearningMethod {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleNewValueOptionsLearningMeth
         Ok(match s.as_str() {
             "duration" => Self::DURATION,
             "threshold" => Self::THRESHOLD,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

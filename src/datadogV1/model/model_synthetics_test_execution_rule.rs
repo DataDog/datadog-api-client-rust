@@ -10,7 +10,7 @@ pub enum SyntheticsTestExecutionRule {
     BLOCKING,
     NON_BLOCKING,
     SKIPPED,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsTestExecutionRule {
@@ -46,7 +46,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestExecutionRule {
             "blocking" => Self::BLOCKING,
             "non_blocking" => Self::NON_BLOCKING,
             "skipped" => Self::SKIPPED,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

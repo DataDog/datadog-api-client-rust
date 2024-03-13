@@ -13,7 +13,7 @@ pub enum SecurityMonitoringRuleNewValueOptionsForgetAfter {
     TWO_WEEKS,
     THREE_WEEKS,
     FOUR_WEEKS,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl Serialize for SecurityMonitoringRuleNewValueOptionsForgetAfter {
@@ -46,7 +46,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleNewValueOptionsForgetAfter 
             14 => Self::TWO_WEEKS,
             21 => Self::THREE_WEEKS,
             28 => Self::FOUR_WEEKS,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::Number(s.into()),
             }),
         })

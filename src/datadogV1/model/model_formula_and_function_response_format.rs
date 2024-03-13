@@ -10,7 +10,7 @@ pub enum FormulaAndFunctionResponseFormat {
     TIMESERIES,
     SCALAR,
     EVENT_LIST,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for FormulaAndFunctionResponseFormat {
@@ -46,7 +46,7 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionResponseFormat {
             "timeseries" => Self::TIMESERIES,
             "scalar" => Self::SCALAR,
             "event_list" => Self::EVENT_LIST,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

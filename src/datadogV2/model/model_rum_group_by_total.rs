@@ -11,7 +11,7 @@ pub enum RUMGroupByTotal {
     RUMGroupByTotalBoolean(bool),
     RUMGroupByTotalString(String),
     RUMGroupByTotalNumber(f64),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for RUMGroupByTotal {
@@ -31,7 +31,7 @@ impl<'de> Deserialize<'de> for RUMGroupByTotal {
         }
 
         return Ok(RUMGroupByTotal::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

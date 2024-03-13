@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum SpansSort {
     TIMESTAMP_ASCENDING,
     TIMESTAMP_DESCENDING,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SpansSort {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for SpansSort {
         Ok(match s.as_str() {
             "timestamp" => Self::TIMESTAMP_ASCENDING,
             "-timestamp" => Self::TIMESTAMP_DESCENDING,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

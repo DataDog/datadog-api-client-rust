@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum SyntheticsTestCallType {
     HEALTHCHECK,
     UNARY,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsTestCallType {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestCallType {
         Ok(match s.as_str() {
             "healthcheck" => Self::HEALTHCHECK,
             "unary" => Self::UNARY,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

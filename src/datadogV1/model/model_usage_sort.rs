@@ -11,7 +11,7 @@ pub enum UsageSort {
     SIZE,
     START_DATE,
     END_DATE,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for UsageSort {
@@ -49,7 +49,7 @@ impl<'de> Deserialize<'de> for UsageSort {
             "size" => Self::SIZE,
             "start_date" => Self::START_DATE,
             "end_date" => Self::END_DATE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

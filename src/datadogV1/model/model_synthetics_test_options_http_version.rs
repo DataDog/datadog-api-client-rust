@@ -10,7 +10,7 @@ pub enum SyntheticsTestOptionsHTTPVersion {
     HTTP1,
     HTTP2,
     ANY,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsTestOptionsHTTPVersion {
@@ -46,7 +46,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptionsHTTPVersion {
             "http1" => Self::HTTP1,
             "http2" => Self::HTTP2,
             "any" => Self::ANY,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

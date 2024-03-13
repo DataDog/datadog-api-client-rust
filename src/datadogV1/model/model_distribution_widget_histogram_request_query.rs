@@ -17,7 +17,7 @@ pub enum DistributionWidgetHistogramRequestQuery {
     FormulaAndFunctionApmResourceStatsQueryDefinition(
         Box<crate::datadogV1::model::FormulaAndFunctionApmResourceStatsQueryDefinition>,
     ),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for DistributionWidgetHistogramRequestQuery {
@@ -56,7 +56,7 @@ impl<'de> Deserialize<'de> for DistributionWidgetHistogramRequestQuery {
         }
 
         return Ok(DistributionWidgetHistogramRequestQuery::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

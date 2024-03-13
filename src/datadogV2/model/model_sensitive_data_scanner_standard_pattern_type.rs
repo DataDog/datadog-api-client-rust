@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SensitiveDataScannerStandardPatternType {
     SENSITIVE_DATA_SCANNER_STANDARD_PATTERN,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SensitiveDataScannerStandardPatternType {
@@ -44,7 +44,7 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerStandardPatternType {
             "sensitive_data_scanner_standard_pattern" => {
                 Self::SENSITIVE_DATA_SCANNER_STANDARD_PATTERN
             }
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

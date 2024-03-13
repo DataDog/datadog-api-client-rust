@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum RetentionFilterType {
     SPANS_SAMPLING_PROCESSOR,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for RetentionFilterType {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for RetentionFilterType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "spans-sampling-processor" => Self::SPANS_SAMPLING_PROCESSOR,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

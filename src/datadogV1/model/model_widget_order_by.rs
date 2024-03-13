@@ -11,7 +11,7 @@ pub enum WidgetOrderBy {
     NAME,
     PRESENT,
     PAST,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetOrderBy {
@@ -49,7 +49,7 @@ impl<'de> Deserialize<'de> for WidgetOrderBy {
             "name" => Self::NAME,
             "present" => Self::PRESENT,
             "past" => Self::PAST,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

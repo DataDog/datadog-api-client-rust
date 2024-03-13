@@ -19,7 +19,7 @@ pub enum RUMAggregationFunction {
     MAX,
     AVG,
     MEDIAN,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for RUMAggregationFunction {
@@ -73,7 +73,7 @@ impl<'de> Deserialize<'de> for RUMAggregationFunction {
             "max" => Self::MAX,
             "avg" => Self::AVG,
             "median" => Self::MEDIAN,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

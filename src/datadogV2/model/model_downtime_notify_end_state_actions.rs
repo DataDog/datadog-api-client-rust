@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum DowntimeNotifyEndStateActions {
     CANCELED,
     EXPIRED,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for DowntimeNotifyEndStateActions {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for DowntimeNotifyEndStateActions {
         Ok(match s.as_str() {
             "canceled" => Self::CANCELED,
             "expired" => Self::EXPIRED,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

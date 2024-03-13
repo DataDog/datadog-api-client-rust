@@ -11,7 +11,7 @@ pub enum WidgetTickEdge {
     LEFT,
     RIGHT,
     TOP,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetTickEdge {
@@ -49,7 +49,7 @@ impl<'de> Deserialize<'de> for WidgetTickEdge {
             "left" => Self::LEFT,
             "right" => Self::RIGHT,
             "top" => Self::TOP,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

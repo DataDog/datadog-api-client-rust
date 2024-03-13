@@ -13,7 +13,7 @@ pub enum LogsAggregateBucketValue {
     LogsAggregateBucketValueTimeseries(
         Vec<crate::datadogV2::model::LogsAggregateBucketValueTimeseriesPoint>,
     ),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for LogsAggregateBucketValue {
@@ -36,7 +36,7 @@ impl<'de> Deserialize<'de> for LogsAggregateBucketValue {
         }
 
         return Ok(LogsAggregateBucketValue::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

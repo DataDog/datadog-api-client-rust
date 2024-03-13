@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ProjectedCostType {
     PROJECt_COST,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for ProjectedCostType {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for ProjectedCostType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "projected_cost" => Self::PROJECt_COST,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

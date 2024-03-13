@@ -26,7 +26,7 @@ pub enum SyntheticsAssertionType {
     GRPC_METADATA,
     GRPC_PROTO,
     CONNECTION,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsAssertionType {
@@ -94,7 +94,7 @@ impl<'de> Deserialize<'de> for SyntheticsAssertionType {
             "grpcMetadata" => Self::GRPC_METADATA,
             "grpcProto" => Self::GRPC_PROTO,
             "connection" => Self::CONNECTION,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

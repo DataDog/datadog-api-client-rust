@@ -11,7 +11,7 @@ pub enum LogsGroupByTotal {
     LogsGroupByTotalBoolean(bool),
     LogsGroupByTotalString(String),
     LogsGroupByTotalNumber(f64),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for LogsGroupByTotal {
@@ -31,7 +31,7 @@ impl<'de> Deserialize<'de> for LogsGroupByTotal {
         }
 
         return Ok(LogsGroupByTotal::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

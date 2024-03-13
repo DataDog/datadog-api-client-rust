@@ -10,7 +10,7 @@ pub enum WidgetTextAlign {
     CENTER,
     LEFT,
     RIGHT,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetTextAlign {
@@ -46,7 +46,7 @@ impl<'de> Deserialize<'de> for WidgetTextAlign {
             "center" => Self::CENTER,
             "left" => Self::LEFT,
             "right" => Self::RIGHT,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

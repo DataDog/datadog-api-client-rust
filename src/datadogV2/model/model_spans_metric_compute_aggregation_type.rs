@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum SpansMetricComputeAggregationType {
     COUNT,
     DISTRIBUTION,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SpansMetricComputeAggregationType {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for SpansMetricComputeAggregationType {
         Ok(match s.as_str() {
             "count" => Self::COUNT,
             "distribution" => Self::DISTRIBUTION,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

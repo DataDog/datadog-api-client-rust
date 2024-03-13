@@ -11,7 +11,7 @@ pub enum IncidentTimelineCellCreateAttributes {
     IncidentTimelineCellMarkdownCreateAttributes(
         Box<crate::datadogV2::model::IncidentTimelineCellMarkdownCreateAttributes>,
     ),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for IncidentTimelineCellCreateAttributes {
@@ -30,7 +30,7 @@ impl<'de> Deserialize<'de> for IncidentTimelineCellCreateAttributes {
         }
 
         return Ok(IncidentTimelineCellCreateAttributes::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

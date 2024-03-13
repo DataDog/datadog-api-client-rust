@@ -23,7 +23,7 @@ pub enum CIAppAggregationFunction {
     EARLIEST,
     MOST_FREQUENT,
     DELTA,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for CIAppAggregationFunction {
@@ -85,7 +85,7 @@ impl<'de> Deserialize<'de> for CIAppAggregationFunction {
             "earliest" => Self::EARLIEST,
             "most_frequent" => Self::MOST_FREQUENT,
             "delta" => Self::DELTA,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

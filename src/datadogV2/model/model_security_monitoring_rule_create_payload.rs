@@ -17,7 +17,7 @@ pub enum SecurityMonitoringRuleCreatePayload {
     CloudConfigurationRuleCreatePayload(
         Box<crate::datadogV2::model::CloudConfigurationRuleCreatePayload>,
     ),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for SecurityMonitoringRuleCreatePayload {
@@ -58,7 +58,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleCreatePayload {
         }
 
         return Ok(SecurityMonitoringRuleCreatePayload::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

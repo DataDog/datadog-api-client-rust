@@ -10,7 +10,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 pub enum RUMGroupByMissing {
     RUMGroupByMissingString(String),
     RUMGroupByMissingNumber(f64),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for RUMGroupByMissing {
@@ -27,7 +27,7 @@ impl<'de> Deserialize<'de> for RUMGroupByMissing {
         }
 
         return Ok(RUMGroupByMissing::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

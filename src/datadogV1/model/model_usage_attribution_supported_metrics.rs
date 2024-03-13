@@ -54,7 +54,7 @@ pub enum UsageAttributionSupportedMetrics {
     ESTIMATED_RUM_USAGE_ATTRIBUTION_USAGE,
     ESTIMATED_RUM_USAGE_ATTRIBUTION_PERCENTAGE,
     ALL,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for UsageAttributionSupportedMetrics {
@@ -192,7 +192,7 @@ impl<'de> Deserialize<'de> for UsageAttributionSupportedMetrics {
                 Self::ESTIMATED_RUM_USAGE_ATTRIBUTION_PERCENTAGE
             }
             "*" => Self::ALL,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

@@ -19,7 +19,7 @@ pub enum AuthNMappingsSort {
     SAML_ASSERTION_ATTRIBUTE_KEY_DESCENDING,
     SAML_ASSERTION_ATTRIBUTE_VALUE_ASCENDING,
     SAML_ASSERTION_ATTRIBUTE_VALUE_DESCENDING,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for AuthNMappingsSort {
@@ -93,7 +93,7 @@ impl<'de> Deserialize<'de> for AuthNMappingsSort {
             "-saml_assertion_attribute.attribute_value" => {
                 Self::SAML_ASSERTION_ATTRIBUTE_VALUE_DESCENDING
             }
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

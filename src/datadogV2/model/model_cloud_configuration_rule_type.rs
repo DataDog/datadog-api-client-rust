@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum CloudConfigurationRuleType {
     CLOUD_CONFIGURATION,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for CloudConfigurationRuleType {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for CloudConfigurationRuleType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "cloud_configuration" => Self::CLOUD_CONFIGURATION,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

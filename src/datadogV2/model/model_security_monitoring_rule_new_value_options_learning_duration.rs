@@ -10,7 +10,7 @@ pub enum SecurityMonitoringRuleNewValueOptionsLearningDuration {
     ZERO_DAYS,
     ONE_DAY,
     SEVEN_DAYS,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl Serialize for SecurityMonitoringRuleNewValueOptionsLearningDuration {
@@ -37,7 +37,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleNewValueOptionsLearningDura
             0 => Self::ZERO_DAYS,
             1 => Self::ONE_DAY,
             7 => Self::SEVEN_DAYS,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::Number(s.into()),
             }),
         })

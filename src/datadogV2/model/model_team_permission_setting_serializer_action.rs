@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum TeamPermissionSettingSerializerAction {
     MANAGE_MEMBERSHIP,
     EDIT,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for TeamPermissionSettingSerializerAction {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for TeamPermissionSettingSerializerAction {
         Ok(match s.as_str() {
             "manage_membership" => Self::MANAGE_MEMBERSHIP,
             "edit" => Self::EDIT,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

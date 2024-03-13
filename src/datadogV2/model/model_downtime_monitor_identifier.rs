@@ -10,7 +10,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 pub enum DowntimeMonitorIdentifier {
     DowntimeMonitorIdentifierId(Box<crate::datadogV2::model::DowntimeMonitorIdentifierId>),
     DowntimeMonitorIdentifierTags(Box<crate::datadogV2::model::DowntimeMonitorIdentifierTags>),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for DowntimeMonitorIdentifier {
@@ -37,7 +37,7 @@ impl<'de> Deserialize<'de> for DowntimeMonitorIdentifier {
         }
 
         return Ok(DowntimeMonitorIdentifier::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

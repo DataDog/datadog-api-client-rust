@@ -12,7 +12,7 @@ pub enum CIAppCreatePipelineEventRequestAttributesResource {
     CIAppPipelineEventStage(Box<crate::datadogV2::model::CIAppPipelineEventStage>),
     CIAppPipelineEventJob(Box<crate::datadogV2::model::CIAppPipelineEventJob>),
     CIAppPipelineEventStep(Box<crate::datadogV2::model::CIAppPipelineEventStep>),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for CIAppCreatePipelineEventRequestAttributesResource {
@@ -64,7 +64,7 @@ impl<'de> Deserialize<'de> for CIAppCreatePipelineEventRequestAttributesResource
 
         return Ok(
             CIAppCreatePipelineEventRequestAttributesResource::UnparsedObject(
-                crate::datadog::UnparsedObejct { value },
+                crate::datadog::UnparsedObject { value },
             ),
         );
     }

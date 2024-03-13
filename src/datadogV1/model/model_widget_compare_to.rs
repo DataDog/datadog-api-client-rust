@@ -11,7 +11,7 @@ pub enum WidgetCompareTo {
     DAY_BEFORE,
     WEEK_BEFORE,
     MONTH_BEFORE,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetCompareTo {
@@ -49,7 +49,7 @@ impl<'de> Deserialize<'de> for WidgetCompareTo {
             "day_before" => Self::DAY_BEFORE,
             "week_before" => Self::WEEK_BEFORE,
             "month_before" => Self::MONTH_BEFORE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

@@ -12,7 +12,7 @@ pub enum SensitiveDataScannerTextReplacementType {
     REPLACEMENT_STRING,
     PARTIAL_REPLACEMENT_FROM_BEGINNING,
     PARTIAL_REPLACEMENT_FROM_END,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SensitiveDataScannerTextReplacementType {
@@ -54,7 +54,7 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerTextReplacementType {
             "replacement_string" => Self::REPLACEMENT_STRING,
             "partial_replacement_from_beginning" => Self::PARTIAL_REPLACEMENT_FROM_BEGINNING,
             "partial_replacement_from_end" => Self::PARTIAL_REPLACEMENT_FROM_END,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

@@ -10,7 +10,7 @@ pub enum WidgetServiceSummaryDisplayFormat {
     ONE_COLUMN,
     TWO_COLUMN,
     THREE_COLUMN,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetServiceSummaryDisplayFormat {
@@ -46,7 +46,7 @@ impl<'de> Deserialize<'de> for WidgetServiceSummaryDisplayFormat {
             "one_column" => Self::ONE_COLUMN,
             "two_column" => Self::TWO_COLUMN,
             "three_column" => Self::THREE_COLUMN,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

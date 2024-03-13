@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum MetricDistinctVolumeType {
     DISTINCT_METRIC_VOLUMES,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for MetricDistinctVolumeType {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for MetricDistinctVolumeType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "distinct_metric_volumes" => Self::DISTINCT_METRIC_VOLUMES,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

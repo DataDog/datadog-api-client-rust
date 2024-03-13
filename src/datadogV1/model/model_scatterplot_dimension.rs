@@ -11,7 +11,7 @@ pub enum ScatterplotDimension {
     Y,
     RADIUS,
     COLOR,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for ScatterplotDimension {
@@ -49,7 +49,7 @@ impl<'de> Deserialize<'de> for ScatterplotDimension {
             "y" => Self::Y,
             "radius" => Self::RADIUS,
             "color" => Self::COLOR,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

@@ -14,7 +14,7 @@ pub enum SyntheticsAssertion {
         Box<crate::datadogV1::model::SyntheticsAssertionJSONPathTarget>,
     ),
     SyntheticsAssertionXPathTarget(Box<crate::datadogV1::model::SyntheticsAssertionXPathTarget>),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for SyntheticsAssertion {
@@ -49,7 +49,7 @@ impl<'de> Deserialize<'de> for SyntheticsAssertion {
         }
 
         return Ok(SyntheticsAssertion::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

@@ -17,7 +17,7 @@ pub enum SplitGraphSourceWidgetDefinition {
     TimeseriesWidgetDefinition(Box<crate::datadogV1::model::TimeseriesWidgetDefinition>),
     ToplistWidgetDefinition(Box<crate::datadogV1::model::ToplistWidgetDefinition>),
     TreeMapWidgetDefinition(Box<crate::datadogV1::model::TreeMapWidgetDefinition>),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for SplitGraphSourceWidgetDefinition {
@@ -103,7 +103,7 @@ impl<'de> Deserialize<'de> for SplitGraphSourceWidgetDefinition {
         }
 
         return Ok(SplitGraphSourceWidgetDefinition::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

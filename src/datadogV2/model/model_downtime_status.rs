@@ -11,7 +11,7 @@ pub enum DowntimeStatus {
     CANCELED,
     ENDED,
     SCHEDULED,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for DowntimeStatus {
@@ -49,7 +49,7 @@ impl<'de> Deserialize<'de> for DowntimeStatus {
             "canceled" => Self::CANCELED,
             "ended" => Self::ENDED,
             "scheduled" => Self::SCHEDULED,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

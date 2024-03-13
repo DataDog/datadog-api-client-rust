@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 #[serde(untagged)]
 pub enum APIKeyResponseIncludedItem {
     User(Box<crate::datadogV2::model::User>),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for APIKeyResponseIncludedItem {
@@ -26,7 +26,7 @@ impl<'de> Deserialize<'de> for APIKeyResponseIncludedItem {
         }
 
         return Ok(APIKeyResponseIncludedItem::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

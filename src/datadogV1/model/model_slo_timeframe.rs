@@ -11,7 +11,7 @@ pub enum SLOTimeframe {
     THIRTY_DAYS,
     NINETY_DAYS,
     CUSTOM,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SLOTimeframe {
@@ -49,7 +49,7 @@ impl<'de> Deserialize<'de> for SLOTimeframe {
             "30d" => Self::THIRTY_DAYS,
             "90d" => Self::NINETY_DAYS,
             "custom" => Self::CUSTOM,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

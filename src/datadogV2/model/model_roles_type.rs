@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum RolesType {
     ROLES,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for RolesType {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for RolesType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "roles" => Self::ROLES,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

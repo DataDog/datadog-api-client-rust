@@ -16,7 +16,7 @@ pub enum SyntheticsTestDetailsSubType {
     UDP,
     WEBSOCKET,
     GRPC,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsTestDetailsSubType {
@@ -64,7 +64,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestDetailsSubType {
             "udp" => Self::UDP,
             "websocket" => Self::WEBSOCKET,
             "grpc" => Self::GRPC,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

@@ -10,7 +10,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 pub enum CIAppGroupByMissing {
     CIAppGroupByMissingString(String),
     CIAppGroupByMissingNumber(f64),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for CIAppGroupByMissing {
@@ -27,7 +27,7 @@ impl<'de> Deserialize<'de> for CIAppGroupByMissing {
         }
 
         return Ok(CIAppGroupByMissing::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum SyntheticsTestDetailsType {
     API,
     BROWSER,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsTestDetailsType {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestDetailsType {
         Ok(match s.as_str() {
             "api" => Self::API,
             "browser" => Self::BROWSER,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

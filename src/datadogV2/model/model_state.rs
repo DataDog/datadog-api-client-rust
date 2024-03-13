@@ -10,7 +10,7 @@ pub enum State {
     PASS,
     FAIL,
     SKIP,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for State {
@@ -46,7 +46,7 @@ impl<'de> Deserialize<'de> for State {
             "pass" => Self::PASS,
             "fail" => Self::FAIL,
             "skip" => Self::SKIP,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

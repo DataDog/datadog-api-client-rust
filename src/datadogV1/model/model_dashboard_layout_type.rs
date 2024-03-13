@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum DashboardLayoutType {
     ORDERED,
     FREE,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for DashboardLayoutType {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for DashboardLayoutType {
         Ok(match s.as_str() {
             "ordered" => Self::ORDERED,
             "free" => Self::FREE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

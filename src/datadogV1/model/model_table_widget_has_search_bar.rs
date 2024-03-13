@@ -10,7 +10,7 @@ pub enum TableWidgetHasSearchBar {
     ALWAYS,
     NEVER,
     AUTO,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for TableWidgetHasSearchBar {
@@ -46,7 +46,7 @@ impl<'de> Deserialize<'de> for TableWidgetHasSearchBar {
             "always" => Self::ALWAYS,
             "never" => Self::NEVER,
             "auto" => Self::AUTO,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

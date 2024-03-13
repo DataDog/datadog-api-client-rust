@@ -10,7 +10,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 pub enum MetricsAndMetricTagConfigurations {
     Metric(Box<crate::datadogV2::model::Metric>),
     MetricTagConfiguration(Box<crate::datadogV2::model::MetricTagConfiguration>),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for MetricsAndMetricTagConfigurations {
@@ -37,7 +37,7 @@ impl<'de> Deserialize<'de> for MetricsAndMetricTagConfigurations {
         }
 
         return Ok(MetricsAndMetricTagConfigurations::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

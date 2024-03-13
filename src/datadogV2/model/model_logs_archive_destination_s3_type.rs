@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum LogsArchiveDestinationS3Type {
     S3,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for LogsArchiveDestinationS3Type {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for LogsArchiveDestinationS3Type {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "s3" => Self::S3,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

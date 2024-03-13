@@ -32,7 +32,7 @@ pub enum SyntheticsStepType {
     TYPE_TEXT,
     UPLOAD_FILES,
     WAIT,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsStepType {
@@ -112,7 +112,7 @@ impl<'de> Deserialize<'de> for SyntheticsStepType {
             "typeText" => Self::TYPE_TEXT,
             "uploadFiles" => Self::UPLOAD_FILES,
             "wait" => Self::WAIT,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

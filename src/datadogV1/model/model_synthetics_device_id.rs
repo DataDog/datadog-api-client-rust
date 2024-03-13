@@ -19,7 +19,7 @@ pub enum SyntheticsDeviceID {
     EDGE_LAPTOP_LARGE,
     EDGE_TABLET,
     EDGE_MOBILE_SMALL,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsDeviceID {
@@ -73,7 +73,7 @@ impl<'de> Deserialize<'de> for SyntheticsDeviceID {
             "edge.laptop_large" => Self::EDGE_LAPTOP_LARGE,
             "edge.tablet" => Self::EDGE_TABLET,
             "edge.mobile_small" => Self::EDGE_MOBILE_SMALL,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

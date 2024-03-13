@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum AzureUCConfigPairType {
     AZURE_UC_CONFIGS,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for AzureUCConfigPairType {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for AzureUCConfigPairType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "azure_uc_configs" => Self::AZURE_UC_CONFIGS,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

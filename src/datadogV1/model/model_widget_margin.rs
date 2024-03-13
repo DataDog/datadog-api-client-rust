@@ -12,7 +12,7 @@ pub enum WidgetMargin {
     LG,
     SMALL,
     LARGE,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetMargin {
@@ -52,7 +52,7 @@ impl<'de> Deserialize<'de> for WidgetMargin {
             "lg" => Self::LG,
             "small" => Self::SMALL,
             "large" => Self::LARGE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

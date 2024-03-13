@@ -11,7 +11,7 @@ pub enum LogsArchiveState {
     WORKING,
     FAILING,
     WORKING_AUTH_LEGACY,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for LogsArchiveState {
@@ -49,7 +49,7 @@ impl<'de> Deserialize<'de> for LogsArchiveState {
             "WORKING" => Self::WORKING,
             "FAILING" => Self::FAILING,
             "WORKING_AUTH_LEGACY" => Self::WORKING_AUTH_LEGACY,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

@@ -10,7 +10,7 @@ pub enum WidgetMonitorSummaryDisplayFormat {
     COUNTS,
     COUNTS_AND_LIST,
     LIST,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetMonitorSummaryDisplayFormat {
@@ -46,7 +46,7 @@ impl<'de> Deserialize<'de> for WidgetMonitorSummaryDisplayFormat {
             "counts" => Self::COUNTS,
             "countsAndList" => Self::COUNTS_AND_LIST,
             "list" => Self::LIST,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

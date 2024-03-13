@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum ListTeamsInclude {
     TEAM_LINKS,
     USER_TEAM_PERMISSIONS,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for ListTeamsInclude {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for ListTeamsInclude {
         Ok(match s.as_str() {
             "team_links" => Self::TEAM_LINKS,
             "user_team_permissions" => Self::USER_TEAM_PERMISSIONS,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

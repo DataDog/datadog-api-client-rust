@@ -10,7 +10,7 @@ pub enum RetentionFilterAllType {
     SPANS_SAMPLING_PROCESSOR,
     SPANS_ERRORS_SAMPLING_PROCESSOR,
     SPANS_APPSEC_SAMPLING_PROCESSOR,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for RetentionFilterAllType {
@@ -50,7 +50,7 @@ impl<'de> Deserialize<'de> for RetentionFilterAllType {
             "spans-sampling-processor" => Self::SPANS_SAMPLING_PROCESSOR,
             "spans-errors-sampling-processor" => Self::SPANS_ERRORS_SAMPLING_PROCESSOR,
             "spans-appsec-sampling-processor" => Self::SPANS_APPSEC_SAMPLING_PROCESSOR,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum UsageTimeSeriesType {
     USAGE_TIMESERIES,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for UsageTimeSeriesType {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for UsageTimeSeriesType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "usage_timeseries" => Self::USAGE_TIMESERIES,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SensitiveDataScannerConfigurationType {
     SENSITIVE_DATA_SCANNER_CONFIGURATIONS,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SensitiveDataScannerConfigurationType {
@@ -42,7 +42,7 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerConfigurationType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "sensitive_data_scanner_configuration" => Self::SENSITIVE_DATA_SCANNER_CONFIGURATIONS,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

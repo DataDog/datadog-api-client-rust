@@ -10,7 +10,7 @@ pub enum OpsgenieServiceRegionType {
     US,
     EU,
     CUSTOM,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for OpsgenieServiceRegionType {
@@ -46,7 +46,7 @@ impl<'de> Deserialize<'de> for OpsgenieServiceRegionType {
             "us" => Self::US,
             "eu" => Self::EU,
             "custom" => Self::CUSTOM,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

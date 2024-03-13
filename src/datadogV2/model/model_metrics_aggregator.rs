@@ -16,7 +16,7 @@ pub enum MetricsAggregator {
     MEAN,
     L2NORM,
     AREA,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for MetricsAggregator {
@@ -64,7 +64,7 @@ impl<'de> Deserialize<'de> for MetricsAggregator {
             "mean" => Self::MEAN,
             "l2norm" => Self::L2NORM,
             "area" => Self::AREA,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

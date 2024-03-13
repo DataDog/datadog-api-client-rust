@@ -12,7 +12,7 @@ pub enum NotebookGraphSize {
     MEDIUM,
     LARGE,
     EXTRA_LARGE,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for NotebookGraphSize {
@@ -52,7 +52,7 @@ impl<'de> Deserialize<'de> for NotebookGraphSize {
             "m" => Self::MEDIUM,
             "l" => Self::LARGE,
             "xl" => Self::EXTRA_LARGE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

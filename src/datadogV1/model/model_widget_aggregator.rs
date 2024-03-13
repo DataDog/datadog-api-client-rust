@@ -13,7 +13,7 @@ pub enum WidgetAggregator {
     MINIMUM,
     SUM,
     PERCENTILE,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetAggregator {
@@ -55,7 +55,7 @@ impl<'de> Deserialize<'de> for WidgetAggregator {
             "min" => Self::MINIMUM,
             "sum" => Self::SUM,
             "percentile" => Self::PERCENTILE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

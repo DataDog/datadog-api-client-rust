@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum TopologyQueryDataSource {
     DATA_STREAMS,
     SERVICE_MAP,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for TopologyQueryDataSource {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for TopologyQueryDataSource {
         Ok(match s.as_str() {
             "data_streams" => Self::DATA_STREAMS,
             "service_map" => Self::SERVICE_MAP,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

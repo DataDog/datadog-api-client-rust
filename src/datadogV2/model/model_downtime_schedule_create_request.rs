@@ -14,7 +14,7 @@ pub enum DowntimeScheduleCreateRequest {
     DowntimeScheduleOneTimeCreateUpdateRequest(
         Box<crate::datadogV2::model::DowntimeScheduleOneTimeCreateUpdateRequest>,
     ),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for DowntimeScheduleCreateRequest {
@@ -45,7 +45,7 @@ impl<'de> Deserialize<'de> for DowntimeScheduleCreateRequest {
         }
 
         return Ok(DowntimeScheduleCreateRequest::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

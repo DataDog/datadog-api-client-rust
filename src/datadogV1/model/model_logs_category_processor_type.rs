@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum LogsCategoryProcessorType {
     CATEGORY_PROCESSOR,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for LogsCategoryProcessorType {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for LogsCategoryProcessorType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "category-processor" => Self::CATEGORY_PROCESSOR,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

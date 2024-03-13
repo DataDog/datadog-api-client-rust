@@ -21,7 +21,7 @@ pub enum SyntheticsCheckType {
     BETWEEN,
     IS_EMPTY,
     NOT_IS_EMPTY,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsCheckType {
@@ -79,7 +79,7 @@ impl<'de> Deserialize<'de> for SyntheticsCheckType {
             "between" => Self::BETWEEN,
             "isEmpty" => Self::IS_EMPTY,
             "notIsEmpty" => Self::NOT_IS_EMPTY,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

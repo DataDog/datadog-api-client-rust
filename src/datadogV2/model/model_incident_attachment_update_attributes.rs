@@ -14,7 +14,7 @@ pub enum IncidentAttachmentUpdateAttributes {
     IncidentAttachmentLinkAttributes(
         Box<crate::datadogV2::model::IncidentAttachmentLinkAttributes>,
     ),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for IncidentAttachmentUpdateAttributes {
@@ -45,7 +45,7 @@ impl<'de> Deserialize<'de> for IncidentAttachmentUpdateAttributes {
         }
 
         return Ok(IncidentAttachmentUpdateAttributes::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

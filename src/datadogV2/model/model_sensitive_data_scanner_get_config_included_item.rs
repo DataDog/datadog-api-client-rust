@@ -14,7 +14,7 @@ pub enum SensitiveDataScannerGetConfigIncludedItem {
     SensitiveDataScannerGroupIncludedItem(
         Box<crate::datadogV2::model::SensitiveDataScannerGroupIncludedItem>,
     ),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for SensitiveDataScannerGetConfigIncludedItem {
@@ -45,7 +45,7 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerGetConfigIncludedItem {
         }
 
         return Ok(SensitiveDataScannerGetConfigIncludedItem::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

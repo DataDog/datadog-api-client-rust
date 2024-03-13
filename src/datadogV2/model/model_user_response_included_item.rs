@@ -11,7 +11,7 @@ pub enum UserResponseIncludedItem {
     Organization(Box<crate::datadogV2::model::Organization>),
     Permission(Box<crate::datadogV2::model::Permission>),
     Role(Box<crate::datadogV2::model::Role>),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for UserResponseIncludedItem {
@@ -42,7 +42,7 @@ impl<'de> Deserialize<'de> for UserResponseIncludedItem {
         }
 
         return Ok(UserResponseIncludedItem::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

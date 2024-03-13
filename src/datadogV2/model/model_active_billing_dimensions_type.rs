@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ActiveBillingDimensionsType {
     BILLING_DIMENSIONS,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for ActiveBillingDimensionsType {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for ActiveBillingDimensionsType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "billing_dimensions" => Self::BILLING_DIMENSIONS,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

@@ -15,7 +15,7 @@ pub enum GetTeamMembershipsSort {
     _HANDLE,
     EMAIL,
     _EMAIL,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for GetTeamMembershipsSort {
@@ -61,7 +61,7 @@ impl<'de> Deserialize<'de> for GetTeamMembershipsSort {
             "-handle" => Self::_HANDLE,
             "email" => Self::EMAIL,
             "-email" => Self::_EMAIL,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum LogsAggregateResponseStatus {
     DONE,
     TIMEOUT,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for LogsAggregateResponseStatus {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for LogsAggregateResponseStatus {
         Ok(match s.as_str() {
             "done" => Self::DONE,
             "timeout" => Self::TIMEOUT,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

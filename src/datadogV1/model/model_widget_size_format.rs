@@ -10,7 +10,7 @@ pub enum WidgetSizeFormat {
     SMALL,
     MEDIUM,
     LARGE,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetSizeFormat {
@@ -46,7 +46,7 @@ impl<'de> Deserialize<'de> for WidgetSizeFormat {
             "small" => Self::SMALL,
             "medium" => Self::MEDIUM,
             "large" => Self::LARGE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

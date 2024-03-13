@@ -19,7 +19,7 @@ pub enum NotebookCellUpdateRequestAttributes {
         Box<crate::datadogV1::model::NotebookDistributionCellAttributes>,
     ),
     NotebookLogStreamCellAttributes(Box<crate::datadogV1::model::NotebookLogStreamCellAttributes>),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for NotebookCellUpdateRequestAttributes {
@@ -84,7 +84,7 @@ impl<'de> Deserialize<'de> for NotebookCellUpdateRequestAttributes {
         }
 
         return Ok(NotebookCellUpdateRequestAttributes::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

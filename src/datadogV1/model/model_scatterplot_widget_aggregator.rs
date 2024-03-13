@@ -12,7 +12,7 @@ pub enum ScatterplotWidgetAggregator {
     MAXIMUM,
     MINIMUM,
     SUM,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for ScatterplotWidgetAggregator {
@@ -52,7 +52,7 @@ impl<'de> Deserialize<'de> for ScatterplotWidgetAggregator {
             "max" => Self::MAXIMUM,
             "min" => Self::MINIMUM,
             "sum" => Self::SUM,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

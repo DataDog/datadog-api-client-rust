@@ -12,7 +12,7 @@ pub enum SyntheticsPlayingTab {
     TAB_1,
     TAB_2,
     TAB_3,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl Serialize for SyntheticsPlayingTab {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for SyntheticsPlayingTab {
             1 => Self::TAB_1,
             2 => Self::TAB_2,
             3 => Self::TAB_3,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::Number(s.into()),
             }),
         })

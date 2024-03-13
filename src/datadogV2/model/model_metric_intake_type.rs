@@ -11,7 +11,7 @@ pub enum MetricIntakeType {
     COUNT,
     RATE,
     GAUGE,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl Serialize for MetricIntakeType {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for MetricIntakeType {
             1 => Self::COUNT,
             2 => Self::RATE,
             3 => Self::GAUGE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::Number(s.into()),
             }),
         })

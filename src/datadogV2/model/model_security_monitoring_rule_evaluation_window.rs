@@ -15,7 +15,7 @@ pub enum SecurityMonitoringRuleEvaluationWindow {
     THIRTY_MINUTES,
     ONE_HOUR,
     TWO_HOURS,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl Serialize for SecurityMonitoringRuleEvaluationWindow {
@@ -52,7 +52,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleEvaluationWindow {
             1800 => Self::THIRTY_MINUTES,
             3600 => Self::ONE_HOUR,
             7200 => Self::TWO_HOURS,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::Number(s.into()),
             }),
         })

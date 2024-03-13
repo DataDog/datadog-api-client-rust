@@ -13,7 +13,7 @@ pub enum SecurityMonitoringRuleDetectionMethod {
     IMPOSSIBLE_TRAVEL,
     HARDCODED,
     THIRD_PARTY,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SecurityMonitoringRuleDetectionMethod {
@@ -55,7 +55,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleDetectionMethod {
             "impossible_travel" => Self::IMPOSSIBLE_TRAVEL,
             "hardcoded" => Self::HARDCODED,
             "third_party" => Self::THIRD_PARTY,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

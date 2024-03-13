@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ContainerImageMetaPageType {
     CURSOR_LIMIT,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for ContainerImageMetaPageType {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for ContainerImageMetaPageType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "cursor_limit" => Self::CURSOR_LIMIT,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

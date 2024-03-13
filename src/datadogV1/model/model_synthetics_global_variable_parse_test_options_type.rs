@@ -10,7 +10,7 @@ pub enum SyntheticsGlobalVariableParseTestOptionsType {
     HTTP_BODY,
     HTTP_HEADER,
     LOCAL_VARIABLE,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsGlobalVariableParseTestOptionsType {
@@ -46,7 +46,7 @@ impl<'de> Deserialize<'de> for SyntheticsGlobalVariableParseTestOptionsType {
             "http_body" => Self::HTTP_BODY,
             "http_header" => Self::HTTP_HEADER,
             "local_variable" => Self::LOCAL_VARIABLE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

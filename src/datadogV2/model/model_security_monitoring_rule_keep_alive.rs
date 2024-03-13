@@ -17,7 +17,7 @@ pub enum SecurityMonitoringRuleKeepAlive {
     TWO_HOURS,
     THREE_HOURS,
     SIX_HOURS,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl Serialize for SecurityMonitoringRuleKeepAlive {
@@ -58,7 +58,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleKeepAlive {
             7200 => Self::TWO_HOURS,
             10800 => Self::THREE_HOURS,
             21600 => Self::SIX_HOURS,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::Number(s.into()),
             }),
         })

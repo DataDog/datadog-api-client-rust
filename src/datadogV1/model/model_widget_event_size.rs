@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum WidgetEventSize {
     SMALL,
     LARGE,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetEventSize {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for WidgetEventSize {
         Ok(match s.as_str() {
             "s" => Self::SMALL,
             "l" => Self::LARGE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

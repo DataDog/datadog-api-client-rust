@@ -128,7 +128,7 @@ pub enum MonthlyUsageAttributionSupportedMetrics {
     SIEM_INGESTED_BYTES_USAGE,
     SIEM_INGESTED_BYTES_PERCENTAGE,
     ALL,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for MonthlyUsageAttributionSupportedMetrics {
@@ -448,7 +448,7 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionSupportedMetrics {
             "siem_ingested_bytes_usage" => Self::SIEM_INGESTED_BYTES_USAGE,
             "siem_ingested_bytes_percentage" => Self::SIEM_INGESTED_BYTES_PERCENTAGE,
             "*" => Self::ALL,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

@@ -14,7 +14,7 @@ pub enum MonitorOverallStates {
     SKIPPED,
     UNKNOWN,
     WARN,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for MonitorOverallStates {
@@ -58,7 +58,7 @@ impl<'de> Deserialize<'de> for MonitorOverallStates {
             "Skipped" => Self::SKIPPED,
             "Unknown" => Self::UNKNOWN,
             "Warn" => Self::WARN,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

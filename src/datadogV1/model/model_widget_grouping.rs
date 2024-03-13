@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum WidgetGrouping {
     CHECK,
     CLUSTER,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetGrouping {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for WidgetGrouping {
         Ok(match s.as_str() {
             "check" => Self::CHECK,
             "cluster" => Self::CLUSTER,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

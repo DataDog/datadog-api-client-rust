@@ -19,7 +19,7 @@ pub enum MonitorFormulaAndFunctionEventAggregation {
     MIN,
     MAX,
     AVG,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for MonitorFormulaAndFunctionEventAggregation {
@@ -73,7 +73,7 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionEventAggregation {
             "min" => Self::MIN,
             "max" => Self::MAX,
             "avg" => Self::AVG,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

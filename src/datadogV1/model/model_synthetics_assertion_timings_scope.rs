@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum SyntheticsAssertionTimingsScope {
     ALL,
     WITHOUT_DNS,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsAssertionTimingsScope {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for SyntheticsAssertionTimingsScope {
         Ok(match s.as_str() {
             "all" => Self::ALL,
             "withoutDNS" => Self::WITHOUT_DNS,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

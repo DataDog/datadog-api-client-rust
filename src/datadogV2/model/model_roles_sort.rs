@@ -13,7 +13,7 @@ pub enum RolesSort {
     MODIFIED_AT_DESCENDING,
     USER_COUNT_ASCENDING,
     USER_COUNT_DESCENDING,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for RolesSort {
@@ -55,7 +55,7 @@ impl<'de> Deserialize<'de> for RolesSort {
             "-modified_at" => Self::MODIFIED_AT_DESCENDING,
             "user_count" => Self::USER_COUNT_ASCENDING,
             "-user_count" => Self::USER_COUNT_DESCENDING,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

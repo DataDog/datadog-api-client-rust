@@ -19,7 +19,7 @@ pub enum SecurityMonitoringRuleMaxSignalDuration {
     SIX_HOURS,
     TWELVE_HOURS,
     ONE_DAY,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl Serialize for SecurityMonitoringRuleMaxSignalDuration {
@@ -64,7 +64,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleMaxSignalDuration {
             21600 => Self::SIX_HOURS,
             43200 => Self::TWELVE_HOURS,
             86400 => Self::ONE_DAY,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::Number(s.into()),
             }),
         })

@@ -10,7 +10,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 pub enum SpansGroupByMissing {
     SpansGroupByMissingString(String),
     SpansGroupByMissingNumber(f64),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for SpansGroupByMissing {
@@ -27,7 +27,7 @@ impl<'de> Deserialize<'de> for SpansGroupByMissing {
         }
 
         return Ok(SpansGroupByMissing::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

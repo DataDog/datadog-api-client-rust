@@ -10,7 +10,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 pub enum DistributionPointItem {
     DistributionPointTimestamp(f64),
     DistributionPointData(Vec<f64>),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for DistributionPointItem {
@@ -27,7 +27,7 @@ impl<'de> Deserialize<'de> for DistributionPointItem {
         }
 
         return Ok(DistributionPointItem::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

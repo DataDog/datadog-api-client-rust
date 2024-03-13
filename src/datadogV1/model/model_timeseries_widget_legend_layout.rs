@@ -10,7 +10,7 @@ pub enum TimeseriesWidgetLegendLayout {
     AUTO,
     HORIZONTAL,
     VERTICAL,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for TimeseriesWidgetLegendLayout {
@@ -46,7 +46,7 @@ impl<'de> Deserialize<'de> for TimeseriesWidgetLegendLayout {
             "auto" => Self::AUTO,
             "horizontal" => Self::HORIZONTAL,
             "vertical" => Self::VERTICAL,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

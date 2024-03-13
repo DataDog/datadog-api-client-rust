@@ -10,7 +10,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 pub enum IncidentIntegrationMetadataMetadata {
     SlackIntegrationMetadata(Box<crate::datadogV2::model::SlackIntegrationMetadata>),
     JiraIntegrationMetadata(Box<crate::datadogV2::model::JiraIntegrationMetadata>),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for IncidentIntegrationMetadataMetadata {
@@ -37,7 +37,7 @@ impl<'de> Deserialize<'de> for IncidentIntegrationMetadataMetadata {
         }
 
         return Ok(IncidentIntegrationMetadataMetadata::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

@@ -26,7 +26,7 @@ pub enum WidgetPalette {
     BLACK_ON_LIGHT_YELLOW,
     BLACK_ON_LIGHT_GREEN,
     BLACK_ON_LIGHT_RED,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetPalette {
@@ -94,7 +94,7 @@ impl<'de> Deserialize<'de> for WidgetPalette {
             "black_on_light_yellow" => Self::BLACK_ON_LIGHT_YELLOW,
             "black_on_light_green" => Self::BLACK_ON_LIGHT_GREEN,
             "black_on_light_red" => Self::BLACK_ON_LIGHT_RED,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

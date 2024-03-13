@@ -12,7 +12,7 @@ pub enum ServiceDefinitionsCreateRequest {
     ServiceDefinitionV2Dot1(Box<crate::datadogV2::model::ServiceDefinitionV2Dot1>),
     ServiceDefinitionV2(Box<crate::datadogV2::model::ServiceDefinitionV2>),
     ServiceDefinitionRaw(String),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for ServiceDefinitionsCreateRequest {
@@ -49,7 +49,7 @@ impl<'de> Deserialize<'de> for ServiceDefinitionsCreateRequest {
         }
 
         return Ok(ServiceDefinitionsCreateRequest::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

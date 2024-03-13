@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum LogsSortOrder {
     ASCENDING,
     DESCENDING,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for LogsSortOrder {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for LogsSortOrder {
         Ok(match s.as_str() {
             "asc" => Self::ASCENDING,
             "desc" => Self::DESCENDING,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

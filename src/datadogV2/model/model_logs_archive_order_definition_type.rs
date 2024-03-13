@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum LogsArchiveOrderDefinitionType {
     ARCHIVE_ORDER,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for LogsArchiveOrderDefinitionType {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for LogsArchiveOrderDefinitionType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "archive_order" => Self::ARCHIVE_ORDER,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

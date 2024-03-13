@@ -13,7 +13,7 @@ pub enum ApplicationKeysSort {
     LAST4_DESCENDING,
     NAME_ASCENDING,
     NAME_DESCENDING,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for ApplicationKeysSort {
@@ -55,7 +55,7 @@ impl<'de> Deserialize<'de> for ApplicationKeysSort {
             "-last4" => Self::LAST4_DESCENDING,
             "name" => Self::NAME_ASCENDING,
             "-name" => Self::NAME_DESCENDING,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

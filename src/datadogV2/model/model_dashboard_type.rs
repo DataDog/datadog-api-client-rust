@@ -12,7 +12,7 @@ pub enum DashboardType {
     INTEGRATION_SCREENBOARD,
     INTEGRATION_TIMEBOARD,
     HOST_TIMEBOARD,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for DashboardType {
@@ -52,7 +52,7 @@ impl<'de> Deserialize<'de> for DashboardType {
             "integration_screenboard" => Self::INTEGRATION_SCREENBOARD,
             "integration_timeboard" => Self::INTEGRATION_TIMEBOARD,
             "host_timeboard" => Self::HOST_TIMEBOARD,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

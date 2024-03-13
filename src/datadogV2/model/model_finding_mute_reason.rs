@@ -14,7 +14,7 @@ pub enum FindingMuteReason {
     HUMAN_ERROR,
     NO_LONGER_ACCEPTED_RISK,
     OTHER,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for FindingMuteReason {
@@ -58,7 +58,7 @@ impl<'de> Deserialize<'de> for FindingMuteReason {
             "HUMAN_ERROR" => Self::HUMAN_ERROR,
             "NO_LONGER_ACCEPTED_RISK" => Self::NO_LONGER_ACCEPTED_RISK,
             "OTHER" => Self::OTHER,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

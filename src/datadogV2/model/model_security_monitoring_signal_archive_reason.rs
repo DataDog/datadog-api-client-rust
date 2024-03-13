@@ -12,7 +12,7 @@ pub enum SecurityMonitoringSignalArchiveReason {
     TESTING_OR_MAINTENANCE,
     INVESTIGATED_CASE_OPENED,
     OTHER,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SecurityMonitoringSignalArchiveReason {
@@ -52,7 +52,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalArchiveReason {
             "testing_or_maintenance" => Self::TESTING_OR_MAINTENANCE,
             "investigated_case_opened" => Self::INVESTIGATED_CASE_OPENED,
             "other" => Self::OTHER,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

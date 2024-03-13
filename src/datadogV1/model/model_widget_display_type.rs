@@ -11,7 +11,7 @@ pub enum WidgetDisplayType {
     BARS,
     LINE,
     OVERLAY,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetDisplayType {
@@ -49,7 +49,7 @@ impl<'de> Deserialize<'de> for WidgetDisplayType {
             "bars" => Self::BARS,
             "line" => Self::LINE,
             "overlay" => Self::OVERLAY,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

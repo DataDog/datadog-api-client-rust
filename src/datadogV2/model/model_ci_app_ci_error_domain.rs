@@ -10,7 +10,7 @@ pub enum CIAppCIErrorDomain {
     PROVIDER,
     USER,
     UNKNOWN,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for CIAppCIErrorDomain {
@@ -46,7 +46,7 @@ impl<'de> Deserialize<'de> for CIAppCIErrorDomain {
             "provider" => Self::PROVIDER,
             "user" => Self::USER,
             "unknown" => Self::UNKNOWN,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

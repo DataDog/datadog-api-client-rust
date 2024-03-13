@@ -12,7 +12,7 @@ pub enum SyntheticsBrowserVariableType {
     GLOBAL,
     JAVASCRIPT,
     TEXT,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsBrowserVariableType {
@@ -52,7 +52,7 @@ impl<'de> Deserialize<'de> for SyntheticsBrowserVariableType {
             "global" => Self::GLOBAL,
             "javascript" => Self::JAVASCRIPT,
             "text" => Self::TEXT,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

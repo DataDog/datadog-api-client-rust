@@ -10,7 +10,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 pub enum ScalarQuery {
     MetricsScalarQuery(Box<crate::datadogV2::model::MetricsScalarQuery>),
     EventsScalarQuery(Box<crate::datadogV2::model::EventsScalarQuery>),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for ScalarQuery {
@@ -35,7 +35,7 @@ impl<'de> Deserialize<'de> for ScalarQuery {
         }
 
         return Ok(ScalarQuery::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

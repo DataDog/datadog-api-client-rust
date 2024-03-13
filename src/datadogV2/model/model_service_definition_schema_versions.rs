@@ -11,7 +11,7 @@ pub enum ServiceDefinitionSchemaVersions {
     V2,
     V2_1,
     V2_2,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for ServiceDefinitionSchemaVersions {
@@ -49,7 +49,7 @@ impl<'de> Deserialize<'de> for ServiceDefinitionSchemaVersions {
             "v2" => Self::V2,
             "v2.1" => Self::V2_1,
             "v2.2" => Self::V2_2,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

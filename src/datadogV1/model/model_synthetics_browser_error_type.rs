@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum SyntheticsBrowserErrorType {
     NETWORK,
     JS,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsBrowserErrorType {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for SyntheticsBrowserErrorType {
         Ok(match s.as_str() {
             "network" => Self::NETWORK,
             "js" => Self::JS,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

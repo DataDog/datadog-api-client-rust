@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum SpansAggregateSortType {
     ALPHABETICAL,
     MEASURE,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SpansAggregateSortType {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for SpansAggregateSortType {
         Ok(match s.as_str() {
             "alphabetical" => Self::ALPHABETICAL,
             "measure" => Self::MEASURE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

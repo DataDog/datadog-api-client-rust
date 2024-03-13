@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum FreeTextWidgetDefinitionType {
     FREE_TEXT,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for FreeTextWidgetDefinitionType {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for FreeTextWidgetDefinitionType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "free_text" => Self::FREE_TEXT,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

@@ -10,7 +10,7 @@ pub enum SyntheticsStatus {
     PASSED,
     skipped,
     failed,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsStatus {
@@ -46,7 +46,7 @@ impl<'de> Deserialize<'de> for SyntheticsStatus {
             "passed" => Self::PASSED,
             "skipped" => Self::skipped,
             "failed" => Self::failed,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

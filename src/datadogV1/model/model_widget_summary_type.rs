@@ -10,7 +10,7 @@ pub enum WidgetSummaryType {
     MONITORS,
     GROUPS,
     COMBINED,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetSummaryType {
@@ -46,7 +46,7 @@ impl<'de> Deserialize<'de> for WidgetSummaryType {
             "monitors" => Self::MONITORS,
             "groups" => Self::GROUPS,
             "combined" => Self::COMBINED,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum SecurityMonitoringSignalsSort {
     TIMESTAMP_ASCENDING,
     TIMESTAMP_DESCENDING,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SecurityMonitoringSignalsSort {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalsSort {
         Ok(match s.as_str() {
             "timestamp" => Self::TIMESTAMP_ASCENDING,
             "-timestamp" => Self::TIMESTAMP_DESCENDING,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

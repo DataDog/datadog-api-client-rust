@@ -124,21 +124,21 @@ impl serde_json::ser::Formatter for DDFormatter {
 pub mod configuration;
 
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub struct UnparsedObejct {
+pub struct UnparsedObject {
     pub value: serde_json::Value,
 }
 
-impl<'de> Deserialize<'de> for UnparsedObejct {
+impl<'de> Deserialize<'de> for UnparsedObject {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let val: serde_json::Value = Deserialize::deserialize(deserializer)?;
-        Ok(UnparsedObejct { value: val })
+        Ok(UnparsedObject { value: val })
     }
 }
 
-impl Serialize for UnparsedObejct {
+impl Serialize for UnparsedObject {
     fn serialize<S: Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
         self.value.serialize(serializer)
     }

@@ -12,7 +12,7 @@ pub enum TimeseriesWidgetLegendColumn {
     SUM,
     MIN,
     MAX,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for TimeseriesWidgetLegendColumn {
@@ -52,7 +52,7 @@ impl<'de> Deserialize<'de> for TimeseriesWidgetLegendColumn {
             "sum" => Self::SUM,
             "min" => Self::MIN,
             "max" => Self::MAX,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

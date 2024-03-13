@@ -67,7 +67,7 @@ pub enum HourlyUsageAttributionUsageType {
     SNMP_USAGE,
     UNIVERSAL_SERVICE_MONITORING_USAGE,
     VULN_MANAGEMENT_HOSTS_USAGE,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for HourlyUsageAttributionUsageType {
@@ -229,7 +229,7 @@ impl<'de> Deserialize<'de> for HourlyUsageAttributionUsageType {
             "snmp_usage" => Self::SNMP_USAGE,
             "universal_service_monitoring_usage" => Self::UNIVERSAL_SERVICE_MONITORING_USAGE,
             "vuln_management_hosts_usage" => Self::VULN_MANAGEMENT_HOSTS_USAGE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

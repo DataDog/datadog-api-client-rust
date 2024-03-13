@@ -26,7 +26,7 @@ pub enum LogsProcessor {
         Box<crate::datadogV1::model::ReferenceTableLogsLookupProcessor>,
     ),
     LogsTraceRemapper(Box<crate::datadogV1::model::LogsTraceRemapper>),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for LogsProcessor {
@@ -152,7 +152,7 @@ impl<'de> Deserialize<'de> for LogsProcessor {
         }
 
         return Ok(LogsProcessor::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

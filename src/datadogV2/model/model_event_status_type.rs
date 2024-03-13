@@ -15,7 +15,7 @@ pub enum EventStatusType {
     USER_UPDATE,
     RECOMMENDATION,
     SNAPSHOT,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for EventStatusType {
@@ -61,7 +61,7 @@ impl<'de> Deserialize<'de> for EventStatusType {
             "user_update" => Self::USER_UPDATE,
             "recommendation" => Self::RECOMMENDATION,
             "snapshot" => Self::SNAPSHOT,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

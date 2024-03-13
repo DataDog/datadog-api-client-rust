@@ -11,7 +11,7 @@ pub enum CIAppGroupByTotal {
     CIAppGroupByTotalBoolean(bool),
     CIAppGroupByTotalString(String),
     CIAppGroupByTotalNumber(f64),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for CIAppGroupByTotal {
@@ -31,7 +31,7 @@ impl<'de> Deserialize<'de> for CIAppGroupByTotal {
         }
 
         return Ok(CIAppGroupByTotal::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

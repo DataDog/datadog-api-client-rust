@@ -12,7 +12,7 @@ pub enum SecurityMonitoringRuleSeverity {
     MEDIUM,
     HIGH,
     CRITICAL,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SecurityMonitoringRuleSeverity {
@@ -52,7 +52,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleSeverity {
             "medium" => Self::MEDIUM,
             "high" => Self::HIGH,
             "critical" => Self::CRITICAL,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

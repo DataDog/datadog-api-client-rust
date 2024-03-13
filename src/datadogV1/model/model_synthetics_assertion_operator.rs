@@ -22,7 +22,7 @@ pub enum SyntheticsAssertionOperator {
     IS_IN_LESS_DAYS_THAN,
     DOES_NOT_EXIST,
     IS_UNDEFINED,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsAssertionOperator {
@@ -82,7 +82,7 @@ impl<'de> Deserialize<'de> for SyntheticsAssertionOperator {
             "isInLessThan" => Self::IS_IN_LESS_DAYS_THAN,
             "doesNotExist" => Self::DOES_NOT_EXIST,
             "isUndefined" => Self::IS_UNDEFINED,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum UserTeamType {
     TEAM_MEMBERSHIPS,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for UserTeamType {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for UserTeamType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "team_memberships" => Self::TEAM_MEMBERSHIPS,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum OktaAccountType {
     OKTA_ACCOUNTS,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for OktaAccountType {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for OktaAccountType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "okta-accounts" => Self::OKTA_ACCOUNTS,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum SecurityMonitoringRuleNewValueOptionsLearningThreshold {
     ZERO_OCCURRENCES,
     ONE_OCCURRENCE,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl Serialize for SecurityMonitoringRuleNewValueOptionsLearningThreshold {
@@ -34,7 +34,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleNewValueOptionsLearningThre
         Ok(match s {
             0 => Self::ZERO_OCCURRENCES,
             1 => Self::ONE_OCCURRENCE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::Number(s.into()),
             }),
         })

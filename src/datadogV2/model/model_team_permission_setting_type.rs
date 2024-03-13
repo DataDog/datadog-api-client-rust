@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum TeamPermissionSettingType {
     TEAM_PERMISSION_SETTINGS,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for TeamPermissionSettingType {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for TeamPermissionSettingType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "team_permission_settings" => Self::TEAM_PERMISSION_SETTINGS,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

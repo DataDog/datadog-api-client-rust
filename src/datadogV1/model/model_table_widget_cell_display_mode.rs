@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum TableWidgetCellDisplayMode {
     NUMBER,
     BAR,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for TableWidgetCellDisplayMode {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for TableWidgetCellDisplayMode {
         Ok(match s.as_str() {
             "number" => Self::NUMBER,
             "bar" => Self::BAR,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

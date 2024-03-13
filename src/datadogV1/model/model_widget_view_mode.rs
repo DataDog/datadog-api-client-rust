@@ -10,7 +10,7 @@ pub enum WidgetViewMode {
     OVERALL,
     COMPONENT,
     BOTH,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetViewMode {
@@ -46,7 +46,7 @@ impl<'de> Deserialize<'de> for WidgetViewMode {
             "overall" => Self::OVERALL,
             "component" => Self::COMPONENT,
             "both" => Self::BOTH,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

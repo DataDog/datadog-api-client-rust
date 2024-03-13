@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum SyntheticsTestPauseStatus {
     LIVE,
     PAUSED,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsTestPauseStatus {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestPauseStatus {
         Ok(match s.as_str() {
             "live" => Self::LIVE,
             "paused" => Self::PAUSED,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

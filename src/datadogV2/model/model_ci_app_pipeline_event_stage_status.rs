@@ -11,7 +11,7 @@ pub enum CIAppPipelineEventStageStatus {
     ERROR,
     CANCELED,
     SKIPPED,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for CIAppPipelineEventStageStatus {
@@ -49,7 +49,7 @@ impl<'de> Deserialize<'de> for CIAppPipelineEventStageStatus {
             "error" => Self::ERROR,
             "canceled" => Self::CANCELED,
             "skipped" => Self::SKIPPED,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

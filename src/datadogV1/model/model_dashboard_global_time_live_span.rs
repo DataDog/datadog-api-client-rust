@@ -15,7 +15,7 @@ pub enum DashboardGlobalTimeLiveSpan {
     PAST_ONE_WEEK,
     PAST_ONE_MONTH,
     PAST_THREE_MONTHS,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for DashboardGlobalTimeLiveSpan {
@@ -61,7 +61,7 @@ impl<'de> Deserialize<'de> for DashboardGlobalTimeLiveSpan {
             "1w" => Self::PAST_ONE_WEEK,
             "1mo" => Self::PAST_ONE_MONTH,
             "3mo" => Self::PAST_THREE_MONTHS,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

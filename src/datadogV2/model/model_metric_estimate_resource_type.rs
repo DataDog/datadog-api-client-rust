@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum MetricEstimateResourceType {
     METRIC_CARDINALITY_ESTIMATE,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for MetricEstimateResourceType {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for MetricEstimateResourceType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "metric_cardinality_estimate" => Self::METRIC_CARDINALITY_ESTIMATE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

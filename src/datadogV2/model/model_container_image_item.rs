@@ -10,7 +10,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 pub enum ContainerImageItem {
     ContainerImage(Box<crate::datadogV2::model::ContainerImage>),
     ContainerImageGroup(Box<crate::datadogV2::model::ContainerImageGroup>),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for ContainerImageItem {
@@ -35,7 +35,7 @@ impl<'de> Deserialize<'de> for ContainerImageItem {
         }
 
         return Ok(ContainerImageItem::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

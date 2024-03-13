@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ApmRetentionFilterType {
     apm_retention_filter,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for ApmRetentionFilterType {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for ApmRetentionFilterType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "apm_retention_filter" => Self::apm_retention_filter,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

@@ -10,7 +10,7 @@ pub enum WidgetLineType {
     DASHED,
     DOTTED,
     SOLID,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetLineType {
@@ -46,7 +46,7 @@ impl<'de> Deserialize<'de> for WidgetLineType {
             "dashed" => Self::DASHED,
             "dotted" => Self::DOTTED,
             "solid" => Self::SOLID,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

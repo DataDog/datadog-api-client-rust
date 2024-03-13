@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum DashboardType {
     CUSTOM_TIMEBOARD,
     CUSTOM_SCREENBOARD,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for DashboardType {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for DashboardType {
         Ok(match s.as_str() {
             "custom_timeboard" => Self::CUSTOM_TIMEBOARD,
             "custom_screenboard" => Self::CUSTOM_SCREENBOARD,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

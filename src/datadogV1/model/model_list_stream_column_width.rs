@@ -10,7 +10,7 @@ pub enum ListStreamColumnWidth {
     AUTO,
     COMPACT,
     FULL,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for ListStreamColumnWidth {
@@ -46,7 +46,7 @@ impl<'de> Deserialize<'de> for ListStreamColumnWidth {
             "auto" => Self::AUTO,
             "compact" => Self::COMPACT,
             "full" => Self::FULL,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

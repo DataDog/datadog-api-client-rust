@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum SLOTypeNumeric {
     MONITOR,
     METRIC,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl Serialize for SLOTypeNumeric {
@@ -34,7 +34,7 @@ impl<'de> Deserialize<'de> for SLOTypeNumeric {
         Ok(match s {
             0 => Self::MONITOR,
             1 => Self::METRIC,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::Number(s.into()),
             }),
         })

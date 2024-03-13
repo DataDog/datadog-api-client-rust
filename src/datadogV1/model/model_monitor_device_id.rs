@@ -16,7 +16,7 @@ pub enum MonitorDeviceID {
     FIREFOX_LAPTOP_LARGE,
     FIREFOX_TABLET,
     FIREFOX_MOBILE_SMALL,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for MonitorDeviceID {
@@ -64,7 +64,7 @@ impl<'de> Deserialize<'de> for MonitorDeviceID {
             "firefox.laptop_large" => Self::FIREFOX_LAPTOP_LARGE,
             "firefox.tablet" => Self::FIREFOX_TABLET,
             "firefox.mobile_small" => Self::FIREFOX_MOBILE_SMALL,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum IPAllowlistEntryType {
     IP_ALLOWLIST_ENTRY,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for IPAllowlistEntryType {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for IPAllowlistEntryType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "ip_allowlist_entry" => Self::IP_ALLOWLIST_ENTRY,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

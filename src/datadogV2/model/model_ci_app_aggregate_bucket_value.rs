@@ -13,7 +13,7 @@ pub enum CIAppAggregateBucketValue {
     CIAppAggregateBucketValueTimeseries(
         Vec<crate::datadogV2::model::CIAppAggregateBucketValueTimeseriesPoint>,
     ),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for CIAppAggregateBucketValue {
@@ -36,7 +36,7 @@ impl<'de> Deserialize<'de> for CIAppAggregateBucketValue {
         }
 
         return Ok(CIAppAggregateBucketValue::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

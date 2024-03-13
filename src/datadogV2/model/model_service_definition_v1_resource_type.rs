@@ -16,7 +16,7 @@ pub enum ServiceDefinitionV1ResourceType {
     ONCALL,
     CODE,
     LINK,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for ServiceDefinitionV1ResourceType {
@@ -64,7 +64,7 @@ impl<'de> Deserialize<'de> for ServiceDefinitionV1ResourceType {
             "oncall" => Self::ONCALL,
             "code" => Self::CODE,
             "link" => Self::LINK,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

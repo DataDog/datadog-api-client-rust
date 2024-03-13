@@ -10,7 +10,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 pub enum LogsGroupByMissing {
     LogsGroupByMissingString(String),
     LogsGroupByMissingNumber(f64),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for LogsGroupByMissing {
@@ -27,7 +27,7 @@ impl<'de> Deserialize<'de> for LogsGroupByMissing {
         }
 
         return Ok(LogsGroupByMissing::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

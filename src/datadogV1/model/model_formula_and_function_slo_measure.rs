@@ -13,7 +13,7 @@ pub enum FormulaAndFunctionSLOMeasure {
     ERROR_BUDGET_REMAINING,
     BURN_RATE,
     ERROR_BUDGET_BURNDOWN,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for FormulaAndFunctionSLOMeasure {
@@ -55,7 +55,7 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionSLOMeasure {
             "error_budget_remaining" => Self::ERROR_BUDGET_REMAINING,
             "burn_rate" => Self::BURN_RATE,
             "error_budget_burndown" => Self::ERROR_BUDGET_BURNDOWN,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

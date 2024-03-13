@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum WidgetVizType {
     TIMESERIES,
     TOPLIST,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetVizType {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for WidgetVizType {
         Ok(match s.as_str() {
             "timeseries" => Self::TIMESERIES,
             "toplist" => Self::TOPLIST,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

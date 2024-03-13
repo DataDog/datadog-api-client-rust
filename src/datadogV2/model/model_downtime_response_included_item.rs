@@ -10,7 +10,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 pub enum DowntimeResponseIncludedItem {
     User(Box<crate::datadogV2::model::User>),
     DowntimeMonitorIncludedItem(Box<crate::datadogV2::model::DowntimeMonitorIncludedItem>),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for DowntimeResponseIncludedItem {
@@ -37,7 +37,7 @@ impl<'de> Deserialize<'de> for DowntimeResponseIncludedItem {
         }
 
         return Ok(DowntimeResponseIncludedItem::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

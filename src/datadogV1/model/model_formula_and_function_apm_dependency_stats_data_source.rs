@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum FormulaAndFunctionApmDependencyStatsDataSource {
     APM_DEPENDENCY_STATS,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for FormulaAndFunctionApmDependencyStatsDataSource {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionApmDependencyStatsDataSource {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "apm_dependency_stats" => Self::APM_DEPENDENCY_STATS,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

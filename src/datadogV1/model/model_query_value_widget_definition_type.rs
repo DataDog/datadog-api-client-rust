@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum QueryValueWidgetDefinitionType {
     QUERY_VALUE,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for QueryValueWidgetDefinitionType {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for QueryValueWidgetDefinitionType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "query_value" => Self::QUERY_VALUE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

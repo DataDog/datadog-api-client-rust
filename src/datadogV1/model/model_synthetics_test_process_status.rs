@@ -11,7 +11,7 @@ pub enum SyntheticsTestProcessStatus {
     SCHEDULED,
     FINISHED,
     FINISHED_WITH_ERROR,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsTestProcessStatus {
@@ -49,7 +49,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestProcessStatus {
             "scheduled" => Self::SCHEDULED,
             "finished" => Self::FINISHED,
             "finished_with_error" => Self::FINISHED_WITH_ERROR,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

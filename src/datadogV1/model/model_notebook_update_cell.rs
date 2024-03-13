@@ -11,7 +11,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 pub enum NotebookUpdateCell {
     NotebookCellCreateRequest(Box<crate::datadogV1::model::NotebookCellCreateRequest>),
     NotebookCellUpdateRequest(Box<crate::datadogV1::model::NotebookCellUpdateRequest>),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for NotebookUpdateCell {
@@ -38,7 +38,7 @@ impl<'de> Deserialize<'de> for NotebookUpdateCell {
         }
 
         return Ok(NotebookUpdateCell::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

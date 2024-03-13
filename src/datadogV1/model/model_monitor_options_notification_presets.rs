@@ -11,7 +11,7 @@ pub enum MonitorOptionsNotificationPresets {
     HIDE_QUERY,
     HIDE_HANDLES,
     HIDE_ALL,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for MonitorOptionsNotificationPresets {
@@ -49,7 +49,7 @@ impl<'de> Deserialize<'de> for MonitorOptionsNotificationPresets {
             "hide_query" => Self::HIDE_QUERY,
             "hide_handles" => Self::HIDE_HANDLES,
             "hide_all" => Self::HIDE_ALL,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

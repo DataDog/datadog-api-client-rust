@@ -10,7 +10,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 pub enum ScalarColumn {
     GroupScalarColumn(Box<crate::datadogV2::model::GroupScalarColumn>),
     DataScalarColumn(Box<crate::datadogV2::model::DataScalarColumn>),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for ScalarColumn {
@@ -35,7 +35,7 @@ impl<'de> Deserialize<'de> for ScalarColumn {
         }
 
         return Ok(ScalarColumn::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

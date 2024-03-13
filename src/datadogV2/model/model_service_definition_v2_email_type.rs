@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ServiceDefinitionV2EmailType {
     EMAIL,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for ServiceDefinitionV2EmailType {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for ServiceDefinitionV2EmailType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "email" => Self::EMAIL,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

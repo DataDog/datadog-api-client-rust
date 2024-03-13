@@ -10,7 +10,7 @@ pub enum ApmStatsQueryRowType {
     SERVICE,
     RESOURCE,
     SPAN,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for ApmStatsQueryRowType {
@@ -46,7 +46,7 @@ impl<'de> Deserialize<'de> for ApmStatsQueryRowType {
             "service" => Self::SERVICE,
             "resource" => Self::RESOURCE,
             "span" => Self::SPAN,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

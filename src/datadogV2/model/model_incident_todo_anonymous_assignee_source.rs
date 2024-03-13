@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum IncidentTodoAnonymousAssigneeSource {
     SLACK,
     MICROSOFT_TEAMS,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for IncidentTodoAnonymousAssigneeSource {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for IncidentTodoAnonymousAssigneeSource {
         Ok(match s.as_str() {
             "slack" => Self::SLACK,
             "microsoft_teams" => Self::MICROSOFT_TEAMS,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

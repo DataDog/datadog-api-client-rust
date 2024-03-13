@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum RUMApplicationType {
     RUM_APPLICATION,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for RUMApplicationType {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for RUMApplicationType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "rum_application" => Self::RUM_APPLICATION,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum SLOType {
     METRIC,
     MONITOR,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SLOType {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for SLOType {
         Ok(match s.as_str() {
             "metric" => Self::METRIC,
             "monitor" => Self::MONITOR,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

@@ -10,7 +10,7 @@ pub enum SyntheticsTestMonitorStatus {
     UNTRIGGERED,
     TRIGGERED,
     NO_DATA,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl Serialize for SyntheticsTestMonitorStatus {
@@ -37,7 +37,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestMonitorStatus {
             0 => Self::UNTRIGGERED,
             1 => Self::TRIGGERED,
             2 => Self::NO_DATA,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::Number(s.into()),
             }),
         })

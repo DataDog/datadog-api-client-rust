@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum APIKeysType {
     API_KEYS,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for APIKeysType {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for APIKeysType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "api_keys" => Self::API_KEYS,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

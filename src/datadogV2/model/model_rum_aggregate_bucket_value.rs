@@ -13,7 +13,7 @@ pub enum RUMAggregateBucketValue {
     RUMAggregateBucketValueTimeseries(
         Vec<crate::datadogV2::model::RUMAggregateBucketValueTimeseriesPoint>,
     ),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for RUMAggregateBucketValue {
@@ -38,7 +38,7 @@ impl<'de> Deserialize<'de> for RUMAggregateBucketValue {
         }
 
         return Ok(RUMAggregateBucketValue::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

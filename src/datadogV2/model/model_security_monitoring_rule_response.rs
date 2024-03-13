@@ -14,7 +14,7 @@ pub enum SecurityMonitoringRuleResponse {
     SecurityMonitoringSignalRuleResponse(
         Box<crate::datadogV2::model::SecurityMonitoringSignalRuleResponse>,
     ),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for SecurityMonitoringRuleResponse {
@@ -45,7 +45,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleResponse {
         }
 
         return Ok(SecurityMonitoringRuleResponse::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

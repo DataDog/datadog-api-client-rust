@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum IncidentSearchResultsType {
     INCIDENTS_SEARCH_RESULTS,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for IncidentSearchResultsType {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for IncidentSearchResultsType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "incidents_search_results" => Self::INCIDENTS_SEARCH_RESULTS,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

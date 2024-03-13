@@ -11,7 +11,7 @@ pub enum OnMissingDataOption {
     SHOW_NO_DATA,
     SHOW_AND_NOTIFY_NO_DATA,
     RESOLVE,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for OnMissingDataOption {
@@ -49,7 +49,7 @@ impl<'de> Deserialize<'de> for OnMissingDataOption {
             "show_no_data" => Self::SHOW_NO_DATA,
             "show_and_notify_no_data" => Self::SHOW_AND_NOTIFY_NO_DATA,
             "resolve" => Self::RESOLVE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

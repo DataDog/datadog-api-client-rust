@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum DORAIncidentType {
     DORA_INCIDENT,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for DORAIncidentType {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for DORAIncidentType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "dora_incident" => Self::DORA_INCIDENT,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

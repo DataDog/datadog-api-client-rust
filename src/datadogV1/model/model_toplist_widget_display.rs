@@ -10,7 +10,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 pub enum ToplistWidgetDisplay {
     ToplistWidgetStacked(Box<crate::datadogV1::model::ToplistWidgetStacked>),
     ToplistWidgetFlat(Box<crate::datadogV1::model::ToplistWidgetFlat>),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for ToplistWidgetDisplay {
@@ -35,7 +35,7 @@ impl<'de> Deserialize<'de> for ToplistWidgetDisplay {
         }
 
         return Ok(ToplistWidgetDisplay::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

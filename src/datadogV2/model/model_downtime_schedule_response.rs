@@ -14,7 +14,7 @@ pub enum DowntimeScheduleResponse {
         Box<crate::datadogV2::model::DowntimeScheduleRecurrencesResponse>,
     ),
     DowntimeScheduleOneTimeResponse(Box<crate::datadogV2::model::DowntimeScheduleOneTimeResponse>),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for DowntimeScheduleResponse {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for DowntimeScheduleResponse {
         }
 
         return Ok(DowntimeScheduleResponse::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

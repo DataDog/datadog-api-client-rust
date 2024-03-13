@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum SyntheticsBasicAuthOauthTokenApiAuthentication {
     HEADER,
     BODY,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsBasicAuthOauthTokenApiAuthentication {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for SyntheticsBasicAuthOauthTokenApiAuthentication {
         Ok(match s.as_str() {
             "header" => Self::HEADER,
             "body" => Self::BODY,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

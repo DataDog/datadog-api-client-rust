@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum WidgetColorPreference {
     BACKGROUND,
     TEXT,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetColorPreference {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for WidgetColorPreference {
         Ok(match s.as_str() {
             "background" => Self::BACKGROUND,
             "text" => Self::TEXT,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

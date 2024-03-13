@@ -11,7 +11,7 @@ pub enum CIAppTestLevel {
     MODULE,
     SUITE,
     TEST,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for CIAppTestLevel {
@@ -49,7 +49,7 @@ impl<'de> Deserialize<'de> for CIAppTestLevel {
             "module" => Self::MODULE,
             "suite" => Self::SUITE,
             "test" => Self::TEST,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

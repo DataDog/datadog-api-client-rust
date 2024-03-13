@@ -14,7 +14,7 @@ pub enum ServiceDefinitionV2Dot2Type {
     BROSWER,
     MOBILE,
     CUSTOM,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for ServiceDefinitionV2Dot2Type {
@@ -58,7 +58,7 @@ impl<'de> Deserialize<'de> for ServiceDefinitionV2Dot2Type {
             "browser" => Self::BROSWER,
             "mobile" => Self::MOBILE,
             "custom" => Self::CUSTOM,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

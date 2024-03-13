@@ -10,7 +10,7 @@ pub enum SignalTriageState {
     OPEN,
     ARCHIVED,
     UNDER_REVIEW,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SignalTriageState {
@@ -46,7 +46,7 @@ impl<'de> Deserialize<'de> for SignalTriageState {
             "open" => Self::OPEN,
             "archived" => Self::ARCHIVED,
             "under_review" => Self::UNDER_REVIEW,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

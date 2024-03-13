@@ -10,7 +10,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 pub enum AuthNMappingIncluded {
     SAMLAssertionAttribute(Box<crate::datadogV2::model::SAMLAssertionAttribute>),
     Role(Box<crate::datadogV2::model::Role>),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for AuthNMappingIncluded {
@@ -34,7 +34,7 @@ impl<'de> Deserialize<'de> for AuthNMappingIncluded {
         }
 
         return Ok(AuthNMappingIncluded::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

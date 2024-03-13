@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum TreeMapSizeBy {
     PCT_CPU,
     PCT_MEM,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for TreeMapSizeBy {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for TreeMapSizeBy {
         Ok(match s.as_str() {
             "pct_cpu" => Self::PCT_CPU,
             "pct_mem" => Self::PCT_MEM,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

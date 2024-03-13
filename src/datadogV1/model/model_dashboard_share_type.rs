@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum DashboardShareType {
     OPEN,
     INVITE,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for DashboardShareType {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for DashboardShareType {
         Ok(match s.as_str() {
             "open" => Self::OPEN,
             "invite" => Self::INVITE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

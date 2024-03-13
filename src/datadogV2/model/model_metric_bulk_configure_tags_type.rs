@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum MetricBulkConfigureTagsType {
     BULK_MANAGE_TAGS,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for MetricBulkConfigureTagsType {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for MetricBulkConfigureTagsType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "metric_bulk_configure_tags" => Self::BULK_MANAGE_TAGS,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

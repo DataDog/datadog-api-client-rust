@@ -11,7 +11,7 @@ pub enum IncidentFieldAttributesValueType {
     TEXTARRAY,
     METRICTAG,
     AUTOCOMPLETE,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for IncidentFieldAttributesValueType {
@@ -49,7 +49,7 @@ impl<'de> Deserialize<'de> for IncidentFieldAttributesValueType {
             "textarray" => Self::TEXTARRAY,
             "metrictag" => Self::METRICTAG,
             "autocomplete" => Self::AUTOCOMPLETE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

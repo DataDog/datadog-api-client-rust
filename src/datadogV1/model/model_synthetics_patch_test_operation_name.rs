@@ -13,7 +13,7 @@ pub enum SyntheticsPatchTestOperationName {
     MOVE,
     COPY,
     TEST,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsPatchTestOperationName {
@@ -55,7 +55,7 @@ impl<'de> Deserialize<'de> for SyntheticsPatchTestOperationName {
             "move" => Self::MOVE,
             "copy" => Self::COPY,
             "test" => Self::TEST,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

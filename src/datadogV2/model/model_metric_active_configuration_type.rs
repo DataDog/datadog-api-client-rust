@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum MetricActiveConfigurationType {
     ACTIVELY_QUERIED_CONFIGURATIONS,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for MetricActiveConfigurationType {
@@ -42,7 +42,7 @@ impl<'de> Deserialize<'de> for MetricActiveConfigurationType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "actively_queried_configurations" => Self::ACTIVELY_QUERIED_CONFIGURATIONS,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

@@ -24,7 +24,7 @@ pub enum MonitorType {
     CI_TESTS_ALERT,
     ERROR_TRACKING_ALERT,
     DATABASE_MONITORING_ALERT,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for MonitorType {
@@ -88,7 +88,7 @@ impl<'de> Deserialize<'de> for MonitorType {
             "ci-tests alert" => Self::CI_TESTS_ALERT,
             "error-tracking alert" => Self::ERROR_TRACKING_ALERT,
             "database-monitoring alert" => Self::DATABASE_MONITORING_ALERT,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

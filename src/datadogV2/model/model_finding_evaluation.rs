@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum FindingEvaluation {
     PASS,
     FAIL,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for FindingEvaluation {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for FindingEvaluation {
         Ok(match s.as_str() {
             "pass" => Self::PASS,
             "fail" => Self::FAIL,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

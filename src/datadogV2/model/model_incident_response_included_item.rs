@@ -10,7 +10,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 pub enum IncidentResponseIncludedItem {
     User(Box<crate::datadogV2::model::User>),
     IncidentAttachmentData(Box<crate::datadogV2::model::IncidentAttachmentData>),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for IncidentResponseIncludedItem {
@@ -34,7 +34,7 @@ impl<'de> Deserialize<'de> for IncidentResponseIncludedItem {
         }
 
         return Ok(IncidentResponseIncludedItem::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

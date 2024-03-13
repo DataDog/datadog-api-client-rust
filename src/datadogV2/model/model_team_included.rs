@@ -11,7 +11,7 @@ pub enum TeamIncluded {
     User(Box<crate::datadogV2::model::User>),
     TeamLink(Box<crate::datadogV2::model::TeamLink>),
     UserTeamPermission(Box<crate::datadogV2::model::UserTeamPermission>),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for TeamIncluded {
@@ -42,7 +42,7 @@ impl<'de> Deserialize<'de> for TeamIncluded {
         }
 
         return Ok(TeamIncluded::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

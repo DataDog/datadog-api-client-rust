@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum CIAppCreatePipelineEventRequestDataType {
     CIPIPELINE_RESOURCE_REQUEST,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for CIAppCreatePipelineEventRequestDataType {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for CIAppCreatePipelineEventRequestDataType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "cipipeline_resource_request" => Self::CIPIPELINE_RESOURCE_REQUEST,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

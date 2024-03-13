@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum MetricsDataSource {
     METRICS,
     CLOUD_COST,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for MetricsDataSource {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for MetricsDataSource {
         Ok(match s.as_str() {
             "metrics" => Self::METRICS,
             "cloud_cost" => Self::CLOUD_COST,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

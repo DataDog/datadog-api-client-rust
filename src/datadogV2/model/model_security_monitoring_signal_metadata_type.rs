@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SecurityMonitoringSignalMetadataType {
     SIGNAL_METADATA,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SecurityMonitoringSignalMetadataType {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalMetadataType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "signal_metadata" => Self::SIGNAL_METADATA,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

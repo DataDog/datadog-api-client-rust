@@ -40,7 +40,7 @@ pub enum SyntheticsBrowserTestFailureCode {
     UPLOAD_FILES_DIALOG,
     UPLOAD_FILES_DYNAMIC_ELEMENT,
     UPLOAD_FILES_NAME,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsBrowserTestFailureCode {
@@ -136,7 +136,7 @@ impl<'de> Deserialize<'de> for SyntheticsBrowserTestFailureCode {
             "UPLOAD_FILES_DIALOG" => Self::UPLOAD_FILES_DIALOG,
             "UPLOAD_FILES_DYNAMIC_ELEMENT" => Self::UPLOAD_FILES_DYNAMIC_ELEMENT,
             "UPLOAD_FILES_NAME" => Self::UPLOAD_FILES_NAME,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

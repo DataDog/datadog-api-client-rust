@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum LogsGeoIPParserType {
     GEO_IP_PARSER,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for LogsGeoIPParserType {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for LogsGeoIPParserType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "geo-ip-parser" => Self::GEO_IP_PARSER,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

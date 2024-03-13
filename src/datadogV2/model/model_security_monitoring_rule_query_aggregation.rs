@@ -15,7 +15,7 @@ pub enum SecurityMonitoringRuleQueryAggregation {
     GEO_DATA,
     EVENT_COUNT,
     NONE,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SecurityMonitoringRuleQueryAggregation {
@@ -61,7 +61,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleQueryAggregation {
             "geo_data" => Self::GEO_DATA,
             "event_count" => Self::EVENT_COUNT,
             "none" => Self::NONE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

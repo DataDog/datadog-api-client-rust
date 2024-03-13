@@ -18,7 +18,7 @@ pub enum FormulaAndFunctionApmResourceStatName {
     LATENCY_P90,
     LATENCY_P95,
     LATENCY_P99,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for FormulaAndFunctionApmResourceStatName {
@@ -70,7 +70,7 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionApmResourceStatName {
             "latency_p90" => Self::LATENCY_P90,
             "latency_p95" => Self::LATENCY_P95,
             "latency_p99" => Self::LATENCY_P99,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

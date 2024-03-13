@@ -11,7 +11,7 @@ pub enum SLOErrorTimeframe {
     THIRTY_DAYS,
     NINETY_DAYS,
     ALL,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SLOErrorTimeframe {
@@ -49,7 +49,7 @@ impl<'de> Deserialize<'de> for SLOErrorTimeframe {
             "30d" => Self::THIRTY_DAYS,
             "90d" => Self::NINETY_DAYS,
             "all" => Self::ALL,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

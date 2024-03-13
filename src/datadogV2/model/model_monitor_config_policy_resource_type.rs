@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum MonitorConfigPolicyResourceType {
     MONITOR_CONFIG_POLICY,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for MonitorConfigPolicyResourceType {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for MonitorConfigPolicyResourceType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "monitor-config-policy" => Self::MONITOR_CONFIG_POLICY,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

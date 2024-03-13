@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SyntheticsBasicAuthSigv4Type {
     SIGV4,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsBasicAuthSigv4Type {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for SyntheticsBasicAuthSigv4Type {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "sigv4" => Self::SIGV4,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

@@ -13,7 +13,7 @@ pub enum IncidentSeverity {
     SEV_3,
     SEV_4,
     SEV_5,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for IncidentSeverity {
@@ -55,7 +55,7 @@ impl<'de> Deserialize<'de> for IncidentSeverity {
             "SEV-3" => Self::SEV_3,
             "SEV-4" => Self::SEV_4,
             "SEV-5" => Self::SEV_5,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

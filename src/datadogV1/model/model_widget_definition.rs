@@ -42,7 +42,7 @@ pub enum WidgetDefinition {
     ToplistWidgetDefinition(Box<crate::datadogV1::model::ToplistWidgetDefinition>),
     TopologyMapWidgetDefinition(Box<crate::datadogV1::model::TopologyMapWidgetDefinition>),
     TreeMapWidgetDefinition(Box<crate::datadogV1::model::TreeMapWidgetDefinition>),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for WidgetDefinition {
@@ -316,7 +316,7 @@ impl<'de> Deserialize<'de> for WidgetDefinition {
         }
 
         return Ok(WidgetDefinition::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum IncidentSearchSortOrder {
     CREATED_ASCENDING,
     CREATED_DESCENDING,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for IncidentSearchSortOrder {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for IncidentSearchSortOrder {
         Ok(match s.as_str() {
             "created" => Self::CREATED_ASCENDING,
             "-created" => Self::CREATED_DESCENDING,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

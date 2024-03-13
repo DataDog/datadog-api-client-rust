@@ -29,7 +29,7 @@ pub enum FormulaAndFunctionQueryDefinition {
     FormulaAndFunctionCloudCostQueryDefinition(
         Box<crate::datadogV1::model::FormulaAndFunctionCloudCostQueryDefinition>,
     ),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for FormulaAndFunctionQueryDefinition {
@@ -108,7 +108,7 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionQueryDefinition {
         }
 
         return Ok(FormulaAndFunctionQueryDefinition::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

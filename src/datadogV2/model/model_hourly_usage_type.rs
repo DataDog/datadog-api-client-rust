@@ -10,7 +10,7 @@ pub enum HourlyUsageType {
     APP_SEC_HOST_COUNT,
     OBSERVABILITY_PIPELINES_BYTES_PROCESSSED,
     LAMBDA_TRACED_INVOCATIONS_COUNT,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for HourlyUsageType {
@@ -52,7 +52,7 @@ impl<'de> Deserialize<'de> for HourlyUsageType {
                 Self::OBSERVABILITY_PIPELINES_BYTES_PROCESSSED
             }
             "lambda_traced_invocations_count" => Self::LAMBDA_TRACED_INVOCATIONS_COUNT,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum IncidentUserDefinedFieldType {
     USER_DEFINED_FIELD,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for IncidentUserDefinedFieldType {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for IncidentUserDefinedFieldType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "user_defined_field" => Self::USER_DEFINED_FIELD,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

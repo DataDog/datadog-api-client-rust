@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum WidgetChangeType {
     ABSOLUTE,
     RELATIVE,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetChangeType {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for WidgetChangeType {
         Ok(match s.as_str() {
             "absolute" => Self::ABSOLUTE,
             "relative" => Self::RELATIVE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

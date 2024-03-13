@@ -12,7 +12,7 @@ pub enum SunburstWidgetLegend {
     SunburstWidgetLegendInlineAutomatic(
         Box<crate::datadogV1::model::SunburstWidgetLegendInlineAutomatic>,
     ),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for SunburstWidgetLegend {
@@ -41,7 +41,7 @@ impl<'de> Deserialize<'de> for SunburstWidgetLegend {
         }
 
         return Ok(SunburstWidgetLegend::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

@@ -15,7 +15,7 @@ pub enum APIKeysSort {
     MODIFIED_AT_DESCENDING,
     NAME_ASCENDING,
     NAME_DESCENDING,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for APIKeysSort {
@@ -61,7 +61,7 @@ impl<'de> Deserialize<'de> for APIKeysSort {
             "-modified_at" => Self::MODIFIED_AT_DESCENDING,
             "name" => Self::NAME_ASCENDING,
             "-name" => Self::NAME_DESCENDING,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

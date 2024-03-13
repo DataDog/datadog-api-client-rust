@@ -12,7 +12,7 @@ pub enum ServiceDefinitionV2Dot1LinkType {
     RUNBOOK,
     DASHBOARD,
     OTHER,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for ServiceDefinitionV2Dot1LinkType {
@@ -52,7 +52,7 @@ impl<'de> Deserialize<'de> for ServiceDefinitionV2Dot1LinkType {
             "runbook" => Self::RUNBOOK,
             "dashboard" => Self::DASHBOARD,
             "other" => Self::OTHER,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

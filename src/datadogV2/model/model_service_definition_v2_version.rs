@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ServiceDefinitionV2Version {
     V2,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for ServiceDefinitionV2Version {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for ServiceDefinitionV2Version {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "v2" => Self::V2,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

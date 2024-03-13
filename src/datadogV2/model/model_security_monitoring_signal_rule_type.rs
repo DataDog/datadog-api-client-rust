@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SecurityMonitoringSignalRuleType {
     SIGNAL_CORRELATION,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SecurityMonitoringSignalRuleType {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalRuleType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "signal_correlation" => Self::SIGNAL_CORRELATION,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

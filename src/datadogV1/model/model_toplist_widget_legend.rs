@@ -10,7 +10,7 @@ pub enum ToplistWidgetLegend {
     AUTOMATIC,
     INLINE,
     NONE,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for ToplistWidgetLegend {
@@ -46,7 +46,7 @@ impl<'de> Deserialize<'de> for ToplistWidgetLegend {
             "automatic" => Self::AUTOMATIC,
             "inline" => Self::INLINE,
             "none" => Self::NONE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ConfluentResourceType {
     CONFLUENT_CLOUD_RESOURCES,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for ConfluentResourceType {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for ConfluentResourceType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "confluent-cloud-resources" => Self::CONFLUENT_CLOUD_RESOURCES,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

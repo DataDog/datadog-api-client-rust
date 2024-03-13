@@ -12,7 +12,7 @@ pub enum MetricCustomTimeAggregation {
     MAX,
     MIN,
     SUM,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for MetricCustomTimeAggregation {
@@ -52,7 +52,7 @@ impl<'de> Deserialize<'de> for MetricCustomTimeAggregation {
             "max" => Self::MAX,
             "min" => Self::MIN,
             "sum" => Self::SUM,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

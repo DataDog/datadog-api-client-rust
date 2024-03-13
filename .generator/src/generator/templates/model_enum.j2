@@ -10,7 +10,7 @@ pub enum {{ name }} {
 {%- for index, value in enumerate(model.enum) %}
 	{{ model["x-enum-varnames"][index] or value.upper() }},
 {%- endfor %}
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 {%- if not model["type"] == "integer" %}
@@ -55,7 +55,7 @@ impl<'de> Deserialize<'de> for {{ name }} {
             {%- for index, value in enumerate(model.enum) %}
             {%- if model["type"] == "string" %}"{%- endif %}{{ value }}{%- if model["type"] == "string" %}"{%- endif %} => Self::{{ model["x-enum-varnames"][index] or value.upper() }},
             {%- endfor %}
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct { value: serde_json::Value::{%- if model["type"] == "string" %}String{%- else %}Number{%- endif %}(s.into()) }),
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::{%- if model["type"] == "string" %}String{%- else %}Number{%- endif %}(s.into()) }),
         })
     }
 }

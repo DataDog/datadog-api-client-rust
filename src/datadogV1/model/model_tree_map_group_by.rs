@@ -10,7 +10,7 @@ pub enum TreeMapGroupBy {
     USER,
     FAMILY,
     PROCESS,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for TreeMapGroupBy {
@@ -46,7 +46,7 @@ impl<'de> Deserialize<'de> for TreeMapGroupBy {
             "user" => Self::USER,
             "family" => Self::FAMILY,
             "process" => Self::PROCESS,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

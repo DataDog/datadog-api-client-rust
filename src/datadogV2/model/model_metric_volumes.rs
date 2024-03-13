@@ -10,7 +10,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 pub enum MetricVolumes {
     MetricDistinctVolume(Box<crate::datadogV2::model::MetricDistinctVolume>),
     MetricIngestedIndexedVolume(Box<crate::datadogV2::model::MetricIngestedIndexedVolume>),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for MetricVolumes {
@@ -36,7 +36,7 @@ impl<'de> Deserialize<'de> for MetricVolumes {
         }
 
         return Ok(MetricVolumes::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

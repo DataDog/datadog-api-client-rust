@@ -12,7 +12,7 @@ pub enum WidgetComparator {
     GREATER_THAN_OR_EQUAL_TO,
     LESS_THAN,
     LESS_THAN_OR_EQUAL_TO,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetComparator {
@@ -52,7 +52,7 @@ impl<'de> Deserialize<'de> for WidgetComparator {
             ">=" => Self::GREATER_THAN_OR_EQUAL_TO,
             "<" => Self::LESS_THAN,
             "<=" => Self::LESS_THAN_OR_EQUAL_TO,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

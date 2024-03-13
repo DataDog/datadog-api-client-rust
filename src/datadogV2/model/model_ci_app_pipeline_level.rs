@@ -12,7 +12,7 @@ pub enum CIAppPipelineLevel {
     JOB,
     STEP,
     CUSTOM,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for CIAppPipelineLevel {
@@ -52,7 +52,7 @@ impl<'de> Deserialize<'de> for CIAppPipelineLevel {
             "job" => Self::JOB,
             "step" => Self::STEP,
             "custom" => Self::CUSTOM,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

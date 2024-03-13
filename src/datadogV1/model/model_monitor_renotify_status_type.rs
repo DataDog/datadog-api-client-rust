@@ -10,7 +10,7 @@ pub enum MonitorRenotifyStatusType {
     ALERT,
     WARN,
     NO_DATA,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for MonitorRenotifyStatusType {
@@ -46,7 +46,7 @@ impl<'de> Deserialize<'de> for MonitorRenotifyStatusType {
             "alert" => Self::ALERT,
             "warn" => Self::WARN,
             "no data" => Self::NO_DATA,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

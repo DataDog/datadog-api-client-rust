@@ -11,7 +11,7 @@ pub enum SyntheticsGlobalVariableParserType {
     JSON_PATH,
     REGEX,
     X_PATH,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsGlobalVariableParserType {
@@ -49,7 +49,7 @@ impl<'de> Deserialize<'de> for SyntheticsGlobalVariableParserType {
             "json_path" => Self::JSON_PATH,
             "regex" => Self::REGEX,
             "x_path" => Self::X_PATH,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

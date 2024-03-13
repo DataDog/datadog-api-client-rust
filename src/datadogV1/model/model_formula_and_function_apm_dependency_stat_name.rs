@@ -14,7 +14,7 @@ pub enum FormulaAndFunctionApmDependencyStatName {
     PCT_EXEC_TIME,
     PCT_OF_TRACES,
     TOTAL_TRACES_COUNT,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for FormulaAndFunctionApmDependencyStatName {
@@ -58,7 +58,7 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionApmDependencyStatName {
             "pct_exec_time" => Self::PCT_EXEC_TIME,
             "pct_of_traces" => Self::PCT_OF_TRACES,
             "total_traces_count" => Self::TOTAL_TRACES_COUNT,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

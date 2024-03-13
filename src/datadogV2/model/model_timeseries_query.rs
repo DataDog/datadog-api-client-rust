@@ -10,7 +10,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 pub enum TimeseriesQuery {
     MetricsTimeseriesQuery(Box<crate::datadogV2::model::MetricsTimeseriesQuery>),
     EventsTimeseriesQuery(Box<crate::datadogV2::model::EventsTimeseriesQuery>),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for TimeseriesQuery {
@@ -35,7 +35,7 @@ impl<'de> Deserialize<'de> for TimeseriesQuery {
         }
 
         return Ok(TimeseriesQuery::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

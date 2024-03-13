@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum UsageMetricCategory {
     STANDARD,
     CUSTOM,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for UsageMetricCategory {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for UsageMetricCategory {
         Ok(match s.as_str() {
             "standard" => Self::STANDARD,
             "custom" => Self::CUSTOM,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

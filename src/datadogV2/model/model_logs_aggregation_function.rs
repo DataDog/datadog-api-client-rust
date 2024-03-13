@@ -19,7 +19,7 @@ pub enum LogsAggregationFunction {
     MAX,
     AVG,
     MEDIAN,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for LogsAggregationFunction {
@@ -73,7 +73,7 @@ impl<'de> Deserialize<'de> for LogsAggregationFunction {
             "max" => Self::MAX,
             "avg" => Self::AVG,
             "median" => Self::MEDIAN,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

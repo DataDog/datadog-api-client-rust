@@ -15,7 +15,7 @@ pub enum FormulaAndFunctionMetricAggregation {
     AREA,
     L2NORM,
     PERCENTILE,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for FormulaAndFunctionMetricAggregation {
@@ -61,7 +61,7 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionMetricAggregation {
             "area" => Self::AREA,
             "l2norm" => Self::L2NORM,
             "percentile" => Self::PERCENTILE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum WidgetNodeType {
     HOST,
     CONTAINER,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetNodeType {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for WidgetNodeType {
         Ok(match s.as_str() {
             "host" => Self::HOST,
             "container" => Self::CONTAINER,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

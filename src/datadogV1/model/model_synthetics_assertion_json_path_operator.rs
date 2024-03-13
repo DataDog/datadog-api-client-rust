@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SyntheticsAssertionJSONPathOperator {
     VALIDATES_JSON_PATH,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsAssertionJSONPathOperator {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for SyntheticsAssertionJSONPathOperator {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "validatesJSONPath" => Self::VALIDATES_JSON_PATH,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

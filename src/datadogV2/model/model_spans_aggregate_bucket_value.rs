@@ -13,7 +13,7 @@ pub enum SpansAggregateBucketValue {
     SpansAggregateBucketValueTimeseries(
         Vec<crate::datadogV2::model::SpansAggregateBucketValueTimeseriesPoint>,
     ),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for SpansAggregateBucketValue {
@@ -36,7 +36,7 @@ impl<'de> Deserialize<'de> for SpansAggregateBucketValue {
         }
 
         return Ok(SpansAggregateBucketValue::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

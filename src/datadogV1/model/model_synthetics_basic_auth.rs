@@ -14,7 +14,7 @@ pub enum SyntheticsBasicAuth {
     SyntheticsBasicAuthDigest(Box<crate::datadogV1::model::SyntheticsBasicAuthDigest>),
     SyntheticsBasicAuthOauthClient(Box<crate::datadogV1::model::SyntheticsBasicAuthOauthClient>),
     SyntheticsBasicAuthOauthROP(Box<crate::datadogV1::model::SyntheticsBasicAuthOauthROP>),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for SyntheticsBasicAuth {
@@ -72,7 +72,7 @@ impl<'de> Deserialize<'de> for SyntheticsBasicAuth {
         }
 
         return Ok(SyntheticsBasicAuth::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

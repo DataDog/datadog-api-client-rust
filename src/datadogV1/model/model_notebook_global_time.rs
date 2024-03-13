@@ -10,7 +10,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 pub enum NotebookGlobalTime {
     NotebookRelativeTime(Box<crate::datadogV1::model::NotebookRelativeTime>),
     NotebookAbsoluteTime(Box<crate::datadogV1::model::NotebookAbsoluteTime>),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for NotebookGlobalTime {
@@ -35,7 +35,7 @@ impl<'de> Deserialize<'de> for NotebookGlobalTime {
         }
 
         return Ok(NotebookGlobalTime::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

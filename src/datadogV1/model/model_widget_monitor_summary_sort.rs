@@ -24,7 +24,7 @@ pub enum WidgetMonitorSummarySort {
     TRIGGERED_DESCENDING,
     PRIORITY_ASCENDING,
     PRIORITY_DESCENDING,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetMonitorSummarySort {
@@ -88,7 +88,7 @@ impl<'de> Deserialize<'de> for WidgetMonitorSummarySort {
             "triggered,desc" => Self::TRIGGERED_DESCENDING,
             "priority,asc" => Self::PRIORITY_ASCENDING,
             "priority,desc" => Self::PRIORITY_DESCENDING,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

@@ -11,7 +11,7 @@ pub enum ServiceDefinitionV2Dot1Contact {
     ServiceDefinitionV2Dot1Email(Box<crate::datadogV2::model::ServiceDefinitionV2Dot1Email>),
     ServiceDefinitionV2Dot1Slack(Box<crate::datadogV2::model::ServiceDefinitionV2Dot1Slack>),
     ServiceDefinitionV2Dot1MSTeams(Box<crate::datadogV2::model::ServiceDefinitionV2Dot1MSTeams>),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for ServiceDefinitionV2Dot1Contact {
@@ -46,7 +46,7 @@ impl<'de> Deserialize<'de> for ServiceDefinitionV2Dot1Contact {
         }
 
         return Ok(ServiceDefinitionV2Dot1Contact::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

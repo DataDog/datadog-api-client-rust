@@ -43,7 +43,7 @@ pub enum UsageAttributionSort {
     APPSEC_FARGATE_PERCENTAGE,
     ESTIMATED_RUM_USAGE_ATTRIBUTION_USAGE,
     ESTIMATED_RUM_USAGE_ATTRIBUTION_PERCENTAGE,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for UsageAttributionSort {
@@ -159,7 +159,7 @@ impl<'de> Deserialize<'de> for UsageAttributionSort {
             "estimated_rum_usage_attribution_percentage" => {
                 Self::ESTIMATED_RUM_USAGE_ATTRIBUTION_PERCENTAGE
             }
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

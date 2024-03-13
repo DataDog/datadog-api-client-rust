@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SyntheticsBasicAuthOauthROPType {
     OAUTH_ROP,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsBasicAuthOauthROPType {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for SyntheticsBasicAuthOauthROPType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "oauth-rop" => Self::OAUTH_ROP,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

@@ -11,7 +11,7 @@ pub enum MonitorFormulaAndFunctionQueryDefinition {
     MonitorFormulaAndFunctionEventQueryDefinition(
         Box<crate::datadogV1::model::MonitorFormulaAndFunctionEventQueryDefinition>,
     ),
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionQueryDefinition {
@@ -30,7 +30,7 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionQueryDefinition {
         }
 
         return Ok(MonitorFormulaAndFunctionQueryDefinition::UnparsedObject(
-            crate::datadog::UnparsedObejct { value },
+            crate::datadog::UnparsedObject { value },
         ));
     }
 }

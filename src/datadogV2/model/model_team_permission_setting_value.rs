@@ -12,7 +12,7 @@ pub enum TeamPermissionSettingValue {
     ORGANIZATION,
     USER_ACCESS_MANAGE,
     TEAMS_MANAGE,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for TeamPermissionSettingValue {
@@ -52,7 +52,7 @@ impl<'de> Deserialize<'de> for TeamPermissionSettingValue {
             "organization" => Self::ORGANIZATION,
             "user_access_manage" => Self::USER_ACCESS_MANAGE,
             "teams_manage" => Self::TEAMS_MANAGE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

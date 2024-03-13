@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum LogsURLParserType {
     URL_PARSER,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for LogsURLParserType {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for LogsURLParserType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "url-parser" => Self::URL_PARSER,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

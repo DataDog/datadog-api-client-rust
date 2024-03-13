@@ -33,7 +33,7 @@ pub enum SyntheticsApiTestFailureCode {
     WEBSOCKET,
     UNKNOWN,
     INTERNAL_ERROR,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsApiTestFailureCode {
@@ -119,7 +119,7 @@ impl<'de> Deserialize<'de> for SyntheticsApiTestFailureCode {
             "WEBSOCKET" => Self::WEBSOCKET,
             "UNKNOWN" => Self::UNKNOWN,
             "INTERNAL_ERROR" => Self::INTERNAL_ERROR,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

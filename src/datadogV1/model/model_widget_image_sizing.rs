@@ -15,7 +15,7 @@ pub enum WidgetImageSizing {
     ZOOM,
     FIT,
     CENTER,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetImageSizing {
@@ -61,7 +61,7 @@ impl<'de> Deserialize<'de> for WidgetImageSizing {
             "zoom" => Self::ZOOM,
             "fit" => Self::FIT,
             "center" => Self::CENTER,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

@@ -10,7 +10,7 @@ pub enum NotifyEndState {
     ALERT,
     NO_DATA,
     WARN,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for NotifyEndState {
@@ -46,7 +46,7 @@ impl<'de> Deserialize<'de> for NotifyEndState {
             "alert" => Self::ALERT,
             "no data" => Self::NO_DATA,
             "warn" => Self::WARN,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

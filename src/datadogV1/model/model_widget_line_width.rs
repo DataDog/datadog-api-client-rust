@@ -10,7 +10,7 @@ pub enum WidgetLineWidth {
     NORMAL,
     THICK,
     THIN,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetLineWidth {
@@ -46,7 +46,7 @@ impl<'de> Deserialize<'de> for WidgetLineWidth {
             "normal" => Self::NORMAL,
             "thick" => Self::THICK,
             "thin" => Self::THIN,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

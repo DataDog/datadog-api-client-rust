@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum ServiceDefinitionV2Dot2OpsgenieRegion {
     US,
     EU,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for ServiceDefinitionV2Dot2OpsgenieRegion {
@@ -43,7 +43,7 @@ impl<'de> Deserialize<'de> for ServiceDefinitionV2Dot2OpsgenieRegion {
         Ok(match s.as_str() {
             "US" => Self::US,
             "EU" => Self::EU,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

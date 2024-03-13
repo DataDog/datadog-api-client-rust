@@ -22,7 +22,7 @@ pub enum ListStreamComputeAggregation {
     EARLIEST,
     LATEST,
     MOST_FREQUENT,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for ListStreamComputeAggregation {
@@ -82,7 +82,7 @@ impl<'de> Deserialize<'de> for ListStreamComputeAggregation {
             "earliest" => Self::EARLIEST,
             "latest" => Self::LATEST,
             "most_frequent" => Self::MOST_FREQUENT,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })

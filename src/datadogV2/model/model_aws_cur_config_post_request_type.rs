@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum AwsCURConfigPostRequestType {
     AWS_CUR_CONFIG_POST_REQUEST,
-    UnparsedObject(crate::datadog::UnparsedObejct),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for AwsCURConfigPostRequestType {
@@ -40,7 +40,7 @@ impl<'de> Deserialize<'de> for AwsCURConfigPostRequestType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "aws_cur_config_post_request" => Self::AWS_CUR_CONFIG_POST_REQUEST,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObejct {
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
         })
