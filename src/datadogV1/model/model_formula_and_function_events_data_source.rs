@@ -17,6 +17,7 @@ pub enum FormulaAndFunctionEventsDataSource {
     EVENTS,
     CI_TESTS,
     CI_PIPELINES,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for FormulaAndFunctionEventsDataSource {
@@ -32,6 +33,7 @@ impl ToString for FormulaAndFunctionEventsDataSource {
             Self::EVENTS => String::from("events"),
             Self::CI_TESTS => String::from("ci_tests"),
             Self::CI_PIPELINES => String::from("ci_pipelines"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -42,6 +44,7 @@ impl Serialize for FormulaAndFunctionEventsDataSource {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -64,12 +67,9 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionEventsDataSource {
             "events" => Self::EVENTS,
             "ci_tests" => Self::CI_TESTS,
             "ci_pipelines" => Self::CI_PIPELINES,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

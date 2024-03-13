@@ -19,6 +19,7 @@ pub enum SyntheticsDeviceID {
     EDGE_LAPTOP_LARGE,
     EDGE_TABLET,
     EDGE_MOBILE_SMALL,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsDeviceID {
@@ -36,6 +37,7 @@ impl ToString for SyntheticsDeviceID {
             Self::EDGE_LAPTOP_LARGE => String::from("edge.laptop_large"),
             Self::EDGE_TABLET => String::from("edge.tablet"),
             Self::EDGE_MOBILE_SMALL => String::from("edge.mobile_small"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -46,6 +48,7 @@ impl Serialize for SyntheticsDeviceID {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -70,12 +73,9 @@ impl<'de> Deserialize<'de> for SyntheticsDeviceID {
             "edge.laptop_large" => Self::EDGE_LAPTOP_LARGE,
             "edge.tablet" => Self::EDGE_TABLET,
             "edge.mobile_small" => Self::EDGE_MOBILE_SMALL,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

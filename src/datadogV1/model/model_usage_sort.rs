@@ -11,6 +11,7 @@ pub enum UsageSort {
     SIZE,
     START_DATE,
     END_DATE,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for UsageSort {
@@ -20,6 +21,7 @@ impl ToString for UsageSort {
             Self::SIZE => String::from("size"),
             Self::START_DATE => String::from("start_date"),
             Self::END_DATE => String::from("end_date"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -30,6 +32,7 @@ impl Serialize for UsageSort {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -46,12 +49,9 @@ impl<'de> Deserialize<'de> for UsageSort {
             "size" => Self::SIZE,
             "start_date" => Self::START_DATE,
             "end_date" => Self::END_DATE,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

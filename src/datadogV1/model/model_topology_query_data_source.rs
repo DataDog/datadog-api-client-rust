@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum TopologyQueryDataSource {
     DATA_STREAMS,
     SERVICE_MAP,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for TopologyQueryDataSource {
@@ -16,6 +17,7 @@ impl ToString for TopologyQueryDataSource {
         match self {
             Self::DATA_STREAMS => String::from("data_streams"),
             Self::SERVICE_MAP => String::from("service_map"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -26,6 +28,7 @@ impl Serialize for TopologyQueryDataSource {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -40,12 +43,9 @@ impl<'de> Deserialize<'de> for TopologyQueryDataSource {
         Ok(match s.as_str() {
             "data_streams" => Self::DATA_STREAMS,
             "service_map" => Self::SERVICE_MAP,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

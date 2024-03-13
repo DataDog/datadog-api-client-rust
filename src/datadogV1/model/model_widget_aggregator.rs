@@ -13,6 +13,7 @@ pub enum WidgetAggregator {
     MINIMUM,
     SUM,
     PERCENTILE,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetAggregator {
@@ -24,6 +25,7 @@ impl ToString for WidgetAggregator {
             Self::MINIMUM => String::from("min"),
             Self::SUM => String::from("sum"),
             Self::PERCENTILE => String::from("percentile"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -34,6 +36,7 @@ impl Serialize for WidgetAggregator {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -52,12 +55,9 @@ impl<'de> Deserialize<'de> for WidgetAggregator {
             "min" => Self::MINIMUM,
             "sum" => Self::SUM,
             "percentile" => Self::PERCENTILE,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

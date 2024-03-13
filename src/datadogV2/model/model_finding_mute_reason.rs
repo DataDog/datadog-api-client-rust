@@ -14,6 +14,7 @@ pub enum FindingMuteReason {
     HUMAN_ERROR,
     NO_LONGER_ACCEPTED_RISK,
     OTHER,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for FindingMuteReason {
@@ -26,6 +27,7 @@ impl ToString for FindingMuteReason {
             Self::HUMAN_ERROR => String::from("HUMAN_ERROR"),
             Self::NO_LONGER_ACCEPTED_RISK => String::from("NO_LONGER_ACCEPTED_RISK"),
             Self::OTHER => String::from("OTHER"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -36,6 +38,7 @@ impl Serialize for FindingMuteReason {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -55,12 +58,9 @@ impl<'de> Deserialize<'de> for FindingMuteReason {
             "HUMAN_ERROR" => Self::HUMAN_ERROR,
             "NO_LONGER_ACCEPTED_RISK" => Self::NO_LONGER_ACCEPTED_RISK,
             "OTHER" => Self::OTHER,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

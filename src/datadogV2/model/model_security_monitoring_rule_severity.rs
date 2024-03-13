@@ -12,6 +12,7 @@ pub enum SecurityMonitoringRuleSeverity {
     MEDIUM,
     HIGH,
     CRITICAL,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SecurityMonitoringRuleSeverity {
@@ -22,6 +23,7 @@ impl ToString for SecurityMonitoringRuleSeverity {
             Self::MEDIUM => String::from("medium"),
             Self::HIGH => String::from("high"),
             Self::CRITICAL => String::from("critical"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -32,6 +34,7 @@ impl Serialize for SecurityMonitoringRuleSeverity {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -49,12 +52,9 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleSeverity {
             "medium" => Self::MEDIUM,
             "high" => Self::HIGH,
             "critical" => Self::CRITICAL,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

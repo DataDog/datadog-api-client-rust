@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// Number of Fargate tasks run and hourly usage.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct UsageFargateHour {
     /// The high-water mark of APM ECS Fargate tasks during the given hour.
     #[serde(
@@ -46,6 +48,9 @@ pub struct UsageFargateHour {
         with = "::serde_with::rust::double_option"
     )]
     pub tasks_count: Option<Option<i64>>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl UsageFargateHour {
@@ -58,6 +63,7 @@ impl UsageFargateHour {
             org_name: None,
             public_id: None,
             tasks_count: None,
+            _unparsed: false,
         }
     }
 
@@ -100,5 +106,90 @@ impl UsageFargateHour {
 impl Default for UsageFargateHour {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for UsageFargateHour {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct UsageFargateHourVisitor;
+        impl<'a> Visitor<'a> for UsageFargateHourVisitor {
+            type Value = UsageFargateHour;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut apm_fargate_count: Option<Option<i64>> = None;
+                let mut appsec_fargate_count: Option<Option<i64>> = None;
+                let mut avg_profiled_fargate_tasks: Option<Option<i64>> = None;
+                let mut hour: Option<String> = None;
+                let mut org_name: Option<String> = None;
+                let mut public_id: Option<String> = None;
+                let mut tasks_count: Option<Option<i64>> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "apm_fargate_count" => {
+                            apm_fargate_count =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "appsec_fargate_count" => {
+                            appsec_fargate_count =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "avg_profiled_fargate_tasks" => {
+                            avg_profiled_fargate_tasks =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "hour" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            hour = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "org_name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            org_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "public_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            public_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "tasks_count" => {
+                            tasks_count =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+
+                let content = UsageFargateHour {
+                    apm_fargate_count,
+                    appsec_fargate_count,
+                    avg_profiled_fargate_tasks,
+                    hour,
+                    org_name,
+                    public_id,
+                    tasks_count,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(UsageFargateHourVisitor)
     }
 }

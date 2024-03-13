@@ -11,6 +11,7 @@ pub enum ServiceDefinitionSchemaVersions {
     V2,
     V2_1,
     V2_2,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for ServiceDefinitionSchemaVersions {
@@ -20,6 +21,7 @@ impl ToString for ServiceDefinitionSchemaVersions {
             Self::V2 => String::from("v2"),
             Self::V2_1 => String::from("v2.1"),
             Self::V2_2 => String::from("v2.2"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -30,6 +32,7 @@ impl Serialize for ServiceDefinitionSchemaVersions {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -46,12 +49,9 @@ impl<'de> Deserialize<'de> for ServiceDefinitionSchemaVersions {
             "v2" => Self::V2,
             "v2.1" => Self::V2_1,
             "v2.2" => Self::V2_2,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

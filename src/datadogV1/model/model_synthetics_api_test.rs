@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// Object containing details about a Synthetic API test.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SyntheticsAPITest {
     /// Configuration object for a Synthetic API test.
     #[serde(rename = "config")]
@@ -44,6 +46,9 @@ pub struct SyntheticsAPITest {
     /// Type of the Synthetic test, `api`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV1::model::SyntheticsAPITestType,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl SyntheticsAPITest {
@@ -67,6 +72,7 @@ impl SyntheticsAPITest {
             subtype: None,
             tags: None,
             type_,
+            _unparsed: false,
         }
     }
 
@@ -93,5 +99,143 @@ impl SyntheticsAPITest {
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
+    }
+}
+
+impl<'de> Deserialize<'de> for SyntheticsAPITest {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct SyntheticsAPITestVisitor;
+        impl<'a> Visitor<'a> for SyntheticsAPITestVisitor {
+            type Value = SyntheticsAPITest;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut config: Option<crate::datadogV1::model::SyntheticsAPITestConfig> = None;
+                let mut locations: Option<Vec<String>> = None;
+                let mut message: Option<String> = None;
+                let mut monitor_id: Option<i64> = None;
+                let mut name: Option<String> = None;
+                let mut options: Option<crate::datadogV1::model::SyntheticsTestOptions> = None;
+                let mut public_id: Option<String> = None;
+                let mut status: Option<crate::datadogV1::model::SyntheticsTestPauseStatus> = None;
+                let mut subtype: Option<crate::datadogV1::model::SyntheticsTestDetailsSubType> =
+                    None;
+                let mut tags: Option<Vec<String>> = None;
+                let mut type_: Option<crate::datadogV1::model::SyntheticsAPITestType> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "config" => {
+                            config = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "locations" => {
+                            locations = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "message" => {
+                            message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "monitor_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            monitor_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "name" => {
+                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "options" => {
+                            options = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "public_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            public_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "status" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _status) = status {
+                                match _status {
+                                    crate::datadogV1::model::SyntheticsTestPauseStatus::UnparsedObject(_status) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "subtype" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            subtype = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _subtype) = subtype {
+                                match _subtype {
+                                    crate::datadogV1::model::SyntheticsTestDetailsSubType::UnparsedObject(_subtype) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "type" => {
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _type_) = type_ {
+                                match _type_ {
+                                    crate::datadogV1::model::SyntheticsAPITestType::UnparsedObject(_type_) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        &_ => {}
+                    }
+                }
+                let config = config.ok_or_else(|| M::Error::missing_field("config"))?;
+                let locations = locations.ok_or_else(|| M::Error::missing_field("locations"))?;
+                let message = message.ok_or_else(|| M::Error::missing_field("message"))?;
+                let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
+                let options = options.ok_or_else(|| M::Error::missing_field("options"))?;
+                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
+
+                let content = SyntheticsAPITest {
+                    config,
+                    locations,
+                    message,
+                    monitor_id,
+                    name,
+                    options,
+                    public_id,
+                    status,
+                    subtype,
+                    tags,
+                    type_,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(SyntheticsAPITestVisitor)
     }
 }

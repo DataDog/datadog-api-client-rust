@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// Facets
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SearchSLOResponseDataAttributesFacets {
     /// All tags associated with an SLO.
     #[serde(rename = "all_tags")]
@@ -41,6 +43,9 @@ pub struct SearchSLOResponseDataAttributesFacets {
     #[serde(rename = "timeframe")]
     pub timeframe:
         Option<Vec<crate::datadogV1::model::SearchSLOResponseDataAttributesFacetsObjectString>>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl SearchSLOResponseDataAttributesFacets {
@@ -54,6 +59,7 @@ impl SearchSLOResponseDataAttributesFacets {
             target: None,
             team_tags: None,
             timeframe: None,
+            _unparsed: false,
         }
     }
 
@@ -125,5 +131,124 @@ impl SearchSLOResponseDataAttributesFacets {
 impl Default for SearchSLOResponseDataAttributesFacets {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for SearchSLOResponseDataAttributesFacets {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct SearchSLOResponseDataAttributesFacetsVisitor;
+        impl<'a> Visitor<'a> for SearchSLOResponseDataAttributesFacetsVisitor {
+            type Value = SearchSLOResponseDataAttributesFacets;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut all_tags: Option<
+                    Vec<crate::datadogV1::model::SearchSLOResponseDataAttributesFacetsObjectString>,
+                > = None;
+                let mut creator_name: Option<
+                    Vec<crate::datadogV1::model::SearchSLOResponseDataAttributesFacetsObjectString>,
+                > = None;
+                let mut env_tags: Option<
+                    Vec<crate::datadogV1::model::SearchSLOResponseDataAttributesFacetsObjectString>,
+                > = None;
+                let mut service_tags: Option<
+                    Vec<crate::datadogV1::model::SearchSLOResponseDataAttributesFacetsObjectString>,
+                > = None;
+                let mut slo_type: Option<
+                    Vec<crate::datadogV1::model::SearchSLOResponseDataAttributesFacetsObjectInt>,
+                > = None;
+                let mut target: Option<
+                    Vec<crate::datadogV1::model::SearchSLOResponseDataAttributesFacetsObjectInt>,
+                > = None;
+                let mut team_tags: Option<
+                    Vec<crate::datadogV1::model::SearchSLOResponseDataAttributesFacetsObjectString>,
+                > = None;
+                let mut timeframe: Option<
+                    Vec<crate::datadogV1::model::SearchSLOResponseDataAttributesFacetsObjectString>,
+                > = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "all_tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            all_tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "creator_name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            creator_name =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "env_tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            env_tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "service_tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            service_tags =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "slo_type" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            slo_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "target" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            target = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "team_tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            team_tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "timeframe" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            timeframe = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+
+                let content = SearchSLOResponseDataAttributesFacets {
+                    all_tags,
+                    creator_name,
+                    env_tags,
+                    service_tags,
+                    slo_type,
+                    target,
+                    team_tags,
+                    timeframe,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(SearchSLOResponseDataAttributesFacetsVisitor)
     }
 }

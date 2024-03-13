@@ -43,6 +43,7 @@ pub enum UsageAttributionSort {
     APPSEC_FARGATE_PERCENTAGE,
     ESTIMATED_RUM_USAGE_ATTRIBUTION_USAGE,
     ESTIMATED_RUM_USAGE_ATTRIBUTION_PERCENTAGE,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for UsageAttributionSort {
@@ -96,6 +97,7 @@ impl ToString for UsageAttributionSort {
             Self::ESTIMATED_RUM_USAGE_ATTRIBUTION_PERCENTAGE => {
                 String::from("estimated_rum_usage_attribution_percentage")
             }
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -106,6 +108,7 @@ impl Serialize for UsageAttributionSort {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -156,12 +159,9 @@ impl<'de> Deserialize<'de> for UsageAttributionSort {
             "estimated_rum_usage_attribution_percentage" => {
                 Self::ESTIMATED_RUM_USAGE_ATTRIBUTION_PERCENTAGE
             }
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

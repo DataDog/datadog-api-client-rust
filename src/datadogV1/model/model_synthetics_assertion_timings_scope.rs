@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum SyntheticsAssertionTimingsScope {
     ALL,
     WITHOUT_DNS,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsAssertionTimingsScope {
@@ -16,6 +17,7 @@ impl ToString for SyntheticsAssertionTimingsScope {
         match self {
             Self::ALL => String::from("all"),
             Self::WITHOUT_DNS => String::from("withoutDNS"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -26,6 +28,7 @@ impl Serialize for SyntheticsAssertionTimingsScope {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -40,12 +43,9 @@ impl<'de> Deserialize<'de> for SyntheticsAssertionTimingsScope {
         Ok(match s.as_str() {
             "all" => Self::ALL,
             "withoutDNS" => Self::WITHOUT_DNS,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

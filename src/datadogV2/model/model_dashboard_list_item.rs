@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// A dashboard within a list.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DashboardListItem {
     /// Creator of the object.
     #[serde(rename = "author")]
@@ -55,6 +57,9 @@ pub struct DashboardListItem {
     /// URL path to the dashboard.
     #[serde(rename = "url")]
     pub url: Option<String>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl DashboardListItem {
@@ -74,6 +79,7 @@ impl DashboardListItem {
             title: None,
             type_,
             url: None,
+            _unparsed: false,
         }
     }
 
@@ -135,5 +141,154 @@ impl DashboardListItem {
     pub fn url(mut self, value: String) -> Self {
         self.url = Some(value);
         self
+    }
+}
+
+impl<'de> Deserialize<'de> for DashboardListItem {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct DashboardListItemVisitor;
+        impl<'a> Visitor<'a> for DashboardListItemVisitor {
+            type Value = DashboardListItem;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut author: Option<crate::datadogV2::model::Creator> = None;
+                let mut created: Option<String> = None;
+                let mut icon: Option<Option<String>> = None;
+                let mut id: Option<String> = None;
+                let mut integration_id: Option<Option<String>> = None;
+                let mut is_favorite: Option<bool> = None;
+                let mut is_read_only: Option<bool> = None;
+                let mut is_shared: Option<bool> = None;
+                let mut modified: Option<String> = None;
+                let mut popularity: Option<i32> = None;
+                let mut tags: Option<Option<Vec<String>>> = None;
+                let mut title: Option<String> = None;
+                let mut type_: Option<crate::datadogV2::model::DashboardType> = None;
+                let mut url: Option<String> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "author" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            author = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "created" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            created = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "icon" => {
+                            icon = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "id" => {
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "integration_id" => {
+                            integration_id =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "is_favorite" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            is_favorite =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "is_read_only" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            is_read_only =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "is_shared" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            is_shared = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "modified" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            modified = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "popularity" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            popularity = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "tags" => {
+                            tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "title" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "type" => {
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _type_) = type_ {
+                                match _type_ {
+                                    crate::datadogV2::model::DashboardType::UnparsedObject(
+                                        _type_,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "url" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            url = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
+                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
+
+                let content = DashboardListItem {
+                    author,
+                    created,
+                    icon,
+                    id,
+                    integration_id,
+                    is_favorite,
+                    is_read_only,
+                    is_shared,
+                    modified,
+                    popularity,
+                    tags,
+                    title,
+                    type_,
+                    url,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(DashboardListItemVisitor)
     }
 }

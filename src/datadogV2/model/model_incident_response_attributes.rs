@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// The incident's attributes from a response.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct IncidentResponseAttributes {
     /// Timestamp of when the incident was archived.
     #[serde(
@@ -123,6 +125,9 @@ pub struct IncidentResponseAttributes {
         with = "::serde_with::rust::double_option"
     )]
     pub visibility: Option<Option<String>>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl IncidentResponseAttributes {
@@ -151,6 +156,7 @@ impl IncidentResponseAttributes {
             time_to_resolve: None,
             title,
             visibility: None,
+            _unparsed: false,
         }
     }
 
@@ -271,5 +277,221 @@ impl IncidentResponseAttributes {
     pub fn visibility(mut self, value: Option<String>) -> Self {
         self.visibility = Some(value);
         self
+    }
+}
+
+impl<'de> Deserialize<'de> for IncidentResponseAttributes {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct IncidentResponseAttributesVisitor;
+        impl<'a> Visitor<'a> for IncidentResponseAttributesVisitor {
+            type Value = IncidentResponseAttributes;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut archived: Option<Option<String>> = None;
+                let mut case_id: Option<Option<i64>> = None;
+                let mut created: Option<String> = None;
+                let mut customer_impact_duration: Option<i64> = None;
+                let mut customer_impact_end: Option<Option<String>> = None;
+                let mut customer_impact_scope: Option<Option<String>> = None;
+                let mut customer_impact_start: Option<Option<String>> = None;
+                let mut customer_impacted: Option<bool> = None;
+                let mut detected: Option<Option<String>> = None;
+                let mut fields: Option<
+                    std::collections::BTreeMap<
+                        String,
+                        crate::datadogV2::model::IncidentFieldAttributes,
+                    >,
+                > = None;
+                let mut modified: Option<String> = None;
+                let mut non_datadog_creator: Option<
+                    Option<crate::datadogV2::model::IncidentNonDatadogCreator>,
+                > = None;
+                let mut notification_handles: Option<
+                    Option<Vec<crate::datadogV2::model::IncidentNotificationHandle>>,
+                > = None;
+                let mut public_id: Option<i64> = None;
+                let mut resolved: Option<Option<String>> = None;
+                let mut severity: Option<crate::datadogV2::model::IncidentSeverity> = None;
+                let mut state: Option<Option<String>> = None;
+                let mut time_to_detect: Option<i64> = None;
+                let mut time_to_internal_response: Option<i64> = None;
+                let mut time_to_repair: Option<i64> = None;
+                let mut time_to_resolve: Option<i64> = None;
+                let mut title: Option<String> = None;
+                let mut visibility: Option<Option<String>> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "archived" => {
+                            archived = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "case_id" => {
+                            case_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "created" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            created = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "customer_impact_duration" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            customer_impact_duration =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "customer_impact_end" => {
+                            customer_impact_end =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "customer_impact_scope" => {
+                            customer_impact_scope =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "customer_impact_start" => {
+                            customer_impact_start =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "customer_impacted" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            customer_impacted =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "detected" => {
+                            detected = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "fields" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            fields = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "modified" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            modified = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "non_datadog_creator" => {
+                            non_datadog_creator =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "notification_handles" => {
+                            notification_handles =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "public_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            public_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "resolved" => {
+                            resolved = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "severity" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            severity = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _severity) = severity {
+                                match _severity {
+                                    crate::datadogV2::model::IncidentSeverity::UnparsedObject(
+                                        _severity,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "state" => {
+                            state = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "time_to_detect" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            time_to_detect =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "time_to_internal_response" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            time_to_internal_response =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "time_to_repair" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            time_to_repair =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "time_to_resolve" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            time_to_resolve =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "title" => {
+                            title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "visibility" => {
+                            visibility = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+                let title = title.ok_or_else(|| M::Error::missing_field("title"))?;
+
+                let content = IncidentResponseAttributes {
+                    archived,
+                    case_id,
+                    created,
+                    customer_impact_duration,
+                    customer_impact_end,
+                    customer_impact_scope,
+                    customer_impact_start,
+                    customer_impacted,
+                    detected,
+                    fields,
+                    modified,
+                    non_datadog_creator,
+                    notification_handles,
+                    public_id,
+                    resolved,
+                    severity,
+                    state,
+                    time_to_detect,
+                    time_to_internal_response,
+                    time_to_repair,
+                    time_to_resolve,
+                    title,
+                    visibility,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(IncidentResponseAttributesVisitor)
     }
 }

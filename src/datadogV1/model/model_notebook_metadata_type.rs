@@ -12,6 +12,7 @@ pub enum NotebookMetadataType {
     INVESTIGATION,
     DOCUMENTATION,
     REPORT,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for NotebookMetadataType {
@@ -22,6 +23,7 @@ impl ToString for NotebookMetadataType {
             Self::INVESTIGATION => String::from("investigation"),
             Self::DOCUMENTATION => String::from("documentation"),
             Self::REPORT => String::from("report"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -32,6 +34,7 @@ impl Serialize for NotebookMetadataType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -49,12 +52,9 @@ impl<'de> Deserialize<'de> for NotebookMetadataType {
             "investigation" => Self::INVESTIGATION,
             "documentation" => Self::DOCUMENTATION,
             "report" => Self::REPORT,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

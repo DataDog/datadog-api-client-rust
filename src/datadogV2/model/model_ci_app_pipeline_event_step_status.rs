@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum CIAppPipelineEventStepStatus {
     SUCCESS,
     ERROR,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for CIAppPipelineEventStepStatus {
@@ -16,6 +17,7 @@ impl ToString for CIAppPipelineEventStepStatus {
         match self {
             Self::SUCCESS => String::from("success"),
             Self::ERROR => String::from("error"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -26,6 +28,7 @@ impl Serialize for CIAppPipelineEventStepStatus {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -40,12 +43,9 @@ impl<'de> Deserialize<'de> for CIAppPipelineEventStepStatus {
         Ok(match s.as_str() {
             "success" => Self::SUCCESS,
             "error" => Self::ERROR,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

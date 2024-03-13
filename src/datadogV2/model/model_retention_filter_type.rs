@@ -8,12 +8,14 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum RetentionFilterType {
     SPANS_SAMPLING_PROCESSOR,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for RetentionFilterType {
     fn to_string(&self) -> String {
         match self {
             Self::SPANS_SAMPLING_PROCESSOR => String::from("spans-sampling-processor"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -24,6 +26,7 @@ impl Serialize for RetentionFilterType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -37,12 +40,9 @@ impl<'de> Deserialize<'de> for RetentionFilterType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "spans-sampling-processor" => Self::SPANS_SAMPLING_PROCESSOR,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

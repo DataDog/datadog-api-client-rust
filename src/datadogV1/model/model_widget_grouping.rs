@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum WidgetGrouping {
     CHECK,
     CLUSTER,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetGrouping {
@@ -16,6 +17,7 @@ impl ToString for WidgetGrouping {
         match self {
             Self::CHECK => String::from("check"),
             Self::CLUSTER => String::from("cluster"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -26,6 +28,7 @@ impl Serialize for WidgetGrouping {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -40,12 +43,9 @@ impl<'de> Deserialize<'de> for WidgetGrouping {
         Ok(match s.as_str() {
             "check" => Self::CHECK,
             "cluster" => Self::CLUSTER,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

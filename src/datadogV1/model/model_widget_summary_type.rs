@@ -10,6 +10,7 @@ pub enum WidgetSummaryType {
     MONITORS,
     GROUPS,
     COMBINED,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetSummaryType {
@@ -18,6 +19,7 @@ impl ToString for WidgetSummaryType {
             Self::MONITORS => String::from("monitors"),
             Self::GROUPS => String::from("groups"),
             Self::COMBINED => String::from("combined"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -28,6 +30,7 @@ impl Serialize for WidgetSummaryType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -43,12 +46,9 @@ impl<'de> Deserialize<'de> for WidgetSummaryType {
             "monitors" => Self::MONITORS,
             "groups" => Self::GROUPS,
             "combined" => Self::COMBINED,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

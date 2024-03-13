@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// JSON object containing all span attributes and their associated values.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SpansAttributes {
     /// JSON object of attributes from your span.
     #[serde(rename = "attributes")]
@@ -62,6 +64,9 @@ pub struct SpansAttributes {
     /// The type of the span.
     #[serde(rename = "type")]
     pub type_: Option<String>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl SpansAttributes {
@@ -84,6 +89,7 @@ impl SpansAttributes {
             tags: None,
             trace_id: None,
             type_: None,
+            _unparsed: false,
         }
     }
 
@@ -179,5 +185,187 @@ impl SpansAttributes {
 impl Default for SpansAttributes {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for SpansAttributes {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct SpansAttributesVisitor;
+        impl<'a> Visitor<'a> for SpansAttributesVisitor {
+            type Value = SpansAttributes;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut attributes: Option<std::collections::BTreeMap<String, serde_json::Value>> =
+                    None;
+                let mut custom: Option<std::collections::BTreeMap<String, serde_json::Value>> =
+                    None;
+                let mut end_timestamp: Option<String> = None;
+                let mut env: Option<String> = None;
+                let mut host: Option<String> = None;
+                let mut ingestion_reason: Option<String> = None;
+                let mut parent_id: Option<String> = None;
+                let mut resource_hash: Option<String> = None;
+                let mut resource_name: Option<String> = None;
+                let mut retained_by: Option<String> = None;
+                let mut service: Option<String> = None;
+                let mut single_span: Option<bool> = None;
+                let mut span_id: Option<String> = None;
+                let mut start_timestamp: Option<String> = None;
+                let mut tags: Option<Vec<String>> = None;
+                let mut trace_id: Option<String> = None;
+                let mut type_: Option<String> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "attributes" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "custom" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            custom = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "end_timestamp" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            end_timestamp =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "env" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            env = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "host" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            host = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "ingestion_reason" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ingestion_reason =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "parent_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            parent_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "resource_hash" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            resource_hash =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "resource_name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            resource_name =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "retained_by" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            retained_by =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "service" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            service = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "single_span" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            single_span =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "span_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            span_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "start_timestamp" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            start_timestamp =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "trace_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            trace_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "type" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+
+                let content = SpansAttributes {
+                    attributes,
+                    custom,
+                    end_timestamp,
+                    env,
+                    host,
+                    ingestion_reason,
+                    parent_id,
+                    resource_hash,
+                    resource_name,
+                    retained_by,
+                    service,
+                    single_span,
+                    span_id,
+                    start_timestamp,
+                    tags,
+                    trace_id,
+                    type_,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(SpansAttributesVisitor)
     }
 }

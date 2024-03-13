@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum SunburstWidgetLegendInlineAutomaticType {
     INLINE,
     AUTOMATIC,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SunburstWidgetLegendInlineAutomaticType {
@@ -16,6 +17,7 @@ impl ToString for SunburstWidgetLegendInlineAutomaticType {
         match self {
             Self::INLINE => String::from("inline"),
             Self::AUTOMATIC => String::from("automatic"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -26,6 +28,7 @@ impl Serialize for SunburstWidgetLegendInlineAutomaticType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -40,12 +43,9 @@ impl<'de> Deserialize<'de> for SunburstWidgetLegendInlineAutomaticType {
         Ok(match s.as_str() {
             "inline" => Self::INLINE,
             "automatic" => Self::AUTOMATIC,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

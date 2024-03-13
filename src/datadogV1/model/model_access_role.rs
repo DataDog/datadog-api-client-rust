@@ -11,6 +11,7 @@ pub enum AccessRole {
     ADMIN,
     READ_ONLY,
     ERROR,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for AccessRole {
@@ -20,6 +21,7 @@ impl ToString for AccessRole {
             Self::ADMIN => String::from("adm"),
             Self::READ_ONLY => String::from("ro"),
             Self::ERROR => String::from("ERROR"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -30,6 +32,7 @@ impl Serialize for AccessRole {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -46,12 +49,9 @@ impl<'de> Deserialize<'de> for AccessRole {
             "adm" => Self::ADMIN,
             "ro" => Self::READ_ONLY,
             "ERROR" => Self::ERROR,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

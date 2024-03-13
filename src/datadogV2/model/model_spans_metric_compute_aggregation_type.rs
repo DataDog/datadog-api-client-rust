@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum SpansMetricComputeAggregationType {
     COUNT,
     DISTRIBUTION,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SpansMetricComputeAggregationType {
@@ -16,6 +17,7 @@ impl ToString for SpansMetricComputeAggregationType {
         match self {
             Self::COUNT => String::from("count"),
             Self::DISTRIBUTION => String::from("distribution"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -26,6 +28,7 @@ impl Serialize for SpansMetricComputeAggregationType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -40,12 +43,9 @@ impl<'de> Deserialize<'de> for SpansMetricComputeAggregationType {
         Ok(match s.as_str() {
             "count" => Self::COUNT,
             "distribution" => Self::DISTRIBUTION,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

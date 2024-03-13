@@ -13,6 +13,7 @@ pub enum SyntheticsTestRequestBodyType {
     TEXT_HTML,
     APPLICATION_X_WWW_FORM_URLENCODED,
     GRAPHQL,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsTestRequestBodyType {
@@ -26,6 +27,7 @@ impl ToString for SyntheticsTestRequestBodyType {
                 String::from("application/x-www-form-urlencoded")
             }
             Self::GRAPHQL => String::from("graphql"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -36,6 +38,7 @@ impl Serialize for SyntheticsTestRequestBodyType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -54,12 +57,9 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequestBodyType {
             "text/html" => Self::TEXT_HTML,
             "application/x-www-form-urlencoded" => Self::APPLICATION_X_WWW_FORM_URLENCODED,
             "graphql" => Self::GRAPHQL,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

@@ -1,8 +1,8 @@
-use serde::{Deserialize, Serialize};
+use serde::{Deserializer, Deserialize, Serialize};
 
 {{ model.description | block_comment }}
 #[non_exhaustive]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum {{name}} {
     {%- for oneOf in model.oneOf %}
@@ -14,4 +14,34 @@ pub enum {{name}} {
 	{{attributeName}}(Box<{{dataType}}>),
 	{%- endif %}
     {%- endfor%}
+	UnparsedObject(crate::datadog::UnparsedObject),
+}
+
+impl<'de> Deserialize<'de> for {{ name }} {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
+
+		{%- for oneOf in model.oneOf %}
+		{%- set dataType = get_type(oneOf, render_nullable=false, render_option=false, render_box=false, version=version) %}
+		{%- set attributeName = (get_name(oneOf) or dataType)|upperfirst %}
+
+		{%- if oneOf | is_primitive or oneOf.type == "array" %}
+		if let Ok(_v) = serde_json::from_value::<{{ dataType }}>(value.clone()) {
+            return Ok({{ name }}::{{ attributeName }}(_v))
+        }
+		{%- else %}
+		if let Ok(_v) = serde_json::from_value::<Box<{{ dataType }}>>(value.clone()) {
+			if !_v._unparsed {
+                return Ok({{ name }}::{{ attributeName }}(_v));
+            }
+        }
+		{%- endif %}
+
+		{%- endfor%}
+	
+        return Ok({{ name }}::UnparsedObject(crate::datadog::UnparsedObject { value }));
+    }
 }

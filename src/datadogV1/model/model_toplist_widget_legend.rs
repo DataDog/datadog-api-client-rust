@@ -10,6 +10,7 @@ pub enum ToplistWidgetLegend {
     AUTOMATIC,
     INLINE,
     NONE,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for ToplistWidgetLegend {
@@ -18,6 +19,7 @@ impl ToString for ToplistWidgetLegend {
             Self::AUTOMATIC => String::from("automatic"),
             Self::INLINE => String::from("inline"),
             Self::NONE => String::from("none"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -28,6 +30,7 @@ impl Serialize for ToplistWidgetLegend {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -43,12 +46,9 @@ impl<'de> Deserialize<'de> for ToplistWidgetLegend {
             "automatic" => Self::AUTOMATIC,
             "inline" => Self::INLINE,
             "none" => Self::NONE,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

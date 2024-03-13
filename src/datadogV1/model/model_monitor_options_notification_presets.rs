@@ -11,6 +11,7 @@ pub enum MonitorOptionsNotificationPresets {
     HIDE_QUERY,
     HIDE_HANDLES,
     HIDE_ALL,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for MonitorOptionsNotificationPresets {
@@ -20,6 +21,7 @@ impl ToString for MonitorOptionsNotificationPresets {
             Self::HIDE_QUERY => String::from("hide_query"),
             Self::HIDE_HANDLES => String::from("hide_handles"),
             Self::HIDE_ALL => String::from("hide_all"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -30,6 +32,7 @@ impl Serialize for MonitorOptionsNotificationPresets {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -46,12 +49,9 @@ impl<'de> Deserialize<'de> for MonitorOptionsNotificationPresets {
             "hide_query" => Self::HIDE_QUERY,
             "hide_handles" => Self::HIDE_HANDLES,
             "hide_all" => Self::HIDE_ALL,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

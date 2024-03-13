@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// Logs that are sent over HTTP.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct HTTPLogItem {
     /// The integration name associated with your log: the technology from which the log originated.
     /// When it matches an integration name, Datadog automatically installs the corresponding parsers and facets.
@@ -32,6 +34,9 @@ pub struct HTTPLogItem {
     pub service: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, String>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl HTTPLogItem {
@@ -43,6 +48,7 @@ impl HTTPLogItem {
             message,
             service: None,
             additional_properties: std::collections::BTreeMap::new(),
+            _unparsed: false,
         }
     }
 
@@ -72,5 +78,87 @@ impl HTTPLogItem {
     ) -> Self {
         self.additional_properties = value;
         self
+    }
+}
+
+impl<'de> Deserialize<'de> for HTTPLogItem {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct HTTPLogItemVisitor;
+        impl<'a> Visitor<'a> for HTTPLogItemVisitor {
+            type Value = HTTPLogItem;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut ddsource: Option<String> = None;
+                let mut ddtags: Option<String> = None;
+                let mut hostname: Option<String> = None;
+                let mut message: Option<String> = None;
+                let mut service: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<String, String> =
+                    std::collections::BTreeMap::new();
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "ddsource" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ddsource = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "ddtags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ddtags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "hostname" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            hostname = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "message" => {
+                            message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "service" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            service = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
+                    }
+                }
+                let message = message.ok_or_else(|| M::Error::missing_field("message"))?;
+
+                let content = HTTPLogItem {
+                    ddsource,
+                    ddtags,
+                    hostname,
+                    message,
+                    service,
+                    additional_properties,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(HTTPLogItemVisitor)
     }
 }

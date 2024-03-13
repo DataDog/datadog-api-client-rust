@@ -13,6 +13,7 @@ pub enum SecurityMonitoringRuleDetectionMethod {
     IMPOSSIBLE_TRAVEL,
     HARDCODED,
     THIRD_PARTY,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SecurityMonitoringRuleDetectionMethod {
@@ -24,6 +25,7 @@ impl ToString for SecurityMonitoringRuleDetectionMethod {
             Self::IMPOSSIBLE_TRAVEL => String::from("impossible_travel"),
             Self::HARDCODED => String::from("hardcoded"),
             Self::THIRD_PARTY => String::from("third_party"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -34,6 +36,7 @@ impl Serialize for SecurityMonitoringRuleDetectionMethod {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -52,12 +55,9 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleDetectionMethod {
             "impossible_travel" => Self::IMPOSSIBLE_TRAVEL,
             "hardcoded" => Self::HARDCODED,
             "third_party" => Self::THIRD_PARTY,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

@@ -8,12 +8,14 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ProjectedCostType {
     PROJECt_COST,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for ProjectedCostType {
     fn to_string(&self) -> String {
         match self {
             Self::PROJECt_COST => String::from("projected_cost"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -24,6 +26,7 @@ impl Serialize for ProjectedCostType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -37,12 +40,9 @@ impl<'de> Deserialize<'de> for ProjectedCostType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "projected_cost" => Self::PROJECt_COST,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

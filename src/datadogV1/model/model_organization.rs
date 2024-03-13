@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// Create, edit, and manage organizations.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct Organization {
     /// A JSON array of billing type.
     #[deprecated]
@@ -35,6 +37,9 @@ pub struct Organization {
     /// Only available for MSP customers. Allows child organizations to be created on a trial plan.
     #[serde(rename = "trial")]
     pub trial: Option<bool>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl Organization {
@@ -49,6 +54,7 @@ impl Organization {
             settings: None,
             subscription: None,
             trial: None,
+            _unparsed: false,
         }
     }
 
@@ -107,5 +113,109 @@ impl Organization {
 impl Default for Organization {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for Organization {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct OrganizationVisitor;
+        impl<'a> Visitor<'a> for OrganizationVisitor {
+            type Value = Organization;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut billing: Option<crate::datadogV1::model::OrganizationBilling> = None;
+                let mut created: Option<String> = None;
+                let mut description: Option<String> = None;
+                let mut name: Option<String> = None;
+                let mut public_id: Option<String> = None;
+                let mut settings: Option<crate::datadogV1::model::OrganizationSettings> = None;
+                let mut subscription: Option<crate::datadogV1::model::OrganizationSubscription> =
+                    None;
+                let mut trial: Option<bool> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "billing" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            billing = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "created" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            created = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            description =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "public_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            public_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "settings" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            settings = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "subscription" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            subscription =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "trial" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            trial = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+
+                let content = Organization {
+                    billing,
+                    created,
+                    description,
+                    name,
+                    public_id,
+                    settings,
+                    subscription,
+                    trial,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(OrganizationVisitor)
     }
 }

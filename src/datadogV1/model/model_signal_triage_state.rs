@@ -10,6 +10,7 @@ pub enum SignalTriageState {
     OPEN,
     ARCHIVED,
     UNDER_REVIEW,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SignalTriageState {
@@ -18,6 +19,7 @@ impl ToString for SignalTriageState {
             Self::OPEN => String::from("open"),
             Self::ARCHIVED => String::from("archived"),
             Self::UNDER_REVIEW => String::from("under_review"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -28,6 +30,7 @@ impl Serialize for SignalTriageState {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -43,12 +46,9 @@ impl<'de> Deserialize<'de> for SignalTriageState {
             "open" => Self::OPEN,
             "archived" => Self::ARCHIVED,
             "under_review" => Self::UNDER_REVIEW,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

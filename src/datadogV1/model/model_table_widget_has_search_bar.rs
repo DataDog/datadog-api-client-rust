@@ -10,6 +10,7 @@ pub enum TableWidgetHasSearchBar {
     ALWAYS,
     NEVER,
     AUTO,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for TableWidgetHasSearchBar {
@@ -18,6 +19,7 @@ impl ToString for TableWidgetHasSearchBar {
             Self::ALWAYS => String::from("always"),
             Self::NEVER => String::from("never"),
             Self::AUTO => String::from("auto"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -28,6 +30,7 @@ impl Serialize for TableWidgetHasSearchBar {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -43,12 +46,9 @@ impl<'de> Deserialize<'de> for TableWidgetHasSearchBar {
             "always" => Self::ALWAYS,
             "never" => Self::NEVER,
             "auto" => Self::AUTO,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

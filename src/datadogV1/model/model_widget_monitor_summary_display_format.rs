@@ -10,6 +10,7 @@ pub enum WidgetMonitorSummaryDisplayFormat {
     COUNTS,
     COUNTS_AND_LIST,
     LIST,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetMonitorSummaryDisplayFormat {
@@ -18,6 +19,7 @@ impl ToString for WidgetMonitorSummaryDisplayFormat {
             Self::COUNTS => String::from("counts"),
             Self::COUNTS_AND_LIST => String::from("countsAndList"),
             Self::LIST => String::from("list"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -28,6 +30,7 @@ impl Serialize for WidgetMonitorSummaryDisplayFormat {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -43,12 +46,9 @@ impl<'de> Deserialize<'de> for WidgetMonitorSummaryDisplayFormat {
             "counts" => Self::COUNTS,
             "countsAndList" => Self::COUNTS_AND_LIST,
             "list" => Self::LIST,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

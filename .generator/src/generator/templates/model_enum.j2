@@ -10,6 +10,7 @@ pub enum {{ name }} {
 {%- for index, value in enumerate(model.enum) %}
 	{{ model["x-enum-varnames"][index] or value.upper() }},
 {%- endfor %}
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 {%- if not model["type"] == "integer" %}
@@ -20,6 +21,7 @@ impl ToString for {{ name }} {
 {%- for index, value in enumerate(model.enum) %}
             Self::{{model["x-enum-varnames"][index] or value.upper()}} => String::from("{{value}}"),
 {%- endfor %}
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -31,6 +33,7 @@ impl Serialize for {{ name }} {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
         {%- if model["type"] == "string"%}
             _ => serializer.serialize_str(self.to_string().as_str()),
         {%- else %}
@@ -52,12 +55,7 @@ impl<'de> Deserialize<'de> for {{ name }} {
             {%- for index, value in enumerate(model.enum) %}
             {%- if model["type"] == "string" %}"{%- endif %}{{ value }}{%- if model["type"] == "string" %}"{%- endif %} => Self::{{ model["x-enum-varnames"][index] or value.upper() }},
             {%- endfor %}
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::{%- if model["type"] == "string" %}String{%- else %}Number{%- endif %}(s.into()) }),
         })
     }
 }

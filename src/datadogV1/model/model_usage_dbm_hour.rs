@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// Database Monitoring usage for a given organization for a given hour.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct UsageDBMHour {
     /// The total number of Database Monitoring host hours from the start of the given hour’s month until the given hour.
     #[serde(
@@ -32,6 +34,9 @@ pub struct UsageDBMHour {
     /// The organization public ID.
     #[serde(rename = "public_id")]
     pub public_id: Option<String>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl UsageDBMHour {
@@ -42,6 +47,7 @@ impl UsageDBMHour {
             hour: None,
             org_name: None,
             public_id: None,
+            _unparsed: false,
         }
     }
 
@@ -74,5 +80,78 @@ impl UsageDBMHour {
 impl Default for UsageDBMHour {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for UsageDBMHour {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct UsageDBMHourVisitor;
+        impl<'a> Visitor<'a> for UsageDBMHourVisitor {
+            type Value = UsageDBMHour;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut dbm_host_count: Option<Option<i64>> = None;
+                let mut dbm_queries_count: Option<Option<i64>> = None;
+                let mut hour: Option<String> = None;
+                let mut org_name: Option<String> = None;
+                let mut public_id: Option<String> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "dbm_host_count" => {
+                            dbm_host_count =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "dbm_queries_count" => {
+                            dbm_queries_count =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "hour" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            hour = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "org_name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            org_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "public_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            public_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+
+                let content = UsageDBMHour {
+                    dbm_host_count,
+                    dbm_queries_count,
+                    hour,
+                    org_name,
+                    public_id,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(UsageDBMHourVisitor)
     }
 }
