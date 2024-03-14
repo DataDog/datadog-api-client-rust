@@ -113,8 +113,8 @@ jobs:
         with:
           app_id: ${{ secrets.PIPELINE_GITHUB_APP_ID }}
           private_key: ${{ secrets.PIPELINE_GITHUB_APP_PRIVATE_KEY }}
-          repositories: >-
-            ["DataDog/datadog-api-spec", "DataDog/datadog-api-client-rust"]
+          installation_retrieval_mode: repository
+          installation_retrieval_payload: DataDog/datadog-api-spec
       - name: Post status check
         uses: DataDog/github-actions/post-status-check@v2
         with:
