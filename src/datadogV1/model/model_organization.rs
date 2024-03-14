@@ -200,6 +200,7 @@ impl<'de> Deserialize<'de> for Organization {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = Organization {
                     billing,
                     created,

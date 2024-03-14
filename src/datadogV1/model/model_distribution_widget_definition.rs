@@ -272,6 +272,7 @@ impl<'de> Deserialize<'de> for DistributionWidgetDefinition {
                 let requests = requests.ok_or_else(|| M::Error::missing_field("requests"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
+                #[allow(deprecated)]
                 let content = DistributionWidgetDefinition {
                     custom_links,
                     legend_size,

@@ -152,15 +152,22 @@ impl<'de> Deserialize<'de> for {{ name }} {
                     }
                 }
 
+                {%- set ns = namespace(hasDeprecated=false) %}
                 {%- for attr, schema in model.get("properties", {}).items() %}
                 {%- set required = attr in model.required %}
                 {%- set propertyName = attr|variable_name %}
                 {%- set nullable = schema.get("nullable", false)%}
+                {%- if schema.deprecated %}
+                {%- set ns.hasDeprecated = true %}
+                {%- endif %}
                 {%- if required %}
                 let {{ propertyName }} = {{ propertyName }}.ok_or_else(|| M::Error::missing_field("{{ propertyName }}"))?;
                 {%- endif %}
                 {%- endfor %}
 
+                {% if ns.hasDeprecated %}
+                #[allow(deprecated)]
+                {% endif%}
                 let content = {{ name }} {
                     {%- for attr, schema in model.get("properties", {}).items() %}
                     {%- set propertyName = attr|variable_name %}

@@ -213,6 +213,7 @@ impl<'de> Deserialize<'de> for RuleAttributes {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = RuleAttributes {
                     category,
                     created_at,

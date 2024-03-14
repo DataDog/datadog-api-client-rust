@@ -346,6 +346,7 @@ impl<'de> Deserialize<'de> for MonitorSummaryWidgetDefinition {
                 let query = query.ok_or_else(|| M::Error::missing_field("query"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
+                #[allow(deprecated)]
                 let content = MonitorSummaryWidgetDefinition {
                     color_preference,
                     count,

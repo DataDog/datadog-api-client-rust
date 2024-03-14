@@ -706,6 +706,7 @@ impl<'de> Deserialize<'de> for MonitorOptions {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = MonitorOptions {
                     aggregation,
                     device_ids,

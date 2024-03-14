@@ -2088,6 +2088,7 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = UsageSummaryResponse {
                     agent_host_top99p_sum,
                     apm_azure_app_service_host_top99p_sum,

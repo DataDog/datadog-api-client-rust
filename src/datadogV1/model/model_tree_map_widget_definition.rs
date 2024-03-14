@@ -215,6 +215,7 @@ impl<'de> Deserialize<'de> for TreeMapWidgetDefinition {
                 let requests = requests.ok_or_else(|| M::Error::missing_field("requests"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
+                #[allow(deprecated)]
                 let content = TreeMapWidgetDefinition {
                     color_by,
                     custom_links,
