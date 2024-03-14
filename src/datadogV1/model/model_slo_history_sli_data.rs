@@ -274,6 +274,7 @@ impl<'de> Deserialize<'de> for SLOHistorySLIData {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = SLOHistorySLIData {
                     error_budget_remaining,
                     errors,

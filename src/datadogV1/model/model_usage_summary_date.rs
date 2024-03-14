@@ -1891,6 +1891,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = UsageSummaryDate {
                     agent_host_top99p,
                     apm_azure_app_service_host_top99p,

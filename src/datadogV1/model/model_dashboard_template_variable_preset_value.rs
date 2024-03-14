@@ -108,6 +108,7 @@ impl<'de> Deserialize<'de> for DashboardTemplateVariablePresetValue {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = DashboardTemplateVariablePresetValue {
                     name,
                     value,

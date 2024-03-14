@@ -211,6 +211,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleQuery {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = SecurityMonitoringStandardRuleQuery {
                     aggregation,
                     distinct_fields,

@@ -207,6 +207,7 @@ impl<'de> Deserialize<'de> for AwsCURConfigAttributes {
                     report_prefix.ok_or_else(|| M::Error::missing_field("report_prefix"))?;
                 let status = status.ok_or_else(|| M::Error::missing_field("status"))?;
 
+                #[allow(deprecated)]
                 let content = AwsCURConfigAttributes {
                     account_id,
                     bucket_name,

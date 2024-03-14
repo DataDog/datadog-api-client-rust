@@ -278,6 +278,7 @@ impl<'de> Deserialize<'de> for SLOHistoryMonitor {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = SLOHistoryMonitor {
                     error_budget_remaining,
                     errors,

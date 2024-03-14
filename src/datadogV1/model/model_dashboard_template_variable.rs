@@ -128,6 +128,7 @@ impl<'de> Deserialize<'de> for DashboardTemplateVariable {
                 }
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
 
+                #[allow(deprecated)]
                 let content = DashboardTemplateVariable {
                     available_values,
                     default,
