@@ -24,6 +24,7 @@ pub enum MonitorType {
     CI_TESTS_ALERT,
     ERROR_TRACKING_ALERT,
     DATABASE_MONITORING_ALERT,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for MonitorType {
@@ -46,6 +47,7 @@ impl ToString for MonitorType {
             Self::CI_TESTS_ALERT => String::from("ci-tests alert"),
             Self::ERROR_TRACKING_ALERT => String::from("error-tracking alert"),
             Self::DATABASE_MONITORING_ALERT => String::from("database-monitoring alert"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -56,6 +58,7 @@ impl Serialize for MonitorType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -85,12 +88,9 @@ impl<'de> Deserialize<'de> for MonitorType {
             "ci-tests alert" => Self::CI_TESTS_ALERT,
             "error-tracking alert" => Self::ERROR_TRACKING_ALERT,
             "database-monitoring alert" => Self::DATABASE_MONITORING_ALERT,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

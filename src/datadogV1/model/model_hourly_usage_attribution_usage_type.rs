@@ -67,6 +67,7 @@ pub enum HourlyUsageAttributionUsageType {
     SNMP_USAGE,
     UNIVERSAL_SERVICE_MONITORING_USAGE,
     VULN_MANAGEMENT_HOSTS_USAGE,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for HourlyUsageAttributionUsageType {
@@ -144,6 +145,7 @@ impl ToString for HourlyUsageAttributionUsageType {
                 String::from("universal_service_monitoring_usage")
             }
             Self::VULN_MANAGEMENT_HOSTS_USAGE => String::from("vuln_management_hosts_usage"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -154,6 +156,7 @@ impl Serialize for HourlyUsageAttributionUsageType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -226,12 +229,9 @@ impl<'de> Deserialize<'de> for HourlyUsageAttributionUsageType {
             "snmp_usage" => Self::SNMP_USAGE,
             "universal_service_monitoring_usage" => Self::UNIVERSAL_SERVICE_MONITORING_USAGE,
             "vuln_management_hosts_usage" => Self::VULN_MANAGEMENT_HOSTS_USAGE,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

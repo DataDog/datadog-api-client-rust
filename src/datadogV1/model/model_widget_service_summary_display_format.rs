@@ -10,6 +10,7 @@ pub enum WidgetServiceSummaryDisplayFormat {
     ONE_COLUMN,
     TWO_COLUMN,
     THREE_COLUMN,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetServiceSummaryDisplayFormat {
@@ -18,6 +19,7 @@ impl ToString for WidgetServiceSummaryDisplayFormat {
             Self::ONE_COLUMN => String::from("one_column"),
             Self::TWO_COLUMN => String::from("two_column"),
             Self::THREE_COLUMN => String::from("three_column"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -28,6 +30,7 @@ impl Serialize for WidgetServiceSummaryDisplayFormat {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -43,12 +46,9 @@ impl<'de> Deserialize<'de> for WidgetServiceSummaryDisplayFormat {
             "one_column" => Self::ONE_COLUMN,
             "two_column" => Self::TWO_COLUMN,
             "three_column" => Self::THREE_COLUMN,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

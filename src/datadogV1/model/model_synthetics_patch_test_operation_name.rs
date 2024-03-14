@@ -13,6 +13,7 @@ pub enum SyntheticsPatchTestOperationName {
     MOVE,
     COPY,
     TEST,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsPatchTestOperationName {
@@ -24,6 +25,7 @@ impl ToString for SyntheticsPatchTestOperationName {
             Self::MOVE => String::from("move"),
             Self::COPY => String::from("copy"),
             Self::TEST => String::from("test"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -34,6 +36,7 @@ impl Serialize for SyntheticsPatchTestOperationName {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -52,12 +55,9 @@ impl<'de> Deserialize<'de> for SyntheticsPatchTestOperationName {
             "move" => Self::MOVE,
             "copy" => Self::COPY,
             "test" => Self::TEST,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

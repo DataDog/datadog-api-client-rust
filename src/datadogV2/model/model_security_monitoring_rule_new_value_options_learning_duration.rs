@@ -10,6 +10,7 @@ pub enum SecurityMonitoringRuleNewValueOptionsLearningDuration {
     ZERO_DAYS,
     ONE_DAY,
     SEVEN_DAYS,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl Serialize for SecurityMonitoringRuleNewValueOptionsLearningDuration {
@@ -18,6 +19,7 @@ impl Serialize for SecurityMonitoringRuleNewValueOptionsLearningDuration {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             Self::ZERO_DAYS => serializer.serialize_i32(0),
             Self::ONE_DAY => serializer.serialize_i32(1),
             Self::SEVEN_DAYS => serializer.serialize_i32(7),
@@ -35,12 +37,9 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleNewValueOptionsLearningDura
             0 => Self::ZERO_DAYS,
             1 => Self::ONE_DAY,
             7 => Self::SEVEN_DAYS,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::Number(s.into()),
+            }),
         })
     }
 }

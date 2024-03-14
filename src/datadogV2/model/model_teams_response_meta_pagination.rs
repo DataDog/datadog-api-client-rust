@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// Teams response metadata.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TeamsResponseMetaPagination {
     /// The first offset.
     #[serde(rename = "first_offset")]
@@ -33,6 +35,9 @@ pub struct TeamsResponseMetaPagination {
     /// Offset type.
     #[serde(rename = "type")]
     pub type_: Option<String>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl TeamsResponseMetaPagination {
@@ -46,6 +51,7 @@ impl TeamsResponseMetaPagination {
             prev_offset: None,
             total: None,
             type_: None,
+            _unparsed: false,
         }
     }
 
@@ -93,5 +99,110 @@ impl TeamsResponseMetaPagination {
 impl Default for TeamsResponseMetaPagination {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for TeamsResponseMetaPagination {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct TeamsResponseMetaPaginationVisitor;
+        impl<'a> Visitor<'a> for TeamsResponseMetaPaginationVisitor {
+            type Value = TeamsResponseMetaPagination;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut first_offset: Option<i64> = None;
+                let mut last_offset: Option<i64> = None;
+                let mut limit: Option<i64> = None;
+                let mut next_offset: Option<i64> = None;
+                let mut offset: Option<i64> = None;
+                let mut prev_offset: Option<i64> = None;
+                let mut total: Option<i64> = None;
+                let mut type_: Option<String> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "first_offset" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            first_offset =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "last_offset" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            last_offset =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "limit" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            limit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "next_offset" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            next_offset =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "offset" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            offset = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "prev_offset" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            prev_offset =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "total" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            total = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "type" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+
+                let content = TeamsResponseMetaPagination {
+                    first_offset,
+                    last_offset,
+                    limit,
+                    next_offset,
+                    offset,
+                    prev_offset,
+                    total,
+                    type_,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(TeamsResponseMetaPaginationVisitor)
     }
 }

@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// Attributes for An AWS CUR config.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AwsCURConfigAttributes {
     /// The AWS account ID.
     #[serde(rename = "account_id")]
@@ -43,6 +45,9 @@ pub struct AwsCURConfigAttributes {
     /// The timestamp when the AWS CUR config status was updated.
     #[serde(rename = "updated_at")]
     pub updated_at: Option<String>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl AwsCURConfigAttributes {
@@ -67,6 +72,7 @@ impl AwsCURConfigAttributes {
             status,
             status_updated_at: None,
             updated_at: None,
+            _unparsed: false,
         }
     }
 
@@ -98,5 +104,129 @@ impl AwsCURConfigAttributes {
     pub fn updated_at(mut self, value: String) -> Self {
         self.updated_at = Some(value);
         self
+    }
+}
+
+impl<'de> Deserialize<'de> for AwsCURConfigAttributes {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct AwsCURConfigAttributesVisitor;
+        impl<'a> Visitor<'a> for AwsCURConfigAttributesVisitor {
+            type Value = AwsCURConfigAttributes;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut account_id: Option<String> = None;
+                let mut bucket_name: Option<String> = None;
+                let mut bucket_region: Option<String> = None;
+                let mut created_at: Option<String> = None;
+                let mut error_messages: Option<Vec<String>> = None;
+                let mut months: Option<i32> = None;
+                let mut report_name: Option<String> = None;
+                let mut report_prefix: Option<String> = None;
+                let mut status: Option<String> = None;
+                let mut status_updated_at: Option<String> = None;
+                let mut updated_at: Option<String> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "account_id" => {
+                            account_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "bucket_name" => {
+                            bucket_name =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "bucket_region" => {
+                            bucket_region =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "created_at" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "error_messages" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            error_messages =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "months" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            months = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "report_name" => {
+                            report_name =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "report_prefix" => {
+                            report_prefix =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "status" => {
+                            status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "status_updated_at" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            status_updated_at =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "updated_at" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+                let account_id = account_id.ok_or_else(|| M::Error::missing_field("account_id"))?;
+                let bucket_name =
+                    bucket_name.ok_or_else(|| M::Error::missing_field("bucket_name"))?;
+                let bucket_region =
+                    bucket_region.ok_or_else(|| M::Error::missing_field("bucket_region"))?;
+                let report_name =
+                    report_name.ok_or_else(|| M::Error::missing_field("report_name"))?;
+                let report_prefix =
+                    report_prefix.ok_or_else(|| M::Error::missing_field("report_prefix"))?;
+                let status = status.ok_or_else(|| M::Error::missing_field("status"))?;
+
+                #[allow(deprecated)]
+                let content = AwsCURConfigAttributes {
+                    account_id,
+                    bucket_name,
+                    bucket_region,
+                    created_at,
+                    error_messages,
+                    months,
+                    report_name,
+                    report_prefix,
+                    status,
+                    status_updated_at,
+                    updated_at,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(AwsCURConfigAttributesVisitor)
     }
 }

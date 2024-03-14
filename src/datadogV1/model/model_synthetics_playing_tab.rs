@@ -12,6 +12,7 @@ pub enum SyntheticsPlayingTab {
     TAB_1,
     TAB_2,
     TAB_3,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl Serialize for SyntheticsPlayingTab {
@@ -20,6 +21,7 @@ impl Serialize for SyntheticsPlayingTab {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             Self::MAIN_TAB => serializer.serialize_i64(-1),
             Self::NEW_TAB => serializer.serialize_i64(0),
             Self::TAB_1 => serializer.serialize_i64(1),
@@ -41,12 +43,9 @@ impl<'de> Deserialize<'de> for SyntheticsPlayingTab {
             1 => Self::TAB_1,
             2 => Self::TAB_2,
             3 => Self::TAB_3,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::Number(s.into()),
+            }),
         })
     }
 }

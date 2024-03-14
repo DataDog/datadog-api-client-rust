@@ -10,6 +10,7 @@ pub enum SyntheticsTestOptionsHTTPVersion {
     HTTP1,
     HTTP2,
     ANY,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsTestOptionsHTTPVersion {
@@ -18,6 +19,7 @@ impl ToString for SyntheticsTestOptionsHTTPVersion {
             Self::HTTP1 => String::from("http1"),
             Self::HTTP2 => String::from("http2"),
             Self::ANY => String::from("any"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -28,6 +30,7 @@ impl Serialize for SyntheticsTestOptionsHTTPVersion {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -43,12 +46,9 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptionsHTTPVersion {
             "http1" => Self::HTTP1,
             "http2" => Self::HTTP2,
             "any" => Self::ANY,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

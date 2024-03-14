@@ -8,12 +8,14 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ContainerMetaPageType {
     CURSOR_LIMIT,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for ContainerMetaPageType {
     fn to_string(&self) -> String {
         match self {
             Self::CURSOR_LIMIT => String::from("cursor_limit"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -24,6 +26,7 @@ impl Serialize for ContainerMetaPageType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -37,12 +40,9 @@ impl<'de> Deserialize<'de> for ContainerMetaPageType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "cursor_limit" => Self::CURSOR_LIMIT,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

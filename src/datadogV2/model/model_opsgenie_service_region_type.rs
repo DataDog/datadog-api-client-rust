@@ -10,6 +10,7 @@ pub enum OpsgenieServiceRegionType {
     US,
     EU,
     CUSTOM,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for OpsgenieServiceRegionType {
@@ -18,6 +19,7 @@ impl ToString for OpsgenieServiceRegionType {
             Self::US => String::from("us"),
             Self::EU => String::from("eu"),
             Self::CUSTOM => String::from("custom"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -28,6 +30,7 @@ impl Serialize for OpsgenieServiceRegionType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -43,12 +46,9 @@ impl<'de> Deserialize<'de> for OpsgenieServiceRegionType {
             "us" => Self::US,
             "eu" => Self::EU,
             "custom" => Self::CUSTOM,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

@@ -22,6 +22,7 @@ pub enum WidgetLiveSpan {
     PAST_SIX_MONTHS,
     PAST_ONE_YEAR,
     ALERT,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetLiveSpan {
@@ -42,6 +43,7 @@ impl ToString for WidgetLiveSpan {
             Self::PAST_SIX_MONTHS => String::from("6mo"),
             Self::PAST_ONE_YEAR => String::from("1y"),
             Self::ALERT => String::from("alert"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -52,6 +54,7 @@ impl Serialize for WidgetLiveSpan {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -79,12 +82,9 @@ impl<'de> Deserialize<'de> for WidgetLiveSpan {
             "6mo" => Self::PAST_SIX_MONTHS,
             "1y" => Self::PAST_ONE_YEAR,
             "alert" => Self::ALERT,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

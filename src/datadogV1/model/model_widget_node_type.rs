@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum WidgetNodeType {
     HOST,
     CONTAINER,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetNodeType {
@@ -16,6 +17,7 @@ impl ToString for WidgetNodeType {
         match self {
             Self::HOST => String::from("host"),
             Self::CONTAINER => String::from("container"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -26,6 +28,7 @@ impl Serialize for WidgetNodeType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -40,12 +43,9 @@ impl<'de> Deserialize<'de> for WidgetNodeType {
         Ok(match s.as_str() {
             "host" => Self::HOST,
             "container" => Self::CONTAINER,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

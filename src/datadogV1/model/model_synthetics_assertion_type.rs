@@ -26,6 +26,7 @@ pub enum SyntheticsAssertionType {
     GRPC_METADATA,
     GRPC_PROTO,
     CONNECTION,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsAssertionType {
@@ -50,6 +51,7 @@ impl ToString for SyntheticsAssertionType {
             Self::GRPC_METADATA => String::from("grpcMetadata"),
             Self::GRPC_PROTO => String::from("grpcProto"),
             Self::CONNECTION => String::from("connection"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -60,6 +62,7 @@ impl Serialize for SyntheticsAssertionType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -91,12 +94,9 @@ impl<'de> Deserialize<'de> for SyntheticsAssertionType {
             "grpcMetadata" => Self::GRPC_METADATA,
             "grpcProto" => Self::GRPC_PROTO,
             "connection" => Self::CONNECTION,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

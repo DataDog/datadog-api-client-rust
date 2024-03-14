@@ -10,6 +10,7 @@ pub enum SyntheticsTestMonitorStatus {
     UNTRIGGERED,
     TRIGGERED,
     NO_DATA,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl Serialize for SyntheticsTestMonitorStatus {
@@ -18,6 +19,7 @@ impl Serialize for SyntheticsTestMonitorStatus {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             Self::UNTRIGGERED => serializer.serialize_i64(0),
             Self::TRIGGERED => serializer.serialize_i64(1),
             Self::NO_DATA => serializer.serialize_i64(2),
@@ -35,12 +37,9 @@ impl<'de> Deserialize<'de> for SyntheticsTestMonitorStatus {
             0 => Self::UNTRIGGERED,
             1 => Self::TRIGGERED,
             2 => Self::NO_DATA,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::Number(s.into()),
+            }),
         })
     }
 }

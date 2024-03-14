@@ -12,6 +12,7 @@ pub enum FindingStatus {
     MEDIUM,
     LOW,
     INFO,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for FindingStatus {
@@ -22,6 +23,7 @@ impl ToString for FindingStatus {
             Self::MEDIUM => String::from("medium"),
             Self::LOW => String::from("low"),
             Self::INFO => String::from("info"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -32,6 +34,7 @@ impl Serialize for FindingStatus {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -49,12 +52,9 @@ impl<'de> Deserialize<'de> for FindingStatus {
             "medium" => Self::MEDIUM,
             "low" => Self::LOW,
             "info" => Self::INFO,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

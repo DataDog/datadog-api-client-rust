@@ -1,10 +1,12 @@
-use serde::{Serialize, Deserialize};
+use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
 use serde_with::skip_serializing_none;
 
 {{ model.description | block_comment }}
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct {{ name }} {
 {%- for attr, schema in model.get("properties", {}).items() %}
 {%- set propertyName = attr|variable_name %}
@@ -28,6 +30,9 @@ pub struct {{ name }} {
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, {{ dataType }}>,
 {%- endif %}
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool
 }
 
 impl {{ name }} {
@@ -49,6 +54,7 @@ impl {{ name }} {
             {%- if model.additionalProperties is defined and model.additionalProperties != false %}
             additional_properties: std::collections::BTreeMap::new(),
             {%- endif %}
+            _unparsed: false,
         }
     }
     {% for attr, schema in model.get("properties", {}).items() if attr not in model.required %}
@@ -78,3 +84,105 @@ impl Default for {{ name }} {
     }
 }
 {%- endif %}
+
+impl<'de> Deserialize<'de> for {{ name }} {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct {{ name }}Visitor;
+        impl<'a> Visitor<'a> for {{ name }}Visitor {
+            type Value = {{ name }};
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                {%- for attr, schema in model.get("properties", {}).items() %}
+                {%- set required = attr in model.required %}
+                {%- set propertyName = attr|variable_name %}
+                {%- set nullable = schema.get("nullable", false)%}
+                {%- set dataType = get_type(schema, alternative_name=name + attr|variable_name, render_nullable=nullable, render_option=not required, render_box=false, version=version) %}
+                let mut {{ propertyName }}: {% if required %}Option<{% endif %}{{ dataType }}{% if required %}>{% endif %} = None;
+                {%- endfor %}
+
+                {%- if model.additionalProperties is defined and model.additionalProperties != false %}
+                {%- set dataType = get_type(model.additionalProperties, alternative_name=None, render_nullable=false, render_option=false, render_box=false, version=version) %}
+                    let mut additional_properties: std::collections::BTreeMap<String, {{ dataType }}> = std::collections::BTreeMap::new();
+                {%- endif %}
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        {%- for attr, schema in model.get("properties", {}).items() %}
+                        {%- set required = attr in model.required %}
+                        {%- set propertyName = attr|variable_name %}
+                        {%- set nullable = schema.get("nullable", false)%}
+                        {%- set dataType = get_type(schema, alternative_name=name + propertyName, render_option=false, version=version) %}
+                        "{{ attr }}" => {
+                            {%- if not nullable and not required %}
+                            if v.is_null() {
+                                continue;
+                            }
+                            {%- endif %}
+                            {{ propertyName }} = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            {%- if schema.enum or schema.oneOf %}
+                            if let Some(ref _{{ propertyName }}) = {{ propertyName }} {
+                                match _{{ propertyName }} {
+                                    {% if nullable%}Some({% endif %}{{ dataType }}::UnparsedObject(_{{ propertyName }}){% if nullable%}){% endif %} => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                            {%- endif %}
+                        },
+                        {%- endfor %}
+                        &_ => {
+                            {%- if model.additionalProperties is defined and model.additionalProperties != false %}
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                            {%- endif %}
+                        },
+                    }
+                }
+
+                {%- set ns = namespace(hasDeprecated=false) %}
+                {%- for attr, schema in model.get("properties", {}).items() %}
+                {%- set required = attr in model.required %}
+                {%- set propertyName = attr|variable_name %}
+                {%- set nullable = schema.get("nullable", false)%}
+                {%- if schema.deprecated %}
+                {%- set ns.hasDeprecated = true %}
+                {%- endif %}
+                {%- if required %}
+                let {{ propertyName }} = {{ propertyName }}.ok_or_else(|| M::Error::missing_field("{{ propertyName }}"))?;
+                {%- endif %}
+                {%- endfor %}
+
+                {% if ns.hasDeprecated %}
+                #[allow(deprecated)]
+                {% endif%}
+                let content = {{ name }} {
+                    {%- for attr, schema in model.get("properties", {}).items() %}
+                    {%- set propertyName = attr|variable_name %}
+                    {{ propertyName }},
+                    {%- endfor %}
+                    {%- if model.additionalProperties is defined and model.additionalProperties != false %}
+                    additional_properties,
+                    {%- endif %}
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any({{ name }}Visitor)
+    }
+}

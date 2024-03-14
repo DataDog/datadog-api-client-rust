@@ -8,12 +8,14 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum LogsMessageRemapperType {
     MESSAGE_REMAPPER,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for LogsMessageRemapperType {
     fn to_string(&self) -> String {
         match self {
             Self::MESSAGE_REMAPPER => String::from("message-remapper"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -24,6 +26,7 @@ impl Serialize for LogsMessageRemapperType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -37,12 +40,9 @@ impl<'de> Deserialize<'de> for LogsMessageRemapperType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "message-remapper" => Self::MESSAGE_REMAPPER,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

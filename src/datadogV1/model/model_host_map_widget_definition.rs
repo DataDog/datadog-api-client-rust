@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// The host map widget graphs any metric across your hosts using the same visualization available from the main Host Map page.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct HostMapWidgetDefinition {
     /// List of custom links.
     #[serde(rename = "custom_links")]
@@ -48,6 +50,9 @@ pub struct HostMapWidgetDefinition {
     /// Type of the host map widget.
     #[serde(rename = "type")]
     pub type_: crate::datadogV1::model::HostMapWidgetDefinitionType,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl HostMapWidgetDefinition {
@@ -69,6 +74,7 @@ impl HostMapWidgetDefinition {
             title_align: None,
             title_size: None,
             type_,
+            _unparsed: false,
         }
     }
 
@@ -125,5 +131,175 @@ impl HostMapWidgetDefinition {
     pub fn title_size(mut self, value: String) -> Self {
         self.title_size = Some(value);
         self
+    }
+}
+
+impl<'de> Deserialize<'de> for HostMapWidgetDefinition {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct HostMapWidgetDefinitionVisitor;
+        impl<'a> Visitor<'a> for HostMapWidgetDefinitionVisitor {
+            type Value = HostMapWidgetDefinition;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>> = None;
+                let mut group: Option<Vec<String>> = None;
+                let mut no_group_hosts: Option<bool> = None;
+                let mut no_metric_hosts: Option<bool> = None;
+                let mut node_type: Option<crate::datadogV1::model::WidgetNodeType> = None;
+                let mut notes: Option<String> = None;
+                let mut requests: Option<crate::datadogV1::model::HostMapWidgetDefinitionRequests> =
+                    None;
+                let mut scope: Option<Vec<String>> = None;
+                let mut style: Option<crate::datadogV1::model::HostMapWidgetDefinitionStyle> = None;
+                let mut title: Option<String> = None;
+                let mut title_align: Option<crate::datadogV1::model::WidgetTextAlign> = None;
+                let mut title_size: Option<String> = None;
+                let mut type_: Option<crate::datadogV1::model::HostMapWidgetDefinitionType> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "custom_links" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            custom_links =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "group" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            group = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "no_group_hosts" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            no_group_hosts =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "no_metric_hosts" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            no_metric_hosts =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "node_type" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            node_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _node_type) = node_type {
+                                match _node_type {
+                                    crate::datadogV1::model::WidgetNodeType::UnparsedObject(
+                                        _node_type,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "notes" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            notes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "requests" => {
+                            requests = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "scope" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            scope = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "style" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            style = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "title" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "title_align" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            title_align =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _title_align) = title_align {
+                                match _title_align {
+                                    crate::datadogV1::model::WidgetTextAlign::UnparsedObject(
+                                        _title_align,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "title_size" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            title_size = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "type" => {
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _type_) = type_ {
+                                match _type_ {
+                                    crate::datadogV1::model::HostMapWidgetDefinitionType::UnparsedObject(_type_) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        &_ => {}
+                    }
+                }
+                let requests = requests.ok_or_else(|| M::Error::missing_field("requests"))?;
+                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
+
+                let content = HostMapWidgetDefinition {
+                    custom_links,
+                    group,
+                    no_group_hosts,
+                    no_metric_hosts,
+                    node_type,
+                    notes,
+                    requests,
+                    scope,
+                    style,
+                    title,
+                    title_align,
+                    title_size,
+                    type_,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(HostMapWidgetDefinitionVisitor)
     }
 }

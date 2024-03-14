@@ -40,6 +40,7 @@ pub enum SyntheticsBrowserTestFailureCode {
     UPLOAD_FILES_DIALOG,
     UPLOAD_FILES_DYNAMIC_ELEMENT,
     UPLOAD_FILES_NAME,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsBrowserTestFailureCode {
@@ -78,6 +79,7 @@ impl ToString for SyntheticsBrowserTestFailureCode {
             Self::UPLOAD_FILES_DIALOG => String::from("UPLOAD_FILES_DIALOG"),
             Self::UPLOAD_FILES_DYNAMIC_ELEMENT => String::from("UPLOAD_FILES_DYNAMIC_ELEMENT"),
             Self::UPLOAD_FILES_NAME => String::from("UPLOAD_FILES_NAME"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -88,6 +90,7 @@ impl Serialize for SyntheticsBrowserTestFailureCode {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -133,12 +136,9 @@ impl<'de> Deserialize<'de> for SyntheticsBrowserTestFailureCode {
             "UPLOAD_FILES_DIALOG" => Self::UPLOAD_FILES_DIALOG,
             "UPLOAD_FILES_DYNAMIC_ELEMENT" => Self::UPLOAD_FILES_DYNAMIC_ELEMENT,
             "UPLOAD_FILES_NAME" => Self::UPLOAD_FILES_NAME,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

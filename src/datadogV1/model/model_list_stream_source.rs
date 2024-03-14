@@ -18,6 +18,7 @@ pub enum ListStreamSource {
     LOGS_PATTERN_STREAM,
     LOGS_TRANSACTION_STREAM,
     EVENT_STREAM,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for ListStreamSource {
@@ -34,6 +35,7 @@ impl ToString for ListStreamSource {
             Self::LOGS_PATTERN_STREAM => String::from("logs_pattern_stream"),
             Self::LOGS_TRANSACTION_STREAM => String::from("logs_transaction_stream"),
             Self::EVENT_STREAM => String::from("event_stream"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -44,6 +46,7 @@ impl Serialize for ListStreamSource {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -67,12 +70,9 @@ impl<'de> Deserialize<'de> for ListStreamSource {
             "logs_pattern_stream" => Self::LOGS_PATTERN_STREAM,
             "logs_transaction_stream" => Self::LOGS_TRANSACTION_STREAM,
             "event_stream" => Self::EVENT_STREAM,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

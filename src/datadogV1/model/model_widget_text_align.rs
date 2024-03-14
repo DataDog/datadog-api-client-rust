@@ -10,6 +10,7 @@ pub enum WidgetTextAlign {
     CENTER,
     LEFT,
     RIGHT,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetTextAlign {
@@ -18,6 +19,7 @@ impl ToString for WidgetTextAlign {
             Self::CENTER => String::from("center"),
             Self::LEFT => String::from("left"),
             Self::RIGHT => String::from("right"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -28,6 +30,7 @@ impl Serialize for WidgetTextAlign {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -43,12 +46,9 @@ impl<'de> Deserialize<'de> for WidgetTextAlign {
             "center" => Self::CENTER,
             "left" => Self::LEFT,
             "right" => Self::RIGHT,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

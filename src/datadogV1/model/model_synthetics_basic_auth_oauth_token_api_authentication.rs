@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum SyntheticsBasicAuthOauthTokenApiAuthentication {
     HEADER,
     BODY,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsBasicAuthOauthTokenApiAuthentication {
@@ -16,6 +17,7 @@ impl ToString for SyntheticsBasicAuthOauthTokenApiAuthentication {
         match self {
             Self::HEADER => String::from("header"),
             Self::BODY => String::from("body"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -26,6 +28,7 @@ impl Serialize for SyntheticsBasicAuthOauthTokenApiAuthentication {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -40,12 +43,9 @@ impl<'de> Deserialize<'de> for SyntheticsBasicAuthOauthTokenApiAuthentication {
         Ok(match s.as_str() {
             "header" => Self::HEADER,
             "body" => Self::BODY,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

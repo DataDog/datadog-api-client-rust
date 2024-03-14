@@ -16,6 +16,7 @@ pub enum SyntheticsTestDetailsSubType {
     UDP,
     WEBSOCKET,
     GRPC,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsTestDetailsSubType {
@@ -30,6 +31,7 @@ impl ToString for SyntheticsTestDetailsSubType {
             Self::UDP => String::from("udp"),
             Self::WEBSOCKET => String::from("websocket"),
             Self::GRPC => String::from("grpc"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -40,6 +42,7 @@ impl Serialize for SyntheticsTestDetailsSubType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -61,12 +64,9 @@ impl<'de> Deserialize<'de> for SyntheticsTestDetailsSubType {
             "udp" => Self::UDP,
             "websocket" => Self::WEBSOCKET,
             "grpc" => Self::GRPC,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

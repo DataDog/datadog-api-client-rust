@@ -8,12 +8,14 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum IPAllowlistType {
     IP_ALLOWLIST,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for IPAllowlistType {
     fn to_string(&self) -> String {
         match self {
             Self::IP_ALLOWLIST => String::from("ip_allowlist"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -24,6 +26,7 @@ impl Serialize for IPAllowlistType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -37,12 +40,9 @@ impl<'de> Deserialize<'de> for IPAllowlistType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "ip_allowlist" => Self::IP_ALLOWLIST,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

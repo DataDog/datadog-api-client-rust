@@ -10,6 +10,7 @@ pub enum DowntimeNotifyEndStateTypes {
     ALERT,
     NO_DATA,
     WARN,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for DowntimeNotifyEndStateTypes {
@@ -18,6 +19,7 @@ impl ToString for DowntimeNotifyEndStateTypes {
             Self::ALERT => String::from("alert"),
             Self::NO_DATA => String::from("no data"),
             Self::WARN => String::from("warn"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -28,6 +30,7 @@ impl Serialize for DowntimeNotifyEndStateTypes {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -43,12 +46,9 @@ impl<'de> Deserialize<'de> for DowntimeNotifyEndStateTypes {
             "alert" => Self::ALERT,
             "no data" => Self::NO_DATA,
             "warn" => Self::WARN,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

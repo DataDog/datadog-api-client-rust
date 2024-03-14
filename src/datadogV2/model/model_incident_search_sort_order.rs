@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum IncidentSearchSortOrder {
     CREATED_ASCENDING,
     CREATED_DESCENDING,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for IncidentSearchSortOrder {
@@ -16,6 +17,7 @@ impl ToString for IncidentSearchSortOrder {
         match self {
             Self::CREATED_ASCENDING => String::from("created"),
             Self::CREATED_DESCENDING => String::from("-created"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -26,6 +28,7 @@ impl Serialize for IncidentSearchSortOrder {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -40,12 +43,9 @@ impl<'de> Deserialize<'de> for IncidentSearchSortOrder {
         Ok(match s.as_str() {
             "created" => Self::CREATED_ASCENDING,
             "-created" => Self::CREATED_DESCENDING,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

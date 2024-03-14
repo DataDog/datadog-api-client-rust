@@ -13,6 +13,7 @@ pub enum FormulaAndFunctionSLOMeasure {
     ERROR_BUDGET_REMAINING,
     BURN_RATE,
     ERROR_BUDGET_BURNDOWN,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for FormulaAndFunctionSLOMeasure {
@@ -24,6 +25,7 @@ impl ToString for FormulaAndFunctionSLOMeasure {
             Self::ERROR_BUDGET_REMAINING => String::from("error_budget_remaining"),
             Self::BURN_RATE => String::from("burn_rate"),
             Self::ERROR_BUDGET_BURNDOWN => String::from("error_budget_burndown"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -34,6 +36,7 @@ impl Serialize for FormulaAndFunctionSLOMeasure {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -52,12 +55,9 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionSLOMeasure {
             "error_budget_remaining" => Self::ERROR_BUDGET_REMAINING,
             "burn_rate" => Self::BURN_RATE,
             "error_budget_burndown" => Self::ERROR_BUDGET_BURNDOWN,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

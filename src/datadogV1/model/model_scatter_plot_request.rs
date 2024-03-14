@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// Updated scatter plot.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ScatterPlotRequest {
     /// Aggregator used for the request.
     #[serde(rename = "aggregator")]
@@ -39,6 +41,9 @@ pub struct ScatterPlotRequest {
     /// The log query.
     #[serde(rename = "security_query")]
     pub security_query: Option<crate::datadogV1::model::LogQueryDefinition>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl ScatterPlotRequest {
@@ -54,6 +59,7 @@ impl ScatterPlotRequest {
             q: None,
             rum_query: None,
             security_query: None,
+            _unparsed: false,
         }
     }
 
@@ -117,5 +123,138 @@ impl ScatterPlotRequest {
 impl Default for ScatterPlotRequest {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for ScatterPlotRequest {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct ScatterPlotRequestVisitor;
+        impl<'a> Visitor<'a> for ScatterPlotRequestVisitor {
+            type Value = ScatterPlotRequest;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut aggregator: Option<crate::datadogV1::model::ScatterplotWidgetAggregator> =
+                    None;
+                let mut apm_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
+                let mut event_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
+                let mut log_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
+                let mut network_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
+                let mut process_query: Option<crate::datadogV1::model::ProcessQueryDefinition> =
+                    None;
+                let mut profile_metrics_query: Option<crate::datadogV1::model::LogQueryDefinition> =
+                    None;
+                let mut q: Option<String> = None;
+                let mut rum_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
+                let mut security_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "aggregator" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            aggregator = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _aggregator) = aggregator {
+                                match _aggregator {
+                                    crate::datadogV1::model::ScatterplotWidgetAggregator::UnparsedObject(_aggregator) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "apm_query" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            apm_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "event_query" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            event_query =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "log_query" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            log_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "network_query" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            network_query =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "process_query" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            process_query =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "profile_metrics_query" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            profile_metrics_query =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "q" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            q = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_query" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "security_query" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            security_query =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+
+                let content = ScatterPlotRequest {
+                    aggregator,
+                    apm_query,
+                    event_query,
+                    log_query,
+                    network_query,
+                    process_query,
+                    profile_metrics_query,
+                    q,
+                    rum_query,
+                    security_query,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(ScatterPlotRequestVisitor)
     }
 }

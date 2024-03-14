@@ -11,6 +11,7 @@ pub enum WidgetDisplayType {
     BARS,
     LINE,
     OVERLAY,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetDisplayType {
@@ -20,6 +21,7 @@ impl ToString for WidgetDisplayType {
             Self::BARS => String::from("bars"),
             Self::LINE => String::from("line"),
             Self::OVERLAY => String::from("overlay"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -30,6 +32,7 @@ impl Serialize for WidgetDisplayType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -46,12 +49,9 @@ impl<'de> Deserialize<'de> for WidgetDisplayType {
             "bars" => Self::BARS,
             "line" => Self::LINE,
             "overlay" => Self::OVERLAY,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

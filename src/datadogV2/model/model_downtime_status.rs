@@ -11,6 +11,7 @@ pub enum DowntimeStatus {
     CANCELED,
     ENDED,
     SCHEDULED,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for DowntimeStatus {
@@ -20,6 +21,7 @@ impl ToString for DowntimeStatus {
             Self::CANCELED => String::from("canceled"),
             Self::ENDED => String::from("ended"),
             Self::SCHEDULED => String::from("scheduled"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -30,6 +32,7 @@ impl Serialize for DowntimeStatus {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -46,12 +49,9 @@ impl<'de> Deserialize<'de> for DowntimeStatus {
             "canceled" => Self::CANCELED,
             "ended" => Self::ENDED,
             "scheduled" => Self::SCHEDULED,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

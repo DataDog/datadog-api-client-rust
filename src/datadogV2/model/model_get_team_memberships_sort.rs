@@ -15,6 +15,7 @@ pub enum GetTeamMembershipsSort {
     _HANDLE,
     EMAIL,
     _EMAIL,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for GetTeamMembershipsSort {
@@ -28,6 +29,7 @@ impl ToString for GetTeamMembershipsSort {
             Self::_HANDLE => String::from("-handle"),
             Self::EMAIL => String::from("email"),
             Self::_EMAIL => String::from("-email"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -38,6 +40,7 @@ impl Serialize for GetTeamMembershipsSort {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -58,12 +61,9 @@ impl<'de> Deserialize<'de> for GetTeamMembershipsSort {
             "-handle" => Self::_HANDLE,
             "email" => Self::EMAIL,
             "-email" => Self::_EMAIL,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

@@ -8,12 +8,14 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum AzureUCConfigPatchRequestType {
     AZURE_UC_CONFIG_PATCH_REQUEST,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for AzureUCConfigPatchRequestType {
     fn to_string(&self) -> String {
         match self {
             Self::AZURE_UC_CONFIG_PATCH_REQUEST => String::from("azure_uc_config_patch_request"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -24,6 +26,7 @@ impl Serialize for AzureUCConfigPatchRequestType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -37,12 +40,9 @@ impl<'de> Deserialize<'de> for AzureUCConfigPatchRequestType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "azure_uc_config_patch_request" => Self::AZURE_UC_CONFIG_PATCH_REQUEST,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

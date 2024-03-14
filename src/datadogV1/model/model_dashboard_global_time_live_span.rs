@@ -15,6 +15,7 @@ pub enum DashboardGlobalTimeLiveSpan {
     PAST_ONE_WEEK,
     PAST_ONE_MONTH,
     PAST_THREE_MONTHS,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for DashboardGlobalTimeLiveSpan {
@@ -28,6 +29,7 @@ impl ToString for DashboardGlobalTimeLiveSpan {
             Self::PAST_ONE_WEEK => String::from("1w"),
             Self::PAST_ONE_MONTH => String::from("1mo"),
             Self::PAST_THREE_MONTHS => String::from("3mo"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -38,6 +40,7 @@ impl Serialize for DashboardGlobalTimeLiveSpan {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -58,12 +61,9 @@ impl<'de> Deserialize<'de> for DashboardGlobalTimeLiveSpan {
             "1w" => Self::PAST_ONE_WEEK,
             "1mo" => Self::PAST_ONE_MONTH,
             "3mo" => Self::PAST_THREE_MONTHS,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

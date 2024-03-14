@@ -10,6 +10,7 @@ pub enum ContentEncoding {
     IDENTITY,
     GZIP,
     DEFLATE,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for ContentEncoding {
@@ -18,6 +19,7 @@ impl ToString for ContentEncoding {
             Self::IDENTITY => String::from("identity"),
             Self::GZIP => String::from("gzip"),
             Self::DEFLATE => String::from("deflate"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -28,6 +30,7 @@ impl Serialize for ContentEncoding {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -43,12 +46,9 @@ impl<'de> Deserialize<'de> for ContentEncoding {
             "identity" => Self::IDENTITY,
             "gzip" => Self::GZIP,
             "deflate" => Self::DEFLATE,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

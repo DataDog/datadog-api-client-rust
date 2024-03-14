@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum UsageSortDirection {
     DESC,
     ASC,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for UsageSortDirection {
@@ -16,6 +17,7 @@ impl ToString for UsageSortDirection {
         match self {
             Self::DESC => String::from("desc"),
             Self::ASC => String::from("asc"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -26,6 +28,7 @@ impl Serialize for UsageSortDirection {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -40,12 +43,9 @@ impl<'de> Deserialize<'de> for UsageSortDirection {
         Ok(match s.as_str() {
             "desc" => Self::DESC,
             "asc" => Self::ASC,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

@@ -10,6 +10,7 @@ pub enum HourlyUsageType {
     APP_SEC_HOST_COUNT,
     OBSERVABILITY_PIPELINES_BYTES_PROCESSSED,
     LAMBDA_TRACED_INVOCATIONS_COUNT,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for HourlyUsageType {
@@ -22,6 +23,7 @@ impl ToString for HourlyUsageType {
             Self::LAMBDA_TRACED_INVOCATIONS_COUNT => {
                 String::from("lambda_traced_invocations_count")
             }
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
@@ -32,6 +34,7 @@ impl Serialize for HourlyUsageType {
         S: Serializer,
     {
         match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
             _ => serializer.serialize_str(self.to_string().as_str()),
         }
     }
@@ -49,12 +52,9 @@ impl<'de> Deserialize<'de> for HourlyUsageType {
                 Self::OBSERVABILITY_PIPELINES_BYTES_PROCESSSED
             }
             "lambda_traced_invocations_count" => Self::LAMBDA_TRACED_INVOCATIONS_COUNT,
-            _ => {
-                return Err(serde::de::Error::custom(format!(
-                    "Invalid value for SyntheticsDeviceID: {}",
-                    s
-                )))
-            }
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

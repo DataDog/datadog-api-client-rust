@@ -1,3 +1,4 @@
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use std::error;
 use std::fmt;
 
@@ -121,3 +122,24 @@ impl serde_json::ser::Formatter for DDFormatter {
 }
 
 pub mod configuration;
+
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct UnparsedObject {
+    pub value: serde_json::Value,
+}
+
+impl<'de> Deserialize<'de> for UnparsedObject {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let val: serde_json::Value = Deserialize::deserialize(deserializer)?;
+        Ok(UnparsedObject { value: val })
+    }
+}
+
+impl Serialize for UnparsedObject {
+    fn serialize<S: Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
+        self.value.serialize(serializer)
+    }
+}
