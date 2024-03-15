@@ -1,7 +1,11 @@
 // Create a tag configuration returns "Created" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_metrics::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_metrics::MetricsAPI;
+use datadog_api_client::datadogV2::model::MetricTagConfigurationCreateAttributes;
+use datadog_api_client::datadogV2::model::MetricTagConfigurationCreateData;
+use datadog_api_client::datadogV2::model::MetricTagConfigurationCreateRequest;
+use datadog_api_client::datadogV2::model::MetricTagConfigurationMetricTypes;
+use datadog_api_client::datadogV2::model::MetricTagConfigurationType;
 
 #[tokio::main]
 async fn main() {

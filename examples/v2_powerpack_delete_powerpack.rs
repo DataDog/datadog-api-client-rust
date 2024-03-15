@@ -1,6 +1,6 @@
 // Delete a powerpack returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_powerpack::*;
+use datadog_api_client::datadogV2::api::api_powerpack::PowerpackAPI;
 
 #[tokio::main]
 async fn main() {

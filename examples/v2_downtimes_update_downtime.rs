@@ -1,7 +1,10 @@
 // Update a downtime returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_downtimes::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_downtimes::DowntimesAPI;
+use datadog_api_client::datadogV2::model::DowntimeResourceType;
+use datadog_api_client::datadogV2::model::DowntimeUpdateRequest;
+use datadog_api_client::datadogV2::model::DowntimeUpdateRequestAttributes;
+use datadog_api_client::datadogV2::model::DowntimeUpdateRequestData;
 
 #[tokio::main]
 async fn main() {

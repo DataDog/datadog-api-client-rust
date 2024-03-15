@@ -1,7 +1,15 @@
 // Update your organization returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_organizations::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_organizations::OrganizationsAPI;
+use datadog_api_client::datadogV1::model::AccessRole;
+use datadog_api_client::datadogV1::model::Organization;
+use datadog_api_client::datadogV1::model::OrganizationBilling;
+use datadog_api_client::datadogV1::model::OrganizationSettings;
+use datadog_api_client::datadogV1::model::OrganizationSettingsSaml;
+use datadog_api_client::datadogV1::model::OrganizationSettingsSamlAutocreateUsersDomains;
+use datadog_api_client::datadogV1::model::OrganizationSettingsSamlIdpInitiatedLogin;
+use datadog_api_client::datadogV1::model::OrganizationSettingsSamlStrictMode;
+use datadog_api_client::datadogV1::model::OrganizationSubscription;
 
 #[tokio::main]
 async fn main() {

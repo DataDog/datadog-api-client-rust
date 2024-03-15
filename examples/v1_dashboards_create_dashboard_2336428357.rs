@@ -1,7 +1,26 @@
 // Create a new dashboard with query_table widget
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_dashboards::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_dashboards::DashboardsAPI;
+use datadog_api_client::datadogV1::model::Dashboard;
+use datadog_api_client::datadogV1::model::DashboardLayoutType;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionMetricAggregation;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionMetricDataSource;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionMetricQueryDefinition;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionQueryDefinition;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionResponseFormat;
+use datadog_api_client::datadogV1::model::QuerySortOrder;
+use datadog_api_client::datadogV1::model::TableWidgetCellDisplayMode;
+use datadog_api_client::datadogV1::model::TableWidgetDefinition;
+use datadog_api_client::datadogV1::model::TableWidgetDefinitionType;
+use datadog_api_client::datadogV1::model::TableWidgetHasSearchBar;
+use datadog_api_client::datadogV1::model::TableWidgetRequest;
+use datadog_api_client::datadogV1::model::Widget;
+use datadog_api_client::datadogV1::model::WidgetDefinition;
+use datadog_api_client::datadogV1::model::WidgetFormula;
+use datadog_api_client::datadogV1::model::WidgetFormulaLimit;
+use datadog_api_client::datadogV1::model::WidgetLayout;
+use datadog_api_client::datadogV1::model::WidgetTextAlign;
+use datadog_api_client::datadogV1::model::WidgetTime;
 
 #[tokio::main]
 async fn main() {

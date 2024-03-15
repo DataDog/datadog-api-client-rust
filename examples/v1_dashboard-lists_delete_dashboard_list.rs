@@ -1,6 +1,6 @@
 // Delete a dashboard list returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_dashboard_lists::*;
+use datadog_api_client::datadogV1::api::api_dashboard_lists::DashboardListsAPI;
 
 #[tokio::main]
 async fn main() {

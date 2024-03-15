@@ -1,7 +1,11 @@
 // Search events returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_events::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_events::EventsAPI;
+use datadog_api_client::datadogV2::api::api_events::SearchEventsOptionalParams;
+use datadog_api_client::datadogV2::model::EventsListRequest;
+use datadog_api_client::datadogV2::model::EventsQueryFilter;
+use datadog_api_client::datadogV2::model::EventsRequestPage;
+use datadog_api_client::datadogV2::model::EventsSort;
 
 #[tokio::main]
 async fn main() {

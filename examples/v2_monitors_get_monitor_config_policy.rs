@@ -1,6 +1,6 @@
 // Get a monitor configuration policy returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_monitors::*;
+use datadog_api_client::datadogV2::api::api_monitors::MonitorsAPI;
 
 #[tokio::main]
 async fn main() {

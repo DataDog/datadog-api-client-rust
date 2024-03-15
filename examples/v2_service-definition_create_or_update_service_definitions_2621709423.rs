@@ -1,7 +1,16 @@
 // Create or update service definition using schema v2-2 returns "CREATED" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_service_definition::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_service_definition::ServiceDefinitionAPI;
+use datadog_api_client::datadogV2::model::ServiceDefinitionV2Dot2;
+use datadog_api_client::datadogV2::model::ServiceDefinitionV2Dot2Contact;
+use datadog_api_client::datadogV2::model::ServiceDefinitionV2Dot2Integrations;
+use datadog_api_client::datadogV2::model::ServiceDefinitionV2Dot2Link;
+use datadog_api_client::datadogV2::model::ServiceDefinitionV2Dot2Opsgenie;
+use datadog_api_client::datadogV2::model::ServiceDefinitionV2Dot2OpsgenieRegion;
+use datadog_api_client::datadogV2::model::ServiceDefinitionV2Dot2Pagerduty;
+use datadog_api_client::datadogV2::model::ServiceDefinitionV2Dot2Version;
+use datadog_api_client::datadogV2::model::ServiceDefinitionsCreateRequest;
+use serde_json::Value;
 use std::collections::BTreeMap;
 
 #[tokio::main]
@@ -18,7 +27,7 @@ async fn main() {
         .name("Team Email".to_string())])
         .extensions(BTreeMap::from([(
             "myorgextension".to_string(),
-            serde_json::Value::from("extensionvalue"),
+            Value::from("extensionvalue"),
         )]))
         .integrations(
             ServiceDefinitionV2Dot2Integrations::new()

@@ -1,6 +1,7 @@
 // Get all dashboards returns "OK" response with pagination
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_dashboards::*;
+use datadog_api_client::datadogV1::api::api_dashboards::DashboardsAPI;
+use datadog_api_client::datadogV1::api::api_dashboards::ListDashboardsOptionalParams;
 use futures_util::pin_mut;
 use futures_util::stream::StreamExt;
 

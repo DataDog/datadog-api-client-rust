@@ -1,7 +1,11 @@
 // Update a security filter returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_security_monitoring::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_security_monitoring::SecurityMonitoringAPI;
+use datadog_api_client::datadogV2::model::SecurityFilterFilteredDataType;
+use datadog_api_client::datadogV2::model::SecurityFilterType;
+use datadog_api_client::datadogV2::model::SecurityFilterUpdateAttributes;
+use datadog_api_client::datadogV2::model::SecurityFilterUpdateData;
+use datadog_api_client::datadogV2::model::SecurityFilterUpdateRequest;
 
 #[tokio::main]
 async fn main() {

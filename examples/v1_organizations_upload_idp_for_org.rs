@@ -1,6 +1,7 @@
 // Upload IdP metadata returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_organizations::*;
+use datadog_api_client::datadogV1::api::api_organizations::OrganizationsAPI;
+use std::fs;
 
 #[tokio::main]
 async fn main() {
@@ -9,7 +10,7 @@ async fn main() {
     let resp = api
         .upload_idp_for_org(
             "abc123".to_string(),
-            std::fs::read("./idp_metadata.xml").unwrap(),
+            fs::read("./idp_metadata.xml").unwrap(),
         )
         .await;
     if let Ok(value) = resp {

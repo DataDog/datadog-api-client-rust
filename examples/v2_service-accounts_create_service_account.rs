@@ -1,7 +1,14 @@
 // Create a service account returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_service_accounts::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_service_accounts::ServiceAccountsAPI;
+use datadog_api_client::datadogV2::model::RelationshipToRoleData;
+use datadog_api_client::datadogV2::model::RelationshipToRoles;
+use datadog_api_client::datadogV2::model::RolesType;
+use datadog_api_client::datadogV2::model::ServiceAccountCreateAttributes;
+use datadog_api_client::datadogV2::model::ServiceAccountCreateData;
+use datadog_api_client::datadogV2::model::ServiceAccountCreateRequest;
+use datadog_api_client::datadogV2::model::UserRelationships;
+use datadog_api_client::datadogV2::model::UsersType;
 
 #[tokio::main]
 async fn main() {

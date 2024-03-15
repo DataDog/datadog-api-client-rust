@@ -1,7 +1,10 @@
 // Create a new role by cloning an existing role returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_roles::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_roles::RolesAPI;
+use datadog_api_client::datadogV2::model::RoleClone;
+use datadog_api_client::datadogV2::model::RoleCloneAttributes;
+use datadog_api_client::datadogV2::model::RoleCloneRequest;
+use datadog_api_client::datadogV2::model::RolesType;
 
 #[tokio::main]
 async fn main() {

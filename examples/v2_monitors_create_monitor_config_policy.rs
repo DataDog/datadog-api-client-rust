@@ -1,7 +1,13 @@
 // Create a monitor configuration policy returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_monitors::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_monitors::MonitorsAPI;
+use datadog_api_client::datadogV2::model::MonitorConfigPolicyAttributeCreateRequest;
+use datadog_api_client::datadogV2::model::MonitorConfigPolicyCreateData;
+use datadog_api_client::datadogV2::model::MonitorConfigPolicyCreateRequest;
+use datadog_api_client::datadogV2::model::MonitorConfigPolicyPolicyCreateRequest;
+use datadog_api_client::datadogV2::model::MonitorConfigPolicyResourceType;
+use datadog_api_client::datadogV2::model::MonitorConfigPolicyTagPolicyCreateRequest;
+use datadog_api_client::datadogV2::model::MonitorConfigPolicyType;
 
 #[tokio::main]
 async fn main() {

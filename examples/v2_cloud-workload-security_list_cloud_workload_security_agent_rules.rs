@@ -1,6 +1,6 @@
 // Get all Cloud Workload Security Agent rules returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_cloud_workload_security::*;
+use datadog_api_client::datadogV2::api::api_cloud_workload_security::CloudWorkloadSecurityAPI;
 
 #[tokio::main]
 async fn main() {

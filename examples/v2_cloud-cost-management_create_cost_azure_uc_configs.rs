@@ -1,7 +1,11 @@
 // Create Cloud Cost Management Azure configs returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_cloud_cost_management::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_cloud_cost_management::CloudCostManagementAPI;
+use datadog_api_client::datadogV2::model::AzureUCConfigPostData;
+use datadog_api_client::datadogV2::model::AzureUCConfigPostRequest;
+use datadog_api_client::datadogV2::model::AzureUCConfigPostRequestAttributes;
+use datadog_api_client::datadogV2::model::AzureUCConfigPostRequestType;
+use datadog_api_client::datadogV2::model::BillConfig;
 
 #[tokio::main]
 async fn main() {

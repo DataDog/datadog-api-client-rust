@@ -1,6 +1,7 @@
 // Get all powerpacks returns "OK" response with pagination
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_powerpack::*;
+use datadog_api_client::datadogV2::api::api_powerpack::ListPowerpacksOptionalParams;
+use datadog_api_client::datadogV2::api::api_powerpack::PowerpackAPI;
 use futures_util::pin_mut;
 use futures_util::stream::StreamExt;
 

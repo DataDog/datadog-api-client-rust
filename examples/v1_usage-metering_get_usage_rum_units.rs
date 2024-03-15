@@ -1,6 +1,7 @@
 // Get hourly usage for RUM units returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_usage_metering::*;
+use datadog_api_client::datadogV1::api::api_usage_metering::GetUsageRumUnitsOptionalParams;
+use datadog_api_client::datadogV1::api::api_usage_metering::UsageMeteringAPI;
 
 #[tokio::main]
 async fn main() {

@@ -1,7 +1,10 @@
 // Submit distribution points returns "Payload accepted" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_metrics::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_metrics::MetricsAPI;
+use datadog_api_client::datadogV1::api::api_metrics::SubmitDistributionPointsOptionalParams;
+use datadog_api_client::datadogV1::model::DistributionPointItem;
+use datadog_api_client::datadogV1::model::DistributionPointsPayload;
+use datadog_api_client::datadogV1::model::DistributionPointsSeries;
 
 #[tokio::main]
 async fn main() {

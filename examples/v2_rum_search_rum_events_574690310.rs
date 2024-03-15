@@ -1,7 +1,11 @@
 // Search RUM events returns "OK" response with pagination
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_rum::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_rum::RUMAPI;
+use datadog_api_client::datadogV2::model::RUMQueryFilter;
+use datadog_api_client::datadogV2::model::RUMQueryOptions;
+use datadog_api_client::datadogV2::model::RUMQueryPageOptions;
+use datadog_api_client::datadogV2::model::RUMSearchEventsRequest;
+use datadog_api_client::datadogV2::model::RUMSort;
 use futures_util::pin_mut;
 use futures_util::stream::StreamExt;
 

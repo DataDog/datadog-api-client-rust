@@ -1,7 +1,11 @@
 // Add Confluent account returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_confluent_cloud::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_confluent_cloud::ConfluentCloudAPI;
+use datadog_api_client::datadogV2::model::ConfluentAccountCreateRequest;
+use datadog_api_client::datadogV2::model::ConfluentAccountCreateRequestAttributes;
+use datadog_api_client::datadogV2::model::ConfluentAccountCreateRequestData;
+use datadog_api_client::datadogV2::model::ConfluentAccountResourceAttributes;
+use datadog_api_client::datadogV2::model::ConfluentAccountType;
 
 #[tokio::main]
 async fn main() {

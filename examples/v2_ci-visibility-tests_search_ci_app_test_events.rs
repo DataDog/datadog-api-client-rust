@@ -1,7 +1,12 @@
 // Search tests events returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_ci_visibility_tests::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_ci_visibility_tests::CIVisibilityTestsAPI;
+use datadog_api_client::datadogV2::api::api_ci_visibility_tests::SearchCIAppTestEventsOptionalParams;
+use datadog_api_client::datadogV2::model::CIAppQueryOptions;
+use datadog_api_client::datadogV2::model::CIAppQueryPageOptions;
+use datadog_api_client::datadogV2::model::CIAppSort;
+use datadog_api_client::datadogV2::model::CIAppTestEventsRequest;
+use datadog_api_client::datadogV2::model::CIAppTestsQueryFilter;
 
 #[tokio::main]
 async fn main() {

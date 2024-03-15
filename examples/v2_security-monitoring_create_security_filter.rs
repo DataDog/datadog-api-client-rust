@@ -1,7 +1,12 @@
 // Create a security filter returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_security_monitoring::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_security_monitoring::SecurityMonitoringAPI;
+use datadog_api_client::datadogV2::model::SecurityFilterCreateAttributes;
+use datadog_api_client::datadogV2::model::SecurityFilterCreateData;
+use datadog_api_client::datadogV2::model::SecurityFilterCreateRequest;
+use datadog_api_client::datadogV2::model::SecurityFilterExclusionFilter;
+use datadog_api_client::datadogV2::model::SecurityFilterFilteredDataType;
+use datadog_api_client::datadogV2::model::SecurityFilterType;
 
 #[tokio::main]
 async fn main() {

@@ -1,7 +1,10 @@
 // Update a user returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_users::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_users::UsersAPI;
+use datadog_api_client::datadogV2::model::UserUpdateAttributes;
+use datadog_api_client::datadogV2::model::UserUpdateData;
+use datadog_api_client::datadogV2::model::UserUpdateRequest;
+use datadog_api_client::datadogV2::model::UsersType;
 
 #[tokio::main]
 async fn main() {

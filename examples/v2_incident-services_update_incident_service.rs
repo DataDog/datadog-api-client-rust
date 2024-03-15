@@ -1,7 +1,10 @@
 // Update an existing incident service returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_incident_services::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_incident_services::IncidentServicesAPI;
+use datadog_api_client::datadogV2::model::IncidentServiceType;
+use datadog_api_client::datadogV2::model::IncidentServiceUpdateAttributes;
+use datadog_api_client::datadogV2::model::IncidentServiceUpdateData;
+use datadog_api_client::datadogV2::model::IncidentServiceUpdateRequest;
 
 #[tokio::main]
 async fn main() {
