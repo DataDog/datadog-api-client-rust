@@ -1,12 +1,9 @@
 // Get the list of all Synthetic tests returns "OK - Returns the list of all
 // Synthetic tests." response with pagination
-use chrono::prelude::{DateTime, Utc};
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_synthetics::*;
-use datadog_api_client::datadogV1::model::*;
 use futures_util::pin_mut;
 use futures_util::stream::StreamExt;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {

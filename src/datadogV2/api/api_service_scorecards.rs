@@ -3,7 +3,7 @@
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
 use async_stream::try_stream;
-use chrono::{DateTime, Utc};
+
 use futures_core::stream::Stream;
 use log::warn;
 use reqwest;

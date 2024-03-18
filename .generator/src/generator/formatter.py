@@ -408,7 +408,7 @@ def format_data_with_schema(
 
             def format_datetime(x):
                 d = dateutil.parser.isoparse(x)
-                return f'DateTime::parse_from_rfc3339("{d.isoformat()}").expect("Failed to parse datetime")'
+                return f'DateTime::parse_from_rfc3339("{d.isoformat()}").expect("Failed to parse datetime").with_timezone(&Utc)'
                 # if d.microsecond != 0:
                 #     return f"(Utc.with_ymd_and_hms({d.year}, {d.month}, {d.day}, {d.hour}, {d.minute}, {d.second}).unwrap() + chrono::Duration::microseconds({d.microsecond})).to_string()"
                 # return f"Utc.with_ymd_and_hms({d.year}, {d.month}, {d.day}, {d.hour}, {d.minute}, {d.second}).unwrap().to_string()"

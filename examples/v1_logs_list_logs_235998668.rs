@@ -3,16 +3,17 @@ use chrono::prelude::{DateTime, Utc};
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_logs::*;
 use datadog_api_client::datadogV1::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
     let body = LogsListRequest::new(
         LogsListRequestTime::new(
             DateTime::parse_from_rfc3339("2021-11-11T10:11:11+00:00")
-                .expect("Failed to parse datetime"),
+                .expect("Failed to parse datetime")
+                .with_timezone(&Utc),
             DateTime::parse_from_rfc3339("2021-11-11T11:11:11+00:00")
-                .expect("Failed to parse datetime"),
+                .expect("Failed to parse datetime")
+                .with_timezone(&Utc),
         )
         .timezone("Europe/Paris".to_string()),
     )

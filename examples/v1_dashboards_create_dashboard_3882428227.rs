@@ -1,10 +1,8 @@
 // Create a distribution widget using a histogram request containing a formulas
 // and functions events query
-use chrono::prelude::{DateTime, Utc};
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_dashboards::*;
 use datadog_api_client::datadogV1::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {

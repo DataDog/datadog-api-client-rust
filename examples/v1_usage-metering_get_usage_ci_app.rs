@@ -2,8 +2,6 @@
 use chrono::prelude::{DateTime, Utc};
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_usage_metering::*;
-use datadog_api_client::datadogV1::model::*;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -12,10 +10,12 @@ async fn main() {
     let resp = api
         .get_usage_ci_app(
             DateTime::parse_from_rfc3339("2021-11-06T11:11:11+00:00")
-                .expect("Failed to parse datetime"),
+                .expect("Failed to parse datetime")
+                .with_timezone(&Utc),
             GetUsageCIAppOptionalParams::default().end_hr(
                 DateTime::parse_from_rfc3339("2021-11-08T11:11:11+00:00")
-                    .expect("Failed to parse datetime"),
+                    .expect("Failed to parse datetime")
+                    .with_timezone(&Utc),
             ),
         )
         .await;

@@ -1,5 +1,4 @@
 // Update an existing incident returns "OK" response
-use chrono::prelude::{DateTime, Utc};
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_incidents::*;
 use datadog_api_client::datadogV2::model::*;

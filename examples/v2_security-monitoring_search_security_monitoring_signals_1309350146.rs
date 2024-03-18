@@ -5,7 +5,6 @@ use datadog_api_client::datadogV2::api::api_security_monitoring::*;
 use datadog_api_client::datadogV2::model::*;
 use futures_util::pin_mut;
 use futures_util::stream::StreamExt;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -14,11 +13,13 @@ async fn main() {
             SecurityMonitoringSignalListRequestFilter::new()
                 .from(
                     DateTime::parse_from_rfc3339("2021-11-11T10:56:11+00:00")
-                        .expect("Failed to parse datetime"),
+                        .expect("Failed to parse datetime")
+                        .with_timezone(&Utc),
                 )
                 .query("security:attack status:high".to_string())
                 .to(DateTime::parse_from_rfc3339("2021-11-11T11:11:11+00:00")
-                    .expect("Failed to parse datetime")),
+                    .expect("Failed to parse datetime")
+                    .with_timezone(&Utc)),
         )
         .page(SecurityMonitoringSignalListRequestPage::new().limit(2))
         .sort(SecurityMonitoringSignalsSort::TIMESTAMP_ASCENDING);
