@@ -1,6 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use chrono::{DateTime, Utc};
 use serde::de::{Error, MapAccess, Visitor};
 use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
@@ -16,7 +17,7 @@ pub struct SharedDashboard {
     pub author: Option<crate::datadogV1::model::SharedDashboardAuthor>,
     /// Date the dashboard was shared.
     #[serde(rename = "created_at")]
-    pub created_at: Option<String>,
+    pub created_at: Option<DateTime<Utc>>,
     /// ID of the dashboard to share.
     #[serde(rename = "dashboard_id")]
     pub dashboard_id: String,
@@ -92,7 +93,7 @@ impl SharedDashboard {
         self
     }
 
-    pub fn created_at(mut self, value: String) -> Self {
+    pub fn created_at(mut self, value: DateTime<Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
@@ -157,7 +158,7 @@ impl<'de> Deserialize<'de> for SharedDashboard {
                 M: MapAccess<'a>,
             {
                 let mut author: Option<crate::datadogV1::model::SharedDashboardAuthor> = None;
-                let mut created_at: Option<String> = None;
+                let mut created_at: Option<DateTime<Utc>> = None;
                 let mut dashboard_id: Option<String> = None;
                 let mut dashboard_type: Option<crate::datadogV1::model::DashboardType> = None;
                 let mut global_time: Option<crate::datadogV1::model::DashboardGlobalTime> = None;

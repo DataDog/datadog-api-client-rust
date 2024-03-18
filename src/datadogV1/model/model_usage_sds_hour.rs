@@ -1,6 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use chrono::{DateTime, Utc};
 use serde::de::{Error, MapAccess, Visitor};
 use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
@@ -27,7 +28,7 @@ pub struct UsageSDSHour {
     pub events_scanned_bytes: Option<Option<i64>>,
     /// The hour for the usage.
     #[serde(rename = "hour")]
-    pub hour: Option<String>,
+    pub hour: Option<DateTime<Utc>>,
     /// The total number of bytes scanned of logs usage by the Sensitive Data Scanner from the start of the given hour’s month until the given hour.
     #[serde(
         rename = "logs_scanned_bytes",
@@ -85,7 +86,7 @@ impl UsageSDSHour {
         self
     }
 
-    pub fn hour(mut self, value: String) -> Self {
+    pub fn hour(mut self, value: DateTime<Utc>) -> Self {
         self.hour = Some(value);
         self
     }
@@ -141,7 +142,7 @@ impl<'de> Deserialize<'de> for UsageSDSHour {
             {
                 let mut apm_scanned_bytes: Option<Option<i64>> = None;
                 let mut events_scanned_bytes: Option<Option<i64>> = None;
-                let mut hour: Option<String> = None;
+                let mut hour: Option<DateTime<Utc>> = None;
                 let mut logs_scanned_bytes: Option<Option<i64>> = None;
                 let mut org_name: Option<String> = None;
                 let mut public_id: Option<String> = None;

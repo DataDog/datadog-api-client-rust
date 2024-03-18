@@ -1,6 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use chrono::{DateTime, Utc};
 use serde::de::{Error, MapAccess, Visitor};
 use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
@@ -13,7 +14,7 @@ use std::fmt::{self, Formatter};
 pub struct ActiveBillingDimensionsAttributes {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]`.
     #[serde(rename = "month")]
-    pub month: Option<String>,
+    pub month: Option<DateTime<Utc>>,
     /// List of active billing dimensions. Example: `[infra_host, apm_host, serverless_infra]`.
     #[serde(rename = "values")]
     pub values: Option<Vec<String>>,
@@ -31,7 +32,7 @@ impl ActiveBillingDimensionsAttributes {
         }
     }
 
-    pub fn month(mut self, value: String) -> Self {
+    pub fn month(mut self, value: DateTime<Utc>) -> Self {
         self.month = Some(value);
         self
     }
@@ -65,7 +66,7 @@ impl<'de> Deserialize<'de> for ActiveBillingDimensionsAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut month: Option<String> = None;
+                let mut month: Option<DateTime<Utc>> = None;
                 let mut values: Option<Vec<String>> = None;
                 let mut _unparsed = false;
 

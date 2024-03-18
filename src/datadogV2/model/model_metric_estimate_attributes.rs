@@ -1,6 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use chrono::{DateTime, Utc};
 use serde::de::{Error, MapAccess, Visitor};
 use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
@@ -16,7 +17,7 @@ pub struct MetricEstimateAttributes {
     pub estimate_type: Option<crate::datadogV2::model::MetricEstimateType>,
     /// Timestamp when the cardinality estimate was requested.
     #[serde(rename = "estimated_at")]
-    pub estimated_at: Option<String>,
+    pub estimated_at: Option<DateTime<Utc>>,
     /// Estimated cardinality of the metric based on the queried configuration.
     #[serde(rename = "estimated_output_series")]
     pub estimated_output_series: Option<i64>,
@@ -40,7 +41,7 @@ impl MetricEstimateAttributes {
         self
     }
 
-    pub fn estimated_at(mut self, value: String) -> Self {
+    pub fn estimated_at(mut self, value: DateTime<Utc>) -> Self {
         self.estimated_at = Some(value);
         self
     }
@@ -75,7 +76,7 @@ impl<'de> Deserialize<'de> for MetricEstimateAttributes {
                 M: MapAccess<'a>,
             {
                 let mut estimate_type: Option<crate::datadogV2::model::MetricEstimateType> = None;
-                let mut estimated_at: Option<String> = None;
+                let mut estimated_at: Option<DateTime<Utc>> = None;
                 let mut estimated_output_series: Option<i64> = None;
                 let mut _unparsed = false;
 

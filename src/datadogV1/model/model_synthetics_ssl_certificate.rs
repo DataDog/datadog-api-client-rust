@@ -1,6 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use chrono::{DateTime, Utc};
 use serde::de::{Error, MapAccess, Visitor};
 use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
@@ -43,10 +44,10 @@ pub struct SyntheticsSSLCertificate {
     pub subject: Option<crate::datadogV1::model::SyntheticsSSLCertificateSubject>,
     /// Date from which the SSL certificate is valid.
     #[serde(rename = "validFrom")]
-    pub valid_from: Option<String>,
+    pub valid_from: Option<DateTime<Utc>>,
     /// Date until which the SSL certificate is valid.
     #[serde(rename = "validTo")]
-    pub valid_to: Option<String>,
+    pub valid_to: Option<DateTime<Utc>>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -127,12 +128,12 @@ impl SyntheticsSSLCertificate {
         self
     }
 
-    pub fn valid_from(mut self, value: String) -> Self {
+    pub fn valid_from(mut self, value: DateTime<Utc>) -> Self {
         self.valid_from = Some(value);
         self
     }
 
-    pub fn valid_to(mut self, value: String) -> Self {
+    pub fn valid_to(mut self, value: DateTime<Utc>) -> Self {
         self.valid_to = Some(value);
         self
     }
@@ -173,8 +174,8 @@ impl<'de> Deserialize<'de> for SyntheticsSSLCertificate {
                 let mut serial_number: Option<String> = None;
                 let mut subject: Option<crate::datadogV1::model::SyntheticsSSLCertificateSubject> =
                     None;
-                let mut valid_from: Option<String> = None;
-                let mut valid_to: Option<String> = None;
+                let mut valid_from: Option<DateTime<Utc>> = None;
+                let mut valid_to: Option<DateTime<Utc>> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {

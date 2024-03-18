@@ -3,6 +3,7 @@
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
 use async_stream::try_stream;
+use chrono::{DateTime, Utc};
 use futures_core::stream::Stream;
 use reqwest;
 use serde::{Deserialize, Serialize};
@@ -14,9 +15,9 @@ pub struct ListAuditLogsOptionalParams {
     /// Search query following Audit Logs syntax.
     pub filter_query: Option<String>,
     /// Minimum timestamp for requested events.
-    pub filter_from: Option<String>,
+    pub filter_from: Option<DateTime<Utc>>,
     /// Maximum timestamp for requested events.
-    pub filter_to: Option<String>,
+    pub filter_to: Option<DateTime<Utc>>,
     /// Order of events in results.
     pub sort: Option<crate::datadogV2::model::AuditLogsSort>,
     /// List following results with a cursor provided in the previous query.
@@ -32,12 +33,12 @@ impl ListAuditLogsOptionalParams {
         self
     }
     /// Minimum timestamp for requested events.
-    pub fn filter_from(mut self, value: String) -> Self {
+    pub fn filter_from(mut self, value: DateTime<Utc>) -> Self {
         self.filter_from = Some(value);
         self
     }
     /// Maximum timestamp for requested events.
-    pub fn filter_to(mut self, value: String) -> Self {
+    pub fn filter_to(mut self, value: DateTime<Utc>) -> Self {
         self.filter_to = Some(value);
         self
     }

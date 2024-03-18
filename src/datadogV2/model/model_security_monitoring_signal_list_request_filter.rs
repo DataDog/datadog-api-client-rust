@@ -1,6 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use chrono::{DateTime, Utc};
 use serde::de::{Error, MapAccess, Visitor};
 use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
@@ -13,13 +14,13 @@ use std::fmt::{self, Formatter};
 pub struct SecurityMonitoringSignalListRequestFilter {
     /// The minimum timestamp for requested security signals.
     #[serde(rename = "from")]
-    pub from: Option<String>,
+    pub from: Option<DateTime<Utc>>,
     /// Search query for listing security signals.
     #[serde(rename = "query")]
     pub query: Option<String>,
     /// The maximum timestamp for requested security signals.
     #[serde(rename = "to")]
-    pub to: Option<String>,
+    pub to: Option<DateTime<Utc>>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -35,7 +36,7 @@ impl SecurityMonitoringSignalListRequestFilter {
         }
     }
 
-    pub fn from(mut self, value: String) -> Self {
+    pub fn from(mut self, value: DateTime<Utc>) -> Self {
         self.from = Some(value);
         self
     }
@@ -45,7 +46,7 @@ impl SecurityMonitoringSignalListRequestFilter {
         self
     }
 
-    pub fn to(mut self, value: String) -> Self {
+    pub fn to(mut self, value: DateTime<Utc>) -> Self {
         self.to = Some(value);
         self
     }
@@ -74,9 +75,9 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalListRequestFilter {
             where
                 M: MapAccess<'a>,
             {
-                let mut from: Option<String> = None;
+                let mut from: Option<DateTime<Utc>> = None;
                 let mut query: Option<String> = None;
-                let mut to: Option<String> = None;
+                let mut to: Option<DateTime<Utc>> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {

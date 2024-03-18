@@ -2,6 +2,7 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use chrono::{DateTime, Utc};
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -48,7 +49,7 @@ impl GetDailyCustomReportsOptionalParams {
 pub struct GetHourlyUsageAttributionOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<DateTime<Utc>>,
     /// List following results with a next_record_id provided in the previous query.
     pub next_record_id: Option<String>,
     /// Comma separated list of tags used to group usage. If no value is provided the usage will not be broken down by tags.
@@ -62,7 +63,7 @@ pub struct GetHourlyUsageAttributionOptionalParams {
 impl GetHourlyUsageAttributionOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: DateTime<Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -91,13 +92,13 @@ impl GetHourlyUsageAttributionOptionalParams {
 pub struct GetIncidentManagementOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<DateTime<Utc>>,
 }
 
 impl GetIncidentManagementOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: DateTime<Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -109,13 +110,13 @@ impl GetIncidentManagementOptionalParams {
 pub struct GetIngestedSpansOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<DateTime<Utc>>,
 }
 
 impl GetIngestedSpansOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: DateTime<Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -163,7 +164,7 @@ impl GetMonthlyCustomReportsOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetMonthlyUsageAttributionOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage ending this month.
-    pub end_month: Option<String>,
+    pub end_month: Option<DateTime<Utc>>,
     /// The direction to sort by: `[desc, asc]`.
     pub sort_direction: Option<crate::datadogV1::model::UsageSortDirection>,
     /// The field to sort by.
@@ -180,7 +181,7 @@ pub struct GetMonthlyUsageAttributionOptionalParams {
 
 impl GetMonthlyUsageAttributionOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage ending this month.
-    pub fn end_month(mut self, value: String) -> Self {
+    pub fn end_month(mut self, value: DateTime<Utc>) -> Self {
         self.end_month = Some(value);
         self
     }
@@ -222,13 +223,13 @@ impl GetMonthlyUsageAttributionOptionalParams {
 pub struct GetUsageAnalyzedLogsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<DateTime<Utc>>,
 }
 
 impl GetUsageAnalyzedLogsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: DateTime<Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -239,7 +240,7 @@ impl GetUsageAnalyzedLogsOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageAttributionOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage ending this month.
-    pub end_month: Option<String>,
+    pub end_month: Option<DateTime<Utc>>,
     /// The direction to sort by: `[desc, asc]`.
     pub sort_direction: Option<crate::datadogV1::model::UsageSortDirection>,
     /// The field to sort by.
@@ -254,7 +255,7 @@ pub struct GetUsageAttributionOptionalParams {
 
 impl GetUsageAttributionOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage ending this month.
-    pub fn end_month(mut self, value: String) -> Self {
+    pub fn end_month(mut self, value: DateTime<Utc>) -> Self {
         self.end_month = Some(value);
         self
     }
@@ -291,13 +292,13 @@ impl GetUsageAttributionOptionalParams {
 pub struct GetUsageAuditLogsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<DateTime<Utc>>,
 }
 
 impl GetUsageAuditLogsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: DateTime<Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -308,12 +309,12 @@ impl GetUsageAuditLogsOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageBillableSummaryOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage starting this month.
-    pub month: Option<String>,
+    pub month: Option<DateTime<Utc>>,
 }
 
 impl GetUsageBillableSummaryOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage starting this month.
-    pub fn month(mut self, value: String) -> Self {
+    pub fn month(mut self, value: DateTime<Utc>) -> Self {
         self.month = Some(value);
         self
     }
@@ -325,13 +326,13 @@ impl GetUsageBillableSummaryOptionalParams {
 pub struct GetUsageCIAppOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<DateTime<Utc>>,
 }
 
 impl GetUsageCIAppOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: DateTime<Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -343,13 +344,13 @@ impl GetUsageCIAppOptionalParams {
 pub struct GetUsageCWSOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<DateTime<Utc>>,
 }
 
 impl GetUsageCWSOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: DateTime<Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -361,13 +362,13 @@ impl GetUsageCWSOptionalParams {
 pub struct GetUsageCloudSecurityPostureManagementOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<DateTime<Utc>>,
 }
 
 impl GetUsageCloudSecurityPostureManagementOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: DateTime<Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -379,13 +380,13 @@ impl GetUsageCloudSecurityPostureManagementOptionalParams {
 pub struct GetUsageDBMOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<DateTime<Utc>>,
 }
 
 impl GetUsageDBMOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: DateTime<Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -396,12 +397,12 @@ impl GetUsageDBMOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageFargateOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<DateTime<Utc>>,
 }
 
 impl GetUsageFargateOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: DateTime<Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -412,12 +413,12 @@ impl GetUsageFargateOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageHostsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<DateTime<Utc>>,
 }
 
 impl GetUsageHostsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: DateTime<Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -428,12 +429,12 @@ impl GetUsageHostsOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageIndexedSpansOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<DateTime<Utc>>,
 }
 
 impl GetUsageIndexedSpansOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: DateTime<Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -445,13 +446,13 @@ impl GetUsageIndexedSpansOptionalParams {
 pub struct GetUsageInternetOfThingsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<DateTime<Utc>>,
 }
 
 impl GetUsageInternetOfThingsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: DateTime<Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -462,12 +463,12 @@ impl GetUsageInternetOfThingsOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageLambdaOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<DateTime<Utc>>,
 }
 
 impl GetUsageLambdaOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: DateTime<Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -478,12 +479,12 @@ impl GetUsageLambdaOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageLogsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<DateTime<Utc>>,
 }
 
 impl GetUsageLogsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: DateTime<Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -494,14 +495,14 @@ impl GetUsageLogsOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageLogsByIndexOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<DateTime<Utc>>,
     /// Comma-separated list of log index names.
     pub index_name: Option<Vec<String>>,
 }
 
 impl GetUsageLogsByIndexOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: DateTime<Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -518,13 +519,13 @@ impl GetUsageLogsByIndexOptionalParams {
 pub struct GetUsageLogsByRetentionOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<DateTime<Utc>>,
 }
 
 impl GetUsageLogsByRetentionOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: DateTime<Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -536,13 +537,13 @@ impl GetUsageLogsByRetentionOptionalParams {
 pub struct GetUsageNetworkFlowsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<DateTime<Utc>>,
 }
 
 impl GetUsageNetworkFlowsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: DateTime<Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -553,12 +554,12 @@ impl GetUsageNetworkFlowsOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageNetworkHostsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<DateTime<Utc>>,
 }
 
 impl GetUsageNetworkHostsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: DateTime<Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -570,13 +571,13 @@ impl GetUsageNetworkHostsOptionalParams {
 pub struct GetUsageOnlineArchiveOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<DateTime<Utc>>,
 }
 
 impl GetUsageOnlineArchiveOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: DateTime<Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -588,13 +589,13 @@ impl GetUsageOnlineArchiveOptionalParams {
 pub struct GetUsageProfilingOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<DateTime<Utc>>,
 }
 
 impl GetUsageProfilingOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: DateTime<Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -605,14 +606,14 @@ impl GetUsageProfilingOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageRumSessionsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<DateTime<Utc>>,
     /// RUM type: `[browser, mobile]`. Defaults to `browser`.
     pub type_: Option<String>,
 }
 
 impl GetUsageRumSessionsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: DateTime<Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -628,12 +629,12 @@ impl GetUsageRumSessionsOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageRumUnitsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<DateTime<Utc>>,
 }
 
 impl GetUsageRumUnitsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: DateTime<Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -645,13 +646,13 @@ impl GetUsageRumUnitsOptionalParams {
 pub struct GetUsageSDSOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<DateTime<Utc>>,
 }
 
 impl GetUsageSDSOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: DateTime<Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -663,13 +664,13 @@ impl GetUsageSDSOptionalParams {
 pub struct GetUsageSNMPOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<DateTime<Utc>>,
 }
 
 impl GetUsageSNMPOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: DateTime<Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -680,14 +681,14 @@ impl GetUsageSNMPOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageSummaryOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage ending this month.
-    pub end_month: Option<String>,
+    pub end_month: Option<DateTime<Utc>>,
     /// Include usage summaries for each sub-org.
     pub include_org_details: Option<bool>,
 }
 
 impl GetUsageSummaryOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage ending this month.
-    pub fn end_month(mut self, value: String) -> Self {
+    pub fn end_month(mut self, value: DateTime<Utc>) -> Self {
         self.end_month = Some(value);
         self
     }
@@ -703,12 +704,12 @@ impl GetUsageSummaryOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageSyntheticsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<DateTime<Utc>>,
 }
 
 impl GetUsageSyntheticsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: DateTime<Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -719,12 +720,12 @@ impl GetUsageSyntheticsOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageSyntheticsAPIOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<DateTime<Utc>>,
 }
 
 impl GetUsageSyntheticsAPIOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: DateTime<Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -735,12 +736,12 @@ impl GetUsageSyntheticsAPIOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageSyntheticsBrowserOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<DateTime<Utc>>,
 }
 
 impl GetUsageSyntheticsBrowserOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: DateTime<Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -751,12 +752,12 @@ impl GetUsageSyntheticsBrowserOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageTimeseriesOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<DateTime<Utc>>,
 }
 
 impl GetUsageTimeseriesOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: DateTime<Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -767,9 +768,9 @@ impl GetUsageTimeseriesOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageTopAvgMetricsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: [YYYY-MM] for usage beginning at this hour. (Either month or day should be specified, but not both)
-    pub month: Option<String>,
+    pub month: Option<DateTime<Utc>>,
     /// Datetime in ISO-8601 format, UTC, precise to day: [YYYY-MM-DD] for usage beginning at this hour. (Either month or day should be specified, but not both)
-    pub day: Option<String>,
+    pub day: Option<DateTime<Utc>>,
     /// Comma-separated list of metric names.
     pub names: Option<Vec<String>>,
     /// Maximum number of results to return (between 1 and 5000) - defaults to 500 results if limit not specified.
@@ -780,12 +781,12 @@ pub struct GetUsageTopAvgMetricsOptionalParams {
 
 impl GetUsageTopAvgMetricsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: [YYYY-MM] for usage beginning at this hour. (Either month or day should be specified, but not both)
-    pub fn month(mut self, value: String) -> Self {
+    pub fn month(mut self, value: DateTime<Utc>) -> Self {
         self.month = Some(value);
         self
     }
     /// Datetime in ISO-8601 format, UTC, precise to day: [YYYY-MM-DD] for usage beginning at this hour. (Either month or day should be specified, but not both)
-    pub fn day(mut self, value: String) -> Self {
+    pub fn day(mut self, value: DateTime<Utc>) -> Self {
         self.day = Some(value);
         self
     }
@@ -1334,7 +1335,7 @@ impl UsageMeteringAPI {
     /// ```
     pub async fn get_hourly_usage_attribution(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         usage_type: crate::datadogV1::model::HourlyUsageAttributionUsageType,
         params: GetHourlyUsageAttributionOptionalParams,
     ) -> Result<
@@ -1375,7 +1376,7 @@ impl UsageMeteringAPI {
     /// ```
     pub async fn get_hourly_usage_attribution_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         usage_type: crate::datadogV1::model::HourlyUsageAttributionUsageType,
         params: GetHourlyUsageAttributionOptionalParams,
     ) -> Result<
@@ -1468,7 +1469,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_incident_management(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetIncidentManagementOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageIncidentManagementResponse,
@@ -1495,7 +1496,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_incident_management_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetIncidentManagementOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageIncidentManagementResponse>,
@@ -1571,7 +1572,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_ingested_spans(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetIngestedSpansOptionalParams,
     ) -> Result<crate::datadogV1::model::UsageIngestedSpansResponse, Error<GetIngestedSpansError>>
     {
@@ -1596,7 +1597,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_ingested_spans_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetIngestedSpansOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageIngestedSpansResponse>,
@@ -1799,7 +1800,7 @@ impl UsageMeteringAPI {
     /// ```
     pub async fn get_monthly_usage_attribution(
         &self,
-        start_month: String,
+        start_month: DateTime<Utc>,
         fields: crate::datadogV1::model::MonthlyUsageAttributionSupportedMetrics,
         params: GetMonthlyUsageAttributionOptionalParams,
     ) -> Result<
@@ -1840,7 +1841,7 @@ impl UsageMeteringAPI {
     /// ```
     pub async fn get_monthly_usage_attribution_with_http_info(
         &self,
-        start_month: String,
+        start_month: DateTime<Utc>,
         fields: crate::datadogV1::model::MonthlyUsageAttributionSupportedMetrics,
         params: GetMonthlyUsageAttributionOptionalParams,
     ) -> Result<
@@ -2133,7 +2134,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_analyzed_logs(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageAnalyzedLogsOptionalParams,
     ) -> Result<crate::datadogV1::model::UsageAnalyzedLogsResponse, Error<GetUsageAnalyzedLogsError>>
     {
@@ -2158,7 +2159,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_analyzed_logs_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageAnalyzedLogsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageAnalyzedLogsResponse>,
@@ -2235,7 +2236,7 @@ impl UsageMeteringAPI {
     /// Refer to [Migrating from v1 to v2 of the Usage Attribution API](<https://docs.datadoghq.com/account_management/guide/usage-attribution-migration/>) for the associated migration guide.
     pub async fn get_usage_attribution(
         &self,
-        start_month: String,
+        start_month: DateTime<Utc>,
         fields: crate::datadogV1::model::UsageAttributionSupportedMetrics,
         params: GetUsageAttributionOptionalParams,
     ) -> Result<crate::datadogV1::model::UsageAttributionResponse, Error<GetUsageAttributionError>>
@@ -2262,7 +2263,7 @@ impl UsageMeteringAPI {
     /// Refer to [Migrating from v1 to v2 of the Usage Attribution API](<https://docs.datadoghq.com/account_management/guide/usage-attribution-migration/>) for the associated migration guide.
     pub async fn get_usage_attribution_with_http_info(
         &self,
-        start_month: String,
+        start_month: DateTime<Utc>,
         fields: crate::datadogV1::model::UsageAttributionSupportedMetrics,
         params: GetUsageAttributionOptionalParams,
     ) -> Result<
@@ -2365,7 +2366,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated.
     pub async fn get_usage_audit_logs(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageAuditLogsOptionalParams,
     ) -> Result<crate::datadogV1::model::UsageAuditLogsResponse, Error<GetUsageAuditLogsError>>
     {
@@ -2390,7 +2391,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated.
     pub async fn get_usage_audit_logs_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageAuditLogsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageAuditLogsResponse>,
@@ -2561,7 +2562,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_ci_app(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageCIAppOptionalParams,
     ) -> Result<crate::datadogV1::model::UsageCIVisibilityResponse, Error<GetUsageCIAppError>> {
         match self.get_usage_ci_app_with_http_info(start_hr, params).await {
@@ -2582,7 +2583,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_ci_app_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageCIAppOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageCIVisibilityResponse>,
@@ -2658,7 +2659,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_cws(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageCWSOptionalParams,
     ) -> Result<crate::datadogV1::model::UsageCWSResponse, Error<GetUsageCWSError>> {
         match self.get_usage_cws_with_http_info(start_hr, params).await {
@@ -2679,7 +2680,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_cws_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageCWSOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV1::model::UsageCWSResponse>, Error<GetUsageCWSError>>
     {
@@ -2751,7 +2752,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_cloud_security_posture_management(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageCloudSecurityPostureManagementOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageCloudSecurityPostureManagementResponse,
@@ -2778,7 +2779,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_cloud_security_posture_management_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageCloudSecurityPostureManagementOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageCloudSecurityPostureManagementResponse>,
@@ -2855,7 +2856,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_dbm(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageDBMOptionalParams,
     ) -> Result<crate::datadogV1::model::UsageDBMResponse, Error<GetUsageDBMError>> {
         match self.get_usage_dbm_with_http_info(start_hr, params).await {
@@ -2876,7 +2877,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_dbm_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageDBMOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV1::model::UsageDBMResponse>, Error<GetUsageDBMError>>
     {
@@ -2948,7 +2949,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_fargate(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageFargateOptionalParams,
     ) -> Result<crate::datadogV1::model::UsageFargateResponse, Error<GetUsageFargateError>> {
         match self
@@ -2972,7 +2973,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_fargate_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageFargateOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageFargateResponse>,
@@ -3048,7 +3049,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_hosts(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageHostsOptionalParams,
     ) -> Result<crate::datadogV1::model::UsageHostsResponse, Error<GetUsageHostsError>> {
         match self.get_usage_hosts_with_http_info(start_hr, params).await {
@@ -3069,7 +3070,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_hosts_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageHostsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageHostsResponse>,
@@ -3145,7 +3146,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_indexed_spans(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageIndexedSpansOptionalParams,
     ) -> Result<crate::datadogV1::model::UsageIndexedSpansResponse, Error<GetUsageIndexedSpansError>>
     {
@@ -3170,7 +3171,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_indexed_spans_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageIndexedSpansOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageIndexedSpansResponse>,
@@ -3246,7 +3247,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_internet_of_things(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageInternetOfThingsOptionalParams,
     ) -> Result<crate::datadogV1::model::UsageIoTResponse, Error<GetUsageInternetOfThingsError>>
     {
@@ -3271,7 +3272,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_internet_of_things_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageInternetOfThingsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageIoTResponse>,
@@ -3346,7 +3347,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_lambda(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageLambdaOptionalParams,
     ) -> Result<crate::datadogV1::model::UsageLambdaResponse, Error<GetUsageLambdaError>> {
         match self.get_usage_lambda_with_http_info(start_hr, params).await {
@@ -3367,7 +3368,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_lambda_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageLambdaOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageLambdaResponse>,
@@ -3443,7 +3444,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_logs(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageLogsOptionalParams,
     ) -> Result<crate::datadogV1::model::UsageLogsResponse, Error<GetUsageLogsError>> {
         match self.get_usage_logs_with_http_info(start_hr, params).await {
@@ -3464,7 +3465,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_logs_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageLogsOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV1::model::UsageLogsResponse>, Error<GetUsageLogsError>>
     {
@@ -3535,7 +3536,7 @@ impl UsageMeteringAPI {
     /// Get hourly usage for logs by index.
     pub async fn get_usage_logs_by_index(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageLogsByIndexOptionalParams,
     ) -> Result<crate::datadogV1::model::UsageLogsByIndexResponse, Error<GetUsageLogsByIndexError>>
     {
@@ -3559,7 +3560,7 @@ impl UsageMeteringAPI {
     /// Get hourly usage for logs by index.
     pub async fn get_usage_logs_by_index_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageLogsByIndexOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageLogsByIndexResponse>,
@@ -3647,7 +3648,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_logs_by_retention(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageLogsByRetentionOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageLogsByRetentionResponse,
@@ -3674,7 +3675,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_logs_by_retention_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageLogsByRetentionOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageLogsByRetentionResponse>,
@@ -3750,7 +3751,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_network_flows(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageNetworkFlowsOptionalParams,
     ) -> Result<crate::datadogV1::model::UsageNetworkFlowsResponse, Error<GetUsageNetworkFlowsError>>
     {
@@ -3775,7 +3776,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_network_flows_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageNetworkFlowsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageNetworkFlowsResponse>,
@@ -3851,7 +3852,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_network_hosts(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageNetworkHostsOptionalParams,
     ) -> Result<crate::datadogV1::model::UsageNetworkHostsResponse, Error<GetUsageNetworkHostsError>>
     {
@@ -3876,7 +3877,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_network_hosts_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageNetworkHostsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageNetworkHostsResponse>,
@@ -3952,7 +3953,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_online_archive(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageOnlineArchiveOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageOnlineArchiveResponse,
@@ -3979,7 +3980,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_online_archive_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageOnlineArchiveOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageOnlineArchiveResponse>,
@@ -4055,7 +4056,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_profiling(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageProfilingOptionalParams,
     ) -> Result<crate::datadogV1::model::UsageProfilingResponse, Error<GetUsageProfilingError>>
     {
@@ -4080,7 +4081,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_profiling_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageProfilingOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageProfilingResponse>,
@@ -4156,7 +4157,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_rum_sessions(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageRumSessionsOptionalParams,
     ) -> Result<crate::datadogV1::model::UsageRumSessionsResponse, Error<GetUsageRumSessionsError>>
     {
@@ -4181,7 +4182,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_rum_sessions_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageRumSessionsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageRumSessionsResponse>,
@@ -4262,7 +4263,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_rum_units(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageRumUnitsOptionalParams,
     ) -> Result<crate::datadogV1::model::UsageRumUnitsResponse, Error<GetUsageRumUnitsError>> {
         match self
@@ -4286,7 +4287,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_rum_units_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageRumUnitsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageRumUnitsResponse>,
@@ -4362,7 +4363,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_sds(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageSDSOptionalParams,
     ) -> Result<crate::datadogV1::model::UsageSDSResponse, Error<GetUsageSDSError>> {
         match self.get_usage_sds_with_http_info(start_hr, params).await {
@@ -4383,7 +4384,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_sds_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageSDSOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV1::model::UsageSDSResponse>, Error<GetUsageSDSError>>
     {
@@ -4455,7 +4456,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_snmp(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageSNMPOptionalParams,
     ) -> Result<crate::datadogV1::model::UsageSNMPResponse, Error<GetUsageSNMPError>> {
         match self.get_usage_snmp_with_http_info(start_hr, params).await {
@@ -4476,7 +4477,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_snmp_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageSNMPOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV1::model::UsageSNMPResponse>, Error<GetUsageSNMPError>>
     {
@@ -4547,7 +4548,7 @@ impl UsageMeteringAPI {
     /// Get all usage across your account.
     pub async fn get_usage_summary(
         &self,
-        start_month: String,
+        start_month: DateTime<Utc>,
         params: GetUsageSummaryOptionalParams,
     ) -> Result<crate::datadogV1::model::UsageSummaryResponse, Error<GetUsageSummaryError>> {
         match self
@@ -4570,7 +4571,7 @@ impl UsageMeteringAPI {
     /// Get all usage across your account.
     pub async fn get_usage_summary_with_http_info(
         &self,
-        start_month: String,
+        start_month: DateTime<Utc>,
         params: GetUsageSummaryOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageSummaryResponse>,
@@ -4651,7 +4652,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageSyntheticsOptionalParams,
     ) -> Result<crate::datadogV1::model::UsageSyntheticsResponse, Error<GetUsageSyntheticsError>>
     {
@@ -4676,7 +4677,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageSyntheticsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageSyntheticsResponse>,
@@ -4752,7 +4753,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics_api(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageSyntheticsAPIOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageSyntheticsAPIResponse,
@@ -4779,7 +4780,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics_api_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageSyntheticsAPIOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageSyntheticsAPIResponse>,
@@ -4855,7 +4856,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics_browser(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageSyntheticsBrowserOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageSyntheticsBrowserResponse,
@@ -4882,7 +4883,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics_browser_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageSyntheticsBrowserOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageSyntheticsBrowserResponse>,
@@ -4958,7 +4959,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_timeseries(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageTimeseriesOptionalParams,
     ) -> Result<crate::datadogV1::model::UsageTimeseriesResponse, Error<GetUsageTimeseriesError>>
     {
@@ -4983,7 +4984,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_timeseries_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: DateTime<Utc>,
         params: GetUsageTimeseriesOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV1::model::UsageTimeseriesResponse>,

@@ -1,7 +1,9 @@
 // Get a list of security signals returns "OK" response
+use chrono::prelude::{DateTime, Utc};
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_security_monitoring::*;
 use datadog_api_client::datadogV2::model::*;
+use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -9,9 +11,17 @@ async fn main() {
         SecurityMonitoringSignalListRequest::new()
             .filter(
                 SecurityMonitoringSignalListRequestFilter::new()
-                    .from("2019-01-02T09:42:36.320000+00:00".to_string())
+                    .from(
+                        DateTime::parse_from_rfc3339(
+                            "2019-01-02T09:42:36.320000+00:00",
+                        ).expect("Failed to parse datetime"),
+                    )
                     .query("security:attack status:high".to_string())
-                    .to("2019-01-03T09:42:36.320000+00:00".to_string()),
+                    .to(
+                        DateTime::parse_from_rfc3339(
+                            "2019-01-03T09:42:36.320000+00:00",
+                        ).expect("Failed to parse datetime"),
+                    ),
             )
             .page(
                 SecurityMonitoringSignalListRequestPage::new()

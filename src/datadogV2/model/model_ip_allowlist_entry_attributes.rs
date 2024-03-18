@@ -1,6 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use chrono::{DateTime, Utc};
 use serde::de::{Error, MapAccess, Visitor};
 use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
@@ -16,10 +17,10 @@ pub struct IPAllowlistEntryAttributes {
     pub cidr_block: Option<String>,
     /// Creation time of the entry.
     #[serde(rename = "created_at")]
-    pub created_at: Option<String>,
+    pub created_at: Option<DateTime<Utc>>,
     /// Time of last entry modification.
     #[serde(rename = "modified_at")]
-    pub modified_at: Option<String>,
+    pub modified_at: Option<DateTime<Utc>>,
     /// A note describing the IP allowlist entry.
     #[serde(rename = "note")]
     pub note: Option<String>,
@@ -44,12 +45,12 @@ impl IPAllowlistEntryAttributes {
         self
     }
 
-    pub fn created_at(mut self, value: String) -> Self {
+    pub fn created_at(mut self, value: DateTime<Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
 
-    pub fn modified_at(mut self, value: String) -> Self {
+    pub fn modified_at(mut self, value: DateTime<Utc>) -> Self {
         self.modified_at = Some(value);
         self
     }
@@ -84,8 +85,8 @@ impl<'de> Deserialize<'de> for IPAllowlistEntryAttributes {
                 M: MapAccess<'a>,
             {
                 let mut cidr_block: Option<String> = None;
-                let mut created_at: Option<String> = None;
-                let mut modified_at: Option<String> = None;
+                let mut created_at: Option<DateTime<Utc>> = None;
+                let mut modified_at: Option<DateTime<Utc>> = None;
                 let mut note: Option<String> = None;
                 let mut _unparsed = false;
 

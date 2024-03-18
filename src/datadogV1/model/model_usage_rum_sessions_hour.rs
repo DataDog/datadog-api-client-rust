@@ -1,6 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use chrono::{DateTime, Utc};
 use serde::de::{Error, MapAccess, Visitor};
 use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
@@ -13,7 +14,7 @@ use std::fmt::{self, Formatter};
 pub struct UsageRumSessionsHour {
     /// The hour for the usage.
     #[serde(rename = "hour")]
-    pub hour: Option<String>,
+    pub hour: Option<DateTime<Utc>>,
     /// The organization name.
     #[serde(rename = "org_name")]
     pub org_name: Option<String>,
@@ -79,7 +80,7 @@ impl UsageRumSessionsHour {
         }
     }
 
-    pub fn hour(mut self, value: String) -> Self {
+    pub fn hour(mut self, value: DateTime<Utc>) -> Self {
         self.hour = Some(value);
         self
     }
@@ -148,7 +149,7 @@ impl<'de> Deserialize<'de> for UsageRumSessionsHour {
             where
                 M: MapAccess<'a>,
             {
-                let mut hour: Option<String> = None;
+                let mut hour: Option<DateTime<Utc>> = None;
                 let mut org_name: Option<String> = None;
                 let mut public_id: Option<String> = None;
                 let mut replay_session_count: Option<i64> = None;

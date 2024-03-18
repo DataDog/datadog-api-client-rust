@@ -1,18 +1,24 @@
 // Get a list of security signals returns "OK" response with pagination
+use chrono::prelude::{DateTime, Utc};
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_security_monitoring::*;
 use datadog_api_client::datadogV2::model::*;
 use futures_util::pin_mut;
 use futures_util::stream::StreamExt;
+use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
     let body = SecurityMonitoringSignalListRequest::new()
         .filter(
             SecurityMonitoringSignalListRequestFilter::new()
-                .from("2021-11-11T10:56:11+00:00".to_string())
+                .from(
+                    DateTime::parse_from_rfc3339("2021-11-11T10:56:11+00:00")
+                        .expect("Failed to parse datetime"),
+                )
                 .query("security:attack status:high".to_string())
-                .to("2021-11-11T11:11:11+00:00".to_string()),
+                .to(DateTime::parse_from_rfc3339("2021-11-11T11:11:11+00:00")
+                    .expect("Failed to parse datetime")),
         )
         .page(SecurityMonitoringSignalListRequestPage::new().limit(2))
         .sort(SecurityMonitoringSignalsSort::TIMESTAMP_ASCENDING);

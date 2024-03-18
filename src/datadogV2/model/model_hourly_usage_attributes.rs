@@ -1,6 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use chrono::{DateTime, Utc};
 use serde::de::{Error, MapAccess, Visitor};
 use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
@@ -28,7 +29,7 @@ pub struct HourlyUsageAttributes {
     pub region: Option<String>,
     /// Datetime in ISO-8601 format, UTC. The hour for the usage.
     #[serde(rename = "timestamp")]
-    pub timestamp: Option<String>,
+    pub timestamp: Option<DateTime<Utc>>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -75,7 +76,7 @@ impl HourlyUsageAttributes {
         self
     }
 
-    pub fn timestamp(mut self, value: String) -> Self {
+    pub fn timestamp(mut self, value: DateTime<Utc>) -> Self {
         self.timestamp = Some(value);
         self
     }
@@ -110,7 +111,7 @@ impl<'de> Deserialize<'de> for HourlyUsageAttributes {
                 let mut product_family: Option<String> = None;
                 let mut public_id: Option<String> = None;
                 let mut region: Option<String> = None;
-                let mut timestamp: Option<String> = None;
+                let mut timestamp: Option<DateTime<Utc>> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {

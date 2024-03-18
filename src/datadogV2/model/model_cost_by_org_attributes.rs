@@ -1,6 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use chrono::{DateTime, Utc};
 use serde::de::{Error, MapAccess, Visitor};
 use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
@@ -16,7 +17,7 @@ pub struct CostByOrgAttributes {
     pub charges: Option<Vec<crate::datadogV2::model::ChargebackBreakdown>>,
     /// The month requested.
     #[serde(rename = "date")]
-    pub date: Option<String>,
+    pub date: Option<DateTime<Utc>>,
     /// The organization name.
     #[serde(rename = "org_name")]
     pub org_name: Option<String>,
@@ -52,7 +53,7 @@ impl CostByOrgAttributes {
         self
     }
 
-    pub fn date(mut self, value: String) -> Self {
+    pub fn date(mut self, value: DateTime<Utc>) -> Self {
         self.date = Some(value);
         self
     }
@@ -102,7 +103,7 @@ impl<'de> Deserialize<'de> for CostByOrgAttributes {
                 M: MapAccess<'a>,
             {
                 let mut charges: Option<Vec<crate::datadogV2::model::ChargebackBreakdown>> = None;
-                let mut date: Option<String> = None;
+                let mut date: Option<DateTime<Utc>> = None;
                 let mut org_name: Option<String> = None;
                 let mut public_id: Option<String> = None;
                 let mut region: Option<String> = None;

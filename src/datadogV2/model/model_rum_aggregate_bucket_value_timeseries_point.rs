@@ -1,6 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use chrono::{DateTime, Utc};
 use serde::de::{Error, MapAccess, Visitor};
 use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
@@ -13,7 +14,7 @@ use std::fmt::{self, Formatter};
 pub struct RUMAggregateBucketValueTimeseriesPoint {
     /// The time value for this point.
     #[serde(rename = "time")]
-    pub time: Option<String>,
+    pub time: Option<DateTime<Utc>>,
     /// The value for this point.
     #[serde(rename = "value")]
     pub value: Option<f64>,
@@ -31,7 +32,7 @@ impl RUMAggregateBucketValueTimeseriesPoint {
         }
     }
 
-    pub fn time(mut self, value: String) -> Self {
+    pub fn time(mut self, value: DateTime<Utc>) -> Self {
         self.time = Some(value);
         self
     }
@@ -65,7 +66,7 @@ impl<'de> Deserialize<'de> for RUMAggregateBucketValueTimeseriesPoint {
             where
                 M: MapAccess<'a>,
             {
-                let mut time: Option<String> = None;
+                let mut time: Option<DateTime<Utc>> = None;
                 let mut value: Option<f64> = None;
                 let mut _unparsed = false;
 

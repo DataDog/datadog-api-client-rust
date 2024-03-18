@@ -1,7 +1,9 @@
 // Send pipeline event returns "Request accepted for processing" response
+use chrono::prelude::{DateTime, Utc};
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_ci_visibility_pipelines::*;
 use datadog_api_client::datadogV2::model::*;
+use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -11,11 +13,13 @@ async fn main() {
                 CIAppCreatePipelineEventRequestAttributesResource::CIAppPipelineEventPipeline(
                     Box::new(
                         CIAppPipelineEventPipeline::new(
-                            "2021-11-11T11:10:41+00:00".to_string(),
+                            DateTime::parse_from_rfc3339("2021-11-11T11:10:41+00:00")
+                                .expect("Failed to parse datetime"),
                             CIAppPipelineEventPipelineLevel::PIPELINE,
                             "Deploy to AWS".to_string(),
                             false,
-                            "2021-11-11T11:09:11+00:00".to_string(),
+                            DateTime::parse_from_rfc3339("2021-11-11T11:09:11+00:00")
+                                .expect("Failed to parse datetime"),
                             CIAppPipelineEventPipelineStatus::SUCCESS,
                             "3eacb6f3-ff04-4e10-8a9c-46e6d054024a".to_string(),
                             "https://my-ci-provider.example/pipelines/my-pipeline/run/1"

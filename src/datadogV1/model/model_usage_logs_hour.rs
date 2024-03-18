@@ -1,6 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use chrono::{DateTime, Utc};
 use serde::de::{Error, MapAccess, Visitor};
 use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
@@ -20,7 +21,7 @@ pub struct UsageLogsHour {
     pub billable_ingested_bytes: Option<Option<i64>>,
     /// The hour for the usage.
     #[serde(rename = "hour")]
-    pub hour: Option<String>,
+    pub hour: Option<DateTime<Utc>>,
     /// Contains the number of log events indexed.
     #[serde(
         rename = "indexed_events_count",
@@ -104,7 +105,7 @@ impl UsageLogsHour {
         self
     }
 
-    pub fn hour(mut self, value: String) -> Self {
+    pub fn hour(mut self, value: DateTime<Utc>) -> Self {
         self.hour = Some(value);
         self
     }
@@ -179,7 +180,7 @@ impl<'de> Deserialize<'de> for UsageLogsHour {
                 M: MapAccess<'a>,
             {
                 let mut billable_ingested_bytes: Option<Option<i64>> = None;
-                let mut hour: Option<String> = None;
+                let mut hour: Option<DateTime<Utc>> = None;
                 let mut indexed_events_count: Option<Option<i64>> = None;
                 let mut ingested_events_bytes: Option<Option<i64>> = None;
                 let mut logs_forwarding_events_bytes: Option<Option<i64>> = None;

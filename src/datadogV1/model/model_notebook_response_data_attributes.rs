@@ -1,6 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use chrono::{DateTime, Utc};
 use serde::de::{Error, MapAccess, Visitor};
 use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
@@ -19,13 +20,13 @@ pub struct NotebookResponseDataAttributes {
     pub cells: Vec<crate::datadogV1::model::NotebookCellResponse>,
     /// UTC time stamp for when the notebook was created.
     #[serde(rename = "created")]
-    pub created: Option<String>,
+    pub created: Option<DateTime<Utc>>,
     /// Metadata associated with the notebook.
     #[serde(rename = "metadata")]
     pub metadata: Option<crate::datadogV1::model::NotebookMetadata>,
     /// UTC time stamp for when the notebook was last modified.
     #[serde(rename = "modified")]
-    pub modified: Option<String>,
+    pub modified: Option<DateTime<Utc>>,
     /// The name of the notebook.
     #[serde(rename = "name")]
     pub name: String,
@@ -64,7 +65,7 @@ impl NotebookResponseDataAttributes {
         self
     }
 
-    pub fn created(mut self, value: String) -> Self {
+    pub fn created(mut self, value: DateTime<Utc>) -> Self {
         self.created = Some(value);
         self
     }
@@ -74,7 +75,7 @@ impl NotebookResponseDataAttributes {
         self
     }
 
-    pub fn modified(mut self, value: String) -> Self {
+    pub fn modified(mut self, value: DateTime<Utc>) -> Self {
         self.modified = Some(value);
         self
     }
@@ -104,9 +105,9 @@ impl<'de> Deserialize<'de> for NotebookResponseDataAttributes {
             {
                 let mut author: Option<crate::datadogV1::model::NotebookAuthor> = None;
                 let mut cells: Option<Vec<crate::datadogV1::model::NotebookCellResponse>> = None;
-                let mut created: Option<String> = None;
+                let mut created: Option<DateTime<Utc>> = None;
                 let mut metadata: Option<crate::datadogV1::model::NotebookMetadata> = None;
-                let mut modified: Option<String> = None;
+                let mut modified: Option<DateTime<Utc>> = None;
                 let mut name: Option<String> = None;
                 let mut status: Option<crate::datadogV1::model::NotebookStatus> = None;
                 let mut time: Option<crate::datadogV1::model::NotebookGlobalTime> = None;

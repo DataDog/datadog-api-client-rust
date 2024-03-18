@@ -1,6 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use chrono::{DateTime, Utc};
 use serde::de::{Error, MapAccess, Visitor};
 use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
@@ -90,7 +91,7 @@ pub struct UsageHostHour {
     pub host_count: Option<Option<i64>>,
     /// The hour for the usage.
     #[serde(rename = "hour", default, with = "::serde_with::rust::double_option")]
-    pub hour: Option<Option<String>>,
+    pub hour: Option<Option<DateTime<Utc>>>,
     /// Contains the total number of hosts that reported through the Azure App Services integration
     /// (and were NOT running the Datadog Agent).
     #[serde(
@@ -206,7 +207,7 @@ impl UsageHostHour {
         self
     }
 
-    pub fn hour(mut self, value: Option<String>) -> Self {
+    pub fn hour(mut self, value: Option<DateTime<Utc>>) -> Self {
         self.hour = Some(value);
         self
     }
@@ -275,7 +276,7 @@ impl<'de> Deserialize<'de> for UsageHostHour {
                 let mut gcp_host_count: Option<Option<i64>> = None;
                 let mut heroku_host_count: Option<Option<i64>> = None;
                 let mut host_count: Option<Option<i64>> = None;
-                let mut hour: Option<Option<String>> = None;
+                let mut hour: Option<Option<DateTime<Utc>>> = None;
                 let mut infra_azure_app_service: Option<Option<i64>> = None;
                 let mut opentelemetry_apm_host_count: Option<Option<i64>> = None;
                 let mut opentelemetry_host_count: Option<Option<i64>> = None;

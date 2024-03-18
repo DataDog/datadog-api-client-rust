@@ -1,6 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use chrono::{DateTime, Utc};
 use serde::de::{Error, MapAccess, Visitor};
 use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
@@ -13,7 +14,7 @@ use std::fmt::{self, Formatter};
 pub struct PermissionAttributes {
     /// Creation time of the permission.
     #[serde(rename = "created")]
-    pub created: Option<String>,
+    pub created: Option<DateTime<Utc>>,
     /// Description of the permission.
     #[serde(rename = "description")]
     pub description: Option<String>,
@@ -51,7 +52,7 @@ impl PermissionAttributes {
         }
     }
 
-    pub fn created(mut self, value: String) -> Self {
+    pub fn created(mut self, value: DateTime<Utc>) -> Self {
         self.created = Some(value);
         self
     }
@@ -110,7 +111,7 @@ impl<'de> Deserialize<'de> for PermissionAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut created: Option<String> = None;
+                let mut created: Option<DateTime<Utc>> = None;
                 let mut description: Option<String> = None;
                 let mut display_name: Option<String> = None;
                 let mut display_type: Option<String> = None;

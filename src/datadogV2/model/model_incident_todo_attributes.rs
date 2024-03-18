@@ -1,6 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use chrono::{DateTime, Utc};
 use serde::de::{Error, MapAccess, Visitor};
 use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
@@ -26,7 +27,7 @@ pub struct IncidentTodoAttributes {
     pub content: String,
     /// Timestamp when the incident todo was created.
     #[serde(rename = "created")]
-    pub created: Option<String>,
+    pub created: Option<DateTime<Utc>>,
     /// Timestamp when the todo should be completed by.
     #[serde(
         rename = "due_date",
@@ -39,7 +40,7 @@ pub struct IncidentTodoAttributes {
     pub incident_id: Option<String>,
     /// Timestamp when the incident todo was last modified.
     #[serde(rename = "modified")]
-    pub modified: Option<String>,
+    pub modified: Option<DateTime<Utc>>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -67,7 +68,7 @@ impl IncidentTodoAttributes {
         self
     }
 
-    pub fn created(mut self, value: String) -> Self {
+    pub fn created(mut self, value: DateTime<Utc>) -> Self {
         self.created = Some(value);
         self
     }
@@ -82,7 +83,7 @@ impl IncidentTodoAttributes {
         self
     }
 
-    pub fn modified(mut self, value: String) -> Self {
+    pub fn modified(mut self, value: DateTime<Utc>) -> Self {
         self.modified = Some(value);
         self
     }
@@ -109,10 +110,10 @@ impl<'de> Deserialize<'de> for IncidentTodoAttributes {
                     None;
                 let mut completed: Option<Option<String>> = None;
                 let mut content: Option<String> = None;
-                let mut created: Option<String> = None;
+                let mut created: Option<DateTime<Utc>> = None;
                 let mut due_date: Option<Option<String>> = None;
                 let mut incident_id: Option<String> = None;
-                let mut modified: Option<String> = None;
+                let mut modified: Option<DateTime<Utc>> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {

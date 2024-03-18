@@ -1,6 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use chrono::{DateTime, Utc};
 use serde::de::{Error, MapAccess, Visitor};
 use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
@@ -13,7 +14,7 @@ use std::fmt::{self, Formatter};
 pub struct MonitorUpdateRequest {
     /// Timestamp of the monitor creation.
     #[serde(rename = "created")]
-    pub created: Option<String>,
+    pub created: Option<DateTime<Utc>>,
     /// Object describing the creator of the shared element.
     #[serde(rename = "creator")]
     pub creator: Option<crate::datadogV1::model::Creator>,
@@ -23,7 +24,7 @@ pub struct MonitorUpdateRequest {
         default,
         with = "::serde_with::rust::double_option"
     )]
-    pub deleted: Option<Option<String>>,
+    pub deleted: Option<Option<DateTime<Utc>>>,
     /// ID of this monitor.
     #[serde(rename = "id")]
     pub id: Option<i64>,
@@ -32,7 +33,7 @@ pub struct MonitorUpdateRequest {
     pub message: Option<String>,
     /// Last timestamp when the monitor was edited.
     #[serde(rename = "modified")]
-    pub modified: Option<String>,
+    pub modified: Option<DateTime<Utc>>,
     /// Whether or not the monitor is broken down on different groups.
     #[serde(rename = "multi")]
     pub multi: Option<bool>,
@@ -95,7 +96,7 @@ impl MonitorUpdateRequest {
         }
     }
 
-    pub fn created(mut self, value: String) -> Self {
+    pub fn created(mut self, value: DateTime<Utc>) -> Self {
         self.created = Some(value);
         self
     }
@@ -105,7 +106,7 @@ impl MonitorUpdateRequest {
         self
     }
 
-    pub fn deleted(mut self, value: Option<String>) -> Self {
+    pub fn deleted(mut self, value: Option<DateTime<Utc>>) -> Self {
         self.deleted = Some(value);
         self
     }
@@ -120,7 +121,7 @@ impl MonitorUpdateRequest {
         self
     }
 
-    pub fn modified(mut self, value: String) -> Self {
+    pub fn modified(mut self, value: DateTime<Utc>) -> Self {
         self.modified = Some(value);
         self
     }
@@ -199,12 +200,12 @@ impl<'de> Deserialize<'de> for MonitorUpdateRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut created: Option<String> = None;
+                let mut created: Option<DateTime<Utc>> = None;
                 let mut creator: Option<crate::datadogV1::model::Creator> = None;
-                let mut deleted: Option<Option<String>> = None;
+                let mut deleted: Option<Option<DateTime<Utc>>> = None;
                 let mut id: Option<i64> = None;
                 let mut message: Option<String> = None;
-                let mut modified: Option<String> = None;
+                let mut modified: Option<DateTime<Utc>> = None;
                 let mut multi: Option<bool> = None;
                 let mut name: Option<String> = None;
                 let mut options: Option<crate::datadogV1::model::MonitorOptions> = None;

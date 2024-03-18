@@ -1,6 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use chrono::{DateTime, Utc};
 use serde::de::{Error, MapAccess, Visitor};
 use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
@@ -13,7 +14,7 @@ use std::fmt::{self, Formatter};
 pub struct SharedDashboardInvitesDataObjectAttributes {
     /// When the invitation was sent.
     #[serde(rename = "created_at")]
-    pub created_at: Option<String>,
+    pub created_at: Option<DateTime<Utc>>,
     /// An email address that an invitation has been (or if used in invitation request, will be) sent to.
     #[serde(rename = "email")]
     pub email: Option<String>,
@@ -22,14 +23,14 @@ pub struct SharedDashboardInvitesDataObjectAttributes {
     pub has_session: Option<bool>,
     /// When the invitation expires.
     #[serde(rename = "invitation_expiry")]
-    pub invitation_expiry: Option<String>,
+    pub invitation_expiry: Option<DateTime<Utc>>,
     /// When the invited user's session expires. null if the invitation has no associated session.
     #[serde(
         rename = "session_expiry",
         default,
         with = "::serde_with::rust::double_option"
     )]
-    pub session_expiry: Option<Option<String>>,
+    pub session_expiry: Option<Option<DateTime<Utc>>>,
     /// The unique token of the shared dashboard that was (or is to be) shared.
     #[serde(rename = "share_token")]
     pub share_token: Option<String>,
@@ -51,7 +52,7 @@ impl SharedDashboardInvitesDataObjectAttributes {
         }
     }
 
-    pub fn created_at(mut self, value: String) -> Self {
+    pub fn created_at(mut self, value: DateTime<Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
@@ -66,12 +67,12 @@ impl SharedDashboardInvitesDataObjectAttributes {
         self
     }
 
-    pub fn invitation_expiry(mut self, value: String) -> Self {
+    pub fn invitation_expiry(mut self, value: DateTime<Utc>) -> Self {
         self.invitation_expiry = Some(value);
         self
     }
 
-    pub fn session_expiry(mut self, value: Option<String>) -> Self {
+    pub fn session_expiry(mut self, value: Option<DateTime<Utc>>) -> Self {
         self.session_expiry = Some(value);
         self
     }
@@ -105,11 +106,11 @@ impl<'de> Deserialize<'de> for SharedDashboardInvitesDataObjectAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut created_at: Option<String> = None;
+                let mut created_at: Option<DateTime<Utc>> = None;
                 let mut email: Option<String> = None;
                 let mut has_session: Option<bool> = None;
-                let mut invitation_expiry: Option<String> = None;
-                let mut session_expiry: Option<Option<String>> = None;
+                let mut invitation_expiry: Option<DateTime<Utc>> = None;
+                let mut session_expiry: Option<Option<DateTime<Utc>>> = None;
                 let mut share_token: Option<String> = None;
                 let mut _unparsed = false;
 

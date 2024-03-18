@@ -1,7 +1,9 @@
 // Aggregate pipelines events returns "OK" response
+use chrono::prelude::{DateTime, Utc};
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_ci_visibility_pipelines::*;
 use datadog_api_client::datadogV2::model::*;
+use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {

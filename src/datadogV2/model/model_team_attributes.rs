@@ -1,6 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use chrono::{DateTime, Utc};
 use serde::de::{Error, MapAccess, Visitor};
 use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
@@ -19,7 +20,7 @@ pub struct TeamAttributes {
     pub banner: Option<Option<i64>>,
     /// Creation date of the team
     #[serde(rename = "created_at")]
-    pub created_at: Option<String>,
+    pub created_at: Option<DateTime<Utc>>,
     /// Free-form markdown description/content for the team's homepage
     #[serde(
         rename = "description",
@@ -38,7 +39,7 @@ pub struct TeamAttributes {
     pub link_count: Option<i32>,
     /// Modification date of the team
     #[serde(rename = "modified_at")]
-    pub modified_at: Option<String>,
+    pub modified_at: Option<DateTime<Utc>>,
     /// The name of the team
     #[serde(rename = "name")]
     pub name: String,
@@ -89,7 +90,7 @@ impl TeamAttributes {
         self
     }
 
-    pub fn created_at(mut self, value: String) -> Self {
+    pub fn created_at(mut self, value: DateTime<Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
@@ -109,7 +110,7 @@ impl TeamAttributes {
         self
     }
 
-    pub fn modified_at(mut self, value: String) -> Self {
+    pub fn modified_at(mut self, value: DateTime<Utc>) -> Self {
         self.modified_at = Some(value);
         self
     }
@@ -149,12 +150,12 @@ impl<'de> Deserialize<'de> for TeamAttributes {
             {
                 let mut avatar: Option<Option<String>> = None;
                 let mut banner: Option<Option<i64>> = None;
-                let mut created_at: Option<String> = None;
+                let mut created_at: Option<DateTime<Utc>> = None;
                 let mut description: Option<Option<String>> = None;
                 let mut handle: Option<String> = None;
                 let mut hidden_modules: Option<Vec<String>> = None;
                 let mut link_count: Option<i32> = None;
-                let mut modified_at: Option<String> = None;
+                let mut modified_at: Option<DateTime<Utc>> = None;
                 let mut name: Option<String> = None;
                 let mut summary: Option<Option<String>> = None;
                 let mut user_count: Option<i32> = None;

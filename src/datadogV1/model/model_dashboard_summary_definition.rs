@@ -1,6 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use chrono::{DateTime, Utc};
 use serde::de::{Error, MapAccess, Visitor};
 use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
@@ -16,7 +17,7 @@ pub struct DashboardSummaryDefinition {
     pub author_handle: Option<String>,
     /// Creation date of the dashboard.
     #[serde(rename = "created_at")]
-    pub created_at: Option<String>,
+    pub created_at: Option<DateTime<Utc>>,
     /// Description of the dashboard.
     #[serde(
         rename = "description",
@@ -35,7 +36,7 @@ pub struct DashboardSummaryDefinition {
     pub layout_type: Option<crate::datadogV1::model::DashboardLayoutType>,
     /// Modification date of the dashboard.
     #[serde(rename = "modified_at")]
-    pub modified_at: Option<String>,
+    pub modified_at: Option<DateTime<Utc>>,
     /// Title of the dashboard.
     #[serde(rename = "title")]
     pub title: Option<String>,
@@ -68,7 +69,7 @@ impl DashboardSummaryDefinition {
         self
     }
 
-    pub fn created_at(mut self, value: String) -> Self {
+    pub fn created_at(mut self, value: DateTime<Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
@@ -93,7 +94,7 @@ impl DashboardSummaryDefinition {
         self
     }
 
-    pub fn modified_at(mut self, value: String) -> Self {
+    pub fn modified_at(mut self, value: DateTime<Utc>) -> Self {
         self.modified_at = Some(value);
         self
     }
@@ -133,12 +134,12 @@ impl<'de> Deserialize<'de> for DashboardSummaryDefinition {
                 M: MapAccess<'a>,
             {
                 let mut author_handle: Option<String> = None;
-                let mut created_at: Option<String> = None;
+                let mut created_at: Option<DateTime<Utc>> = None;
                 let mut description: Option<Option<String>> = None;
                 let mut id: Option<String> = None;
                 let mut is_read_only: Option<bool> = None;
                 let mut layout_type: Option<crate::datadogV1::model::DashboardLayoutType> = None;
-                let mut modified_at: Option<String> = None;
+                let mut modified_at: Option<DateTime<Utc>> = None;
                 let mut title: Option<String> = None;
                 let mut url: Option<String> = None;
                 let mut _unparsed = false;
