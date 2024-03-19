@@ -1,7 +1,11 @@
 // Update an SLO correction returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_service_level_objective_corrections::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_service_level_objective_corrections::ServiceLevelObjectiveCorrectionsAPI;
+use datadog_api_client::datadogV1::model::SLOCorrectionCategory;
+use datadog_api_client::datadogV1::model::SLOCorrectionType;
+use datadog_api_client::datadogV1::model::SLOCorrectionUpdateData;
+use datadog_api_client::datadogV1::model::SLOCorrectionUpdateRequest;
+use datadog_api_client::datadogV1::model::SLOCorrectionUpdateRequestAttributes;
 
 #[tokio::main]
 async fn main() {

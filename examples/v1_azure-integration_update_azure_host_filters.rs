@@ -1,7 +1,7 @@
 // Update Azure integration host filters returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_azure_integration::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_azure_integration::AzureIntegrationAPI;
+use datadog_api_client::datadogV1::model::AzureAccount;
 
 #[tokio::main]
 async fn main() {

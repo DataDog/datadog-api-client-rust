@@ -1,7 +1,8 @@
 // Send logs returns "Response from server (always 200 empty JSON)." response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_logs::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_logs::LogsAPI;
+use datadog_api_client::datadogV1::api::api_logs::SubmitLogOptionalParams;
+use datadog_api_client::datadogV1::model::HTTPLogItem;
 use std::collections::BTreeMap;
 
 #[tokio::main]

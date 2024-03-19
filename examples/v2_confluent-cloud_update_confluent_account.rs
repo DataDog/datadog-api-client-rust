@@ -1,7 +1,10 @@
 // Update Confluent account returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_confluent_cloud::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_confluent_cloud::ConfluentCloudAPI;
+use datadog_api_client::datadogV2::model::ConfluentAccountType;
+use datadog_api_client::datadogV2::model::ConfluentAccountUpdateRequest;
+use datadog_api_client::datadogV2::model::ConfluentAccountUpdateRequestAttributes;
+use datadog_api_client::datadogV2::model::ConfluentAccountUpdateRequestData;
 
 #[tokio::main]
 async fn main() {

@@ -1,7 +1,14 @@
 // Create a new dashboard with image widget
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_dashboards::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_dashboards::DashboardsAPI;
+use datadog_api_client::datadogV1::model::Dashboard;
+use datadog_api_client::datadogV1::model::DashboardLayoutType;
+use datadog_api_client::datadogV1::model::ImageWidgetDefinition;
+use datadog_api_client::datadogV1::model::ImageWidgetDefinitionType;
+use datadog_api_client::datadogV1::model::Widget;
+use datadog_api_client::datadogV1::model::WidgetDefinition;
+use datadog_api_client::datadogV1::model::WidgetImageSizing;
+use datadog_api_client::datadogV1::model::WidgetLayout;
 
 #[tokio::main]
 async fn main() {

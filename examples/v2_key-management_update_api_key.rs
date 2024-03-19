@@ -1,7 +1,10 @@
 // Edit an API key returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_key_management::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_key_management::KeyManagementAPI;
+use datadog_api_client::datadogV2::model::APIKeyUpdateAttributes;
+use datadog_api_client::datadogV2::model::APIKeyUpdateData;
+use datadog_api_client::datadogV2::model::APIKeyUpdateRequest;
+use datadog_api_client::datadogV2::model::APIKeysType;
 
 #[tokio::main]
 async fn main() {

@@ -1,6 +1,6 @@
 // List Confluent Account resources returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_confluent_cloud::*;
+use datadog_api_client::datadogV2::api::api_confluent_cloud::ConfluentCloudAPI;
 
 #[tokio::main]
 async fn main() {

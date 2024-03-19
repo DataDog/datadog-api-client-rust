@@ -1,8 +1,10 @@
 // Send deflate logs returns "Request accepted for processing (always 202 empty
 // JSON)." response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_logs::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_logs::LogsAPI;
+use datadog_api_client::datadogV2::api::api_logs::SubmitLogOptionalParams;
+use datadog_api_client::datadogV2::model::ContentEncoding;
+use datadog_api_client::datadogV2::model::HTTPLogItem;
 use std::collections::BTreeMap;
 
 #[tokio::main]

@@ -1,8 +1,27 @@
 // Create an API test with multi subtype returns "OK - Returns the created test
 // details." response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_synthetics::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_synthetics::SyntheticsAPI;
+use datadog_api_client::datadogV1::model::SyntheticsAPIStep;
+use datadog_api_client::datadogV1::model::SyntheticsAPIStepSubtype;
+use datadog_api_client::datadogV1::model::SyntheticsAPITest;
+use datadog_api_client::datadogV1::model::SyntheticsAPITestConfig;
+use datadog_api_client::datadogV1::model::SyntheticsAPITestType;
+use datadog_api_client::datadogV1::model::SyntheticsAssertion;
+use datadog_api_client::datadogV1::model::SyntheticsAssertionOperator;
+use datadog_api_client::datadogV1::model::SyntheticsAssertionTarget;
+use datadog_api_client::datadogV1::model::SyntheticsAssertionType;
+use datadog_api_client::datadogV1::model::SyntheticsConfigVariable;
+use datadog_api_client::datadogV1::model::SyntheticsConfigVariableType;
+use datadog_api_client::datadogV1::model::SyntheticsGlobalVariableParseTestOptionsType;
+use datadog_api_client::datadogV1::model::SyntheticsGlobalVariableParserType;
+use datadog_api_client::datadogV1::model::SyntheticsParsingOptions;
+use datadog_api_client::datadogV1::model::SyntheticsTestDetailsSubType;
+use datadog_api_client::datadogV1::model::SyntheticsTestOptions;
+use datadog_api_client::datadogV1::model::SyntheticsTestOptionsRetry;
+use datadog_api_client::datadogV1::model::SyntheticsTestRequest;
+use datadog_api_client::datadogV1::model::SyntheticsVariableParser;
+use serde_json::Value;
 
 #[tokio::main]
 async fn main() {
@@ -18,7 +37,7 @@ async fn main() {
                 vec![SyntheticsAssertion::SyntheticsAssertionTarget(Box::new(
                     SyntheticsAssertionTarget::new(
                         SyntheticsAssertionOperator::IS,
-                        serde_json::Value::from(200),
+                        Value::from(200),
                         SyntheticsAssertionType::STATUS_CODE,
                     ),
                 ))],

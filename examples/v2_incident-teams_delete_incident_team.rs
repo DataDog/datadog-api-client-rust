@@ -1,6 +1,6 @@
 // Delete an existing incident team returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_incident_teams::*;
+use datadog_api_client::datadogV2::api::api_incident_teams::IncidentTeamsAPI;
 
 #[tokio::main]
 async fn main() {

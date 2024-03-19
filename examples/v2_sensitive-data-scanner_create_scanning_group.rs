@@ -1,7 +1,18 @@
 // Create Scanning Group returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_sensitive_data_scanner::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_sensitive_data_scanner::SensitiveDataScannerAPI;
+use datadog_api_client::datadogV2::model::SensitiveDataScannerConfiguration;
+use datadog_api_client::datadogV2::model::SensitiveDataScannerConfigurationData;
+use datadog_api_client::datadogV2::model::SensitiveDataScannerConfigurationType;
+use datadog_api_client::datadogV2::model::SensitiveDataScannerFilter;
+use datadog_api_client::datadogV2::model::SensitiveDataScannerGroupAttributes;
+use datadog_api_client::datadogV2::model::SensitiveDataScannerGroupCreate;
+use datadog_api_client::datadogV2::model::SensitiveDataScannerGroupCreateRequest;
+use datadog_api_client::datadogV2::model::SensitiveDataScannerGroupRelationships;
+use datadog_api_client::datadogV2::model::SensitiveDataScannerGroupType;
+use datadog_api_client::datadogV2::model::SensitiveDataScannerMetaVersionOnly;
+use datadog_api_client::datadogV2::model::SensitiveDataScannerProduct;
+use datadog_api_client::datadogV2::model::SensitiveDataScannerRuleData;
 
 #[tokio::main]
 async fn main() {

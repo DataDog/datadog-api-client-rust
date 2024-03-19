@@ -1,7 +1,10 @@
 // Delete tags for multiple metrics returns "Accepted" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_metrics::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_metrics::MetricsAPI;
+use datadog_api_client::datadogV2::model::MetricBulkConfigureTagsType;
+use datadog_api_client::datadogV2::model::MetricBulkTagConfigDelete;
+use datadog_api_client::datadogV2::model::MetricBulkTagConfigDeleteAttributes;
+use datadog_api_client::datadogV2::model::MetricBulkTagConfigDeleteRequest;
 
 #[tokio::main]
 async fn main() {

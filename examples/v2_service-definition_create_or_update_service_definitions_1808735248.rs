@@ -1,7 +1,20 @@
 // Create or update service definition using schema v2 returns "CREATED" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_service_definition::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_service_definition::ServiceDefinitionAPI;
+use datadog_api_client::datadogV2::model::ServiceDefinitionV2;
+use datadog_api_client::datadogV2::model::ServiceDefinitionV2Contact;
+use datadog_api_client::datadogV2::model::ServiceDefinitionV2Doc;
+use datadog_api_client::datadogV2::model::ServiceDefinitionV2Email;
+use datadog_api_client::datadogV2::model::ServiceDefinitionV2EmailType;
+use datadog_api_client::datadogV2::model::ServiceDefinitionV2Integrations;
+use datadog_api_client::datadogV2::model::ServiceDefinitionV2Link;
+use datadog_api_client::datadogV2::model::ServiceDefinitionV2LinkType;
+use datadog_api_client::datadogV2::model::ServiceDefinitionV2Opsgenie;
+use datadog_api_client::datadogV2::model::ServiceDefinitionV2OpsgenieRegion;
+use datadog_api_client::datadogV2::model::ServiceDefinitionV2Repo;
+use datadog_api_client::datadogV2::model::ServiceDefinitionV2Version;
+use datadog_api_client::datadogV2::model::ServiceDefinitionsCreateRequest;
+use serde_json::Value;
 use std::collections::BTreeMap;
 
 #[tokio::main]
@@ -28,7 +41,7 @@ async fn main() {
         .provider("google drive".to_string())])
         .extensions(BTreeMap::from([(
             "myorgextension".to_string(),
-            serde_json::Value::from("extensionvalue"),
+            Value::from("extensionvalue"),
         )]))
         .integrations(
             ServiceDefinitionV2Integrations::new()

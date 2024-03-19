@@ -1,6 +1,7 @@
 // Get a list of RUM events returns "OK" response with pagination
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_rum::*;
+use datadog_api_client::datadogV2::api::api_rum::ListRUMEventsOptionalParams;
+use datadog_api_client::datadogV2::api::api_rum::RUMAPI;
 use futures_util::pin_mut;
 use futures_util::stream::StreamExt;
 

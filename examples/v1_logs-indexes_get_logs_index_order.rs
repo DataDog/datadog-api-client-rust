@@ -1,6 +1,6 @@
 // Get indexes order returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_logs_indexes::*;
+use datadog_api_client::datadogV1::api::api_logs_indexes::LogsIndexesAPI;
 
 #[tokio::main]
 async fn main() {

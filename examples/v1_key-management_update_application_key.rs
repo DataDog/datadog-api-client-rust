@@ -1,7 +1,7 @@
 // Edit an application key returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_key_management::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_key_management::KeyManagementAPI;
+use datadog_api_client::datadogV1::model::ApplicationKey;
 
 #[tokio::main]
 async fn main() {

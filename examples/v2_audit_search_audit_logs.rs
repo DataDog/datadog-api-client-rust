@@ -1,7 +1,12 @@
 // Search Audit Logs events returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_audit::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_audit::AuditAPI;
+use datadog_api_client::datadogV2::api::api_audit::SearchAuditLogsOptionalParams;
+use datadog_api_client::datadogV2::model::AuditLogsQueryFilter;
+use datadog_api_client::datadogV2::model::AuditLogsQueryOptions;
+use datadog_api_client::datadogV2::model::AuditLogsQueryPageOptions;
+use datadog_api_client::datadogV2::model::AuditLogsSearchEventsRequest;
+use datadog_api_client::datadogV2::model::AuditLogsSort;
 
 #[tokio::main]
 async fn main() {

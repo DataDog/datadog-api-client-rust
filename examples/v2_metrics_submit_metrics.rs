@@ -1,7 +1,12 @@
 // Submit metrics returns "Payload accepted" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_metrics::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_metrics::MetricsAPI;
+use datadog_api_client::datadogV2::api::api_metrics::SubmitMetricsOptionalParams;
+use datadog_api_client::datadogV2::model::MetricIntakeType;
+use datadog_api_client::datadogV2::model::MetricPayload;
+use datadog_api_client::datadogV2::model::MetricPoint;
+use datadog_api_client::datadogV2::model::MetricResource;
+use datadog_api_client::datadogV2::model::MetricSeries;
 
 #[tokio::main]
 async fn main() {

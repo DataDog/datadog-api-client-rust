@@ -1,6 +1,7 @@
 // Get all monitor details with tags
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_monitors::*;
+use datadog_api_client::datadogV1::api::api_monitors::ListMonitorsOptionalParams;
+use datadog_api_client::datadogV1::api::api_monitors::MonitorsAPI;
 
 #[tokio::main]
 async fn main() {

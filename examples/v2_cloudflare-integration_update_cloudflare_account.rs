@@ -1,7 +1,10 @@
 // Update Cloudflare account returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_cloudflare_integration::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_cloudflare_integration::CloudflareIntegrationAPI;
+use datadog_api_client::datadogV2::model::CloudflareAccountType;
+use datadog_api_client::datadogV2::model::CloudflareAccountUpdateRequest;
+use datadog_api_client::datadogV2::model::CloudflareAccountUpdateRequestAttributes;
+use datadog_api_client::datadogV2::model::CloudflareAccountUpdateRequestData;
 
 #[tokio::main]
 async fn main() {

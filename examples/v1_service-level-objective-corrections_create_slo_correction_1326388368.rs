@@ -1,7 +1,11 @@
 // Create an SLO correction with rrule returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_service_level_objective_corrections::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_service_level_objective_corrections::ServiceLevelObjectiveCorrectionsAPI;
+use datadog_api_client::datadogV1::model::SLOCorrectionCategory;
+use datadog_api_client::datadogV1::model::SLOCorrectionCreateData;
+use datadog_api_client::datadogV1::model::SLOCorrectionCreateRequest;
+use datadog_api_client::datadogV1::model::SLOCorrectionCreateRequestAttributes;
+use datadog_api_client::datadogV1::model::SLOCorrectionType;
 
 #[tokio::main]
 async fn main() {

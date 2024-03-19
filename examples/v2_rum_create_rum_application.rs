@@ -1,7 +1,10 @@
 // Create a new RUM application returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_rum::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_rum::RUMAPI;
+use datadog_api_client::datadogV2::model::RUMApplicationCreate;
+use datadog_api_client::datadogV2::model::RUMApplicationCreateAttributes;
+use datadog_api_client::datadogV2::model::RUMApplicationCreateRequest;
+use datadog_api_client::datadogV2::model::RUMApplicationCreateType;
 
 #[tokio::main]
 async fn main() {

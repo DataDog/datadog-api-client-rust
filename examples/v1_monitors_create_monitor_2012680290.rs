@@ -1,7 +1,12 @@
 // Create a metric monitor returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_monitors::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_monitors::MonitorsAPI;
+use datadog_api_client::datadogV1::model::Monitor;
+use datadog_api_client::datadogV1::model::MonitorOptions;
+use datadog_api_client::datadogV1::model::MonitorOptionsSchedulingOptions;
+use datadog_api_client::datadogV1::model::MonitorOptionsSchedulingOptionsEvaluationWindow;
+use datadog_api_client::datadogV1::model::MonitorThresholds;
+use datadog_api_client::datadogV1::model::MonitorType;
 
 #[tokio::main]
 async fn main() {

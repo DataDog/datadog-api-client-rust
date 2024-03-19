@@ -1,7 +1,10 @@
 // Add Fastly account returns "CREATED" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_fastly_integration::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_fastly_integration::FastlyIntegrationAPI;
+use datadog_api_client::datadogV2::model::FastlyAccountCreateRequest;
+use datadog_api_client::datadogV2::model::FastlyAccountCreateRequestAttributes;
+use datadog_api_client::datadogV2::model::FastlyAccountCreateRequestData;
+use datadog_api_client::datadogV2::model::FastlyAccountType;
 
 #[tokio::main]
 async fn main() {

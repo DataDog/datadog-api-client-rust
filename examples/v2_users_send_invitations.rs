@@ -1,7 +1,13 @@
 // Send invitation emails returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_users::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_users::UsersAPI;
+use datadog_api_client::datadogV2::model::RelationshipToUser;
+use datadog_api_client::datadogV2::model::RelationshipToUserData;
+use datadog_api_client::datadogV2::model::UserInvitationData;
+use datadog_api_client::datadogV2::model::UserInvitationRelationships;
+use datadog_api_client::datadogV2::model::UserInvitationsRequest;
+use datadog_api_client::datadogV2::model::UserInvitationsType;
+use datadog_api_client::datadogV2::model::UsersType;
 
 #[tokio::main]
 async fn main() {

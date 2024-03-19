@@ -1,7 +1,10 @@
 // Create a new rule returns "Created" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_service_scorecards::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_service_scorecards::ServiceScorecardsAPI;
+use datadog_api_client::datadogV2::model::CreateRuleRequest;
+use datadog_api_client::datadogV2::model::CreateRuleRequestData;
+use datadog_api_client::datadogV2::model::RuleAttributes;
+use datadog_api_client::datadogV2::model::RuleType;
 
 #[tokio::main]
 async fn main() {

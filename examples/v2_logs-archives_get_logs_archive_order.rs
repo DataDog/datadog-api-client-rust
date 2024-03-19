@@ -1,6 +1,6 @@
 // Get archive order returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_logs_archives::*;
+use datadog_api_client::datadogV2::api::api_logs_archives::LogsArchivesAPI;
 
 #[tokio::main]
 async fn main() {

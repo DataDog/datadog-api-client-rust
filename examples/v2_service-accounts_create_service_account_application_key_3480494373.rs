@@ -1,8 +1,11 @@
 // Create an application key with scopes for this service account returns
 // "Created" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_service_accounts::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_service_accounts::ServiceAccountsAPI;
+use datadog_api_client::datadogV2::model::ApplicationKeyCreateAttributes;
+use datadog_api_client::datadogV2::model::ApplicationKeyCreateData;
+use datadog_api_client::datadogV2::model::ApplicationKeyCreateRequest;
+use datadog_api_client::datadogV2::model::ApplicationKeysType;
 
 #[tokio::main]
 async fn main() {

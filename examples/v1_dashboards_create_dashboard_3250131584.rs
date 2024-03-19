@@ -1,7 +1,14 @@
 // Create a new dashboard with event_timeline widget
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_dashboards::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_dashboards::DashboardsAPI;
+use datadog_api_client::datadogV1::model::Dashboard;
+use datadog_api_client::datadogV1::model::DashboardLayoutType;
+use datadog_api_client::datadogV1::model::EventTimelineWidgetDefinition;
+use datadog_api_client::datadogV1::model::EventTimelineWidgetDefinitionType;
+use datadog_api_client::datadogV1::model::Widget;
+use datadog_api_client::datadogV1::model::WidgetDefinition;
+use datadog_api_client::datadogV1::model::WidgetLayout;
+use datadog_api_client::datadogV1::model::WidgetTextAlign;
 
 #[tokio::main]
 async fn main() {

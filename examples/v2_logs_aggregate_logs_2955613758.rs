@@ -1,7 +1,17 @@
 // Aggregate compute events with group by returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_logs::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_logs::LogsAPI;
+use datadog_api_client::datadogV2::model::LogsAggregateRequest;
+use datadog_api_client::datadogV2::model::LogsAggregateSort;
+use datadog_api_client::datadogV2::model::LogsAggregateSortType;
+use datadog_api_client::datadogV2::model::LogsAggregationFunction;
+use datadog_api_client::datadogV2::model::LogsCompute;
+use datadog_api_client::datadogV2::model::LogsComputeType;
+use datadog_api_client::datadogV2::model::LogsGroupBy;
+use datadog_api_client::datadogV2::model::LogsGroupByMissing;
+use datadog_api_client::datadogV2::model::LogsGroupByTotal;
+use datadog_api_client::datadogV2::model::LogsQueryFilter;
+use datadog_api_client::datadogV2::model::LogsSortOrder;
 
 #[tokio::main]
 async fn main() {

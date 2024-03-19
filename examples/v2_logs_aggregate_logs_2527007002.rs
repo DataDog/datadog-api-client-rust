@@ -1,7 +1,11 @@
 // Aggregate compute events returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_logs::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_logs::LogsAPI;
+use datadog_api_client::datadogV2::model::LogsAggregateRequest;
+use datadog_api_client::datadogV2::model::LogsAggregationFunction;
+use datadog_api_client::datadogV2::model::LogsCompute;
+use datadog_api_client::datadogV2::model::LogsComputeType;
+use datadog_api_client::datadogV2::model::LogsQueryFilter;
 
 #[tokio::main]
 async fn main() {

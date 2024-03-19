@@ -1,7 +1,7 @@
 // Bulk Delete SLO Timeframes returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_service_level_objectives::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_service_level_objectives::ServiceLevelObjectivesAPI;
+use datadog_api_client::datadogV1::model::SLOTimeframe;
 use std::collections::BTreeMap;
 
 #[tokio::main]

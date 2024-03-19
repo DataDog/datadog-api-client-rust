@@ -1,7 +1,14 @@
 // Aggregate spans returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_spans::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_spans::SpansAPI;
+use datadog_api_client::datadogV2::model::SpansAggregateData;
+use datadog_api_client::datadogV2::model::SpansAggregateRequest;
+use datadog_api_client::datadogV2::model::SpansAggregateRequestAttributes;
+use datadog_api_client::datadogV2::model::SpansAggregateRequestType;
+use datadog_api_client::datadogV2::model::SpansAggregationFunction;
+use datadog_api_client::datadogV2::model::SpansCompute;
+use datadog_api_client::datadogV2::model::SpansComputeType;
+use datadog_api_client::datadogV2::model::SpansQueryFilter;
 
 #[tokio::main]
 async fn main() {

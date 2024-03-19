@@ -1,7 +1,11 @@
 // Update a restriction policy returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_restriction_policies::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_restriction_policies::RestrictionPoliciesAPI;
+use datadog_api_client::datadogV2::model::RestrictionPolicy;
+use datadog_api_client::datadogV2::model::RestrictionPolicyAttributes;
+use datadog_api_client::datadogV2::model::RestrictionPolicyBinding;
+use datadog_api_client::datadogV2::model::RestrictionPolicyType;
+use datadog_api_client::datadogV2::model::RestrictionPolicyUpdateRequest;
 
 #[tokio::main]
 async fn main() {
