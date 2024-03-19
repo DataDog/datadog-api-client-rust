@@ -75,7 +75,7 @@ impl DashboardListsAPI {
             reqwest_client_builder = reqwest_client_builder.proxy(proxy);
         }
 
-        let mut middleware_client_builder =
+        let middleware_client_builder =
             reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
         let client = middleware_client_builder.build();
         Self { config, client }

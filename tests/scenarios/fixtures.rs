@@ -47,6 +47,7 @@ struct UndoOperation {
 pub struct DatadogWorld {
     pub api_version: i32,
     pub config: Configuration,
+    pub http_client: Option<reqwest_middleware::ClientWithMiddleware>,
     pub fixtures: Value,
     pub function_mappings: HashMap<String, TestCall>,
     pub operation_id: String,
@@ -174,8 +175,7 @@ pub async fn before_scenario(
             vcr_client_builder.with(middleware)
         }
     };
-
-    world.config.client(vcr_client_builder.build());
+    world.http_client = Some(vcr_client_builder.build());
 
     let escaped_name = NON_ALNUM_RE
         .replace_all(scenario.name.as_str(), "_")
