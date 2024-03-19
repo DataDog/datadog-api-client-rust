@@ -14,7 +14,7 @@ use std::fmt::{self, Formatter};
 pub struct UsageAttributionBody {
     /// Datetime in ISO-8601 format, UTC, precise to month: [YYYY-MM].
     #[serde(rename = "month")]
-    pub month: Option<DateTime<Utc>>,
+    pub month: Option<chrono::DateTime<chrono::Utc>>,
     /// The name of the organization.
     #[serde(rename = "org_name")]
     pub org_name: Option<String>,
@@ -56,7 +56,7 @@ impl UsageAttributionBody {
         }
     }
 
-    pub fn month(mut self, value: DateTime<Utc>) -> Self {
+    pub fn month(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.month = Some(value);
         self
     }
@@ -118,7 +118,7 @@ impl<'de> Deserialize<'de> for UsageAttributionBody {
             where
                 M: MapAccess<'a>,
             {
-                let mut month: Option<DateTime<Utc>> = None;
+                let mut month: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut org_name: Option<String> = None;
                 let mut public_id: Option<String> = None;
                 let mut tag_config_source: Option<String> = None;

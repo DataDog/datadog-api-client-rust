@@ -174,7 +174,7 @@ pub struct UsageSummaryResponse {
     pub dbm_queries_avg_sum: Option<i64>,
     /// Shows the last date of usage in the current months for all organizations.
     #[serde(rename = "end_date")]
-    pub end_date: Option<DateTime<Utc>>,
+    pub end_date: Option<chrono::DateTime<chrono::Utc>>,
     /// Shows the average of all Fargate tasks over all hours in the current months for all organizations.
     #[serde(rename = "fargate_tasks_count_avg_sum")]
     pub fargate_tasks_count_avg_sum: Option<i64>,
@@ -210,7 +210,7 @@ pub struct UsageSummaryResponse {
     pub iot_device_top99p_sum: Option<i64>,
     /// Shows the the most recent hour in the current months for all organizations for which all usages were calculated.
     #[serde(rename = "last_updated")]
-    pub last_updated: Option<DateTime<Utc>>,
+    pub last_updated: Option<chrono::DateTime<chrono::Utc>>,
     /// Shows the sum of all live logs indexed over all hours in the current months for all organizations (data available as of December 1, 2020).
     #[serde(rename = "live_indexed_events_agg_sum")]
     pub live_indexed_events_agg_sum: Option<i64>,
@@ -318,7 +318,7 @@ pub struct UsageSummaryResponse {
     pub serverless_apps_total_count_avg_sum: Option<i64>,
     /// Shows the first date of usage in the current months for all organizations.
     #[serde(rename = "start_date")]
-    pub start_date: Option<DateTime<Utc>>,
+    pub start_date: Option<chrono::DateTime<chrono::Utc>>,
     /// Shows the sum of all Synthetic browser tests over all hours in the current months for all organizations.
     #[serde(rename = "synthetics_browser_check_calls_count_agg_sum")]
     pub synthetics_browser_check_calls_count_agg_sum: Option<i64>,
@@ -797,7 +797,7 @@ impl UsageSummaryResponse {
     }
 
     #[allow(deprecated)]
-    pub fn end_date(mut self, value: DateTime<Utc>) -> Self {
+    pub fn end_date(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_date = Some(value);
         self
     }
@@ -869,7 +869,7 @@ impl UsageSummaryResponse {
     }
 
     #[allow(deprecated)]
-    pub fn last_updated(mut self, value: DateTime<Utc>) -> Self {
+    pub fn last_updated(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.last_updated = Some(value);
         self
     }
@@ -1085,7 +1085,7 @@ impl UsageSummaryResponse {
     }
 
     #[allow(deprecated)]
-    pub fn start_date(mut self, value: DateTime<Utc>) -> Self {
+    pub fn start_date(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.start_date = Some(value);
         self
     }
@@ -1233,7 +1233,7 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                 let mut cws_host_top99p_sum: Option<i64> = None;
                 let mut dbm_host_top99p_sum: Option<i64> = None;
                 let mut dbm_queries_avg_sum: Option<i64> = None;
-                let mut end_date: Option<DateTime<Utc>> = None;
+                let mut end_date: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut fargate_tasks_count_avg_sum: Option<i64> = None;
                 let mut fargate_tasks_count_hwm_sum: Option<i64> = None;
                 let mut forwarding_events_bytes_agg_sum: Option<i64> = None;
@@ -1245,7 +1245,7 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                 let mut ingested_events_bytes_agg_sum: Option<i64> = None;
                 let mut iot_device_agg_sum: Option<i64> = None;
                 let mut iot_device_top99p_sum: Option<i64> = None;
-                let mut last_updated: Option<DateTime<Utc>> = None;
+                let mut last_updated: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut live_indexed_events_agg_sum: Option<i64> = None;
                 let mut live_ingested_bytes_agg_sum: Option<i64> = None;
                 let mut logs_by_retention: Option<crate::datadogV1::model::LogsByRetention> = None;
@@ -1281,7 +1281,7 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                 let mut serverless_apps_azure_count_avg_sum: Option<i64> = None;
                 let mut serverless_apps_google_count_avg_sum: Option<i64> = None;
                 let mut serverless_apps_total_count_avg_sum: Option<i64> = None;
-                let mut start_date: Option<DateTime<Utc>> = None;
+                let mut start_date: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut synthetics_browser_check_calls_count_agg_sum: Option<i64> = None;
                 let mut synthetics_check_calls_count_agg_sum: Option<i64> = None;
                 let mut synthetics_mobile_test_runs_agg_sum: Option<i64> = None;

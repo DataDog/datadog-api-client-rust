@@ -14,10 +14,10 @@ use std::fmt::{self, Formatter};
 pub struct UserInvitationDataAttributes {
     /// Creation time of the user invitation.
     #[serde(rename = "created_at")]
-    pub created_at: Option<DateTime<Utc>>,
+    pub created_at: Option<chrono::DateTime<chrono::Utc>>,
     /// Time of invitation expiration.
     #[serde(rename = "expires_at")]
-    pub expires_at: Option<DateTime<Utc>>,
+    pub expires_at: Option<chrono::DateTime<chrono::Utc>>,
     /// Type of invitation.
     #[serde(rename = "invite_type")]
     pub invite_type: Option<String>,
@@ -40,12 +40,12 @@ impl UserInvitationDataAttributes {
         }
     }
 
-    pub fn created_at(mut self, value: DateTime<Utc>) -> Self {
+    pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
 
-    pub fn expires_at(mut self, value: DateTime<Utc>) -> Self {
+    pub fn expires_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.expires_at = Some(value);
         self
     }
@@ -84,8 +84,8 @@ impl<'de> Deserialize<'de> for UserInvitationDataAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut created_at: Option<DateTime<Utc>> = None;
-                let mut expires_at: Option<DateTime<Utc>> = None;
+                let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
+                let mut expires_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut invite_type: Option<String> = None;
                 let mut uuid: Option<String> = None;
                 let mut _unparsed = false;

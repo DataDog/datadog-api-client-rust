@@ -14,7 +14,7 @@ use std::fmt::{self, Formatter};
 pub struct IncidentIntegrationMetadataAttributes {
     /// Timestamp when the incident todo was created.
     #[serde(rename = "created")]
-    pub created: Option<DateTime<Utc>>,
+    pub created: Option<chrono::DateTime<chrono::Utc>>,
     /// UUID of the incident this integration metadata is connected to.
     #[serde(rename = "incident_id")]
     pub incident_id: Option<String>,
@@ -27,7 +27,7 @@ pub struct IncidentIntegrationMetadataAttributes {
     pub metadata: crate::datadogV2::model::IncidentIntegrationMetadataMetadata,
     /// Timestamp when the incident todo was last modified.
     #[serde(rename = "modified")]
-    pub modified: Option<DateTime<Utc>>,
+    pub modified: Option<chrono::DateTime<chrono::Utc>>,
     /// A number indicating the status of this integration metadata. 0 indicates unknown;
     /// 1 indicates pending; 2 indicates complete; 3 indicates manually created;
     /// 4 indicates manually updated; 5 indicates failed.
@@ -54,7 +54,7 @@ impl IncidentIntegrationMetadataAttributes {
         }
     }
 
-    pub fn created(mut self, value: DateTime<Utc>) -> Self {
+    pub fn created(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created = Some(value);
         self
     }
@@ -64,7 +64,7 @@ impl IncidentIntegrationMetadataAttributes {
         self
     }
 
-    pub fn modified(mut self, value: DateTime<Utc>) -> Self {
+    pub fn modified(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.modified = Some(value);
         self
     }
@@ -92,13 +92,13 @@ impl<'de> Deserialize<'de> for IncidentIntegrationMetadataAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut created: Option<DateTime<Utc>> = None;
+                let mut created: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut incident_id: Option<String> = None;
                 let mut integration_type: Option<i32> = None;
                 let mut metadata: Option<
                     crate::datadogV2::model::IncidentIntegrationMetadataMetadata,
                 > = None;
-                let mut modified: Option<DateTime<Utc>> = None;
+                let mut modified: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut status: Option<i32> = None;
                 let mut _unparsed = false;
 

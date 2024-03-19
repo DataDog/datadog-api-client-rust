@@ -14,10 +14,10 @@ use std::fmt::{self, Formatter};
 pub struct IncidentTeamResponseAttributes {
     /// Timestamp of when the incident team was created.
     #[serde(rename = "created")]
-    pub created: Option<DateTime<Utc>>,
+    pub created: Option<chrono::DateTime<chrono::Utc>>,
     /// Timestamp of when the incident team was modified.
     #[serde(rename = "modified")]
-    pub modified: Option<DateTime<Utc>>,
+    pub modified: Option<chrono::DateTime<chrono::Utc>>,
     /// Name of the incident team.
     #[serde(rename = "name")]
     pub name: Option<String>,
@@ -36,12 +36,12 @@ impl IncidentTeamResponseAttributes {
         }
     }
 
-    pub fn created(mut self, value: DateTime<Utc>) -> Self {
+    pub fn created(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created = Some(value);
         self
     }
 
-    pub fn modified(mut self, value: DateTime<Utc>) -> Self {
+    pub fn modified(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.modified = Some(value);
         self
     }
@@ -75,8 +75,8 @@ impl<'de> Deserialize<'de> for IncidentTeamResponseAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut created: Option<DateTime<Utc>> = None;
-                let mut modified: Option<DateTime<Utc>> = None;
+                let mut created: Option<chrono::DateTime<chrono::Utc>> = None;
+                let mut modified: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut name: Option<String> = None;
                 let mut _unparsed = false;
 

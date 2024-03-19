@@ -91,7 +91,7 @@ pub struct UsageHostHour {
     pub host_count: Option<Option<i64>>,
     /// The hour for the usage.
     #[serde(rename = "hour", default, with = "::serde_with::rust::double_option")]
-    pub hour: Option<Option<DateTime<Utc>>>,
+    pub hour: Option<Option<chrono::DateTime<chrono::Utc>>>,
     /// Contains the total number of hosts that reported through the Azure App Services integration
     /// (and were NOT running the Datadog Agent).
     #[serde(
@@ -207,7 +207,7 @@ impl UsageHostHour {
         self
     }
 
-    pub fn hour(mut self, value: Option<DateTime<Utc>>) -> Self {
+    pub fn hour(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.hour = Some(value);
         self
     }
@@ -276,7 +276,7 @@ impl<'de> Deserialize<'de> for UsageHostHour {
                 let mut gcp_host_count: Option<Option<i64>> = None;
                 let mut heroku_host_count: Option<Option<i64>> = None;
                 let mut host_count: Option<Option<i64>> = None;
-                let mut hour: Option<Option<DateTime<Utc>>> = None;
+                let mut hour: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
                 let mut infra_azure_app_service: Option<Option<i64>> = None;
                 let mut opentelemetry_apm_host_count: Option<Option<i64>> = None;
                 let mut opentelemetry_host_count: Option<Option<i64>> = None;

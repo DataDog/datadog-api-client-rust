@@ -17,7 +17,7 @@ pub struct UsageBillableSummaryHour {
     pub billing_plan: Option<String>,
     /// Shows the last date of usage.
     #[serde(rename = "end_date")]
-    pub end_date: Option<DateTime<Utc>>,
+    pub end_date: Option<chrono::DateTime<chrono::Utc>>,
     /// The number of organizations.
     #[serde(rename = "num_orgs")]
     pub num_orgs: Option<i64>,
@@ -35,7 +35,7 @@ pub struct UsageBillableSummaryHour {
     pub region: Option<String>,
     /// Shows the first date of usage.
     #[serde(rename = "start_date")]
-    pub start_date: Option<DateTime<Utc>>,
+    pub start_date: Option<chrono::DateTime<chrono::Utc>>,
     /// Response with aggregated usage types.
     #[serde(rename = "usage")]
     pub usage: Option<crate::datadogV1::model::UsageBillableSummaryKeys>,
@@ -65,7 +65,7 @@ impl UsageBillableSummaryHour {
         self
     }
 
-    pub fn end_date(mut self, value: DateTime<Utc>) -> Self {
+    pub fn end_date(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_date = Some(value);
         self
     }
@@ -95,7 +95,7 @@ impl UsageBillableSummaryHour {
         self
     }
 
-    pub fn start_date(mut self, value: DateTime<Utc>) -> Self {
+    pub fn start_date(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.start_date = Some(value);
         self
     }
@@ -130,13 +130,13 @@ impl<'de> Deserialize<'de> for UsageBillableSummaryHour {
                 M: MapAccess<'a>,
             {
                 let mut billing_plan: Option<String> = None;
-                let mut end_date: Option<DateTime<Utc>> = None;
+                let mut end_date: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut num_orgs: Option<i64> = None;
                 let mut org_name: Option<String> = None;
                 let mut public_id: Option<String> = None;
                 let mut ratio_in_month: Option<f64> = None;
                 let mut region: Option<String> = None;
-                let mut start_date: Option<DateTime<Utc>> = None;
+                let mut start_date: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut usage: Option<crate::datadogV1::model::UsageBillableSummaryKeys> = None;
                 let mut _unparsed = false;
 

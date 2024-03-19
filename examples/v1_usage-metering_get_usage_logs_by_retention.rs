@@ -1,4 +1,5 @@
 // Get hourly logs usage by retention returns "OK" response
+use chrono::{DateTime, Utc};
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_usage_metering::GetUsageLogsByRetentionOptionalParams;
 use datadog_api_client::datadogV1::api::api_usage_metering::UsageMeteringAPI;

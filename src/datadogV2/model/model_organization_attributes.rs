@@ -14,7 +14,7 @@ use std::fmt::{self, Formatter};
 pub struct OrganizationAttributes {
     /// Creation time of the organization.
     #[serde(rename = "created_at")]
-    pub created_at: Option<DateTime<Utc>>,
+    pub created_at: Option<chrono::DateTime<chrono::Utc>>,
     /// Description of the organization.
     #[serde(rename = "description")]
     pub description: Option<String>,
@@ -23,7 +23,7 @@ pub struct OrganizationAttributes {
     pub disabled: Option<bool>,
     /// Time of last organization modification.
     #[serde(rename = "modified_at")]
-    pub modified_at: Option<DateTime<Utc>>,
+    pub modified_at: Option<chrono::DateTime<chrono::Utc>>,
     /// Name of the organization.
     #[serde(rename = "name")]
     pub name: Option<String>,
@@ -56,7 +56,7 @@ impl OrganizationAttributes {
         }
     }
 
-    pub fn created_at(mut self, value: DateTime<Utc>) -> Self {
+    pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
@@ -71,7 +71,7 @@ impl OrganizationAttributes {
         self
     }
 
-    pub fn modified_at(mut self, value: DateTime<Utc>) -> Self {
+    pub fn modified_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.modified_at = Some(value);
         self
     }
@@ -120,10 +120,10 @@ impl<'de> Deserialize<'de> for OrganizationAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut created_at: Option<DateTime<Utc>> = None;
+                let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut description: Option<String> = None;
                 let mut disabled: Option<bool> = None;
-                let mut modified_at: Option<DateTime<Utc>> = None;
+                let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut name: Option<String> = None;
                 let mut public_id: Option<String> = None;
                 let mut sharing: Option<String> = None;

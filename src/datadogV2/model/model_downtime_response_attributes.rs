@@ -18,10 +18,10 @@ pub struct DowntimeResponseAttributes {
         default,
         with = "::serde_with::rust::double_option"
     )]
-    pub canceled: Option<Option<DateTime<Utc>>>,
+    pub canceled: Option<Option<chrono::DateTime<chrono::Utc>>>,
     /// Creation time of the downtime.
     #[serde(rename = "created")]
-    pub created: Option<DateTime<Utc>>,
+    pub created: Option<chrono::DateTime<chrono::Utc>>,
     /// The timezone in which to display the downtime's start and end times in Datadog applications. This is not used
     /// as an offset for scheduling.
     #[serde(
@@ -40,7 +40,7 @@ pub struct DowntimeResponseAttributes {
     pub message: Option<Option<String>>,
     /// Time that the downtime was last modified.
     #[serde(rename = "modified")]
-    pub modified: Option<DateTime<Utc>>,
+    pub modified: Option<chrono::DateTime<chrono::Utc>>,
     /// Monitor identifier for the downtime.
     #[serde(rename = "monitor_identifier")]
     pub monitor_identifier: Option<crate::datadogV2::model::DowntimeMonitorIdentifier>,
@@ -88,12 +88,12 @@ impl DowntimeResponseAttributes {
         }
     }
 
-    pub fn canceled(mut self, value: Option<DateTime<Utc>>) -> Self {
+    pub fn canceled(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.canceled = Some(value);
         self
     }
 
-    pub fn created(mut self, value: DateTime<Utc>) -> Self {
+    pub fn created(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created = Some(value);
         self
     }
@@ -108,7 +108,7 @@ impl DowntimeResponseAttributes {
         self
     }
 
-    pub fn modified(mut self, value: DateTime<Utc>) -> Self {
+    pub fn modified(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.modified = Some(value);
         self
     }
@@ -181,11 +181,11 @@ impl<'de> Deserialize<'de> for DowntimeResponseAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut canceled: Option<Option<DateTime<Utc>>> = None;
-                let mut created: Option<DateTime<Utc>> = None;
+                let mut canceled: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
+                let mut created: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut display_timezone: Option<Option<String>> = None;
                 let mut message: Option<Option<String>> = None;
-                let mut modified: Option<DateTime<Utc>> = None;
+                let mut modified: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut monitor_identifier: Option<
                     crate::datadogV2::model::DowntimeMonitorIdentifier,
                 > = None;

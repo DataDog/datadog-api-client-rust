@@ -1,4 +1,5 @@
 // Get hourly usage attribution returns "OK" response
+use chrono::{DateTime, Utc};
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_usage_metering::GetHourlyUsageAttributionOptionalParams;
 use datadog_api_client::datadogV1::api::api_usage_metering::UsageMeteringAPI;

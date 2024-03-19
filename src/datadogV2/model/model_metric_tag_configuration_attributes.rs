@@ -32,7 +32,7 @@ pub struct MetricTagConfigurationAttributes {
     pub aggregations: Option<Vec<crate::datadogV2::model::MetricCustomAggregation>>,
     /// Timestamp when the tag configuration was created.
     #[serde(rename = "created_at")]
-    pub created_at: Option<DateTime<Utc>>,
+    pub created_at: Option<chrono::DateTime<chrono::Utc>>,
     /// When set to true, the configuration will exclude the configured tags and include any other submitted tags.
     /// When set to false, the configuration will include the configured tags and exclude any other submitted tags.
     /// Defaults to false. Requires `tags` property.
@@ -47,7 +47,7 @@ pub struct MetricTagConfigurationAttributes {
     pub metric_type: Option<crate::datadogV2::model::MetricTagConfigurationMetricTypes>,
     /// Timestamp when the tag configuration was last modified.
     #[serde(rename = "modified_at")]
-    pub modified_at: Option<DateTime<Utc>>,
+    pub modified_at: Option<chrono::DateTime<chrono::Utc>>,
     /// List of tag keys on which to group.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
@@ -78,7 +78,7 @@ impl MetricTagConfigurationAttributes {
         self
     }
 
-    pub fn created_at(mut self, value: DateTime<Utc>) -> Self {
+    pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
@@ -101,7 +101,7 @@ impl MetricTagConfigurationAttributes {
         self
     }
 
-    pub fn modified_at(mut self, value: DateTime<Utc>) -> Self {
+    pub fn modified_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.modified_at = Some(value);
         self
     }
@@ -138,13 +138,13 @@ impl<'de> Deserialize<'de> for MetricTagConfigurationAttributes {
                 let mut aggregations: Option<
                     Vec<crate::datadogV2::model::MetricCustomAggregation>,
                 > = None;
-                let mut created_at: Option<DateTime<Utc>> = None;
+                let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut exclude_tags_mode: Option<bool> = None;
                 let mut include_percentiles: Option<bool> = None;
                 let mut metric_type: Option<
                     crate::datadogV2::model::MetricTagConfigurationMetricTypes,
                 > = None;
-                let mut modified_at: Option<DateTime<Utc>> = None;
+                let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut _unparsed = false;
 

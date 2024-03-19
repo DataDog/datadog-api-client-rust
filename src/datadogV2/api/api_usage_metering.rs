@@ -2,7 +2,6 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
-use chrono::{DateTime, Utc};
 use log::warn;
 use reqwest;
 use serde::{Deserialize, Serialize};
@@ -12,12 +11,12 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Default, Debug)]
 pub struct GetCostByOrgOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost ending this month.
-    pub end_month: Option<DateTime<Utc>>,
+    pub end_month: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetCostByOrgOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost ending this month.
-    pub fn end_month(mut self, value: DateTime<Utc>) -> Self {
+    pub fn end_month(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_month = Some(value);
         self
     }
@@ -30,13 +29,13 @@ pub struct GetEstimatedCostByOrgOptionalParams {
     /// String to specify whether cost is broken down at a parent-org level or at the sub-org level. Available views are `summary` and `sub-org`. Defaults to `summary`.
     pub view: Option<String>,
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost beginning this month. Either start_month or start_date should be specified, but not both. (start_month cannot go beyond two months in the past). Provide an `end_month` to view month-over-month cost.
-    pub start_month: Option<DateTime<Utc>>,
+    pub start_month: Option<chrono::DateTime<chrono::Utc>>,
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost ending this month.
-    pub end_month: Option<DateTime<Utc>>,
+    pub end_month: Option<chrono::DateTime<chrono::Utc>>,
     /// Datetime in ISO-8601 format, UTC, precise to day: `[YYYY-MM-DD]` for cost beginning this day. Either start_month or start_date should be specified, but not both. (start_date cannot go beyond two months in the past). Provide an `end_date` to view day-over-day cumulative cost.
-    pub start_date: Option<DateTime<Utc>>,
+    pub start_date: Option<chrono::DateTime<chrono::Utc>>,
     /// Datetime in ISO-8601 format, UTC, precise to day: `[YYYY-MM-DD]` for cost ending this day.
-    pub end_date: Option<DateTime<Utc>>,
+    pub end_date: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetEstimatedCostByOrgOptionalParams {
@@ -46,22 +45,22 @@ impl GetEstimatedCostByOrgOptionalParams {
         self
     }
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost beginning this month. Either start_month or start_date should be specified, but not both. (start_month cannot go beyond two months in the past). Provide an `end_month` to view month-over-month cost.
-    pub fn start_month(mut self, value: DateTime<Utc>) -> Self {
+    pub fn start_month(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.start_month = Some(value);
         self
     }
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost ending this month.
-    pub fn end_month(mut self, value: DateTime<Utc>) -> Self {
+    pub fn end_month(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_month = Some(value);
         self
     }
     /// Datetime in ISO-8601 format, UTC, precise to day: `[YYYY-MM-DD]` for cost beginning this day. Either start_month or start_date should be specified, but not both. (start_date cannot go beyond two months in the past). Provide an `end_date` to view day-over-day cumulative cost.
-    pub fn start_date(mut self, value: DateTime<Utc>) -> Self {
+    pub fn start_date(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.start_date = Some(value);
         self
     }
     /// Datetime in ISO-8601 format, UTC, precise to day: `[YYYY-MM-DD]` for cost ending this day.
-    pub fn end_date(mut self, value: DateTime<Utc>) -> Self {
+    pub fn end_date(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_date = Some(value);
         self
     }
@@ -74,7 +73,7 @@ pub struct GetHistoricalCostByOrgOptionalParams {
     /// String to specify whether cost is broken down at a parent-org level or at the sub-org level. Available views are `summary` and `sub-org`.  Defaults to `summary`.
     pub view: Option<String>,
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost ending this month.
-    pub end_month: Option<DateTime<Utc>>,
+    pub end_month: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetHistoricalCostByOrgOptionalParams {
@@ -84,7 +83,7 @@ impl GetHistoricalCostByOrgOptionalParams {
         self
     }
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost ending this month.
-    pub fn end_month(mut self, value: DateTime<Utc>) -> Self {
+    pub fn end_month(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_month = Some(value);
         self
     }
@@ -95,7 +94,7 @@ impl GetHistoricalCostByOrgOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetHourlyUsageOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub filter_timestamp_end: Option<DateTime<Utc>>,
+    pub filter_timestamp_end: Option<chrono::DateTime<chrono::Utc>>,
     /// Include child org usage in the response. Defaults to false.
     pub filter_include_descendants: Option<bool>,
     /// Include breakdown of usage by subcategories where applicable (for product family logs only). Defaults to false.
@@ -112,7 +111,7 @@ pub struct GetHourlyUsageOptionalParams {
 
 impl GetHourlyUsageOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn filter_timestamp_end(mut self, value: DateTime<Utc>) -> Self {
+    pub fn filter_timestamp_end(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.filter_timestamp_end = Some(value);
         self
     }
@@ -213,13 +212,13 @@ impl GetProjectedCostOptionalParams {
 pub struct GetUsageApplicationSecurityMonitoringOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<DateTime<Utc>>,
+    pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetUsageApplicationSecurityMonitoringOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: DateTime<Utc>) -> Self {
+    pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -231,13 +230,13 @@ impl GetUsageApplicationSecurityMonitoringOptionalParams {
 pub struct GetUsageLambdaTracedInvocationsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<DateTime<Utc>>,
+    pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetUsageLambdaTracedInvocationsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: DateTime<Utc>) -> Self {
+    pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -249,13 +248,13 @@ impl GetUsageLambdaTracedInvocationsOptionalParams {
 pub struct GetUsageObservabilityPipelinesOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<DateTime<Utc>>,
+    pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetUsageObservabilityPipelinesOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: DateTime<Utc>) -> Self {
+    pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -482,7 +481,7 @@ impl UsageMeteringAPI {
     /// instead.
     pub async fn get_cost_by_org(
         &self,
-        start_month: DateTime<Utc>,
+        start_month: chrono::DateTime<chrono::Utc>,
         params: GetCostByOrgOptionalParams,
     ) -> Result<crate::datadogV2::model::CostByOrgResponse, Error<GetCostByOrgError>> {
         match self
@@ -509,7 +508,7 @@ impl UsageMeteringAPI {
     /// instead.
     pub async fn get_cost_by_org_with_http_info(
         &self,
-        start_month: DateTime<Utc>,
+        start_month: chrono::DateTime<chrono::Utc>,
         params: GetCostByOrgOptionalParams,
     ) -> Result<ResponseContent<crate::datadogV2::model::CostByOrgResponse>, Error<GetCostByOrgError>>
     {
@@ -698,7 +697,7 @@ impl UsageMeteringAPI {
     /// Cost data for a given month becomes available no later than the 16th of the following month.
     pub async fn get_historical_cost_by_org(
         &self,
-        start_month: DateTime<Utc>,
+        start_month: chrono::DateTime<chrono::Utc>,
         params: GetHistoricalCostByOrgOptionalParams,
     ) -> Result<crate::datadogV2::model::CostByOrgResponse, Error<GetHistoricalCostByOrgError>>
     {
@@ -723,7 +722,7 @@ impl UsageMeteringAPI {
     /// Cost data for a given month becomes available no later than the 16th of the following month.
     pub async fn get_historical_cost_by_org_with_http_info(
         &self,
-        start_month: DateTime<Utc>,
+        start_month: chrono::DateTime<chrono::Utc>,
         params: GetHistoricalCostByOrgOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::CostByOrgResponse>,
@@ -802,7 +801,7 @@ impl UsageMeteringAPI {
     /// Get hourly usage by product family.
     pub async fn get_hourly_usage(
         &self,
-        filter_timestamp_start: DateTime<Utc>,
+        filter_timestamp_start: chrono::DateTime<chrono::Utc>,
         filter_product_families: String,
         params: GetHourlyUsageOptionalParams,
     ) -> Result<crate::datadogV2::model::HourlyUsageResponse, Error<GetHourlyUsageError>> {
@@ -830,7 +829,7 @@ impl UsageMeteringAPI {
     /// Get hourly usage by product family.
     pub async fn get_hourly_usage_with_http_info(
         &self,
-        filter_timestamp_start: DateTime<Utc>,
+        filter_timestamp_start: chrono::DateTime<chrono::Utc>,
         filter_product_families: String,
         params: GetHourlyUsageOptionalParams,
     ) -> Result<
@@ -953,8 +952,8 @@ impl UsageMeteringAPI {
     /// ```
     pub async fn get_monthly_cost_attribution(
         &self,
-        start_month: DateTime<Utc>,
-        end_month: DateTime<Utc>,
+        start_month: chrono::DateTime<chrono::Utc>,
+        end_month: chrono::DateTime<chrono::Utc>,
         fields: String,
         params: GetMonthlyCostAttributionOptionalParams,
     ) -> Result<
@@ -994,8 +993,8 @@ impl UsageMeteringAPI {
     /// ```
     pub async fn get_monthly_cost_attribution_with_http_info(
         &self,
-        start_month: DateTime<Utc>,
-        end_month: DateTime<Utc>,
+        start_month: chrono::DateTime<chrono::Utc>,
+        end_month: chrono::DateTime<chrono::Utc>,
         fields: String,
         params: GetMonthlyCostAttributionOptionalParams,
     ) -> Result<
@@ -1198,7 +1197,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_application_security_monitoring(
         &self,
-        start_hr: DateTime<Utc>,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageApplicationSecurityMonitoringOptionalParams,
     ) -> Result<
         crate::datadogV2::model::UsageApplicationSecurityMonitoringResponse,
@@ -1225,7 +1224,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_application_security_monitoring_with_http_info(
         &self,
-        start_hr: DateTime<Utc>,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageApplicationSecurityMonitoringOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::UsageApplicationSecurityMonitoringResponse>,
@@ -1302,7 +1301,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_lambda_traced_invocations(
         &self,
-        start_hr: DateTime<Utc>,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageLambdaTracedInvocationsOptionalParams,
     ) -> Result<
         crate::datadogV2::model::UsageLambdaTracedInvocationsResponse,
@@ -1329,7 +1328,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_lambda_traced_invocations_with_http_info(
         &self,
-        start_hr: DateTime<Utc>,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageLambdaTracedInvocationsOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::UsageLambdaTracedInvocationsResponse>,
@@ -1406,7 +1405,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_observability_pipelines(
         &self,
-        start_hr: DateTime<Utc>,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageObservabilityPipelinesOptionalParams,
     ) -> Result<
         crate::datadogV2::model::UsageObservabilityPipelinesResponse,
@@ -1433,7 +1432,7 @@ impl UsageMeteringAPI {
     /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_observability_pipelines_with_http_info(
         &self,
-        start_hr: DateTime<Utc>,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageObservabilityPipelinesOptionalParams,
     ) -> Result<
         ResponseContent<crate::datadogV2::model::UsageObservabilityPipelinesResponse>,

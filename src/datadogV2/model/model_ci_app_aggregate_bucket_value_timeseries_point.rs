@@ -14,7 +14,7 @@ use std::fmt::{self, Formatter};
 pub struct CIAppAggregateBucketValueTimeseriesPoint {
     /// The time value for this point.
     #[serde(rename = "time")]
-    pub time: Option<DateTime<Utc>>,
+    pub time: Option<chrono::DateTime<chrono::Utc>>,
     /// The value for this point.
     #[serde(rename = "value")]
     pub value: Option<f64>,
@@ -32,7 +32,7 @@ impl CIAppAggregateBucketValueTimeseriesPoint {
         }
     }
 
-    pub fn time(mut self, value: DateTime<Utc>) -> Self {
+    pub fn time(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.time = Some(value);
         self
     }
@@ -66,7 +66,7 @@ impl<'de> Deserialize<'de> for CIAppAggregateBucketValueTimeseriesPoint {
             where
                 M: MapAccess<'a>,
             {
-                let mut time: Option<DateTime<Utc>> = None;
+                let mut time: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut value: Option<f64> = None;
                 let mut _unparsed = false;
 

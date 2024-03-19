@@ -3,7 +3,6 @@
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
 use async_stream::try_stream;
-use chrono::{DateTime, Utc};
 use futures_core::stream::Stream;
 use log::warn;
 use reqwest;
@@ -148,9 +147,9 @@ pub struct ListSecurityMonitoringSignalsOptionalParams {
     /// The search query for security signals.
     pub filter_query: Option<String>,
     /// The minimum timestamp for requested security signals.
-    pub filter_from: Option<DateTime<Utc>>,
+    pub filter_from: Option<chrono::DateTime<chrono::Utc>>,
     /// The maximum timestamp for requested security signals.
-    pub filter_to: Option<DateTime<Utc>>,
+    pub filter_to: Option<chrono::DateTime<chrono::Utc>>,
     /// The order of the security signals in results.
     pub sort: Option<crate::datadogV2::model::SecurityMonitoringSignalsSort>,
     /// A list of results using the cursor provided in the previous query.
@@ -166,12 +165,12 @@ impl ListSecurityMonitoringSignalsOptionalParams {
         self
     }
     /// The minimum timestamp for requested security signals.
-    pub fn filter_from(mut self, value: DateTime<Utc>) -> Self {
+    pub fn filter_from(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.filter_from = Some(value);
         self
     }
     /// The maximum timestamp for requested security signals.
-    pub fn filter_to(mut self, value: DateTime<Utc>) -> Self {
+    pub fn filter_to(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.filter_to = Some(value);
         self
     }

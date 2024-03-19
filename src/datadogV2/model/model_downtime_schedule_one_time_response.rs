@@ -14,17 +14,17 @@ use std::fmt::{self, Formatter};
 pub struct DowntimeScheduleOneTimeResponse {
     /// ISO-8601 Datetime to end the downtime.
     #[serde(rename = "end", default, with = "::serde_with::rust::double_option")]
-    pub end: Option<Option<DateTime<Utc>>>,
+    pub end: Option<Option<chrono::DateTime<chrono::Utc>>>,
     /// ISO-8601 Datetime to start the downtime.
     #[serde(rename = "start")]
-    pub start: DateTime<Utc>,
+    pub start: chrono::DateTime<chrono::Utc>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
 }
 
 impl DowntimeScheduleOneTimeResponse {
-    pub fn new(start: DateTime<Utc>) -> DowntimeScheduleOneTimeResponse {
+    pub fn new(start: chrono::DateTime<chrono::Utc>) -> DowntimeScheduleOneTimeResponse {
         DowntimeScheduleOneTimeResponse {
             end: None,
             start,
@@ -32,7 +32,7 @@ impl DowntimeScheduleOneTimeResponse {
         }
     }
 
-    pub fn end(mut self, value: Option<DateTime<Utc>>) -> Self {
+    pub fn end(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.end = Some(value);
         self
     }
@@ -55,8 +55,8 @@ impl<'de> Deserialize<'de> for DowntimeScheduleOneTimeResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut end: Option<Option<DateTime<Utc>>> = None;
-                let mut start: Option<DateTime<Utc>> = None;
+                let mut end: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
+                let mut start: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {

@@ -20,7 +20,7 @@ pub struct IncidentAttachmentLinkAttributes {
     pub attachment_type: crate::datadogV2::model::IncidentAttachmentLinkAttachmentType,
     /// Timestamp when the incident attachment link was last modified.
     #[serde(rename = "modified")]
-    pub modified: Option<DateTime<Utc>>,
+    pub modified: Option<chrono::DateTime<chrono::Utc>>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -39,7 +39,7 @@ impl IncidentAttachmentLinkAttributes {
         }
     }
 
-    pub fn modified(mut self, value: DateTime<Utc>) -> Self {
+    pub fn modified(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.modified = Some(value);
         self
     }
@@ -68,7 +68,7 @@ impl<'de> Deserialize<'de> for IncidentAttachmentLinkAttributes {
                 let mut attachment_type: Option<
                     crate::datadogV2::model::IncidentAttachmentLinkAttachmentType,
                 > = None;
-                let mut modified: Option<DateTime<Utc>> = None;
+                let mut modified: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {

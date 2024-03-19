@@ -29,7 +29,7 @@ pub struct HourlyUsageAttributes {
     pub region: Option<String>,
     /// Datetime in ISO-8601 format, UTC. The hour for the usage.
     #[serde(rename = "timestamp")]
-    pub timestamp: Option<DateTime<Utc>>,
+    pub timestamp: Option<chrono::DateTime<chrono::Utc>>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -76,7 +76,7 @@ impl HourlyUsageAttributes {
         self
     }
 
-    pub fn timestamp(mut self, value: DateTime<Utc>) -> Self {
+    pub fn timestamp(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.timestamp = Some(value);
         self
     }
@@ -111,7 +111,7 @@ impl<'de> Deserialize<'de> for HourlyUsageAttributes {
                 let mut product_family: Option<String> = None;
                 let mut public_id: Option<String> = None;
                 let mut region: Option<String> = None;
-                let mut timestamp: Option<DateTime<Utc>> = None;
+                let mut timestamp: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {

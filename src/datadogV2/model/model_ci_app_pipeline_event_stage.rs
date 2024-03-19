@@ -21,7 +21,7 @@ pub struct CIAppPipelineEventStage {
     pub dependencies: Option<Option<Vec<String>>>,
     /// Time when the stage run finished. The time format must be RFC3339.
     #[serde(rename = "end")]
-    pub end: DateTime<Utc>,
+    pub end: chrono::DateTime<chrono::Utc>,
     /// Contains information of the CI error.
     #[serde(rename = "error", default, with = "::serde_with::rust::double_option")]
     pub error: Option<Option<crate::datadogV2::model::CIAppCIError>>,
@@ -70,7 +70,7 @@ pub struct CIAppPipelineEventStage {
     pub queue_time: Option<Option<i64>>,
     /// Time when the stage run started (it should not include any queue time). The time format must be RFC3339.
     #[serde(rename = "start")]
-    pub start: DateTime<Utc>,
+    pub start: chrono::DateTime<chrono::Utc>,
     /// The final status of the stage.
     #[serde(rename = "status")]
     pub status: crate::datadogV2::model::CIAppPipelineEventStageStatus,
@@ -84,13 +84,13 @@ pub struct CIAppPipelineEventStage {
 
 impl CIAppPipelineEventStage {
     pub fn new(
-        end: DateTime<Utc>,
+        end: chrono::DateTime<chrono::Utc>,
         id: String,
         level: crate::datadogV2::model::CIAppPipelineEventStageLevel,
         name: String,
         pipeline_name: String,
         pipeline_unique_id: String,
-        start: DateTime<Utc>,
+        start: chrono::DateTime<chrono::Utc>,
         status: crate::datadogV2::model::CIAppPipelineEventStageStatus,
     ) -> CIAppPipelineEventStage {
         CIAppPipelineEventStage {
@@ -173,7 +173,7 @@ impl<'de> Deserialize<'de> for CIAppPipelineEventStage {
                 M: MapAccess<'a>,
             {
                 let mut dependencies: Option<Option<Vec<String>>> = None;
-                let mut end: Option<DateTime<Utc>> = None;
+                let mut end: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut error: Option<Option<crate::datadogV2::model::CIAppCIError>> = None;
                 let mut git: Option<Option<crate::datadogV2::model::CIAppGitInfo>> = None;
                 let mut id: Option<String> = None;
@@ -186,7 +186,7 @@ impl<'de> Deserialize<'de> for CIAppPipelineEventStage {
                 let mut pipeline_name: Option<String> = None;
                 let mut pipeline_unique_id: Option<String> = None;
                 let mut queue_time: Option<Option<i64>> = None;
-                let mut start: Option<DateTime<Utc>> = None;
+                let mut start: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut status: Option<crate::datadogV2::model::CIAppPipelineEventStageStatus> =
                     None;
                 let mut tags: Option<Option<Vec<String>>> = None;

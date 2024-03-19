@@ -14,7 +14,7 @@ use std::fmt::{self, Formatter};
 pub struct UsageTimeseriesHour {
     /// The hour for the usage.
     #[serde(rename = "hour")]
-    pub hour: Option<DateTime<Utc>>,
+    pub hour: Option<chrono::DateTime<chrono::Utc>>,
     /// Contains the number of custom metrics that are inputs for aggregations (metric configured is custom).
     #[serde(rename = "num_custom_input_timeseries")]
     pub num_custom_input_timeseries: Option<i64>,
@@ -48,7 +48,7 @@ impl UsageTimeseriesHour {
         }
     }
 
-    pub fn hour(mut self, value: DateTime<Utc>) -> Self {
+    pub fn hour(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.hour = Some(value);
         self
     }
@@ -102,7 +102,7 @@ impl<'de> Deserialize<'de> for UsageTimeseriesHour {
             where
                 M: MapAccess<'a>,
             {
-                let mut hour: Option<DateTime<Utc>> = None;
+                let mut hour: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut num_custom_input_timeseries: Option<i64> = None;
                 let mut num_custom_output_timeseries: Option<i64> = None;
                 let mut num_custom_timeseries: Option<i64> = None;

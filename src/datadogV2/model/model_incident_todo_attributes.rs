@@ -27,7 +27,7 @@ pub struct IncidentTodoAttributes {
     pub content: String,
     /// Timestamp when the incident todo was created.
     #[serde(rename = "created")]
-    pub created: Option<DateTime<Utc>>,
+    pub created: Option<chrono::DateTime<chrono::Utc>>,
     /// Timestamp when the todo should be completed by.
     #[serde(
         rename = "due_date",
@@ -40,7 +40,7 @@ pub struct IncidentTodoAttributes {
     pub incident_id: Option<String>,
     /// Timestamp when the incident todo was last modified.
     #[serde(rename = "modified")]
-    pub modified: Option<DateTime<Utc>>,
+    pub modified: Option<chrono::DateTime<chrono::Utc>>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -68,7 +68,7 @@ impl IncidentTodoAttributes {
         self
     }
 
-    pub fn created(mut self, value: DateTime<Utc>) -> Self {
+    pub fn created(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created = Some(value);
         self
     }
@@ -83,7 +83,7 @@ impl IncidentTodoAttributes {
         self
     }
 
-    pub fn modified(mut self, value: DateTime<Utc>) -> Self {
+    pub fn modified(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.modified = Some(value);
         self
     }
@@ -110,10 +110,10 @@ impl<'de> Deserialize<'de> for IncidentTodoAttributes {
                     None;
                 let mut completed: Option<Option<String>> = None;
                 let mut content: Option<String> = None;
-                let mut created: Option<DateTime<Utc>> = None;
+                let mut created: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut due_date: Option<Option<String>> = None;
                 let mut incident_id: Option<String> = None;
-                let mut modified: Option<DateTime<Utc>> = None;
+                let mut modified: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {

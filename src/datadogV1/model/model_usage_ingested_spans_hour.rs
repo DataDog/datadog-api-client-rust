@@ -14,7 +14,7 @@ use std::fmt::{self, Formatter};
 pub struct UsageIngestedSpansHour {
     /// The hour for the usage.
     #[serde(rename = "hour")]
-    pub hour: Option<DateTime<Utc>>,
+    pub hour: Option<chrono::DateTime<chrono::Utc>>,
     /// Contains the total number of bytes ingested for APM spans during a given hour.
     #[serde(
         rename = "ingested_events_bytes",
@@ -44,7 +44,7 @@ impl UsageIngestedSpansHour {
         }
     }
 
-    pub fn hour(mut self, value: DateTime<Utc>) -> Self {
+    pub fn hour(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.hour = Some(value);
         self
     }
@@ -88,7 +88,7 @@ impl<'de> Deserialize<'de> for UsageIngestedSpansHour {
             where
                 M: MapAccess<'a>,
             {
-                let mut hour: Option<DateTime<Utc>> = None;
+                let mut hour: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut ingested_events_bytes: Option<Option<i64>> = None;
                 let mut org_name: Option<String> = None;
                 let mut public_id: Option<String> = None;

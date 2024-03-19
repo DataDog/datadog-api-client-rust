@@ -15,7 +15,7 @@ use std::fmt::{self, Formatter};
 pub struct SyntheticsDeletedTest {
     /// Deletion timestamp of the Synthetic test ID.
     #[serde(rename = "deleted_at")]
-    pub deleted_at: Option<DateTime<Utc>>,
+    pub deleted_at: Option<chrono::DateTime<chrono::Utc>>,
     /// The Synthetic test ID deleted.
     #[serde(rename = "public_id")]
     pub public_id: Option<String>,
@@ -33,7 +33,7 @@ impl SyntheticsDeletedTest {
         }
     }
 
-    pub fn deleted_at(mut self, value: DateTime<Utc>) -> Self {
+    pub fn deleted_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.deleted_at = Some(value);
         self
     }
@@ -67,7 +67,7 @@ impl<'de> Deserialize<'de> for SyntheticsDeletedTest {
             where
                 M: MapAccess<'a>,
             {
-                let mut deleted_at: Option<DateTime<Utc>> = None;
+                let mut deleted_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut public_id: Option<String> = None;
                 let mut _unparsed = false;
 

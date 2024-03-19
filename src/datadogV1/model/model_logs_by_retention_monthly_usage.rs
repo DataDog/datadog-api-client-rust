@@ -14,7 +14,7 @@ use std::fmt::{self, Formatter};
 pub struct LogsByRetentionMonthlyUsage {
     /// The month for the usage.
     #[serde(rename = "date")]
-    pub date: Option<DateTime<Utc>>,
+    pub date: Option<chrono::DateTime<chrono::Utc>>,
     /// Indexed logs usage for each active retention for the month.
     #[serde(rename = "usage")]
     pub usage: Option<Vec<crate::datadogV1::model::LogsRetentionSumUsage>>,
@@ -32,7 +32,7 @@ impl LogsByRetentionMonthlyUsage {
         }
     }
 
-    pub fn date(mut self, value: DateTime<Utc>) -> Self {
+    pub fn date(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.date = Some(value);
         self
     }
@@ -66,7 +66,7 @@ impl<'de> Deserialize<'de> for LogsByRetentionMonthlyUsage {
             where
                 M: MapAccess<'a>,
             {
-                let mut date: Option<DateTime<Utc>> = None;
+                let mut date: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut usage: Option<Vec<crate::datadogV1::model::LogsRetentionSumUsage>> = None;
                 let mut _unparsed = false;
 

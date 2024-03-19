@@ -2,7 +2,6 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
-use chrono::{DateTime, Utc};
 use log::warn;
 use reqwest;
 use serde::{Deserialize, Serialize};

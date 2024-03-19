@@ -20,13 +20,13 @@ pub struct NotebooksResponseDataAttributes {
     pub cells: Option<Vec<crate::datadogV1::model::NotebookCellResponse>>,
     /// UTC time stamp for when the notebook was created.
     #[serde(rename = "created")]
-    pub created: Option<DateTime<Utc>>,
+    pub created: Option<chrono::DateTime<chrono::Utc>>,
     /// Metadata associated with the notebook.
     #[serde(rename = "metadata")]
     pub metadata: Option<crate::datadogV1::model::NotebookMetadata>,
     /// UTC time stamp for when the notebook was last modified.
     #[serde(rename = "modified")]
-    pub modified: Option<DateTime<Utc>>,
+    pub modified: Option<chrono::DateTime<chrono::Utc>>,
     /// The name of the notebook.
     #[serde(rename = "name")]
     pub name: String,
@@ -66,7 +66,7 @@ impl NotebooksResponseDataAttributes {
         self
     }
 
-    pub fn created(mut self, value: DateTime<Utc>) -> Self {
+    pub fn created(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created = Some(value);
         self
     }
@@ -76,7 +76,7 @@ impl NotebooksResponseDataAttributes {
         self
     }
 
-    pub fn modified(mut self, value: DateTime<Utc>) -> Self {
+    pub fn modified(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.modified = Some(value);
         self
     }
@@ -111,9 +111,9 @@ impl<'de> Deserialize<'de> for NotebooksResponseDataAttributes {
             {
                 let mut author: Option<crate::datadogV1::model::NotebookAuthor> = None;
                 let mut cells: Option<Vec<crate::datadogV1::model::NotebookCellResponse>> = None;
-                let mut created: Option<DateTime<Utc>> = None;
+                let mut created: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut metadata: Option<crate::datadogV1::model::NotebookMetadata> = None;
-                let mut modified: Option<DateTime<Utc>> = None;
+                let mut modified: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut name: Option<String> = None;
                 let mut status: Option<crate::datadogV1::model::NotebookStatus> = None;
                 let mut time: Option<crate::datadogV1::model::NotebookGlobalTime> = None;

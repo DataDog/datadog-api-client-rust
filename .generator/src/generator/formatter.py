@@ -146,7 +146,7 @@ def simple_type(schema, render_nullable=False, render_option=True, render_new=Fa
     if type_name == "string":
         inner_type = {
             "date": "String",
-            "date-time": "DateTime<Utc>",
+            "date-time": "chrono::DateTime<chrono::Utc>",
             "email": "String",
             "binary": "Vec<u8>",
             None: "String",
@@ -419,7 +419,7 @@ def format_data_with_schema(
 
             def format_datetime(x):
                 d = dateutil.parser.isoparse(x)
-                return f'DateTime::parse_from_rfc3339("{d.isoformat()}").expect("Failed to parse datetime").with_timezone(&Utc)', set()
+                return f'DateTime::parse_from_rfc3339("{d.isoformat()}").expect("Failed to parse datetime").with_timezone(&Utc)', set(["chrono::{DateTime, Utc}"])
                 # if d.microsecond != 0:
                 #     return f"(Utc.with_ymd_and_hms({d.year}, {d.month}, {d.day}, {d.hour}, {d.minute}, {d.second}).unwrap() + chrono::Duration::microseconds({d.microsecond})).to_string()"
                 # return f"Utc.with_ymd_and_hms({d.year}, {d.month}, {d.day}, {d.hour}, {d.minute}, {d.second}).unwrap().to_string()"

@@ -14,13 +14,13 @@ use std::fmt::{self, Formatter};
 pub struct SecurityMonitoringSignalListRequestFilter {
     /// The minimum timestamp for requested security signals.
     #[serde(rename = "from")]
-    pub from: Option<DateTime<Utc>>,
+    pub from: Option<chrono::DateTime<chrono::Utc>>,
     /// Search query for listing security signals.
     #[serde(rename = "query")]
     pub query: Option<String>,
     /// The maximum timestamp for requested security signals.
     #[serde(rename = "to")]
-    pub to: Option<DateTime<Utc>>,
+    pub to: Option<chrono::DateTime<chrono::Utc>>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -36,7 +36,7 @@ impl SecurityMonitoringSignalListRequestFilter {
         }
     }
 
-    pub fn from(mut self, value: DateTime<Utc>) -> Self {
+    pub fn from(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.from = Some(value);
         self
     }
@@ -46,7 +46,7 @@ impl SecurityMonitoringSignalListRequestFilter {
         self
     }
 
-    pub fn to(mut self, value: DateTime<Utc>) -> Self {
+    pub fn to(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.to = Some(value);
         self
     }
@@ -75,9 +75,9 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalListRequestFilter {
             where
                 M: MapAccess<'a>,
             {
-                let mut from: Option<DateTime<Utc>> = None;
+                let mut from: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut query: Option<String> = None;
-                let mut to: Option<DateTime<Utc>> = None;
+                let mut to: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {

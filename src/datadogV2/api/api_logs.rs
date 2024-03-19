@@ -3,7 +3,6 @@
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
 use async_stream::try_stream;
-use chrono::{DateTime, Utc};
 use futures_core::stream::Stream;
 use reqwest;
 use serde::{Deserialize, Serialize};
@@ -32,9 +31,9 @@ pub struct ListLogsGetOptionalParams {
     /// Defaults to '*' which means all indexes
     pub filter_indexes: Option<Vec<String>>,
     /// Minimum timestamp for requested logs.
-    pub filter_from: Option<DateTime<Utc>>,
+    pub filter_from: Option<chrono::DateTime<chrono::Utc>>,
     /// Maximum timestamp for requested logs.
-    pub filter_to: Option<DateTime<Utc>>,
+    pub filter_to: Option<chrono::DateTime<chrono::Utc>>,
     /// Specifies the storage type to be used
     pub filter_storage_tier: Option<crate::datadogV2::model::LogsStorageTier>,
     /// Order of logs in results.
@@ -58,12 +57,12 @@ impl ListLogsGetOptionalParams {
         self
     }
     /// Minimum timestamp for requested logs.
-    pub fn filter_from(mut self, value: DateTime<Utc>) -> Self {
+    pub fn filter_from(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.filter_from = Some(value);
         self
     }
     /// Maximum timestamp for requested logs.
-    pub fn filter_to(mut self, value: DateTime<Utc>) -> Self {
+    pub fn filter_to(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.filter_to = Some(value);
         self
     }

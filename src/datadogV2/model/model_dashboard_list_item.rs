@@ -17,7 +17,7 @@ pub struct DashboardListItem {
     pub author: Option<crate::datadogV2::model::Creator>,
     /// Date of creation of the dashboard.
     #[serde(rename = "created")]
-    pub created: Option<DateTime<Utc>>,
+    pub created: Option<chrono::DateTime<chrono::Utc>>,
     /// URL to the icon of the dashboard.
     #[serde(rename = "icon", default, with = "::serde_with::rust::double_option")]
     pub icon: Option<Option<String>>,
@@ -42,7 +42,7 @@ pub struct DashboardListItem {
     pub is_shared: Option<bool>,
     /// Date of last edition of the dashboard.
     #[serde(rename = "modified")]
-    pub modified: Option<DateTime<Utc>>,
+    pub modified: Option<chrono::DateTime<chrono::Utc>>,
     /// Popularity of the dashboard.
     #[serde(rename = "popularity")]
     pub popularity: Option<i32>,
@@ -89,7 +89,7 @@ impl DashboardListItem {
         self
     }
 
-    pub fn created(mut self, value: DateTime<Utc>) -> Self {
+    pub fn created(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created = Some(value);
         self
     }
@@ -119,7 +119,7 @@ impl DashboardListItem {
         self
     }
 
-    pub fn modified(mut self, value: DateTime<Utc>) -> Self {
+    pub fn modified(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.modified = Some(value);
         self
     }
@@ -163,14 +163,14 @@ impl<'de> Deserialize<'de> for DashboardListItem {
                 M: MapAccess<'a>,
             {
                 let mut author: Option<crate::datadogV2::model::Creator> = None;
-                let mut created: Option<DateTime<Utc>> = None;
+                let mut created: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut icon: Option<Option<String>> = None;
                 let mut id: Option<String> = None;
                 let mut integration_id: Option<Option<String>> = None;
                 let mut is_favorite: Option<bool> = None;
                 let mut is_read_only: Option<bool> = None;
                 let mut is_shared: Option<bool> = None;
-                let mut modified: Option<DateTime<Utc>> = None;
+                let mut modified: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut popularity: Option<i32> = None;
                 let mut tags: Option<Option<Vec<String>>> = None;
                 let mut title: Option<String> = None;

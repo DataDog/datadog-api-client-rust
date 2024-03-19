@@ -159,7 +159,7 @@ pub struct UsageSummaryDate {
     pub cws_host_top99p: Option<i64>,
     /// The date for the usage.
     #[serde(rename = "date")]
-    pub date: Option<DateTime<Utc>>,
+    pub date: Option<chrono::DateTime<chrono::Utc>>,
     /// Shows the 99th percentile of all Database Monitoring hosts over all hours in the current date for all organizations.
     #[serde(rename = "dbm_host_top99p")]
     pub dbm_host_top99p: Option<i64>,
@@ -723,7 +723,7 @@ impl UsageSummaryDate {
     }
 
     #[allow(deprecated)]
-    pub fn date(mut self, value: DateTime<Utc>) -> Self {
+    pub fn date(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.date = Some(value);
         self
     }
@@ -1118,7 +1118,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                 let mut custom_ts_avg: Option<i64> = None;
                 let mut cws_container_count_avg: Option<i64> = None;
                 let mut cws_host_top99p: Option<i64> = None;
-                let mut date: Option<DateTime<Utc>> = None;
+                let mut date: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut dbm_host_top99p: Option<i64> = None;
                 let mut dbm_queries_count_avg: Option<i64> = None;
                 let mut fargate_tasks_count_avg: Option<i64> = None;
