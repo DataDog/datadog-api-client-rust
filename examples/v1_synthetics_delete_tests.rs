@@ -1,7 +1,7 @@
 // Delete tests returns "OK." response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_synthetics::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_synthetics::SyntheticsAPI;
+use datadog_api_client::datadogV1::model::SyntheticsDeleteTestsPayload;
 
 #[tokio::main]
 async fn main() {

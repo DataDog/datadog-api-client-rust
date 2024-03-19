@@ -1,6 +1,7 @@
 // Remove host tags returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_tags::*;
+use datadog_api_client::datadogV1::api::api_tags::DeleteHostTagsOptionalParams;
+use datadog_api_client::datadogV1::api::api_tags::TagsAPI;
 
 #[tokio::main]
 async fn main() {

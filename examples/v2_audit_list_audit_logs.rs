@@ -1,6 +1,7 @@
 // Get a list of Audit Logs events returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_audit::*;
+use datadog_api_client::datadogV2::api::api_audit::AuditAPI;
+use datadog_api_client::datadogV2::api::api_audit::ListAuditLogsOptionalParams;
 
 #[tokio::main]
 async fn main() {

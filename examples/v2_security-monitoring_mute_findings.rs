@@ -1,7 +1,14 @@
 // Mute or unmute a batch of findings returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_security_monitoring::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_security_monitoring::SecurityMonitoringAPI;
+use datadog_api_client::datadogV2::model::BulkMuteFindingsRequest;
+use datadog_api_client::datadogV2::model::BulkMuteFindingsRequestAttributes;
+use datadog_api_client::datadogV2::model::BulkMuteFindingsRequestData;
+use datadog_api_client::datadogV2::model::BulkMuteFindingsRequestMeta;
+use datadog_api_client::datadogV2::model::BulkMuteFindingsRequestMetaFindings;
+use datadog_api_client::datadogV2::model::BulkMuteFindingsRequestProperties;
+use datadog_api_client::datadogV2::model::FindingMuteReason;
+use datadog_api_client::datadogV2::model::FindingType;
 
 #[tokio::main]
 async fn main() {

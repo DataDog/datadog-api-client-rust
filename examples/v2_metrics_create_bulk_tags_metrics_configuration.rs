@@ -1,7 +1,10 @@
 // Configure tags for multiple metrics returns "Accepted" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_metrics::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_metrics::MetricsAPI;
+use datadog_api_client::datadogV2::model::MetricBulkConfigureTagsType;
+use datadog_api_client::datadogV2::model::MetricBulkTagConfigCreate;
+use datadog_api_client::datadogV2::model::MetricBulkTagConfigCreateAttributes;
+use datadog_api_client::datadogV2::model::MetricBulkTagConfigCreateRequest;
 
 #[tokio::main]
 async fn main() {

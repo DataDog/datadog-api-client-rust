@@ -1,7 +1,16 @@
 // Create a new dashboard with trace_service widget
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_dashboards::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_dashboards::DashboardsAPI;
+use datadog_api_client::datadogV1::model::Dashboard;
+use datadog_api_client::datadogV1::model::DashboardLayoutType;
+use datadog_api_client::datadogV1::model::ServiceSummaryWidgetDefinition;
+use datadog_api_client::datadogV1::model::ServiceSummaryWidgetDefinitionType;
+use datadog_api_client::datadogV1::model::Widget;
+use datadog_api_client::datadogV1::model::WidgetDefinition;
+use datadog_api_client::datadogV1::model::WidgetLayout;
+use datadog_api_client::datadogV1::model::WidgetServiceSummaryDisplayFormat;
+use datadog_api_client::datadogV1::model::WidgetSizeFormat;
+use datadog_api_client::datadogV1::model::WidgetTime;
 
 #[tokio::main]
 async fn main() {

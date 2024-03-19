@@ -1,7 +1,16 @@
 // Update a powerpack returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_powerpack::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_powerpack::PowerpackAPI;
+use datadog_api_client::datadogV2::model::Powerpack;
+use datadog_api_client::datadogV2::model::PowerpackAttributes;
+use datadog_api_client::datadogV2::model::PowerpackData;
+use datadog_api_client::datadogV2::model::PowerpackGroupWidget;
+use datadog_api_client::datadogV2::model::PowerpackGroupWidgetDefinition;
+use datadog_api_client::datadogV2::model::PowerpackGroupWidgetLayout;
+use datadog_api_client::datadogV2::model::PowerpackInnerWidgets;
+use datadog_api_client::datadogV2::model::PowerpackTemplateVariable;
+use datadog_api_client::datadogV2::model::WidgetLiveSpan;
+use serde_json::Value;
 use std::collections::BTreeMap;
 
 #[tokio::main]
@@ -17,8 +26,8 @@ async fn main() {
                             "ordered".to_string(),
                             "group".to_string(),
                             vec![PowerpackInnerWidgets::new(BTreeMap::from([
-                                ("content".to_string(), serde_json::Value::from("test")),
-                                ("type".to_string(), serde_json::Value::from("note")),
+                                ("content".to_string(), Value::from("test")),
+                                ("type".to_string(), Value::from("note")),
                             ]))],
                         )
                         .show_title(true)

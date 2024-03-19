@@ -1,7 +1,30 @@
 // Create a new dashboard with geomap widget
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_dashboards::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_dashboards::DashboardsAPI;
+use datadog_api_client::datadogV1::model::Dashboard;
+use datadog_api_client::datadogV1::model::DashboardLayoutType;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionEventAggregation;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionEventQueryDefinition;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionEventQueryDefinitionCompute;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionEventQueryDefinitionSearch;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionEventQueryGroupBy;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionEventQueryGroupBySort;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionEventsDataSource;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionQueryDefinition;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionResponseFormat;
+use datadog_api_client::datadogV1::model::GeomapWidgetDefinition;
+use datadog_api_client::datadogV1::model::GeomapWidgetDefinitionStyle;
+use datadog_api_client::datadogV1::model::GeomapWidgetDefinitionType;
+use datadog_api_client::datadogV1::model::GeomapWidgetDefinitionView;
+use datadog_api_client::datadogV1::model::GeomapWidgetRequest;
+use datadog_api_client::datadogV1::model::QuerySortOrder;
+use datadog_api_client::datadogV1::model::Widget;
+use datadog_api_client::datadogV1::model::WidgetDefinition;
+use datadog_api_client::datadogV1::model::WidgetFormula;
+use datadog_api_client::datadogV1::model::WidgetFormulaLimit;
+use datadog_api_client::datadogV1::model::WidgetLayout;
+use datadog_api_client::datadogV1::model::WidgetTextAlign;
+use datadog_api_client::datadogV1::model::WidgetTime;
 
 #[tokio::main]
 async fn main() {

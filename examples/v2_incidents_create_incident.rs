@@ -1,7 +1,17 @@
 // Create an incident returns "CREATED" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_incidents::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_incidents::IncidentsAPI;
+use datadog_api_client::datadogV2::model::IncidentCreateAttributes;
+use datadog_api_client::datadogV2::model::IncidentCreateData;
+use datadog_api_client::datadogV2::model::IncidentCreateRelationships;
+use datadog_api_client::datadogV2::model::IncidentCreateRequest;
+use datadog_api_client::datadogV2::model::IncidentFieldAttributes;
+use datadog_api_client::datadogV2::model::IncidentFieldAttributesSingleValue;
+use datadog_api_client::datadogV2::model::IncidentFieldAttributesSingleValueType;
+use datadog_api_client::datadogV2::model::IncidentType;
+use datadog_api_client::datadogV2::model::NullableRelationshipToUser;
+use datadog_api_client::datadogV2::model::NullableRelationshipToUserData;
+use datadog_api_client::datadogV2::model::UsersType;
 use std::collections::BTreeMap;
 
 #[tokio::main]

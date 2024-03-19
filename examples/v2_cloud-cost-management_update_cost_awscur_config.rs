@@ -1,7 +1,10 @@
 // Update Cloud Cost Management AWS CUR config returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_cloud_cost_management::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_cloud_cost_management::CloudCostManagementAPI;
+use datadog_api_client::datadogV2::model::AwsCURConfigPatchData;
+use datadog_api_client::datadogV2::model::AwsCURConfigPatchRequest;
+use datadog_api_client::datadogV2::model::AwsCURConfigPatchRequestAttributes;
+use datadog_api_client::datadogV2::model::AwsCURConfigPatchRequestType;
 
 #[tokio::main]
 async fn main() {

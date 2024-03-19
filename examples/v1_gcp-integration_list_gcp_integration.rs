@@ -1,6 +1,6 @@
 // List all GCP integrations returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_gcp_integration::*;
+use datadog_api_client::datadogV1::api::api_gcp_integration::GCPIntegrationAPI;
 
 #[tokio::main]
 async fn main() {

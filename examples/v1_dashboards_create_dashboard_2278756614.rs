@@ -1,7 +1,33 @@
 // Create a new dashboard with split graph widget
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_dashboards::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_dashboards::DashboardsAPI;
+use datadog_api_client::datadogV1::model::Dashboard;
+use datadog_api_client::datadogV1::model::DashboardLayoutType;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionMetricDataSource;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionMetricQueryDefinition;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionQueryDefinition;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionResponseFormat;
+use datadog_api_client::datadogV1::model::SplitConfig;
+use datadog_api_client::datadogV1::model::SplitConfigSortCompute;
+use datadog_api_client::datadogV1::model::SplitDimension;
+use datadog_api_client::datadogV1::model::SplitGraphSourceWidgetDefinition;
+use datadog_api_client::datadogV1::model::SplitGraphVizSize;
+use datadog_api_client::datadogV1::model::SplitGraphWidgetDefinition;
+use datadog_api_client::datadogV1::model::SplitGraphWidgetDefinitionType;
+use datadog_api_client::datadogV1::model::SplitSort;
+use datadog_api_client::datadogV1::model::SplitVectorEntryItem;
+use datadog_api_client::datadogV1::model::TimeseriesWidgetDefinition;
+use datadog_api_client::datadogV1::model::TimeseriesWidgetDefinitionType;
+use datadog_api_client::datadogV1::model::TimeseriesWidgetRequest;
+use datadog_api_client::datadogV1::model::Widget;
+use datadog_api_client::datadogV1::model::WidgetDefinition;
+use datadog_api_client::datadogV1::model::WidgetDisplayType;
+use datadog_api_client::datadogV1::model::WidgetLayout;
+use datadog_api_client::datadogV1::model::WidgetLineType;
+use datadog_api_client::datadogV1::model::WidgetLineWidth;
+use datadog_api_client::datadogV1::model::WidgetRequestStyle;
+use datadog_api_client::datadogV1::model::WidgetSort;
+use datadog_api_client::datadogV1::model::WidgetTextAlign;
 
 #[tokio::main]
 async fn main() {

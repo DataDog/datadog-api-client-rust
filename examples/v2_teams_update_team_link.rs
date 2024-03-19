@@ -1,7 +1,10 @@
 // Update a team link returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_teams::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_teams::TeamsAPI;
+use datadog_api_client::datadogV2::model::TeamLinkAttributes;
+use datadog_api_client::datadogV2::model::TeamLinkCreate;
+use datadog_api_client::datadogV2::model::TeamLinkCreateRequest;
+use datadog_api_client::datadogV2::model::TeamLinkType;
 
 #[tokio::main]
 async fn main() {

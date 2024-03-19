@@ -1,7 +1,12 @@
 // Create a retention filter returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_apm_retention_filters::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_apm_retention_filters::APMRetentionFiltersAPI;
+use datadog_api_client::datadogV2::model::ApmRetentionFilterType;
+use datadog_api_client::datadogV2::model::RetentionFilterCreateAttributes;
+use datadog_api_client::datadogV2::model::RetentionFilterCreateData;
+use datadog_api_client::datadogV2::model::RetentionFilterCreateRequest;
+use datadog_api_client::datadogV2::model::RetentionFilterType;
+use datadog_api_client::datadogV2::model::SpansFilterCreate;
 
 #[tokio::main]
 async fn main() {

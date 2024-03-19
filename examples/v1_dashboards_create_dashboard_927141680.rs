@@ -1,7 +1,16 @@
 // Create a new dashboard with funnel widget
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_dashboards::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_dashboards::DashboardsAPI;
+use datadog_api_client::datadogV1::model::Dashboard;
+use datadog_api_client::datadogV1::model::DashboardLayoutType;
+use datadog_api_client::datadogV1::model::FunnelQuery;
+use datadog_api_client::datadogV1::model::FunnelRequestType;
+use datadog_api_client::datadogV1::model::FunnelSource;
+use datadog_api_client::datadogV1::model::FunnelWidgetDefinition;
+use datadog_api_client::datadogV1::model::FunnelWidgetDefinitionType;
+use datadog_api_client::datadogV1::model::FunnelWidgetRequest;
+use datadog_api_client::datadogV1::model::Widget;
+use datadog_api_client::datadogV1::model::WidgetDefinition;
 
 #[tokio::main]
 async fn main() {

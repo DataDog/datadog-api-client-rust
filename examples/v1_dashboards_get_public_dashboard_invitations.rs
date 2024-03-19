@@ -1,6 +1,7 @@
 // Get all invitations for a shared dashboard returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_dashboards::*;
+use datadog_api_client::datadogV1::api::api_dashboards::DashboardsAPI;
+use datadog_api_client::datadogV1::api::api_dashboards::GetPublicDashboardInvitationsOptionalParams;
 
 #[tokio::main]
 async fn main() {

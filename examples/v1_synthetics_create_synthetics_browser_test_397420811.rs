@@ -1,8 +1,20 @@
 // Create a browser test with advanced scheduling options returns "OK - Returns
 // the created test details." response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_synthetics::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_synthetics::SyntheticsAPI;
+use datadog_api_client::datadogV1::model::SyntheticsBrowserTest;
+use datadog_api_client::datadogV1::model::SyntheticsBrowserTestConfig;
+use datadog_api_client::datadogV1::model::SyntheticsBrowserTestType;
+use datadog_api_client::datadogV1::model::SyntheticsConfigVariable;
+use datadog_api_client::datadogV1::model::SyntheticsConfigVariableType;
+use datadog_api_client::datadogV1::model::SyntheticsDeviceID;
+use datadog_api_client::datadogV1::model::SyntheticsStep;
+use datadog_api_client::datadogV1::model::SyntheticsStepType;
+use datadog_api_client::datadogV1::model::SyntheticsTestOptions;
+use datadog_api_client::datadogV1::model::SyntheticsTestOptionsRetry;
+use datadog_api_client::datadogV1::model::SyntheticsTestOptionsScheduling;
+use datadog_api_client::datadogV1::model::SyntheticsTestOptionsSchedulingTimeframe;
+use datadog_api_client::datadogV1::model::SyntheticsTestRequest;
 use std::collections::BTreeMap;
 
 #[tokio::main]

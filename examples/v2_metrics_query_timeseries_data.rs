@@ -1,7 +1,16 @@
 // Query timeseries data across multiple products returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_metrics::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_metrics::MetricsAPI;
+use datadog_api_client::datadogV2::model::FormulaLimit;
+use datadog_api_client::datadogV2::model::MetricsDataSource;
+use datadog_api_client::datadogV2::model::MetricsTimeseriesQuery;
+use datadog_api_client::datadogV2::model::QueryFormula;
+use datadog_api_client::datadogV2::model::QuerySortOrder;
+use datadog_api_client::datadogV2::model::TimeseriesFormulaQueryRequest;
+use datadog_api_client::datadogV2::model::TimeseriesFormulaRequest;
+use datadog_api_client::datadogV2::model::TimeseriesFormulaRequestAttributes;
+use datadog_api_client::datadogV2::model::TimeseriesFormulaRequestType;
+use datadog_api_client::datadogV2::model::TimeseriesQuery;
 
 #[tokio::main]
 async fn main() {

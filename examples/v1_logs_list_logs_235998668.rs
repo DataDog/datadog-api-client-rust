@@ -1,7 +1,9 @@
 // Search test logs returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_logs::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_logs::LogsAPI;
+use datadog_api_client::datadogV1::model::LogsListRequest;
+use datadog_api_client::datadogV1::model::LogsListRequestTime;
+use datadog_api_client::datadogV1::model::LogsSort;
 
 #[tokio::main]
 async fn main() {

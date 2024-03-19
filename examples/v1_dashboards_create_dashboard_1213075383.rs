@@ -1,7 +1,30 @@
 // Create a new dashboard with toplist widget
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_dashboards::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_dashboards::DashboardsAPI;
+use datadog_api_client::datadogV1::model::Dashboard;
+use datadog_api_client::datadogV1::model::DashboardLayoutType;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionMetricAggregation;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionMetricDataSource;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionMetricQueryDefinition;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionQueryDefinition;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionResponseFormat;
+use datadog_api_client::datadogV1::model::QuerySortOrder;
+use datadog_api_client::datadogV1::model::ToplistWidgetDefinition;
+use datadog_api_client::datadogV1::model::ToplistWidgetDefinitionType;
+use datadog_api_client::datadogV1::model::ToplistWidgetDisplay;
+use datadog_api_client::datadogV1::model::ToplistWidgetLegend;
+use datadog_api_client::datadogV1::model::ToplistWidgetRequest;
+use datadog_api_client::datadogV1::model::ToplistWidgetScaling;
+use datadog_api_client::datadogV1::model::ToplistWidgetStacked;
+use datadog_api_client::datadogV1::model::ToplistWidgetStackedType;
+use datadog_api_client::datadogV1::model::ToplistWidgetStyle;
+use datadog_api_client::datadogV1::model::Widget;
+use datadog_api_client::datadogV1::model::WidgetDefinition;
+use datadog_api_client::datadogV1::model::WidgetFormula;
+use datadog_api_client::datadogV1::model::WidgetFormulaLimit;
+use datadog_api_client::datadogV1::model::WidgetLayout;
+use datadog_api_client::datadogV1::model::WidgetTextAlign;
+use datadog_api_client::datadogV1::model::WidgetTime;
 
 #[tokio::main]
 async fn main() {

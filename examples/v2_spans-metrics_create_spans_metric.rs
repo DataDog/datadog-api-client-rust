@@ -1,7 +1,14 @@
 // Create a span-based metric returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_spans_metrics::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_spans_metrics::SpansMetricsAPI;
+use datadog_api_client::datadogV2::model::SpansMetricCompute;
+use datadog_api_client::datadogV2::model::SpansMetricComputeAggregationType;
+use datadog_api_client::datadogV2::model::SpansMetricCreateAttributes;
+use datadog_api_client::datadogV2::model::SpansMetricCreateData;
+use datadog_api_client::datadogV2::model::SpansMetricCreateRequest;
+use datadog_api_client::datadogV2::model::SpansMetricFilter;
+use datadog_api_client::datadogV2::model::SpansMetricGroupBy;
+use datadog_api_client::datadogV2::model::SpansMetricType;
 
 #[tokio::main]
 async fn main() {

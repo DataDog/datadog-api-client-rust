@@ -1,7 +1,10 @@
 // Modify the triage assignee of a security signal returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_security_monitoring::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_security_monitoring::SecurityMonitoringAPI;
+use datadog_api_client::datadogV2::model::SecurityMonitoringSignalAssigneeUpdateAttributes;
+use datadog_api_client::datadogV2::model::SecurityMonitoringSignalAssigneeUpdateData;
+use datadog_api_client::datadogV2::model::SecurityMonitoringSignalAssigneeUpdateRequest;
+use datadog_api_client::datadogV2::model::SecurityMonitoringTriageUser;
 
 #[tokio::main]
 async fn main() {

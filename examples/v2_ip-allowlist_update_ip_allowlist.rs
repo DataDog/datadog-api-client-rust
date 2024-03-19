@@ -1,7 +1,14 @@
 // Update IP Allowlist returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_ip_allowlist::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_ip_allowlist::IPAllowlistAPI;
+use datadog_api_client::datadogV2::model::IPAllowlistAttributes;
+use datadog_api_client::datadogV2::model::IPAllowlistData;
+use datadog_api_client::datadogV2::model::IPAllowlistEntry;
+use datadog_api_client::datadogV2::model::IPAllowlistEntryAttributes;
+use datadog_api_client::datadogV2::model::IPAllowlistEntryData;
+use datadog_api_client::datadogV2::model::IPAllowlistEntryType;
+use datadog_api_client::datadogV2::model::IPAllowlistType;
+use datadog_api_client::datadogV2::model::IPAllowlistUpdateRequest;
 
 #[tokio::main]
 async fn main() {

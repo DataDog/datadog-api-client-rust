@@ -1,7 +1,15 @@
 // Send pipeline event returns "Request accepted for processing" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_ci_visibility_pipelines::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_ci_visibility_pipelines::CIVisibilityPipelinesAPI;
+use datadog_api_client::datadogV2::model::CIAppCreatePipelineEventRequest;
+use datadog_api_client::datadogV2::model::CIAppCreatePipelineEventRequestAttributes;
+use datadog_api_client::datadogV2::model::CIAppCreatePipelineEventRequestAttributesResource;
+use datadog_api_client::datadogV2::model::CIAppCreatePipelineEventRequestData;
+use datadog_api_client::datadogV2::model::CIAppCreatePipelineEventRequestDataType;
+use datadog_api_client::datadogV2::model::CIAppGitInfo;
+use datadog_api_client::datadogV2::model::CIAppPipelineEventPipeline;
+use datadog_api_client::datadogV2::model::CIAppPipelineEventPipelineLevel;
+use datadog_api_client::datadogV2::model::CIAppPipelineEventPipelineStatus;
 
 #[tokio::main]
 async fn main() {

@@ -1,7 +1,12 @@
 // Create a team returns "CREATED" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_teams::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_teams::TeamsAPI;
+use datadog_api_client::datadogV2::model::RelationshipToUsers;
+use datadog_api_client::datadogV2::model::TeamCreate;
+use datadog_api_client::datadogV2::model::TeamCreateAttributes;
+use datadog_api_client::datadogV2::model::TeamCreateRelationships;
+use datadog_api_client::datadogV2::model::TeamCreateRequest;
+use datadog_api_client::datadogV2::model::TeamType;
 
 #[tokio::main]
 async fn main() {

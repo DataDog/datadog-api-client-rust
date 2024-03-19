@@ -1,7 +1,10 @@
 // Add Okta account returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_okta_integration::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_okta_integration::OktaIntegrationAPI;
+use datadog_api_client::datadogV2::model::OktaAccount;
+use datadog_api_client::datadogV2::model::OktaAccountAttributes;
+use datadog_api_client::datadogV2::model::OktaAccountRequest;
+use datadog_api_client::datadogV2::model::OktaAccountType;
 
 #[tokio::main]
 async fn main() {

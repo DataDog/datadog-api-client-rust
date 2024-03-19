@@ -1,6 +1,7 @@
 // List all users returns "OK" response with pagination
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_users::*;
+use datadog_api_client::datadogV2::api::api_users::ListUsersOptionalParams;
+use datadog_api_client::datadogV2::api::api_users::UsersAPI;
 use futures_util::pin_mut;
 use futures_util::stream::StreamExt;
 

@@ -1,7 +1,12 @@
 // Create a log-based metric returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_logs_metrics::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_logs_metrics::LogsMetricsAPI;
+use datadog_api_client::datadogV2::model::LogsMetricCompute;
+use datadog_api_client::datadogV2::model::LogsMetricComputeAggregationType;
+use datadog_api_client::datadogV2::model::LogsMetricCreateAttributes;
+use datadog_api_client::datadogV2::model::LogsMetricCreateData;
+use datadog_api_client::datadogV2::model::LogsMetricCreateRequest;
+use datadog_api_client::datadogV2::model::LogsMetricType;
 
 #[tokio::main]
 async fn main() {

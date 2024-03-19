@@ -1,7 +1,8 @@
 // Add tags to a host returns "Created" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_tags::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_tags::CreateHostTagsOptionalParams;
+use datadog_api_client::datadogV1::api::api_tags::TagsAPI;
+use datadog_api_client::datadogV1::model::HostTags;
 
 #[tokio::main]
 async fn main() {

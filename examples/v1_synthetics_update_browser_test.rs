@@ -1,7 +1,35 @@
 // Edit a browser test returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_synthetics::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_synthetics::SyntheticsAPI;
+use datadog_api_client::datadogV1::model::SyntheticsBasicAuth;
+use datadog_api_client::datadogV1::model::SyntheticsBasicAuthWeb;
+use datadog_api_client::datadogV1::model::SyntheticsBasicAuthWebType;
+use datadog_api_client::datadogV1::model::SyntheticsBrowserTest;
+use datadog_api_client::datadogV1::model::SyntheticsBrowserTestConfig;
+use datadog_api_client::datadogV1::model::SyntheticsBrowserTestRumSettings;
+use datadog_api_client::datadogV1::model::SyntheticsBrowserTestType;
+use datadog_api_client::datadogV1::model::SyntheticsBrowserVariable;
+use datadog_api_client::datadogV1::model::SyntheticsBrowserVariableType;
+use datadog_api_client::datadogV1::model::SyntheticsConfigVariable;
+use datadog_api_client::datadogV1::model::SyntheticsConfigVariableType;
+use datadog_api_client::datadogV1::model::SyntheticsDeviceID;
+use datadog_api_client::datadogV1::model::SyntheticsStep;
+use datadog_api_client::datadogV1::model::SyntheticsStepType;
+use datadog_api_client::datadogV1::model::SyntheticsTestCallType;
+use datadog_api_client::datadogV1::model::SyntheticsTestCiOptions;
+use datadog_api_client::datadogV1::model::SyntheticsTestExecutionRule;
+use datadog_api_client::datadogV1::model::SyntheticsTestOptions;
+use datadog_api_client::datadogV1::model::SyntheticsTestOptionsHTTPVersion;
+use datadog_api_client::datadogV1::model::SyntheticsTestOptionsMonitorOptions;
+use datadog_api_client::datadogV1::model::SyntheticsTestOptionsRetry;
+use datadog_api_client::datadogV1::model::SyntheticsTestOptionsScheduling;
+use datadog_api_client::datadogV1::model::SyntheticsTestOptionsSchedulingTimeframe;
+use datadog_api_client::datadogV1::model::SyntheticsTestPauseStatus;
+use datadog_api_client::datadogV1::model::SyntheticsTestRequest;
+use datadog_api_client::datadogV1::model::SyntheticsTestRequestBodyType;
+use datadog_api_client::datadogV1::model::SyntheticsTestRequestCertificate;
+use datadog_api_client::datadogV1::model::SyntheticsTestRequestCertificateItem;
+use datadog_api_client::datadogV1::model::SyntheticsTestRequestProxy;
 
 #[tokio::main]
 async fn main() {
