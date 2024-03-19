@@ -2,7 +2,6 @@ use std::fmt::{self, Formatter};
 use serde::{Deserializer, Deserialize, Serialize};
 use serde::de::{Error, MapAccess, Visitor};
 use serde_with::skip_serializing_none;
-use chrono::{DateTime, Utc};
 
 {{ model.description | block_comment }}
 #[non_exhaustive]
