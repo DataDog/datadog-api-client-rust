@@ -1,5 +1,4 @@
 // Get a list of tests events returns "OK" response
-use chrono::{DateTime, Utc};
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_ci_visibility_tests::CIVisibilityTestsAPI;
 use datadog_api_client::datadogV2::api::api_ci_visibility_tests::ListCIAppTestEventsOptionalParams;

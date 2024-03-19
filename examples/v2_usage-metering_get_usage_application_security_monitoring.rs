@@ -1,5 +1,4 @@
 // Get hourly usage for application security returns "OK" response
-use chrono::{DateTime, Utc};
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_usage_metering::GetUsageApplicationSecurityMonitoringOptionalParams;
 use datadog_api_client::datadogV2::api::api_usage_metering::UsageMeteringAPI;
