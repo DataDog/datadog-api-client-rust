@@ -1,7 +1,8 @@
 // get hourly usage for network flows returns "OK" response
 use chrono::{DateTime, Utc};
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_usage_metering::*;
+use datadog_api_client::datadogV1::api::api_usage_metering::GetUsageNetworkFlowsOptionalParams;
+use datadog_api_client::datadogV1::api::api_usage_metering::UsageMeteringAPI;
 
 #[tokio::main]
 async fn main() {

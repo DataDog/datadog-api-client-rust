@@ -1,7 +1,19 @@
 // Create a new dashboard returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_dashboards::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_dashboards::DashboardsAPI;
+use datadog_api_client::datadogV1::model::Dashboard;
+use datadog_api_client::datadogV1::model::DashboardLayoutType;
+use datadog_api_client::datadogV1::model::LogQueryDefinition;
+use datadog_api_client::datadogV1::model::LogQueryDefinitionGroupBy;
+use datadog_api_client::datadogV1::model::LogQueryDefinitionGroupBySort;
+use datadog_api_client::datadogV1::model::LogQueryDefinitionSearch;
+use datadog_api_client::datadogV1::model::LogsQueryCompute;
+use datadog_api_client::datadogV1::model::TimeseriesWidgetDefinition;
+use datadog_api_client::datadogV1::model::TimeseriesWidgetDefinitionType;
+use datadog_api_client::datadogV1::model::TimeseriesWidgetRequest;
+use datadog_api_client::datadogV1::model::Widget;
+use datadog_api_client::datadogV1::model::WidgetDefinition;
+use datadog_api_client::datadogV1::model::WidgetSort;
 
 #[tokio::main]
 async fn main() {

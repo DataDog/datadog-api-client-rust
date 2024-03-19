@@ -1,7 +1,16 @@
 // Aggregate tests events returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_ci_visibility_tests::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_ci_visibility_tests::CIVisibilityTestsAPI;
+use datadog_api_client::datadogV2::model::CIAppAggregateSort;
+use datadog_api_client::datadogV2::model::CIAppAggregationFunction;
+use datadog_api_client::datadogV2::model::CIAppCompute;
+use datadog_api_client::datadogV2::model::CIAppComputeType;
+use datadog_api_client::datadogV2::model::CIAppGroupByTotal;
+use datadog_api_client::datadogV2::model::CIAppQueryOptions;
+use datadog_api_client::datadogV2::model::CIAppSortOrder;
+use datadog_api_client::datadogV2::model::CIAppTestsAggregateRequest;
+use datadog_api_client::datadogV2::model::CIAppTestsGroupBy;
+use datadog_api_client::datadogV2::model::CIAppTestsQueryFilter;
 
 #[tokio::main]
 async fn main() {

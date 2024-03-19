@@ -1,6 +1,6 @@
 // Get an AuthN Mapping by UUID returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_authn_mappings::*;
+use datadog_api_client::datadogV2::api::api_authn_mappings::AuthNMappingsAPI;
 
 #[tokio::main]
 async fn main() {

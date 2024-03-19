@@ -1,8 +1,19 @@
 // Create an API GRPC test returns "OK - Returns the created test details."
 // response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_synthetics::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_synthetics::SyntheticsAPI;
+use datadog_api_client::datadogV1::model::SyntheticsAPITest;
+use datadog_api_client::datadogV1::model::SyntheticsAPITestConfig;
+use datadog_api_client::datadogV1::model::SyntheticsAPITestType;
+use datadog_api_client::datadogV1::model::SyntheticsAssertion;
+use datadog_api_client::datadogV1::model::SyntheticsAssertionOperator;
+use datadog_api_client::datadogV1::model::SyntheticsAssertionTarget;
+use datadog_api_client::datadogV1::model::SyntheticsAssertionType;
+use datadog_api_client::datadogV1::model::SyntheticsTestDetailsSubType;
+use datadog_api_client::datadogV1::model::SyntheticsTestOptions;
+use datadog_api_client::datadogV1::model::SyntheticsTestOptionsMonitorOptions;
+use datadog_api_client::datadogV1::model::SyntheticsTestRequest;
+use serde_json::Value;
 use std::collections::BTreeMap;
 
 #[tokio::main]
@@ -13,21 +24,21 @@ async fn main() {
                 SyntheticsAssertion::SyntheticsAssertionTarget(Box::new(
                     SyntheticsAssertionTarget::new(
                         SyntheticsAssertionOperator::IS,
-                        serde_json::Value::from(1),
+                        Value::from(1),
                         SyntheticsAssertionType::GRPC_HEALTHCHECK_STATUS,
                     ),
                 )),
                 SyntheticsAssertion::SyntheticsAssertionTarget(Box::new(
                     SyntheticsAssertionTarget::new(
                         SyntheticsAssertionOperator::IS,
-                        serde_json::Value::from("proto target"),
+                        Value::from("proto target"),
                         SyntheticsAssertionType::GRPC_PROTO,
                     ),
                 )),
                 SyntheticsAssertion::SyntheticsAssertionTarget(Box::new(
                     SyntheticsAssertionTarget::new(
                         SyntheticsAssertionOperator::IS,
-                        serde_json::Value::from("123"),
+                        Value::from("123"),
                         SyntheticsAssertionType::GRPC_METADATA,
                     )
                     .property("property".to_string()),

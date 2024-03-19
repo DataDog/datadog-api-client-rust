@@ -1,7 +1,12 @@
 // Create outcomes batch returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_service_scorecards::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_service_scorecards::ServiceScorecardsAPI;
+use datadog_api_client::datadogV2::model::OutcomesBatchAttributes;
+use datadog_api_client::datadogV2::model::OutcomesBatchRequest;
+use datadog_api_client::datadogV2::model::OutcomesBatchRequestData;
+use datadog_api_client::datadogV2::model::OutcomesBatchRequestItem;
+use datadog_api_client::datadogV2::model::OutcomesBatchType;
+use datadog_api_client::datadogV2::model::State;
 
 #[tokio::main]
 async fn main() {

@@ -1,7 +1,28 @@
 // Create a new dashboard with team tags returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_dashboards::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_dashboards::DashboardsAPI;
+use datadog_api_client::datadogV1::model::ChangeWidgetDefinition;
+use datadog_api_client::datadogV1::model::ChangeWidgetDefinitionType;
+use datadog_api_client::datadogV1::model::ChangeWidgetRequest;
+use datadog_api_client::datadogV1::model::Dashboard;
+use datadog_api_client::datadogV1::model::DashboardLayoutType;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionEventAggregation;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionEventQueryDefinition;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionEventQueryDefinitionCompute;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionEventQueryDefinitionSearch;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionEventsDataSource;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionQueryDefinition;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionResponseFormat;
+use datadog_api_client::datadogV1::model::Widget;
+use datadog_api_client::datadogV1::model::WidgetChangeType;
+use datadog_api_client::datadogV1::model::WidgetCompareTo;
+use datadog_api_client::datadogV1::model::WidgetDefinition;
+use datadog_api_client::datadogV1::model::WidgetFormula;
+use datadog_api_client::datadogV1::model::WidgetLayout;
+use datadog_api_client::datadogV1::model::WidgetOrderBy;
+use datadog_api_client::datadogV1::model::WidgetSort;
+use datadog_api_client::datadogV1::model::WidgetTextAlign;
+use datadog_api_client::datadogV1::model::WidgetTime;
 
 #[tokio::main]
 async fn main() {

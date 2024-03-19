@@ -1,6 +1,7 @@
 // Get the total number of active hosts returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_hosts::*;
+use datadog_api_client::datadogV1::api::api_hosts::GetHostTotalsOptionalParams;
+use datadog_api_client::datadogV1::api::api_hosts::HostsAPI;
 
 #[tokio::main]
 async fn main() {

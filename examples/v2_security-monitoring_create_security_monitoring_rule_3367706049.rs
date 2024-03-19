@@ -1,8 +1,18 @@
 // Create a detection rule with detection method 'third_party' returns "OK"
 // response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_security_monitoring::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_security_monitoring::SecurityMonitoringAPI;
+use datadog_api_client::datadogV2::model::SecurityMonitoringRuleCreatePayload;
+use datadog_api_client::datadogV2::model::SecurityMonitoringRuleDetectionMethod;
+use datadog_api_client::datadogV2::model::SecurityMonitoringRuleKeepAlive;
+use datadog_api_client::datadogV2::model::SecurityMonitoringRuleMaxSignalDuration;
+use datadog_api_client::datadogV2::model::SecurityMonitoringRuleOptions;
+use datadog_api_client::datadogV2::model::SecurityMonitoringRuleSeverity;
+use datadog_api_client::datadogV2::model::SecurityMonitoringRuleThirdPartyOptions;
+use datadog_api_client::datadogV2::model::SecurityMonitoringRuleTypeCreate;
+use datadog_api_client::datadogV2::model::SecurityMonitoringStandardRuleCreatePayload;
+use datadog_api_client::datadogV2::model::SecurityMonitoringThirdPartyRootQuery;
+use datadog_api_client::datadogV2::model::SecurityMonitoringThirdPartyRuleCaseCreate;
 
 #[tokio::main]
 async fn main() {

@@ -1,8 +1,24 @@
 // Create a distribution widget using a histogram request containing a formulas
 // and functions metrics query
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_dashboards::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_dashboards::DashboardsAPI;
+use datadog_api_client::datadogV1::model::Dashboard;
+use datadog_api_client::datadogV1::model::DashboardLayoutType;
+use datadog_api_client::datadogV1::model::DistributionWidgetDefinition;
+use datadog_api_client::datadogV1::model::DistributionWidgetDefinitionType;
+use datadog_api_client::datadogV1::model::DistributionWidgetHistogramRequestQuery;
+use datadog_api_client::datadogV1::model::DistributionWidgetHistogramRequestType;
+use datadog_api_client::datadogV1::model::DistributionWidgetRequest;
+use datadog_api_client::datadogV1::model::DistributionWidgetXAxis;
+use datadog_api_client::datadogV1::model::DistributionWidgetYAxis;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionMetricDataSource;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionMetricQueryDefinition;
+use datadog_api_client::datadogV1::model::Widget;
+use datadog_api_client::datadogV1::model::WidgetCustomLink;
+use datadog_api_client::datadogV1::model::WidgetDefinition;
+use datadog_api_client::datadogV1::model::WidgetLayout;
+use datadog_api_client::datadogV1::model::WidgetStyle;
+use datadog_api_client::datadogV1::model::WidgetTextAlign;
 
 #[tokio::main]
 async fn main() {

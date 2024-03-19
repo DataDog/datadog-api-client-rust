@@ -104,14 +104,14 @@ def format_value(value, quotes='"', schema=None, version=None, required=None):
         index = schema["enum"].index(value)
         enum_varnames = schema["x-enum-varnames"][index]
         name = schema_name(schema)
-        return f"crate::datadog{version.upper()}::model::{name}::{enum_varnames}"
+        return f"datadog_api_client::datadog{version.upper()}::model::{name}::{enum_varnames}"
 
     if isinstance(value, str):
         value = f"{quotes}{value}{quotes}"
     elif isinstance(value, bool):
         value = "true" if value else "false"
     elif value is None:
-        value = "nil"
+        value = "None"
 
     if required is False:
         value = f"Some({value})"
@@ -268,6 +268,7 @@ def reference_to_value(schema, value, print_nullable=True, **kwargs):
 
 
 def format_parameters(data, spec, replace_values=None, has_body=False, **kwargs):
+    imports = set()
     parameters_spec = {p["name"]: p for p in spec.get("parameters", [])}
     if "requestBody" in spec and "multipart/form-data" in spec["requestBody"]["content"]:
         parent = spec["requestBody"]["content"]["multipart/form-data"]["schema"]
@@ -287,13 +288,15 @@ def format_parameters(data, spec, replace_values=None, has_body=False, **kwargs)
         if required:
             k = p["name"]
             v = data.pop(k)  # otherwise there is a missing required parameters
-            value = format_data_with_schema(
+            value, extra_imports = format_data_with_schema(
                 v["value"],
                 p["schema"],
                 replace_values=replace_values,
                 required=True,
+                imports=imports,
                 **kwargs,
             )
+            imports.update(extra_imports)
             parameters += f"{value}, "
         else:
             has_optional = True
@@ -303,26 +306,29 @@ def format_parameters(data, spec, replace_values=None, has_body=False, **kwargs)
     if has_body and body_is_required:
         parameters += "body, "
     if has_optional or body_is_required is False:
+        imports.add(f"datadog_api_client::datadog{kwargs.get('version', '')}::api::api_{kwargs.get('api')}::{spec['operationId']}OptionalParams")
         parameters += f"{spec['operationId']}OptionalParams::default()"
         if has_body and not body_is_required:
             parameters += ".body(body)"
 
         for k, v in data.items():
-            value = format_data_with_schema(
+            value, extra_imports = format_data_with_schema(
                 v["value"],
                 parameters_spec[k]["schema"],
                 replace_values=replace_values,
                 required=True,
+                imports=imports,
                 **kwargs,
             )
+            imports.update(extra_imports)
             parameters += f".{variable_name(k)}({value})"
 
         parameters += ", "
 
-    return parameters
+    return parameters, imports
 
 
-def _format_oneof(schema, data, name, replace_values, required, nullable, **kwargs):
+def _format_oneof(schema, data, name, replace_values, imports, **kwargs):
     matched = 0
     one_of_schema = None
     for sub_schema in schema["oneOf"]:
@@ -334,12 +340,14 @@ def _format_oneof(schema, data, name, replace_values, required, nullable, **kwar
                 formatted = "None"
             else:
                 sub_schema["nullable"] = False
-                formatted = format_data_with_schema(
+                formatted, extra_imports = format_data_with_schema(
                     data,
                     sub_schema,
                     replace_values=replace_values,
+                    imports=set(),
                     **kwargs,
                 )
+                imports.update(extra_imports)
             if matched == 0:
                 one_of_schema = sub_schema
                 # NOTE we do not support mixed schemas with oneOf
@@ -360,8 +368,9 @@ def _format_oneof(schema, data, name, replace_values, required, nullable, **kwar
         # TODO: revisit possibility of removing all boxes
         parameters = f"Box::new({parameters})"
     if name:
-        return f"{name}::{one_of_schema_name}({parameters})"
-    return f"{parameters}"
+        imports.add(f"datadog_api_client::datadog{kwargs.get('version', '')}::model::{name}")
+        return f"{name}::{one_of_schema_name}({parameters})", imports
+    return f"{parameters}", imports
 
 
 @singledispatch
@@ -371,14 +380,15 @@ def format_data_with_schema(
     replace_values=None,
     default_name=None,
     required=False,
-    in_list=False,
+    imports=set(),
     **kwargs,
 ):
     if not schema:
-        return ""
+        return "", imports
 
     nullable = schema.get("nullable", False)
     variables = kwargs.get("variables", set())
+    extra_imports = set()
 
     name = schema_name(schema)
 
@@ -402,13 +412,14 @@ def format_data_with_schema(
                 if isinstance(x, bool):
                     raise TypeError(f"{x} is not supported type {schema}")
                 if x and ("`" in x or '"' in x or "\n" in x):
-                    x = f"r#\"{x}\"#.to_string()"
-                    return x
-                return f'"{x}".to_string()' if x else '"".to_string()'
+                    return f"r#\"{x}\"#.to_string()", set()
+                if x:
+                    return f'"{x}".to_string()', set()
+                return '"".to_string()', set()
 
             def format_datetime(x):
                 d = dateutil.parser.isoparse(x)
-                return f'DateTime::parse_from_rfc3339("{d.isoformat()}").expect("Failed to parse datetime").with_timezone(&Utc)'
+                return f'DateTime::parse_from_rfc3339("{d.isoformat()}").expect("Failed to parse datetime").with_timezone(&Utc)', set()
                 # if d.microsecond != 0:
                 #     return f"(Utc.with_ymd_and_hms({d.year}, {d.month}, {d.day}, {d.hour}, {d.minute}, {d.second}).unwrap() + chrono::Duration::microseconds({d.microsecond})).to_string()"
                 # return f"Utc.with_ymd_and_hms({d.year}, {d.month}, {d.day}, {d.hour}, {d.minute}, {d.second}).unwrap().to_string()"
@@ -416,35 +427,38 @@ def format_data_with_schema(
             def format_double(x):
                 if isinstance(x, (bool, str)):
                     raise TypeError(f"{x} is not supported type {schema}")
-                return str(x)
+                return str(x), set()
 
             def format_number(x):
                 if isinstance(x, bool):
                     raise TypeError(f"{x} is not supported type {schema}")
-                return str(x)
+                return str(x), set()
 
             def format_value(x):
                 if isinstance(x, (int, float)):
-                    return f"serde_json::Value::from({x})"
+                    return f"Value::from({x})", set(["serde_json::Value"])
                 if isinstance(x, str):
-                    return f"serde_json::Value::from(\"{x}\")"
+                    return f"Value::from(\"{x}\")", set(["serde_json::Value"])
                 raise TypeError(f"{x} is not supported type {schema}")
 
             def format_bool(x):
                 if not isinstance(x, bool):
                     raise TypeError(f"{x} is not supported type {schema}")
-                return "true" if x else "false"
+                if x:
+                    return "true", set()
+                return "false", set()
+            # create a set with a single string element
 
             def open_file(x):
-                return f"std::fs::read(\"{x}\").unwrap()"
+                return f"fs::read(\"{x}\").unwrap()", set(["std::fs"])
 
             formatter = {
-                "int32": str,
-                "int64": str,
+                "int32": format_number,
+                "int64": format_number,
                 "double": format_double,
                 "date-time": format_datetime,
                 "number": format_number,
-                "integer": str,
+                "integer": format_number,
                 "boolean": format_bool,
                 "string": format_string,
                 "email": format_string,
@@ -453,7 +467,7 @@ def format_data_with_schema(
             }[schema.get("format", schema.get("type"))]
 
             # TODO format date and datetime
-            parameters = formatter(data)
+            parameters, extra_imports = formatter(data)
 
     if "enum" in schema and name:
         if data is None and nullable:
@@ -462,25 +476,29 @@ def format_data_with_schema(
             # find schema index and get name from x-enum-varnames
             index = schema["enum"].index(data)
             enum_varnames = schema["x-enum-varnames"][index]
-            parameters = f"{name}::{enum_varnames}"
+            imports.add(f"datadog_api_client::datadog{kwargs.get('version', '')}::model::{name}")
+            parameters = f"{name}::{enum_varnames}" 
 
         if not required:
             if nullable:
                 if data is None:
-                    return "None"
-                return f"Some({parameters})"
+                    return "None", imports
+                return f"Some({parameters})", imports
             parameters = f"{parameters}"
-        return parameters
+        return parameters, imports
 
+    
     if (not required or schema.get("nullable")) and schema.get("type") is not None:
-        return reference_to_value(schema, parameters, print_nullable=True, **kwargs)
+        imports.update(extra_imports)
+        return reference_to_value(schema, parameters, print_nullable=True, **kwargs), imports
 
     if "oneOf" in schema:
         if default_name and schema_name(schema) is None:
-            return _format_oneof(schema, data, default_name+"Item", replace_values, required, nullable, **kwargs)
-        return _format_oneof(schema, data, schema_name(schema), replace_values, required, nullable, **kwargs)
-
-    return parameters
+            return _format_oneof(schema, data, default_name+"Item", replace_values, imports, **kwargs)
+        return _format_oneof(schema, data, schema_name(schema), replace_values, imports, **kwargs)
+    
+    imports.update(extra_imports)
+    return parameters, imports
 
 
 @format_data_with_schema.register(list)
@@ -490,18 +508,18 @@ def format_data_with_schema_list(
     replace_values=None,
     default_name=None,
     required=False,
-    in_list=False,
+    imports=None,
     **kwargs,
 ):
     if not schema:
-        return ""
+        return "", imports
 
     nullable = schema.get("nullable")
 
     if "oneOf" in schema:
         if default_name and schema_name(schema) is None:
-            return _format_oneof(schema, data, default_name+"Item", replace_values, required, nullable, **kwargs)
-        return _format_oneof(schema, data, schema_name(schema), replace_values, required, nullable, **kwargs)
+            return _format_oneof(schema, data, default_name+"Item", replace_values, imports, **kwargs)
+        return _format_oneof(schema, data, schema_name(schema), replace_values, imports, **kwargs)
 
     parameters = ""
     list_schema = schema["items"]
@@ -512,20 +530,21 @@ def format_data_with_schema_list(
 
     parameters = ""
     for d in data:
-        value = format_data_with_schema(
+        value, extra_imports = format_data_with_schema(
             d,
             schema["items"],
             replace_values=replace_values,
             default_name=schema_name(schema),
             required=not schema["items"].get("nullable", False),
-            in_list=True,
+            imports=set(),
             **kwargs,
         )
+        imports.update(extra_imports)
         parameters += f"{value},"
 
     if nullable:
-        return f"Some(vec![{parameters}])"
-    return f"vec![{parameters}]"
+        return f"Some(vec![{parameters}])", imports
+    return f"vec![{parameters}]", imports
 
 
 @format_data_with_schema.register(dict)
@@ -535,14 +554,13 @@ def format_data_with_schema_dict(
     replace_values=None,
     default_name=None,
     required=False,
-    in_list=False,
+    imports=None,
     **kwargs,
 ):
     if not schema:
-        return ""
+        return "", imports
 
     nullable = schema.get("nullable", False)
-
     name = schema_name(schema) or default_name
     required = ""
     parameters = ""
@@ -554,14 +572,16 @@ def format_data_with_schema_dict(
         for k, v in schema["properties"].items():
             if k not in data:
                 continue
-            value = format_data_with_schema(
+            value, extra_imports = format_data_with_schema(
                 data[k],
                 v,
                 replace_values=replace_values,
                 default_name=name if name else None,
                 required=k in required_properties,
+                imports=set(),
                 **kwargs,
             )
+            imports.update(extra_imports)
             if k in required_properties:
                 required += f"{value}, "
             else:
@@ -573,33 +593,39 @@ def format_data_with_schema_dict(
         for k, v in data.items():
             if has_properties and k in schema["properties"]:
                 continue
-            value = format_data_with_schema(
+            value, extra_imports = format_data_with_schema(
                 v,
                 schema["additionalProperties"],
                 replace_values=replace_values,
                 required=True,
+                imports=set(),
                 **kwargs,
             )
+            imports.update(extra_imports)
             add_parameters += f'("{k}".to_string(), {value}),'
 
+        imports.add("std::collections::BTreeMap")
         if has_properties:
             parameters += f".additional_properties(BTreeMap::from([{add_parameters}]))"
         else:
-            return f"BTreeMap::from([{add_parameters}])"
+            return f"BTreeMap::from([{add_parameters}])", imports
 
     if "oneOf" in schema:
-        return _format_oneof(schema, data, name, replace_values, required, nullable, **kwargs)
+        return _format_oneof(schema, data, name, replace_values, imports, **kwargs)
 
     if schema.get("type") == "object" and "properties" not in schema:
+        imports.add("std::collections::BTreeMap")
         if schema.get("additionalProperties") == {}:
             for k, v in data.items():
                 if isinstance(v, (int, float)):
-                    parameters += f'("{k}".to_string(), serde_json::Value::from({v})),'
+                    imports.add("serde_json::Value")
+                    parameters += f'("{k}".to_string(), Value::from({v})),'
                 if isinstance(v, str):
-                    parameters += f'("{k}".to_string(), serde_json::Value::from(\"{v}\")),'
-            return f"BTreeMap::from([{parameters}])"
+                    imports.add("serde_json::Value")
+                    parameters += f'("{k}".to_string(), Value::from(\"{v}\")),'
+            return f"BTreeMap::from([{parameters}])", imports
         else:
-            return "BTreeMap::new()"
+            return "BTreeMap::new()", imports
 
     if not name:
         raise ValueError(f"Unnamed schema {schema} for {data}")
@@ -607,6 +633,7 @@ def format_data_with_schema_dict(
     if parameters == "" and schema.get("type") == "string":
         raise ValueError(f"No schema matched for {data}")
 
+    imports.add(f"datadog_api_client::datadog{kwargs.get('version', '')}::model::{name}")
     if nullable:
-        return f"Some({name}::new({required}){parameters})"
-    return f"{name}::new({required}){parameters}"
+        return f"Some({name}::new({required}){parameters})", imports
+    return f"{name}::new({required}){parameters}", imports

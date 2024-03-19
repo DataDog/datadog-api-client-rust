@@ -1,7 +1,14 @@
 // Create an incident attachment returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_incidents::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_incidents::IncidentsAPI;
+use datadog_api_client::datadogV2::api::api_incidents::UpdateIncidentAttachmentsOptionalParams;
+use datadog_api_client::datadogV2::model::IncidentAttachmentLinkAttachmentType;
+use datadog_api_client::datadogV2::model::IncidentAttachmentLinkAttributes;
+use datadog_api_client::datadogV2::model::IncidentAttachmentLinkAttributesAttachmentObject;
+use datadog_api_client::datadogV2::model::IncidentAttachmentType;
+use datadog_api_client::datadogV2::model::IncidentAttachmentUpdateAttributes;
+use datadog_api_client::datadogV2::model::IncidentAttachmentUpdateData;
+use datadog_api_client::datadogV2::model::IncidentAttachmentUpdateRequest;
 
 #[tokio::main]
 async fn main() {

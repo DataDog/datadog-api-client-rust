@@ -1,6 +1,6 @@
 // List Cloud Cost Management AWS CUR configs returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_cloud_cost_management::*;
+use datadog_api_client::datadogV2::api::api_cloud_cost_management::CloudCostManagementAPI;
 
 #[tokio::main]
 async fn main() {

@@ -1,7 +1,8 @@
 // Submit a Service Check returns "Payload accepted" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_service_checks::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_service_checks::ServiceChecksAPI;
+use datadog_api_client::datadogV1::model::ServiceCheck;
+use datadog_api_client::datadogV1::model::ServiceCheckStatus;
 
 #[tokio::main]
 async fn main() {

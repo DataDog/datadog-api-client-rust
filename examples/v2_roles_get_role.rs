@@ -1,6 +1,6 @@
 // Get a role returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_roles::*;
+use datadog_api_client::datadogV2::api::api_roles::RolesAPI;
 
 #[tokio::main]
 async fn main() {

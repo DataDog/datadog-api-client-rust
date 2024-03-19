@@ -1,7 +1,14 @@
 // Create an AuthN Mapping returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_authn_mappings::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_authn_mappings::AuthNMappingsAPI;
+use datadog_api_client::datadogV2::model::AuthNMappingCreateAttributes;
+use datadog_api_client::datadogV2::model::AuthNMappingCreateData;
+use datadog_api_client::datadogV2::model::AuthNMappingCreateRelationships;
+use datadog_api_client::datadogV2::model::AuthNMappingCreateRequest;
+use datadog_api_client::datadogV2::model::AuthNMappingsType;
+use datadog_api_client::datadogV2::model::RelationshipToRole;
+use datadog_api_client::datadogV2::model::RelationshipToRoleData;
+use datadog_api_client::datadogV2::model::RolesType;
 
 #[tokio::main]
 async fn main() {

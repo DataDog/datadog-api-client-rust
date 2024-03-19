@@ -1,15 +1,15 @@
 // {{ scenario.name|wordwrap(width=120, wrapstring="\n// ")}}
 
 {%- set variables = given_variables(context) %}
-{%- set parameters = format_parameters(context.api_request.kwargs, spec=operation_spec, replace_values=context._replace_values, has_body=context.body, variables=variables, version=version|upper) %}
+{%- set parameters, imports = format_parameters(context.api_request.kwargs, spec=operation_spec, replace_values=context._replace_values, has_body=context.body, variables=variables, version=version|upper, api=context["api_instance"]["name"] | snake_case) %}
 {%- if context.body %}
-{%- set body = format_data_with_schema(context.body.value, context.api_request.schema.spec, replace_values=context._replace_values, required=True, variables=variables, version=version|upper)%}
+{%- set body, imports = format_data_with_schema(context.body.value, context.api_request.schema.spec, replace_values=context._replace_values, required=True, variables=variables, version=version|upper, imports=imports)%}
 {%- endif %}
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadog{{ version|upper }}::api::api_{{context["api_instance"]["name"] | snake_case}}::*;
-use datadog_api_client::datadog{{ version|upper }}::model::*;
-use std::collections::BTreeMap;
-use chrono::{DateTime, Utc};
+use datadog_api_client::datadog{{ version|upper }}::api::api_{{context["api_instance"]["name"] | snake_case}}::{{context["api_instance"]["name"]}}API;
+{%- for name in imports %}
+use {{name}};
+{%- endfor %}
 {%- if context.pagination %}
 use futures_util::pin_mut;
 use futures_util::stream::StreamExt;

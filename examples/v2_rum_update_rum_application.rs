@@ -1,7 +1,10 @@
 // Update a RUM application returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_rum::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_rum::RUMAPI;
+use datadog_api_client::datadogV2::model::RUMApplicationUpdate;
+use datadog_api_client::datadogV2::model::RUMApplicationUpdateAttributes;
+use datadog_api_client::datadogV2::model::RUMApplicationUpdateRequest;
+use datadog_api_client::datadogV2::model::RUMApplicationUpdateType;
 
 #[tokio::main]
 async fn main() {

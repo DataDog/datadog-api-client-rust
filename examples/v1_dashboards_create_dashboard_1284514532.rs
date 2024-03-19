@@ -1,8 +1,26 @@
 // Create a new dashboard with a timeseries widget using formulas and functions
 // cloud cost query
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_dashboards::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_dashboards::DashboardsAPI;
+use datadog_api_client::datadogV1::model::Dashboard;
+use datadog_api_client::datadogV1::model::DashboardLayoutType;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionCloudCostDataSource;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionCloudCostQueryDefinition;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionQueryDefinition;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionResponseFormat;
+use datadog_api_client::datadogV1::model::TimeseriesWidgetDefinition;
+use datadog_api_client::datadogV1::model::TimeseriesWidgetDefinitionType;
+use datadog_api_client::datadogV1::model::TimeseriesWidgetRequest;
+use datadog_api_client::datadogV1::model::Widget;
+use datadog_api_client::datadogV1::model::WidgetDefinition;
+use datadog_api_client::datadogV1::model::WidgetDisplayType;
+use datadog_api_client::datadogV1::model::WidgetFormula;
+use datadog_api_client::datadogV1::model::WidgetLineType;
+use datadog_api_client::datadogV1::model::WidgetLineWidth;
+use datadog_api_client::datadogV1::model::WidgetLiveSpan;
+use datadog_api_client::datadogV1::model::WidgetRequestStyle;
+use datadog_api_client::datadogV1::model::WidgetTextAlign;
+use datadog_api_client::datadogV1::model::WidgetTime;
 
 #[tokio::main]
 async fn main() {

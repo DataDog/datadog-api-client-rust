@@ -1,8 +1,19 @@
 // Create a new dashboard with template variable presets using values returns "OK"
 // response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_dashboards::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_dashboards::DashboardsAPI;
+use datadog_api_client::datadogV1::model::Dashboard;
+use datadog_api_client::datadogV1::model::DashboardLayoutType;
+use datadog_api_client::datadogV1::model::DashboardReflowType;
+use datadog_api_client::datadogV1::model::DashboardTemplateVariable;
+use datadog_api_client::datadogV1::model::DashboardTemplateVariablePreset;
+use datadog_api_client::datadogV1::model::DashboardTemplateVariablePresetValue;
+use datadog_api_client::datadogV1::model::HostMapRequest;
+use datadog_api_client::datadogV1::model::HostMapWidgetDefinition;
+use datadog_api_client::datadogV1::model::HostMapWidgetDefinitionRequests;
+use datadog_api_client::datadogV1::model::HostMapWidgetDefinitionType;
+use datadog_api_client::datadogV1::model::Widget;
+use datadog_api_client::datadogV1::model::WidgetDefinition;
 
 #[tokio::main]
 async fn main() {

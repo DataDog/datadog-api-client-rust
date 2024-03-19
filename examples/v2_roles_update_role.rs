@@ -1,7 +1,14 @@
 // Update a role returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_roles::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_roles::RolesAPI;
+use datadog_api_client::datadogV2::model::PermissionsType;
+use datadog_api_client::datadogV2::model::RelationshipToPermissionData;
+use datadog_api_client::datadogV2::model::RelationshipToPermissions;
+use datadog_api_client::datadogV2::model::RoleRelationships;
+use datadog_api_client::datadogV2::model::RoleUpdateAttributes;
+use datadog_api_client::datadogV2::model::RoleUpdateData;
+use datadog_api_client::datadogV2::model::RoleUpdateRequest;
+use datadog_api_client::datadogV2::model::RolesType;
 
 #[tokio::main]
 async fn main() {

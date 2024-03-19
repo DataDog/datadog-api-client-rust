@@ -1,8 +1,12 @@
 // Get a list of security signals returns "OK" response with pagination
 use chrono::{DateTime, Utc};
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_security_monitoring::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_security_monitoring::SearchSecurityMonitoringSignalsOptionalParams;
+use datadog_api_client::datadogV2::api::api_security_monitoring::SecurityMonitoringAPI;
+use datadog_api_client::datadogV2::model::SecurityMonitoringSignalListRequest;
+use datadog_api_client::datadogV2::model::SecurityMonitoringSignalListRequestFilter;
+use datadog_api_client::datadogV2::model::SecurityMonitoringSignalListRequestPage;
+use datadog_api_client::datadogV2::model::SecurityMonitoringSignalsSort;
 use futures_util::pin_mut;
 use futures_util::stream::StreamExt;
 

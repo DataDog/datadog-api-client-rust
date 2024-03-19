@@ -1,6 +1,7 @@
 // Get an SLO's history returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_service_level_objectives::*;
+use datadog_api_client::datadogV1::api::api_service_level_objectives::GetSLOHistoryOptionalParams;
+use datadog_api_client::datadogV1::api::api_service_level_objectives::ServiceLevelObjectivesAPI;
 
 #[tokio::main]
 async fn main() {

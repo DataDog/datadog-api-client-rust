@@ -1,7 +1,27 @@
 // Create an API test returns "OK - Returns the created test details." response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_synthetics::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_synthetics::SyntheticsAPI;
+use datadog_api_client::datadogV1::model::SyntheticsAPITest;
+use datadog_api_client::datadogV1::model::SyntheticsAPITestConfig;
+use datadog_api_client::datadogV1::model::SyntheticsAPITestType;
+use datadog_api_client::datadogV1::model::SyntheticsAssertion;
+use datadog_api_client::datadogV1::model::SyntheticsAssertionOperator;
+use datadog_api_client::datadogV1::model::SyntheticsAssertionTarget;
+use datadog_api_client::datadogV1::model::SyntheticsAssertionType;
+use datadog_api_client::datadogV1::model::SyntheticsBrowserTestRumSettings;
+use datadog_api_client::datadogV1::model::SyntheticsDeviceID;
+use datadog_api_client::datadogV1::model::SyntheticsTestCiOptions;
+use datadog_api_client::datadogV1::model::SyntheticsTestDetailsSubType;
+use datadog_api_client::datadogV1::model::SyntheticsTestExecutionRule;
+use datadog_api_client::datadogV1::model::SyntheticsTestOptions;
+use datadog_api_client::datadogV1::model::SyntheticsTestOptionsHTTPVersion;
+use datadog_api_client::datadogV1::model::SyntheticsTestOptionsMonitorOptions;
+use datadog_api_client::datadogV1::model::SyntheticsTestOptionsRetry;
+use datadog_api_client::datadogV1::model::SyntheticsTestOptionsScheduling;
+use datadog_api_client::datadogV1::model::SyntheticsTestOptionsSchedulingTimeframe;
+use datadog_api_client::datadogV1::model::SyntheticsTestPauseStatus;
+use datadog_api_client::datadogV1::model::SyntheticsTestRequest;
+use serde_json::Value;
 
 #[tokio::main]
 async fn main() {
@@ -10,7 +30,7 @@ async fn main() {
             .assertions(vec![SyntheticsAssertion::SyntheticsAssertionTarget(
                 Box::new(SyntheticsAssertionTarget::new(
                     SyntheticsAssertionOperator::LESS_THAN,
-                    serde_json::Value::from(1000),
+                    Value::from(1000),
                     SyntheticsAssertionType::RESPONSE_TIME,
                 )),
             )])

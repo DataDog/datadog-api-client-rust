@@ -1,8 +1,9 @@
 // Get usage attribution returns "OK" response
 use chrono::{DateTime, Utc};
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_usage_metering::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_usage_metering::GetUsageAttributionOptionalParams;
+use datadog_api_client::datadogV1::api::api_usage_metering::UsageMeteringAPI;
+use datadog_api_client::datadogV1::model::UsageAttributionSupportedMetrics;
 
 #[tokio::main]
 async fn main() {

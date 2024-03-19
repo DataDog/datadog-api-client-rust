@@ -1,7 +1,17 @@
 // Create a cloud_configuration rule returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_security_monitoring::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_security_monitoring::SecurityMonitoringAPI;
+use datadog_api_client::datadogV2::model::CloudConfigurationComplianceRuleOptions;
+use datadog_api_client::datadogV2::model::CloudConfigurationRegoRule;
+use datadog_api_client::datadogV2::model::CloudConfigurationRuleCaseCreate;
+use datadog_api_client::datadogV2::model::CloudConfigurationRuleComplianceSignalOptions;
+use datadog_api_client::datadogV2::model::CloudConfigurationRuleCreatePayload;
+use datadog_api_client::datadogV2::model::CloudConfigurationRuleOptions;
+use datadog_api_client::datadogV2::model::CloudConfigurationRuleType;
+use datadog_api_client::datadogV2::model::SecurityMonitoringFilter;
+use datadog_api_client::datadogV2::model::SecurityMonitoringFilterAction;
+use datadog_api_client::datadogV2::model::SecurityMonitoringRuleCreatePayload;
+use datadog_api_client::datadogV2::model::SecurityMonitoringRuleSeverity;
 
 #[tokio::main]
 async fn main() {

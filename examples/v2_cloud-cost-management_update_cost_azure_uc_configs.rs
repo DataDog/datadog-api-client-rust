@@ -1,7 +1,10 @@
 // Update Cloud Cost Management Azure config returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_cloud_cost_management::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_cloud_cost_management::CloudCostManagementAPI;
+use datadog_api_client::datadogV2::model::AzureUCConfigPatchData;
+use datadog_api_client::datadogV2::model::AzureUCConfigPatchRequest;
+use datadog_api_client::datadogV2::model::AzureUCConfigPatchRequestAttributes;
+use datadog_api_client::datadogV2::model::AzureUCConfigPatchRequestType;
 
 #[tokio::main]
 async fn main() {

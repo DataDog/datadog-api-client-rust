@@ -1,6 +1,7 @@
 // Get a monitor's details with downtime returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_monitors::*;
+use datadog_api_client::datadogV1::api::api_monitors::GetMonitorOptionalParams;
+use datadog_api_client::datadogV1::api::api_monitors::MonitorsAPI;
 
 #[tokio::main]
 async fn main() {

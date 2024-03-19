@@ -1,6 +1,7 @@
 // Take graph snapshots returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_snapshots::*;
+use datadog_api_client::datadogV1::api::api_snapshots::GetGraphSnapshotOptionalParams;
+use datadog_api_client::datadogV1::api::api_snapshots::SnapshotsAPI;
 
 #[tokio::main]
 async fn main() {

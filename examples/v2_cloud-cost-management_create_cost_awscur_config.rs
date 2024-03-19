@@ -1,7 +1,10 @@
 // Create Cloud Cost Management AWS CUR config returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_cloud_cost_management::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_cloud_cost_management::CloudCostManagementAPI;
+use datadog_api_client::datadogV2::model::AwsCURConfigPostData;
+use datadog_api_client::datadogV2::model::AwsCURConfigPostRequest;
+use datadog_api_client::datadogV2::model::AwsCURConfigPostRequestAttributes;
+use datadog_api_client::datadogV2::model::AwsCURConfigPostRequestType;
 
 #[tokio::main]
 async fn main() {

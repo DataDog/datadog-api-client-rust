@@ -1,7 +1,10 @@
 // Update resource in Confluent account returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_confluent_cloud::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_confluent_cloud::ConfluentCloudAPI;
+use datadog_api_client::datadogV2::model::ConfluentResourceRequest;
+use datadog_api_client::datadogV2::model::ConfluentResourceRequestAttributes;
+use datadog_api_client::datadogV2::model::ConfluentResourceRequestData;
+use datadog_api_client::datadogV2::model::ConfluentResourceType;
 
 #[tokio::main]
 async fn main() {

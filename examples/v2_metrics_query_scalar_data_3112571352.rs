@@ -1,7 +1,17 @@
 // Scalar cross product query returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_metrics::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_metrics::MetricsAPI;
+use datadog_api_client::datadogV2::model::FormulaLimit;
+use datadog_api_client::datadogV2::model::MetricsAggregator;
+use datadog_api_client::datadogV2::model::MetricsDataSource;
+use datadog_api_client::datadogV2::model::MetricsScalarQuery;
+use datadog_api_client::datadogV2::model::QueryFormula;
+use datadog_api_client::datadogV2::model::QuerySortOrder;
+use datadog_api_client::datadogV2::model::ScalarFormulaQueryRequest;
+use datadog_api_client::datadogV2::model::ScalarFormulaRequest;
+use datadog_api_client::datadogV2::model::ScalarFormulaRequestAttributes;
+use datadog_api_client::datadogV2::model::ScalarFormulaRequestType;
+use datadog_api_client::datadogV2::model::ScalarQuery;
 
 #[tokio::main]
 async fn main() {

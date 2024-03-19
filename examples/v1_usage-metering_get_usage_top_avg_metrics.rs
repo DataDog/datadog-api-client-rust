@@ -1,7 +1,8 @@
 // Get all custom metrics by hourly average returns "OK" response
 use chrono::{DateTime, Utc};
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_usage_metering::*;
+use datadog_api_client::datadogV1::api::api_usage_metering::GetUsageTopAvgMetricsOptionalParams;
+use datadog_api_client::datadogV1::api::api_usage_metering::UsageMeteringAPI;
 
 #[tokio::main]
 async fn main() {
