@@ -1,5 +1,5 @@
 // Get a list of tests events returns "OK" response with pagination
-use chrono::prelude::{DateTime, Utc};
+use chrono::{DateTime, Utc};
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_ci_visibility_tests::*;
 use futures_util::pin_mut;
