@@ -1,7 +1,11 @@
 // Create an incident todo returns "CREATED" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_incidents::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_incidents::IncidentsAPI;
+use datadog_api_client::datadogV2::model::IncidentTodoAssignee;
+use datadog_api_client::datadogV2::model::IncidentTodoAttributes;
+use datadog_api_client::datadogV2::model::IncidentTodoCreateData;
+use datadog_api_client::datadogV2::model::IncidentTodoCreateRequest;
+use datadog_api_client::datadogV2::model::IncidentTodoType;
 
 #[tokio::main]
 async fn main() {

@@ -1,7 +1,15 @@
 // Aggregate RUM events returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_rum::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_rum::RUMAPI;
+use datadog_api_client::datadogV2::model::RUMAggregateRequest;
+use datadog_api_client::datadogV2::model::RUMAggregationFunction;
+use datadog_api_client::datadogV2::model::RUMCompute;
+use datadog_api_client::datadogV2::model::RUMComputeType;
+use datadog_api_client::datadogV2::model::RUMGroupBy;
+use datadog_api_client::datadogV2::model::RUMGroupByTotal;
+use datadog_api_client::datadogV2::model::RUMQueryFilter;
+use datadog_api_client::datadogV2::model::RUMQueryOptions;
+use datadog_api_client::datadogV2::model::RUMQueryPageOptions;
 
 #[tokio::main]
 async fn main() {

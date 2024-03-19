@@ -1,6 +1,7 @@
 // Get a list of metrics with configured filter returns "Success" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_metrics::*;
+use datadog_api_client::datadogV2::api::api_metrics::ListTagConfigurationsOptionalParams;
+use datadog_api_client::datadogV2::api::api_metrics::MetricsAPI;
 
 #[tokio::main]
 async fn main() {

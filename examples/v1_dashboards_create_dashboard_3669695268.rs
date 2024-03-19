@@ -1,7 +1,24 @@
 // Create a new dashboard with logs query table widget and storage parameter
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_dashboards::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_dashboards::DashboardsAPI;
+use datadog_api_client::datadogV1::model::Dashboard;
+use datadog_api_client::datadogV1::model::DashboardLayoutType;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionEventAggregation;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionEventQueryDefinition;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionEventQueryDefinitionCompute;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionEventQueryDefinitionSearch;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionEventsDataSource;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionQueryDefinition;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionResponseFormat;
+use datadog_api_client::datadogV1::model::QuerySortOrder;
+use datadog_api_client::datadogV1::model::TableWidgetCellDisplayMode;
+use datadog_api_client::datadogV1::model::TableWidgetDefinition;
+use datadog_api_client::datadogV1::model::TableWidgetDefinitionType;
+use datadog_api_client::datadogV1::model::TableWidgetRequest;
+use datadog_api_client::datadogV1::model::Widget;
+use datadog_api_client::datadogV1::model::WidgetDefinition;
+use datadog_api_client::datadogV1::model::WidgetFormula;
+use datadog_api_client::datadogV1::model::WidgetFormulaLimit;
 
 #[tokio::main]
 async fn main() {

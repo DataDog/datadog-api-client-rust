@@ -1,7 +1,10 @@
 // Update an existing incident team returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_incident_teams::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_incident_teams::IncidentTeamsAPI;
+use datadog_api_client::datadogV2::model::IncidentTeamType;
+use datadog_api_client::datadogV2::model::IncidentTeamUpdateAttributes;
+use datadog_api_client::datadogV2::model::IncidentTeamUpdateData;
+use datadog_api_client::datadogV2::model::IncidentTeamUpdateRequest;
 
 #[tokio::main]
 async fn main() {

@@ -1,7 +1,8 @@
 // Get all service definitions returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_service_definition::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_service_definition::ListServiceDefinitionsOptionalParams;
+use datadog_api_client::datadogV2::api::api_service_definition::ServiceDefinitionAPI;
+use datadog_api_client::datadogV2::model::ServiceDefinitionSchemaVersions;
 
 #[tokio::main]
 async fn main() {

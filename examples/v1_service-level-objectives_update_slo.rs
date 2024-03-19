@@ -1,7 +1,11 @@
 // Update an SLO returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_service_level_objectives::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_service_level_objectives::ServiceLevelObjectivesAPI;
+use datadog_api_client::datadogV1::model::SLOThreshold;
+use datadog_api_client::datadogV1::model::SLOTimeframe;
+use datadog_api_client::datadogV1::model::SLOType;
+use datadog_api_client::datadogV1::model::ServiceLevelObjective;
+use datadog_api_client::datadogV1::model::ServiceLevelObjectiveQuery;
 
 #[tokio::main]
 async fn main() {
@@ -19,7 +23,7 @@ async fn main() {
     ))
     .target_threshold(97.0 as f64)
     .timeframe(SLOTimeframe::SEVEN_DAYS)
-    .warning_threshold(98 as f64);
+    .warning_threshold(98.0 as f64);
     let configuration = Configuration::new();
     let api = ServiceLevelObjectivesAPI::with_config(configuration);
     let resp = api.update_slo(slo_data_0_id.clone(), body).await;

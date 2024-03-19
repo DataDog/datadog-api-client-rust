@@ -1,7 +1,26 @@
 // Edit an API test returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_synthetics::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_synthetics::SyntheticsAPI;
+use datadog_api_client::datadogV1::model::SyntheticsAPITest;
+use datadog_api_client::datadogV1::model::SyntheticsAPITestConfig;
+use datadog_api_client::datadogV1::model::SyntheticsAPITestType;
+use datadog_api_client::datadogV1::model::SyntheticsAssertion;
+use datadog_api_client::datadogV1::model::SyntheticsAssertionJSONPathOperator;
+use datadog_api_client::datadogV1::model::SyntheticsAssertionJSONPathTarget;
+use datadog_api_client::datadogV1::model::SyntheticsAssertionJSONPathTargetTarget;
+use datadog_api_client::datadogV1::model::SyntheticsAssertionOperator;
+use datadog_api_client::datadogV1::model::SyntheticsAssertionTarget;
+use datadog_api_client::datadogV1::model::SyntheticsAssertionType;
+use datadog_api_client::datadogV1::model::SyntheticsConfigVariable;
+use datadog_api_client::datadogV1::model::SyntheticsConfigVariableType;
+use datadog_api_client::datadogV1::model::SyntheticsTestDetailsSubType;
+use datadog_api_client::datadogV1::model::SyntheticsTestOptions;
+use datadog_api_client::datadogV1::model::SyntheticsTestOptionsRetry;
+use datadog_api_client::datadogV1::model::SyntheticsTestPauseStatus;
+use datadog_api_client::datadogV1::model::SyntheticsTestRequest;
+use datadog_api_client::datadogV1::model::SyntheticsTestRequestCertificate;
+use datadog_api_client::datadogV1::model::SyntheticsTestRequestCertificateItem;
+use serde_json::Value;
 use std::collections::BTreeMap;
 
 #[tokio::main]
@@ -14,7 +33,7 @@ async fn main() {
                 SyntheticsAssertion::SyntheticsAssertionTarget(Box::new(
                     SyntheticsAssertionTarget::new(
                         SyntheticsAssertionOperator::IS,
-                        serde_json::Value::from("text/html"),
+                        Value::from("text/html"),
                         SyntheticsAssertionType::HEADER,
                     )
                     .property("{{ PROPERTY }}".to_string()),
@@ -22,7 +41,7 @@ async fn main() {
                 SyntheticsAssertion::SyntheticsAssertionTarget(Box::new(
                     SyntheticsAssertionTarget::new(
                         SyntheticsAssertionOperator::LESS_THAN,
-                        serde_json::Value::from(2000),
+                        Value::from(2000),
                         SyntheticsAssertionType::RESPONSE_TIME,
                     ),
                 )),
@@ -35,7 +54,7 @@ async fn main() {
                         SyntheticsAssertionJSONPathTargetTarget::new()
                             .json_path("topKey".to_string())
                             .operator("isNot".to_string())
-                            .target_value(serde_json::Value::from("0")),
+                            .target_value(Value::from("0")),
                     ),
                 )),
             ])
@@ -65,7 +84,7 @@ async fn main() {
                         "examplesynthetic".to_string(),
                     )]))
                     .method("GET".to_string())
-                    .timeout(10 as f64)
+                    .timeout(10.0 as f64)
                     .url("https://datadoghq.com".to_string()),
             ),
         vec!["aws:us-east-2".to_string()],
@@ -82,7 +101,7 @@ async fn main() {
             .retry(
                 SyntheticsTestOptionsRetry::new()
                     .count(3)
-                    .interval(10 as f64),
+                    .interval(10.0 as f64),
             )
             .tick_every(60),
         SyntheticsAPITestType::API,

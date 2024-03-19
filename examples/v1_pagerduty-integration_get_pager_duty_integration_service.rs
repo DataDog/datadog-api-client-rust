@@ -1,6 +1,6 @@
 // Get a single service object returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_pager_duty_integration::*;
+use datadog_api_client::datadogV1::api::api_pager_duty_integration::PagerDutyIntegrationAPI;
 
 #[tokio::main]
 async fn main() {

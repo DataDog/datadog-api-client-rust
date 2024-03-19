@@ -1,7 +1,20 @@
 // Create a browser test returns "OK - Returns saved rumSettings." response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_synthetics::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_synthetics::SyntheticsAPI;
+use datadog_api_client::datadogV1::model::SyntheticsBrowserTest;
+use datadog_api_client::datadogV1::model::SyntheticsBrowserTestConfig;
+use datadog_api_client::datadogV1::model::SyntheticsBrowserTestRumSettings;
+use datadog_api_client::datadogV1::model::SyntheticsBrowserTestType;
+use datadog_api_client::datadogV1::model::SyntheticsConfigVariable;
+use datadog_api_client::datadogV1::model::SyntheticsConfigVariableType;
+use datadog_api_client::datadogV1::model::SyntheticsDeviceID;
+use datadog_api_client::datadogV1::model::SyntheticsStep;
+use datadog_api_client::datadogV1::model::SyntheticsStepType;
+use datadog_api_client::datadogV1::model::SyntheticsTestCiOptions;
+use datadog_api_client::datadogV1::model::SyntheticsTestExecutionRule;
+use datadog_api_client::datadogV1::model::SyntheticsTestOptions;
+use datadog_api_client::datadogV1::model::SyntheticsTestOptionsRetry;
+use datadog_api_client::datadogV1::model::SyntheticsTestRequest;
 use std::collections::BTreeMap;
 
 #[tokio::main]
@@ -40,7 +53,7 @@ async fn main() {
             .retry(
                 SyntheticsTestOptionsRetry::new()
                     .count(2)
-                    .interval(10 as f64),
+                    .interval(10.0 as f64),
             )
             .rum_settings(
                 SyntheticsBrowserTestRumSettings::new(true)

@@ -1,7 +1,32 @@
 // Update a notebook returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_notebooks::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_notebooks::NotebooksAPI;
+use datadog_api_client::datadogV1::model::NotebookCellCreateRequest;
+use datadog_api_client::datadogV1::model::NotebookCellCreateRequestAttributes;
+use datadog_api_client::datadogV1::model::NotebookCellResourceType;
+use datadog_api_client::datadogV1::model::NotebookGlobalTime;
+use datadog_api_client::datadogV1::model::NotebookGraphSize;
+use datadog_api_client::datadogV1::model::NotebookMarkdownCellAttributes;
+use datadog_api_client::datadogV1::model::NotebookMarkdownCellDefinition;
+use datadog_api_client::datadogV1::model::NotebookMarkdownCellDefinitionType;
+use datadog_api_client::datadogV1::model::NotebookRelativeTime;
+use datadog_api_client::datadogV1::model::NotebookResourceType;
+use datadog_api_client::datadogV1::model::NotebookSplitBy;
+use datadog_api_client::datadogV1::model::NotebookStatus;
+use datadog_api_client::datadogV1::model::NotebookTimeseriesCellAttributes;
+use datadog_api_client::datadogV1::model::NotebookUpdateCell;
+use datadog_api_client::datadogV1::model::NotebookUpdateData;
+use datadog_api_client::datadogV1::model::NotebookUpdateDataAttributes;
+use datadog_api_client::datadogV1::model::NotebookUpdateRequest;
+use datadog_api_client::datadogV1::model::TimeseriesWidgetDefinition;
+use datadog_api_client::datadogV1::model::TimeseriesWidgetDefinitionType;
+use datadog_api_client::datadogV1::model::TimeseriesWidgetRequest;
+use datadog_api_client::datadogV1::model::WidgetAxis;
+use datadog_api_client::datadogV1::model::WidgetDisplayType;
+use datadog_api_client::datadogV1::model::WidgetLineType;
+use datadog_api_client::datadogV1::model::WidgetLineWidth;
+use datadog_api_client::datadogV1::model::WidgetLiveSpan;
+use datadog_api_client::datadogV1::model::WidgetRequestStyle;
 
 #[tokio::main]
 async fn main() {

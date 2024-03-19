@@ -1,7 +1,13 @@
 // Update a cloud configuration rule's details returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_security_monitoring::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_security_monitoring::SecurityMonitoringAPI;
+use datadog_api_client::datadogV2::model::CloudConfigurationComplianceRuleOptions;
+use datadog_api_client::datadogV2::model::CloudConfigurationRegoRule;
+use datadog_api_client::datadogV2::model::CloudConfigurationRuleComplianceSignalOptions;
+use datadog_api_client::datadogV2::model::SecurityMonitoringRuleCase;
+use datadog_api_client::datadogV2::model::SecurityMonitoringRuleOptions;
+use datadog_api_client::datadogV2::model::SecurityMonitoringRuleSeverity;
+use datadog_api_client::datadogV2::model::SecurityMonitoringRuleUpdatePayload;
 
 #[tokio::main]
 async fn main() {

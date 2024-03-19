@@ -1,7 +1,12 @@
 // Search pipelines events returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_ci_visibility_pipelines::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_ci_visibility_pipelines::CIVisibilityPipelinesAPI;
+use datadog_api_client::datadogV2::api::api_ci_visibility_pipelines::SearchCIAppPipelineEventsOptionalParams;
+use datadog_api_client::datadogV2::model::CIAppPipelineEventsRequest;
+use datadog_api_client::datadogV2::model::CIAppPipelinesQueryFilter;
+use datadog_api_client::datadogV2::model::CIAppQueryOptions;
+use datadog_api_client::datadogV2::model::CIAppQueryPageOptions;
+use datadog_api_client::datadogV2::model::CIAppSort;
 
 #[tokio::main]
 async fn main() {

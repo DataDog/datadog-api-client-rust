@@ -1,7 +1,9 @@
 // Revoke role from an archive returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_logs_archives::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_logs_archives::LogsArchivesAPI;
+use datadog_api_client::datadogV2::model::RelationshipToRole;
+use datadog_api_client::datadogV2::model::RelationshipToRoleData;
+use datadog_api_client::datadogV2::model::RolesType;
 
 #[tokio::main]
 async fn main() {

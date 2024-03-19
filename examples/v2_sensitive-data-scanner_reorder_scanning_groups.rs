@@ -1,7 +1,14 @@
 // Reorder Groups returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_sensitive_data_scanner::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_sensitive_data_scanner::SensitiveDataScannerAPI;
+use datadog_api_client::datadogV2::model::SensitiveDataScannerConfigRequest;
+use datadog_api_client::datadogV2::model::SensitiveDataScannerConfigurationRelationships;
+use datadog_api_client::datadogV2::model::SensitiveDataScannerConfigurationType;
+use datadog_api_client::datadogV2::model::SensitiveDataScannerGroupItem;
+use datadog_api_client::datadogV2::model::SensitiveDataScannerGroupList;
+use datadog_api_client::datadogV2::model::SensitiveDataScannerGroupType;
+use datadog_api_client::datadogV2::model::SensitiveDataScannerMetaVersionOnly;
+use datadog_api_client::datadogV2::model::SensitiveDataScannerReorderConfig;
 
 #[tokio::main]
 async fn main() {

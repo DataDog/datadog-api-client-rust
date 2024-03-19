@@ -1,7 +1,12 @@
 // Validate a monitor returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_monitors::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_monitors::MonitorsAPI;
+use datadog_api_client::datadogV1::model::Monitor;
+use datadog_api_client::datadogV1::model::MonitorOptions;
+use datadog_api_client::datadogV1::model::MonitorOptionsNotificationPresets;
+use datadog_api_client::datadogV1::model::MonitorThresholds;
+use datadog_api_client::datadogV1::model::MonitorType;
+use datadog_api_client::datadogV1::model::OnMissingDataOption;
 
 #[tokio::main]
 async fn main() {
@@ -28,7 +33,7 @@ async fn main() {
                     .on_missing_data(OnMissingDataOption::SHOW_AND_NOTIFY_NO_DATA)
                     .renotify_interval(Some(60))
                     .require_full_window(true)
-                    .thresholds(MonitorThresholds::new().critical(2 as f64).warning(Some(1 as f64)))
+                    .thresholds(MonitorThresholds::new().critical(2.0 as f64).warning(Some(1.0 as f64)))
                     .timeout_h(Some(24)),
             )
             .priority(Some(3))

@@ -1,7 +1,10 @@
 // Send a deployment event for DORA Metrics returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_dora_metrics::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_dora_metrics::DORAMetricsAPI;
+use datadog_api_client::datadogV2::model::DORADeploymentRequest;
+use datadog_api_client::datadogV2::model::DORADeploymentRequestAttributes;
+use datadog_api_client::datadogV2::model::DORADeploymentRequestData;
+use datadog_api_client::datadogV2::model::DORAGitInfo;
 
 #[tokio::main]
 async fn main() {

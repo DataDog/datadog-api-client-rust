@@ -1,6 +1,6 @@
 // Get a given APM retention filter returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_apm_retention_filters::*;
+use datadog_api_client::datadogV2::api::api_apm_retention_filters::APMRetentionFiltersAPI;
 
 #[tokio::main]
 async fn main() {

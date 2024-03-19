@@ -1,7 +1,12 @@
 // Search logs returns "OK" response with pagination
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_logs::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_logs::ListLogsOptionalParams;
+use datadog_api_client::datadogV2::api::api_logs::LogsAPI;
+use datadog_api_client::datadogV2::model::LogsListRequest;
+use datadog_api_client::datadogV2::model::LogsListRequestPage;
+use datadog_api_client::datadogV2::model::LogsQueryFilter;
+use datadog_api_client::datadogV2::model::LogsQueryOptions;
+use datadog_api_client::datadogV2::model::LogsSort;
 use futures_util::pin_mut;
 use futures_util::stream::StreamExt;
 

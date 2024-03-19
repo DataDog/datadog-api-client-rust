@@ -1,6 +1,7 @@
 // Get hourly logs usage by retention returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_usage_metering::*;
+use datadog_api_client::datadogV1::api::api_usage_metering::GetUsageLogsByRetentionOptionalParams;
+use datadog_api_client::datadogV1::api::api_usage_metering::UsageMeteringAPI;
 
 #[tokio::main]
 async fn main() {

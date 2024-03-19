@@ -1,7 +1,10 @@
 // Create a new incident team returns "CREATED" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_incident_teams::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_incident_teams::IncidentTeamsAPI;
+use datadog_api_client::datadogV2::model::IncidentTeamCreateAttributes;
+use datadog_api_client::datadogV2::model::IncidentTeamCreateData;
+use datadog_api_client::datadogV2::model::IncidentTeamCreateRequest;
+use datadog_api_client::datadogV2::model::IncidentTeamType;
 
 #[tokio::main]
 async fn main() {

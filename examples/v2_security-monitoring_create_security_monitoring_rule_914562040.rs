@@ -1,7 +1,17 @@
 // Create a detection rule with type 'signal_correlation' returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_security_monitoring::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_security_monitoring::SecurityMonitoringAPI;
+use datadog_api_client::datadogV2::model::SecurityMonitoringRuleCaseCreate;
+use datadog_api_client::datadogV2::model::SecurityMonitoringRuleCreatePayload;
+use datadog_api_client::datadogV2::model::SecurityMonitoringRuleEvaluationWindow;
+use datadog_api_client::datadogV2::model::SecurityMonitoringRuleKeepAlive;
+use datadog_api_client::datadogV2::model::SecurityMonitoringRuleMaxSignalDuration;
+use datadog_api_client::datadogV2::model::SecurityMonitoringRuleOptions;
+use datadog_api_client::datadogV2::model::SecurityMonitoringRuleQueryAggregation;
+use datadog_api_client::datadogV2::model::SecurityMonitoringRuleSeverity;
+use datadog_api_client::datadogV2::model::SecurityMonitoringSignalRuleCreatePayload;
+use datadog_api_client::datadogV2::model::SecurityMonitoringSignalRuleQuery;
+use datadog_api_client::datadogV2::model::SecurityMonitoringSignalRuleType;
 
 #[tokio::main]
 async fn main() {

@@ -1,7 +1,10 @@
 // Create a ci-pipelines monitor returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_monitors::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_monitors::MonitorsAPI;
+use datadog_api_client::datadogV1::model::Monitor;
+use datadog_api_client::datadogV1::model::MonitorOptions;
+use datadog_api_client::datadogV1::model::MonitorThresholds;
+use datadog_api_client::datadogV1::model::MonitorType;
 
 #[tokio::main]
 async fn main() {
@@ -12,7 +15,7 @@ async fn main() {
         )
             .message("some message Notify: @hipchat-channel".to_string())
             .name("Example-Monitor".to_string())
-            .options(MonitorOptions::new().thresholds(MonitorThresholds::new().critical(1 as f64)))
+            .options(MonitorOptions::new().thresholds(MonitorThresholds::new().critical(1.0 as f64)))
             .priority(Some(3))
             .tags(vec!["test:examplemonitor".to_string(), "env:ci".to_string()]);
     let configuration = Configuration::new();

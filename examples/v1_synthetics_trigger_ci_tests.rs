@@ -1,7 +1,18 @@
 // Trigger tests from CI/CD pipelines returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_synthetics::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_synthetics::SyntheticsAPI;
+use datadog_api_client::datadogV1::model::SyntheticsBasicAuth;
+use datadog_api_client::datadogV1::model::SyntheticsBasicAuthWeb;
+use datadog_api_client::datadogV1::model::SyntheticsBasicAuthWebType;
+use datadog_api_client::datadogV1::model::SyntheticsCIBatchMetadata;
+use datadog_api_client::datadogV1::model::SyntheticsCIBatchMetadataCI;
+use datadog_api_client::datadogV1::model::SyntheticsCIBatchMetadataGit;
+use datadog_api_client::datadogV1::model::SyntheticsCIBatchMetadataPipeline;
+use datadog_api_client::datadogV1::model::SyntheticsCIBatchMetadataProvider;
+use datadog_api_client::datadogV1::model::SyntheticsCITest;
+use datadog_api_client::datadogV1::model::SyntheticsCITestBody;
+use datadog_api_client::datadogV1::model::SyntheticsDeviceID;
+use datadog_api_client::datadogV1::model::SyntheticsTestOptionsRetry;
 
 #[tokio::main]
 async fn main() {

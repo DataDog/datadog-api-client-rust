@@ -1,7 +1,10 @@
 // Update Fastly account returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_fastly_integration::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_fastly_integration::FastlyIntegrationAPI;
+use datadog_api_client::datadogV2::model::FastlyAccountType;
+use datadog_api_client::datadogV2::model::FastlyAccountUpdateRequest;
+use datadog_api_client::datadogV2::model::FastlyAccountUpdateRequestAttributes;
+use datadog_api_client::datadogV2::model::FastlyAccountUpdateRequestData;
 
 #[tokio::main]
 async fn main() {

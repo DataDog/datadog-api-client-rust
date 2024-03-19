@@ -1,7 +1,13 @@
 // Update an archive returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_logs_archives::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_logs_archives::LogsArchivesAPI;
+use datadog_api_client::datadogV2::model::LogsArchiveCreateRequest;
+use datadog_api_client::datadogV2::model::LogsArchiveCreateRequestAttributes;
+use datadog_api_client::datadogV2::model::LogsArchiveCreateRequestDefinition;
+use datadog_api_client::datadogV2::model::LogsArchiveCreateRequestDestination;
+use datadog_api_client::datadogV2::model::LogsArchiveDestinationAzure;
+use datadog_api_client::datadogV2::model::LogsArchiveDestinationAzureType;
+use datadog_api_client::datadogV2::model::LogsArchiveIntegrationAzure;
 
 #[tokio::main]
 async fn main() {

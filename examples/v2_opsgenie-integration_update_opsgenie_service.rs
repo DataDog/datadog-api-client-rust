@@ -1,7 +1,11 @@
 // Update a single service object returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_opsgenie_integration::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_opsgenie_integration::OpsgenieIntegrationAPI;
+use datadog_api_client::datadogV2::model::OpsgenieServiceRegionType;
+use datadog_api_client::datadogV2::model::OpsgenieServiceType;
+use datadog_api_client::datadogV2::model::OpsgenieServiceUpdateAttributes;
+use datadog_api_client::datadogV2::model::OpsgenieServiceUpdateData;
+use datadog_api_client::datadogV2::model::OpsgenieServiceUpdateRequest;
 
 #[tokio::main]
 async fn main() {

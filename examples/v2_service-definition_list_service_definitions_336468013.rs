@@ -1,6 +1,7 @@
 // Get all service definitions returns "OK" response with pagination
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_service_definition::*;
+use datadog_api_client::datadogV2::api::api_service_definition::ListServiceDefinitionsOptionalParams;
+use datadog_api_client::datadogV2::api::api_service_definition::ServiceDefinitionAPI;
 use futures_util::pin_mut;
 use futures_util::stream::StreamExt;
 

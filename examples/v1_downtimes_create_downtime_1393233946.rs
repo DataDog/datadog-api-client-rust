@@ -1,7 +1,8 @@
 // Schedule a downtime with until occurrences
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_downtimes::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_downtimes::DowntimesAPI;
+use datadog_api_client::datadogV1::model::Downtime;
+use datadog_api_client::datadogV1::model::DowntimeRecurrence;
 
 #[tokio::main]
 async fn main() {

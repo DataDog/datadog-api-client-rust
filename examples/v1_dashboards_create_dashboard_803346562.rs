@@ -1,7 +1,17 @@
 // Create a new dashboard with distribution widget and apm stats data
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_dashboards::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_dashboards::DashboardsAPI;
+use datadog_api_client::datadogV1::model::ApmStatsQueryDefinition;
+use datadog_api_client::datadogV1::model::ApmStatsQueryRowType;
+use datadog_api_client::datadogV1::model::Dashboard;
+use datadog_api_client::datadogV1::model::DashboardLayoutType;
+use datadog_api_client::datadogV1::model::DistributionWidgetDefinition;
+use datadog_api_client::datadogV1::model::DistributionWidgetDefinitionType;
+use datadog_api_client::datadogV1::model::DistributionWidgetRequest;
+use datadog_api_client::datadogV1::model::Widget;
+use datadog_api_client::datadogV1::model::WidgetDefinition;
+use datadog_api_client::datadogV1::model::WidgetLayout;
+use datadog_api_client::datadogV1::model::WidgetTextAlign;
 
 #[tokio::main]
 async fn main() {

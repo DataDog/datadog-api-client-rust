@@ -1,7 +1,14 @@
 // Aggregate pipelines events returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_ci_visibility_pipelines::*;
-use datadog_api_client::datadogV2::model::*;
+use datadog_api_client::datadogV2::api::api_ci_visibility_pipelines::CIVisibilityPipelinesAPI;
+use datadog_api_client::datadogV2::model::CIAppAggregationFunction;
+use datadog_api_client::datadogV2::model::CIAppCompute;
+use datadog_api_client::datadogV2::model::CIAppComputeType;
+use datadog_api_client::datadogV2::model::CIAppGroupByTotal;
+use datadog_api_client::datadogV2::model::CIAppPipelinesAggregateRequest;
+use datadog_api_client::datadogV2::model::CIAppPipelinesGroupBy;
+use datadog_api_client::datadogV2::model::CIAppPipelinesQueryFilter;
+use datadog_api_client::datadogV2::model::CIAppQueryOptions;
 
 #[tokio::main]
 async fn main() {

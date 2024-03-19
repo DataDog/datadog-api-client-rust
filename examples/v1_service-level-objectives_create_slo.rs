@@ -1,7 +1,11 @@
 // Create an SLO object returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_service_level_objectives::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_service_level_objectives::ServiceLevelObjectivesAPI;
+use datadog_api_client::datadogV1::model::SLOThreshold;
+use datadog_api_client::datadogV1::model::SLOTimeframe;
+use datadog_api_client::datadogV1::model::SLOType;
+use datadog_api_client::datadogV1::model::ServiceLevelObjectiveQuery;
+use datadog_api_client::datadogV1::model::ServiceLevelObjectiveRequest;
 
 #[tokio::main]
 async fn main() {
@@ -9,7 +13,7 @@ async fn main() {
         "Example-Service-Level-Objective".to_string(),
         vec![SLOThreshold::new(97.0, SLOTimeframe::SEVEN_DAYS)
             .target_display("97.0".to_string())
-            .warning(98 as f64)
+            .warning(98.0 as f64)
             .warning_display("98.0".to_string())],
         SLOType::METRIC,
     )
@@ -23,7 +27,7 @@ async fn main() {
     .tags(vec!["env:prod".to_string(), "app:core".to_string()])
     .target_threshold(97.0 as f64)
     .timeframe(SLOTimeframe::SEVEN_DAYS)
-    .warning_threshold(98 as f64);
+    .warning_threshold(98.0 as f64);
     let configuration = Configuration::new();
     let api = ServiceLevelObjectivesAPI::with_config(configuration);
     let resp = api.create_slo(body).await;

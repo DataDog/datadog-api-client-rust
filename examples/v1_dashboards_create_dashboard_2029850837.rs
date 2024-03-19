@@ -1,7 +1,17 @@
 // Create a new dashboard with log_stream widget
 use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_dashboards::*;
-use datadog_api_client::datadogV1::model::*;
+use datadog_api_client::datadogV1::api::api_dashboards::DashboardsAPI;
+use datadog_api_client::datadogV1::model::Dashboard;
+use datadog_api_client::datadogV1::model::DashboardLayoutType;
+use datadog_api_client::datadogV1::model::LogStreamWidgetDefinition;
+use datadog_api_client::datadogV1::model::LogStreamWidgetDefinitionType;
+use datadog_api_client::datadogV1::model::Widget;
+use datadog_api_client::datadogV1::model::WidgetDefinition;
+use datadog_api_client::datadogV1::model::WidgetFieldSort;
+use datadog_api_client::datadogV1::model::WidgetLayout;
+use datadog_api_client::datadogV1::model::WidgetMessageDisplay;
+use datadog_api_client::datadogV1::model::WidgetSort;
+use datadog_api_client::datadogV1::model::WidgetTextAlign;
 
 #[tokio::main]
 async fn main() {
