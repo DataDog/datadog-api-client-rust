@@ -151,6 +151,7 @@ components:
       required: true
       schema:
         type: string
+        format: uuid
     CloudAccountID:
       description: Cloud Account id.
       in: path

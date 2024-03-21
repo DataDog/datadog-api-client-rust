@@ -149,6 +149,7 @@ def simple_type(schema, render_nullable=False, render_option=True, render_new=Fa
             "date-time": "String",
             "email": "String",
             "binary": "Vec<u8>",
+            "uuid": "uuid::Uuid",
             None: "String",
         }[type_format]
     if type_name == "boolean":
@@ -255,6 +256,7 @@ def reference_to_value(schema, value, print_nullable=True, **kwargs):
             "date": "Time",
             "date-time": "Time",
             "email": "String",
+            "uuid": "uuid::Uuid",
             None: "String",
         }[type_format]
         if function_name == "Time":
@@ -450,6 +452,9 @@ def format_data_with_schema(
                 return "false", set()
             # create a set with a single string element
 
+            def format_uuid(x):
+                return f'Uuid::parse_str("&\"{x}\"").expect("invalid UUID")', set(["uuid::Uuid"])
+
             def open_file(x):
                 return f"fs::read(\"{x}\").unwrap()", set(["std::fs"])
 
@@ -463,6 +468,7 @@ def format_data_with_schema(
                 "boolean": format_bool,
                 "string": format_string,
                 "email": format_string,
+                "uuid": format_uuid,
                 "binary": open_file,
                 None: format_value,
             }[schema.get("format", schema.get("type"))]
