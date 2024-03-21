@@ -380,12 +380,14 @@ pub enum UpdateTestPauseStatusError {
 #[derive(Debug, Clone)]
 pub struct SyntheticsAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for SyntheticsAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -395,7 +397,24 @@ impl SyntheticsAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// Create a Synthetic global variable.
@@ -429,7 +448,7 @@ impl SyntheticsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.create_global_variable";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/variables",
@@ -523,7 +542,7 @@ impl SyntheticsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.create_private_location";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/private-locations",
@@ -616,7 +635,7 @@ impl SyntheticsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.create_synthetics_api_test";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/api",
@@ -712,7 +731,7 @@ impl SyntheticsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.create_synthetics_browser_test";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/browser",
@@ -795,7 +814,7 @@ impl SyntheticsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.delete_global_variable";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/variables/{variable_id}",
@@ -865,7 +884,7 @@ impl SyntheticsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.delete_private_location";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/private-locations/{location_id}",
@@ -944,7 +963,7 @@ impl SyntheticsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.delete_tests";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/delete",
@@ -1040,7 +1059,7 @@ impl SyntheticsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.edit_global_variable";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/variables/{variable_id}",
@@ -1132,7 +1151,7 @@ impl SyntheticsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.get_api_test";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/api/{public_id}",
@@ -1228,7 +1247,7 @@ impl SyntheticsAPI {
         let to_ts = params.to_ts;
         let probe_dc = params.probe_dc;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/{public_id}/results",
@@ -1340,7 +1359,7 @@ impl SyntheticsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.get_api_test_result";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/{public_id}/results/{result_id}",
@@ -1428,7 +1447,7 @@ impl SyntheticsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.get_browser_test";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/browser/{public_id}",
@@ -1526,7 +1545,7 @@ impl SyntheticsAPI {
         let to_ts = params.to_ts;
         let probe_dc = params.probe_dc;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/browser/{public_id}/results",
@@ -1640,7 +1659,7 @@ impl SyntheticsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.get_browser_test_result";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/browser/{public_id}/results/{result_id}",
@@ -1727,7 +1746,7 @@ impl SyntheticsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.get_global_variable";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/variables/{variable_id}",
@@ -1813,7 +1832,7 @@ impl SyntheticsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.get_private_location";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/private-locations/{location_id}",
@@ -1899,7 +1918,7 @@ impl SyntheticsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.get_synthetics_ci_batch";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/ci/batch/{batch_id}",
@@ -1979,7 +1998,7 @@ impl SyntheticsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.get_synthetics_default_locations";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/settings/default_locations",
@@ -2059,7 +2078,7 @@ impl SyntheticsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.get_test";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/{public_id}",
@@ -2144,7 +2163,7 @@ impl SyntheticsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.list_global_variables";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/variables",
@@ -2229,7 +2248,7 @@ impl SyntheticsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.list_locations";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/locations",
@@ -2351,7 +2370,7 @@ impl SyntheticsAPI {
         let page_size = params.page_size;
         let page_number = params.page_number;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests",
@@ -2445,7 +2464,7 @@ impl SyntheticsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.patch_test";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/{public_id}",
@@ -2537,7 +2556,7 @@ impl SyntheticsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.trigger_ci_tests";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/trigger/ci",
@@ -2629,7 +2648,7 @@ impl SyntheticsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.trigger_tests";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/trigger",
@@ -2721,7 +2740,7 @@ impl SyntheticsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.update_api_test";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/api/{public_id}",
@@ -2817,7 +2836,7 @@ impl SyntheticsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.update_browser_test";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/browser/{public_id}",
@@ -2915,7 +2934,7 @@ impl SyntheticsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.update_private_location";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/private-locations/{location_id}",
@@ -3009,7 +3028,7 @@ impl SyntheticsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.update_test_pause_status";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/{public_id}/status",

@@ -220,12 +220,14 @@ pub enum ListScorecardRulesError {
 #[derive(Debug, Clone)]
 pub struct ServiceScorecardsAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for ServiceScorecardsAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -235,7 +237,24 @@ impl ServiceScorecardsAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// Sets multiple service-rule outcomes in a single batched request.
@@ -282,7 +301,7 @@ impl ServiceScorecardsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/outcomes/batch",
@@ -381,7 +400,7 @@ impl ServiceScorecardsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/rules",
@@ -469,7 +488,7 @@ impl ServiceScorecardsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/rules/{rule_id}",
@@ -605,7 +624,7 @@ impl ServiceScorecardsAPI {
         let filter_rule_id = params.filter_rule_id;
         let filter_rule_name = params.filter_rule_name;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/outcomes",
@@ -789,7 +808,7 @@ impl ServiceScorecardsAPI {
         let fields_rule = params.fields_rule;
         let fields_scorecard = params.fields_scorecard;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/rules",

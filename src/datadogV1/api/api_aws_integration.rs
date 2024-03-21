@@ -194,12 +194,14 @@ pub enum UpdateAWSAccountError {
 #[derive(Debug, Clone)]
 pub struct AWSIntegrationAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for AWSIntegrationAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -209,7 +211,24 @@ impl AWSIntegrationAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// Create a Datadog-Amazon Web Services integration.
@@ -249,7 +268,7 @@ impl AWSIntegrationAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.create_aws_account";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws",
@@ -346,7 +365,7 @@ impl AWSIntegrationAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.create_aws_event_bridge_source";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/event_bridge",
@@ -438,7 +457,7 @@ impl AWSIntegrationAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.create_aws_tag_filter";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/filtering",
@@ -530,7 +549,7 @@ impl AWSIntegrationAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.create_new_aws_external_id";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/generate_new_external_id",
@@ -622,7 +641,7 @@ impl AWSIntegrationAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.delete_aws_account";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws",
@@ -719,7 +738,7 @@ impl AWSIntegrationAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.delete_aws_event_bridge_source";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/event_bridge",
@@ -811,7 +830,7 @@ impl AWSIntegrationAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.delete_aws_tag_filter";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/filtering",
@@ -907,7 +926,7 @@ impl AWSIntegrationAPI {
         let role_name = params.role_name;
         let access_key_id = params.access_key_id;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws",
@@ -1005,7 +1024,7 @@ impl AWSIntegrationAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.list_aws_event_bridge_sources";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/event_bridge",
@@ -1090,7 +1109,7 @@ impl AWSIntegrationAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.list_aws_tag_filters";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/filtering",
@@ -1171,7 +1190,7 @@ impl AWSIntegrationAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.list_available_aws_namespaces";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/available_namespace_rules",
@@ -1261,7 +1280,7 @@ impl AWSIntegrationAPI {
         let role_name = params.role_name;
         let access_key_id = params.access_key_id;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws",
