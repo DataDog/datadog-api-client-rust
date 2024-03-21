@@ -32,7 +32,7 @@ pub struct MetricsQueryMetadata {
     /// Metric name.
     #[serde(rename = "metric")]
     pub metric: Option<String>,
-    /// List of points of the time series in milliseconds.
+    /// List of points of the timeseries in milliseconds.
     #[serde(rename = "pointlist")]
     pub pointlist: Option<Vec<Vec<Option<f64>>>>,
     /// The index of the series' query within the request.

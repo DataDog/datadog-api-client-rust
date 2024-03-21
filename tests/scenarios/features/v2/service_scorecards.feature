@@ -1,8 +1,9 @@
 @endpoint(service-scorecards) @endpoint(service-scorecards-v2)
 Feature: Service Scorecards
-  API to create, update scorecard rules and outcomes.  This feature is
-  currently in BETA. If you have any feedback, contact [Datadog
-  support](https://docs.datadoghq.com/help/).
+  API to create, update scorecard rules and outcomes. See [Service
+  Scorecards](https://docs.datadoghq.com/service_catalog/scorecards) for
+  more information.  This feature is currently in BETA. If you have any
+  feedback, contact [Datadog support](https://docs.datadoghq.com/help/).
 
   Background:
     Given a valid "apiKeyAuth" key in the system

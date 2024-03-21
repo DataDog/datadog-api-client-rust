@@ -13,6 +13,8 @@ pub enum HourlyUsageAttributionUsageType {
     APM_USM_USAGE,
     APPSEC_FARGATE_USAGE,
     APPSEC_USAGE,
+    ASM_SERVERLESS_TRACED_INVOCATIONS_USAGE,
+    ASM_SERVERLESS_TRACED_INVOCATIONS_PERCENTAGE,
     BROWSER_USAGE,
     CI_PIPELINE_INDEXED_SPANS_USAGE,
     CI_TEST_INDEXED_SPANS_USAGE,
@@ -29,6 +31,8 @@ pub enum HourlyUsageAttributionUsageType {
     CWS_HOSTS_USAGE,
     DBM_HOSTS_USAGE,
     DBM_QUERIES_USAGE,
+    ERROR_TRACKING_USAGE,
+    ERROR_TRACKING_PERCENTAGE,
     ESTIMATED_INDEXED_LOGS_USAGE,
     ESTIMATED_INDEXED_SPANS_USAGE,
     ESTIMATED_INGESTED_LOGS_USAGE,
@@ -56,6 +60,7 @@ pub enum HourlyUsageAttributionUsageType {
     NDM_NETFLOW_USAGE,
     NPM_HOST_USAGE,
     OBS_PIPELINE_BYTES_USAGE,
+    OBS_PIPELINE_VCPU_USAGE,
     PROFILED_CONTAINER_USAGE,
     PROFILED_FARGATE_USAGE,
     PROFILED_HOST_USAGE,
@@ -67,6 +72,7 @@ pub enum HourlyUsageAttributionUsageType {
     SNMP_USAGE,
     UNIVERSAL_SERVICE_MONITORING_USAGE,
     VULN_MANAGEMENT_HOSTS_USAGE,
+    WORKFLOW_EXECUTIONS_USAGE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -79,6 +85,12 @@ impl ToString for HourlyUsageAttributionUsageType {
             Self::APM_USM_USAGE => String::from("apm_usm_usage"),
             Self::APPSEC_FARGATE_USAGE => String::from("appsec_fargate_usage"),
             Self::APPSEC_USAGE => String::from("appsec_usage"),
+            Self::ASM_SERVERLESS_TRACED_INVOCATIONS_USAGE => {
+                String::from("asm_serverless_traced_invocations_usage")
+            }
+            Self::ASM_SERVERLESS_TRACED_INVOCATIONS_PERCENTAGE => {
+                String::from("asm_serverless_traced_invocations_percentage")
+            }
             Self::BROWSER_USAGE => String::from("browser_usage"),
             Self::CI_PIPELINE_INDEXED_SPANS_USAGE => {
                 String::from("ci_pipeline_indexed_spans_usage")
@@ -99,6 +111,8 @@ impl ToString for HourlyUsageAttributionUsageType {
             Self::CWS_HOSTS_USAGE => String::from("cws_hosts_usage"),
             Self::DBM_HOSTS_USAGE => String::from("dbm_hosts_usage"),
             Self::DBM_QUERIES_USAGE => String::from("dbm_queries_usage"),
+            Self::ERROR_TRACKING_USAGE => String::from("error_tracking_usage"),
+            Self::ERROR_TRACKING_PERCENTAGE => String::from("error_tracking_percentage"),
             Self::ESTIMATED_INDEXED_LOGS_USAGE => String::from("estimated_indexed_logs_usage"),
             Self::ESTIMATED_INDEXED_SPANS_USAGE => String::from("estimated_indexed_spans_usage"),
             Self::ESTIMATED_INGESTED_LOGS_USAGE => String::from("estimated_ingested_logs_usage"),
@@ -130,6 +144,7 @@ impl ToString for HourlyUsageAttributionUsageType {
             Self::NDM_NETFLOW_USAGE => String::from("ndm_netflow_usage"),
             Self::NPM_HOST_USAGE => String::from("npm_host_usage"),
             Self::OBS_PIPELINE_BYTES_USAGE => String::from("obs_pipeline_bytes_usage"),
+            Self::OBS_PIPELINE_VCPU_USAGE => String::from("obs_pipelines_vcpu_usage"),
             Self::PROFILED_CONTAINER_USAGE => String::from("profiled_container_usage"),
             Self::PROFILED_FARGATE_USAGE => String::from("profiled_fargate_usage"),
             Self::PROFILED_HOST_USAGE => String::from("profiled_host_usage"),
@@ -145,6 +160,7 @@ impl ToString for HourlyUsageAttributionUsageType {
                 String::from("universal_service_monitoring_usage")
             }
             Self::VULN_MANAGEMENT_HOSTS_USAGE => String::from("vuln_management_hosts_usage"),
+            Self::WORKFLOW_EXECUTIONS_USAGE => String::from("workflow_executions_usage"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -175,6 +191,12 @@ impl<'de> Deserialize<'de> for HourlyUsageAttributionUsageType {
             "apm_usm_usage" => Self::APM_USM_USAGE,
             "appsec_fargate_usage" => Self::APPSEC_FARGATE_USAGE,
             "appsec_usage" => Self::APPSEC_USAGE,
+            "asm_serverless_traced_invocations_usage" => {
+                Self::ASM_SERVERLESS_TRACED_INVOCATIONS_USAGE
+            }
+            "asm_serverless_traced_invocations_percentage" => {
+                Self::ASM_SERVERLESS_TRACED_INVOCATIONS_PERCENTAGE
+            }
             "browser_usage" => Self::BROWSER_USAGE,
             "ci_pipeline_indexed_spans_usage" => Self::CI_PIPELINE_INDEXED_SPANS_USAGE,
             "ci_test_indexed_spans_usage" => Self::CI_TEST_INDEXED_SPANS_USAGE,
@@ -191,6 +213,8 @@ impl<'de> Deserialize<'de> for HourlyUsageAttributionUsageType {
             "cws_hosts_usage" => Self::CWS_HOSTS_USAGE,
             "dbm_hosts_usage" => Self::DBM_HOSTS_USAGE,
             "dbm_queries_usage" => Self::DBM_QUERIES_USAGE,
+            "error_tracking_usage" => Self::ERROR_TRACKING_USAGE,
+            "error_tracking_percentage" => Self::ERROR_TRACKING_PERCENTAGE,
             "estimated_indexed_logs_usage" => Self::ESTIMATED_INDEXED_LOGS_USAGE,
             "estimated_indexed_spans_usage" => Self::ESTIMATED_INDEXED_SPANS_USAGE,
             "estimated_ingested_logs_usage" => Self::ESTIMATED_INGESTED_LOGS_USAGE,
@@ -218,6 +242,7 @@ impl<'de> Deserialize<'de> for HourlyUsageAttributionUsageType {
             "ndm_netflow_usage" => Self::NDM_NETFLOW_USAGE,
             "npm_host_usage" => Self::NPM_HOST_USAGE,
             "obs_pipeline_bytes_usage" => Self::OBS_PIPELINE_BYTES_USAGE,
+            "obs_pipelines_vcpu_usage" => Self::OBS_PIPELINE_VCPU_USAGE,
             "profiled_container_usage" => Self::PROFILED_CONTAINER_USAGE,
             "profiled_fargate_usage" => Self::PROFILED_FARGATE_USAGE,
             "profiled_host_usage" => Self::PROFILED_HOST_USAGE,
@@ -229,6 +254,7 @@ impl<'de> Deserialize<'de> for HourlyUsageAttributionUsageType {
             "snmp_usage" => Self::SNMP_USAGE,
             "universal_service_monitoring_usage" => Self::UNIVERSAL_SERVICE_MONITORING_USAGE,
             "vuln_management_hosts_usage" => Self::VULN_MANAGEMENT_HOSTS_USAGE,
+            "workflow_executions_usage" => Self::WORKFLOW_EXECUTIONS_USAGE,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SLOHistoryMetrics {
-    /// A representation of `metric` based SLO time series for the provided queries.
+    /// A representation of `metric` based SLO timeseries for the provided queries.
     /// This is the same response type from `batch_query` endpoint.
     #[serde(rename = "denominator")]
     pub denominator: crate::datadogV1::model::SLOHistoryMetricsSeries,
@@ -23,7 +23,7 @@ pub struct SLOHistoryMetrics {
     /// Optional message if there are specific query issues/warnings.
     #[serde(rename = "message")]
     pub message: Option<String>,
-    /// A representation of `metric` based SLO time series for the provided queries.
+    /// A representation of `metric` based SLO timeseries for the provided queries.
     /// This is the same response type from `batch_query` endpoint.
     #[serde(rename = "numerator")]
     pub numerator: crate::datadogV1::model::SLOHistoryMetricsSeries,

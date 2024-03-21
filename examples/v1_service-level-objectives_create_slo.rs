@@ -13,7 +13,7 @@ async fn main() {
         "Example-Service-Level-Objective".to_string(),
         vec![SLOThreshold::new(97.0, SLOTimeframe::SEVEN_DAYS)
             .target_display("97.0".to_string())
-            .warning(98 as f64)
+            .warning(98.0 as f64)
             .warning_display("98.0".to_string())],
         SLOType::METRIC,
     )
@@ -27,7 +27,7 @@ async fn main() {
     .tags(vec!["env:prod".to_string(), "app:core".to_string()])
     .target_threshold(97.0 as f64)
     .timeframe(SLOTimeframe::SEVEN_DAYS)
-    .warning_threshold(98 as f64);
+    .warning_threshold(98.0 as f64);
     let configuration = Configuration::new();
     let api = ServiceLevelObjectivesAPI::with_config(configuration);
     let resp = api.create_slo(body).await;

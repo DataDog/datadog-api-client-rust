@@ -21,7 +21,7 @@ async fn main() {
 	// {{ name|wordwrap(width=120, wrapstring="\n	// ") }}
 	{%- for value, schema in values.items()|sort -%}
 	{%- if context._replace_values.is_used(value) -%}
-	{%- if schema.type == 'string' and schema.format != 'uuid' %}
+	{%- if schema.type == 'string' %}
 	let {{ value|rust_name }} = std::env::var("{{ value }}").unwrap();
 	{%- elif schema.type == 'integer' %}
 	let {{ value|rust_name }}: i{{ '64' if schema.format == 'int64' else '32' }} = std::env::var("{{ value }}").unwrap().parse().unwrap();

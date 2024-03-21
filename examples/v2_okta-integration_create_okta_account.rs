@@ -13,7 +13,7 @@ async fn main() {
             OktaAccountAttributes::new(
                 "oauth".to_string(),
                 "https://example.okta.com/".to_string(),
-                "Okta_Prod".to_string(),
+                "exampleoktaintegration".to_string(),
             )
             .client_id("client_id".to_string())
             .client_secret("client_secret".to_string()),

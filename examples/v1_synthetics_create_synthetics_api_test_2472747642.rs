@@ -55,7 +55,7 @@ async fn main() {
             .retry(
                 SyntheticsTestOptionsRetry::new()
                     .count(3)
-                    .interval(10 as f64),
+                    .interval(10.0 as f64),
             )
             .tick_every(60),
         SyntheticsAPITestType::API,

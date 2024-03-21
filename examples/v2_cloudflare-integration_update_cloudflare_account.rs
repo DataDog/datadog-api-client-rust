@@ -14,7 +14,8 @@ async fn main() {
         CloudflareAccountUpdateRequestData::new()
             .attributes(
                 CloudflareAccountUpdateRequestAttributes::new("fakekey".to_string())
-                    .email("new@email".to_string()),
+                    .email("dev@datadoghq.com".to_string())
+                    .zones(vec!["zone-id-3".to_string()]),
             )
             .type_(CloudflareAccountType::CLOUDFLARE_ACCOUNTS),
     );

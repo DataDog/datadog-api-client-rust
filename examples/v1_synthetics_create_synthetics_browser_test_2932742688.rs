@@ -53,7 +53,7 @@ async fn main() {
             .retry(
                 SyntheticsTestOptionsRetry::new()
                     .count(2)
-                    .interval(10 as f64),
+                    .interval(10.0 as f64),
             )
             .rum_settings(
                 SyntheticsBrowserTestRumSettings::new(true)

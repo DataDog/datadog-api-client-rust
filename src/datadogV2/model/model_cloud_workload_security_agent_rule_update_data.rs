@@ -14,6 +14,9 @@ pub struct CloudWorkloadSecurityAgentRuleUpdateData {
     /// Update an existing Cloud Workload Security Agent rule.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleUpdateAttributes,
+    /// The ID of the agent rule.
+    #[serde(rename = "id")]
+    pub id: Option<String>,
     /// The type of the resource. The value should always be `agent_rule`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleType,
@@ -29,9 +32,15 @@ impl CloudWorkloadSecurityAgentRuleUpdateData {
     ) -> CloudWorkloadSecurityAgentRuleUpdateData {
         CloudWorkloadSecurityAgentRuleUpdateData {
             attributes,
+            id: None,
             type_,
             _unparsed: false,
         }
+    }
+
+    pub fn id(mut self, value: String) -> Self {
+        self.id = Some(value);
+        self
     }
 }
 
@@ -55,6 +64,7 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleUpdateData {
                 let mut attributes: Option<
                     crate::datadogV2::model::CloudWorkloadSecurityAgentRuleUpdateAttributes,
                 > = None;
+                let mut id: Option<String> = None;
                 let mut type_: Option<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleType> =
                     None;
                 let mut _unparsed = false;
@@ -63,6 +73,12 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleUpdateData {
                     match k.as_str() {
                         "attributes" => {
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -83,6 +99,7 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleUpdateData {
 
                 let content = CloudWorkloadSecurityAgentRuleUpdateData {
                     attributes,
+                    id,
                     type_,
                     _unparsed,
                 };

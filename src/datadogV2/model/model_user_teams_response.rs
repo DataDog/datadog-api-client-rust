@@ -14,6 +14,9 @@ pub struct UserTeamsResponse {
     /// Team memberships response data
     #[serde(rename = "data")]
     pub data: Option<Vec<crate::datadogV2::model::UserTeam>>,
+    /// Resources related to the team memberships
+    #[serde(rename = "included")]
+    pub included: Option<Vec<crate::datadogV2::model::UserTeamIncluded>>,
     /// Teams response links.
     #[serde(rename = "links")]
     pub links: Option<crate::datadogV2::model::TeamsResponseLinks>,
@@ -29,6 +32,7 @@ impl UserTeamsResponse {
     pub fn new() -> UserTeamsResponse {
         UserTeamsResponse {
             data: None,
+            included: None,
             links: None,
             meta: None,
             _unparsed: false,
@@ -37,6 +41,11 @@ impl UserTeamsResponse {
 
     pub fn data(mut self, value: Vec<crate::datadogV2::model::UserTeam>) -> Self {
         self.data = Some(value);
+        self
+    }
+
+    pub fn included(mut self, value: Vec<crate::datadogV2::model::UserTeamIncluded>) -> Self {
+        self.included = Some(value);
         self
     }
 
@@ -75,6 +84,7 @@ impl<'de> Deserialize<'de> for UserTeamsResponse {
                 M: MapAccess<'a>,
             {
                 let mut data: Option<Vec<crate::datadogV2::model::UserTeam>> = None;
+                let mut included: Option<Vec<crate::datadogV2::model::UserTeamIncluded>> = None;
                 let mut links: Option<crate::datadogV2::model::TeamsResponseLinks> = None;
                 let mut meta: Option<crate::datadogV2::model::TeamsResponseMeta> = None;
                 let mut _unparsed = false;
@@ -86,6 +96,12 @@ impl<'de> Deserialize<'de> for UserTeamsResponse {
                                 continue;
                             }
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "included" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            included = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "links" => {
                             if v.is_null() {
@@ -105,6 +121,7 @@ impl<'de> Deserialize<'de> for UserTeamsResponse {
 
                 let content = UserTeamsResponse {
                     data,
+                    included,
                     links,
                     meta,
                     _unparsed,
