@@ -176,6 +176,8 @@ pub async fn before_scenario(
         }
     };
 
+    world.config.set_retry(true, 3);
+
     if world.config.enable_retry {
         struct RetryableStatus;
         impl reqwest_retry::RetryableStrategy for RetryableStatus {
