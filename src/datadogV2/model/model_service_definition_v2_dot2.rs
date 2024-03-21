@@ -14,6 +14,9 @@ pub struct ServiceDefinitionV2Dot2 {
     /// Identifier for a group of related services serving a product feature, which the service is a part of.
     #[serde(rename = "application")]
     pub application: Option<String>,
+    /// A set of CI fingerprints.
+    #[serde(rename = "ci-pipeline-fingerprints")]
+    pub ci_pipeline_fingerprints: Option<Vec<String>>,
     /// A list of contacts related to the services.
     #[serde(rename = "contacts")]
     pub contacts: Option<Vec<crate::datadogV2::model::ServiceDefinitionV2Dot2Contact>>,
@@ -65,6 +68,7 @@ impl ServiceDefinitionV2Dot2 {
     ) -> ServiceDefinitionV2Dot2 {
         ServiceDefinitionV2Dot2 {
             application: None,
+            ci_pipeline_fingerprints: None,
             contacts: None,
             dd_service,
             description: None,
@@ -84,6 +88,11 @@ impl ServiceDefinitionV2Dot2 {
 
     pub fn application(mut self, value: String) -> Self {
         self.application = Some(value);
+        self
+    }
+
+    pub fn ci_pipeline_fingerprints(mut self, value: Vec<String>) -> Self {
+        self.ci_pipeline_fingerprints = Some(value);
         self
     }
 
@@ -173,6 +182,7 @@ impl<'de> Deserialize<'de> for ServiceDefinitionV2Dot2 {
                 M: MapAccess<'a>,
             {
                 let mut application: Option<String> = None;
+                let mut ci_pipeline_fingerprints: Option<Vec<String>> = None;
                 let mut contacts: Option<
                     Vec<crate::datadogV2::model::ServiceDefinitionV2Dot2Contact>,
                 > = None;
@@ -203,6 +213,13 @@ impl<'de> Deserialize<'de> for ServiceDefinitionV2Dot2 {
                                 continue;
                             }
                             application =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "ci-pipeline-fingerprints" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ci_pipeline_fingerprints =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "contacts" => {
@@ -305,6 +322,7 @@ impl<'de> Deserialize<'de> for ServiceDefinitionV2Dot2 {
 
                 let content = ServiceDefinitionV2Dot2 {
                     application,
+                    ci_pipeline_fingerprints,
                     contacts,
                     dd_service,
                     description,

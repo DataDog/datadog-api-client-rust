@@ -229,6 +229,17 @@ pub enum CreateSecurityMonitoringRuleError {
     UnknownValue(serde_json::Value),
 }
 
+/// CreateSecurityMonitoringSuppressionError is a struct for typed errors of method [`SecurityMonitoringAPI::create_security_monitoring_suppression`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum CreateSecurityMonitoringSuppressionError {
+    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status409(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    UnknownValue(serde_json::Value),
+}
+
 /// DeleteSecurityFilterError is a struct for typed errors of method [`SecurityMonitoringAPI::delete_security_filter`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -243,6 +254,16 @@ pub enum DeleteSecurityFilterError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteSecurityMonitoringRuleError {
+    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    UnknownValue(serde_json::Value),
+}
+
+/// DeleteSecurityMonitoringSuppressionError is a struct for typed errors of method [`SecurityMonitoringAPI::delete_security_monitoring_suppression`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeleteSecurityMonitoringSuppressionError {
     Status403(Option<crate::datadogV2::model::APIErrorResponse>),
     Status404(Option<crate::datadogV2::model::APIErrorResponse>),
     Status429(Option<crate::datadogV2::model::APIErrorResponse>),
@@ -321,6 +342,16 @@ pub enum GetSecurityMonitoringSignalError {
     UnknownValue(serde_json::Value),
 }
 
+/// GetSecurityMonitoringSuppressionError is a struct for typed errors of method [`SecurityMonitoringAPI::get_security_monitoring_suppression`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetSecurityMonitoringSuppressionError {
+    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    UnknownValue(serde_json::Value),
+}
+
 /// ListFindingsError is a struct for typed errors of method [`SecurityMonitoringAPI::list_findings`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -355,6 +386,15 @@ pub enum ListSecurityMonitoringRulesError {
 #[serde(untagged)]
 pub enum ListSecurityMonitoringSignalsError {
     Status400(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListSecurityMonitoringSuppressionsError is a struct for typed errors of method [`SecurityMonitoringAPI::list_security_monitoring_suppressions`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListSecurityMonitoringSuppressionsError {
     Status403(Option<crate::datadogV2::model::APIErrorResponse>),
     Status429(Option<crate::datadogV2::model::APIErrorResponse>),
     UnknownValue(serde_json::Value),
@@ -402,6 +442,18 @@ pub enum UpdateSecurityMonitoringRuleError {
     Status401(Option<crate::datadogV2::model::APIErrorResponse>),
     Status403(Option<crate::datadogV2::model::APIErrorResponse>),
     Status404(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    UnknownValue(serde_json::Value),
+}
+
+/// UpdateSecurityMonitoringSuppressionError is a struct for typed errors of method [`SecurityMonitoringAPI::update_security_monitoring_suppression`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum UpdateSecurityMonitoringSuppressionError {
+    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status409(Option<crate::datadogV2::model::APIErrorResponse>),
     Status429(Option<crate::datadogV2::model::APIErrorResponse>),
     UnknownValue(serde_json::Value),
 }
@@ -641,6 +693,104 @@ impl SecurityMonitoringAPI {
         }
     }
 
+    /// Create a new suppression rule.
+    pub async fn create_security_monitoring_suppression(
+        &self,
+        body: crate::datadogV2::model::SecurityMonitoringSuppressionCreateRequest,
+    ) -> Result<
+        crate::datadogV2::model::SecurityMonitoringSuppressionResponse,
+        Error<CreateSecurityMonitoringSuppressionError>,
+    > {
+        match self
+            .create_security_monitoring_suppression_with_http_info(body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Create a new suppression rule.
+    pub async fn create_security_monitoring_suppression_with_http_info(
+        &self,
+        body: crate::datadogV2::model::SecurityMonitoringSuppressionCreateRequest,
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::SecurityMonitoringSuppressionResponse>,
+        Error<CreateSecurityMonitoringSuppressionError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.create_security_monitoring_suppression";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/configuration/suppressions",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build user agent
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            local_req_builder = local_req_builder.body(ser.into_inner());
+        }
+
+        let local_req = local_req_builder.build()?;
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::SecurityMonitoringSuppressionResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<CreateSecurityMonitoringSuppressionError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(Error::ResponseError(local_error))
+        }
+    }
+
     /// Delete a specific security filter.
     pub async fn delete_security_filter(
         &self,
@@ -771,6 +921,76 @@ impl SecurityMonitoringAPI {
             })
         } else {
             let local_entity: Option<DeleteSecurityMonitoringRuleError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(Error::ResponseError(local_error))
+        }
+    }
+
+    /// Delete a specific suppression rule.
+    pub async fn delete_security_monitoring_suppression(
+        &self,
+        suppression_id: String,
+    ) -> Result<(), Error<DeleteSecurityMonitoringSuppressionError>> {
+        match self
+            .delete_security_monitoring_suppression_with_http_info(suppression_id)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Delete a specific suppression rule.
+    pub async fn delete_security_monitoring_suppression_with_http_info(
+        &self,
+        suppression_id: String,
+    ) -> Result<ResponseContent<()>, Error<DeleteSecurityMonitoringSuppressionError>> {
+        let local_configuration = &self.config;
+        let operation_id = "v2.delete_security_monitoring_suppression";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/configuration/suppressions/{suppression_id}",
+            local_configuration.get_operation_host(operation_id),
+            suppression_id = urlencode(suppression_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build user agent
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+        };
+
+        let local_req = local_req_builder.build()?;
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<DeleteSecurityMonitoringSuppressionError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
@@ -1461,6 +1681,98 @@ impl SecurityMonitoringAPI {
         }
     }
 
+    /// Get the details of a specific suppression rule.
+    pub async fn get_security_monitoring_suppression(
+        &self,
+        suppression_id: String,
+    ) -> Result<
+        crate::datadogV2::model::SecurityMonitoringSuppressionResponse,
+        Error<GetSecurityMonitoringSuppressionError>,
+    > {
+        match self
+            .get_security_monitoring_suppression_with_http_info(suppression_id)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get the details of a specific suppression rule.
+    pub async fn get_security_monitoring_suppression_with_http_info(
+        &self,
+        suppression_id: String,
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::SecurityMonitoringSuppressionResponse>,
+        Error<GetSecurityMonitoringSuppressionError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_security_monitoring_suppression";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/configuration/suppressions/{suppression_id}",
+            local_configuration.get_operation_host(operation_id),
+            suppression_id = urlencode(suppression_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build user agent
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+        };
+
+        let local_req = local_req_builder.build()?;
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::SecurityMonitoringSuppressionResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetSecurityMonitoringSuppressionError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(Error::ResponseError(local_error))
+        }
+    }
+
     /// Get a list of CSPM findings.
     ///
     /// ### Filtering
@@ -2063,6 +2375,95 @@ impl SecurityMonitoringAPI {
         }
     }
 
+    /// Get the list of all suppression rules.
+    pub async fn list_security_monitoring_suppressions(
+        &self,
+    ) -> Result<
+        crate::datadogV2::model::SecurityMonitoringSuppressionsResponse,
+        Error<ListSecurityMonitoringSuppressionsError>,
+    > {
+        match self
+            .list_security_monitoring_suppressions_with_http_info()
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get the list of all suppression rules.
+    pub async fn list_security_monitoring_suppressions_with_http_info(
+        &self,
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::SecurityMonitoringSuppressionsResponse>,
+        Error<ListSecurityMonitoringSuppressionsError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_security_monitoring_suppressions";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/configuration/suppressions",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build user agent
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+        };
+
+        let local_req = local_req_builder.build()?;
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::SecurityMonitoringSuppressionsResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListSecurityMonitoringSuppressionsError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(Error::ResponseError(local_error))
+        }
+    }
+
     /// Mute or unmute findings.
     pub async fn mute_findings(
         &self,
@@ -2504,6 +2905,107 @@ impl SecurityMonitoringAPI {
             };
         } else {
             let local_entity: Option<UpdateSecurityMonitoringRuleError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(Error::ResponseError(local_error))
+        }
+    }
+
+    /// Update a specific suppression rule.
+    pub async fn update_security_monitoring_suppression(
+        &self,
+        suppression_id: String,
+        body: crate::datadogV2::model::SecurityMonitoringSuppressionUpdateRequest,
+    ) -> Result<
+        crate::datadogV2::model::SecurityMonitoringSuppressionResponse,
+        Error<UpdateSecurityMonitoringSuppressionError>,
+    > {
+        match self
+            .update_security_monitoring_suppression_with_http_info(suppression_id, body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Update a specific suppression rule.
+    pub async fn update_security_monitoring_suppression_with_http_info(
+        &self,
+        suppression_id: String,
+        body: crate::datadogV2::model::SecurityMonitoringSuppressionUpdateRequest,
+    ) -> Result<
+        ResponseContent<crate::datadogV2::model::SecurityMonitoringSuppressionResponse>,
+        Error<UpdateSecurityMonitoringSuppressionError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.update_security_monitoring_suppression";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/configuration/suppressions/{suppression_id}",
+            local_configuration.get_operation_host(operation_id),
+            suppression_id = urlencode(suppression_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        // build user agent
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            local_req_builder = local_req_builder.body(ser.into_inner());
+        }
+
+        let local_req = local_req_builder.build()?;
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::SecurityMonitoringSuppressionResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<UpdateSecurityMonitoringSuppressionError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,

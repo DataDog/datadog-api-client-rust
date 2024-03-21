@@ -24,7 +24,7 @@ pub struct SLOCorrectionCreateRequestAttributes {
     #[serde(rename = "end")]
     pub end: Option<i64>,
     /// The recurrence rules as defined in the iCalendar RFC 5545. The supported rules for SLO corrections
-    /// are `FREQ`, `INTERVAL`, `COUNT` and `UNTIL`.
+    /// are `FREQ`, `INTERVAL`, `COUNT`, `UNTIL` and `BYDAY`.
     #[serde(rename = "rrule")]
     pub rrule: Option<String>,
     /// ID of the SLO that this correction applies to.

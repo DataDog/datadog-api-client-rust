@@ -7,7 +7,9 @@ Feature: Metrics
   number of points and as the timeframe over which a metric is viewed
   increases, aggregation between points occurs to stay below that set
   number.  The Post, Patch, and Delete `manage_tags` API methods can only be
-  performed by a user who has the `Manage Tags for Metrics` permission.
+  performed by a user who has the `Manage Tags for Metrics` permission.  See
+  the [Metrics page](https://docs.datadoghq.com/metrics/) for more
+  information.
 
   Background:
     Given a valid "apiKeyAuth" key in the system
@@ -132,7 +134,7 @@ Feature: Metrics
     Then the response status is 200 Success
     And the response "data" has length 0
 
-  @team:DataDog/metrics-experience
+  @replay-only @team:DataDog/metrics-experience
   Scenario: Get a list of metrics with configured filter returns "Success" response
     Given a valid "appKeyAuth" key in the system
     And new "ListTagConfigurations" request
@@ -277,6 +279,24 @@ Feature: Metrics
     When the request is sent
     Then the response status is 200 OK
 
+  @generated @skip @team:DataDog/metrics-experience
+  Scenario: Related Assets to a Metric returns "API error response." response
+    Given a valid "appKeyAuth" key in the system
+    And new "ListMetricAssets" request
+    And request contains "metric_name" parameter from "REPLACE.ME"
+    When the request is sent
+    Then the response status is 404 API error response.
+
+  @team:DataDog/metrics-experience
+  Scenario: Related Assets to a Metric returns "Success" response
+    Given a valid "appKeyAuth" key in the system
+    And new "ListMetricAssets" request
+    And request contains "metric_name" parameter with value "system.cpu.user"
+    When the request is sent
+    Then the response status is 200 Success
+    And the response "data.type" is equal to "metrics"
+    And the response "data.id" is equal to "system.cpu.user"
+
   @team:Datadog/timeseries-query
   Scenario: Scalar cross product query returns "Bad Request" response
     Given a valid "appKeyAuth" key in the system
@@ -351,7 +371,7 @@ Feature: Metrics
     When the request is sent
     Then the response status is 200 Success
 
-  @skip-rust @team:Datadog/timeseries-query
+  @skip @team:Datadog/timeseries-query
   Scenario: Timeseries cross product query returns "Bad Request" response
     Given a valid "appKeyAuth" key in the system
     And operation "QueryTimeseriesData" enabled

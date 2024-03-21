@@ -11,6 +11,13 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CloudWorkloadSecurityAgentRuleAttributes {
+    /// The array of actions the rule can perform if triggered.
+    #[serde(
+        rename = "actions",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub actions: Option<Option<Vec<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleAction>>>,
     /// The version of the agent.
     #[serde(rename = "agentConstraint")]
     pub agent_constraint: Option<String>,
@@ -67,6 +74,7 @@ pub struct CloudWorkloadSecurityAgentRuleAttributes {
 impl CloudWorkloadSecurityAgentRuleAttributes {
     pub fn new() -> CloudWorkloadSecurityAgentRuleAttributes {
         CloudWorkloadSecurityAgentRuleAttributes {
+            actions: None,
             agent_constraint: None,
             category: None,
             creation_author_uu_id: None,
@@ -85,6 +93,14 @@ impl CloudWorkloadSecurityAgentRuleAttributes {
             version: None,
             _unparsed: false,
         }
+    }
+
+    pub fn actions(
+        mut self,
+        value: Option<Vec<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleAction>>,
+    ) -> Self {
+        self.actions = Some(value);
+        self
     }
 
     pub fn agent_constraint(mut self, value: String) -> Self {
@@ -197,6 +213,9 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut actions: Option<
+                    Option<Vec<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleAction>>,
+                > = None;
                 let mut agent_constraint: Option<String> = None;
                 let mut category: Option<String> = None;
                 let mut creation_author_uu_id: Option<String> = None;
@@ -221,6 +240,9 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "actions" => {
+                            actions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "agentConstraint" => {
                             if v.is_null() {
                                 continue;
@@ -329,6 +351,7 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleAttributes {
                 }
 
                 let content = CloudWorkloadSecurityAgentRuleAttributes {
+                    actions,
                     agent_constraint,
                     category,
                     creation_author_uu_id,

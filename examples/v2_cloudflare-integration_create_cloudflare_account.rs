@@ -13,7 +13,7 @@ async fn main() {
             "fakekey".to_string(),
             "examplecloudflareintegration".to_string(),
         )
-        .email("new@email".to_string()),
+        .email("dev@datadoghq.com".to_string()),
         CloudflareAccountType::CLOUDFLARE_ACCOUNTS,
     ));
     let configuration = Configuration::new();

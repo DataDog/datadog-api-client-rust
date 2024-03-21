@@ -49,6 +49,7 @@ async fn main() {
                         .key(SyntheticsTestRequestCertificateItem::new()),
                 )
                 .certificate_domains(vec![])
+                .http_version(SyntheticsTestOptionsHTTPVersion::HTTP1)
                 .proxy(SyntheticsTestRequestProxy::new(
                     "https://example.com".to_string(),
                 ))
@@ -70,7 +71,7 @@ async fn main() {
         SyntheticsTestOptions::new()
             .ci(SyntheticsTestCiOptions::new()
                 .execution_rule(SyntheticsTestExecutionRule::BLOCKING))
-            .device_ids(vec![SyntheticsDeviceID::LAPTOP_LARGE])
+            .device_ids(vec![SyntheticsDeviceID::CHROME_LAPTOP_LARGE])
             .http_version(SyntheticsTestOptionsHTTPVersion::HTTP1)
             .monitor_options(SyntheticsTestOptionsMonitorOptions::new())
             .restricted_roles(vec!["xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx".to_string()])

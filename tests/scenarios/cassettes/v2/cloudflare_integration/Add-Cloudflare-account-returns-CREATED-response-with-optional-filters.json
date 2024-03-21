@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"api_key\":\"fakekey\",\"email\":\"new@email\",\"name\":\"testaddcloudflareaccountreturnscreatedresponsewithoptionalfilters1704309457\",\"resources\":[\"lb\",\"dns\"],\"zones\":[\"zone-id-1\",\"zone-id-2\"]},\"type\":\"cloudflare-accounts\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/integrations/cloudflare/accounts"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[\"Invalid account. Your Cloudflare configuration is invalid. Impossible to get zones for the account testaddcloudflareaccountreturnscreatedresponsewithoptionalfilters1704309457: API key or email is not in the correct format.\"]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Wed, 03 Jan 2024 19:17:37 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

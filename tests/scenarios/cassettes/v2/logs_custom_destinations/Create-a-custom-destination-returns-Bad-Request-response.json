@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"name\":\"Nginx logs\"},\"type\":\"custom_destination\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/logs/config/custom-destinations"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[\"The parameter 'forwarder_destination' is required\"]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Tue, 12 Mar 2024 09:20:10 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

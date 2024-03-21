@@ -1,1 +1,39 @@
-{"http_interactions": [{"request": {"body": {"string": "{\"data\":{\"attributes\":{\"description\":\"Sample powerpack\",\"name\":\"Sample Powerpack\",\"tags\":[\"tag:sample\"],\"template_variables\":[{\"defaults\":[\"*\"],\"name\":\"sample\"}]},\"type\":\"powerpack\"}}", "encoding": null}, "headers": {"Accept": ["application/json"], "Content-Type": ["application/json"]}, "method": "post", "uri": "https://api.datadoghq.com/api/v2/powerpacks"}, "response": {"body": {"string": "{\"errors\":[\"API input validation failed: {'group_widget': ['Missing data for required field.']}\"]}", "encoding": null}, "headers": {"Content-Type": ["application/json"]}, "status": {"code": 400, "message": "Bad Request"}}, "recorded_at": "Wed, 04 Oct 2023 19:18:49 GMT"}], "recorded_with": "VCR 6.0.0"}
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"description\":\"Sample powerpack\",\"name\":\"Sample Powerpack\",\"tags\":[\"tag:sample\"],\"template_variables\":[{\"defaults\":[\"*\"],\"name\":\"sample\"}]},\"type\":\"powerpack\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/powerpacks"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[\"API input validation failed: {'group_widget': ['Missing data for required field.']}\"]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Wed, 04 Oct 2023 19:18:49 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

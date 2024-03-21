@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum SLOTypeNumeric {
     MONITOR,
     METRIC,
+    TIME_SLICE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -21,6 +22,7 @@ impl Serialize for SLOTypeNumeric {
             Self::UnparsedObject(v) => v.serialize(serializer),
             Self::MONITOR => serializer.serialize_i32(0),
             Self::METRIC => serializer.serialize_i32(1),
+            Self::TIME_SLICE => serializer.serialize_i32(2),
         }
     }
 }
@@ -34,6 +36,7 @@ impl<'de> Deserialize<'de> for SLOTypeNumeric {
         Ok(match s {
             0 => Self::MONITOR,
             1 => Self::METRIC,
+            2 => Self::TIME_SLICE,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::Number(s.into()),
             }),

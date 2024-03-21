@@ -28,6 +28,9 @@ pub struct DashboardSummaryDefinition {
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Whether this dashboard is read-only. If True, only the author and admins can make changes to it.
+    ///
+    /// This property is deprecated; please use the [Restriction Policies API](<https://docs.datadoghq.com/api/latest/restriction-policies/>) instead to manage write authorization for individual dashboards.
+    #[deprecated]
     #[serde(rename = "is_read_only")]
     pub is_read_only: Option<bool>,
     /// Layout type of the dashboard.
@@ -49,6 +52,7 @@ pub struct DashboardSummaryDefinition {
 
 impl DashboardSummaryDefinition {
     pub fn new() -> DashboardSummaryDefinition {
+        #[allow(deprecated)]
         DashboardSummaryDefinition {
             author_handle: None,
             created_at: None,
@@ -63,46 +67,55 @@ impl DashboardSummaryDefinition {
         }
     }
 
+    #[allow(deprecated)]
     pub fn author_handle(mut self, value: String) -> Self {
         self.author_handle = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn created_at(mut self, value: String) -> Self {
         self.created_at = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn description(mut self, value: Option<String>) -> Self {
         self.description = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn is_read_only(mut self, value: bool) -> Self {
         self.is_read_only = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn layout_type(mut self, value: crate::datadogV1::model::DashboardLayoutType) -> Self {
         self.layout_type = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn modified_at(mut self, value: String) -> Self {
         self.modified_at = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn url(mut self, value: String) -> Self {
         self.url = Some(value);
         self
@@ -213,6 +226,7 @@ impl<'de> Deserialize<'de> for DashboardSummaryDefinition {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = DashboardSummaryDefinition {
                     author_handle,
                     created_at,

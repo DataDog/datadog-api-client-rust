@@ -1,1 +1,67 @@
-{"http_interactions": [{"request": {"body": {"string": "{\"access_role\":null,\"disabled\":false,\"email\":\"test@datadoghq.com\",\"handle\":\"test@datadoghq.com\",\"name\":\"test user\"}", "encoding": null}, "headers": {"Accept": ["application/json"], "Content-Type": ["application/json"]}, "method": "post", "uri": "https://api.datadoghq.com/api/v1/user"}, "response": {"body": {"string": "{\"user\":{\"handle\":\"test@datadoghq.com\",\"name\":\"test user\",\"role\":null,\"title\":null,\"email\":\"test@datadoghq.com\",\"disabled\":true,\"access_role\":null,\"is_admin\":false,\"icon\":\"https://secure.gravatar.com/avatar/f979f58720feb88e09cc3d11ce3d15da?s=48&d=retro\",\"verified\":false}}\n", "encoding": null}, "headers": {"Content-Type": ["application/json"]}, "status": {"code": 200, "message": "OK"}}, "recorded_at": "Mon, 10 Jul 2023 18:58:47 GMT"}, {"request": {"body": "", "headers": {"Accept": ["application/json"]}, "method": "delete", "uri": "https://api.datadoghq.com/api/v1/user/test%40datadoghq.com"}, "response": {"body": {"string": "{\"errors\":[\"User is already disabled\"]}", "encoding": null}, "headers": {"Content-Type": ["application/json"]}, "status": {"code": 400, "message": "Bad Request"}}, "recorded_at": "Mon, 10 Jul 2023 18:58:47 GMT"}], "recorded_with": "VCR 6.0.0"}
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"access_role\":null,\"disabled\":false,\"email\":\"test@datadoghq.com\",\"handle\":\"test@datadoghq.com\",\"name\":\"test user\"}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v1/user"
+      },
+      "response": {
+        "body": {
+          "string": "{\"user\":{\"handle\":\"test@datadoghq.com\",\"name\":\"test user\",\"role\":null,\"title\":null,\"email\":\"test@datadoghq.com\",\"disabled\":true,\"access_role\":null,\"is_admin\":false,\"icon\":\"https://secure.gravatar.com/avatar/f979f58720feb88e09cc3d11ce3d15da?s=48&d=retro\",\"verified\":false}}\n",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Mon, 10 Jul 2023 18:58:47 GMT"
+    },
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "application/json"
+          ]
+        },
+        "method": "delete",
+        "uri": "https://api.datadoghq.com/api/v1/user/test%40datadoghq.com"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[\"User is already disabled\"]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Mon, 10 Jul 2023 18:58:47 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

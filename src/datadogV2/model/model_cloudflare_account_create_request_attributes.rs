@@ -20,6 +20,12 @@ pub struct CloudflareAccountCreateRequestAttributes {
     /// The name of the Cloudflare account.
     #[serde(rename = "name")]
     pub name: String,
+    /// An allowlist of resources to restrict pulling metrics for.
+    #[serde(rename = "resources")]
+    pub resources: Option<Vec<String>>,
+    /// An allowlist of zones to restrict pulling metrics for.
+    #[serde(rename = "zones")]
+    pub zones: Option<Vec<String>>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -31,12 +37,24 @@ impl CloudflareAccountCreateRequestAttributes {
             api_key,
             email: None,
             name,
+            resources: None,
+            zones: None,
             _unparsed: false,
         }
     }
 
     pub fn email(mut self, value: String) -> Self {
         self.email = Some(value);
+        self
+    }
+
+    pub fn resources(mut self, value: Vec<String>) -> Self {
+        self.resources = Some(value);
+        self
+    }
+
+    pub fn zones(mut self, value: Vec<String>) -> Self {
+        self.zones = Some(value);
         self
     }
 }
@@ -61,6 +79,8 @@ impl<'de> Deserialize<'de> for CloudflareAccountCreateRequestAttributes {
                 let mut api_key: Option<String> = None;
                 let mut email: Option<String> = None;
                 let mut name: Option<String> = None;
+                let mut resources: Option<Vec<String>> = None;
+                let mut zones: Option<Vec<String>> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -77,6 +97,18 @@ impl<'de> Deserialize<'de> for CloudflareAccountCreateRequestAttributes {
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "resources" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            resources = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "zones" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            zones = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {}
                     }
                 }
@@ -87,6 +119,8 @@ impl<'de> Deserialize<'de> for CloudflareAccountCreateRequestAttributes {
                     api_key,
                     email,
                     name,
+                    resources,
+                    zones,
                     _unparsed,
                 };
 

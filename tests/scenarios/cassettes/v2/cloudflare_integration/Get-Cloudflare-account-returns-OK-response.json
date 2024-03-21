@@ -1,1 +1,95 @@
-{"http_interactions": [{"request": {"body": {"string": "{\"data\":{\"attributes\":{\"api_key\":\"fakekey\",\"email\":\"dev@datadog.com\",\"name\":\"testgetcloudflareaccountreturnsokresponse1674810021\"},\"type\":\"cloudflare-accounts\"}}", "encoding": null}, "headers": {"Accept": ["application/json"], "Content-Type": ["application/json"]}, "method": "post", "uri": "https://api.datadoghq.com/api/v2/integrations/cloudflare/accounts"}, "response": {"body": {"string": "{\"data\":{\"attributes\":{\"email\":\"dev@datadog.com\",\"name\":\"testgetcloudflareaccountreturnsokresponse1674810021\"},\"type\":\"cloudflare-accounts\",\"id\":\"ec582035efa21742f8f4ef4393ded49c\"}}\n", "encoding": null}, "headers": {"Content-Type": ["application/json"]}, "status": {"code": 201, "message": "Created"}}, "recorded_at": "Fri, 27 Jan 2023 09:00:21 GMT"}, {"request": {"body": "", "headers": {"Accept": ["application/json"]}, "method": "get", "uri": "https://api.datadoghq.com/api/v2/integrations/cloudflare/accounts/ec582035efa21742f8f4ef4393ded49c"}, "response": {"body": {"string": "{\"data\":{\"attributes\":{\"email\":\"dev@datadog.com\",\"name\":\"testgetcloudflareaccountreturnsokresponse1674810021\"},\"type\":\"cloudflare-accounts\",\"id\":\"ec582035efa21742f8f4ef4393ded49c\"}}\n", "encoding": null}, "headers": {"Content-Type": ["application/json"]}, "status": {"code": 200, "message": "OK"}}, "recorded_at": "Fri, 27 Jan 2023 09:00:21 GMT"}, {"request": {"body": "", "headers": {"Accept": ["*/*"]}, "method": "delete", "uri": "https://api.datadoghq.com/api/v2/integrations/cloudflare/accounts/ec582035efa21742f8f4ef4393ded49c"}, "response": {"body": {"string": "", "encoding": null}, "headers": {"Content-Type": ["text/html; charset=utf-8"]}, "status": {"code": 204, "message": "No Content"}}, "recorded_at": "Fri, 27 Jan 2023 09:00:21 GMT"}], "recorded_with": "VCR 6.0.0"}
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"api_key\":\"fakekey\",\"email\":\"dev@datadog.com\",\"name\":\"testgetcloudflareaccountreturnsokresponse1704393642\",\"resources\":[\"web\",\"dns\"],\"zones\":[\"zone-id-1\",\"zone-id-2\"]},\"type\":\"cloudflare-accounts\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/integrations/cloudflare/accounts"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":{\"type\":\"cloudflare-accounts\",\"attributes\":{\"name\":\"testgetcloudflareaccountreturnsokresponse1704393642\",\"email\":\"dev@datadog.com\",\"zones\":[\"zone-id-1\",\"zone-id-2\"],\"resources\":[\"web\",\"dns\"]},\"id\":\"88d65a60026254bfaf976a427606c061\"}}\n",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 201,
+          "message": "Created"
+        }
+      },
+      "recorded_at": "Thu, 04 Jan 2024 18:40:42 GMT"
+    },
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "application/json"
+          ]
+        },
+        "method": "get",
+        "uri": "https://api.datadoghq.com/api/v2/integrations/cloudflare/accounts/88d65a60026254bfaf976a427606c061"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":{\"type\":\"cloudflare-accounts\",\"attributes\":{\"zones\":[\"zone-id-1\",\"zone-id-2\"],\"email\":\"dev@datadog.com\",\"name\":\"testgetcloudflareaccountreturnsokresponse1704393642\",\"resources\":[\"web\",\"dns\"]},\"id\":\"88d65a60026254bfaf976a427606c061\"}}\n",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Thu, 04 Jan 2024 18:40:42 GMT"
+    },
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "*/*"
+          ]
+        },
+        "method": "delete",
+        "uri": "https://api.datadoghq.com/api/v2/integrations/cloudflare/accounts/88d65a60026254bfaf976a427606c061"
+      },
+      "response": {
+        "body": {
+          "string": "",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "text/html; charset=utf-8"
+          ]
+        },
+        "status": {
+          "code": 204,
+          "message": "No Content"
+        }
+      },
+      "recorded_at": "Thu, 04 Jan 2024 18:40:42 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

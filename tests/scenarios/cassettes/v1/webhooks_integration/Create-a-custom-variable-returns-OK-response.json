@@ -1,1 +1,67 @@
-{"http_interactions": [{"request": {"body": {"string": "{\"is_secret\":true,\"name\":\"TESTCREATEACUSTOMVARIABLERETURNSOKRESPONSE1652349031\",\"value\":\"CUSTOM_VARIABLE_VALUE\"}", "encoding": null}, "headers": {"Accept": ["application/json"], "Content-Type": ["application/json"]}, "method": "post", "uri": "https://api.datadoghq.com/api/v1/integration/webhooks/configuration/custom-variables"}, "response": {"body": {"string": "{\"is_secret\":true,\"name\":\"TESTCREATEACUSTOMVARIABLERETURNSOKRESPONSE1652349031\"}", "encoding": null}, "headers": {"Content-Type": ["application/json"]}, "status": {"code": 201, "message": "Created"}}, "recorded_at": "Thu, 12 May 2022 09:50:31 GMT"}, {"request": {"body": "", "headers": {"Accept": ["*/*"]}, "method": "delete", "uri": "https://api.datadoghq.com/api/v1/integration/webhooks/configuration/custom-variables/TESTCREATEACUSTOMVARIABLERETURNSOKRESPONSE1652349031"}, "response": {"body": {"string": "{}", "encoding": null}, "headers": {"Content-Type": ["application/json"]}, "status": {"code": 200, "message": "OK"}}, "recorded_at": "Thu, 12 May 2022 09:50:31 GMT"}], "recorded_with": "VCR 6.0.0"}
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"is_secret\":true,\"name\":\"TESTCREATEACUSTOMVARIABLERETURNSOKRESPONSE1652349031\",\"value\":\"CUSTOM_VARIABLE_VALUE\"}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v1/integration/webhooks/configuration/custom-variables"
+      },
+      "response": {
+        "body": {
+          "string": "{\"is_secret\":true,\"name\":\"TESTCREATEACUSTOMVARIABLERETURNSOKRESPONSE1652349031\"}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 201,
+          "message": "Created"
+        }
+      },
+      "recorded_at": "Thu, 12 May 2022 09:50:31 GMT"
+    },
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "*/*"
+          ]
+        },
+        "method": "delete",
+        "uri": "https://api.datadoghq.com/api/v1/integration/webhooks/configuration/custom-variables/TESTCREATEACUSTOMVARIABLERETURNSOKRESPONSE1652349031"
+      },
+      "response": {
+        "body": {
+          "string": "{}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Thu, 12 May 2022 09:50:31 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

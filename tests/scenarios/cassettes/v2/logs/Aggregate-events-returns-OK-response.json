@@ -1,1 +1,39 @@
-{"http_interactions": [{"request": {"body": {"string": "{\"filter\":{\"from\":\"now-15m\",\"indexes\":[\"main\"],\"query\":\"*\",\"to\":\"now\"}}", "encoding": null}, "headers": {"Accept": ["application/json"], "Content-Type": ["application/json"]}, "method": "post", "uri": "https://api.datadoghq.com/api/v2/logs/analytics/aggregate"}, "response": {"body": {"string": "{\"meta\":{\"status\":\"done\",\"request_id\":\"pddv1ChZqNnEtQ2hTU1M5dTYxbWtrUGtBMGFBIi0KHVny0iHoClVAOb_xrSWcwl_hHz3QjhOb8cLTslhGEgz4EiXPOZ8kQFQe2Zw\",\"elapsed\":5},\"data\":{\"buckets\":[{\"computes\":{\"c0\":2},\"by\":{}}]}}", "encoding": null}, "headers": {"Content-Type": ["application/json"]}, "status": {"code": 200, "message": "OK"}}, "recorded_at": "Thu, 06 Jan 2022 00:51:50 GMT"}], "recorded_with": "VCR 6.0.0"}
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"filter\":{\"from\":\"now-15m\",\"indexes\":[\"main\"],\"query\":\"*\",\"to\":\"now\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/logs/analytics/aggregate"
+      },
+      "response": {
+        "body": {
+          "string": "{\"meta\":{\"status\":\"done\",\"request_id\":\"pddv1ChZqNnEtQ2hTU1M5dTYxbWtrUGtBMGFBIi0KHVny0iHoClVAOb_xrSWcwl_hHz3QjhOb8cLTslhGEgz4EiXPOZ8kQFQe2Zw\",\"elapsed\":5},\"data\":{\"buckets\":[{\"computes\":{\"c0\":2},\"by\":{}}]}}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Thu, 06 Jan 2022 00:51:50 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

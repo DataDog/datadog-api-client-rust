@@ -46,7 +46,7 @@ async fn main() {
         SyntheticsTestOptions::new()
             .accept_self_signed(false)
             .allow_insecure(true)
-            .device_ids(vec![SyntheticsDeviceID::TABLET])
+            .device_ids(vec![SyntheticsDeviceID::CHROME_LAPTOP_LARGE])
             .disable_cors(true)
             .follow_redirects(true)
             .min_failure_duration(10)

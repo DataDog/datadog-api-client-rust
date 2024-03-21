@@ -1,1 +1,63 @@
-{"http_interactions": [{"request": {"body": {"string": "{\"end\":1657667267,\"message\":\"Test-Schedule_a_downtime_with_until_occurrences-1657663667\",\"monitor_tags\":[\"tag0\"],\"recurrence\":{\"period\":1,\"type\":\"weeks\",\"until_occurrences\":3,\"week_days\":[\"Mon\",\"Tue\",\"Wed\",\"Thu\",\"Fri\"]},\"scope\":[\"*\"],\"start\":1657663667,\"timezone\":\"Etc/UTC\"}", "encoding": null}, "headers": {"Accept": ["application/json"], "Content-Type": ["application/json"]}, "method": "post", "uri": "https://api.datadoghq.com/api/v1/downtime"}, "response": {"body": {"string": "{\"recurrence\":{\"until_date\":null,\"until_occurrences\":3,\"week_days\":[\"Mon\",\"Tue\",\"Wed\",\"Thu\",\"Fri\"],\"type\":\"weeks\",\"period\":1},\"end\":1657667267,\"monitor_tags\":[\"tag0\"],\"child_id\":null,\"canceled\":null,\"monitor_id\":null,\"mute_first_recovery_notification\":false,\"created\":1657663667,\"org_id\":321813,\"modified\":1657663667,\"disabled\":false,\"start\":1657663667,\"creator_id\":1445416,\"parent_id\":null,\"timezone\":\"Etc/UTC\",\"active\":true,\"scope\":[\"*\"],\"message\":\"Test-Schedule_a_downtime_with_until_occurrences-1657663667\",\"downtime_type\":0,\"id\":2082107712,\"updater_id\":null}", "encoding": null}, "headers": {"Content-Type": ["application/json"]}, "status": {"code": 200, "message": "OK"}}, "recorded_at": "Tue, 12 Jul 2022 22:07:47 GMT"}, {"request": {"body": "", "headers": {"Accept": ["*/*"]}, "method": "delete", "uri": "https://api.datadoghq.com/api/v1/downtime/2082107712"}, "response": {"body": {"string": "", "encoding": null}, "headers": {}, "status": {"code": 204, "message": "No Content"}}, "recorded_at": "Tue, 12 Jul 2022 22:07:47 GMT"}], "recorded_with": "VCR 6.0.0"}
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"end\":1657667267,\"message\":\"Test-Schedule_a_downtime_with_until_occurrences-1657663667\",\"monitor_tags\":[\"tag0\"],\"recurrence\":{\"period\":1,\"type\":\"weeks\",\"until_occurrences\":3,\"week_days\":[\"Mon\",\"Tue\",\"Wed\",\"Thu\",\"Fri\"]},\"scope\":[\"*\"],\"start\":1657663667,\"timezone\":\"Etc/UTC\"}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v1/downtime"
+      },
+      "response": {
+        "body": {
+          "string": "{\"recurrence\":{\"until_date\":null,\"until_occurrences\":3,\"week_days\":[\"Mon\",\"Tue\",\"Wed\",\"Thu\",\"Fri\"],\"type\":\"weeks\",\"period\":1},\"end\":1657667267,\"monitor_tags\":[\"tag0\"],\"child_id\":null,\"canceled\":null,\"monitor_id\":null,\"mute_first_recovery_notification\":false,\"created\":1657663667,\"org_id\":321813,\"modified\":1657663667,\"disabled\":false,\"start\":1657663667,\"creator_id\":1445416,\"parent_id\":null,\"timezone\":\"Etc/UTC\",\"active\":true,\"scope\":[\"*\"],\"message\":\"Test-Schedule_a_downtime_with_until_occurrences-1657663667\",\"downtime_type\":0,\"id\":2082107712,\"updater_id\":null}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Tue, 12 Jul 2022 22:07:47 GMT"
+    },
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "*/*"
+          ]
+        },
+        "method": "delete",
+        "uri": "https://api.datadoghq.com/api/v1/downtime/2082107712"
+      },
+      "response": {
+        "body": {
+          "string": "",
+          "encoding": null
+        },
+        "headers": {},
+        "status": {
+          "code": 204,
+          "message": "No Content"
+        }
+      },
+      "recorded_at": "Tue, 12 Jul 2022 22:07:47 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

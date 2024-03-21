@@ -53,6 +53,8 @@ pub enum UsageAttributionSupportedMetrics {
     APPSEC_FARGATE_PERCENTAGE,
     ESTIMATED_RUM_USAGE_ATTRIBUTION_USAGE,
     ESTIMATED_RUM_USAGE_ATTRIBUTION_PERCENTAGE,
+    ASM_SERVERLESS_TRACED_INVOCATIONS_USAGE,
+    ASM_SERVERLESS_TRACED_INVOCATIONS_PERCENTAGE,
     ALL,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
@@ -117,6 +119,12 @@ impl ToString for UsageAttributionSupportedMetrics {
             }
             Self::ESTIMATED_RUM_USAGE_ATTRIBUTION_PERCENTAGE => {
                 String::from("estimated_rum_usage_attribution_percentage")
+            }
+            Self::ASM_SERVERLESS_TRACED_INVOCATIONS_USAGE => {
+                String::from("asm_serverless_traced_invocations_usage")
+            }
+            Self::ASM_SERVERLESS_TRACED_INVOCATIONS_PERCENTAGE => {
+                String::from("asm_serverless_traced_invocations_percentage")
             }
             Self::ALL => String::from("*"),
             Self::UnparsedObject(v) => v.value.to_string(),
@@ -190,6 +198,12 @@ impl<'de> Deserialize<'de> for UsageAttributionSupportedMetrics {
             "estimated_rum_usage_attribution_usage" => Self::ESTIMATED_RUM_USAGE_ATTRIBUTION_USAGE,
             "estimated_rum_usage_attribution_percentage" => {
                 Self::ESTIMATED_RUM_USAGE_ATTRIBUTION_PERCENTAGE
+            }
+            "asm_serverless_traced_invocations_usage" => {
+                Self::ASM_SERVERLESS_TRACED_INVOCATIONS_USAGE
+            }
+            "asm_serverless_traced_invocations_percentage" => {
+                Self::ASM_SERVERLESS_TRACED_INVOCATIONS_PERCENTAGE
             }
             "*" => Self::ALL,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {

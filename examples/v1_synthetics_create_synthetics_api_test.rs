@@ -45,7 +45,7 @@ async fn main() {
         SyntheticsTestOptions::new()
             .ci(SyntheticsTestCiOptions::new()
                 .execution_rule(SyntheticsTestExecutionRule::BLOCKING))
-            .device_ids(vec![SyntheticsDeviceID::LAPTOP_LARGE])
+            .device_ids(vec![SyntheticsDeviceID::CHROME_LAPTOP_LARGE])
             .http_version(SyntheticsTestOptionsHTTPVersion::HTTP1)
             .monitor_options(SyntheticsTestOptionsMonitorOptions::new())
             .restricted_roles(vec!["xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx".to_string()])

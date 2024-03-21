@@ -1,1 +1,33 @@
-{"http_interactions": [{"request": {"body": "", "headers": {"Accept": ["application/json"]}, "method": "get", "uri": "https://api.datadoghq.com/api/v2/restriction_policy/malformed"}, "response": {"body": {"string": "{\"errors\":[\"Invalid resource: 'malformed' is not in a valid format\"]}", "encoding": null}, "headers": {"Content-Type": ["application/json"]}, "status": {"code": 400, "message": "Bad Request"}}, "recorded_at": "Wed, 08 Feb 2023 21:43:23 GMT"}], "recorded_with": "VCR 6.0.0"}
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "application/json"
+          ]
+        },
+        "method": "get",
+        "uri": "https://api.datadoghq.com/api/v2/restriction_policy/malformed"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[\"Invalid resource: 'malformed' is not in a valid format\"]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Wed, 08 Feb 2023 21:43:23 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

@@ -1,0 +1,33 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "application/json;datetime-format=rfc3339"
+          ]
+        },
+        "method": "get",
+        "uri": "https://api.datadoghq.com/api/v2/usage/lambda_traced_invocations?start_hr=2024-01-21T20%3A56%3A23.911Z&end_hr=2024-01-19T20%3A56%3A23.911Z"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[\"start_hr [YYYY-MM-DDThh] must be before end_hr [YYYY-MM-DDThh]\"]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Wed, 24 Jan 2024 20:56:23 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
