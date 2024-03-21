@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// An object defining the recurrence of the downtime.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DowntimeRecurrence {
     /// How often to repeat as an integer.
     /// For example, to repeat every 3 days, select a type of `days` and a period of `3`.
@@ -48,6 +50,9 @@ pub struct DowntimeRecurrence {
         with = "::serde_with::rust::double_option"
     )]
     pub week_days: Option<Option<Vec<String>>>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl DowntimeRecurrence {
@@ -59,35 +64,36 @@ impl DowntimeRecurrence {
             until_date: None,
             until_occurrences: None,
             week_days: None,
+            _unparsed: false,
         }
     }
 
-    pub fn period(&mut self, value: i32) -> &mut Self {
+    pub fn period(mut self, value: i32) -> Self {
         self.period = Some(value);
         self
     }
 
-    pub fn rrule(&mut self, value: String) -> &mut Self {
+    pub fn rrule(mut self, value: String) -> Self {
         self.rrule = Some(value);
         self
     }
 
-    pub fn type_(&mut self, value: String) -> &mut Self {
+    pub fn type_(mut self, value: String) -> Self {
         self.type_ = Some(value);
         self
     }
 
-    pub fn until_date(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn until_date(mut self, value: Option<i64>) -> Self {
         self.until_date = Some(value);
         self
     }
 
-    pub fn until_occurrences(&mut self, value: Option<i32>) -> &mut Self {
+    pub fn until_occurrences(mut self, value: Option<i32>) -> Self {
         self.until_occurrences = Some(value);
         self
     }
 
-    pub fn week_days(&mut self, value: Option<Vec<String>>) -> &mut Self {
+    pub fn week_days(mut self, value: Option<Vec<String>>) -> Self {
         self.week_days = Some(value);
         self
     }
@@ -96,5 +102,82 @@ impl DowntimeRecurrence {
 impl Default for DowntimeRecurrence {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for DowntimeRecurrence {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct DowntimeRecurrenceVisitor;
+        impl<'a> Visitor<'a> for DowntimeRecurrenceVisitor {
+            type Value = DowntimeRecurrence;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut period: Option<i32> = None;
+                let mut rrule: Option<String> = None;
+                let mut type_: Option<String> = None;
+                let mut until_date: Option<Option<i64>> = None;
+                let mut until_occurrences: Option<Option<i32>> = None;
+                let mut week_days: Option<Option<Vec<String>>> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "period" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            period = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rrule" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rrule = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "type" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "until_date" => {
+                            until_date = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "until_occurrences" => {
+                            until_occurrences =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "week_days" => {
+                            week_days = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+
+                let content = DowntimeRecurrence {
+                    period,
+                    rrule,
+                    type_,
+                    until_date,
+                    until_occurrences,
+                    week_days,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(DowntimeRecurrenceVisitor)
     }
 }

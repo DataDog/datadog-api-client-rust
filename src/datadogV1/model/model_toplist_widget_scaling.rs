@@ -2,15 +2,14 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ToplistWidgetScaling {
-    #[serde(rename = "absolute")]
     ABSOLUTE,
-    #[serde(rename = "relative")]
     RELATIVE,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for ToplistWidgetScaling {
@@ -18,6 +17,35 @@ impl ToString for ToplistWidgetScaling {
         match self {
             Self::ABSOLUTE => String::from("absolute"),
             Self::RELATIVE => String::from("relative"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
+    }
+}
+
+impl Serialize for ToplistWidgetScaling {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for ToplistWidgetScaling {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "absolute" => Self::ABSOLUTE,
+            "relative" => Self::RELATIVE,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
+        })
     }
 }

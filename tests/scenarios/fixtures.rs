@@ -2,7 +2,7 @@ use crate::{
     scenarios::function_mappings::{collect_function_calls, initialize_api_instance, ApiInstances},
     GIVEN_MAP, UNDO_MAP,
 };
-use chrono::{DateTime, Duration, Months, SecondsFormat};
+use chrono::{DateTime, Duration, Months, SecondsFormat, Utc};
 use convert_case::{Case, Casing};
 use cucumber::{
     event::ScenarioFinished,
@@ -20,7 +20,8 @@ use sha256::digest;
 use std::{
     collections::{HashMap, HashSet},
     env,
-    fs::{create_dir_all, read_to_string},
+    fs::{create_dir_all, read_to_string, remove_file, File},
+    io::Write,
     ops::Add,
     path::PathBuf,
     str::FromStr,
@@ -46,6 +47,7 @@ struct UndoOperation {
 pub struct DatadogWorld {
     pub api_version: i32,
     pub config: Configuration,
+    pub http_client: Option<reqwest_middleware::ClientWithMiddleware>,
     pub fixtures: Value,
     pub function_mappings: HashMap<String, TestCall>,
     pub operation_id: String,
@@ -99,37 +101,56 @@ pub async fn before_scenario(
 
     let mut frozen_time = chrono::Utc::now().signed_duration_since(DateTime::UNIX_EPOCH);
 
-    let vcr_client_builder = ClientBuilder::new(reqwest::Client::new());
-    let client = match env::var("RECORD").unwrap_or("false".to_string()).as_str() {
+    world.config.set_auth_key(
+        "apiKeyAuth",
+        APIKey {
+            key: "00000000000000000000000000000000".to_string(),
+            prefix: "".to_owned(),
+        },
+    );
+    world.config.set_auth_key(
+        "appKeyAuth",
+        APIKey {
+            key: "0000000000000000000000000000000000000000".to_string(),
+            prefix: "".to_owned(),
+        },
+    );
+
+    let mut reqwest_client_builder = reqwest::Client::builder();
+    if let Some(proxy_url) = &world.config.proxy_url {
+        let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+        reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+    }
+
+    let mut vcr_client_builder = ClientBuilder::new(reqwest_client_builder.build().unwrap());
+    vcr_client_builder = match env::var("RECORD").unwrap_or("false".to_string()).as_str() {
         "none" => {
             prefix.push_str("-Rust");
-            vcr_client_builder.build()
+            vcr_client_builder
         }
         "true" => {
-            // let _ = remove_file(cassette.clone());
-            // let _ = remove_file(freeze.clone());
-            // let mut freeze_file = File::create(freeze).expect("failed to write freeze file");
-            // freeze_file
-            //     .write_all(
-            //         DateTime::to_rfc3339(
-            //             &DateTime::from_timestamp(frozen_time.num_milliseconds() as i64, 0)
-            //                 .expect("failed to convert timestamp to datetime"),
-            //         )
-            //         .as_bytes(),
-            //     )
-            //     .expect("failed to write freeze file");
-            // let middleware: VCRMiddleware = VCRMiddleware::try_from(cassette)
-            //     .expect("Failed to initialize rVCR middleware")
-            //     .with_mode(VCRMode::Record)
-            //     .with_modify_request(|req| {
-            //         req.headers.remove_entry("dd-api-key");
-            //         req.headers.remove_entry("dd-application-key");
-            //     })
-            //     .with_modify_response(|res| {
-            //         res.headers.remove_entry("content-security-policy");
-            //     });
-            // vcr_client_builder.with(middleware).build()
-            panic!("Use the cassette transform in datadog-api-spec instead. This recording mode is only here for completeness.");
+            let _ = remove_file(cassette.clone());
+            let _ = remove_file(freeze.clone());
+            let mut freeze_file = File::create(freeze).expect("failed to write freeze file");
+            freeze_file
+                .write_all(
+                    Utc::now()
+                        .format("%Y-%m-%dT%H:%M:%S%.3fZ")
+                        .to_string()
+                        .as_bytes(),
+                )
+                .expect("failed to write freeze file");
+            let middleware: VCRMiddleware = VCRMiddleware::try_from(cassette)
+                .expect("Failed to initialize rVCR middleware")
+                .with_mode(VCRMode::Record)
+                .with_modify_request(|req| {
+                    req.headers.remove_entry("dd-api-key");
+                    req.headers.remove_entry("dd-application-key");
+                })
+                .with_modify_response(|res| {
+                    res.headers.remove_entry("content-security-policy");
+                });
+            vcr_client_builder.with(middleware)
         }
         _ => {
             frozen_time = DateTime::parse_from_rfc3339(
@@ -151,24 +172,10 @@ pub async fn before_scenario(
                     res.headers.remove_entry("content-security-policy");
                 })
                 .with_request_matcher(|vcr_req, req| req_eq(vcr_req, req));
-            vcr_client_builder.with(middleware).build()
+            vcr_client_builder.with(middleware)
         }
     };
-    world.config.client(client);
-    world.config.set_auth_key(
-        "apiKeyAuth",
-        APIKey {
-            key: "00000000000000000000000000000000".to_string(),
-            prefix: "".to_owned(),
-        },
-    );
-    world.config.set_auth_key(
-        "appKeyAuth",
-        APIKey {
-            key: "0000000000000000000000000000000000000000".to_string(),
-            prefix: "".to_owned(),
-        },
-    );
+    world.http_client = Some(vcr_client_builder.build());
 
     world.config.set_retry(true, 3);
 
@@ -473,10 +480,24 @@ fn request_sent(world: &mut DatadogWorld) {
     }
 }
 
-// #[when(regex = r"^the request with pagination is sent$")]
-// fn request_with_pagination_sent(_world: &mut DatadogWorld) {
+#[when(regex = r"^the request with pagination is sent$")]
+fn request_with_pagination_sent(world: &mut DatadogWorld) {
+    world
+        .function_mappings
+        .get(&format!(
+            "v{}.{}WithPagination",
+            world.api_version, &world.operation_id
+        ))
+        .expect(&format!(
+            "{:?} request operation id not found",
+            world.operation_id
+        ))(world, &world.parameters.clone());
+}
 
-// }
+#[then(expr = "the response has {int} items")]
+fn response_has_items(world: &mut DatadogWorld, size: usize) {
+    assert!(world.response.object.as_array().unwrap().len() == size);
+}
 
 #[then(expr = "the response status is {int} {}")]
 fn response_status_is(world: &mut DatadogWorld, status_code: u16, _status_message: String) {
@@ -500,6 +521,13 @@ fn response_has_field(world: &mut DatadogWorld, path: String, field_path: String
     let found = lookup(&path, &world.response.object).expect("value not found in response");
     let field = lookup(&field_path, &found);
     assert!(field.is_some());
+}
+
+#[then(expr = "the response {string} does not have field {string}")]
+fn response_does_not_have_field(world: &mut DatadogWorld, path: String, field_path: String) {
+    let found = lookup(&path, &world.response.object).expect("value not found in response");
+    let field = lookup(&field_path, &found);
+    assert!(field.is_none());
 }
 
 #[then(expr = "the response {string} has item with field {string} with value {}")]
@@ -647,10 +675,10 @@ fn relative_time_helper(v: &String, ts: i64) -> DateTime<chrono::Utc> {
         )
         .unwrap();
         match caps.get(3).unwrap().as_str() {
-            "s" => time.add(Duration::seconds(diff)),
-            "m" => time.add(Duration::minutes(diff)),
-            "h" => time.add(Duration::hours(diff)),
-            "d" => time.add(Duration::days(diff)),
+            "s" => time.add(Duration::try_seconds(diff).unwrap()),
+            "m" => time.add(Duration::try_minutes(diff).unwrap()),
+            "h" => time.add(Duration::try_hours(diff).unwrap()),
+            "d" => time.add(Duration::try_days(diff).unwrap()),
             "M" => {
                 if diff > 0 {
                     time.checked_add_months(Months::new(diff as u32)).unwrap()

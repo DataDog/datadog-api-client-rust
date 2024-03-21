@@ -2,27 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum GetTeamMembershipsSort {
-    #[serde(rename = "manager_name")]
     MANAGER_NAME,
-    #[serde(rename = "-manager_name")]
     _MANAGER_NAME,
-    #[serde(rename = "name")]
     NAME,
-    #[serde(rename = "-name")]
     _NAME,
-    #[serde(rename = "handle")]
     HANDLE,
-    #[serde(rename = "-handle")]
     _HANDLE,
-    #[serde(rename = "email")]
     EMAIL,
-    #[serde(rename = "-email")]
     _EMAIL,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for GetTeamMembershipsSort {
@@ -36,6 +29,41 @@ impl ToString for GetTeamMembershipsSort {
             Self::_HANDLE => String::from("-handle"),
             Self::EMAIL => String::from("email"),
             Self::_EMAIL => String::from("-email"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
+    }
+}
+
+impl Serialize for GetTeamMembershipsSort {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for GetTeamMembershipsSort {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "manager_name" => Self::MANAGER_NAME,
+            "-manager_name" => Self::_MANAGER_NAME,
+            "name" => Self::NAME,
+            "-name" => Self::_NAME,
+            "handle" => Self::HANDLE,
+            "-handle" => Self::_HANDLE,
+            "email" => Self::EMAIL,
+            "-email" => Self::_EMAIL,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
+        })
     }
 }

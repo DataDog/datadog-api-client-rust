@@ -2,6 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use log::warn;
 use reqwest;
 use serde::{Deserialize, Serialize};
@@ -16,7 +18,7 @@ pub struct GetFindingOptionalParams {
 
 impl GetFindingOptionalParams {
     /// Return the finding for a given snapshot of time (Unix ms).
-    pub fn snapshot_timestamp(&mut self, value: i64) -> &mut Self {
+    pub fn snapshot_timestamp(mut self, value: i64) -> Self {
         self.snapshot_timestamp = Some(value);
         self
     }
@@ -54,65 +56,62 @@ pub struct ListFindingsOptionalParams {
 
 impl ListFindingsOptionalParams {
     /// Limit the number of findings returned. Must be <= 1000.
-    pub fn page_limit(&mut self, value: i64) -> &mut Self {
+    pub fn page_limit(mut self, value: i64) -> Self {
         self.page_limit = Some(value);
         self
     }
     /// Return findings for a given snapshot of time (Unix ms).
-    pub fn snapshot_timestamp(&mut self, value: i64) -> &mut Self {
+    pub fn snapshot_timestamp(mut self, value: i64) -> Self {
         self.snapshot_timestamp = Some(value);
         self
     }
     /// Return the next page of findings pointed to by the cursor.
-    pub fn page_cursor(&mut self, value: String) -> &mut Self {
+    pub fn page_cursor(mut self, value: String) -> Self {
         self.page_cursor = Some(value);
         self
     }
     /// Return findings that have these associated tags (repeatable).
-    pub fn filter_tags(&mut self, value: String) -> &mut Self {
+    pub fn filter_tags(mut self, value: String) -> Self {
         self.filter_tags = Some(value);
         self
     }
     /// Return findings that have changed from pass to fail or vice versa on a specified date (Unix ms) or date range (using comparison operators).
-    pub fn filter_evaluation_changed_at(&mut self, value: String) -> &mut Self {
+    pub fn filter_evaluation_changed_at(mut self, value: String) -> Self {
         self.filter_evaluation_changed_at = Some(value);
         self
     }
     /// Set to `true` to return findings that are muted. Set to `false` to return unmuted findings.
-    pub fn filter_muted(&mut self, value: bool) -> &mut Self {
+    pub fn filter_muted(mut self, value: bool) -> Self {
         self.filter_muted = Some(value);
         self
     }
     /// Return findings for the specified rule ID.
-    pub fn filter_rule_id(&mut self, value: String) -> &mut Self {
+    pub fn filter_rule_id(mut self, value: String) -> Self {
         self.filter_rule_id = Some(value);
         self
     }
     /// Return findings for the specified rule.
-    pub fn filter_rule_name(&mut self, value: String) -> &mut Self {
+    pub fn filter_rule_name(mut self, value: String) -> Self {
         self.filter_rule_name = Some(value);
         self
     }
     /// Return only findings for the specified resource type.
-    pub fn filter_resource_type(&mut self, value: String) -> &mut Self {
+    pub fn filter_resource_type(mut self, value: String) -> Self {
         self.filter_resource_type = Some(value);
         self
     }
     /// Return findings that were found on a specified date (Unix ms) or date range (using comparison operators).
-    pub fn filter_discovery_timestamp(&mut self, value: String) -> &mut Self {
+    pub fn filter_discovery_timestamp(mut self, value: String) -> Self {
         self.filter_discovery_timestamp = Some(value);
         self
     }
     /// Return only `pass` or `fail` findings.
-    pub fn filter_evaluation(
-        &mut self,
-        value: crate::datadogV2::model::FindingEvaluation,
-    ) -> &mut Self {
+    pub fn filter_evaluation(mut self, value: crate::datadogV2::model::FindingEvaluation) -> Self {
         self.filter_evaluation = Some(value);
         self
     }
     /// Return only findings with the specified status.
-    pub fn filter_status(&mut self, value: crate::datadogV2::model::FindingStatus) -> &mut Self {
+    pub fn filter_status(mut self, value: crate::datadogV2::model::FindingStatus) -> Self {
         self.filter_status = Some(value);
         self
     }
@@ -130,12 +129,12 @@ pub struct ListSecurityMonitoringRulesOptionalParams {
 
 impl ListSecurityMonitoringRulesOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
-    pub fn page_size(&mut self, value: i64) -> &mut Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// Specific page number to return.
-    pub fn page_number(&mut self, value: i64) -> &mut Self {
+    pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }
@@ -161,35 +160,32 @@ pub struct ListSecurityMonitoringSignalsOptionalParams {
 
 impl ListSecurityMonitoringSignalsOptionalParams {
     /// The search query for security signals.
-    pub fn filter_query(&mut self, value: String) -> &mut Self {
+    pub fn filter_query(mut self, value: String) -> Self {
         self.filter_query = Some(value);
         self
     }
     /// The minimum timestamp for requested security signals.
-    pub fn filter_from(&mut self, value: String) -> &mut Self {
+    pub fn filter_from(mut self, value: String) -> Self {
         self.filter_from = Some(value);
         self
     }
     /// The maximum timestamp for requested security signals.
-    pub fn filter_to(&mut self, value: String) -> &mut Self {
+    pub fn filter_to(mut self, value: String) -> Self {
         self.filter_to = Some(value);
         self
     }
     /// The order of the security signals in results.
-    pub fn sort(
-        &mut self,
-        value: crate::datadogV2::model::SecurityMonitoringSignalsSort,
-    ) -> &mut Self {
+    pub fn sort(mut self, value: crate::datadogV2::model::SecurityMonitoringSignalsSort) -> Self {
         self.sort = Some(value);
         self
     }
     /// A list of results using the cursor provided in the previous query.
-    pub fn page_cursor(&mut self, value: String) -> &mut Self {
+    pub fn page_cursor(mut self, value: String) -> Self {
         self.page_cursor = Some(value);
         self
     }
     /// The maximum number of security signals in the response.
-    pub fn page_limit(&mut self, value: i32) -> &mut Self {
+    pub fn page_limit(mut self, value: i32) -> Self {
         self.page_limit = Some(value);
         self
     }
@@ -204,9 +200,9 @@ pub struct SearchSecurityMonitoringSignalsOptionalParams {
 
 impl SearchSecurityMonitoringSignalsOptionalParams {
     pub fn body(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::SecurityMonitoringSignalListRequest,
-    ) -> &mut Self {
+    ) -> Self {
         self.body = Some(value);
         self
     }
@@ -413,12 +409,14 @@ pub enum UpdateSecurityMonitoringRuleError {
 #[derive(Debug, Clone)]
 pub struct SecurityMonitoringAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for SecurityMonitoringAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -428,7 +426,24 @@ impl SecurityMonitoringAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// Create a security filter.
@@ -468,7 +483,7 @@ impl SecurityMonitoringAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.create_security_filter";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/security_filters",
@@ -565,7 +580,7 @@ impl SecurityMonitoringAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.create_security_monitoring_rule";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/rules",
@@ -648,7 +663,7 @@ impl SecurityMonitoringAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_security_filter";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/security_filters/{security_filter_id}",
@@ -718,7 +733,7 @@ impl SecurityMonitoringAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_security_monitoring_rule";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/rules/{rule_id}",
@@ -804,7 +819,7 @@ impl SecurityMonitoringAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.edit_security_monitoring_signal_assignee";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/signals/{signal_id}/assignee",
@@ -905,7 +920,7 @@ impl SecurityMonitoringAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.edit_security_monitoring_signal_incidents";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/signals/{signal_id}/incidents",
@@ -1006,7 +1021,7 @@ impl SecurityMonitoringAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.edit_security_monitoring_signal_state";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/signals/{signal_id}/state",
@@ -1110,7 +1125,7 @@ impl SecurityMonitoringAPI {
         // unbox and build optional parameters
         let snapshot_timestamp = params.snapshot_timestamp;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/posture_management/findings/{finding_id}",
@@ -1209,7 +1224,7 @@ impl SecurityMonitoringAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.get_security_filter";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/security_filters/{security_filter_id}",
@@ -1300,7 +1315,7 @@ impl SecurityMonitoringAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.get_security_monitoring_rule";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/rules/{rule_id}",
@@ -1391,7 +1406,7 @@ impl SecurityMonitoringAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.get_security_monitoring_signal";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/signals/{signal_id}",
@@ -1495,6 +1510,38 @@ impl SecurityMonitoringAPI {
         }
     }
 
+    pub fn list_findings_with_pagination(
+        &self,
+        mut params: ListFindingsOptionalParams,
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::Finding, Error<ListFindingsError>>> + '_
+    {
+        try_stream! {
+            let mut page_size: i64 = 100;
+            if params.page_limit.is_none() {
+                params.page_limit = Some(page_size);
+            } else {
+                page_size = params.page_limit.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_findings(params.clone()).await?;
+
+                let r = resp.data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                let Some(page) = resp.meta.page else { break };
+                let Some(cursor) = page.cursor else { break };
+
+                params.page_cursor = Some(cursor);
+            }
+        }
+    }
+
     /// Get a list of CSPM findings.
     ///
     /// ### Filtering
@@ -1558,7 +1605,7 @@ impl SecurityMonitoringAPI {
         let filter_evaluation = params.filter_evaluation;
         let filter_status = params.filter_status;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/posture_management/findings",
@@ -1693,7 +1740,7 @@ impl SecurityMonitoringAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.list_security_filters";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/security_filters",
@@ -1787,7 +1834,7 @@ impl SecurityMonitoringAPI {
         let page_size = params.page_size;
         let page_number = params.page_number;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/rules",
@@ -1877,6 +1924,44 @@ impl SecurityMonitoringAPI {
         }
     }
 
+    pub fn list_security_monitoring_signals_with_pagination(
+        &self,
+        mut params: ListSecurityMonitoringSignalsOptionalParams,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV2::model::SecurityMonitoringSignal,
+            Error<ListSecurityMonitoringSignalsError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i32 = 10;
+            if params.page_limit.is_none() {
+                params.page_limit = Some(page_size);
+            } else {
+                page_size = params.page_limit.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_security_monitoring_signals(params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                let Some(meta) = resp.meta else { break };
+                let Some(page) = meta.page else { break };
+                let Some(after) = page.after else { break };
+
+                params.page_cursor = Some(after);
+            }
+        }
+    }
+
     /// The list endpoint returns security signals that match a search query.
     /// Both this endpoint and the POST endpoint can be used interchangeably when listing
     /// security signals.
@@ -1898,7 +1983,7 @@ impl SecurityMonitoringAPI {
         let page_cursor = params.page_cursor;
         let page_limit = params.page_limit;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/signals",
@@ -2016,7 +2101,7 @@ impl SecurityMonitoringAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/posture_management/findings",
@@ -2103,6 +2188,50 @@ impl SecurityMonitoringAPI {
         }
     }
 
+    pub fn search_security_monitoring_signals_with_pagination(
+        &self,
+        mut params: SearchSecurityMonitoringSignalsOptionalParams,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV2::model::SecurityMonitoringSignal,
+            Error<SearchSecurityMonitoringSignalsError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i32 = 10;
+            if params.body.is_none() {
+                params.body = Some(crate::datadogV2::model::SecurityMonitoringSignalListRequest::new());
+            }
+            if params.body.as_ref().unwrap().page.is_none() {
+                params.body.as_mut().unwrap().page = Some(crate::datadogV2::model::SecurityMonitoringSignalListRequestPage::new());
+            }
+            if params.body.as_ref().unwrap().page.as_ref().unwrap().limit.is_none() {
+                params.body.as_mut().unwrap().page.as_mut().unwrap().limit = Some(page_size);
+            } else {
+                page_size = params.body.as_ref().unwrap().page.as_ref().unwrap().limit.unwrap().clone();
+            }
+            loop {
+                let resp = self.search_security_monitoring_signals(params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                let Some(meta) = resp.meta else { break };
+                let Some(page) = meta.page else { break };
+                let Some(after) = page.after else { break };
+
+                params.body.as_mut().unwrap().page.as_mut().unwrap().cursor = Some(after);
+            }
+        }
+    }
+
     /// Returns security signals that match a search query.
     /// Both this endpoint and the GET endpoint can be used interchangeably for listing
     /// security signals.
@@ -2119,7 +2248,7 @@ impl SecurityMonitoringAPI {
         // unbox and build optional parameters
         let body = params.body;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/signals/search",
@@ -2219,7 +2348,7 @@ impl SecurityMonitoringAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.update_security_filter";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/security_filters/{security_filter_id}",
@@ -2323,7 +2452,7 @@ impl SecurityMonitoringAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.update_security_monitoring_rule";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/rules/{rule_id}",

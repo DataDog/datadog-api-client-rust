@@ -69,12 +69,14 @@ pub enum UpdateCloudWorkloadSecurityAgentRuleError {
 #[derive(Debug, Clone)]
 pub struct CloudWorkloadSecurityAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for CloudWorkloadSecurityAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -84,7 +86,24 @@ impl CloudWorkloadSecurityAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// Create a new Agent rule with the given parameters.
@@ -123,7 +142,7 @@ impl CloudWorkloadSecurityAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.create_cloud_workload_security_agent_rule";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/cloud_workload_security/agent_rules",
@@ -207,7 +226,7 @@ impl CloudWorkloadSecurityAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_cloud_workload_security_agent_rule";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/cloud_workload_security/agent_rules/{agent_rule_id}",
@@ -287,7 +306,7 @@ impl CloudWorkloadSecurityAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.download_cloud_workload_policy_file";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security/cloud_workload/policy/download",
@@ -317,16 +336,11 @@ impl CloudWorkloadSecurityAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<Vec<u8>>(&local_content) {
-                Ok(e) => {
-                    return Ok(ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
-            };
+            Ok(ResponseContent {
+                status: local_status,
+                content: local_content.clone(),
+                entity: Some(local_content.into_bytes()),
+            })
         } else {
             let local_entity: Option<DownloadCloudWorkloadPolicyFileError> =
                 serde_json::from_str(&local_content).ok();
@@ -375,7 +389,7 @@ impl CloudWorkloadSecurityAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.get_cloud_workload_security_agent_rule";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/cloud_workload_security/agent_rules/{agent_rule_id}",
@@ -465,7 +479,7 @@ impl CloudWorkloadSecurityAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.list_cloud_workload_security_agent_rules";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/cloud_workload_security/agent_rules",
@@ -560,7 +574,7 @@ impl CloudWorkloadSecurityAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.update_cloud_workload_security_agent_rule";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/cloud_workload_security/agent_rules/{agent_rule_id}",

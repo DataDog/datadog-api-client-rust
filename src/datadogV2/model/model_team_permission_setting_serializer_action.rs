@@ -2,15 +2,14 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum TeamPermissionSettingSerializerAction {
-    #[serde(rename = "manage_membership")]
     MANAGE_MEMBERSHIP,
-    #[serde(rename = "edit")]
     EDIT,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for TeamPermissionSettingSerializerAction {
@@ -18,6 +17,35 @@ impl ToString for TeamPermissionSettingSerializerAction {
         match self {
             Self::MANAGE_MEMBERSHIP => String::from("manage_membership"),
             Self::EDIT => String::from("edit"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
+    }
+}
+
+impl Serialize for TeamPermissionSettingSerializerAction {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for TeamPermissionSettingSerializerAction {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "manage_membership" => Self::MANAGE_MEMBERSHIP,
+            "edit" => Self::EDIT,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
+        })
     }
 }

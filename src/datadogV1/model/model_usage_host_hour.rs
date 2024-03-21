@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// Number of hosts/containers recorded for each hour for a given organization.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct UsageHostHour {
     /// Contains the total number of infrastructure hosts reporting
     /// during a given hour that were running the Datadog Agent.
@@ -125,6 +127,9 @@ pub struct UsageHostHour {
         with = "::serde_with::rust::double_option"
     )]
     pub vsphere_host_count: Option<Option<i64>>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl UsageHostHour {
@@ -147,90 +152,91 @@ impl UsageHostHour {
             org_name: None,
             public_id: None,
             vsphere_host_count: None,
+            _unparsed: false,
         }
     }
 
-    pub fn agent_host_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn agent_host_count(mut self, value: Option<i64>) -> Self {
         self.agent_host_count = Some(value);
         self
     }
 
-    pub fn alibaba_host_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn alibaba_host_count(mut self, value: Option<i64>) -> Self {
         self.alibaba_host_count = Some(value);
         self
     }
 
-    pub fn apm_azure_app_service_host_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn apm_azure_app_service_host_count(mut self, value: Option<i64>) -> Self {
         self.apm_azure_app_service_host_count = Some(value);
         self
     }
 
-    pub fn apm_host_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn apm_host_count(mut self, value: Option<i64>) -> Self {
         self.apm_host_count = Some(value);
         self
     }
 
-    pub fn aws_host_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn aws_host_count(mut self, value: Option<i64>) -> Self {
         self.aws_host_count = Some(value);
         self
     }
 
-    pub fn azure_host_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn azure_host_count(mut self, value: Option<i64>) -> Self {
         self.azure_host_count = Some(value);
         self
     }
 
-    pub fn container_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn container_count(mut self, value: Option<i64>) -> Self {
         self.container_count = Some(value);
         self
     }
 
-    pub fn gcp_host_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn gcp_host_count(mut self, value: Option<i64>) -> Self {
         self.gcp_host_count = Some(value);
         self
     }
 
-    pub fn heroku_host_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn heroku_host_count(mut self, value: Option<i64>) -> Self {
         self.heroku_host_count = Some(value);
         self
     }
 
-    pub fn host_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn host_count(mut self, value: Option<i64>) -> Self {
         self.host_count = Some(value);
         self
     }
 
-    pub fn hour(&mut self, value: Option<String>) -> &mut Self {
+    pub fn hour(mut self, value: Option<String>) -> Self {
         self.hour = Some(value);
         self
     }
 
-    pub fn infra_azure_app_service(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn infra_azure_app_service(mut self, value: Option<i64>) -> Self {
         self.infra_azure_app_service = Some(value);
         self
     }
 
-    pub fn opentelemetry_apm_host_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn opentelemetry_apm_host_count(mut self, value: Option<i64>) -> Self {
         self.opentelemetry_apm_host_count = Some(value);
         self
     }
 
-    pub fn opentelemetry_host_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn opentelemetry_host_count(mut self, value: Option<i64>) -> Self {
         self.opentelemetry_host_count = Some(value);
         self
     }
 
-    pub fn org_name(&mut self, value: String) -> &mut Self {
+    pub fn org_name(mut self, value: String) -> Self {
         self.org_name = Some(value);
         self
     }
 
-    pub fn public_id(&mut self, value: String) -> &mut Self {
+    pub fn public_id(mut self, value: String) -> Self {
         self.public_id = Some(value);
         self
     }
 
-    pub fn vsphere_host_count(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn vsphere_host_count(mut self, value: Option<i64>) -> Self {
         self.vsphere_host_count = Some(value);
         self
     }
@@ -239,5 +245,146 @@ impl UsageHostHour {
 impl Default for UsageHostHour {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for UsageHostHour {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct UsageHostHourVisitor;
+        impl<'a> Visitor<'a> for UsageHostHourVisitor {
+            type Value = UsageHostHour;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut agent_host_count: Option<Option<i64>> = None;
+                let mut alibaba_host_count: Option<Option<i64>> = None;
+                let mut apm_azure_app_service_host_count: Option<Option<i64>> = None;
+                let mut apm_host_count: Option<Option<i64>> = None;
+                let mut aws_host_count: Option<Option<i64>> = None;
+                let mut azure_host_count: Option<Option<i64>> = None;
+                let mut container_count: Option<Option<i64>> = None;
+                let mut gcp_host_count: Option<Option<i64>> = None;
+                let mut heroku_host_count: Option<Option<i64>> = None;
+                let mut host_count: Option<Option<i64>> = None;
+                let mut hour: Option<Option<String>> = None;
+                let mut infra_azure_app_service: Option<Option<i64>> = None;
+                let mut opentelemetry_apm_host_count: Option<Option<i64>> = None;
+                let mut opentelemetry_host_count: Option<Option<i64>> = None;
+                let mut org_name: Option<String> = None;
+                let mut public_id: Option<String> = None;
+                let mut vsphere_host_count: Option<Option<i64>> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "agent_host_count" => {
+                            agent_host_count =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "alibaba_host_count" => {
+                            alibaba_host_count =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "apm_azure_app_service_host_count" => {
+                            apm_azure_app_service_host_count =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "apm_host_count" => {
+                            apm_host_count =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "aws_host_count" => {
+                            aws_host_count =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "azure_host_count" => {
+                            azure_host_count =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "container_count" => {
+                            container_count =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "gcp_host_count" => {
+                            gcp_host_count =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "heroku_host_count" => {
+                            heroku_host_count =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "host_count" => {
+                            host_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "hour" => {
+                            hour = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "infra_azure_app_service" => {
+                            infra_azure_app_service =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "opentelemetry_apm_host_count" => {
+                            opentelemetry_apm_host_count =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "opentelemetry_host_count" => {
+                            opentelemetry_host_count =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "org_name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            org_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "public_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            public_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "vsphere_host_count" => {
+                            vsphere_host_count =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+
+                let content = UsageHostHour {
+                    agent_host_count,
+                    alibaba_host_count,
+                    apm_azure_app_service_host_count,
+                    apm_host_count,
+                    aws_host_count,
+                    azure_host_count,
+                    container_count,
+                    gcp_host_count,
+                    heroku_host_count,
+                    host_count,
+                    hour,
+                    infra_azure_app_service,
+                    opentelemetry_apm_host_count,
+                    opentelemetry_host_count,
+                    org_name,
+                    public_id,
+                    vsphere_host_count,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(UsageHostHourVisitor)
     }
 }

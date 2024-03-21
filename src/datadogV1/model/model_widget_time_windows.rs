@@ -2,27 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum WidgetTimeWindows {
-    #[serde(rename = "7d")]
     SEVEN_DAYS,
-    #[serde(rename = "30d")]
     THIRTY_DAYS,
-    #[serde(rename = "90d")]
     NINETY_DAYS,
-    #[serde(rename = "week_to_date")]
     WEEK_TO_DATE,
-    #[serde(rename = "previous_week")]
     PREVIOUS_WEEK,
-    #[serde(rename = "month_to_date")]
     MONTH_TO_DATE,
-    #[serde(rename = "previous_month")]
     PREVIOUS_MONTH,
-    #[serde(rename = "global_time")]
     GLOBAL_TIME,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetTimeWindows {
@@ -36,6 +29,41 @@ impl ToString for WidgetTimeWindows {
             Self::MONTH_TO_DATE => String::from("month_to_date"),
             Self::PREVIOUS_MONTH => String::from("previous_month"),
             Self::GLOBAL_TIME => String::from("global_time"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
+    }
+}
+
+impl Serialize for WidgetTimeWindows {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for WidgetTimeWindows {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "7d" => Self::SEVEN_DAYS,
+            "30d" => Self::THIRTY_DAYS,
+            "90d" => Self::NINETY_DAYS,
+            "week_to_date" => Self::WEEK_TO_DATE,
+            "previous_week" => Self::PREVIOUS_WEEK,
+            "month_to_date" => Self::MONTH_TO_DATE,
+            "previous_month" => Self::PREVIOUS_MONTH,
+            "global_time" => Self::GLOBAL_TIME,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
+        })
     }
 }

@@ -2,41 +2,27 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SyntheticsAssertionOperator {
-    #[serde(rename = "contains")]
     CONTAINS,
-    #[serde(rename = "doesNotContain")]
     DOES_NOT_CONTAIN,
-    #[serde(rename = "is")]
     IS,
-    #[serde(rename = "isNot")]
     IS_NOT,
-    #[serde(rename = "lessThan")]
     LESS_THAN,
-    #[serde(rename = "lessThanOrEqual")]
     LESS_THAN_OR_EQUAL,
-    #[serde(rename = "moreThan")]
     MORE_THAN,
-    #[serde(rename = "moreThanOrEqual")]
     MORE_THAN_OR_EQUAL,
-    #[serde(rename = "matches")]
     MATCHES,
-    #[serde(rename = "doesNotMatch")]
     DOES_NOT_MATCH,
-    #[serde(rename = "validates")]
     VALIDATES,
-    #[serde(rename = "isInMoreThan")]
     IS_IN_MORE_DAYS_THAN,
-    #[serde(rename = "isInLessThan")]
     IS_IN_LESS_DAYS_THAN,
-    #[serde(rename = "doesNotExist")]
     DOES_NOT_EXIST,
-    #[serde(rename = "isUndefined")]
     IS_UNDEFINED,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsAssertionOperator {
@@ -57,6 +43,48 @@ impl ToString for SyntheticsAssertionOperator {
             Self::IS_IN_LESS_DAYS_THAN => String::from("isInLessThan"),
             Self::DOES_NOT_EXIST => String::from("doesNotExist"),
             Self::IS_UNDEFINED => String::from("isUndefined"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
+    }
+}
+
+impl Serialize for SyntheticsAssertionOperator {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for SyntheticsAssertionOperator {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "contains" => Self::CONTAINS,
+            "doesNotContain" => Self::DOES_NOT_CONTAIN,
+            "is" => Self::IS,
+            "isNot" => Self::IS_NOT,
+            "lessThan" => Self::LESS_THAN,
+            "lessThanOrEqual" => Self::LESS_THAN_OR_EQUAL,
+            "moreThan" => Self::MORE_THAN,
+            "moreThanOrEqual" => Self::MORE_THAN_OR_EQUAL,
+            "matches" => Self::MATCHES,
+            "doesNotMatch" => Self::DOES_NOT_MATCH,
+            "validates" => Self::VALIDATES,
+            "isInMoreThan" => Self::IS_IN_MORE_DAYS_THAN,
+            "isInLessThan" => Self::IS_IN_LESS_DAYS_THAN,
+            "doesNotExist" => Self::DOES_NOT_EXIST,
+            "isUndefined" => Self::IS_UNDEFINED,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
+        })
     }
 }

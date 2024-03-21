@@ -2,6 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -21,22 +23,22 @@ pub struct GetTeamMembershipsOptionalParams {
 
 impl GetTeamMembershipsOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
-    pub fn page_size(&mut self, value: i64) -> &mut Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// Specific page number to return.
-    pub fn page_number(&mut self, value: i64) -> &mut Self {
+    pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }
     /// Specifies the order of returned team memberships
-    pub fn sort(&mut self, value: crate::datadogV2::model::GetTeamMembershipsSort) -> &mut Self {
+    pub fn sort(mut self, value: crate::datadogV2::model::GetTeamMembershipsSort) -> Self {
         self.sort = Some(value);
         self
     }
     /// Search query, can be user email or name
-    pub fn filter_keyword(&mut self, value: String) -> &mut Self {
+    pub fn filter_keyword(mut self, value: String) -> Self {
         self.filter_keyword = Some(value);
         self
     }
@@ -64,37 +66,37 @@ pub struct ListTeamsOptionalParams {
 
 impl ListTeamsOptionalParams {
     /// Specific page number to return.
-    pub fn page_number(&mut self, value: i64) -> &mut Self {
+    pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }
     /// Size for a given page. The maximum allowed value is 100.
-    pub fn page_size(&mut self, value: i64) -> &mut Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// Specifies the order of the returned teams
-    pub fn sort(&mut self, value: crate::datadogV2::model::ListTeamsSort) -> &mut Self {
+    pub fn sort(mut self, value: crate::datadogV2::model::ListTeamsSort) -> Self {
         self.sort = Some(value);
         self
     }
     /// Included related resources optionally requested. Allowed enum values: `team_links, user_team_permissions`
-    pub fn include(&mut self, value: Vec<crate::datadogV2::model::ListTeamsInclude>) -> &mut Self {
+    pub fn include(mut self, value: Vec<crate::datadogV2::model::ListTeamsInclude>) -> Self {
         self.include = Some(value);
         self
     }
     /// Search query. Can be team name, team handle, or email of team member
-    pub fn filter_keyword(&mut self, value: String) -> &mut Self {
+    pub fn filter_keyword(mut self, value: String) -> Self {
         self.filter_keyword = Some(value);
         self
     }
     /// When true, only returns teams the current user belongs to
-    pub fn filter_me(&mut self, value: bool) -> &mut Self {
+    pub fn filter_me(mut self, value: bool) -> Self {
         self.filter_me = Some(value);
         self
     }
     /// List of fields that need to be fetched.
-    pub fn fields_team(&mut self, value: Vec<crate::datadogV2::model::TeamsField>) -> &mut Self {
+    pub fn fields_team(mut self, value: Vec<crate::datadogV2::model::TeamsField>) -> Self {
         self.fields_team = Some(value);
         self
     }
@@ -275,12 +277,14 @@ pub enum UpdateTeamPermissionSettingError {
 #[derive(Debug, Clone)]
 pub struct TeamsAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for TeamsAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -290,7 +294,24 @@ impl TeamsAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// Create a new team.
@@ -323,7 +344,7 @@ impl TeamsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.create_team";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team",
@@ -413,7 +434,7 @@ impl TeamsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.create_team_link";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/links",
@@ -509,7 +530,7 @@ impl TeamsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.create_team_membership";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/memberships",
@@ -586,7 +607,7 @@ impl TeamsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_team";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}",
@@ -654,7 +675,7 @@ impl TeamsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_team_link";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/links/{link_id}",
@@ -727,7 +748,7 @@ impl TeamsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_team_membership";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/memberships/{user_id}",
@@ -803,7 +824,7 @@ impl TeamsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.get_team";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}",
@@ -885,7 +906,7 @@ impl TeamsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.get_team_link";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/links/{link_id}",
@@ -967,7 +988,7 @@ impl TeamsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.get_team_links";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/links",
@@ -1061,7 +1082,7 @@ impl TeamsAPI {
         let sort = params.sort;
         let filter_keyword = params.filter_keyword;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/memberships",
@@ -1168,7 +1189,7 @@ impl TeamsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.get_team_permission_settings";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/permission-settings",
@@ -1253,7 +1274,7 @@ impl TeamsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.get_user_memberships";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/users/{user_uuid}/memberships",
@@ -1327,6 +1348,38 @@ impl TeamsAPI {
         }
     }
 
+    pub fn list_teams_with_pagination(
+        &self,
+        mut params: ListTeamsOptionalParams,
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::Team, Error<ListTeamsError>>> + '_ {
+        try_stream! {
+            let mut page_size: i64 = 10;
+            if params.page_size.is_none() {
+                params.page_size = Some(page_size);
+            } else {
+                page_size = params.page_size.unwrap().clone();
+            }
+            if params.page_number.is_none() {
+                params.page_number = Some(0);
+            }
+            loop {
+                let resp = self.list_teams(params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                params.page_number = Some(params.page_number.unwrap() + 1);
+            }
+        }
+    }
+
     /// Get all teams.
     /// Can be used to search for teams using the `filter[keyword]` and `filter[me]` query parameters.
     pub async fn list_teams_with_http_info(
@@ -1346,7 +1399,7 @@ impl TeamsAPI {
         let filter_me = params.filter_me;
         let fields_team = params.fields_team;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team",
@@ -1472,7 +1525,7 @@ impl TeamsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.update_team";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}",
@@ -1568,7 +1621,7 @@ impl TeamsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.update_team_link";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/links/{link_id}",
@@ -1667,7 +1720,7 @@ impl TeamsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.update_team_membership";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/memberships/{user_id}",
@@ -1769,7 +1822,7 @@ impl TeamsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.update_team_permission_setting";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/permission-settings/{action}",

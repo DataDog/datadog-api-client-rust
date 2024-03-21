@@ -2,21 +2,17 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum FindingStatus {
-    #[serde(rename = "critical")]
     CRITICAL,
-    #[serde(rename = "high")]
     HIGH,
-    #[serde(rename = "medium")]
     MEDIUM,
-    #[serde(rename = "low")]
     LOW,
-    #[serde(rename = "info")]
     INFO,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for FindingStatus {
@@ -27,6 +23,38 @@ impl ToString for FindingStatus {
             Self::MEDIUM => String::from("medium"),
             Self::LOW => String::from("low"),
             Self::INFO => String::from("info"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
+    }
+}
+
+impl Serialize for FindingStatus {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for FindingStatus {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "critical" => Self::CRITICAL,
+            "high" => Self::HIGH,
+            "medium" => Self::MEDIUM,
+            "low" => Self::LOW,
+            "info" => Self::INFO,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
+        })
     }
 }

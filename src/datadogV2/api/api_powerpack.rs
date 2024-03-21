@@ -2,6 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -17,12 +19,12 @@ pub struct ListPowerpacksOptionalParams {
 
 impl ListPowerpacksOptionalParams {
     /// Maximum number of powerpacks in the response.
-    pub fn page_limit(&mut self, value: i64) -> &mut Self {
+    pub fn page_limit(mut self, value: i64) -> Self {
         self.page_limit = Some(value);
         self
     }
     /// Specific offset to use as the beginning of the returned page.
-    pub fn page_offset(&mut self, value: i64) -> &mut Self {
+    pub fn page_offset(mut self, value: i64) -> Self {
         self.page_offset = Some(value);
         self
     }
@@ -76,12 +78,14 @@ pub enum UpdatePowerpackError {
 #[derive(Debug, Clone)]
 pub struct PowerpackAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for PowerpackAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -91,7 +95,24 @@ impl PowerpackAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// Create a powerpack.
@@ -124,7 +145,7 @@ impl PowerpackAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.create_powerpack";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/powerpacks",
@@ -203,7 +224,7 @@ impl PowerpackAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_powerpack";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/powerpacks/{powerpack_id}",
@@ -279,7 +300,7 @@ impl PowerpackAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.get_powerpack";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/powerpacks/{powerpack_id}",
@@ -351,6 +372,40 @@ impl PowerpackAPI {
         }
     }
 
+    pub fn list_powerpacks_with_pagination(
+        &self,
+        mut params: ListPowerpacksOptionalParams,
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::PowerpackData, Error<ListPowerpacksError>>>
+           + '_ {
+        try_stream! {
+            let mut page_size: i64 = 25;
+            if params.page_limit.is_none() {
+                params.page_limit = Some(page_size);
+            } else {
+                page_size = params.page_limit.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_powerpacks(params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                if params.page_offset.is_none() {
+                    params.page_offset = Some(page_size.clone());
+                } else {
+                    params.page_offset = Some(params.page_offset.unwrap() + page_size.clone());
+                }
+            }
+        }
+    }
+
     /// Get a list of all powerpacks.
     pub async fn list_powerpacks_with_http_info(
         &self,
@@ -366,7 +421,7 @@ impl PowerpackAPI {
         let page_limit = params.page_limit;
         let page_offset = params.page_offset;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/powerpacks",
@@ -464,7 +519,7 @@ impl PowerpackAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.update_powerpack";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/powerpacks/{powerpack_id}",

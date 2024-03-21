@@ -2,6 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -17,12 +19,12 @@ pub struct ListSLOCorrectionOptionalParams {
 
 impl ListSLOCorrectionOptionalParams {
     /// The specific offset to use as the beginning of the returned response.
-    pub fn offset(&mut self, value: i64) -> &mut Self {
+    pub fn offset(mut self, value: i64) -> Self {
         self.offset = Some(value);
         self
     }
     /// The number of SLO corrections to return in the response. Default is 25.
-    pub fn limit(&mut self, value: i64) -> &mut Self {
+    pub fn limit(mut self, value: i64) -> Self {
         self.limit = Some(value);
         self
     }
@@ -82,12 +84,14 @@ pub enum UpdateSLOCorrectionError {
 #[derive(Debug, Clone)]
 pub struct ServiceLevelObjectiveCorrectionsAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for ServiceLevelObjectiveCorrectionsAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -97,7 +101,24 @@ impl ServiceLevelObjectiveCorrectionsAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// Create an SLO Correction.
@@ -131,7 +152,7 @@ impl ServiceLevelObjectiveCorrectionsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.create_slo_correction";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo/correction",
@@ -214,7 +235,7 @@ impl ServiceLevelObjectiveCorrectionsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.delete_slo_correction";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo/correction/{slo_correction_id}",
@@ -295,7 +316,7 @@ impl ServiceLevelObjectiveCorrectionsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.get_slo_correction";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo/correction/{slo_correction_id}",
@@ -370,6 +391,41 @@ impl ServiceLevelObjectiveCorrectionsAPI {
         }
     }
 
+    pub fn list_slo_correction_with_pagination(
+        &self,
+        mut params: ListSLOCorrectionOptionalParams,
+    ) -> impl Stream<
+        Item = Result<crate::datadogV1::model::SLOCorrection, Error<ListSLOCorrectionError>>,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 25;
+            if params.limit.is_none() {
+                params.limit = Some(page_size);
+            } else {
+                page_size = params.limit.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_slo_correction(params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                if params.offset.is_none() {
+                    params.offset = Some(page_size.clone());
+                } else {
+                    params.offset = Some(params.offset.unwrap() + page_size.clone());
+                }
+            }
+        }
+    }
+
     /// Get all Service Level Objective corrections.
     pub async fn list_slo_correction_with_http_info(
         &self,
@@ -385,7 +441,7 @@ impl ServiceLevelObjectiveCorrectionsAPI {
         let offset = params.offset;
         let limit = params.limit;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo/correction",
@@ -484,7 +540,7 @@ impl ServiceLevelObjectiveCorrectionsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.update_slo_correction";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo/correction/{slo_correction_id}",

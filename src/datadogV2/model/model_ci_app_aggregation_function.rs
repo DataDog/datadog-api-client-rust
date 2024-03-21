@@ -2,43 +2,28 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum CIAppAggregationFunction {
-    #[serde(rename = "count")]
     COUNT,
-    #[serde(rename = "cardinality")]
     CARDINALITY,
-    #[serde(rename = "pc75")]
     PERCENTILE_75,
-    #[serde(rename = "pc90")]
     PERCENTILE_90,
-    #[serde(rename = "pc95")]
     PERCENTILE_95,
-    #[serde(rename = "pc98")]
     PERCENTILE_98,
-    #[serde(rename = "pc99")]
     PERCENTILE_99,
-    #[serde(rename = "sum")]
     SUM,
-    #[serde(rename = "min")]
     MIN,
-    #[serde(rename = "max")]
     MAX,
-    #[serde(rename = "avg")]
     AVG,
-    #[serde(rename = "median")]
     MEDIAN,
-    #[serde(rename = "latest")]
     LATEST,
-    #[serde(rename = "earliest")]
     EARLIEST,
-    #[serde(rename = "most_frequent")]
     MOST_FREQUENT,
-    #[serde(rename = "delta")]
     DELTA,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for CIAppAggregationFunction {
@@ -60,6 +45,49 @@ impl ToString for CIAppAggregationFunction {
             Self::EARLIEST => String::from("earliest"),
             Self::MOST_FREQUENT => String::from("most_frequent"),
             Self::DELTA => String::from("delta"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
+    }
+}
+
+impl Serialize for CIAppAggregationFunction {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for CIAppAggregationFunction {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "count" => Self::COUNT,
+            "cardinality" => Self::CARDINALITY,
+            "pc75" => Self::PERCENTILE_75,
+            "pc90" => Self::PERCENTILE_90,
+            "pc95" => Self::PERCENTILE_95,
+            "pc98" => Self::PERCENTILE_98,
+            "pc99" => Self::PERCENTILE_99,
+            "sum" => Self::SUM,
+            "min" => Self::MIN,
+            "max" => Self::MAX,
+            "avg" => Self::AVG,
+            "median" => Self::MEDIAN,
+            "latest" => Self::LATEST,
+            "earliest" => Self::EARLIEST,
+            "most_frequent" => Self::MOST_FREQUENT,
+            "delta" => Self::DELTA,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
+        })
     }
 }

@@ -2,15 +2,14 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum TreeMapSizeBy {
-    #[serde(rename = "pct_cpu")]
     PCT_CPU,
-    #[serde(rename = "pct_mem")]
     PCT_MEM,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for TreeMapSizeBy {
@@ -18,6 +17,35 @@ impl ToString for TreeMapSizeBy {
         match self {
             Self::PCT_CPU => String::from("pct_cpu"),
             Self::PCT_MEM => String::from("pct_mem"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
+    }
+}
+
+impl Serialize for TreeMapSizeBy {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for TreeMapSizeBy {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "pct_cpu" => Self::PCT_CPU,
+            "pct_mem" => Self::PCT_MEM,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
+        })
     }
 }

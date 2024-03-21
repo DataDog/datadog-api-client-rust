@@ -2,35 +2,24 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SyntheticsDeviceID {
-    #[serde(rename = "laptop_large")]
     LAPTOP_LARGE,
-    #[serde(rename = "tablet")]
     TABLET,
-    #[serde(rename = "mobile_small")]
     MOBILE_SMALL,
-    #[serde(rename = "chrome.laptop_large")]
     CHROME_LAPTOP_LARGE,
-    #[serde(rename = "chrome.tablet")]
     CHROME_TABLET,
-    #[serde(rename = "chrome.mobile_small")]
     CHROME_MOBILE_SMALL,
-    #[serde(rename = "firefox.laptop_large")]
     FIREFOX_LAPTOP_LARGE,
-    #[serde(rename = "firefox.tablet")]
     FIREFOX_TABLET,
-    #[serde(rename = "firefox.mobile_small")]
     FIREFOX_MOBILE_SMALL,
-    #[serde(rename = "edge.laptop_large")]
     EDGE_LAPTOP_LARGE,
-    #[serde(rename = "edge.tablet")]
     EDGE_TABLET,
-    #[serde(rename = "edge.mobile_small")]
     EDGE_MOBILE_SMALL,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsDeviceID {
@@ -48,6 +37,45 @@ impl ToString for SyntheticsDeviceID {
             Self::EDGE_LAPTOP_LARGE => String::from("edge.laptop_large"),
             Self::EDGE_TABLET => String::from("edge.tablet"),
             Self::EDGE_MOBILE_SMALL => String::from("edge.mobile_small"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
+    }
+}
+
+impl Serialize for SyntheticsDeviceID {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for SyntheticsDeviceID {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "laptop_large" => Self::LAPTOP_LARGE,
+            "tablet" => Self::TABLET,
+            "mobile_small" => Self::MOBILE_SMALL,
+            "chrome.laptop_large" => Self::CHROME_LAPTOP_LARGE,
+            "chrome.tablet" => Self::CHROME_TABLET,
+            "chrome.mobile_small" => Self::CHROME_MOBILE_SMALL,
+            "firefox.laptop_large" => Self::FIREFOX_LAPTOP_LARGE,
+            "firefox.tablet" => Self::FIREFOX_TABLET,
+            "firefox.mobile_small" => Self::FIREFOX_MOBILE_SMALL,
+            "edge.laptop_large" => Self::EDGE_LAPTOP_LARGE,
+            "edge.tablet" => Self::EDGE_TABLET,
+            "edge.mobile_small" => Self::EDGE_MOBILE_SMALL,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
+        })
     }
 }

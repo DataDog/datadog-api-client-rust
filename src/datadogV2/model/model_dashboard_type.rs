@@ -2,21 +2,17 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum DashboardType {
-    #[serde(rename = "custom_timeboard")]
     CUSTOM_TIMEBOARD,
-    #[serde(rename = "custom_screenboard")]
     CUSTOM_SCREENBOARD,
-    #[serde(rename = "integration_screenboard")]
     INTEGRATION_SCREENBOARD,
-    #[serde(rename = "integration_timeboard")]
     INTEGRATION_TIMEBOARD,
-    #[serde(rename = "host_timeboard")]
     HOST_TIMEBOARD,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for DashboardType {
@@ -27,6 +23,38 @@ impl ToString for DashboardType {
             Self::INTEGRATION_SCREENBOARD => String::from("integration_screenboard"),
             Self::INTEGRATION_TIMEBOARD => String::from("integration_timeboard"),
             Self::HOST_TIMEBOARD => String::from("host_timeboard"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
+    }
+}
+
+impl Serialize for DashboardType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for DashboardType {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "custom_timeboard" => Self::CUSTOM_TIMEBOARD,
+            "custom_screenboard" => Self::CUSTOM_SCREENBOARD,
+            "integration_screenboard" => Self::INTEGRATION_SCREENBOARD,
+            "integration_timeboard" => Self::INTEGRATION_TIMEBOARD,
+            "host_timeboard" => Self::HOST_TIMEBOARD,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
+        })
     }
 }

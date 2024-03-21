@@ -2,49 +2,31 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum WidgetPalette {
-    #[serde(rename = "blue")]
     BLUE,
-    #[serde(rename = "custom_bg")]
     CUSTOM_BACKGROUND,
-    #[serde(rename = "custom_image")]
     CUSTOM_IMAGE,
-    #[serde(rename = "custom_text")]
     CUSTOM_TEXT,
-    #[serde(rename = "gray_on_white")]
     GRAY_ON_WHITE,
-    #[serde(rename = "grey")]
     GREY,
-    #[serde(rename = "green")]
     GREEN,
-    #[serde(rename = "orange")]
     ORANGE,
-    #[serde(rename = "red")]
     RED,
-    #[serde(rename = "red_on_white")]
     RED_ON_WHITE,
-    #[serde(rename = "white_on_gray")]
     WHITE_ON_GRAY,
-    #[serde(rename = "white_on_green")]
     WHITE_ON_GREEN,
-    #[serde(rename = "green_on_white")]
     GREEN_ON_WHITE,
-    #[serde(rename = "white_on_red")]
     WHITE_ON_RED,
-    #[serde(rename = "white_on_yellow")]
     WHITE_ON_YELLOW,
-    #[serde(rename = "yellow_on_white")]
     YELLOW_ON_WHITE,
-    #[serde(rename = "black_on_light_yellow")]
     BLACK_ON_LIGHT_YELLOW,
-    #[serde(rename = "black_on_light_green")]
     BLACK_ON_LIGHT_GREEN,
-    #[serde(rename = "black_on_light_red")]
     BLACK_ON_LIGHT_RED,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetPalette {
@@ -69,6 +51,52 @@ impl ToString for WidgetPalette {
             Self::BLACK_ON_LIGHT_YELLOW => String::from("black_on_light_yellow"),
             Self::BLACK_ON_LIGHT_GREEN => String::from("black_on_light_green"),
             Self::BLACK_ON_LIGHT_RED => String::from("black_on_light_red"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
+    }
+}
+
+impl Serialize for WidgetPalette {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for WidgetPalette {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "blue" => Self::BLUE,
+            "custom_bg" => Self::CUSTOM_BACKGROUND,
+            "custom_image" => Self::CUSTOM_IMAGE,
+            "custom_text" => Self::CUSTOM_TEXT,
+            "gray_on_white" => Self::GRAY_ON_WHITE,
+            "grey" => Self::GREY,
+            "green" => Self::GREEN,
+            "orange" => Self::ORANGE,
+            "red" => Self::RED,
+            "red_on_white" => Self::RED_ON_WHITE,
+            "white_on_gray" => Self::WHITE_ON_GRAY,
+            "white_on_green" => Self::WHITE_ON_GREEN,
+            "green_on_white" => Self::GREEN_ON_WHITE,
+            "white_on_red" => Self::WHITE_ON_RED,
+            "white_on_yellow" => Self::WHITE_ON_YELLOW,
+            "yellow_on_white" => Self::YELLOW_ON_WHITE,
+            "black_on_light_yellow" => Self::BLACK_ON_LIGHT_YELLOW,
+            "black_on_light_green" => Self::BLACK_ON_LIGHT_GREEN,
+            "black_on_light_red" => Self::BLACK_ON_LIGHT_RED,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
+        })
     }
 }

@@ -62,13 +62,13 @@ pub struct APIKey {
 #[derive(Debug, Clone)]
 pub struct Configuration {
     pub(crate) user_agent: String,
-    pub(crate) client: reqwest_middleware::ClientWithMiddleware,
     pub(crate) unstable_operations: HashMap<String, bool>,
     pub(crate) auth_keys: HashMap<String, APIKey>,
     pub server_index: usize,
     pub server_variables: HashMap<String, String>,
     pub server_operation_index: HashMap<String, usize>,
     pub server_operation_variables: HashMap<String, HashMap<String, String>>,
+    pub proxy_url: Option<String>,
     pub enable_retry: bool,
     pub max_retries: u32,
 }
@@ -76,10 +76,6 @@ pub struct Configuration {
 impl Configuration {
     pub fn new() -> Self {
         Self::default()
-    }
-
-    pub fn client(&mut self, client: reqwest_middleware::ClientWithMiddleware) {
-        self.client = client;
     }
 
     pub fn get_operation_host(&self, operation_str: &str) -> String {
@@ -138,26 +134,13 @@ impl Configuration {
         self.auth_keys.insert(operation_str.to_string(), api_key);
     }
 
-    pub fn set_retry(&mut self, enable: bool, max: u32) {
-        if enable {
-            let backoff_policy = ExponentialBackoff::builder().build_with_max_retries(max);
-
-            let retry_middleware = RetryTransientMiddleware::new_with_policy_and_strategy(
-                backoff_policy,
-                RetryableStatus,
-            );
-            let client_builder = ClientBuilder::new(reqwest::Client::new()).with(retry_middleware);
-            self.client = client_builder.build();
-        } else {
-            self.client = ClientBuilder::new(reqwest::Client::new()).build();
-        }
+    pub fn set_proxy_url(&mut self, proxy_url: Option<String>) {
+        self.proxy_url = proxy_url;
     }
-
 }
 
 impl Default for Configuration {
     fn default() -> Self {
-        let http_client = reqwest_middleware::ClientBuilder::new(reqwest::Client::new());
         let user_agent = format!(
             "datadog-api-client-rust/{} (rust {}; os {}; arch {})",
             option_env!("CARGO_PKG_VERSION").unwrap_or("?"),
@@ -227,7 +210,6 @@ impl Default for Configuration {
 
         Self {
             user_agent,
-            client: http_client.build(),
             unstable_operations,
             auth_keys,
             server_index: 0,
@@ -236,6 +218,7 @@ impl Default for Configuration {
             server_operation_variables: HashMap::new(),
             enable_retry: false,
             max_retries: 3,
+            proxy_url: None,
         }
     }
 }

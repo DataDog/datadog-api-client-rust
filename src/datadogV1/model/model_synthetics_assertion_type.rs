@@ -2,49 +2,31 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SyntheticsAssertionType {
-    #[serde(rename = "body")]
     BODY,
-    #[serde(rename = "header")]
     HEADER,
-    #[serde(rename = "statusCode")]
     STATUS_CODE,
-    #[serde(rename = "certificate")]
     CERTIFICATE,
-    #[serde(rename = "responseTime")]
     RESPONSE_TIME,
-    #[serde(rename = "property")]
     PROPERTY,
-    #[serde(rename = "recordEvery")]
     RECORD_EVERY,
-    #[serde(rename = "recordSome")]
     RECORD_SOME,
-    #[serde(rename = "tlsVersion")]
     TLS_VERSION,
-    #[serde(rename = "minTlsVersion")]
     MIN_TLS_VERSION,
-    #[serde(rename = "latency")]
     LATENCY,
-    #[serde(rename = "packetLossPercentage")]
     PACKET_LOSS_PERCENTAGE,
-    #[serde(rename = "packetsReceived")]
     PACKETS_RECEIVED,
-    #[serde(rename = "networkHop")]
     NETWORK_HOP,
-    #[serde(rename = "receivedMessage")]
     RECEIVED_MESSAGE,
-    #[serde(rename = "grpcHealthcheckStatus")]
     GRPC_HEALTHCHECK_STATUS,
-    #[serde(rename = "grpcMetadata")]
     GRPC_METADATA,
-    #[serde(rename = "grpcProto")]
     GRPC_PROTO,
-    #[serde(rename = "connection")]
     CONNECTION,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsAssertionType {
@@ -69,6 +51,52 @@ impl ToString for SyntheticsAssertionType {
             Self::GRPC_METADATA => String::from("grpcMetadata"),
             Self::GRPC_PROTO => String::from("grpcProto"),
             Self::CONNECTION => String::from("connection"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
+    }
+}
+
+impl Serialize for SyntheticsAssertionType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for SyntheticsAssertionType {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "body" => Self::BODY,
+            "header" => Self::HEADER,
+            "statusCode" => Self::STATUS_CODE,
+            "certificate" => Self::CERTIFICATE,
+            "responseTime" => Self::RESPONSE_TIME,
+            "property" => Self::PROPERTY,
+            "recordEvery" => Self::RECORD_EVERY,
+            "recordSome" => Self::RECORD_SOME,
+            "tlsVersion" => Self::TLS_VERSION,
+            "minTlsVersion" => Self::MIN_TLS_VERSION,
+            "latency" => Self::LATENCY,
+            "packetLossPercentage" => Self::PACKET_LOSS_PERCENTAGE,
+            "packetsReceived" => Self::PACKETS_RECEIVED,
+            "networkHop" => Self::NETWORK_HOP,
+            "receivedMessage" => Self::RECEIVED_MESSAGE,
+            "grpcHealthcheckStatus" => Self::GRPC_HEALTHCHECK_STATUS,
+            "grpcMetadata" => Self::GRPC_METADATA,
+            "grpcProto" => Self::GRPC_PROTO,
+            "connection" => Self::CONNECTION,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
+        })
     }
 }

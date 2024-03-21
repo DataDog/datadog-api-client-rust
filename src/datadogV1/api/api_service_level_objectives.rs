@@ -2,6 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -15,7 +17,7 @@ pub struct DeleteSLOOptionalParams {
 
 impl DeleteSLOOptionalParams {
     /// Delete the monitor even if it's referenced by other resources (for example SLO, composite monitor).
-    pub fn force(&mut self, value: String) -> &mut Self {
+    pub fn force(mut self, value: String) -> Self {
         self.force = Some(value);
         self
     }
@@ -31,7 +33,7 @@ pub struct GetSLOOptionalParams {
 
 impl GetSLOOptionalParams {
     /// Get the IDs of SLO monitors that reference this SLO.
-    pub fn with_configured_alert_ids(&mut self, value: bool) -> &mut Self {
+    pub fn with_configured_alert_ids(mut self, value: bool) -> Self {
         self.with_configured_alert_ids = Some(value);
         self
     }
@@ -50,13 +52,13 @@ pub struct GetSLOHistoryOptionalParams {
 
 impl GetSLOHistoryOptionalParams {
     /// The SLO target. If `target` is passed in, the response will include the remaining error budget and a timeframe value of `custom`.
-    pub fn target(&mut self, value: f64) -> &mut Self {
+    pub fn target(mut self, value: f64) -> Self {
         self.target = Some(value);
         self
     }
     /// Defaults to `true`. If any SLO corrections are applied and this parameter is set to `false`,
     /// then the corrections will not be applied and the SLI values will not be affected.
-    pub fn apply_correction(&mut self, value: bool) -> &mut Self {
+    pub fn apply_correction(mut self, value: bool) -> Self {
         self.apply_correction = Some(value);
         self
     }
@@ -82,32 +84,32 @@ pub struct ListSLOsOptionalParams {
 
 impl ListSLOsOptionalParams {
     /// A comma separated list of the IDs of the service level objectives objects.
-    pub fn ids(&mut self, value: String) -> &mut Self {
+    pub fn ids(mut self, value: String) -> Self {
         self.ids = Some(value);
         self
     }
     /// The query string to filter results based on SLO names.
-    pub fn query(&mut self, value: String) -> &mut Self {
+    pub fn query(mut self, value: String) -> Self {
         self.query = Some(value);
         self
     }
     /// The query string to filter results based on a single SLO tag.
-    pub fn tags_query(&mut self, value: String) -> &mut Self {
+    pub fn tags_query(mut self, value: String) -> Self {
         self.tags_query = Some(value);
         self
     }
     /// The query string to filter results based on SLO numerator and denominator.
-    pub fn metrics_query(&mut self, value: String) -> &mut Self {
+    pub fn metrics_query(mut self, value: String) -> Self {
         self.metrics_query = Some(value);
         self
     }
     /// The number of SLOs to return in the response.
-    pub fn limit(&mut self, value: i64) -> &mut Self {
+    pub fn limit(mut self, value: i64) -> Self {
         self.limit = Some(value);
         self
     }
     /// The specific offset to use as the beginning of the returned response.
-    pub fn offset(&mut self, value: i64) -> &mut Self {
+    pub fn offset(mut self, value: i64) -> Self {
         self.offset = Some(value);
         self
     }
@@ -133,22 +135,22 @@ impl SearchSLOOptionalParams {
     /// The query string to filter results based on SLO names.
     /// Some examples of queries include `service:<service-name>`
     /// and `<slo-name>`.
-    pub fn query(&mut self, value: String) -> &mut Self {
+    pub fn query(mut self, value: String) -> Self {
         self.query = Some(value);
         self
     }
     /// The number of files to return in the response `[default=10]`.
-    pub fn page_size(&mut self, value: i64) -> &mut Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// The identifier of the first page to return. This parameter is used for the pagination feature `[default=0]`.
-    pub fn page_number(&mut self, value: i64) -> &mut Self {
+    pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }
     /// Whether or not to return facet information in the response `[default=false]`.
-    pub fn include_facets(&mut self, value: bool) -> &mut Self {
+    pub fn include_facets(mut self, value: bool) -> Self {
         self.include_facets = Some(value);
         self
     }
@@ -263,12 +265,14 @@ pub enum UpdateSLOError {
 #[derive(Debug, Clone)]
 pub struct ServiceLevelObjectivesAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for ServiceLevelObjectivesAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -278,7 +282,24 @@ impl ServiceLevelObjectivesAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// Check if an SLO can be safely deleted. For example,
@@ -314,7 +335,7 @@ impl ServiceLevelObjectivesAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.check_can_delete_slo";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo/can_delete",
@@ -398,7 +419,7 @@ impl ServiceLevelObjectivesAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.create_slo";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo",
@@ -495,7 +516,7 @@ impl ServiceLevelObjectivesAPI {
         // unbox and build optional parameters
         let force = params.force;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo/{slo_id}",
@@ -592,7 +613,7 @@ impl ServiceLevelObjectivesAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.delete_slo_timeframe_in_bulk";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo/bulk_delete",
@@ -685,7 +706,7 @@ impl ServiceLevelObjectivesAPI {
         // unbox and build optional parameters
         let with_configured_alert_ids = params.with_configured_alert_ids;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo/{slo_id}",
@@ -773,7 +794,7 @@ impl ServiceLevelObjectivesAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.get_slo_corrections";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo/{slo_id}/corrections",
@@ -885,7 +906,7 @@ impl ServiceLevelObjectivesAPI {
         let target = params.target;
         let apply_correction = params.apply_correction;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo/{slo_id}/history",
@@ -970,6 +991,41 @@ impl ServiceLevelObjectivesAPI {
         }
     }
 
+    pub fn list_slos_with_pagination(
+        &self,
+        mut params: ListSLOsOptionalParams,
+    ) -> impl Stream<
+        Item = Result<crate::datadogV1::model::ServiceLevelObjective, Error<ListSLOsError>>,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 1000;
+            if params.limit.is_none() {
+                params.limit = Some(page_size);
+            } else {
+                page_size = params.limit.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_slos(params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                if params.offset.is_none() {
+                    params.offset = Some(page_size.clone());
+                } else {
+                    params.offset = Some(params.offset.unwrap() + page_size.clone());
+                }
+            }
+        }
+    }
+
     /// Get a list of service level objective objects for your organization.
     pub async fn list_slos_with_http_info(
         &self,
@@ -987,7 +1043,7 @@ impl ServiceLevelObjectivesAPI {
         let limit = params.limit;
         let offset = params.offset;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo",
@@ -1096,7 +1152,7 @@ impl ServiceLevelObjectivesAPI {
         let page_number = params.page_number;
         let include_facets = params.include_facets;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo/search",
@@ -1195,7 +1251,7 @@ impl ServiceLevelObjectivesAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.update_slo";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo/{slo_id}",

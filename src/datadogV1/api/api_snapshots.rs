@@ -27,34 +27,34 @@ pub struct GetGraphSnapshotOptionalParams {
 
 impl GetGraphSnapshotOptionalParams {
     /// The metric query.
-    pub fn metric_query(&mut self, value: String) -> &mut Self {
+    pub fn metric_query(mut self, value: String) -> Self {
         self.metric_query = Some(value);
         self
     }
     /// A query that adds event bands to the graph.
-    pub fn event_query(&mut self, value: String) -> &mut Self {
+    pub fn event_query(mut self, value: String) -> Self {
         self.event_query = Some(value);
         self
     }
     /// A JSON document defining the graph. `graph_def` can be used instead of `metric_query`.
     /// The JSON document uses the [grammar defined here](<https://docs.datadoghq.com/graphing/graphing_json/#grammar>)
     /// and should be formatted to a single line then URL encoded.
-    pub fn graph_def(&mut self, value: String) -> &mut Self {
+    pub fn graph_def(mut self, value: String) -> Self {
         self.graph_def = Some(value);
         self
     }
     /// A title for the graph. If no title is specified, the graph does not have a title.
-    pub fn title(&mut self, value: String) -> &mut Self {
+    pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
     /// The height of the graph. If no height is specified, the graph's original height is used.
-    pub fn height(&mut self, value: i64) -> &mut Self {
+    pub fn height(mut self, value: i64) -> Self {
         self.height = Some(value);
         self
     }
     /// The width of the graph. If no width is specified, the graph's original width is used.
-    pub fn width(&mut self, value: i64) -> &mut Self {
+    pub fn width(mut self, value: i64) -> Self {
         self.width = Some(value);
         self
     }
@@ -73,12 +73,14 @@ pub enum GetGraphSnapshotError {
 #[derive(Debug, Clone)]
 pub struct SnapshotsAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for SnapshotsAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -88,7 +90,24 @@ impl SnapshotsAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// Take graph snapshots.
@@ -136,7 +155,7 @@ impl SnapshotsAPI {
         let height = params.height;
         let width = params.width;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/graph/snapshot",

@@ -2,6 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -25,32 +27,32 @@ pub struct ListSpansGetOptionalParams {
 
 impl ListSpansGetOptionalParams {
     /// Search query following spans syntax.
-    pub fn filter_query(&mut self, value: String) -> &mut Self {
+    pub fn filter_query(mut self, value: String) -> Self {
         self.filter_query = Some(value);
         self
     }
     /// Minimum timestamp for requested spans. Supports date-time ISO8601, date math, and regular timestamps (milliseconds).
-    pub fn filter_from(&mut self, value: String) -> &mut Self {
+    pub fn filter_from(mut self, value: String) -> Self {
         self.filter_from = Some(value);
         self
     }
     /// Maximum timestamp for requested spans. Supports date-time ISO8601, date math, and regular timestamps (milliseconds).
-    pub fn filter_to(&mut self, value: String) -> &mut Self {
+    pub fn filter_to(mut self, value: String) -> Self {
         self.filter_to = Some(value);
         self
     }
     /// Order of spans in results.
-    pub fn sort(&mut self, value: crate::datadogV2::model::SpansSort) -> &mut Self {
+    pub fn sort(mut self, value: crate::datadogV2::model::SpansSort) -> Self {
         self.sort = Some(value);
         self
     }
     /// List following results with a cursor provided in the previous query.
-    pub fn page_cursor(&mut self, value: String) -> &mut Self {
+    pub fn page_cursor(mut self, value: String) -> Self {
         self.page_cursor = Some(value);
         self
     }
     /// Maximum number of spans in the response.
-    pub fn page_limit(&mut self, value: i32) -> &mut Self {
+    pub fn page_limit(mut self, value: i32) -> Self {
         self.page_limit = Some(value);
         self
     }
@@ -91,12 +93,14 @@ pub enum ListSpansGetError {
 #[derive(Debug, Clone)]
 pub struct SpansAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for SpansAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -106,7 +110,24 @@ impl SpansAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// The API endpoint to aggregate spans into buckets and compute metrics and timeseries.
@@ -141,7 +162,7 @@ impl SpansAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.aggregate_spans";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/spans/analytics/aggregate",
@@ -227,6 +248,48 @@ impl SpansAPI {
         }
     }
 
+    pub fn list_spans_with_pagination(
+        &self,
+        mut body: crate::datadogV2::model::SpansListRequest,
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::Span, Error<ListSpansError>>> + '_ {
+        try_stream! {
+            let mut page_size: i32 = 10;
+            if body.data.is_none() {
+                body.data = Some(crate::datadogV2::model::SpansListRequestData::new());
+            }
+            if body.data.as_ref().unwrap().attributes.is_none() {
+                body.data.as_mut().unwrap().attributes = Some(crate::datadogV2::model::SpansListRequestAttributes::new());
+            }
+            if body.data.as_ref().unwrap().attributes.as_ref().unwrap().page.is_none() {
+                body.data.as_mut().unwrap().attributes.as_mut().unwrap().page = Some(crate::datadogV2::model::SpansListRequestPage::new());
+            }
+            if body.data.as_ref().unwrap().attributes.as_ref().unwrap().page.as_ref().unwrap().limit.is_none() {
+                body.data.as_mut().unwrap().attributes.as_mut().unwrap().page.as_mut().unwrap().limit = Some(page_size);
+            } else {
+                page_size = body.data.as_ref().unwrap().attributes.as_ref().unwrap().page.as_ref().unwrap().limit.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_spans( body.clone(),).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                let Some(meta) = resp.meta else { break };
+                let Some(page) = meta.page else { break };
+                let Some(after) = page.after else { break };
+
+                body.data.as_mut().unwrap().attributes.as_mut().unwrap().page.as_mut().unwrap().cursor = Some(after);
+            }
+        }
+    }
+
     /// List endpoint returns spans that match a span search query.
     /// [Results are paginated][1].
     ///
@@ -242,7 +305,7 @@ impl SpansAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.list_spans";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/spans/events/search",
@@ -326,6 +389,40 @@ impl SpansAPI {
         }
     }
 
+    pub fn list_spans_get_with_pagination(
+        &self,
+        mut params: ListSpansGetOptionalParams,
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::Span, Error<ListSpansGetError>>> + '_
+    {
+        try_stream! {
+            let mut page_size: i32 = 10;
+            if params.page_limit.is_none() {
+                params.page_limit = Some(page_size);
+            } else {
+                page_size = params.page_limit.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_spans_get(params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                let Some(meta) = resp.meta else { break };
+                let Some(page) = meta.page else { break };
+                let Some(after) = page.after else { break };
+
+                params.page_cursor = Some(after);
+            }
+        }
+    }
+
     /// List endpoint returns spans that match a span search query.
     /// [Results are paginated][1].
     ///
@@ -349,7 +446,7 @@ impl SpansAPI {
         let page_cursor = params.page_cursor;
         let page_limit = params.page_limit;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/spans/events",

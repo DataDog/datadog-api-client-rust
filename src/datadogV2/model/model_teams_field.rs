@@ -2,41 +2,27 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum TeamsField {
-    #[serde(rename = "id")]
     ID,
-    #[serde(rename = "name")]
     NAME,
-    #[serde(rename = "handle")]
     HANDLE,
-    #[serde(rename = "summary")]
     SUMMARY,
-    #[serde(rename = "description")]
     DESCRIPTION,
-    #[serde(rename = "avatar")]
     AVATAR,
-    #[serde(rename = "banner")]
     BANNER,
-    #[serde(rename = "visible_modules")]
     VISIBLE_MODULES,
-    #[serde(rename = "hidden_modules")]
     HIDDEN_MODULES,
-    #[serde(rename = "created_at")]
     CREATED_AT,
-    #[serde(rename = "modified_at")]
     MODIFIED_AT,
-    #[serde(rename = "user_count")]
     USER_COUNT,
-    #[serde(rename = "link_count")]
     LINK_COUNT,
-    #[serde(rename = "team_links")]
     TEAM_LINKS,
-    #[serde(rename = "user_team_permissions")]
     USER_TEAM_PERMISSIONS,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for TeamsField {
@@ -57,6 +43,48 @@ impl ToString for TeamsField {
             Self::LINK_COUNT => String::from("link_count"),
             Self::TEAM_LINKS => String::from("team_links"),
             Self::USER_TEAM_PERMISSIONS => String::from("user_team_permissions"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
+    }
+}
+
+impl Serialize for TeamsField {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for TeamsField {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "id" => Self::ID,
+            "name" => Self::NAME,
+            "handle" => Self::HANDLE,
+            "summary" => Self::SUMMARY,
+            "description" => Self::DESCRIPTION,
+            "avatar" => Self::AVATAR,
+            "banner" => Self::BANNER,
+            "visible_modules" => Self::VISIBLE_MODULES,
+            "hidden_modules" => Self::HIDDEN_MODULES,
+            "created_at" => Self::CREATED_AT,
+            "modified_at" => Self::MODIFIED_AT,
+            "user_count" => Self::USER_COUNT,
+            "link_count" => Self::LINK_COUNT,
+            "team_links" => Self::TEAM_LINKS,
+            "user_team_permissions" => Self::USER_TEAM_PERMISSIONS,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
+        })
     }
 }

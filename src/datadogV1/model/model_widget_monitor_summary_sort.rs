@@ -2,45 +2,29 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum WidgetMonitorSummarySort {
-    #[serde(rename = "name")]
     NAME,
-    #[serde(rename = "group")]
     GROUP,
-    #[serde(rename = "status")]
     STATUS,
-    #[serde(rename = "tags")]
     TAGS,
-    #[serde(rename = "triggered")]
     TRIGGERED,
-    #[serde(rename = "group,asc")]
     GROUP_ASCENDING,
-    #[serde(rename = "group,desc")]
     GROUP_DESCENDING,
-    #[serde(rename = "name,asc")]
     NAME_ASCENDING,
-    #[serde(rename = "name,desc")]
     NAME_DESCENDING,
-    #[serde(rename = "status,asc")]
     STATUS_ASCENDING,
-    #[serde(rename = "status,desc")]
     STATUS_DESCENDING,
-    #[serde(rename = "tags,asc")]
     TAGS_ASCENDING,
-    #[serde(rename = "tags,desc")]
     TAGS_DESCENDING,
-    #[serde(rename = "triggered,asc")]
     TRIGGERED_ASCENDING,
-    #[serde(rename = "triggered,desc")]
     TRIGGERED_DESCENDING,
-    #[serde(rename = "priority,asc")]
     PRIORITY_ASCENDING,
-    #[serde(rename = "priority,desc")]
     PRIORITY_DESCENDING,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for WidgetMonitorSummarySort {
@@ -63,6 +47,50 @@ impl ToString for WidgetMonitorSummarySort {
             Self::TRIGGERED_DESCENDING => String::from("triggered,desc"),
             Self::PRIORITY_ASCENDING => String::from("priority,asc"),
             Self::PRIORITY_DESCENDING => String::from("priority,desc"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
+    }
+}
+
+impl Serialize for WidgetMonitorSummarySort {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for WidgetMonitorSummarySort {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "name" => Self::NAME,
+            "group" => Self::GROUP,
+            "status" => Self::STATUS,
+            "tags" => Self::TAGS,
+            "triggered" => Self::TRIGGERED,
+            "group,asc" => Self::GROUP_ASCENDING,
+            "group,desc" => Self::GROUP_DESCENDING,
+            "name,asc" => Self::NAME_ASCENDING,
+            "name,desc" => Self::NAME_DESCENDING,
+            "status,asc" => Self::STATUS_ASCENDING,
+            "status,desc" => Self::STATUS_DESCENDING,
+            "tags,asc" => Self::TAGS_ASCENDING,
+            "tags,desc" => Self::TAGS_DESCENDING,
+            "triggered,asc" => Self::TRIGGERED_ASCENDING,
+            "triggered,desc" => Self::TRIGGERED_DESCENDING,
+            "priority,asc" => Self::PRIORITY_ASCENDING,
+            "priority,desc" => Self::PRIORITY_DESCENDING,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
+        })
     }
 }

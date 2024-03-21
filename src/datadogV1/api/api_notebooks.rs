@@ -2,6 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -33,52 +35,52 @@ pub struct ListNotebooksOptionalParams {
 
 impl ListNotebooksOptionalParams {
     /// Return notebooks created by the given `author_handle`.
-    pub fn author_handle(&mut self, value: String) -> &mut Self {
+    pub fn author_handle(mut self, value: String) -> Self {
         self.author_handle = Some(value);
         self
     }
     /// Return notebooks not created by the given `author_handle`.
-    pub fn exclude_author_handle(&mut self, value: String) -> &mut Self {
+    pub fn exclude_author_handle(mut self, value: String) -> Self {
         self.exclude_author_handle = Some(value);
         self
     }
     /// The index of the first notebook you want returned.
-    pub fn start(&mut self, value: i64) -> &mut Self {
+    pub fn start(mut self, value: i64) -> Self {
         self.start = Some(value);
         self
     }
     /// The number of notebooks to be returned.
-    pub fn count(&mut self, value: i64) -> &mut Self {
+    pub fn count(mut self, value: i64) -> Self {
         self.count = Some(value);
         self
     }
     /// Sort by field `modified`, `name`, or `created`.
-    pub fn sort_field(&mut self, value: String) -> &mut Self {
+    pub fn sort_field(mut self, value: String) -> Self {
         self.sort_field = Some(value);
         self
     }
     /// Sort by direction `asc` or `desc`.
-    pub fn sort_dir(&mut self, value: String) -> &mut Self {
+    pub fn sort_dir(mut self, value: String) -> Self {
         self.sort_dir = Some(value);
         self
     }
     /// Return only notebooks with `query` string in notebook name or author handle.
-    pub fn query(&mut self, value: String) -> &mut Self {
+    pub fn query(mut self, value: String) -> Self {
         self.query = Some(value);
         self
     }
     /// Value of `false` excludes the `cells` and global `time` for each notebook.
-    pub fn include_cells(&mut self, value: bool) -> &mut Self {
+    pub fn include_cells(mut self, value: bool) -> Self {
         self.include_cells = Some(value);
         self
     }
     /// True value returns only template notebooks. Default is false (returns only non-template notebooks).
-    pub fn is_template(&mut self, value: bool) -> &mut Self {
+    pub fn is_template(mut self, value: bool) -> Self {
         self.is_template = Some(value);
         self
     }
     /// If type is provided, returns only notebooks with that metadata type. Default does not have type filtering.
-    pub fn type_(&mut self, value: String) -> &mut Self {
+    pub fn type_(mut self, value: String) -> Self {
         self.type_ = Some(value);
         self
     }
@@ -141,12 +143,14 @@ pub enum UpdateNotebookError {
 #[derive(Debug, Clone)]
 pub struct NotebooksAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for NotebooksAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -156,7 +160,24 @@ impl NotebooksAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// Create a notebook using the specified options.
@@ -189,7 +210,7 @@ impl NotebooksAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.create_notebook";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/notebooks",
@@ -268,7 +289,7 @@ impl NotebooksAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.delete_notebook";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/notebooks/{notebook_id}",
@@ -344,7 +365,7 @@ impl NotebooksAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.get_notebook";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/notebooks/{notebook_id}",
@@ -417,6 +438,41 @@ impl NotebooksAPI {
         }
     }
 
+    pub fn list_notebooks_with_pagination(
+        &self,
+        mut params: ListNotebooksOptionalParams,
+    ) -> impl Stream<
+        Item = Result<crate::datadogV1::model::NotebooksResponseData, Error<ListNotebooksError>>,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 100;
+            if params.count.is_none() {
+                params.count = Some(page_size);
+            } else {
+                page_size = params.count.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_notebooks(params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                if params.start.is_none() {
+                    params.start = Some(page_size.clone());
+                } else {
+                    params.start = Some(params.start.unwrap() + page_size.clone());
+                }
+            }
+        }
+    }
+
     /// Get all notebooks. This can also be used to search for notebooks with a particular `query` in the notebook
     /// `name` or author `handle`.
     pub async fn list_notebooks_with_http_info(
@@ -441,7 +497,7 @@ impl NotebooksAPI {
         let is_template = params.is_template;
         let type_ = params.type_;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/notebooks",
@@ -567,7 +623,7 @@ impl NotebooksAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.update_notebook";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/notebooks/{notebook_id}",

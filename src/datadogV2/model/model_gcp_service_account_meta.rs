@@ -1,27 +1,33 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// Additional information related to your service account.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct GCPServiceAccountMeta {
     /// The current list of projects accessible from your service account.
     #[serde(rename = "accessible_projects")]
     pub accessible_projects: Option<Vec<String>>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl GCPServiceAccountMeta {
     pub fn new() -> GCPServiceAccountMeta {
         GCPServiceAccountMeta {
             accessible_projects: None,
+            _unparsed: false,
         }
     }
 
-    pub fn accessible_projects(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn accessible_projects(mut self, value: Vec<String>) -> Self {
         self.accessible_projects = Some(value);
         self
     }
@@ -30,5 +36,51 @@ impl GCPServiceAccountMeta {
 impl Default for GCPServiceAccountMeta {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for GCPServiceAccountMeta {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct GCPServiceAccountMetaVisitor;
+        impl<'a> Visitor<'a> for GCPServiceAccountMetaVisitor {
+            type Value = GCPServiceAccountMeta;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut accessible_projects: Option<Vec<String>> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "accessible_projects" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            accessible_projects =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+
+                let content = GCPServiceAccountMeta {
+                    accessible_projects,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(GCPServiceAccountMetaVisitor)
     }
 }

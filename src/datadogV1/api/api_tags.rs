@@ -17,7 +17,7 @@ pub struct CreateHostTagsOptionalParams {
 impl CreateHostTagsOptionalParams {
     /// The source of the tags.
     /// [Complete list of source attribute values](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>).
-    pub fn source(&mut self, value: String) -> &mut Self {
+    pub fn source(mut self, value: String) -> Self {
         self.source = Some(value);
         self
     }
@@ -35,7 +35,7 @@ pub struct DeleteHostTagsOptionalParams {
 impl DeleteHostTagsOptionalParams {
     /// The source of the tags (for example chef, puppet).
     /// [Complete list of source attribute values](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>).
-    pub fn source(&mut self, value: String) -> &mut Self {
+    pub fn source(mut self, value: String) -> Self {
         self.source = Some(value);
         self
     }
@@ -51,7 +51,7 @@ pub struct GetHostTagsOptionalParams {
 
 impl GetHostTagsOptionalParams {
     /// Source to filter.
-    pub fn source(&mut self, value: String) -> &mut Self {
+    pub fn source(mut self, value: String) -> Self {
         self.source = Some(value);
         self
     }
@@ -67,7 +67,7 @@ pub struct ListHostTagsOptionalParams {
 
 impl ListHostTagsOptionalParams {
     /// When specified, filters host list to those tags with the specified source.
-    pub fn source(&mut self, value: String) -> &mut Self {
+    pub fn source(mut self, value: String) -> Self {
         self.source = Some(value);
         self
     }
@@ -85,7 +85,7 @@ pub struct UpdateHostTagsOptionalParams {
 impl UpdateHostTagsOptionalParams {
     /// The source of the tags (for example chef, puppet).
     /// [Complete list of source attribute values](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>)
-    pub fn source(&mut self, value: String) -> &mut Self {
+    pub fn source(mut self, value: String) -> Self {
         self.source = Some(value);
         self
     }
@@ -144,12 +144,14 @@ pub enum UpdateHostTagsError {
 #[derive(Debug, Clone)]
 pub struct TagsAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for TagsAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -159,7 +161,24 @@ impl TagsAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// This endpoint allows you to add new tags to a host,
@@ -202,7 +221,7 @@ impl TagsAPI {
         // unbox and build optional parameters
         let source = params.source;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/tags/hosts/{host_name}",
@@ -296,7 +315,7 @@ impl TagsAPI {
         // unbox and build optional parameters
         let source = params.source;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/tags/hosts/{host_name}",
@@ -381,7 +400,7 @@ impl TagsAPI {
         // unbox and build optional parameters
         let source = params.source;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/tags/hosts/{host_name}",
@@ -469,7 +488,7 @@ impl TagsAPI {
         // unbox and build optional parameters
         let source = params.source;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/tags/hosts",
@@ -565,7 +584,7 @@ impl TagsAPI {
         // unbox and build optional parameters
         let source = params.source;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/tags/hosts/{host_name}",

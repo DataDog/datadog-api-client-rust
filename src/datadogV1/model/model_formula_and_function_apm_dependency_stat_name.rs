@@ -2,25 +2,19 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum FormulaAndFunctionApmDependencyStatName {
-    #[serde(rename = "avg_duration")]
     AVG_DURATION,
-    #[serde(rename = "avg_root_duration")]
     AVG_ROOT_DURATION,
-    #[serde(rename = "avg_spans_per_trace")]
     AVG_SPANS_PER_TRACE,
-    #[serde(rename = "error_rate")]
     ERROR_RATE,
-    #[serde(rename = "pct_exec_time")]
     PCT_EXEC_TIME,
-    #[serde(rename = "pct_of_traces")]
     PCT_OF_TRACES,
-    #[serde(rename = "total_traces_count")]
     TOTAL_TRACES_COUNT,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for FormulaAndFunctionApmDependencyStatName {
@@ -33,6 +27,40 @@ impl ToString for FormulaAndFunctionApmDependencyStatName {
             Self::PCT_EXEC_TIME => String::from("pct_exec_time"),
             Self::PCT_OF_TRACES => String::from("pct_of_traces"),
             Self::TOTAL_TRACES_COUNT => String::from("total_traces_count"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
+    }
+}
+
+impl Serialize for FormulaAndFunctionApmDependencyStatName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for FormulaAndFunctionApmDependencyStatName {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "avg_duration" => Self::AVG_DURATION,
+            "avg_root_duration" => Self::AVG_ROOT_DURATION,
+            "avg_spans_per_trace" => Self::AVG_SPANS_PER_TRACE,
+            "error_rate" => Self::ERROR_RATE,
+            "pct_exec_time" => Self::PCT_EXEC_TIME,
+            "pct_of_traces" => Self::PCT_OF_TRACES,
+            "total_traces_count" => Self::TOTAL_TRACES_COUNT,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
+        })
     }
 }

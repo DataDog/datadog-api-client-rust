@@ -2,6 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -25,32 +27,32 @@ pub struct ListCIAppTestEventsOptionalParams {
 
 impl ListCIAppTestEventsOptionalParams {
     /// Search query following log syntax.
-    pub fn filter_query(&mut self, value: String) -> &mut Self {
+    pub fn filter_query(mut self, value: String) -> Self {
         self.filter_query = Some(value);
         self
     }
     /// Minimum timestamp for requested events.
-    pub fn filter_from(&mut self, value: String) -> &mut Self {
+    pub fn filter_from(mut self, value: String) -> Self {
         self.filter_from = Some(value);
         self
     }
     /// Maximum timestamp for requested events.
-    pub fn filter_to(&mut self, value: String) -> &mut Self {
+    pub fn filter_to(mut self, value: String) -> Self {
         self.filter_to = Some(value);
         self
     }
     /// Order of events in results.
-    pub fn sort(&mut self, value: crate::datadogV2::model::CIAppSort) -> &mut Self {
+    pub fn sort(mut self, value: crate::datadogV2::model::CIAppSort) -> Self {
         self.sort = Some(value);
         self
     }
     /// List following results with a cursor provided in the previous query.
-    pub fn page_cursor(&mut self, value: String) -> &mut Self {
+    pub fn page_cursor(mut self, value: String) -> Self {
         self.page_cursor = Some(value);
         self
     }
     /// Maximum number of events in the response.
-    pub fn page_limit(&mut self, value: i32) -> &mut Self {
+    pub fn page_limit(mut self, value: i32) -> Self {
         self.page_limit = Some(value);
         self
     }
@@ -64,7 +66,7 @@ pub struct SearchCIAppTestEventsOptionalParams {
 }
 
 impl SearchCIAppTestEventsOptionalParams {
-    pub fn body(&mut self, value: crate::datadogV2::model::CIAppTestEventsRequest) -> &mut Self {
+    pub fn body(mut self, value: crate::datadogV2::model::CIAppTestEventsRequest) -> Self {
         self.body = Some(value);
         self
     }
@@ -103,12 +105,14 @@ pub enum SearchCIAppTestEventsError {
 #[derive(Debug, Clone)]
 pub struct CIVisibilityTestsAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for CIVisibilityTestsAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -118,7 +122,24 @@ impl CIVisibilityTestsAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// The API endpoint to aggregate CI Visibility test events into buckets of computed metrics and timeseries.
@@ -154,7 +175,7 @@ impl CIVisibilityTestsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.aggregate_ci_app_test_events";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/ci/tests/analytics/aggregate",
@@ -239,6 +260,41 @@ impl CIVisibilityTestsAPI {
         }
     }
 
+    pub fn list_ci_app_test_events_with_pagination(
+        &self,
+        mut params: ListCIAppTestEventsOptionalParams,
+    ) -> impl Stream<
+        Item = Result<crate::datadogV2::model::CIAppTestEvent, Error<ListCIAppTestEventsError>>,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i32 = 10;
+            if params.page_limit.is_none() {
+                params.page_limit = Some(page_size);
+            } else {
+                page_size = params.page_limit.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_ci_app_test_events(params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                let Some(meta) = resp.meta else { break };
+                let Some(page) = meta.page else { break };
+                let Some(after) = page.after else { break };
+
+                params.page_cursor = Some(after);
+            }
+        }
+    }
+
     /// List endpoint returns CI Visibility test events that match a [log search query](<https://docs.datadoghq.com/logs/explorer/search_syntax/>).
     /// [Results are paginated similarly to logs](<https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>).
     ///
@@ -261,7 +317,7 @@ impl CIVisibilityTestsAPI {
         let page_cursor = params.page_cursor;
         let page_limit = params.page_limit;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/ci/tests/events",
@@ -363,6 +419,47 @@ impl CIVisibilityTestsAPI {
         }
     }
 
+    pub fn search_ci_app_test_events_with_pagination(
+        &self,
+        mut params: SearchCIAppTestEventsOptionalParams,
+    ) -> impl Stream<
+        Item = Result<crate::datadogV2::model::CIAppTestEvent, Error<SearchCIAppTestEventsError>>,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i32 = 10;
+            if params.body.is_none() {
+                params.body = Some(crate::datadogV2::model::CIAppTestEventsRequest::new());
+            }
+            if params.body.as_ref().unwrap().page.is_none() {
+                params.body.as_mut().unwrap().page = Some(crate::datadogV2::model::CIAppQueryPageOptions::new());
+            }
+            if params.body.as_ref().unwrap().page.as_ref().unwrap().limit.is_none() {
+                params.body.as_mut().unwrap().page.as_mut().unwrap().limit = Some(page_size);
+            } else {
+                page_size = params.body.as_ref().unwrap().page.as_ref().unwrap().limit.unwrap().clone();
+            }
+            loop {
+                let resp = self.search_ci_app_test_events(params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                let Some(meta) = resp.meta else { break };
+                let Some(page) = meta.page else { break };
+                let Some(after) = page.after else { break };
+
+                params.body.as_mut().unwrap().page.as_mut().unwrap().cursor = Some(after);
+            }
+        }
+    }
+
     /// List endpoint returns CI Visibility test events that match a [log search query](<https://docs.datadoghq.com/logs/explorer/search_syntax/>).
     /// [Results are paginated similarly to logs](<https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>).
     ///
@@ -380,7 +477,7 @@ impl CIVisibilityTestsAPI {
         // unbox and build optional parameters
         let body = params.body;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/ci/tests/events/search",

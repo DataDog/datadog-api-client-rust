@@ -2,19 +2,16 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum DowntimeStatus {
-    #[serde(rename = "active")]
     ACTIVE,
-    #[serde(rename = "canceled")]
     CANCELED,
-    #[serde(rename = "ended")]
     ENDED,
-    #[serde(rename = "scheduled")]
     SCHEDULED,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for DowntimeStatus {
@@ -24,6 +21,37 @@ impl ToString for DowntimeStatus {
             Self::CANCELED => String::from("canceled"),
             Self::ENDED => String::from("ended"),
             Self::SCHEDULED => String::from("scheduled"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
+    }
+}
+
+impl Serialize for DowntimeStatus {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for DowntimeStatus {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "active" => Self::ACTIVE,
+            "canceled" => Self::CANCELED,
+            "ended" => Self::ENDED,
+            "scheduled" => Self::SCHEDULED,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
+        })
     }
 }

@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// Response summarizing all usage aggregated across the months in the request for all organizations, and broken down by month and by organization.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct UsageSummaryResponse {
     /// Shows the 99th percentile of all agent hosts over all hours in the current months for all organizations.
     #[serde(rename = "agent_host_top99p_sum")]
@@ -349,6 +351,9 @@ pub struct UsageSummaryResponse {
     /// Sum of all workflows executed over all hours in the current months for all organizations.
     #[serde(rename = "workflow_executions_usage_agg_sum")]
     pub workflow_executions_usage_agg_sum: Option<i64>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl UsageSummaryResponse {
@@ -468,689 +473,684 @@ impl UsageSummaryResponse {
             vsphere_host_top99p_sum: None,
             vuln_management_host_count_top99p_sum: None,
             workflow_executions_usage_agg_sum: None,
+            _unparsed: false,
         }
     }
 
     #[allow(deprecated)]
-    pub fn agent_host_top99p_sum(&mut self, value: i64) -> &mut Self {
+    pub fn agent_host_top99p_sum(mut self, value: i64) -> Self {
         self.agent_host_top99p_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn apm_azure_app_service_host_top99p_sum(&mut self, value: i64) -> &mut Self {
+    pub fn apm_azure_app_service_host_top99p_sum(mut self, value: i64) -> Self {
         self.apm_azure_app_service_host_top99p_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn apm_fargate_count_avg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn apm_fargate_count_avg_sum(mut self, value: i64) -> Self {
         self.apm_fargate_count_avg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn apm_host_top99p_sum(&mut self, value: i64) -> &mut Self {
+    pub fn apm_host_top99p_sum(mut self, value: i64) -> Self {
         self.apm_host_top99p_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn appsec_fargate_count_avg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn appsec_fargate_count_avg_sum(mut self, value: i64) -> Self {
         self.appsec_fargate_count_avg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn audit_logs_lines_indexed_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn audit_logs_lines_indexed_agg_sum(mut self, value: i64) -> Self {
         self.audit_logs_lines_indexed_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn audit_trail_enabled_hwm_sum(&mut self, value: i64) -> &mut Self {
+    pub fn audit_trail_enabled_hwm_sum(mut self, value: i64) -> Self {
         self.audit_trail_enabled_hwm_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn avg_profiled_fargate_tasks_sum(&mut self, value: i64) -> &mut Self {
+    pub fn avg_profiled_fargate_tasks_sum(mut self, value: i64) -> Self {
         self.avg_profiled_fargate_tasks_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn aws_host_top99p_sum(&mut self, value: i64) -> &mut Self {
+    pub fn aws_host_top99p_sum(mut self, value: i64) -> Self {
         self.aws_host_top99p_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn aws_lambda_func_count(&mut self, value: i64) -> &mut Self {
+    pub fn aws_lambda_func_count(mut self, value: i64) -> Self {
         self.aws_lambda_func_count = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn aws_lambda_invocations_sum(&mut self, value: i64) -> &mut Self {
+    pub fn aws_lambda_invocations_sum(mut self, value: i64) -> Self {
         self.aws_lambda_invocations_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn azure_app_service_top99p_sum(&mut self, value: i64) -> &mut Self {
+    pub fn azure_app_service_top99p_sum(mut self, value: i64) -> Self {
         self.azure_app_service_top99p_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn azure_host_top99p_sum(&mut self, value: i64) -> &mut Self {
+    pub fn azure_host_top99p_sum(mut self, value: i64) -> Self {
         self.azure_host_top99p_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn billable_ingested_bytes_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn billable_ingested_bytes_agg_sum(mut self, value: i64) -> Self {
         self.billable_ingested_bytes_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn browser_rum_lite_session_count_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn browser_rum_lite_session_count_agg_sum(mut self, value: i64) -> Self {
         self.browser_rum_lite_session_count_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn browser_rum_replay_session_count_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn browser_rum_replay_session_count_agg_sum(mut self, value: i64) -> Self {
         self.browser_rum_replay_session_count_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn browser_rum_units_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn browser_rum_units_agg_sum(mut self, value: i64) -> Self {
         self.browser_rum_units_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn ci_pipeline_indexed_spans_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn ci_pipeline_indexed_spans_agg_sum(mut self, value: i64) -> Self {
         self.ci_pipeline_indexed_spans_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn ci_test_indexed_spans_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn ci_test_indexed_spans_agg_sum(mut self, value: i64) -> Self {
         self.ci_test_indexed_spans_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn ci_visibility_itr_committers_hwm_sum(&mut self, value: i64) -> &mut Self {
+    pub fn ci_visibility_itr_committers_hwm_sum(mut self, value: i64) -> Self {
         self.ci_visibility_itr_committers_hwm_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn ci_visibility_pipeline_committers_hwm_sum(&mut self, value: i64) -> &mut Self {
+    pub fn ci_visibility_pipeline_committers_hwm_sum(mut self, value: i64) -> Self {
         self.ci_visibility_pipeline_committers_hwm_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn ci_visibility_test_committers_hwm_sum(&mut self, value: i64) -> &mut Self {
+    pub fn ci_visibility_test_committers_hwm_sum(mut self, value: i64) -> Self {
         self.ci_visibility_test_committers_hwm_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn cloud_cost_management_aws_host_count_avg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn cloud_cost_management_aws_host_count_avg_sum(mut self, value: i64) -> Self {
         self.cloud_cost_management_aws_host_count_avg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn cloud_cost_management_azure_host_count_avg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn cloud_cost_management_azure_host_count_avg_sum(mut self, value: i64) -> Self {
         self.cloud_cost_management_azure_host_count_avg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn cloud_cost_management_host_count_avg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn cloud_cost_management_host_count_avg_sum(mut self, value: i64) -> Self {
         self.cloud_cost_management_host_count_avg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn cloud_siem_events_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn cloud_siem_events_agg_sum(mut self, value: i64) -> Self {
         self.cloud_siem_events_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn container_avg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn container_avg_sum(mut self, value: i64) -> Self {
         self.container_avg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn container_excl_agent_avg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn container_excl_agent_avg_sum(mut self, value: i64) -> Self {
         self.container_excl_agent_avg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn container_hwm_sum(&mut self, value: i64) -> &mut Self {
+    pub fn container_hwm_sum(mut self, value: i64) -> Self {
         self.container_hwm_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn csm_container_enterprise_compliance_count_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn csm_container_enterprise_compliance_count_agg_sum(mut self, value: i64) -> Self {
         self.csm_container_enterprise_compliance_count_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn csm_container_enterprise_cws_count_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn csm_container_enterprise_cws_count_agg_sum(mut self, value: i64) -> Self {
         self.csm_container_enterprise_cws_count_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn csm_container_enterprise_total_count_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn csm_container_enterprise_total_count_agg_sum(mut self, value: i64) -> Self {
         self.csm_container_enterprise_total_count_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn csm_host_enterprise_aas_host_count_top99p_sum(&mut self, value: i64) -> &mut Self {
+    pub fn csm_host_enterprise_aas_host_count_top99p_sum(mut self, value: i64) -> Self {
         self.csm_host_enterprise_aas_host_count_top99p_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn csm_host_enterprise_aws_host_count_top99p_sum(&mut self, value: i64) -> &mut Self {
+    pub fn csm_host_enterprise_aws_host_count_top99p_sum(mut self, value: i64) -> Self {
         self.csm_host_enterprise_aws_host_count_top99p_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn csm_host_enterprise_azure_host_count_top99p_sum(&mut self, value: i64) -> &mut Self {
+    pub fn csm_host_enterprise_azure_host_count_top99p_sum(mut self, value: i64) -> Self {
         self.csm_host_enterprise_azure_host_count_top99p_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn csm_host_enterprise_compliance_host_count_top99p_sum(
-        &mut self,
-        value: i64,
-    ) -> &mut Self {
+    pub fn csm_host_enterprise_compliance_host_count_top99p_sum(mut self, value: i64) -> Self {
         self.csm_host_enterprise_compliance_host_count_top99p_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn csm_host_enterprise_cws_host_count_top99p_sum(&mut self, value: i64) -> &mut Self {
+    pub fn csm_host_enterprise_cws_host_count_top99p_sum(mut self, value: i64) -> Self {
         self.csm_host_enterprise_cws_host_count_top99p_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn csm_host_enterprise_gcp_host_count_top99p_sum(&mut self, value: i64) -> &mut Self {
+    pub fn csm_host_enterprise_gcp_host_count_top99p_sum(mut self, value: i64) -> Self {
         self.csm_host_enterprise_gcp_host_count_top99p_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn csm_host_enterprise_total_host_count_top99p_sum(&mut self, value: i64) -> &mut Self {
+    pub fn csm_host_enterprise_total_host_count_top99p_sum(mut self, value: i64) -> Self {
         self.csm_host_enterprise_total_host_count_top99p_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn cspm_aas_host_top99p_sum(&mut self, value: i64) -> &mut Self {
+    pub fn cspm_aas_host_top99p_sum(mut self, value: i64) -> Self {
         self.cspm_aas_host_top99p_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn cspm_aws_host_top99p_sum(&mut self, value: i64) -> &mut Self {
+    pub fn cspm_aws_host_top99p_sum(mut self, value: i64) -> Self {
         self.cspm_aws_host_top99p_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn cspm_azure_host_top99p_sum(&mut self, value: i64) -> &mut Self {
+    pub fn cspm_azure_host_top99p_sum(mut self, value: i64) -> Self {
         self.cspm_azure_host_top99p_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn cspm_container_avg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn cspm_container_avg_sum(mut self, value: i64) -> Self {
         self.cspm_container_avg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn cspm_container_hwm_sum(&mut self, value: i64) -> &mut Self {
+    pub fn cspm_container_hwm_sum(mut self, value: i64) -> Self {
         self.cspm_container_hwm_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn cspm_gcp_host_top99p_sum(&mut self, value: i64) -> &mut Self {
+    pub fn cspm_gcp_host_top99p_sum(mut self, value: i64) -> Self {
         self.cspm_gcp_host_top99p_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn cspm_host_top99p_sum(&mut self, value: i64) -> &mut Self {
+    pub fn cspm_host_top99p_sum(mut self, value: i64) -> Self {
         self.cspm_host_top99p_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn custom_historical_ts_sum(&mut self, value: i64) -> &mut Self {
+    pub fn custom_historical_ts_sum(mut self, value: i64) -> Self {
         self.custom_historical_ts_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn custom_live_ts_sum(&mut self, value: i64) -> &mut Self {
+    pub fn custom_live_ts_sum(mut self, value: i64) -> Self {
         self.custom_live_ts_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn custom_ts_sum(&mut self, value: i64) -> &mut Self {
+    pub fn custom_ts_sum(mut self, value: i64) -> Self {
         self.custom_ts_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn cws_containers_avg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn cws_containers_avg_sum(mut self, value: i64) -> Self {
         self.cws_containers_avg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn cws_host_top99p_sum(&mut self, value: i64) -> &mut Self {
+    pub fn cws_host_top99p_sum(mut self, value: i64) -> Self {
         self.cws_host_top99p_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn dbm_host_top99p_sum(&mut self, value: i64) -> &mut Self {
+    pub fn dbm_host_top99p_sum(mut self, value: i64) -> Self {
         self.dbm_host_top99p_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn dbm_queries_avg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn dbm_queries_avg_sum(mut self, value: i64) -> Self {
         self.dbm_queries_avg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn end_date(&mut self, value: String) -> &mut Self {
+    pub fn end_date(mut self, value: String) -> Self {
         self.end_date = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn fargate_tasks_count_avg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn fargate_tasks_count_avg_sum(mut self, value: i64) -> Self {
         self.fargate_tasks_count_avg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn fargate_tasks_count_hwm_sum(&mut self, value: i64) -> &mut Self {
+    pub fn fargate_tasks_count_hwm_sum(mut self, value: i64) -> Self {
         self.fargate_tasks_count_hwm_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn forwarding_events_bytes_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn forwarding_events_bytes_agg_sum(mut self, value: i64) -> Self {
         self.forwarding_events_bytes_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn gcp_host_top99p_sum(&mut self, value: i64) -> &mut Self {
+    pub fn gcp_host_top99p_sum(mut self, value: i64) -> Self {
         self.gcp_host_top99p_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn heroku_host_top99p_sum(&mut self, value: i64) -> &mut Self {
+    pub fn heroku_host_top99p_sum(mut self, value: i64) -> Self {
         self.heroku_host_top99p_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn incident_management_monthly_active_users_hwm_sum(&mut self, value: i64) -> &mut Self {
+    pub fn incident_management_monthly_active_users_hwm_sum(mut self, value: i64) -> Self {
         self.incident_management_monthly_active_users_hwm_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn indexed_events_count_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn indexed_events_count_agg_sum(mut self, value: i64) -> Self {
         self.indexed_events_count_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn infra_host_top99p_sum(&mut self, value: i64) -> &mut Self {
+    pub fn infra_host_top99p_sum(mut self, value: i64) -> Self {
         self.infra_host_top99p_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn ingested_events_bytes_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn ingested_events_bytes_agg_sum(mut self, value: i64) -> Self {
         self.ingested_events_bytes_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn iot_device_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn iot_device_agg_sum(mut self, value: i64) -> Self {
         self.iot_device_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn iot_device_top99p_sum(&mut self, value: i64) -> &mut Self {
+    pub fn iot_device_top99p_sum(mut self, value: i64) -> Self {
         self.iot_device_top99p_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn last_updated(&mut self, value: String) -> &mut Self {
+    pub fn last_updated(mut self, value: String) -> Self {
         self.last_updated = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn live_indexed_events_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn live_indexed_events_agg_sum(mut self, value: i64) -> Self {
         self.live_indexed_events_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn live_ingested_bytes_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn live_ingested_bytes_agg_sum(mut self, value: i64) -> Self {
         self.live_ingested_bytes_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn logs_by_retention(
-        &mut self,
-        value: crate::datadogV1::model::LogsByRetention,
-    ) -> &mut Self {
+    pub fn logs_by_retention(mut self, value: crate::datadogV1::model::LogsByRetention) -> Self {
         self.logs_by_retention = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn mobile_rum_lite_session_count_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn mobile_rum_lite_session_count_agg_sum(mut self, value: i64) -> Self {
         self.mobile_rum_lite_session_count_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn mobile_rum_session_count_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn mobile_rum_session_count_agg_sum(mut self, value: i64) -> Self {
         self.mobile_rum_session_count_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn mobile_rum_session_count_android_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn mobile_rum_session_count_android_agg_sum(mut self, value: i64) -> Self {
         self.mobile_rum_session_count_android_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn mobile_rum_session_count_flutter_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn mobile_rum_session_count_flutter_agg_sum(mut self, value: i64) -> Self {
         self.mobile_rum_session_count_flutter_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn mobile_rum_session_count_ios_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn mobile_rum_session_count_ios_agg_sum(mut self, value: i64) -> Self {
         self.mobile_rum_session_count_ios_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn mobile_rum_session_count_reactnative_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn mobile_rum_session_count_reactnative_agg_sum(mut self, value: i64) -> Self {
         self.mobile_rum_session_count_reactnative_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn mobile_rum_session_count_roku_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn mobile_rum_session_count_roku_agg_sum(mut self, value: i64) -> Self {
         self.mobile_rum_session_count_roku_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn mobile_rum_units_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn mobile_rum_units_agg_sum(mut self, value: i64) -> Self {
         self.mobile_rum_units_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn ndm_netflow_events_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn ndm_netflow_events_agg_sum(mut self, value: i64) -> Self {
         self.ndm_netflow_events_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn netflow_indexed_events_count_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn netflow_indexed_events_count_agg_sum(mut self, value: i64) -> Self {
         self.netflow_indexed_events_count_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn npm_host_top99p_sum(&mut self, value: i64) -> &mut Self {
+    pub fn npm_host_top99p_sum(mut self, value: i64) -> Self {
         self.npm_host_top99p_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn observability_pipelines_bytes_processed_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn observability_pipelines_bytes_processed_agg_sum(mut self, value: i64) -> Self {
         self.observability_pipelines_bytes_processed_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn online_archive_events_count_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn online_archive_events_count_agg_sum(mut self, value: i64) -> Self {
         self.online_archive_events_count_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn opentelemetry_apm_host_top99p_sum(&mut self, value: i64) -> &mut Self {
+    pub fn opentelemetry_apm_host_top99p_sum(mut self, value: i64) -> Self {
         self.opentelemetry_apm_host_top99p_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn opentelemetry_host_top99p_sum(&mut self, value: i64) -> &mut Self {
+    pub fn opentelemetry_host_top99p_sum(mut self, value: i64) -> Self {
         self.opentelemetry_host_top99p_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn profiling_aas_count_top99p_sum(&mut self, value: i64) -> &mut Self {
+    pub fn profiling_aas_count_top99p_sum(mut self, value: i64) -> Self {
         self.profiling_aas_count_top99p_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn profiling_container_agent_count_avg(&mut self, value: i64) -> &mut Self {
+    pub fn profiling_container_agent_count_avg(mut self, value: i64) -> Self {
         self.profiling_container_agent_count_avg = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn profiling_host_count_top99p_sum(&mut self, value: i64) -> &mut Self {
+    pub fn profiling_host_count_top99p_sum(mut self, value: i64) -> Self {
         self.profiling_host_count_top99p_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn rehydrated_indexed_events_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn rehydrated_indexed_events_agg_sum(mut self, value: i64) -> Self {
         self.rehydrated_indexed_events_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn rehydrated_ingested_bytes_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn rehydrated_ingested_bytes_agg_sum(mut self, value: i64) -> Self {
         self.rehydrated_ingested_bytes_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn rum_browser_and_mobile_session_count(&mut self, value: i64) -> &mut Self {
+    pub fn rum_browser_and_mobile_session_count(mut self, value: i64) -> Self {
         self.rum_browser_and_mobile_session_count = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn rum_session_count_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn rum_session_count_agg_sum(mut self, value: i64) -> Self {
         self.rum_session_count_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn rum_total_session_count_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn rum_total_session_count_agg_sum(mut self, value: i64) -> Self {
         self.rum_total_session_count_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn rum_units_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn rum_units_agg_sum(mut self, value: i64) -> Self {
         self.rum_units_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn sds_apm_scanned_bytes_sum(&mut self, value: i64) -> &mut Self {
+    pub fn sds_apm_scanned_bytes_sum(mut self, value: i64) -> Self {
         self.sds_apm_scanned_bytes_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn sds_events_scanned_bytes_sum(&mut self, value: i64) -> &mut Self {
+    pub fn sds_events_scanned_bytes_sum(mut self, value: i64) -> Self {
         self.sds_events_scanned_bytes_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn sds_logs_scanned_bytes_sum(&mut self, value: i64) -> &mut Self {
+    pub fn sds_logs_scanned_bytes_sum(mut self, value: i64) -> Self {
         self.sds_logs_scanned_bytes_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn sds_rum_scanned_bytes_sum(&mut self, value: i64) -> &mut Self {
+    pub fn sds_rum_scanned_bytes_sum(mut self, value: i64) -> Self {
         self.sds_rum_scanned_bytes_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn sds_total_scanned_bytes_sum(&mut self, value: i64) -> &mut Self {
+    pub fn sds_total_scanned_bytes_sum(mut self, value: i64) -> Self {
         self.sds_total_scanned_bytes_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn serverless_apps_azure_count_avg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn serverless_apps_azure_count_avg_sum(mut self, value: i64) -> Self {
         self.serverless_apps_azure_count_avg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn serverless_apps_google_count_avg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn serverless_apps_google_count_avg_sum(mut self, value: i64) -> Self {
         self.serverless_apps_google_count_avg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn serverless_apps_total_count_avg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn serverless_apps_total_count_avg_sum(mut self, value: i64) -> Self {
         self.serverless_apps_total_count_avg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn start_date(&mut self, value: String) -> &mut Self {
+    pub fn start_date(mut self, value: String) -> Self {
         self.start_date = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn synthetics_browser_check_calls_count_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn synthetics_browser_check_calls_count_agg_sum(mut self, value: i64) -> Self {
         self.synthetics_browser_check_calls_count_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn synthetics_check_calls_count_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn synthetics_check_calls_count_agg_sum(mut self, value: i64) -> Self {
         self.synthetics_check_calls_count_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn synthetics_mobile_test_runs_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn synthetics_mobile_test_runs_agg_sum(mut self, value: i64) -> Self {
         self.synthetics_mobile_test_runs_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn synthetics_parallel_testing_max_slots_hwm_sum(&mut self, value: i64) -> &mut Self {
+    pub fn synthetics_parallel_testing_max_slots_hwm_sum(mut self, value: i64) -> Self {
         self.synthetics_parallel_testing_max_slots_hwm_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn trace_search_indexed_events_count_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn trace_search_indexed_events_count_agg_sum(mut self, value: i64) -> Self {
         self.trace_search_indexed_events_count_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn twol_ingested_events_bytes_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn twol_ingested_events_bytes_agg_sum(mut self, value: i64) -> Self {
         self.twol_ingested_events_bytes_agg_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn universal_service_monitoring_host_top99p_sum(&mut self, value: i64) -> &mut Self {
+    pub fn universal_service_monitoring_host_top99p_sum(mut self, value: i64) -> Self {
         self.universal_service_monitoring_host_top99p_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn usage(&mut self, value: Vec<crate::datadogV1::model::UsageSummaryDate>) -> &mut Self {
+    pub fn usage(mut self, value: Vec<crate::datadogV1::model::UsageSummaryDate>) -> Self {
         self.usage = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn vsphere_host_top99p_sum(&mut self, value: i64) -> &mut Self {
+    pub fn vsphere_host_top99p_sum(mut self, value: i64) -> Self {
         self.vsphere_host_top99p_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn vuln_management_host_count_top99p_sum(&mut self, value: i64) -> &mut Self {
+    pub fn vuln_management_host_count_top99p_sum(mut self, value: i64) -> Self {
         self.vuln_management_host_count_top99p_sum = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn workflow_executions_usage_agg_sum(&mut self, value: i64) -> &mut Self {
+    pub fn workflow_executions_usage_agg_sum(mut self, value: i64) -> Self {
         self.workflow_executions_usage_agg_sum = Some(value);
         self
     }
@@ -1159,5 +1159,1057 @@ impl UsageSummaryResponse {
 impl Default for UsageSummaryResponse {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for UsageSummaryResponse {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct UsageSummaryResponseVisitor;
+        impl<'a> Visitor<'a> for UsageSummaryResponseVisitor {
+            type Value = UsageSummaryResponse;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut agent_host_top99p_sum: Option<i64> = None;
+                let mut apm_azure_app_service_host_top99p_sum: Option<i64> = None;
+                let mut apm_fargate_count_avg_sum: Option<i64> = None;
+                let mut apm_host_top99p_sum: Option<i64> = None;
+                let mut appsec_fargate_count_avg_sum: Option<i64> = None;
+                let mut audit_logs_lines_indexed_agg_sum: Option<i64> = None;
+                let mut audit_trail_enabled_hwm_sum: Option<i64> = None;
+                let mut avg_profiled_fargate_tasks_sum: Option<i64> = None;
+                let mut aws_host_top99p_sum: Option<i64> = None;
+                let mut aws_lambda_func_count: Option<i64> = None;
+                let mut aws_lambda_invocations_sum: Option<i64> = None;
+                let mut azure_app_service_top99p_sum: Option<i64> = None;
+                let mut azure_host_top99p_sum: Option<i64> = None;
+                let mut billable_ingested_bytes_agg_sum: Option<i64> = None;
+                let mut browser_rum_lite_session_count_agg_sum: Option<i64> = None;
+                let mut browser_rum_replay_session_count_agg_sum: Option<i64> = None;
+                let mut browser_rum_units_agg_sum: Option<i64> = None;
+                let mut ci_pipeline_indexed_spans_agg_sum: Option<i64> = None;
+                let mut ci_test_indexed_spans_agg_sum: Option<i64> = None;
+                let mut ci_visibility_itr_committers_hwm_sum: Option<i64> = None;
+                let mut ci_visibility_pipeline_committers_hwm_sum: Option<i64> = None;
+                let mut ci_visibility_test_committers_hwm_sum: Option<i64> = None;
+                let mut cloud_cost_management_aws_host_count_avg_sum: Option<i64> = None;
+                let mut cloud_cost_management_azure_host_count_avg_sum: Option<i64> = None;
+                let mut cloud_cost_management_host_count_avg_sum: Option<i64> = None;
+                let mut cloud_siem_events_agg_sum: Option<i64> = None;
+                let mut container_avg_sum: Option<i64> = None;
+                let mut container_excl_agent_avg_sum: Option<i64> = None;
+                let mut container_hwm_sum: Option<i64> = None;
+                let mut csm_container_enterprise_compliance_count_agg_sum: Option<i64> = None;
+                let mut csm_container_enterprise_cws_count_agg_sum: Option<i64> = None;
+                let mut csm_container_enterprise_total_count_agg_sum: Option<i64> = None;
+                let mut csm_host_enterprise_aas_host_count_top99p_sum: Option<i64> = None;
+                let mut csm_host_enterprise_aws_host_count_top99p_sum: Option<i64> = None;
+                let mut csm_host_enterprise_azure_host_count_top99p_sum: Option<i64> = None;
+                let mut csm_host_enterprise_compliance_host_count_top99p_sum: Option<i64> = None;
+                let mut csm_host_enterprise_cws_host_count_top99p_sum: Option<i64> = None;
+                let mut csm_host_enterprise_gcp_host_count_top99p_sum: Option<i64> = None;
+                let mut csm_host_enterprise_total_host_count_top99p_sum: Option<i64> = None;
+                let mut cspm_aas_host_top99p_sum: Option<i64> = None;
+                let mut cspm_aws_host_top99p_sum: Option<i64> = None;
+                let mut cspm_azure_host_top99p_sum: Option<i64> = None;
+                let mut cspm_container_avg_sum: Option<i64> = None;
+                let mut cspm_container_hwm_sum: Option<i64> = None;
+                let mut cspm_gcp_host_top99p_sum: Option<i64> = None;
+                let mut cspm_host_top99p_sum: Option<i64> = None;
+                let mut custom_historical_ts_sum: Option<i64> = None;
+                let mut custom_live_ts_sum: Option<i64> = None;
+                let mut custom_ts_sum: Option<i64> = None;
+                let mut cws_containers_avg_sum: Option<i64> = None;
+                let mut cws_host_top99p_sum: Option<i64> = None;
+                let mut dbm_host_top99p_sum: Option<i64> = None;
+                let mut dbm_queries_avg_sum: Option<i64> = None;
+                let mut end_date: Option<String> = None;
+                let mut fargate_tasks_count_avg_sum: Option<i64> = None;
+                let mut fargate_tasks_count_hwm_sum: Option<i64> = None;
+                let mut forwarding_events_bytes_agg_sum: Option<i64> = None;
+                let mut gcp_host_top99p_sum: Option<i64> = None;
+                let mut heroku_host_top99p_sum: Option<i64> = None;
+                let mut incident_management_monthly_active_users_hwm_sum: Option<i64> = None;
+                let mut indexed_events_count_agg_sum: Option<i64> = None;
+                let mut infra_host_top99p_sum: Option<i64> = None;
+                let mut ingested_events_bytes_agg_sum: Option<i64> = None;
+                let mut iot_device_agg_sum: Option<i64> = None;
+                let mut iot_device_top99p_sum: Option<i64> = None;
+                let mut last_updated: Option<String> = None;
+                let mut live_indexed_events_agg_sum: Option<i64> = None;
+                let mut live_ingested_bytes_agg_sum: Option<i64> = None;
+                let mut logs_by_retention: Option<crate::datadogV1::model::LogsByRetention> = None;
+                let mut mobile_rum_lite_session_count_agg_sum: Option<i64> = None;
+                let mut mobile_rum_session_count_agg_sum: Option<i64> = None;
+                let mut mobile_rum_session_count_android_agg_sum: Option<i64> = None;
+                let mut mobile_rum_session_count_flutter_agg_sum: Option<i64> = None;
+                let mut mobile_rum_session_count_ios_agg_sum: Option<i64> = None;
+                let mut mobile_rum_session_count_reactnative_agg_sum: Option<i64> = None;
+                let mut mobile_rum_session_count_roku_agg_sum: Option<i64> = None;
+                let mut mobile_rum_units_agg_sum: Option<i64> = None;
+                let mut ndm_netflow_events_agg_sum: Option<i64> = None;
+                let mut netflow_indexed_events_count_agg_sum: Option<i64> = None;
+                let mut npm_host_top99p_sum: Option<i64> = None;
+                let mut observability_pipelines_bytes_processed_agg_sum: Option<i64> = None;
+                let mut online_archive_events_count_agg_sum: Option<i64> = None;
+                let mut opentelemetry_apm_host_top99p_sum: Option<i64> = None;
+                let mut opentelemetry_host_top99p_sum: Option<i64> = None;
+                let mut profiling_aas_count_top99p_sum: Option<i64> = None;
+                let mut profiling_container_agent_count_avg: Option<i64> = None;
+                let mut profiling_host_count_top99p_sum: Option<i64> = None;
+                let mut rehydrated_indexed_events_agg_sum: Option<i64> = None;
+                let mut rehydrated_ingested_bytes_agg_sum: Option<i64> = None;
+                let mut rum_browser_and_mobile_session_count: Option<i64> = None;
+                let mut rum_session_count_agg_sum: Option<i64> = None;
+                let mut rum_total_session_count_agg_sum: Option<i64> = None;
+                let mut rum_units_agg_sum: Option<i64> = None;
+                let mut sds_apm_scanned_bytes_sum: Option<i64> = None;
+                let mut sds_events_scanned_bytes_sum: Option<i64> = None;
+                let mut sds_logs_scanned_bytes_sum: Option<i64> = None;
+                let mut sds_rum_scanned_bytes_sum: Option<i64> = None;
+                let mut sds_total_scanned_bytes_sum: Option<i64> = None;
+                let mut serverless_apps_azure_count_avg_sum: Option<i64> = None;
+                let mut serverless_apps_google_count_avg_sum: Option<i64> = None;
+                let mut serverless_apps_total_count_avg_sum: Option<i64> = None;
+                let mut start_date: Option<String> = None;
+                let mut synthetics_browser_check_calls_count_agg_sum: Option<i64> = None;
+                let mut synthetics_check_calls_count_agg_sum: Option<i64> = None;
+                let mut synthetics_mobile_test_runs_agg_sum: Option<i64> = None;
+                let mut synthetics_parallel_testing_max_slots_hwm_sum: Option<i64> = None;
+                let mut trace_search_indexed_events_count_agg_sum: Option<i64> = None;
+                let mut twol_ingested_events_bytes_agg_sum: Option<i64> = None;
+                let mut universal_service_monitoring_host_top99p_sum: Option<i64> = None;
+                let mut usage: Option<Vec<crate::datadogV1::model::UsageSummaryDate>> = None;
+                let mut vsphere_host_top99p_sum: Option<i64> = None;
+                let mut vuln_management_host_count_top99p_sum: Option<i64> = None;
+                let mut workflow_executions_usage_agg_sum: Option<i64> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "agent_host_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            agent_host_top99p_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "apm_azure_app_service_host_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            apm_azure_app_service_host_top99p_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "apm_fargate_count_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            apm_fargate_count_avg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "apm_host_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            apm_host_top99p_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "appsec_fargate_count_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            appsec_fargate_count_avg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "audit_logs_lines_indexed_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            audit_logs_lines_indexed_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "audit_trail_enabled_hwm_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            audit_trail_enabled_hwm_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "avg_profiled_fargate_tasks_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            avg_profiled_fargate_tasks_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "aws_host_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            aws_host_top99p_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "aws_lambda_func_count" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            aws_lambda_func_count =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "aws_lambda_invocations_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            aws_lambda_invocations_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "azure_app_service_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            azure_app_service_top99p_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "azure_host_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            azure_host_top99p_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "billable_ingested_bytes_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            billable_ingested_bytes_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "browser_rum_lite_session_count_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            browser_rum_lite_session_count_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "browser_rum_replay_session_count_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            browser_rum_replay_session_count_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "browser_rum_units_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            browser_rum_units_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "ci_pipeline_indexed_spans_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ci_pipeline_indexed_spans_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "ci_test_indexed_spans_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ci_test_indexed_spans_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "ci_visibility_itr_committers_hwm_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ci_visibility_itr_committers_hwm_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "ci_visibility_pipeline_committers_hwm_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ci_visibility_pipeline_committers_hwm_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "ci_visibility_test_committers_hwm_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ci_visibility_test_committers_hwm_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cloud_cost_management_aws_host_count_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cloud_cost_management_aws_host_count_avg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cloud_cost_management_azure_host_count_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cloud_cost_management_azure_host_count_avg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cloud_cost_management_host_count_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cloud_cost_management_host_count_avg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cloud_siem_events_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cloud_siem_events_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "container_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            container_avg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "container_excl_agent_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            container_excl_agent_avg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "container_hwm_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            container_hwm_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "csm_container_enterprise_compliance_count_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            csm_container_enterprise_compliance_count_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "csm_container_enterprise_cws_count_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            csm_container_enterprise_cws_count_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "csm_container_enterprise_total_count_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            csm_container_enterprise_total_count_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "csm_host_enterprise_aas_host_count_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            csm_host_enterprise_aas_host_count_top99p_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "csm_host_enterprise_aws_host_count_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            csm_host_enterprise_aws_host_count_top99p_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "csm_host_enterprise_azure_host_count_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            csm_host_enterprise_azure_host_count_top99p_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "csm_host_enterprise_compliance_host_count_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            csm_host_enterprise_compliance_host_count_top99p_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "csm_host_enterprise_cws_host_count_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            csm_host_enterprise_cws_host_count_top99p_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "csm_host_enterprise_gcp_host_count_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            csm_host_enterprise_gcp_host_count_top99p_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "csm_host_enterprise_total_host_count_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            csm_host_enterprise_total_host_count_top99p_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cspm_aas_host_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cspm_aas_host_top99p_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cspm_aws_host_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cspm_aws_host_top99p_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cspm_azure_host_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cspm_azure_host_top99p_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cspm_container_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cspm_container_avg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cspm_container_hwm_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cspm_container_hwm_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cspm_gcp_host_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cspm_gcp_host_top99p_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cspm_host_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cspm_host_top99p_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "custom_historical_ts_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            custom_historical_ts_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "custom_live_ts_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            custom_live_ts_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "custom_ts_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            custom_ts_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cws_containers_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cws_containers_avg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cws_host_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cws_host_top99p_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "dbm_host_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            dbm_host_top99p_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "dbm_queries_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            dbm_queries_avg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "end_date" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            end_date = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "fargate_tasks_count_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            fargate_tasks_count_avg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "fargate_tasks_count_hwm_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            fargate_tasks_count_hwm_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "forwarding_events_bytes_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            forwarding_events_bytes_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "gcp_host_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            gcp_host_top99p_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "heroku_host_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            heroku_host_top99p_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "incident_management_monthly_active_users_hwm_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            incident_management_monthly_active_users_hwm_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "indexed_events_count_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            indexed_events_count_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "infra_host_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_host_top99p_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "ingested_events_bytes_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ingested_events_bytes_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "iot_device_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            iot_device_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "iot_device_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            iot_device_top99p_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "last_updated" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            last_updated =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "live_indexed_events_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            live_indexed_events_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "live_ingested_bytes_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            live_ingested_bytes_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs_by_retention" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_by_retention =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "mobile_rum_lite_session_count_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            mobile_rum_lite_session_count_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "mobile_rum_session_count_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            mobile_rum_session_count_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "mobile_rum_session_count_android_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            mobile_rum_session_count_android_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "mobile_rum_session_count_flutter_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            mobile_rum_session_count_flutter_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "mobile_rum_session_count_ios_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            mobile_rum_session_count_ios_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "mobile_rum_session_count_reactnative_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            mobile_rum_session_count_reactnative_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "mobile_rum_session_count_roku_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            mobile_rum_session_count_roku_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "mobile_rum_units_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            mobile_rum_units_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "ndm_netflow_events_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ndm_netflow_events_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "netflow_indexed_events_count_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            netflow_indexed_events_count_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "npm_host_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            npm_host_top99p_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "observability_pipelines_bytes_processed_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            observability_pipelines_bytes_processed_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "online_archive_events_count_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            online_archive_events_count_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "opentelemetry_apm_host_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            opentelemetry_apm_host_top99p_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "opentelemetry_host_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            opentelemetry_host_top99p_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "profiling_aas_count_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            profiling_aas_count_top99p_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "profiling_container_agent_count_avg" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            profiling_container_agent_count_avg =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "profiling_host_count_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            profiling_host_count_top99p_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rehydrated_indexed_events_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rehydrated_indexed_events_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rehydrated_ingested_bytes_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rehydrated_ingested_bytes_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_browser_and_mobile_session_count" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_browser_and_mobile_session_count =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_session_count_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_session_count_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_total_session_count_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_total_session_count_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_units_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_units_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "sds_apm_scanned_bytes_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            sds_apm_scanned_bytes_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "sds_events_scanned_bytes_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            sds_events_scanned_bytes_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "sds_logs_scanned_bytes_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            sds_logs_scanned_bytes_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "sds_rum_scanned_bytes_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            sds_rum_scanned_bytes_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "sds_total_scanned_bytes_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            sds_total_scanned_bytes_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "serverless_apps_azure_count_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            serverless_apps_azure_count_avg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "serverless_apps_google_count_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            serverless_apps_google_count_avg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "serverless_apps_total_count_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            serverless_apps_total_count_avg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "start_date" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            start_date = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "synthetics_browser_check_calls_count_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            synthetics_browser_check_calls_count_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "synthetics_check_calls_count_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            synthetics_check_calls_count_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "synthetics_mobile_test_runs_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            synthetics_mobile_test_runs_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "synthetics_parallel_testing_max_slots_hwm_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            synthetics_parallel_testing_max_slots_hwm_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "trace_search_indexed_events_count_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            trace_search_indexed_events_count_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "twol_ingested_events_bytes_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            twol_ingested_events_bytes_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "universal_service_monitoring_host_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            universal_service_monitoring_host_top99p_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "vsphere_host_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            vsphere_host_top99p_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "vuln_management_host_count_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            vuln_management_host_count_top99p_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "workflow_executions_usage_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            workflow_executions_usage_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+
+                #[allow(deprecated)]
+                let content = UsageSummaryResponse {
+                    agent_host_top99p_sum,
+                    apm_azure_app_service_host_top99p_sum,
+                    apm_fargate_count_avg_sum,
+                    apm_host_top99p_sum,
+                    appsec_fargate_count_avg_sum,
+                    audit_logs_lines_indexed_agg_sum,
+                    audit_trail_enabled_hwm_sum,
+                    avg_profiled_fargate_tasks_sum,
+                    aws_host_top99p_sum,
+                    aws_lambda_func_count,
+                    aws_lambda_invocations_sum,
+                    azure_app_service_top99p_sum,
+                    azure_host_top99p_sum,
+                    billable_ingested_bytes_agg_sum,
+                    browser_rum_lite_session_count_agg_sum,
+                    browser_rum_replay_session_count_agg_sum,
+                    browser_rum_units_agg_sum,
+                    ci_pipeline_indexed_spans_agg_sum,
+                    ci_test_indexed_spans_agg_sum,
+                    ci_visibility_itr_committers_hwm_sum,
+                    ci_visibility_pipeline_committers_hwm_sum,
+                    ci_visibility_test_committers_hwm_sum,
+                    cloud_cost_management_aws_host_count_avg_sum,
+                    cloud_cost_management_azure_host_count_avg_sum,
+                    cloud_cost_management_host_count_avg_sum,
+                    cloud_siem_events_agg_sum,
+                    container_avg_sum,
+                    container_excl_agent_avg_sum,
+                    container_hwm_sum,
+                    csm_container_enterprise_compliance_count_agg_sum,
+                    csm_container_enterprise_cws_count_agg_sum,
+                    csm_container_enterprise_total_count_agg_sum,
+                    csm_host_enterprise_aas_host_count_top99p_sum,
+                    csm_host_enterprise_aws_host_count_top99p_sum,
+                    csm_host_enterprise_azure_host_count_top99p_sum,
+                    csm_host_enterprise_compliance_host_count_top99p_sum,
+                    csm_host_enterprise_cws_host_count_top99p_sum,
+                    csm_host_enterprise_gcp_host_count_top99p_sum,
+                    csm_host_enterprise_total_host_count_top99p_sum,
+                    cspm_aas_host_top99p_sum,
+                    cspm_aws_host_top99p_sum,
+                    cspm_azure_host_top99p_sum,
+                    cspm_container_avg_sum,
+                    cspm_container_hwm_sum,
+                    cspm_gcp_host_top99p_sum,
+                    cspm_host_top99p_sum,
+                    custom_historical_ts_sum,
+                    custom_live_ts_sum,
+                    custom_ts_sum,
+                    cws_containers_avg_sum,
+                    cws_host_top99p_sum,
+                    dbm_host_top99p_sum,
+                    dbm_queries_avg_sum,
+                    end_date,
+                    fargate_tasks_count_avg_sum,
+                    fargate_tasks_count_hwm_sum,
+                    forwarding_events_bytes_agg_sum,
+                    gcp_host_top99p_sum,
+                    heroku_host_top99p_sum,
+                    incident_management_monthly_active_users_hwm_sum,
+                    indexed_events_count_agg_sum,
+                    infra_host_top99p_sum,
+                    ingested_events_bytes_agg_sum,
+                    iot_device_agg_sum,
+                    iot_device_top99p_sum,
+                    last_updated,
+                    live_indexed_events_agg_sum,
+                    live_ingested_bytes_agg_sum,
+                    logs_by_retention,
+                    mobile_rum_lite_session_count_agg_sum,
+                    mobile_rum_session_count_agg_sum,
+                    mobile_rum_session_count_android_agg_sum,
+                    mobile_rum_session_count_flutter_agg_sum,
+                    mobile_rum_session_count_ios_agg_sum,
+                    mobile_rum_session_count_reactnative_agg_sum,
+                    mobile_rum_session_count_roku_agg_sum,
+                    mobile_rum_units_agg_sum,
+                    ndm_netflow_events_agg_sum,
+                    netflow_indexed_events_count_agg_sum,
+                    npm_host_top99p_sum,
+                    observability_pipelines_bytes_processed_agg_sum,
+                    online_archive_events_count_agg_sum,
+                    opentelemetry_apm_host_top99p_sum,
+                    opentelemetry_host_top99p_sum,
+                    profiling_aas_count_top99p_sum,
+                    profiling_container_agent_count_avg,
+                    profiling_host_count_top99p_sum,
+                    rehydrated_indexed_events_agg_sum,
+                    rehydrated_ingested_bytes_agg_sum,
+                    rum_browser_and_mobile_session_count,
+                    rum_session_count_agg_sum,
+                    rum_total_session_count_agg_sum,
+                    rum_units_agg_sum,
+                    sds_apm_scanned_bytes_sum,
+                    sds_events_scanned_bytes_sum,
+                    sds_logs_scanned_bytes_sum,
+                    sds_rum_scanned_bytes_sum,
+                    sds_total_scanned_bytes_sum,
+                    serverless_apps_azure_count_avg_sum,
+                    serverless_apps_google_count_avg_sum,
+                    serverless_apps_total_count_avg_sum,
+                    start_date,
+                    synthetics_browser_check_calls_count_agg_sum,
+                    synthetics_check_calls_count_agg_sum,
+                    synthetics_mobile_test_runs_agg_sum,
+                    synthetics_parallel_testing_max_slots_hwm_sum,
+                    trace_search_indexed_events_count_agg_sum,
+                    twol_ingested_events_bytes_agg_sum,
+                    universal_service_monitoring_host_top99p_sum,
+                    usage,
+                    vsphere_host_top99p_sum,
+                    vuln_management_host_count_top99p_sum,
+                    workflow_executions_usage_agg_sum,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(UsageSummaryResponseVisitor)
     }
 }

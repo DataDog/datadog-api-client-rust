@@ -16,7 +16,7 @@ pub struct GetIncidentServiceOptionalParams {
 
 impl GetIncidentServiceOptionalParams {
     /// Specifies which types of related objects should be included in the response.
-    pub fn include(&mut self, value: crate::datadogV2::model::IncidentRelatedObject) -> &mut Self {
+    pub fn include(mut self, value: crate::datadogV2::model::IncidentRelatedObject) -> Self {
         self.include = Some(value);
         self
     }
@@ -38,22 +38,22 @@ pub struct ListIncidentServicesOptionalParams {
 
 impl ListIncidentServicesOptionalParams {
     /// Specifies which types of related objects should be included in the response.
-    pub fn include(&mut self, value: crate::datadogV2::model::IncidentRelatedObject) -> &mut Self {
+    pub fn include(mut self, value: crate::datadogV2::model::IncidentRelatedObject) -> Self {
         self.include = Some(value);
         self
     }
     /// Size for a given page. The maximum allowed value is 100.
-    pub fn page_size(&mut self, value: i64) -> &mut Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// Specific offset to use as the beginning of the returned page.
-    pub fn page_offset(&mut self, value: i64) -> &mut Self {
+    pub fn page_offset(mut self, value: i64) -> Self {
         self.page_offset = Some(value);
         self
     }
     /// A search query that filters services by name.
-    pub fn filter(&mut self, value: String) -> &mut Self {
+    pub fn filter(mut self, value: String) -> Self {
         self.filter = Some(value);
         self
     }
@@ -122,12 +122,14 @@ pub enum UpdateIncidentServiceError {
 #[derive(Debug, Clone)]
 pub struct IncidentServicesAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for IncidentServicesAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -137,7 +139,24 @@ impl IncidentServicesAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// Creates a new incident service.
@@ -179,7 +198,7 @@ impl IncidentServicesAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/services",
@@ -270,7 +289,7 @@ impl IncidentServicesAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/services/{service_id}",
@@ -367,7 +386,7 @@ impl IncidentServicesAPI {
         // unbox and build optional parameters
         let include = params.include;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/services/{service_id}",
@@ -472,7 +491,7 @@ impl IncidentServicesAPI {
         let page_offset = params.page_offset;
         let filter = params.filter;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/services",
@@ -587,7 +606,7 @@ impl IncidentServicesAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/services/{service_id}",

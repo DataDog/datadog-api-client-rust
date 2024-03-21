@@ -2,21 +2,17 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SecurityMonitoringRuleTypeRead {
-    #[serde(rename = "log_detection")]
     LOG_DETECTION,
-    #[serde(rename = "infrastructure_configuration")]
     INFRASTRUCTURE_CONFIGURATION,
-    #[serde(rename = "workload_security")]
     WORKLOAD_SECURITY,
-    #[serde(rename = "cloud_configuration")]
     CLOUD_CONFIGURATION,
-    #[serde(rename = "application_security")]
     APPLICATION_SECURITY,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SecurityMonitoringRuleTypeRead {
@@ -27,6 +23,38 @@ impl ToString for SecurityMonitoringRuleTypeRead {
             Self::WORKLOAD_SECURITY => String::from("workload_security"),
             Self::CLOUD_CONFIGURATION => String::from("cloud_configuration"),
             Self::APPLICATION_SECURITY => String::from("application_security"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
+    }
+}
+
+impl Serialize for SecurityMonitoringRuleTypeRead {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for SecurityMonitoringRuleTypeRead {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "log_detection" => Self::LOG_DETECTION,
+            "infrastructure_configuration" => Self::INFRASTRUCTURE_CONFIGURATION,
+            "workload_security" => Self::WORKLOAD_SECURITY,
+            "cloud_configuration" => Self::CLOUD_CONFIGURATION,
+            "application_security" => Self::APPLICATION_SECURITY,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
+        })
     }
 }

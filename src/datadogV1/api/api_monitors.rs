@@ -2,6 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -15,7 +17,7 @@ pub struct DeleteMonitorOptionalParams {
 
 impl DeleteMonitorOptionalParams {
     /// Delete the monitor even if it's referenced by other resources (for example SLO, composite monitor).
-    pub fn force(&mut self, value: String) -> &mut Self {
+    pub fn force(mut self, value: String) -> Self {
         self.force = Some(value);
         self
     }
@@ -33,12 +35,12 @@ pub struct GetMonitorOptionalParams {
 
 impl GetMonitorOptionalParams {
     /// When specified, shows additional information about the group states. Choose one or more from `all`, `alert`, `warn`, and `no data`.
-    pub fn group_states(&mut self, value: String) -> &mut Self {
+    pub fn group_states(mut self, value: String) -> Self {
         self.group_states = Some(value);
         self
     }
     /// If this argument is set to true, then the returned data includes all current active downtimes for the monitor.
-    pub fn with_downtimes(&mut self, value: bool) -> &mut Self {
+    pub fn with_downtimes(mut self, value: bool) -> Self {
         self.with_downtimes = Some(value);
         self
     }
@@ -72,44 +74,44 @@ pub struct ListMonitorsOptionalParams {
 impl ListMonitorsOptionalParams {
     /// When specified, shows additional information about the group states.
     /// Choose one or more from `all`, `alert`, `warn`, and `no data`.
-    pub fn group_states(&mut self, value: String) -> &mut Self {
+    pub fn group_states(mut self, value: String) -> Self {
         self.group_states = Some(value);
         self
     }
     /// A string to filter monitors by name.
-    pub fn name(&mut self, value: String) -> &mut Self {
+    pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
     /// A comma separated list indicating what tags, if any, should be used to filter the list of monitors by scope.
     /// For example, `host:host0`.
-    pub fn tags(&mut self, value: String) -> &mut Self {
+    pub fn tags(mut self, value: String) -> Self {
         self.tags = Some(value);
         self
     }
     /// A comma separated list indicating what service and/or custom tags, if any, should be used to filter the list of monitors.
     /// Tags created in the Datadog UI automatically have the service key prepended. For example, `service:my-app`.
-    pub fn monitor_tags(&mut self, value: String) -> &mut Self {
+    pub fn monitor_tags(mut self, value: String) -> Self {
         self.monitor_tags = Some(value);
         self
     }
     /// If this argument is set to true, then the returned data includes all current active downtimes for each monitor.
-    pub fn with_downtimes(&mut self, value: bool) -> &mut Self {
+    pub fn with_downtimes(mut self, value: bool) -> Self {
         self.with_downtimes = Some(value);
         self
     }
     /// Use this parameter for paginating through large sets of monitors. Start with a value of zero, make a request, set the value to the last ID of result set, and then repeat until the response is empty.
-    pub fn id_offset(&mut self, value: i64) -> &mut Self {
+    pub fn id_offset(mut self, value: i64) -> Self {
         self.id_offset = Some(value);
         self
     }
     /// The page to start paginating from. If this argument is not specified, the request returns all monitors without pagination.
-    pub fn page(&mut self, value: i64) -> &mut Self {
+    pub fn page(mut self, value: i64) -> Self {
         self.page = Some(value);
         self
     }
     /// The number of monitors to return per page. If the page argument is not specified, the default behavior returns all monitors without a `page_size` limit. However, if page is specified and `page_size` is not, the argument defaults to 100.
-    pub fn page_size(&mut self, value: i32) -> &mut Self {
+    pub fn page_size(mut self, value: i32) -> Self {
         self.page_size = Some(value);
         self
     }
@@ -149,17 +151,17 @@ impl SearchMonitorGroupsOptionalParams {
     ///
     /// [1]: <https://app.datadoghq.com/monitors/manage>
     /// [2]: /monitors/manage/#find-the-monitors
-    pub fn query(&mut self, value: String) -> &mut Self {
+    pub fn query(mut self, value: String) -> Self {
         self.query = Some(value);
         self
     }
     /// Page to start paginating from.
-    pub fn page(&mut self, value: i64) -> &mut Self {
+    pub fn page(mut self, value: i64) -> Self {
         self.page = Some(value);
         self
     }
     /// Number of monitors to return per page.
-    pub fn per_page(&mut self, value: i64) -> &mut Self {
+    pub fn per_page(mut self, value: i64) -> Self {
         self.per_page = Some(value);
         self
     }
@@ -168,7 +170,7 @@ impl SearchMonitorGroupsOptionalParams {
     /// * `name`
     /// * `status`
     /// * `tags`
-    pub fn sort(&mut self, value: String) -> &mut Self {
+    pub fn sort(mut self, value: String) -> Self {
         self.sort = Some(value);
         self
     }
@@ -208,17 +210,17 @@ impl SearchMonitorsOptionalParams {
     ///
     /// [1]: <https://app.datadoghq.com/monitors/manage>
     /// [2]: /monitors/manage/#find-the-monitors
-    pub fn query(&mut self, value: String) -> &mut Self {
+    pub fn query(mut self, value: String) -> Self {
         self.query = Some(value);
         self
     }
     /// Page to start paginating from.
-    pub fn page(&mut self, value: i64) -> &mut Self {
+    pub fn page(mut self, value: i64) -> Self {
         self.page = Some(value);
         self
     }
     /// Number of monitors to return per page.
-    pub fn per_page(&mut self, value: i64) -> &mut Self {
+    pub fn per_page(mut self, value: i64) -> Self {
         self.per_page = Some(value);
         self
     }
@@ -227,7 +229,7 @@ impl SearchMonitorsOptionalParams {
     /// * `name`
     /// * `status`
     /// * `tags`
-    pub fn sort(&mut self, value: String) -> &mut Self {
+    pub fn sort(mut self, value: String) -> Self {
         self.sort = Some(value);
         self
     }
@@ -342,12 +344,14 @@ pub enum ValidateMonitorError {
 #[derive(Debug, Clone)]
 pub struct MonitorsAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for MonitorsAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -357,7 +361,24 @@ impl MonitorsAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// Check if the given monitors can be deleted.
@@ -396,7 +417,7 @@ impl MonitorsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.check_can_delete_monitor";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/monitor/can_delete",
@@ -849,7 +870,7 @@ impl MonitorsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.create_monitor";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/monitor",
@@ -941,7 +962,7 @@ impl MonitorsAPI {
         // unbox and build optional parameters
         let force = params.force;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/monitor/{monitor_id}",
@@ -1032,7 +1053,7 @@ impl MonitorsAPI {
         let group_states = params.group_states;
         let with_downtimes = params.with_downtimes;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/monitor/{monitor_id}",
@@ -1112,6 +1133,38 @@ impl MonitorsAPI {
         }
     }
 
+    pub fn list_monitors_with_pagination(
+        &self,
+        mut params: ListMonitorsOptionalParams,
+    ) -> impl Stream<Item = Result<crate::datadogV1::model::Monitor, Error<ListMonitorsError>>> + '_
+    {
+        try_stream! {
+            let mut page_size: i32 = 100;
+            if params.page_size.is_none() {
+                params.page_size = Some(page_size);
+            } else {
+                page_size = params.page_size.unwrap().clone();
+            }
+            if params.page.is_none() {
+                params.page = Some(0);
+            }
+            loop {
+                let resp = self.list_monitors(params.clone()).await?;
+
+                let r = resp;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                params.page = Some(params.page.unwrap() + 1);
+            }
+        }
+    }
+
     /// Get details about the specified monitor from your organization.
     pub async fn list_monitors_with_http_info(
         &self,
@@ -1131,7 +1184,7 @@ impl MonitorsAPI {
         let page = params.page;
         let page_size = params.page_size;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/monitor",
@@ -1252,7 +1305,7 @@ impl MonitorsAPI {
         let per_page = params.per_page;
         let sort = params.sort;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/monitor/groups/search",
@@ -1359,7 +1412,7 @@ impl MonitorsAPI {
         let per_page = params.per_page;
         let sort = params.sort;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/monitor/search",
@@ -1459,7 +1512,7 @@ impl MonitorsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.update_monitor";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/monitor/{monitor_id}",
@@ -1557,7 +1610,7 @@ impl MonitorsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.validate_existing_monitor";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/monitor/{monitor_id}/validate",
@@ -1654,7 +1707,7 @@ impl MonitorsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.validate_monitor";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/monitor/validate",

@@ -2,6 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -30,12 +32,12 @@ pub struct ListUsersOptionalParams {
 
 impl ListUsersOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
-    pub fn page_size(&mut self, value: i64) -> &mut Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// Specific page number to return.
-    pub fn page_number(&mut self, value: i64) -> &mut Self {
+    pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }
@@ -43,24 +45,24 @@ impl ListUsersOptionalParams {
     /// Sort order is descending if the field
     /// is prefixed by a negative sign, for example `sort=-name`. Options: `name`,
     /// `modified_at`, `user_count`.
-    pub fn sort(&mut self, value: String) -> &mut Self {
+    pub fn sort(mut self, value: String) -> Self {
         self.sort = Some(value);
         self
     }
     /// Direction of sort. Options: `asc`, `desc`.
-    pub fn sort_dir(&mut self, value: crate::datadogV2::model::QuerySortOrder) -> &mut Self {
+    pub fn sort_dir(mut self, value: crate::datadogV2::model::QuerySortOrder) -> Self {
         self.sort_dir = Some(value);
         self
     }
     /// Filter all users by the given string. Defaults to no filtering.
-    pub fn filter(&mut self, value: String) -> &mut Self {
+    pub fn filter(mut self, value: String) -> Self {
         self.filter = Some(value);
         self
     }
     /// Filter on status attribute.
     /// Comma separated list, with possible values `Active`, `Pending`, and `Disabled`.
     /// Defaults to no filtering.
-    pub fn filter_status(&mut self, value: String) -> &mut Self {
+    pub fn filter_status(mut self, value: String) -> Self {
         self.filter_status = Some(value);
         self
     }
@@ -161,12 +163,14 @@ pub enum UpdateUserError {
 #[derive(Debug, Clone)]
 pub struct UsersAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for UsersAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -176,7 +180,24 @@ impl UsersAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// Create a user for your organization.
@@ -207,7 +228,7 @@ impl UsersAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.create_user";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/users",
@@ -283,7 +304,7 @@ impl UsersAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.disable_user";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/users/{user_id}",
@@ -363,7 +384,7 @@ impl UsersAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.get_invitation";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/user_invitations/{user_invitation_uuid}",
@@ -445,7 +466,7 @@ impl UsersAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.get_user";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/users/{user_id}",
@@ -529,7 +550,7 @@ impl UsersAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.list_user_organizations";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/users/{user_id}/orgs",
@@ -614,7 +635,7 @@ impl UsersAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.list_user_permissions";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/users/{user_id}/permissions",
@@ -689,6 +710,38 @@ impl UsersAPI {
         }
     }
 
+    pub fn list_users_with_pagination(
+        &self,
+        mut params: ListUsersOptionalParams,
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::User, Error<ListUsersError>>> + '_ {
+        try_stream! {
+            let mut page_size: i64 = 10;
+            if params.page_size.is_none() {
+                params.page_size = Some(page_size);
+            } else {
+                page_size = params.page_size.unwrap().clone();
+            }
+            if params.page_number.is_none() {
+                params.page_number = Some(0);
+            }
+            loop {
+                let resp = self.list_users(params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                params.page_number = Some(params.page_number.unwrap() + 1);
+            }
+        }
+    }
+
     /// Get the list of all users in the organization. This list includes
     /// all users even if they are deactivated or unverified.
     pub async fn list_users_with_http_info(
@@ -707,7 +760,7 @@ impl UsersAPI {
         let filter = params.filter;
         let filter_status = params.filter_status;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/users",
@@ -813,7 +866,7 @@ impl UsersAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.send_invitations";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/user_invitations",
@@ -906,7 +959,7 @@ impl UsersAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.update_user";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/users/{user_id}",

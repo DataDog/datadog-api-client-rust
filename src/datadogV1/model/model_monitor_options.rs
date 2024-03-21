@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// List of options associated with your monitor.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MonitorOptions {
     /// Type of aggregation performed in the monitor query.
     #[serde(rename = "aggregation")]
@@ -188,6 +190,9 @@ pub struct MonitorOptions {
     /// List of requests that can be used in the monitor query. **This feature is currently in beta.**
     #[serde(rename = "variables")]
     pub variables: Option<Vec<crate::datadogV1::model::MonitorFormulaAndFunctionQueryDefinition>>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl MonitorOptions {
@@ -225,215 +230,210 @@ impl MonitorOptions {
             thresholds: None,
             timeout_h: None,
             variables: None,
+            _unparsed: false,
         }
     }
 
     #[allow(deprecated)]
     pub fn aggregation(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::MonitorOptionsAggregation,
-    ) -> &mut Self {
+    ) -> Self {
         self.aggregation = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn device_ids(
-        &mut self,
-        value: Vec<crate::datadogV1::model::MonitorDeviceID>,
-    ) -> &mut Self {
+    pub fn device_ids(mut self, value: Vec<crate::datadogV1::model::MonitorDeviceID>) -> Self {
         self.device_ids = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn enable_logs_sample(&mut self, value: bool) -> &mut Self {
+    pub fn enable_logs_sample(mut self, value: bool) -> Self {
         self.enable_logs_sample = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn enable_samples(&mut self, value: bool) -> &mut Self {
+    pub fn enable_samples(mut self, value: bool) -> Self {
         self.enable_samples = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn escalation_message(&mut self, value: String) -> &mut Self {
+    pub fn escalation_message(mut self, value: String) -> Self {
         self.escalation_message = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn evaluation_delay(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn evaluation_delay(mut self, value: Option<i64>) -> Self {
         self.evaluation_delay = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn group_retention_duration(&mut self, value: String) -> &mut Self {
+    pub fn group_retention_duration(mut self, value: String) -> Self {
         self.group_retention_duration = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn groupby_simple_monitor(&mut self, value: bool) -> &mut Self {
+    pub fn groupby_simple_monitor(mut self, value: bool) -> Self {
         self.groupby_simple_monitor = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn include_tags(&mut self, value: bool) -> &mut Self {
+    pub fn include_tags(mut self, value: bool) -> Self {
         self.include_tags = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn locked(&mut self, value: bool) -> &mut Self {
+    pub fn locked(mut self, value: bool) -> Self {
         self.locked = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn min_failure_duration(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn min_failure_duration(mut self, value: Option<i64>) -> Self {
         self.min_failure_duration = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn min_location_failed(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn min_location_failed(mut self, value: Option<i64>) -> Self {
         self.min_location_failed = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn new_group_delay(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn new_group_delay(mut self, value: Option<i64>) -> Self {
         self.new_group_delay = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn new_host_delay(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn new_host_delay(mut self, value: Option<i64>) -> Self {
         self.new_host_delay = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn no_data_timeframe(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn no_data_timeframe(mut self, value: Option<i64>) -> Self {
         self.no_data_timeframe = Some(value);
         self
     }
 
     #[allow(deprecated)]
     pub fn notification_preset_name(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::MonitorOptionsNotificationPresets,
-    ) -> &mut Self {
+    ) -> Self {
         self.notification_preset_name = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn notify_audit(&mut self, value: bool) -> &mut Self {
+    pub fn notify_audit(mut self, value: bool) -> Self {
         self.notify_audit = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn notify_by(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn notify_by(mut self, value: Vec<String>) -> Self {
         self.notify_by = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn notify_no_data(&mut self, value: bool) -> &mut Self {
+    pub fn notify_no_data(mut self, value: bool) -> Self {
         self.notify_no_data = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn on_missing_data(
-        &mut self,
-        value: crate::datadogV1::model::OnMissingDataOption,
-    ) -> &mut Self {
+    pub fn on_missing_data(mut self, value: crate::datadogV1::model::OnMissingDataOption) -> Self {
         self.on_missing_data = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn renotify_interval(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn renotify_interval(mut self, value: Option<i64>) -> Self {
         self.renotify_interval = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn renotify_occurrences(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn renotify_occurrences(mut self, value: Option<i64>) -> Self {
         self.renotify_occurrences = Some(value);
         self
     }
 
     #[allow(deprecated)]
     pub fn renotify_statuses(
-        &mut self,
+        mut self,
         value: Option<Vec<crate::datadogV1::model::MonitorRenotifyStatusType>>,
-    ) -> &mut Self {
+    ) -> Self {
         self.renotify_statuses = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn require_full_window(&mut self, value: bool) -> &mut Self {
+    pub fn require_full_window(mut self, value: bool) -> Self {
         self.require_full_window = Some(value);
         self
     }
 
     #[allow(deprecated)]
     pub fn scheduling_options(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::MonitorOptionsSchedulingOptions,
-    ) -> &mut Self {
+    ) -> Self {
         self.scheduling_options = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn silenced(&mut self, value: std::collections::BTreeMap<String, i64>) -> &mut Self {
+    pub fn silenced(mut self, value: std::collections::BTreeMap<String, i64>) -> Self {
         self.silenced = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn synthetics_check_id(&mut self, value: Option<String>) -> &mut Self {
+    pub fn synthetics_check_id(mut self, value: Option<String>) -> Self {
         self.synthetics_check_id = Some(value);
         self
     }
 
     #[allow(deprecated)]
     pub fn threshold_windows(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::MonitorThresholdWindowOptions,
-    ) -> &mut Self {
+    ) -> Self {
         self.threshold_windows = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn thresholds(&mut self, value: crate::datadogV1::model::MonitorThresholds) -> &mut Self {
+    pub fn thresholds(mut self, value: crate::datadogV1::model::MonitorThresholds) -> Self {
         self.thresholds = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn timeout_h(&mut self, value: Option<i64>) -> &mut Self {
+    pub fn timeout_h(mut self, value: Option<i64>) -> Self {
         self.timeout_h = Some(value);
         self
     }
 
     #[allow(deprecated)]
     pub fn variables(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV1::model::MonitorFormulaAndFunctionQueryDefinition>,
-    ) -> &mut Self {
+    ) -> Self {
         self.variables = Some(value);
         self
     }
@@ -442,5 +442,310 @@ impl MonitorOptions {
 impl Default for MonitorOptions {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for MonitorOptions {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct MonitorOptionsVisitor;
+        impl<'a> Visitor<'a> for MonitorOptionsVisitor {
+            type Value = MonitorOptions;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut aggregation: Option<crate::datadogV1::model::MonitorOptionsAggregation> =
+                    None;
+                let mut device_ids: Option<Vec<crate::datadogV1::model::MonitorDeviceID>> = None;
+                let mut enable_logs_sample: Option<bool> = None;
+                let mut enable_samples: Option<bool> = None;
+                let mut escalation_message: Option<String> = None;
+                let mut evaluation_delay: Option<Option<i64>> = None;
+                let mut group_retention_duration: Option<String> = None;
+                let mut groupby_simple_monitor: Option<bool> = None;
+                let mut include_tags: Option<bool> = None;
+                let mut locked: Option<bool> = None;
+                let mut min_failure_duration: Option<Option<i64>> = None;
+                let mut min_location_failed: Option<Option<i64>> = None;
+                let mut new_group_delay: Option<Option<i64>> = None;
+                let mut new_host_delay: Option<Option<i64>> = None;
+                let mut no_data_timeframe: Option<Option<i64>> = None;
+                let mut notification_preset_name: Option<
+                    crate::datadogV1::model::MonitorOptionsNotificationPresets,
+                > = None;
+                let mut notify_audit: Option<bool> = None;
+                let mut notify_by: Option<Vec<String>> = None;
+                let mut notify_no_data: Option<bool> = None;
+                let mut on_missing_data: Option<crate::datadogV1::model::OnMissingDataOption> =
+                    None;
+                let mut renotify_interval: Option<Option<i64>> = None;
+                let mut renotify_occurrences: Option<Option<i64>> = None;
+                let mut renotify_statuses: Option<
+                    Option<Vec<crate::datadogV1::model::MonitorRenotifyStatusType>>,
+                > = None;
+                let mut require_full_window: Option<bool> = None;
+                let mut scheduling_options: Option<
+                    crate::datadogV1::model::MonitorOptionsSchedulingOptions,
+                > = None;
+                let mut silenced: Option<std::collections::BTreeMap<String, i64>> = None;
+                let mut synthetics_check_id: Option<Option<String>> = None;
+                let mut threshold_windows: Option<
+                    crate::datadogV1::model::MonitorThresholdWindowOptions,
+                > = None;
+                let mut thresholds: Option<crate::datadogV1::model::MonitorThresholds> = None;
+                let mut timeout_h: Option<Option<i64>> = None;
+                let mut variables: Option<
+                    Vec<crate::datadogV1::model::MonitorFormulaAndFunctionQueryDefinition>,
+                > = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "aggregation" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            aggregation =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "device_ids" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            device_ids = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "enable_logs_sample" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            enable_logs_sample =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "enable_samples" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            enable_samples =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "escalation_message" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            escalation_message =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "evaluation_delay" => {
+                            evaluation_delay =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "group_retention_duration" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            group_retention_duration =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "groupby_simple_monitor" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            groupby_simple_monitor =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "include_tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            include_tags =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "locked" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            locked = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "min_failure_duration" => {
+                            min_failure_duration =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "min_location_failed" => {
+                            min_location_failed =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "new_group_delay" => {
+                            new_group_delay =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "new_host_delay" => {
+                            new_host_delay =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "no_data_timeframe" => {
+                            no_data_timeframe =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "notification_preset_name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            notification_preset_name =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _notification_preset_name) = notification_preset_name {
+                                match _notification_preset_name {
+                                    crate::datadogV1::model::MonitorOptionsNotificationPresets::UnparsedObject(_notification_preset_name) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "notify_audit" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            notify_audit =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "notify_by" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            notify_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "notify_no_data" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            notify_no_data =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "on_missing_data" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            on_missing_data =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _on_missing_data) = on_missing_data {
+                                match _on_missing_data {
+                                    crate::datadogV1::model::OnMissingDataOption::UnparsedObject(_on_missing_data) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "renotify_interval" => {
+                            renotify_interval =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "renotify_occurrences" => {
+                            renotify_occurrences =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "renotify_statuses" => {
+                            renotify_statuses =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "require_full_window" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            require_full_window =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "scheduling_options" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            scheduling_options =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "silenced" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            silenced = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "synthetics_check_id" => {
+                            synthetics_check_id =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "threshold_windows" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            threshold_windows =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "thresholds" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            thresholds = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "timeout_h" => {
+                            timeout_h = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "variables" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            variables = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+
+                #[allow(deprecated)]
+                let content = MonitorOptions {
+                    aggregation,
+                    device_ids,
+                    enable_logs_sample,
+                    enable_samples,
+                    escalation_message,
+                    evaluation_delay,
+                    group_retention_duration,
+                    groupby_simple_monitor,
+                    include_tags,
+                    locked,
+                    min_failure_duration,
+                    min_location_failed,
+                    new_group_delay,
+                    new_host_delay,
+                    no_data_timeframe,
+                    notification_preset_name,
+                    notify_audit,
+                    notify_by,
+                    notify_no_data,
+                    on_missing_data,
+                    renotify_interval,
+                    renotify_occurrences,
+                    renotify_statuses,
+                    require_full_window,
+                    scheduling_options,
+                    silenced,
+                    synthetics_check_id,
+                    threshold_windows,
+                    thresholds,
+                    timeout_h,
+                    variables,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(MonitorOptionsVisitor)
     }
 }

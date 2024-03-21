@@ -2,6 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -17,7 +19,7 @@ pub struct GetDowntimeOptionalParams {
 impl GetDowntimeOptionalParams {
     /// Comma-separated list of resource paths for related resources to include in the response. Supported resource
     /// paths are `created_by` and `monitor`.
-    pub fn include(&mut self, value: String) -> &mut Self {
+    pub fn include(mut self, value: String) -> Self {
         self.include = Some(value);
         self
     }
@@ -40,23 +42,23 @@ pub struct ListDowntimesOptionalParams {
 
 impl ListDowntimesOptionalParams {
     /// Only return downtimes that are active when the request is made.
-    pub fn current_only(&mut self, value: bool) -> &mut Self {
+    pub fn current_only(mut self, value: bool) -> Self {
         self.current_only = Some(value);
         self
     }
     /// Comma-separated list of resource paths for related resources to include in the response. Supported resource
     /// paths are `created_by` and `monitor`.
-    pub fn include(&mut self, value: String) -> &mut Self {
+    pub fn include(mut self, value: String) -> Self {
         self.include = Some(value);
         self
     }
     /// Specific offset to use as the beginning of the returned page.
-    pub fn page_offset(&mut self, value: i64) -> &mut Self {
+    pub fn page_offset(mut self, value: i64) -> Self {
         self.page_offset = Some(value);
         self
     }
     /// Maximum number of downtimes in the response.
-    pub fn page_limit(&mut self, value: i64) -> &mut Self {
+    pub fn page_limit(mut self, value: i64) -> Self {
         self.page_limit = Some(value);
         self
     }
@@ -74,12 +76,12 @@ pub struct ListMonitorDowntimesOptionalParams {
 
 impl ListMonitorDowntimesOptionalParams {
     /// Specific offset to use as the beginning of the returned page.
-    pub fn page_offset(&mut self, value: i64) -> &mut Self {
+    pub fn page_offset(mut self, value: i64) -> Self {
         self.page_offset = Some(value);
         self
     }
     /// Maximum number of downtimes in the response.
-    pub fn page_limit(&mut self, value: i64) -> &mut Self {
+    pub fn page_limit(mut self, value: i64) -> Self {
         self.page_limit = Some(value);
         self
     }
@@ -148,12 +150,14 @@ pub enum UpdateDowntimeError {
 #[derive(Debug, Clone)]
 pub struct DowntimesAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for DowntimesAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -163,7 +167,24 @@ impl DowntimesAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// Cancel a downtime.
@@ -185,7 +206,7 @@ impl DowntimesAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.cancel_downtime";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/downtime/{downtime_id}",
@@ -263,7 +284,7 @@ impl DowntimesAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.create_downtime";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/downtime",
@@ -356,7 +377,7 @@ impl DowntimesAPI {
         // unbox and build optional parameters
         let include = params.include;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/downtime/{downtime_id}",
@@ -433,6 +454,41 @@ impl DowntimesAPI {
         }
     }
 
+    pub fn list_downtimes_with_pagination(
+        &self,
+        mut params: ListDowntimesOptionalParams,
+    ) -> impl Stream<
+        Item = Result<crate::datadogV2::model::DowntimeResponseData, Error<ListDowntimesError>>,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 30;
+            if params.page_limit.is_none() {
+                params.page_limit = Some(page_size);
+            } else {
+                page_size = params.page_limit.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_downtimes(params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                if params.page_offset.is_none() {
+                    params.page_offset = Some(page_size.clone());
+                } else {
+                    params.page_offset = Some(params.page_offset.unwrap() + page_size.clone());
+                }
+            }
+        }
+    }
+
     /// Get all scheduled downtimes.
     pub async fn list_downtimes_with_http_info(
         &self,
@@ -450,7 +506,7 @@ impl DowntimesAPI {
         let page_offset = params.page_offset;
         let page_limit = params.page_limit;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/downtime",
@@ -547,6 +603,45 @@ impl DowntimesAPI {
         }
     }
 
+    pub fn list_monitor_downtimes_with_pagination(
+        &self,
+        monitor_id: i64,
+        mut params: ListMonitorDowntimesOptionalParams,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV2::model::MonitorDowntimeMatchResponseData,
+            Error<ListMonitorDowntimesError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 30;
+            if params.page_limit.is_none() {
+                params.page_limit = Some(page_size);
+            } else {
+                page_size = params.page_limit.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_monitor_downtimes( monitor_id.clone(),params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                if params.page_offset.is_none() {
+                    params.page_offset = Some(page_size.clone());
+                } else {
+                    params.page_offset = Some(params.page_offset.unwrap() + page_size.clone());
+                }
+            }
+        }
+    }
+
     /// Get all active downtimes for the specified monitor.
     pub async fn list_monitor_downtimes_with_http_info(
         &self,
@@ -563,7 +658,7 @@ impl DowntimesAPI {
         let page_offset = params.page_offset;
         let page_limit = params.page_limit;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/monitor/{monitor_id}/downtime_matches",
@@ -659,7 +754,7 @@ impl DowntimesAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.update_downtime";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/downtime/{downtime_id}",

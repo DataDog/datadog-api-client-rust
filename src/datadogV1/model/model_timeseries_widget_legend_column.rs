@@ -2,21 +2,17 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum TimeseriesWidgetLegendColumn {
-    #[serde(rename = "value")]
     VALUE,
-    #[serde(rename = "avg")]
     AVG,
-    #[serde(rename = "sum")]
     SUM,
-    #[serde(rename = "min")]
     MIN,
-    #[serde(rename = "max")]
     MAX,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for TimeseriesWidgetLegendColumn {
@@ -27,6 +23,38 @@ impl ToString for TimeseriesWidgetLegendColumn {
             Self::SUM => String::from("sum"),
             Self::MIN => String::from("min"),
             Self::MAX => String::from("max"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
+    }
+}
+
+impl Serialize for TimeseriesWidgetLegendColumn {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for TimeseriesWidgetLegendColumn {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "value" => Self::VALUE,
+            "avg" => Self::AVG,
+            "sum" => Self::SUM,
+            "min" => Self::MIN,
+            "max" => Self::MAX,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
+        })
     }
 }

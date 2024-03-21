@@ -68,12 +68,14 @@ pub enum UploadIdPForOrgError {
 #[derive(Debug, Clone)]
 pub struct OrganizationsAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for OrganizationsAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -83,7 +85,24 @@ impl OrganizationsAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// Create a child organization.
@@ -135,7 +154,7 @@ impl OrganizationsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.create_child_org";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/org",
@@ -226,7 +245,7 @@ impl OrganizationsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.downgrade_org";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/org/{public_id}/downgrade",
@@ -308,7 +327,7 @@ impl OrganizationsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.get_org";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/org/{public_id}",
@@ -390,7 +409,7 @@ impl OrganizationsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.list_orgs";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/org",
@@ -473,7 +492,7 @@ impl OrganizationsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.update_org";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/org/{public_id}",
@@ -577,7 +596,7 @@ impl OrganizationsAPI {
         let local_configuration = &self.config;
         let operation_id = "v1.upload_idp_for_org";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/org/{public_id}/idp_metadata",

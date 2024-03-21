@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// Returns the AWS account associated with this integration.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AWSAccount {
     /// Your AWS access key ID. Only required if your AWS account is a GovCloud or China account.
     #[serde(rename = "access_key_id")]
@@ -51,6 +53,9 @@ pub struct AWSAccount {
     /// Your AWS secret access key. Only required if your AWS account is a GovCloud or China account.
     #[serde(rename = "secret_access_key")]
     pub secret_access_key: Option<String>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl AWSAccount {
@@ -67,63 +72,64 @@ impl AWSAccount {
             resource_collection_enabled: None,
             role_name: None,
             secret_access_key: None,
+            _unparsed: false,
         }
     }
 
-    pub fn access_key_id(&mut self, value: String) -> &mut Self {
+    pub fn access_key_id(mut self, value: String) -> Self {
         self.access_key_id = Some(value);
         self
     }
 
-    pub fn account_id(&mut self, value: String) -> &mut Self {
+    pub fn account_id(mut self, value: String) -> Self {
         self.account_id = Some(value);
         self
     }
 
     pub fn account_specific_namespace_rules(
-        &mut self,
+        mut self,
         value: std::collections::BTreeMap<String, bool>,
-    ) -> &mut Self {
+    ) -> Self {
         self.account_specific_namespace_rules = Some(value);
         self
     }
 
-    pub fn cspm_resource_collection_enabled(&mut self, value: bool) -> &mut Self {
+    pub fn cspm_resource_collection_enabled(mut self, value: bool) -> Self {
         self.cspm_resource_collection_enabled = Some(value);
         self
     }
 
-    pub fn excluded_regions(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn excluded_regions(mut self, value: Vec<String>) -> Self {
         self.excluded_regions = Some(value);
         self
     }
 
-    pub fn filter_tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn filter_tags(mut self, value: Vec<String>) -> Self {
         self.filter_tags = Some(value);
         self
     }
 
-    pub fn host_tags(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn host_tags(mut self, value: Vec<String>) -> Self {
         self.host_tags = Some(value);
         self
     }
 
-    pub fn metrics_collection_enabled(&mut self, value: bool) -> &mut Self {
+    pub fn metrics_collection_enabled(mut self, value: bool) -> Self {
         self.metrics_collection_enabled = Some(value);
         self
     }
 
-    pub fn resource_collection_enabled(&mut self, value: bool) -> &mut Self {
+    pub fn resource_collection_enabled(mut self, value: bool) -> Self {
         self.resource_collection_enabled = Some(value);
         self
     }
 
-    pub fn role_name(&mut self, value: String) -> &mut Self {
+    pub fn role_name(mut self, value: String) -> Self {
         self.role_name = Some(value);
         self
     }
 
-    pub fn secret_access_key(&mut self, value: String) -> &mut Self {
+    pub fn secret_access_key(mut self, value: String) -> Self {
         self.secret_access_key = Some(value);
         self
     }
@@ -132,5 +138,140 @@ impl AWSAccount {
 impl Default for AWSAccount {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for AWSAccount {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct AWSAccountVisitor;
+        impl<'a> Visitor<'a> for AWSAccountVisitor {
+            type Value = AWSAccount;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut access_key_id: Option<String> = None;
+                let mut account_id: Option<String> = None;
+                let mut account_specific_namespace_rules: Option<
+                    std::collections::BTreeMap<String, bool>,
+                > = None;
+                let mut cspm_resource_collection_enabled: Option<bool> = None;
+                let mut excluded_regions: Option<Vec<String>> = None;
+                let mut filter_tags: Option<Vec<String>> = None;
+                let mut host_tags: Option<Vec<String>> = None;
+                let mut metrics_collection_enabled: Option<bool> = None;
+                let mut resource_collection_enabled: Option<bool> = None;
+                let mut role_name: Option<String> = None;
+                let mut secret_access_key: Option<String> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "access_key_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            access_key_id =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "account_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            account_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "account_specific_namespace_rules" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            account_specific_namespace_rules =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cspm_resource_collection_enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cspm_resource_collection_enabled =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "excluded_regions" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            excluded_regions =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "filter_tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            filter_tags =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "host_tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            host_tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "metrics_collection_enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            metrics_collection_enabled =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "resource_collection_enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            resource_collection_enabled =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "role_name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            role_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "secret_access_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            secret_access_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+
+                let content = AWSAccount {
+                    access_key_id,
+                    account_id,
+                    account_specific_namespace_rules,
+                    cspm_resource_collection_enabled,
+                    excluded_regions,
+                    filter_tags,
+                    host_tags,
+                    metrics_collection_enabled,
+                    resource_collection_enabled,
+                    role_name,
+                    secret_access_key,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(AWSAccountVisitor)
     }
 }

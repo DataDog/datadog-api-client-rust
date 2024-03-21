@@ -2,63 +2,38 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SyntheticsApiTestFailureCode {
-    #[serde(rename = "BODY_TOO_LARGE")]
     BODY_TOO_LARGE,
-    #[serde(rename = "DENIED")]
     DENIED,
-    #[serde(rename = "TOO_MANY_REDIRECTS")]
     TOO_MANY_REDIRECTS,
-    #[serde(rename = "AUTHENTICATION_ERROR")]
     AUTHENTICATION_ERROR,
-    #[serde(rename = "DECRYPTION")]
     DECRYPTION,
-    #[serde(rename = "INVALID_CHAR_IN_HEADER")]
     INVALID_CHAR_IN_HEADER,
-    #[serde(rename = "HEADER_TOO_LARGE")]
     HEADER_TOO_LARGE,
-    #[serde(rename = "HEADERS_INCOMPATIBLE_CONTENT_LENGTH")]
     HEADERS_INCOMPATIBLE_CONTENT_LENGTH,
-    #[serde(rename = "INVALID_REQUEST")]
     INVALID_REQUEST,
-    #[serde(rename = "REQUIRES_UPDATE")]
     REQUIRES_UPDATE,
-    #[serde(rename = "UNESCAPED_CHARACTERS_IN_REQUEST_PATH")]
     UNESCAPED_CHARACTERS_IN_REQUEST_PATH,
-    #[serde(rename = "MALFORMED_RESPONSE")]
     MALFORMED_RESPONSE,
-    #[serde(rename = "INCORRECT_ASSERTION")]
     INCORRECT_ASSERTION,
-    #[serde(rename = "CONNREFUSED")]
     CONNREFUSED,
-    #[serde(rename = "CONNRESET")]
     CONNRESET,
-    #[serde(rename = "DNS")]
     DNS,
-    #[serde(rename = "HOSTUNREACH")]
     HOSTUNREACH,
-    #[serde(rename = "NETUNREACH")]
     NETUNREACH,
-    #[serde(rename = "TIMEOUT")]
     TIMEOUT,
-    #[serde(rename = "SSL")]
     SSL,
-    #[serde(rename = "OCSP")]
     OCSP,
-    #[serde(rename = "INVALID_TEST")]
     INVALID_TEST,
-    #[serde(rename = "TUNNEL")]
     TUNNEL,
-    #[serde(rename = "WEBSOCKET")]
     WEBSOCKET,
-    #[serde(rename = "UNKNOWN")]
     UNKNOWN,
-    #[serde(rename = "INTERNAL_ERROR")]
     INTERNAL_ERROR,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsApiTestFailureCode {
@@ -94,6 +69,59 @@ impl ToString for SyntheticsApiTestFailureCode {
             Self::WEBSOCKET => String::from("WEBSOCKET"),
             Self::UNKNOWN => String::from("UNKNOWN"),
             Self::INTERNAL_ERROR => String::from("INTERNAL_ERROR"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
+    }
+}
+
+impl Serialize for SyntheticsApiTestFailureCode {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for SyntheticsApiTestFailureCode {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "BODY_TOO_LARGE" => Self::BODY_TOO_LARGE,
+            "DENIED" => Self::DENIED,
+            "TOO_MANY_REDIRECTS" => Self::TOO_MANY_REDIRECTS,
+            "AUTHENTICATION_ERROR" => Self::AUTHENTICATION_ERROR,
+            "DECRYPTION" => Self::DECRYPTION,
+            "INVALID_CHAR_IN_HEADER" => Self::INVALID_CHAR_IN_HEADER,
+            "HEADER_TOO_LARGE" => Self::HEADER_TOO_LARGE,
+            "HEADERS_INCOMPATIBLE_CONTENT_LENGTH" => Self::HEADERS_INCOMPATIBLE_CONTENT_LENGTH,
+            "INVALID_REQUEST" => Self::INVALID_REQUEST,
+            "REQUIRES_UPDATE" => Self::REQUIRES_UPDATE,
+            "UNESCAPED_CHARACTERS_IN_REQUEST_PATH" => Self::UNESCAPED_CHARACTERS_IN_REQUEST_PATH,
+            "MALFORMED_RESPONSE" => Self::MALFORMED_RESPONSE,
+            "INCORRECT_ASSERTION" => Self::INCORRECT_ASSERTION,
+            "CONNREFUSED" => Self::CONNREFUSED,
+            "CONNRESET" => Self::CONNRESET,
+            "DNS" => Self::DNS,
+            "HOSTUNREACH" => Self::HOSTUNREACH,
+            "NETUNREACH" => Self::NETUNREACH,
+            "TIMEOUT" => Self::TIMEOUT,
+            "SSL" => Self::SSL,
+            "OCSP" => Self::OCSP,
+            "INVALID_TEST" => Self::INVALID_TEST,
+            "TUNNEL" => Self::TUNNEL,
+            "WEBSOCKET" => Self::WEBSOCKET,
+            "UNKNOWN" => Self::UNKNOWN,
+            "INTERNAL_ERROR" => Self::INTERNAL_ERROR,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
+        })
     }
 }

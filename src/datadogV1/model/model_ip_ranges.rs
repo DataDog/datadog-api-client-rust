@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// IP ranges.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct IPRanges {
     /// Available prefix information for the Agent endpoints.
     #[serde(rename = "agents")]
@@ -49,6 +51,9 @@ pub struct IPRanges {
     /// Available prefix information for the Webhook endpoints.
     #[serde(rename = "webhooks")]
     pub webhooks: Option<crate::datadogV1::model::IPPrefixesWebhooks>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl IPRanges {
@@ -67,82 +72,77 @@ impl IPRanges {
             synthetics_private_locations: None,
             version: None,
             webhooks: None,
+            _unparsed: false,
         }
     }
 
-    pub fn agents(&mut self, value: crate::datadogV1::model::IPPrefixesAgents) -> &mut Self {
+    pub fn agents(mut self, value: crate::datadogV1::model::IPPrefixesAgents) -> Self {
         self.agents = Some(value);
         self
     }
 
-    pub fn api(&mut self, value: crate::datadogV1::model::IPPrefixesAPI) -> &mut Self {
+    pub fn api(mut self, value: crate::datadogV1::model::IPPrefixesAPI) -> Self {
         self.api = Some(value);
         self
     }
 
-    pub fn apm(&mut self, value: crate::datadogV1::model::IPPrefixesAPM) -> &mut Self {
+    pub fn apm(mut self, value: crate::datadogV1::model::IPPrefixesAPM) -> Self {
         self.apm = Some(value);
         self
     }
 
-    pub fn global(&mut self, value: crate::datadogV1::model::IPPrefixesGlobal) -> &mut Self {
+    pub fn global(mut self, value: crate::datadogV1::model::IPPrefixesGlobal) -> Self {
         self.global = Some(value);
         self
     }
 
-    pub fn logs(&mut self, value: crate::datadogV1::model::IPPrefixesLogs) -> &mut Self {
+    pub fn logs(mut self, value: crate::datadogV1::model::IPPrefixesLogs) -> Self {
         self.logs = Some(value);
         self
     }
 
-    pub fn modified(&mut self, value: String) -> &mut Self {
+    pub fn modified(mut self, value: String) -> Self {
         self.modified = Some(value);
         self
     }
 
-    pub fn orchestrator(
-        &mut self,
-        value: crate::datadogV1::model::IPPrefixesOrchestrator,
-    ) -> &mut Self {
+    pub fn orchestrator(mut self, value: crate::datadogV1::model::IPPrefixesOrchestrator) -> Self {
         self.orchestrator = Some(value);
         self
     }
 
-    pub fn process(&mut self, value: crate::datadogV1::model::IPPrefixesProcess) -> &mut Self {
+    pub fn process(mut self, value: crate::datadogV1::model::IPPrefixesProcess) -> Self {
         self.process = Some(value);
         self
     }
 
     pub fn remote_configuration(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::IPPrefixesRemoteConfiguration,
-    ) -> &mut Self {
+    ) -> Self {
         self.remote_configuration = Some(value);
         self
     }
 
-    pub fn synthetics(
-        &mut self,
-        value: crate::datadogV1::model::IPPrefixesSynthetics,
-    ) -> &mut Self {
+    pub fn synthetics(mut self, value: crate::datadogV1::model::IPPrefixesSynthetics) -> Self {
         self.synthetics = Some(value);
         self
     }
 
     pub fn synthetics_private_locations(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::IPPrefixesSyntheticsPrivateLocations,
-    ) -> &mut Self {
+    ) -> Self {
         self.synthetics_private_locations = Some(value);
         self
     }
 
-    pub fn version(&mut self, value: i64) -> &mut Self {
+    pub fn version(mut self, value: i64) -> Self {
         self.version = Some(value);
         self
     }
 
-    pub fn webhooks(&mut self, value: crate::datadogV1::model::IPPrefixesWebhooks) -> &mut Self {
+    pub fn webhooks(mut self, value: crate::datadogV1::model::IPPrefixesWebhooks) -> Self {
         self.webhooks = Some(value);
         self
     }
@@ -151,5 +151,154 @@ impl IPRanges {
 impl Default for IPRanges {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for IPRanges {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct IPRangesVisitor;
+        impl<'a> Visitor<'a> for IPRangesVisitor {
+            type Value = IPRanges;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut agents: Option<crate::datadogV1::model::IPPrefixesAgents> = None;
+                let mut api: Option<crate::datadogV1::model::IPPrefixesAPI> = None;
+                let mut apm: Option<crate::datadogV1::model::IPPrefixesAPM> = None;
+                let mut global: Option<crate::datadogV1::model::IPPrefixesGlobal> = None;
+                let mut logs: Option<crate::datadogV1::model::IPPrefixesLogs> = None;
+                let mut modified: Option<String> = None;
+                let mut orchestrator: Option<crate::datadogV1::model::IPPrefixesOrchestrator> =
+                    None;
+                let mut process: Option<crate::datadogV1::model::IPPrefixesProcess> = None;
+                let mut remote_configuration: Option<
+                    crate::datadogV1::model::IPPrefixesRemoteConfiguration,
+                > = None;
+                let mut synthetics: Option<crate::datadogV1::model::IPPrefixesSynthetics> = None;
+                let mut synthetics_private_locations: Option<
+                    crate::datadogV1::model::IPPrefixesSyntheticsPrivateLocations,
+                > = None;
+                let mut version: Option<i64> = None;
+                let mut webhooks: Option<crate::datadogV1::model::IPPrefixesWebhooks> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "agents" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            agents = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "api" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            api = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "apm" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            apm = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "global" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            global = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "modified" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            modified = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "orchestrator" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            orchestrator =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "process" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            process = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "remote-configuration" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            remote_configuration =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "synthetics" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            synthetics = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "synthetics-private-locations" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            synthetics_private_locations =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "version" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "webhooks" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            webhooks = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+
+                let content = IPRanges {
+                    agents,
+                    api,
+                    apm,
+                    global,
+                    logs,
+                    modified,
+                    orchestrator,
+                    process,
+                    remote_configuration,
+                    synthetics,
+                    synthetics_private_locations,
+                    version,
+                    webhooks,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(IPRangesVisitor)
     }
 }

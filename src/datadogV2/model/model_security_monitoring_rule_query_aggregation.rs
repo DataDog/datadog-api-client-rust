@@ -2,27 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SecurityMonitoringRuleQueryAggregation {
-    #[serde(rename = "count")]
     COUNT,
-    #[serde(rename = "cardinality")]
     CARDINALITY,
-    #[serde(rename = "sum")]
     SUM,
-    #[serde(rename = "max")]
     MAX,
-    #[serde(rename = "new_value")]
     NEW_VALUE,
-    #[serde(rename = "geo_data")]
     GEO_DATA,
-    #[serde(rename = "event_count")]
     EVENT_COUNT,
-    #[serde(rename = "none")]
     NONE,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SecurityMonitoringRuleQueryAggregation {
@@ -36,6 +29,41 @@ impl ToString for SecurityMonitoringRuleQueryAggregation {
             Self::GEO_DATA => String::from("geo_data"),
             Self::EVENT_COUNT => String::from("event_count"),
             Self::NONE => String::from("none"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
+    }
+}
+
+impl Serialize for SecurityMonitoringRuleQueryAggregation {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for SecurityMonitoringRuleQueryAggregation {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "count" => Self::COUNT,
+            "cardinality" => Self::CARDINALITY,
+            "sum" => Self::SUM,
+            "max" => Self::MAX,
+            "new_value" => Self::NEW_VALUE,
+            "geo_data" => Self::GEO_DATA,
+            "event_count" => Self::EVENT_COUNT,
+            "none" => Self::NONE,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
+        })
     }
 }

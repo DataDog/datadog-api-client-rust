@@ -24,27 +24,27 @@ pub struct EstimateMetricsOutputSeriesOptionalParams {
 
 impl EstimateMetricsOutputSeriesOptionalParams {
     /// Filtered tag keys that the metric is configured to query with.
-    pub fn filter_groups(&mut self, value: String) -> &mut Self {
+    pub fn filter_groups(mut self, value: String) -> Self {
         self.filter_groups = Some(value);
         self
     }
     /// The number of hours of look back (from now) to estimate cardinality with.
-    pub fn filter_hours_ago(&mut self, value: i32) -> &mut Self {
+    pub fn filter_hours_ago(mut self, value: i32) -> Self {
         self.filter_hours_ago = Some(value);
         self
     }
     /// The number of aggregations that a `count`, `rate`, or `gauge` metric is configured to use. Max number of aggregation combos is 9.
-    pub fn filter_num_aggregations(&mut self, value: i32) -> &mut Self {
+    pub fn filter_num_aggregations(mut self, value: i32) -> Self {
         self.filter_num_aggregations = Some(value);
         self
     }
     /// A boolean, for distribution metrics only, to estimate cardinality if the metric includes additional percentile aggregators.
-    pub fn filter_pct(&mut self, value: bool) -> &mut Self {
+    pub fn filter_pct(mut self, value: bool) -> Self {
         self.filter_pct = Some(value);
         self
     }
     /// A window, in hours, from the look back to estimate cardinality with.
-    pub fn filter_timespan_h(&mut self, value: i32) -> &mut Self {
+    pub fn filter_timespan_h(mut self, value: i32) -> Self {
         self.filter_timespan_h = Some(value);
         self
     }
@@ -62,7 +62,7 @@ pub struct ListActiveMetricConfigurationsOptionalParams {
 impl ListActiveMetricConfigurationsOptionalParams {
     /// The number of seconds of look back (from now).
     /// Default value is 604,800 (1 week), minimum value is 7200 (2 hours), maximum value is 2,630,000 (1 month).
-    pub fn window_seconds(&mut self, value: i64) -> &mut Self {
+    pub fn window_seconds(mut self, value: i64) -> Self {
         self.window_seconds = Some(value);
         self
     }
@@ -94,44 +94,44 @@ pub struct ListTagConfigurationsOptionalParams {
 
 impl ListTagConfigurationsOptionalParams {
     /// Filter custom metrics that have configured tags.
-    pub fn filter_configured(&mut self, value: bool) -> &mut Self {
+    pub fn filter_configured(mut self, value: bool) -> Self {
         self.filter_configured = Some(value);
         self
     }
     /// Filter tag configurations by configured tags.
-    pub fn filter_tags_configured(&mut self, value: String) -> &mut Self {
+    pub fn filter_tags_configured(mut self, value: String) -> Self {
         self.filter_tags_configured = Some(value);
         self
     }
     /// Filter metrics by metric type.
     pub fn filter_metric_type(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::MetricTagConfigurationMetricTypes,
-    ) -> &mut Self {
+    ) -> Self {
         self.filter_metric_type = Some(value);
         self
     }
     /// Filter distributions with additional percentile
     /// aggregations enabled or disabled.
-    pub fn filter_include_percentiles(&mut self, value: bool) -> &mut Self {
+    pub fn filter_include_percentiles(mut self, value: bool) -> Self {
         self.filter_include_percentiles = Some(value);
         self
     }
     /// (Beta) Filter custom metrics that have or have not been queried in the specified window[seconds].
     /// If no window is provided or the window is less than 2 hours, a default of 2 hours will be applied.
-    pub fn filter_queried(&mut self, value: bool) -> &mut Self {
+    pub fn filter_queried(mut self, value: bool) -> Self {
         self.filter_queried = Some(value);
         self
     }
     /// Filter metrics that have been submitted with the given tags. Supports boolean and wildcard expressions.
     /// Can only be combined with the filter[queried] filter.
-    pub fn filter_tags(&mut self, value: String) -> &mut Self {
+    pub fn filter_tags(mut self, value: String) -> Self {
         self.filter_tags = Some(value);
         self
     }
     /// The number of seconds of look back (from now) to apply to a filter[tag] or filter[queried] query.
     /// Default value is 3600 (1 hour), maximum value is 2,592,000 (30 days).
-    pub fn window_seconds(&mut self, value: i64) -> &mut Self {
+    pub fn window_seconds(mut self, value: i64) -> Self {
         self.window_seconds = Some(value);
         self
     }
@@ -148,9 +148,9 @@ pub struct SubmitMetricsOptionalParams {
 impl SubmitMetricsOptionalParams {
     /// HTTP header used to compress the media-type.
     pub fn content_encoding(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::MetricContentEncoding,
-    ) -> &mut Self {
+    ) -> Self {
         self.content_encoding = Some(value);
         self
     }
@@ -311,12 +311,14 @@ pub enum UpdateTagConfigurationError {
 #[derive(Debug, Clone)]
 pub struct MetricsAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for MetricsAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -326,7 +328,24 @@ impl MetricsAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// Create and define a list of queryable tag keys for a set of existing count, gauge, rate, and distribution metrics.
@@ -377,7 +396,7 @@ impl MetricsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.create_bulk_tags_metrics_configuration";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/config/bulk-tags",
@@ -484,7 +503,7 @@ impl MetricsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.create_tag_configuration";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/tags",
@@ -588,7 +607,7 @@ impl MetricsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_bulk_tags_metrics_configuration";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/config/bulk-tags",
@@ -673,7 +692,7 @@ impl MetricsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_tag_configuration";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/tags",
@@ -766,7 +785,7 @@ impl MetricsAPI {
         let filter_pct = params.filter_pct;
         let filter_timespan_h = params.filter_timespan_h;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/estimate",
@@ -883,7 +902,7 @@ impl MetricsAPI {
         // unbox and build optional parameters
         let window_seconds = params.window_seconds;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/active-configurations",
@@ -980,7 +999,7 @@ impl MetricsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.list_tag_configuration_by_name";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/tags",
@@ -1077,7 +1096,7 @@ impl MetricsAPI {
         let filter_tags = params.filter_tags;
         let window_seconds = params.window_seconds;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics",
@@ -1197,7 +1216,7 @@ impl MetricsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.list_tags_by_metric_name";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/all-tags",
@@ -1290,7 +1309,7 @@ impl MetricsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.list_volumes_by_metric_name";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/volumes",
@@ -1388,7 +1407,7 @@ impl MetricsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/query/scalar",
@@ -1492,7 +1511,7 @@ impl MetricsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/query/timeseries",
@@ -1610,7 +1629,7 @@ impl MetricsAPI {
         // unbox and build optional parameters
         let content_encoding = params.content_encoding;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/series",
@@ -1718,7 +1737,7 @@ impl MetricsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.update_tag_configuration";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/tags",

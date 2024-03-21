@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// The service summary displays the graphs of a chosen service in your screenboard. Only available on FREE layout dashboards.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ServiceSummaryWidgetDefinition {
     /// Number of columns to display.
     #[serde(rename = "display_format")]
@@ -57,6 +59,9 @@ pub struct ServiceSummaryWidgetDefinition {
     /// Type of the service summary widget.
     #[serde(rename = "type")]
     pub type_: crate::datadogV1::model::ServiceSummaryWidgetDefinitionType,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl ServiceSummaryWidgetDefinition {
@@ -83,69 +88,274 @@ impl ServiceSummaryWidgetDefinition {
             title_align: None,
             title_size: None,
             type_,
+            _unparsed: false,
         }
     }
 
     pub fn display_format(
-        &mut self,
+        mut self,
         value: crate::datadogV1::model::WidgetServiceSummaryDisplayFormat,
-    ) -> &mut Self {
+    ) -> Self {
         self.display_format = Some(value);
         self
     }
 
-    pub fn show_breakdown(&mut self, value: bool) -> &mut Self {
+    pub fn show_breakdown(mut self, value: bool) -> Self {
         self.show_breakdown = Some(value);
         self
     }
 
-    pub fn show_distribution(&mut self, value: bool) -> &mut Self {
+    pub fn show_distribution(mut self, value: bool) -> Self {
         self.show_distribution = Some(value);
         self
     }
 
-    pub fn show_errors(&mut self, value: bool) -> &mut Self {
+    pub fn show_errors(mut self, value: bool) -> Self {
         self.show_errors = Some(value);
         self
     }
 
-    pub fn show_hits(&mut self, value: bool) -> &mut Self {
+    pub fn show_hits(mut self, value: bool) -> Self {
         self.show_hits = Some(value);
         self
     }
 
-    pub fn show_latency(&mut self, value: bool) -> &mut Self {
+    pub fn show_latency(mut self, value: bool) -> Self {
         self.show_latency = Some(value);
         self
     }
 
-    pub fn show_resource_list(&mut self, value: bool) -> &mut Self {
+    pub fn show_resource_list(mut self, value: bool) -> Self {
         self.show_resource_list = Some(value);
         self
     }
 
-    pub fn size_format(&mut self, value: crate::datadogV1::model::WidgetSizeFormat) -> &mut Self {
+    pub fn size_format(mut self, value: crate::datadogV1::model::WidgetSizeFormat) -> Self {
         self.size_format = Some(value);
         self
     }
 
-    pub fn time(&mut self, value: crate::datadogV1::model::WidgetTime) -> &mut Self {
+    pub fn time(mut self, value: crate::datadogV1::model::WidgetTime) -> Self {
         self.time = Some(value);
         self
     }
 
-    pub fn title(&mut self, value: String) -> &mut Self {
+    pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
 
-    pub fn title_align(&mut self, value: crate::datadogV1::model::WidgetTextAlign) -> &mut Self {
+    pub fn title_align(mut self, value: crate::datadogV1::model::WidgetTextAlign) -> Self {
         self.title_align = Some(value);
         self
     }
 
-    pub fn title_size(&mut self, value: String) -> &mut Self {
+    pub fn title_size(mut self, value: String) -> Self {
         self.title_size = Some(value);
         self
+    }
+}
+
+impl<'de> Deserialize<'de> for ServiceSummaryWidgetDefinition {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct ServiceSummaryWidgetDefinitionVisitor;
+        impl<'a> Visitor<'a> for ServiceSummaryWidgetDefinitionVisitor {
+            type Value = ServiceSummaryWidgetDefinition;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut display_format: Option<
+                    crate::datadogV1::model::WidgetServiceSummaryDisplayFormat,
+                > = None;
+                let mut env: Option<String> = None;
+                let mut service: Option<String> = None;
+                let mut show_breakdown: Option<bool> = None;
+                let mut show_distribution: Option<bool> = None;
+                let mut show_errors: Option<bool> = None;
+                let mut show_hits: Option<bool> = None;
+                let mut show_latency: Option<bool> = None;
+                let mut show_resource_list: Option<bool> = None;
+                let mut size_format: Option<crate::datadogV1::model::WidgetSizeFormat> = None;
+                let mut span_name: Option<String> = None;
+                let mut time: Option<crate::datadogV1::model::WidgetTime> = None;
+                let mut title: Option<String> = None;
+                let mut title_align: Option<crate::datadogV1::model::WidgetTextAlign> = None;
+                let mut title_size: Option<String> = None;
+                let mut type_: Option<crate::datadogV1::model::ServiceSummaryWidgetDefinitionType> =
+                    None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "display_format" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            display_format =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _display_format) = display_format {
+                                match _display_format {
+                                    crate::datadogV1::model::WidgetServiceSummaryDisplayFormat::UnparsedObject(_display_format) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "env" => {
+                            env = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "service" => {
+                            service = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "show_breakdown" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            show_breakdown =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "show_distribution" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            show_distribution =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "show_errors" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            show_errors =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "show_hits" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            show_hits = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "show_latency" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            show_latency =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "show_resource_list" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            show_resource_list =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "size_format" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            size_format =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _size_format) = size_format {
+                                match _size_format {
+                                    crate::datadogV1::model::WidgetSizeFormat::UnparsedObject(
+                                        _size_format,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "span_name" => {
+                            span_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "time" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            time = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "title" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "title_align" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            title_align =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _title_align) = title_align {
+                                match _title_align {
+                                    crate::datadogV1::model::WidgetTextAlign::UnparsedObject(
+                                        _title_align,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "title_size" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            title_size = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "type" => {
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _type_) = type_ {
+                                match _type_ {
+                                    crate::datadogV1::model::ServiceSummaryWidgetDefinitionType::UnparsedObject(_type_) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        &_ => {}
+                    }
+                }
+                let env = env.ok_or_else(|| M::Error::missing_field("env"))?;
+                let service = service.ok_or_else(|| M::Error::missing_field("service"))?;
+                let span_name = span_name.ok_or_else(|| M::Error::missing_field("span_name"))?;
+                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
+
+                let content = ServiceSummaryWidgetDefinition {
+                    display_format,
+                    env,
+                    service,
+                    show_breakdown,
+                    show_distribution,
+                    show_errors,
+                    show_hits,
+                    show_latency,
+                    show_resource_list,
+                    size_format,
+                    span_name,
+                    time,
+                    title,
+                    title_align,
+                    title_size,
+                    type_,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(ServiceSummaryWidgetDefinitionVisitor)
     }
 }

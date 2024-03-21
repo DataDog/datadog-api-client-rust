@@ -1,14 +1,16 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// A dashboard is Datadog’s tool for visually tracking, analyzing, and displaying
 /// key performance metrics, which enable you to monitor the health of your infrastructure.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct Dashboard {
     /// Identifier of the dashboard author.
     #[serde(rename = "author_handle")]
@@ -85,6 +87,9 @@ pub struct Dashboard {
     /// List of widgets to display on the dashboard.
     #[serde(rename = "widgets")]
     pub widgets: Vec<crate::datadogV1::model::Widget>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl Dashboard {
@@ -112,99 +117,279 @@ impl Dashboard {
             title,
             url: None,
             widgets,
+            _unparsed: false,
         }
     }
 
     #[allow(deprecated)]
-    pub fn author_handle(&mut self, value: String) -> &mut Self {
+    pub fn author_handle(mut self, value: String) -> Self {
         self.author_handle = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn author_name(&mut self, value: Option<String>) -> &mut Self {
+    pub fn author_name(mut self, value: Option<String>) -> Self {
         self.author_name = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn created_at(&mut self, value: String) -> &mut Self {
+    pub fn created_at(mut self, value: String) -> Self {
         self.created_at = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn description(&mut self, value: Option<String>) -> &mut Self {
+    pub fn description(mut self, value: Option<String>) -> Self {
         self.description = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn id(&mut self, value: String) -> &mut Self {
+    pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn is_read_only(&mut self, value: bool) -> &mut Self {
+    pub fn is_read_only(mut self, value: bool) -> Self {
         self.is_read_only = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn modified_at(&mut self, value: String) -> &mut Self {
+    pub fn modified_at(mut self, value: String) -> Self {
         self.modified_at = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn notify_list(&mut self, value: Option<Vec<String>>) -> &mut Self {
+    pub fn notify_list(mut self, value: Option<Vec<String>>) -> Self {
         self.notify_list = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn reflow_type(
-        &mut self,
-        value: crate::datadogV1::model::DashboardReflowType,
-    ) -> &mut Self {
+    pub fn reflow_type(mut self, value: crate::datadogV1::model::DashboardReflowType) -> Self {
         self.reflow_type = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn restricted_roles(&mut self, value: Vec<String>) -> &mut Self {
+    pub fn restricted_roles(mut self, value: Vec<String>) -> Self {
         self.restricted_roles = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn tags(&mut self, value: Option<Vec<String>>) -> &mut Self {
+    pub fn tags(mut self, value: Option<Vec<String>>) -> Self {
         self.tags = Some(value);
         self
     }
 
     #[allow(deprecated)]
     pub fn template_variable_presets(
-        &mut self,
+        mut self,
         value: Option<Vec<crate::datadogV1::model::DashboardTemplateVariablePreset>>,
-    ) -> &mut Self {
+    ) -> Self {
         self.template_variable_presets = Some(value);
         self
     }
 
     #[allow(deprecated)]
     pub fn template_variables(
-        &mut self,
+        mut self,
         value: Option<Vec<crate::datadogV1::model::DashboardTemplateVariable>>,
-    ) -> &mut Self {
+    ) -> Self {
         self.template_variables = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn url(&mut self, value: String) -> &mut Self {
+    pub fn url(mut self, value: String) -> Self {
         self.url = Some(value);
         self
+    }
+}
+
+impl<'de> Deserialize<'de> for Dashboard {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct DashboardVisitor;
+        impl<'a> Visitor<'a> for DashboardVisitor {
+            type Value = Dashboard;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut author_handle: Option<String> = None;
+                let mut author_name: Option<Option<String>> = None;
+                let mut created_at: Option<String> = None;
+                let mut description: Option<Option<String>> = None;
+                let mut id: Option<String> = None;
+                let mut is_read_only: Option<bool> = None;
+                let mut layout_type: Option<crate::datadogV1::model::DashboardLayoutType> = None;
+                let mut modified_at: Option<String> = None;
+                let mut notify_list: Option<Option<Vec<String>>> = None;
+                let mut reflow_type: Option<crate::datadogV1::model::DashboardReflowType> = None;
+                let mut restricted_roles: Option<Vec<String>> = None;
+                let mut tags: Option<Option<Vec<String>>> = None;
+                let mut template_variable_presets: Option<
+                    Option<Vec<crate::datadogV1::model::DashboardTemplateVariablePreset>>,
+                > = None;
+                let mut template_variables: Option<
+                    Option<Vec<crate::datadogV1::model::DashboardTemplateVariable>>,
+                > = None;
+                let mut title: Option<String> = None;
+                let mut url: Option<String> = None;
+                let mut widgets: Option<Vec<crate::datadogV1::model::Widget>> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "author_handle" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            author_handle =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "author_name" => {
+                            author_name =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "created_at" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "description" => {
+                            description =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "is_read_only" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            is_read_only =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "layout_type" => {
+                            layout_type =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _layout_type) = layout_type {
+                                match _layout_type {
+                                    crate::datadogV1::model::DashboardLayoutType::UnparsedObject(_layout_type) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "modified_at" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            modified_at =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "notify_list" => {
+                            notify_list =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "reflow_type" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            reflow_type =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _reflow_type) = reflow_type {
+                                match _reflow_type {
+                                    crate::datadogV1::model::DashboardReflowType::UnparsedObject(_reflow_type) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "restricted_roles" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            restricted_roles =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "tags" => {
+                            tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "template_variable_presets" => {
+                            template_variable_presets =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "template_variables" => {
+                            template_variables =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "title" => {
+                            title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "url" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            url = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "widgets" => {
+                            widgets = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+                let layout_type =
+                    layout_type.ok_or_else(|| M::Error::missing_field("layout_type"))?;
+                let title = title.ok_or_else(|| M::Error::missing_field("title"))?;
+                let widgets = widgets.ok_or_else(|| M::Error::missing_field("widgets"))?;
+
+                #[allow(deprecated)]
+                let content = Dashboard {
+                    author_handle,
+                    author_name,
+                    created_at,
+                    description,
+                    id,
+                    is_read_only,
+                    layout_type,
+                    modified_at,
+                    notify_list,
+                    reflow_type,
+                    restricted_roles,
+                    tags,
+                    template_variable_presets,
+                    template_variables,
+                    title,
+                    url,
+                    widgets,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(DashboardVisitor)
     }
 }

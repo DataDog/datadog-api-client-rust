@@ -2,6 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use reqwest;
 use serde::{Deserialize, Serialize};
 
@@ -16,9 +18,9 @@ pub struct GetServiceDefinitionOptionalParams {
 impl GetServiceDefinitionOptionalParams {
     /// The schema version desired in the response.
     pub fn schema_version(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::ServiceDefinitionSchemaVersions,
-    ) -> &mut Self {
+    ) -> Self {
         self.schema_version = Some(value);
         self
     }
@@ -38,20 +40,20 @@ pub struct ListServiceDefinitionsOptionalParams {
 
 impl ListServiceDefinitionsOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
-    pub fn page_size(&mut self, value: i64) -> &mut Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// Specific page number to return.
-    pub fn page_number(&mut self, value: i64) -> &mut Self {
+    pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }
     /// The schema version desired in the response.
     pub fn schema_version(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::ServiceDefinitionSchemaVersions,
-    ) -> &mut Self {
+    ) -> Self {
         self.schema_version = Some(value);
         self
     }
@@ -103,12 +105,14 @@ pub enum ListServiceDefinitionsError {
 #[derive(Debug, Clone)]
 pub struct ServiceDefinitionAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for ServiceDefinitionAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -118,7 +122,24 @@ impl ServiceDefinitionAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// Create or update service definition in the Datadog Service Catalog.
@@ -157,7 +178,7 @@ impl ServiceDefinitionAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.create_or_update_service_definitions";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/services/definitions",
@@ -240,7 +261,7 @@ impl ServiceDefinitionAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_service_definition";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/services/definitions/{service_name}",
@@ -329,7 +350,7 @@ impl ServiceDefinitionAPI {
         // unbox and build optional parameters
         let schema_version = params.schema_version;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/services/definitions/{service_name}",
@@ -411,6 +432,44 @@ impl ServiceDefinitionAPI {
         }
     }
 
+    pub fn list_service_definitions_with_pagination(
+        &self,
+        mut params: ListServiceDefinitionsOptionalParams,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV2::model::ServiceDefinitionData,
+            Error<ListServiceDefinitionsError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 10;
+            if params.page_size.is_none() {
+                params.page_size = Some(page_size);
+            } else {
+                page_size = params.page_size.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_service_definitions(params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                if params.page_number.is_none() {
+                    params.page_number = Some(page_size.clone());
+                } else {
+                    params.page_number = Some(params.page_number.unwrap() + page_size.clone());
+                }
+            }
+        }
+    }
+
     /// Get a list of all service definitions from the Datadog Service Catalog.
     pub async fn list_service_definitions_with_http_info(
         &self,
@@ -427,7 +486,7 @@ impl ServiceDefinitionAPI {
         let page_number = params.page_number;
         let schema_version = params.schema_version;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/services/definitions",

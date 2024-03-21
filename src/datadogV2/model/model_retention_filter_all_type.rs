@@ -2,17 +2,15 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum RetentionFilterAllType {
-    #[serde(rename = "spans-sampling-processor")]
     SPANS_SAMPLING_PROCESSOR,
-    #[serde(rename = "spans-errors-sampling-processor")]
     SPANS_ERRORS_SAMPLING_PROCESSOR,
-    #[serde(rename = "spans-appsec-sampling-processor")]
     SPANS_APPSEC_SAMPLING_PROCESSOR,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for RetentionFilterAllType {
@@ -25,6 +23,36 @@ impl ToString for RetentionFilterAllType {
             Self::SPANS_APPSEC_SAMPLING_PROCESSOR => {
                 String::from("spans-appsec-sampling-processor")
             }
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
+    }
+}
+
+impl Serialize for RetentionFilterAllType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for RetentionFilterAllType {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "spans-sampling-processor" => Self::SPANS_SAMPLING_PROCESSOR,
+            "spans-errors-sampling-processor" => Self::SPANS_ERRORS_SAMPLING_PROCESSOR,
+            "spans-appsec-sampling-processor" => Self::SPANS_APPSEC_SAMPLING_PROCESSOR,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
+        })
     }
 }

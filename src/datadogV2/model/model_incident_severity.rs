@@ -2,23 +2,18 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum IncidentSeverity {
-    #[serde(rename = "UNKNOWN")]
     UNKNOWN,
-    #[serde(rename = "SEV-1")]
     SEV_1,
-    #[serde(rename = "SEV-2")]
     SEV_2,
-    #[serde(rename = "SEV-3")]
     SEV_3,
-    #[serde(rename = "SEV-4")]
     SEV_4,
-    #[serde(rename = "SEV-5")]
     SEV_5,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for IncidentSeverity {
@@ -30,6 +25,39 @@ impl ToString for IncidentSeverity {
             Self::SEV_3 => String::from("SEV-3"),
             Self::SEV_4 => String::from("SEV-4"),
             Self::SEV_5 => String::from("SEV-5"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
+    }
+}
+
+impl Serialize for IncidentSeverity {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for IncidentSeverity {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "UNKNOWN" => Self::UNKNOWN,
+            "SEV-1" => Self::SEV_1,
+            "SEV-2" => Self::SEV_2,
+            "SEV-3" => Self::SEV_3,
+            "SEV-4" => Self::SEV_4,
+            "SEV-5" => Self::SEV_5,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
+        })
     }
 }

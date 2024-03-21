@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// Object containing the definition of a metric tag configuration to be created.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MetricTagConfigurationCreateAttributes {
     /// A list of queryable aggregation combinations for a count, rate, or gauge metric.
     /// By default, count and rate metrics require the (time: sum, space: sum) aggregation and
@@ -42,6 +44,9 @@ pub struct MetricTagConfigurationCreateAttributes {
     /// A list of tag keys that will be queryable for your metric.
     #[serde(rename = "tags")]
     pub tags: Vec<String>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl MetricTagConfigurationCreateAttributes {
@@ -55,24 +60,115 @@ impl MetricTagConfigurationCreateAttributes {
             include_percentiles: None,
             metric_type,
             tags,
+            _unparsed: false,
         }
     }
 
     pub fn aggregations(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::MetricCustomAggregation>,
-    ) -> &mut Self {
+    ) -> Self {
         self.aggregations = Some(value);
         self
     }
 
-    pub fn exclude_tags_mode(&mut self, value: bool) -> &mut Self {
+    pub fn exclude_tags_mode(mut self, value: bool) -> Self {
         self.exclude_tags_mode = Some(value);
         self
     }
 
-    pub fn include_percentiles(&mut self, value: bool) -> &mut Self {
+    pub fn include_percentiles(mut self, value: bool) -> Self {
         self.include_percentiles = Some(value);
         self
+    }
+}
+
+impl<'de> Deserialize<'de> for MetricTagConfigurationCreateAttributes {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct MetricTagConfigurationCreateAttributesVisitor;
+        impl<'a> Visitor<'a> for MetricTagConfigurationCreateAttributesVisitor {
+            type Value = MetricTagConfigurationCreateAttributes;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut aggregations: Option<
+                    Vec<crate::datadogV2::model::MetricCustomAggregation>,
+                > = None;
+                let mut exclude_tags_mode: Option<bool> = None;
+                let mut include_percentiles: Option<bool> = None;
+                let mut metric_type: Option<
+                    crate::datadogV2::model::MetricTagConfigurationMetricTypes,
+                > = None;
+                let mut tags: Option<Vec<String>> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "aggregations" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            aggregations =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "exclude_tags_mode" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            exclude_tags_mode =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "include_percentiles" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            include_percentiles =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "metric_type" => {
+                            metric_type =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _metric_type) = metric_type {
+                                match _metric_type {
+                                    crate::datadogV2::model::MetricTagConfigurationMetricTypes::UnparsedObject(_metric_type) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "tags" => {
+                            tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+                let metric_type =
+                    metric_type.ok_or_else(|| M::Error::missing_field("metric_type"))?;
+                let tags = tags.ok_or_else(|| M::Error::missing_field("tags"))?;
+
+                let content = MetricTagConfigurationCreateAttributes {
+                    aggregations,
+                    exclude_tags_mode,
+                    include_percentiles,
+                    metric_type,
+                    tags,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(MetricTagConfigurationCreateAttributesVisitor)
     }
 }

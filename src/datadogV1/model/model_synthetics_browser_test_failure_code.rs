@@ -2,77 +2,45 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SyntheticsBrowserTestFailureCode {
-    #[serde(rename = "API_REQUEST_FAILURE")]
     API_REQUEST_FAILURE,
-    #[serde(rename = "ASSERTION_FAILURE")]
     ASSERTION_FAILURE,
-    #[serde(rename = "DOWNLOAD_FILE_TOO_LARGE")]
     DOWNLOAD_FILE_TOO_LARGE,
-    #[serde(rename = "ELEMENT_NOT_INTERACTABLE")]
     ELEMENT_NOT_INTERACTABLE,
-    #[serde(rename = "EMAIL_VARIABLE_NOT_DEFINED")]
     EMAIL_VARIABLE_NOT_DEFINED,
-    #[serde(rename = "EVALUATE_JAVASCRIPT")]
     EVALUATE_JAVASCRIPT,
-    #[serde(rename = "EVALUATE_JAVASCRIPT_CONTEXT")]
     EVALUATE_JAVASCRIPT_CONTEXT,
-    #[serde(rename = "EXTRACT_VARIABLE")]
     EXTRACT_VARIABLE,
-    #[serde(rename = "FORBIDDEN_URL")]
     FORBIDDEN_URL,
-    #[serde(rename = "FRAME_DETACHED")]
     FRAME_DETACHED,
-    #[serde(rename = "INCONSISTENCIES")]
     INCONSISTENCIES,
-    #[serde(rename = "INTERNAL_ERROR")]
     INTERNAL_ERROR,
-    #[serde(rename = "INVALID_TYPE_TEXT_DELAY")]
     INVALID_TYPE_TEXT_DELAY,
-    #[serde(rename = "INVALID_URL")]
     INVALID_URL,
-    #[serde(rename = "INVALID_VARIABLE_PATTERN")]
     INVALID_VARIABLE_PATTERN,
-    #[serde(rename = "INVISIBLE_ELEMENT")]
     INVISIBLE_ELEMENT,
-    #[serde(rename = "LOCATE_ELEMENT")]
     LOCATE_ELEMENT,
-    #[serde(rename = "NAVIGATE_TO_LINK")]
     NAVIGATE_TO_LINK,
-    #[serde(rename = "OPEN_URL")]
     OPEN_URL,
-    #[serde(rename = "PRESS_KEY")]
     PRESS_KEY,
-    #[serde(rename = "SERVER_CERTIFICATE")]
     SERVER_CERTIFICATE,
-    #[serde(rename = "SELECT_OPTION")]
     SELECT_OPTION,
-    #[serde(rename = "STEP_TIMEOUT")]
     STEP_TIMEOUT,
-    #[serde(rename = "SUB_TEST_NOT_PASSED")]
     SUB_TEST_NOT_PASSED,
-    #[serde(rename = "TEST_TIMEOUT")]
     TEST_TIMEOUT,
-    #[serde(rename = "TOO_MANY_HTTP_REQUESTS")]
     TOO_MANY_HTTP_REQUESTS,
-    #[serde(rename = "UNAVAILABLE_BROWSER")]
     UNAVAILABLE_BROWSER,
-    #[serde(rename = "UNKNOWN")]
     UNKNOWN,
-    #[serde(rename = "UNSUPPORTED_AUTH_SCHEMA")]
     UNSUPPORTED_AUTH_SCHEMA,
-    #[serde(rename = "UPLOAD_FILES_ELEMENT_TYPE")]
     UPLOAD_FILES_ELEMENT_TYPE,
-    #[serde(rename = "UPLOAD_FILES_DIALOG")]
     UPLOAD_FILES_DIALOG,
-    #[serde(rename = "UPLOAD_FILES_DYNAMIC_ELEMENT")]
     UPLOAD_FILES_DYNAMIC_ELEMENT,
-    #[serde(rename = "UPLOAD_FILES_NAME")]
     UPLOAD_FILES_NAME,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsBrowserTestFailureCode {
@@ -111,6 +79,66 @@ impl ToString for SyntheticsBrowserTestFailureCode {
             Self::UPLOAD_FILES_DIALOG => String::from("UPLOAD_FILES_DIALOG"),
             Self::UPLOAD_FILES_DYNAMIC_ELEMENT => String::from("UPLOAD_FILES_DYNAMIC_ELEMENT"),
             Self::UPLOAD_FILES_NAME => String::from("UPLOAD_FILES_NAME"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
+    }
+}
+
+impl Serialize for SyntheticsBrowserTestFailureCode {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for SyntheticsBrowserTestFailureCode {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "API_REQUEST_FAILURE" => Self::API_REQUEST_FAILURE,
+            "ASSERTION_FAILURE" => Self::ASSERTION_FAILURE,
+            "DOWNLOAD_FILE_TOO_LARGE" => Self::DOWNLOAD_FILE_TOO_LARGE,
+            "ELEMENT_NOT_INTERACTABLE" => Self::ELEMENT_NOT_INTERACTABLE,
+            "EMAIL_VARIABLE_NOT_DEFINED" => Self::EMAIL_VARIABLE_NOT_DEFINED,
+            "EVALUATE_JAVASCRIPT" => Self::EVALUATE_JAVASCRIPT,
+            "EVALUATE_JAVASCRIPT_CONTEXT" => Self::EVALUATE_JAVASCRIPT_CONTEXT,
+            "EXTRACT_VARIABLE" => Self::EXTRACT_VARIABLE,
+            "FORBIDDEN_URL" => Self::FORBIDDEN_URL,
+            "FRAME_DETACHED" => Self::FRAME_DETACHED,
+            "INCONSISTENCIES" => Self::INCONSISTENCIES,
+            "INTERNAL_ERROR" => Self::INTERNAL_ERROR,
+            "INVALID_TYPE_TEXT_DELAY" => Self::INVALID_TYPE_TEXT_DELAY,
+            "INVALID_URL" => Self::INVALID_URL,
+            "INVALID_VARIABLE_PATTERN" => Self::INVALID_VARIABLE_PATTERN,
+            "INVISIBLE_ELEMENT" => Self::INVISIBLE_ELEMENT,
+            "LOCATE_ELEMENT" => Self::LOCATE_ELEMENT,
+            "NAVIGATE_TO_LINK" => Self::NAVIGATE_TO_LINK,
+            "OPEN_URL" => Self::OPEN_URL,
+            "PRESS_KEY" => Self::PRESS_KEY,
+            "SERVER_CERTIFICATE" => Self::SERVER_CERTIFICATE,
+            "SELECT_OPTION" => Self::SELECT_OPTION,
+            "STEP_TIMEOUT" => Self::STEP_TIMEOUT,
+            "SUB_TEST_NOT_PASSED" => Self::SUB_TEST_NOT_PASSED,
+            "TEST_TIMEOUT" => Self::TEST_TIMEOUT,
+            "TOO_MANY_HTTP_REQUESTS" => Self::TOO_MANY_HTTP_REQUESTS,
+            "UNAVAILABLE_BROWSER" => Self::UNAVAILABLE_BROWSER,
+            "UNKNOWN" => Self::UNKNOWN,
+            "UNSUPPORTED_AUTH_SCHEMA" => Self::UNSUPPORTED_AUTH_SCHEMA,
+            "UPLOAD_FILES_ELEMENT_TYPE" => Self::UPLOAD_FILES_ELEMENT_TYPE,
+            "UPLOAD_FILES_DIALOG" => Self::UPLOAD_FILES_DIALOG,
+            "UPLOAD_FILES_DYNAMIC_ELEMENT" => Self::UPLOAD_FILES_DYNAMIC_ELEMENT,
+            "UPLOAD_FILES_NAME" => Self::UPLOAD_FILES_NAME,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
+        })
     }
 }

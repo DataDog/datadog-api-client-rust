@@ -2,21 +2,17 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum CIAppPipelineLevel {
-    #[serde(rename = "pipeline")]
     PIPELINE,
-    #[serde(rename = "stage")]
     STAGE,
-    #[serde(rename = "job")]
     JOB,
-    #[serde(rename = "step")]
     STEP,
-    #[serde(rename = "custom")]
     CUSTOM,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for CIAppPipelineLevel {
@@ -27,6 +23,38 @@ impl ToString for CIAppPipelineLevel {
             Self::JOB => String::from("job"),
             Self::STEP => String::from("step"),
             Self::CUSTOM => String::from("custom"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
+    }
+}
+
+impl Serialize for CIAppPipelineLevel {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for CIAppPipelineLevel {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "pipeline" => Self::PIPELINE,
+            "stage" => Self::STAGE,
+            "job" => Self::JOB,
+            "step" => Self::STEP,
+            "custom" => Self::CUSTOM,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
+        })
     }
 }

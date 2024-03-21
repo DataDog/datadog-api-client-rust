@@ -15,7 +15,7 @@ pub struct GetAPIKeyOptionalParams {
 
 impl GetAPIKeyOptionalParams {
     /// Comma separated list of resource paths for related resources to include in the response. Supported resource paths are `created_by` and `modified_by`.
-    pub fn include(&mut self, value: String) -> &mut Self {
+    pub fn include(mut self, value: String) -> Self {
         self.include = Some(value);
         self
     }
@@ -31,7 +31,7 @@ pub struct GetApplicationKeyOptionalParams {
 
 impl GetApplicationKeyOptionalParams {
     /// Resource path for related resources to include in the response. Only `owned_by` is supported.
-    pub fn include(&mut self, value: String) -> &mut Self {
+    pub fn include(mut self, value: String) -> Self {
         self.include = Some(value);
         self
     }
@@ -69,59 +69,59 @@ pub struct ListAPIKeysOptionalParams {
 
 impl ListAPIKeysOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
-    pub fn page_size(&mut self, value: i64) -> &mut Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// Specific page number to return.
-    pub fn page_number(&mut self, value: i64) -> &mut Self {
+    pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }
     /// API key attribute used to sort results. Sort order is ascending
     /// by default. In order to specify a descending sort, prefix the
     /// attribute with a minus sign.
-    pub fn sort(&mut self, value: crate::datadogV2::model::APIKeysSort) -> &mut Self {
+    pub fn sort(mut self, value: crate::datadogV2::model::APIKeysSort) -> Self {
         self.sort = Some(value);
         self
     }
     /// Filter API keys by the specified string.
-    pub fn filter(&mut self, value: String) -> &mut Self {
+    pub fn filter(mut self, value: String) -> Self {
         self.filter = Some(value);
         self
     }
     /// Only include API keys created on or after the specified date.
-    pub fn filter_created_at_start(&mut self, value: String) -> &mut Self {
+    pub fn filter_created_at_start(mut self, value: String) -> Self {
         self.filter_created_at_start = Some(value);
         self
     }
     /// Only include API keys created on or before the specified date.
-    pub fn filter_created_at_end(&mut self, value: String) -> &mut Self {
+    pub fn filter_created_at_end(mut self, value: String) -> Self {
         self.filter_created_at_end = Some(value);
         self
     }
     /// Only include API keys modified on or after the specified date.
-    pub fn filter_modified_at_start(&mut self, value: String) -> &mut Self {
+    pub fn filter_modified_at_start(mut self, value: String) -> Self {
         self.filter_modified_at_start = Some(value);
         self
     }
     /// Only include API keys modified on or before the specified date.
-    pub fn filter_modified_at_end(&mut self, value: String) -> &mut Self {
+    pub fn filter_modified_at_end(mut self, value: String) -> Self {
         self.filter_modified_at_end = Some(value);
         self
     }
     /// Comma separated list of resource paths for related resources to include in the response. Supported resource paths are `created_by` and `modified_by`.
-    pub fn include(&mut self, value: String) -> &mut Self {
+    pub fn include(mut self, value: String) -> Self {
         self.include = Some(value);
         self
     }
     /// Filter API keys by remote config read enabled status.
-    pub fn filter_remote_config_read_enabled(&mut self, value: bool) -> &mut Self {
+    pub fn filter_remote_config_read_enabled(mut self, value: bool) -> Self {
         self.filter_remote_config_read_enabled = Some(value);
         self
     }
     /// Filter API keys by category.
-    pub fn filter_category(&mut self, value: String) -> &mut Self {
+    pub fn filter_category(mut self, value: String) -> Self {
         self.filter_category = Some(value);
         self
     }
@@ -151,39 +151,39 @@ pub struct ListApplicationKeysOptionalParams {
 
 impl ListApplicationKeysOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
-    pub fn page_size(&mut self, value: i64) -> &mut Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// Specific page number to return.
-    pub fn page_number(&mut self, value: i64) -> &mut Self {
+    pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }
     /// Application key attribute used to sort results. Sort order is ascending
     /// by default. In order to specify a descending sort, prefix the
     /// attribute with a minus sign.
-    pub fn sort(&mut self, value: crate::datadogV2::model::ApplicationKeysSort) -> &mut Self {
+    pub fn sort(mut self, value: crate::datadogV2::model::ApplicationKeysSort) -> Self {
         self.sort = Some(value);
         self
     }
     /// Filter application keys by the specified string.
-    pub fn filter(&mut self, value: String) -> &mut Self {
+    pub fn filter(mut self, value: String) -> Self {
         self.filter = Some(value);
         self
     }
     /// Only include application keys created on or after the specified date.
-    pub fn filter_created_at_start(&mut self, value: String) -> &mut Self {
+    pub fn filter_created_at_start(mut self, value: String) -> Self {
         self.filter_created_at_start = Some(value);
         self
     }
     /// Only include application keys created on or before the specified date.
-    pub fn filter_created_at_end(&mut self, value: String) -> &mut Self {
+    pub fn filter_created_at_end(mut self, value: String) -> Self {
         self.filter_created_at_end = Some(value);
         self
     }
     /// Resource path for related resources to include in the response. Only `owned_by` is supported.
-    pub fn include(&mut self, value: String) -> &mut Self {
+    pub fn include(mut self, value: String) -> Self {
         self.include = Some(value);
         self
     }
@@ -213,39 +213,39 @@ pub struct ListCurrentUserApplicationKeysOptionalParams {
 
 impl ListCurrentUserApplicationKeysOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
-    pub fn page_size(&mut self, value: i64) -> &mut Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// Specific page number to return.
-    pub fn page_number(&mut self, value: i64) -> &mut Self {
+    pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }
     /// Application key attribute used to sort results. Sort order is ascending
     /// by default. In order to specify a descending sort, prefix the
     /// attribute with a minus sign.
-    pub fn sort(&mut self, value: crate::datadogV2::model::ApplicationKeysSort) -> &mut Self {
+    pub fn sort(mut self, value: crate::datadogV2::model::ApplicationKeysSort) -> Self {
         self.sort = Some(value);
         self
     }
     /// Filter application keys by the specified string.
-    pub fn filter(&mut self, value: String) -> &mut Self {
+    pub fn filter(mut self, value: String) -> Self {
         self.filter = Some(value);
         self
     }
     /// Only include application keys created on or after the specified date.
-    pub fn filter_created_at_start(&mut self, value: String) -> &mut Self {
+    pub fn filter_created_at_start(mut self, value: String) -> Self {
         self.filter_created_at_start = Some(value);
         self
     }
     /// Only include application keys created on or before the specified date.
-    pub fn filter_created_at_end(&mut self, value: String) -> &mut Self {
+    pub fn filter_created_at_end(mut self, value: String) -> Self {
         self.filter_created_at_end = Some(value);
         self
     }
     /// Resource path for related resources to include in the response. Only `owned_by` is supported.
-    pub fn include(&mut self, value: String) -> &mut Self {
+    pub fn include(mut self, value: String) -> Self {
         self.include = Some(value);
         self
     }
@@ -400,12 +400,14 @@ pub enum UpdateCurrentUserApplicationKeyError {
 #[derive(Debug, Clone)]
 pub struct KeyManagementAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for KeyManagementAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -415,7 +417,24 @@ impl KeyManagementAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// Create an API key.
@@ -446,7 +465,7 @@ impl KeyManagementAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.create_api_key";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/api_keys",
@@ -540,7 +559,7 @@ impl KeyManagementAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.create_current_user_application_key";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/current_user/application_keys",
@@ -617,7 +636,7 @@ impl KeyManagementAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_api_key";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/api_keys/{api_key_id}",
@@ -683,7 +702,7 @@ impl KeyManagementAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_application_key";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/application_keys/{app_key_id}",
@@ -753,7 +772,7 @@ impl KeyManagementAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_current_user_application_key";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/current_user/application_keys/{app_key_id}",
@@ -834,7 +853,7 @@ impl KeyManagementAPI {
         // unbox and build optional parameters
         let include = params.include;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/api_keys/{api_key_id}",
@@ -930,7 +949,7 @@ impl KeyManagementAPI {
         // unbox and build optional parameters
         let include = params.include;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/application_keys/{app_key_id}",
@@ -1026,7 +1045,7 @@ impl KeyManagementAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.get_current_user_application_key";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/current_user/application_keys/{app_key_id}",
@@ -1122,7 +1141,7 @@ impl KeyManagementAPI {
         let filter_remote_config_read_enabled = params.filter_remote_config_read_enabled;
         let filter_category = params.filter_category;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/api_keys",
@@ -1260,7 +1279,7 @@ impl KeyManagementAPI {
         let filter_created_at_end = params.filter_created_at_end;
         let include = params.include;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/application_keys",
@@ -1388,7 +1407,7 @@ impl KeyManagementAPI {
         let filter_created_at_end = params.filter_created_at_end;
         let include = params.include;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/current_user/application_keys",
@@ -1501,7 +1520,7 @@ impl KeyManagementAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.update_api_key";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/api_keys/{api_key_id}",
@@ -1596,7 +1615,7 @@ impl KeyManagementAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.update_application_key";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/application_keys/{app_key_id}",
@@ -1696,7 +1715,7 @@ impl KeyManagementAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.update_current_user_application_key";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/current_user/application_keys/{app_key_id}",

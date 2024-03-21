@@ -2,6 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use log::warn;
 use reqwest;
 use serde::{Deserialize, Serialize};
@@ -16,10 +18,7 @@ pub struct GetIncidentOptionalParams {
 
 impl GetIncidentOptionalParams {
     /// Specifies which types of related objects should be included in the response.
-    pub fn include(
-        &mut self,
-        value: Vec<crate::datadogV2::model::IncidentRelatedObject>,
-    ) -> &mut Self {
+    pub fn include(mut self, value: Vec<crate::datadogV2::model::IncidentRelatedObject>) -> Self {
         self.include = Some(value);
         self
     }
@@ -39,17 +38,17 @@ pub struct ListIncidentAttachmentsOptionalParams {
 impl ListIncidentAttachmentsOptionalParams {
     /// Specifies which types of related objects are included in the response.
     pub fn include(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::IncidentAttachmentRelatedObject>,
-    ) -> &mut Self {
+    ) -> Self {
         self.include = Some(value);
         self
     }
     /// Specifies which types of attachments are included in the response.
     pub fn filter_attachment_type(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::IncidentAttachmentAttachmentType>,
-    ) -> &mut Self {
+    ) -> Self {
         self.filter_attachment_type = Some(value);
         self
     }
@@ -69,20 +68,17 @@ pub struct ListIncidentsOptionalParams {
 
 impl ListIncidentsOptionalParams {
     /// Specifies which types of related objects should be included in the response.
-    pub fn include(
-        &mut self,
-        value: Vec<crate::datadogV2::model::IncidentRelatedObject>,
-    ) -> &mut Self {
+    pub fn include(mut self, value: Vec<crate::datadogV2::model::IncidentRelatedObject>) -> Self {
         self.include = Some(value);
         self
     }
     /// Size for a given page. The maximum allowed value is 100.
-    pub fn page_size(&mut self, value: i64) -> &mut Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// Specific offset to use as the beginning of the returned page.
-    pub fn page_offset(&mut self, value: i64) -> &mut Self {
+    pub fn page_offset(mut self, value: i64) -> Self {
         self.page_offset = Some(value);
         self
     }
@@ -104,22 +100,22 @@ pub struct SearchIncidentsOptionalParams {
 
 impl SearchIncidentsOptionalParams {
     /// Specifies which types of related objects should be included in the response.
-    pub fn include(&mut self, value: crate::datadogV2::model::IncidentRelatedObject) -> &mut Self {
+    pub fn include(mut self, value: crate::datadogV2::model::IncidentRelatedObject) -> Self {
         self.include = Some(value);
         self
     }
     /// Specifies the order of returned incidents.
-    pub fn sort(&mut self, value: crate::datadogV2::model::IncidentSearchSortOrder) -> &mut Self {
+    pub fn sort(mut self, value: crate::datadogV2::model::IncidentSearchSortOrder) -> Self {
         self.sort = Some(value);
         self
     }
     /// Size for a given page. The maximum allowed value is 100.
-    pub fn page_size(&mut self, value: i64) -> &mut Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// Specific offset to use as the beginning of the returned page.
-    pub fn page_offset(&mut self, value: i64) -> &mut Self {
+    pub fn page_offset(mut self, value: i64) -> Self {
         self.page_offset = Some(value);
         self
     }
@@ -135,10 +131,7 @@ pub struct UpdateIncidentOptionalParams {
 
 impl UpdateIncidentOptionalParams {
     /// Specifies which types of related objects should be included in the response.
-    pub fn include(
-        &mut self,
-        value: Vec<crate::datadogV2::model::IncidentRelatedObject>,
-    ) -> &mut Self {
+    pub fn include(mut self, value: Vec<crate::datadogV2::model::IncidentRelatedObject>) -> Self {
         self.include = Some(value);
         self
     }
@@ -155,9 +148,9 @@ pub struct UpdateIncidentAttachmentsOptionalParams {
 impl UpdateIncidentAttachmentsOptionalParams {
     /// Specifies which types of related objects are included in the response.
     pub fn include(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::IncidentAttachmentRelatedObject>,
-    ) -> &mut Self {
+    ) -> Self {
         self.include = Some(value);
         self
     }
@@ -382,12 +375,14 @@ pub enum UpdateIncidentTodoError {
 #[derive(Debug, Clone)]
 pub struct IncidentsAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for IncidentsAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -397,7 +392,24 @@ impl IncidentsAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// Create an incident.
@@ -438,7 +450,7 @@ impl IncidentsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents",
@@ -544,7 +556,7 @@ impl IncidentsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/integrations",
@@ -649,7 +661,7 @@ impl IncidentsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/todos",
@@ -738,7 +750,7 @@ impl IncidentsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}",
@@ -818,7 +830,7 @@ impl IncidentsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/integrations/{integration_metadata_id}",
@@ -900,7 +912,7 @@ impl IncidentsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/todos/{todo_id}",
@@ -990,7 +1002,7 @@ impl IncidentsAPI {
         // unbox and build optional parameters
         let include = params.include;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}",
@@ -1101,7 +1113,7 @@ impl IncidentsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/integrations/{integration_metadata_id}",
@@ -1201,7 +1213,7 @@ impl IncidentsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/todos/{todo_id}",
@@ -1307,7 +1319,7 @@ impl IncidentsAPI {
         let include = params.include;
         let filter_attachment_type = params.filter_attachment_type;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/attachments",
@@ -1429,7 +1441,7 @@ impl IncidentsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/integrations",
@@ -1524,7 +1536,7 @@ impl IncidentsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/todos",
@@ -1598,6 +1610,40 @@ impl IncidentsAPI {
         }
     }
 
+    pub fn list_incidents_with_pagination(
+        &self,
+        mut params: ListIncidentsOptionalParams,
+    ) -> impl Stream<
+        Item = Result<crate::datadogV2::model::IncidentResponseData, Error<ListIncidentsError>>,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 10;
+            if params.page_size.is_none() {
+                params.page_size = Some(page_size);
+            } else {
+                page_size = params.page_size.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_incidents(params.clone()).await?;
+
+                let r = resp.data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                if params.page_offset.is_none() {
+                    params.page_offset = Some(page_size.clone());
+                } else {
+                    params.page_offset = Some(params.page_offset.unwrap() + page_size.clone());
+                }
+            }
+        }
+    }
+
     /// Get all incidents for the user's organization.
     pub async fn list_incidents_with_http_info(
         &self,
@@ -1622,7 +1668,7 @@ impl IncidentsAPI {
         let page_size = params.page_size;
         let page_offset = params.page_offset;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents",
@@ -1715,6 +1761,45 @@ impl IncidentsAPI {
         }
     }
 
+    pub fn search_incidents_with_pagination(
+        &self,
+        query: String,
+        mut params: SearchIncidentsOptionalParams,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV2::model::IncidentSearchResponseIncidentsData,
+            Error<SearchIncidentsError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 10;
+            if params.page_size.is_none() {
+                params.page_size = Some(page_size);
+            } else {
+                page_size = params.page_size.unwrap().clone();
+            }
+            loop {
+                let resp = self.search_incidents( query.clone(),params.clone()).await?;
+                let Some(attributes) = resp.data.attributes else { break };
+
+                let r = attributes.incidents;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                if params.page_offset.is_none() {
+                    params.page_offset = Some(page_size.clone());
+                } else {
+                    params.page_offset = Some(params.page_offset.unwrap() + page_size.clone());
+                }
+            }
+        }
+    }
+
     /// Search for incidents matching a certain query.
     pub async fn search_incidents_with_http_info(
         &self,
@@ -1741,7 +1826,7 @@ impl IncidentsAPI {
         let page_size = params.page_size;
         let page_offset = params.page_offset;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/search",
@@ -1861,7 +1946,7 @@ impl IncidentsAPI {
         // unbox and build optional parameters
         let include = params.include;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}",
@@ -1985,7 +2070,7 @@ impl IncidentsAPI {
         // unbox and build optional parameters
         let include = params.include;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/attachments",
@@ -2107,7 +2192,7 @@ impl IncidentsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/integrations/{integration_metadata_id}",
@@ -2216,7 +2301,7 @@ impl IncidentsAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/todos/{todo_id}",

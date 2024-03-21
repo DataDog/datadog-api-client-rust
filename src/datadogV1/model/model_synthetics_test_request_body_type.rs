@@ -2,23 +2,18 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SyntheticsTestRequestBodyType {
-    #[serde(rename = "text/plain")]
     TEXT_PLAIN,
-    #[serde(rename = "application/json")]
     APPLICATION_JSON,
-    #[serde(rename = "text/xml")]
     TEXT_XML,
-    #[serde(rename = "text/html")]
     TEXT_HTML,
-    #[serde(rename = "application/x-www-form-urlencoded")]
     APPLICATION_X_WWW_FORM_URLENCODED,
-    #[serde(rename = "graphql")]
     GRAPHQL,
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SyntheticsTestRequestBodyType {
@@ -32,6 +27,39 @@ impl ToString for SyntheticsTestRequestBodyType {
                 String::from("application/x-www-form-urlencoded")
             }
             Self::GRAPHQL => String::from("graphql"),
+            Self::UnparsedObject(v) => v.value.to_string(),
         }
+    }
+}
+
+impl Serialize for SyntheticsTestRequestBodyType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for SyntheticsTestRequestBodyType {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "text/plain" => Self::TEXT_PLAIN,
+            "application/json" => Self::APPLICATION_JSON,
+            "text/xml" => Self::TEXT_XML,
+            "text/html" => Self::TEXT_HTML,
+            "application/x-www-form-urlencoded" => Self::APPLICATION_X_WWW_FORM_URLENCODED,
+            "graphql" => Self::GRAPHQL,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
+        })
     }
 }

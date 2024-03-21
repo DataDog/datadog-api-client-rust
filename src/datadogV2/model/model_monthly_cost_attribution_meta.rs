@@ -1,13 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
 /// The object containing document metadata.
 #[non_exhaustive]
 #[skip_serializing_none]
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MonthlyCostAttributionMeta {
     /// An array of available aggregates.
     #[serde(rename = "aggregates")]
@@ -15,6 +17,9 @@ pub struct MonthlyCostAttributionMeta {
     /// The metadata for the current pagination.
     #[serde(rename = "pagination")]
     pub pagination: Option<crate::datadogV2::model::MonthlyCostAttributionPagination>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
 }
 
 impl MonthlyCostAttributionMeta {
@@ -22,21 +27,22 @@ impl MonthlyCostAttributionMeta {
         MonthlyCostAttributionMeta {
             aggregates: None,
             pagination: None,
+            _unparsed: false,
         }
     }
 
     pub fn aggregates(
-        &mut self,
+        mut self,
         value: Vec<crate::datadogV2::model::CostAttributionAggregatesBody>,
-    ) -> &mut Self {
+    ) -> Self {
         self.aggregates = Some(value);
         self
     }
 
     pub fn pagination(
-        &mut self,
+        mut self,
         value: crate::datadogV2::model::MonthlyCostAttributionPagination,
-    ) -> &mut Self {
+    ) -> Self {
         self.pagination = Some(value);
         self
     }
@@ -45,5 +51,62 @@ impl MonthlyCostAttributionMeta {
 impl Default for MonthlyCostAttributionMeta {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for MonthlyCostAttributionMeta {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct MonthlyCostAttributionMetaVisitor;
+        impl<'a> Visitor<'a> for MonthlyCostAttributionMetaVisitor {
+            type Value = MonthlyCostAttributionMeta;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut aggregates: Option<
+                    Vec<crate::datadogV2::model::CostAttributionAggregatesBody>,
+                > = None;
+                let mut pagination: Option<
+                    crate::datadogV2::model::MonthlyCostAttributionPagination,
+                > = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "aggregates" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            aggregates = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "pagination" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            pagination = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {}
+                    }
+                }
+
+                let content = MonthlyCostAttributionMeta {
+                    aggregates,
+                    pagination,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(MonthlyCostAttributionMetaVisitor)
     }
 }
