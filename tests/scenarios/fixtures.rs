@@ -175,9 +175,33 @@ pub async fn before_scenario(
             vcr_client_builder.with(middleware)
         }
     };
-    world.http_client = Some(vcr_client_builder.build());
 
-    world.config.set_retry(true, 3);
+    if world.config.enable_retry {
+        struct RetryableStatus;
+        impl reqwest_retry::RetryableStrategy for RetryableStatus {
+            fn handle(
+                &self,
+                res: &Result<reqwest::Response, reqwest_middleware::Error>,
+            ) -> Option<reqwest_retry::Retryable> {
+                match res {
+                    Ok(success) => reqwest_retry::default_on_request_success(success),
+                    Err(_) => None,
+                }
+            }
+        }
+        let backoff_policy = reqwest_retry::policies::ExponentialBackoff::builder()
+            .build_with_max_retries(world.config.max_retries);
+
+        let retry_middleware =
+            reqwest_retry::RetryTransientMiddleware::new_with_policy_and_strategy(
+                backoff_policy,
+                RetryableStatus,
+            );
+
+        vcr_client_builder = vcr_client_builder.with(retry_middleware);
+    }
+
+    world.http_client = Some(vcr_client_builder.build());
 
     let escaped_name = NON_ALNUM_RE
         .replace_all(scenario.name.as_str(), "_")
