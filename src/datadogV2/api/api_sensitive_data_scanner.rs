@@ -102,12 +102,14 @@ pub enum UpdateScanningRuleError {
 #[derive(Debug, Clone)]
 pub struct SensitiveDataScannerAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for SensitiveDataScannerAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -117,7 +119,24 @@ impl SensitiveDataScannerAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// Create a scanning group.
@@ -161,7 +180,7 @@ impl SensitiveDataScannerAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.create_scanning_group";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/sensitive-data-scanner/config/groups",
@@ -264,7 +283,7 @@ impl SensitiveDataScannerAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.create_scanning_rule";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/sensitive-data-scanner/config/rules",
@@ -364,7 +383,7 @@ impl SensitiveDataScannerAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_scanning_group";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/sensitive-data-scanner/config/groups/{group_id}",
@@ -465,7 +484,7 @@ impl SensitiveDataScannerAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_scanning_rule";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/sensitive-data-scanner/config/rules/{rule_id}",
@@ -559,7 +578,7 @@ impl SensitiveDataScannerAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.list_scanning_groups";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/sensitive-data-scanner/config",
@@ -645,7 +664,7 @@ impl SensitiveDataScannerAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.list_standard_patterns";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/sensitive-data-scanner/config/standard-patterns",
@@ -733,7 +752,7 @@ impl SensitiveDataScannerAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.reorder_scanning_groups";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/sensitive-data-scanner/config",
@@ -839,7 +858,7 @@ impl SensitiveDataScannerAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.update_scanning_group";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/sensitive-data-scanner/config/groups/{group_id}",
@@ -946,7 +965,7 @@ impl SensitiveDataScannerAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.update_scanning_rule";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/sensitive-data-scanner/config/rules/{rule_id}",

@@ -163,12 +163,14 @@ pub enum UpdateUserError {
 #[derive(Debug, Clone)]
 pub struct UsersAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for UsersAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -178,7 +180,24 @@ impl UsersAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// Create a user for your organization.
@@ -209,7 +228,7 @@ impl UsersAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.create_user";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/users",
@@ -285,7 +304,7 @@ impl UsersAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.disable_user";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/users/{user_id}",
@@ -365,7 +384,7 @@ impl UsersAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.get_invitation";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/user_invitations/{user_invitation_uuid}",
@@ -447,7 +466,7 @@ impl UsersAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.get_user";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/users/{user_id}",
@@ -531,7 +550,7 @@ impl UsersAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.list_user_organizations";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/users/{user_id}/orgs",
@@ -616,7 +635,7 @@ impl UsersAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.list_user_permissions";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/users/{user_id}/permissions",
@@ -741,7 +760,7 @@ impl UsersAPI {
         let filter = params.filter;
         let filter_status = params.filter_status;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/users",
@@ -847,7 +866,7 @@ impl UsersAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.send_invitations";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/user_invitations",
@@ -940,7 +959,7 @@ impl UsersAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.update_user";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/users/{user_id}",

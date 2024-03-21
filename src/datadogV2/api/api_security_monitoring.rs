@@ -409,12 +409,14 @@ pub enum UpdateSecurityMonitoringRuleError {
 #[derive(Debug, Clone)]
 pub struct SecurityMonitoringAPI {
     config: configuration::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for SecurityMonitoringAPI {
     fn default() -> Self {
         Self {
             config: configuration::Configuration::new(),
+            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
         }
     }
 }
@@ -424,7 +426,24 @@ impl SecurityMonitoringAPI {
         Self::default()
     }
     pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+        let client = middleware_client_builder.build();
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: configuration::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// Create a security filter.
@@ -464,7 +483,7 @@ impl SecurityMonitoringAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.create_security_filter";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/security_filters",
@@ -561,7 +580,7 @@ impl SecurityMonitoringAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.create_security_monitoring_rule";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/rules",
@@ -644,7 +663,7 @@ impl SecurityMonitoringAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_security_filter";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/security_filters/{security_filter_id}",
@@ -714,7 +733,7 @@ impl SecurityMonitoringAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_security_monitoring_rule";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/rules/{rule_id}",
@@ -800,7 +819,7 @@ impl SecurityMonitoringAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.edit_security_monitoring_signal_assignee";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/signals/{signal_id}/assignee",
@@ -901,7 +920,7 @@ impl SecurityMonitoringAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.edit_security_monitoring_signal_incidents";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/signals/{signal_id}/incidents",
@@ -1002,7 +1021,7 @@ impl SecurityMonitoringAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.edit_security_monitoring_signal_state";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/signals/{signal_id}/state",
@@ -1106,7 +1125,7 @@ impl SecurityMonitoringAPI {
         // unbox and build optional parameters
         let snapshot_timestamp = params.snapshot_timestamp;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/posture_management/findings/{finding_id}",
@@ -1205,7 +1224,7 @@ impl SecurityMonitoringAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.get_security_filter";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/security_filters/{security_filter_id}",
@@ -1296,7 +1315,7 @@ impl SecurityMonitoringAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.get_security_monitoring_rule";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/rules/{rule_id}",
@@ -1387,7 +1406,7 @@ impl SecurityMonitoringAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.get_security_monitoring_signal";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/signals/{signal_id}",
@@ -1586,7 +1605,7 @@ impl SecurityMonitoringAPI {
         let filter_evaluation = params.filter_evaluation;
         let filter_status = params.filter_status;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/posture_management/findings",
@@ -1721,7 +1740,7 @@ impl SecurityMonitoringAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.list_security_filters";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/security_filters",
@@ -1815,7 +1834,7 @@ impl SecurityMonitoringAPI {
         let page_size = params.page_size;
         let page_number = params.page_number;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/rules",
@@ -1964,7 +1983,7 @@ impl SecurityMonitoringAPI {
         let page_cursor = params.page_cursor;
         let page_limit = params.page_limit;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/signals",
@@ -2082,7 +2101,7 @@ impl SecurityMonitoringAPI {
             return Err(Error::UnstableOperationDisabledError(local_error));
         }
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/posture_management/findings",
@@ -2229,7 +2248,7 @@ impl SecurityMonitoringAPI {
         // unbox and build optional parameters
         let body = params.body;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/signals/search",
@@ -2329,7 +2348,7 @@ impl SecurityMonitoringAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.update_security_filter";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/security_filters/{security_filter_id}",
@@ -2433,7 +2452,7 @@ impl SecurityMonitoringAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.update_security_monitoring_rule";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/rules/{rule_id}",
