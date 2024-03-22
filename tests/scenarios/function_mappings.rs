@@ -723,10 +723,6 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v1.GetUsageAnalyzedLogs".into(),
         test_v1_get_usage_analyzed_logs,
     );
-    world.function_mappings.insert(
-        "v1.GetUsageAttribution".into(),
-        test_v1_get_usage_attribution,
-    );
     world
         .function_mappings
         .insert("v1.GetUsageAuditLogs".into(), test_v1_get_usage_audit_logs);
@@ -3254,60 +3250,6 @@ fn test_v1_get_usage_analyzed_logs(world: &mut DatadogWorld, _parameters: &HashM
             };
         }
     };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v1_get_usage_attribution(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v1_api_usage_metering
-        .as_ref()
-        .expect("api instance not found");
-    let start_month =
-        serde_json::from_value(_parameters.get("start_month").unwrap().clone()).unwrap();
-    let fields = serde_json::from_value(_parameters.get("fields").unwrap().clone()).unwrap();
-    let end_month = _parameters
-        .get("end_month")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let sort_direction = _parameters
-        .get("sort_direction")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let sort_name = _parameters
-        .get("sort_name")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let include_descendants = _parameters
-        .get("include_descendants")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let offset = _parameters
-        .get("offset")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let limit = _parameters
-        .get("limit")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let mut params =
-        datadogV1::api::api_usage_metering::GetUsageAttributionOptionalParams::default();
-    params.end_month = end_month;
-    params.sort_direction = sort_direction;
-    params.sort_name = sort_name;
-    params.include_descendants = include_descendants;
-    params.offset = offset;
-    params.limit = limit;
-    let response =
-        match block_on(api.get_usage_attribution_with_http_info(start_month, fields, params)) {
-            Ok(response) => response,
-            Err(error) => {
-                return match error {
-                    Error::ResponseError(e) => {
-                        world.response.code = e.status.as_u16();
-                        if let Some(entity) = e.entity {
-                            world.response.object = serde_json::to_value(entity).unwrap();
-                        }
-                    }
-                    _ => panic!("error parsing response: {error}"),
-                };
-            }
-        };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
