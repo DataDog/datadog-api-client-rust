@@ -169,6 +169,10 @@ impl WebhooksIntegrationAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
+        // build headers
+        local_req_builder = local_req_builder.header("Content-Type", "application/json");
+        local_req_builder = local_req_builder.header("Accept", "application/json");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -266,6 +270,10 @@ impl WebhooksIntegrationAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
+        // build headers
+        local_req_builder = local_req_builder.header("Content-Type", "application/json");
+        local_req_builder = local_req_builder.header("Accept", "application/json");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -351,6 +359,9 @@ impl WebhooksIntegrationAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
+        // build headers
+        local_req_builder = local_req_builder.header("Accept", "*/*");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -420,6 +431,9 @@ impl WebhooksIntegrationAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build headers
+        local_req_builder = local_req_builder.header("Accept", "*/*");
 
         // build user agent
         local_req_builder = local_req_builder.header(
@@ -502,6 +516,9 @@ impl WebhooksIntegrationAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        local_req_builder = local_req_builder.header("Accept", "application/json");
 
         // build user agent
         local_req_builder = local_req_builder.header(
@@ -600,6 +617,9 @@ impl WebhooksIntegrationAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        // build headers
+        local_req_builder = local_req_builder.header("Accept", "application/json");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -691,6 +711,10 @@ impl WebhooksIntegrationAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        // build headers
+        local_req_builder = local_req_builder.header("Content-Type", "application/json");
+        local_req_builder = local_req_builder.header("Accept", "application/json");
 
         // build user agent
         local_req_builder = local_req_builder.header(
@@ -791,6 +815,10 @@ impl WebhooksIntegrationAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        // build headers
+        local_req_builder = local_req_builder.header("Content-Type", "application/json");
+        local_req_builder = local_req_builder.header("Accept", "application/json");
 
         // build user agent
         local_req_builder = local_req_builder.header(

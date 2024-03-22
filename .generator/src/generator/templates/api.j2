@@ -300,6 +300,28 @@ impl {{ structName }} {
         {%- endif %}
         {%- endfor %}
 
+        // build headers
+        {%- if operation.requestBody %}
+        {%- set contentTypeHeaders = operation.requestBody.content.keys()|list %}
+        {%- if contentTypeHeaders %}
+        {%- if "application/json" in contentTypeHeaders %}
+        local_req_builder = local_req_builder.header("Content-Type", "application/json");
+        {%- else  %}
+        local_req_builder = local_req_builder.header("Content-Type", "{{ contentTypeHeaders[0] }}");
+        {%- endif %}
+        {%- endif %}
+        {%- endif %}
+        {%- if operation.responses %}
+        {%- set acceptHeaders = operation|accept_headers %}
+        {%- if acceptHeaders %}
+        {%- if "application/json" in acceptHeaders %}
+        local_req_builder = local_req_builder.header("Accept", "application/json");
+        {%- else  %}
+        local_req_builder = local_req_builder.header("Accept", "{{ acceptHeaders|join(",") }}");
+        {%- endif %}
+        {%- endif %}
+        {%- endif %}
+
         {% for name, parameter in operation|parameters if parameter.in == "header" %}
         {%- if not parameter.required %}
         if let Some(ref local) = {{name|variable_name}} {

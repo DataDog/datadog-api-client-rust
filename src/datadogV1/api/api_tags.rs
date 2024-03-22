@@ -236,6 +236,10 @@ impl TagsAPI {
                 local_req_builder.query(&[("source", &local_query_param.to_string())]);
         };
 
+        // build headers
+        local_req_builder = local_req_builder.header("Content-Type", "application/json");
+        local_req_builder = local_req_builder.header("Accept", "application/json");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -330,6 +334,9 @@ impl TagsAPI {
                 local_req_builder.query(&[("source", &local_query_param.to_string())]);
         };
 
+        // build headers
+        local_req_builder = local_req_builder.header("Accept", "*/*");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -414,6 +421,9 @@ impl TagsAPI {
             local_req_builder =
                 local_req_builder.query(&[("source", &local_query_param.to_string())]);
         };
+
+        // build headers
+        local_req_builder = local_req_builder.header("Accept", "application/json");
 
         // build user agent
         local_req_builder = local_req_builder.header(
@@ -501,6 +511,9 @@ impl TagsAPI {
             local_req_builder =
                 local_req_builder.query(&[("source", &local_query_param.to_string())]);
         };
+
+        // build headers
+        local_req_builder = local_req_builder.header("Accept", "application/json");
 
         // build user agent
         local_req_builder = local_req_builder.header(
@@ -598,6 +611,10 @@ impl TagsAPI {
             local_req_builder =
                 local_req_builder.query(&[("source", &local_query_param.to_string())]);
         };
+
+        // build headers
+        local_req_builder = local_req_builder.header("Content-Type", "application/json");
+        local_req_builder = local_req_builder.header("Accept", "application/json");
 
         // build user agent
         local_req_builder = local_req_builder.header(

@@ -346,6 +346,9 @@ impl ServiceLevelObjectivesAPI {
 
         local_req_builder = local_req_builder.query(&[("ids", &ids.to_string())]);
 
+        // build headers
+        local_req_builder = local_req_builder.header("Accept", "application/json");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -427,6 +430,10 @@ impl ServiceLevelObjectivesAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        local_req_builder = local_req_builder.header("Content-Type", "application/json");
+        local_req_builder = local_req_builder.header("Accept", "application/json");
 
         // build user agent
         local_req_builder = local_req_builder.header(
@@ -531,6 +538,9 @@ impl ServiceLevelObjectivesAPI {
                 local_req_builder.query(&[("force", &local_query_param.to_string())]);
         };
 
+        // build headers
+        local_req_builder = local_req_builder.header("Accept", "application/json");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -621,6 +631,10 @@ impl ServiceLevelObjectivesAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        local_req_builder = local_req_builder.header("Content-Type", "application/json");
+        local_req_builder = local_req_builder.header("Accept", "application/json");
 
         // build user agent
         local_req_builder = local_req_builder.header(
@@ -721,6 +735,9 @@ impl ServiceLevelObjectivesAPI {
                 .query(&[("with_configured_alert_ids", &local_query_param.to_string())]);
         };
 
+        // build headers
+        local_req_builder = local_req_builder.header("Accept", "application/json");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -803,6 +820,9 @@ impl ServiceLevelObjectivesAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        local_req_builder = local_req_builder.header("Accept", "application/json");
 
         // build user agent
         local_req_builder = local_req_builder.header(
@@ -926,6 +946,9 @@ impl ServiceLevelObjectivesAPI {
             local_req_builder =
                 local_req_builder.query(&[("apply_correction", &local_query_param.to_string())]);
         };
+
+        // build headers
+        local_req_builder = local_req_builder.header("Accept", "application/json");
 
         // build user agent
         local_req_builder = local_req_builder.header(
@@ -1076,6 +1099,9 @@ impl ServiceLevelObjectivesAPI {
                 local_req_builder.query(&[("offset", &local_query_param.to_string())]);
         };
 
+        // build headers
+        local_req_builder = local_req_builder.header("Accept", "application/json");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -1178,6 +1204,9 @@ impl ServiceLevelObjectivesAPI {
                 local_req_builder.query(&[("include_facets", &local_query_param.to_string())]);
         };
 
+        // build headers
+        local_req_builder = local_req_builder.header("Accept", "application/json");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -1260,6 +1289,10 @@ impl ServiceLevelObjectivesAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        // build headers
+        local_req_builder = local_req_builder.header("Content-Type", "application/json");
+        local_req_builder = local_req_builder.header("Accept", "application/json");
 
         // build user agent
         local_req_builder = local_req_builder.header(

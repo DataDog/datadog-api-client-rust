@@ -1291,6 +1291,10 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("sort", &local_query_param.to_string())]);
         };
 
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -1438,6 +1442,10 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("include_descendants", &local_query_param.to_string())]);
         };
 
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -1541,6 +1549,10 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -1641,6 +1653,10 @@ impl UsageMeteringAPI {
             local_req_builder =
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
+
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
 
         // build user agent
         local_req_builder = local_req_builder.header(
@@ -1755,6 +1771,10 @@ impl UsageMeteringAPI {
             local_req_builder =
                 local_req_builder.query(&[("sort", &local_query_param.to_string())]);
         };
+
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
 
         // build user agent
         local_req_builder = local_req_builder.header(
@@ -1913,6 +1933,10 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("include_descendants", &local_query_param.to_string())]);
         };
 
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -2008,6 +2032,10 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -2102,6 +2130,10 @@ impl UsageMeteringAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
 
         // build user agent
         local_req_builder = local_req_builder.header(
@@ -2203,6 +2235,10 @@ impl UsageMeteringAPI {
             local_req_builder =
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
+
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
 
         // build user agent
         local_req_builder = local_req_builder.header(
@@ -2335,6 +2371,10 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("limit", &local_query_param.to_string())]);
         };
 
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -2436,6 +2476,10 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -2530,6 +2574,10 @@ impl UsageMeteringAPI {
             local_req_builder =
                 local_req_builder.query(&[("month", &local_query_param.to_string())]);
         };
+
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
 
         // build user agent
         local_req_builder = local_req_builder.header(
@@ -2628,6 +2676,10 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -2722,6 +2774,10 @@ impl UsageMeteringAPI {
             local_req_builder =
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
+
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
 
         // build user agent
         local_req_builder = local_req_builder.header(
@@ -2824,6 +2880,10 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -2919,6 +2979,10 @@ impl UsageMeteringAPI {
             local_req_builder =
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
+
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
 
         // build user agent
         local_req_builder = local_req_builder.header(
@@ -3018,6 +3082,10 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -3114,6 +3182,10 @@ impl UsageMeteringAPI {
             local_req_builder =
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
+
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
 
         // build user agent
         local_req_builder = local_req_builder.header(
@@ -3216,6 +3288,10 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -3317,6 +3393,10 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -3413,6 +3493,10 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -3507,6 +3591,10 @@ impl UsageMeteringAPI {
             local_req_builder =
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
+
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
 
         // build user agent
         local_req_builder = local_req_builder.header(
@@ -3617,6 +3705,10 @@ impl UsageMeteringAPI {
             )]);
         };
 
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -3720,6 +3812,10 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -3821,6 +3917,10 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -3921,6 +4021,10 @@ impl UsageMeteringAPI {
             local_req_builder =
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
+
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
 
         // build user agent
         local_req_builder = local_req_builder.header(
@@ -4025,6 +4129,10 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -4125,6 +4233,10 @@ impl UsageMeteringAPI {
             local_req_builder =
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
+
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
 
         // build user agent
         local_req_builder = local_req_builder.header(
@@ -4232,6 +4344,10 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("type", &local_query_param.to_string())]);
         };
 
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -4332,6 +4448,10 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -4427,6 +4547,10 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -4519,6 +4643,10 @@ impl UsageMeteringAPI {
             local_req_builder =
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
+
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
 
         // build user agent
         local_req_builder = local_req_builder.header(
@@ -4621,6 +4749,10 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("include_org_details", &local_query_param.to_string())]);
         };
 
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -4721,6 +4853,10 @@ impl UsageMeteringAPI {
             local_req_builder =
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
+
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
 
         // build user agent
         local_req_builder = local_req_builder.header(
@@ -4825,6 +4961,10 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -4928,6 +5068,10 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -5028,6 +5172,10 @@ impl UsageMeteringAPI {
             local_req_builder =
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
+
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
 
         // build user agent
         local_req_builder = local_req_builder.header(
@@ -5149,6 +5297,10 @@ impl UsageMeteringAPI {
             local_req_builder =
                 local_req_builder.query(&[("next_record_id", &local_query_param.to_string())]);
         };
+
+        // build headers
+        local_req_builder =
+            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
 
         // build user agent
         local_req_builder = local_req_builder.header(

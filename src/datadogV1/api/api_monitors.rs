@@ -436,6 +436,9 @@ impl MonitorsAPI {
                 .to_string(),
         )]);
 
+        // build headers
+        local_req_builder = local_req_builder.header("Accept", "application/json");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -875,6 +878,10 @@ impl MonitorsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
+        // build headers
+        local_req_builder = local_req_builder.header("Content-Type", "application/json");
+        local_req_builder = local_req_builder.header("Accept", "application/json");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -973,6 +980,9 @@ impl MonitorsAPI {
                 local_req_builder.query(&[("force", &local_query_param.to_string())]);
         };
 
+        // build headers
+        local_req_builder = local_req_builder.header("Accept", "application/json");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -1067,6 +1077,9 @@ impl MonitorsAPI {
             local_req_builder =
                 local_req_builder.query(&[("with_downtimes", &local_query_param.to_string())]);
         };
+
+        // build headers
+        local_req_builder = local_req_builder.header("Accept", "application/json");
 
         // build user agent
         local_req_builder = local_req_builder.header(
@@ -1222,6 +1235,9 @@ impl MonitorsAPI {
                 local_req_builder.query(&[("page_size", &local_query_param.to_string())]);
         };
 
+        // build headers
+        local_req_builder = local_req_builder.header("Accept", "application/json");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -1326,6 +1342,9 @@ impl MonitorsAPI {
             local_req_builder =
                 local_req_builder.query(&[("sort", &local_query_param.to_string())]);
         };
+
+        // build headers
+        local_req_builder = local_req_builder.header("Accept", "application/json");
 
         // build user agent
         local_req_builder = local_req_builder.header(
@@ -1434,6 +1453,9 @@ impl MonitorsAPI {
                 local_req_builder.query(&[("sort", &local_query_param.to_string())]);
         };
 
+        // build headers
+        local_req_builder = local_req_builder.header("Accept", "application/json");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -1517,6 +1539,10 @@ impl MonitorsAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        // build headers
+        local_req_builder = local_req_builder.header("Content-Type", "application/json");
+        local_req_builder = local_req_builder.header("Accept", "application/json");
 
         // build user agent
         local_req_builder = local_req_builder.header(
@@ -1616,6 +1642,10 @@ impl MonitorsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
+        // build headers
+        local_req_builder = local_req_builder.header("Content-Type", "application/json");
+        local_req_builder = local_req_builder.header("Accept", "application/json");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -1711,6 +1741,10 @@ impl MonitorsAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        local_req_builder = local_req_builder.header("Content-Type", "application/json");
+        local_req_builder = local_req_builder.header("Accept", "application/json");
 
         // build user agent
         local_req_builder = local_req_builder.header(

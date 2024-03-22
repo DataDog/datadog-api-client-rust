@@ -206,6 +206,9 @@ impl ContainerImagesAPI {
                 local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
         };
 
+        // build headers
+        local_req_builder = local_req_builder.header("Accept", "application/json");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,

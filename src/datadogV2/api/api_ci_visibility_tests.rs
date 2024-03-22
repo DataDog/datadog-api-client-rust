@@ -184,6 +184,10 @@ impl CIVisibilityTestsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
+        // build headers
+        local_req_builder = local_req_builder.header("Content-Type", "application/json");
+        local_req_builder = local_req_builder.header("Accept", "application/json");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -351,6 +355,9 @@ impl CIVisibilityTestsAPI {
                 local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
         };
 
+        // build headers
+        local_req_builder = local_req_builder.header("Accept", "application/json");
+
         // build user agent
         local_req_builder = local_req_builder.header(
             reqwest::header::USER_AGENT,
@@ -485,6 +492,10 @@ impl CIVisibilityTestsAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        local_req_builder = local_req_builder.header("Content-Type", "application/json");
+        local_req_builder = local_req_builder.header("Accept", "application/json");
 
         // build user agent
         local_req_builder = local_req_builder.header(
