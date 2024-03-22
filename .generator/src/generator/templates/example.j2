@@ -27,6 +27,8 @@ async fn main() {
 	let {{ value|rust_name }}: i{{ '64' if schema.format == 'int64' else '32' }} = std::env::var("{{ value }}").unwrap().parse().unwrap();
 	{%- elif schema.type == 'boolean' %}
 	let {{ value|rust_name }}: bool = std::env::var("{{ value }}").unwrap().parse().unwrap();
+    {%- elif schema.format == 'uuid' %}
+    let {{ value|rust_name }} = Uuid::parse_str(&std::env::var("{{ value }}").unwrap()).expect("Invalid UUID");
 	{%- else %}
 	{{ 1/0 }}
 	{%- endif %}

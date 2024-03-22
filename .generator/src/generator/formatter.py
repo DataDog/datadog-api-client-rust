@@ -282,7 +282,6 @@ def format_parameters(data, spec, replace_values=None, has_body=False, **kwargs)
                 "description": schema.get("description"),
                 "required": name in parent.get("required", []),
             }
-
     parameters = ""
     has_optional = False
     for p in parameters_spec.values():
@@ -453,7 +452,7 @@ def format_data_with_schema(
             # create a set with a single string element
 
             def format_uuid(x):
-                return f'Uuid::parse_str("&\"{x}\"").expect("invalid UUID")', set(["uuid::Uuid"])
+                return f'Uuid::parse_str(\"{x}\").expect("invalid UUID")', set(["uuid::Uuid"])
 
             def open_file(x):
                 return f"fs::read(\"{x}\").unwrap()", set(["std::fs"])
