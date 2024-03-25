@@ -426,7 +426,6 @@ fn body_from_file(world: &mut DatadogWorld, path: String) {
 
 #[given(expr = "request contains {string} parameter from {string}")]
 fn request_parameter_from_path(world: &mut DatadogWorld, param: String, path: String) {
-    log::debug!("fixtures: {:?}", world.fixtures);
     let lookup = lookup(&path, &world.fixtures).expect("failed to lookup parameter");
     world.parameters.insert(param, lookup);
 }
