@@ -859,6 +859,12 @@ impl OrganizationsAPI {
             "idp_file",
             reqwest::multipart::Part::bytes(idp_file).file_name("idp_file"),
         );
+        headers.insert(
+            "Content-Type",
+            format!("multipart/form-data; boundary={}", local_form.boundary())
+                .parse()
+                .unwrap(),
+        );
         local_req_builder = local_req_builder.multipart(local_form);
 
         local_req_builder = local_req_builder.headers(headers);

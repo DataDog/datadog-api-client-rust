@@ -363,11 +363,13 @@ impl {{ structName }} {
         {%- if formParameter.required %}
         let mut local_form = reqwest::multipart::Form::new();
         local_form = local_form.part("{{formParameter.name}}", reqwest::multipart::Part::bytes({{formParameter.name}}).file_name("{{formParameter.name}}"));
+        headers.insert("Content-Type", format!("multipart/form-data; boundary={}", local_form.boundary()).parse().unwrap());
         local_req_builder = local_req_builder.multipart(local_form);
         {%- else %}
         if let Some({{formParameter.name}}) = {{formParameter.name}} {
             let mut local_form = reqwest::multipart::Form::new();
             local_form = local_form.part("{{formParameter.name}}", reqwest::multipart::Part::bytes({{formParameter.name}}).file_name("{{formParameter.name}}"));
+            headers.insert("Content-Type", format!("multipart/form-data; boundary={}", local_form.boundary()).parse().unwrap());
             local_req_builder = local_req_builder.multipart(local_form);
         };
         {%- endif %}

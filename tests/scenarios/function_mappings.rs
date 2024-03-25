@@ -8102,13 +8102,12 @@ fn test_v1_upload_idp_for_org(world: &mut DatadogWorld, _parameters: &HashMap<St
         .as_ref()
         .expect("api instance not found");
     let public_id = serde_json::from_value(_parameters.get("public_id").unwrap().clone()).unwrap();
-    let idp_file = _parameters
-        .get("idp_file")
-        .unwrap()
-        .as_str()
-        .unwrap()
-        .as_bytes()
-        .to_vec();
+    let idp_file = std::fs::read(format!(
+        "tests/scenarios/features/v{}/{}",
+        world.api_version,
+        _parameters.get("idp_file").unwrap().as_str().unwrap()
+    ))
+    .unwrap();
     let response = match block_on(api.upload_idp_for_org_with_http_info(public_id, idp_file)) {
         Ok(response) => response,
         Err(error) => {
@@ -10473,9 +10472,14 @@ fn test_v2_update_open_api(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         .as_ref()
         .expect("api instance not found");
     let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
-    let openapi_spec_file = _parameters
-        .get("openapi_spec_file")
-        .and_then(|param| Some(param.as_str().unwrap().as_bytes().to_vec()));
+    let openapi_spec_file = _parameters.get("openapi_spec_file").and_then(|param| {
+        std::fs::read(format!(
+            "tests/scenarios/features/v{}/{}",
+            world.api_version,
+            param.as_str().unwrap()
+        ))
+        .ok()
+    });
     let mut params = datadogV2::api::api_api_management::UpdateOpenAPIOptionalParams::default();
     params.openapi_spec_file = openapi_spec_file;
     let response = match block_on(api.update_open_api_with_http_info(id, params)) {
@@ -10502,9 +10506,14 @@ fn test_v2_create_open_api(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         .v2_api_api_management
         .as_ref()
         .expect("api instance not found");
-    let openapi_spec_file = _parameters
-        .get("openapi_spec_file")
-        .and_then(|param| Some(param.as_str().unwrap().as_bytes().to_vec()));
+    let openapi_spec_file = _parameters.get("openapi_spec_file").and_then(|param| {
+        std::fs::read(format!(
+            "tests/scenarios/features/v{}/{}",
+            world.api_version,
+            param.as_str().unwrap()
+        ))
+        .ok()
+    });
     let mut params = datadogV2::api::api_api_management::CreateOpenAPIOptionalParams::default();
     params.openapi_spec_file = openapi_spec_file;
     let response = match block_on(api.create_open_api_with_http_info(params)) {
@@ -19162,9 +19171,14 @@ fn test_v2_upload_idp_metadata(world: &mut DatadogWorld, _parameters: &HashMap<S
         .v2_api_organizations
         .as_ref()
         .expect("api instance not found");
-    let idp_file = _parameters
-        .get("idp_file")
-        .and_then(|param| Some(param.as_str().unwrap().as_bytes().to_vec()));
+    let idp_file = _parameters.get("idp_file").and_then(|param| {
+        std::fs::read(format!(
+            "tests/scenarios/features/v{}/{}",
+            world.api_version,
+            param.as_str().unwrap()
+        ))
+        .ok()
+    });
     let mut params = datadogV2::api::api_organizations::UploadIdPMetadataOptionalParams::default();
     params.idp_file = idp_file;
     let response = match block_on(api.upload_idp_metadata_with_http_info(params)) {

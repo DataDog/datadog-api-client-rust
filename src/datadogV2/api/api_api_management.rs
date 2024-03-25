@@ -229,6 +229,12 @@ impl APIManagementAPI {
                 "openapi_spec_file",
                 reqwest::multipart::Part::bytes(openapi_spec_file).file_name("openapi_spec_file"),
             );
+            headers.insert(
+                "Content-Type",
+                format!("multipart/form-data; boundary={}", local_form.boundary())
+                    .parse()
+                    .unwrap(),
+            );
             local_req_builder = local_req_builder.multipart(local_form);
         };
 
@@ -569,6 +575,12 @@ impl APIManagementAPI {
             local_form = local_form.part(
                 "openapi_spec_file",
                 reqwest::multipart::Part::bytes(openapi_spec_file).file_name("openapi_spec_file"),
+            );
+            headers.insert(
+                "Content-Type",
+                format!("multipart/form-data; boundary={}", local_form.boundary())
+                    .parse()
+                    .unwrap(),
             );
             local_req_builder = local_req_builder.multipart(local_form);
         };
