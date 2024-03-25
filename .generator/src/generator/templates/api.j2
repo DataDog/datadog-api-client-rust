@@ -2,6 +2,7 @@
 use reqwest;
 use serde::{Serialize, Deserialize};
 use crate::datadog::*;
+use reqwest::header::HeaderMap;
 {%- for _, _, operation in operations if "x-pagination" in operation %}
 {%- if loop.first %}
 use async_stream::try_stream;
@@ -11,6 +12,12 @@ use futures_core::stream::Stream;
 {%- for _, _, operation in operations if "x-unstable" in operation %}
 {%- if loop.first %}
 use log::warn;
+{%- endif %}
+{%- endfor %}
+{%- for _, _, operation in operations if operation.requestBody is defined and not operation|form_parameter %}
+{%- if loop.first %}
+use std::io::Write;
+use flate2::{write::{GzEncoder, DeflateEncoder}, Compression};
 {%- endif %}
 {%- endfor %}
 
@@ -301,13 +308,14 @@ impl {{ structName }} {
         {%- endfor %}
 
         // build headers
+        let mut headers = HeaderMap::new();
         {%- if operation.requestBody %}
         {%- set contentTypeHeaders = operation.requestBody.content.keys()|list %}
         {%- if contentTypeHeaders %}
         {%- if "application/json" in contentTypeHeaders %}
-        local_req_builder = local_req_builder.header("Content-Type", "application/json");
-        {%- else  %}
-        local_req_builder = local_req_builder.header("Content-Type", "{{ contentTypeHeaders[0] }}");
+        headers.insert("Content-Type", "application/json".parse().unwrap());
+        {%- else %}
+        headers.insert("Content-Type", "{{ contentTypeHeaders[0] }}".parse().expect("failed to parse Content-Type header"));
         {%- endif %}
         {%- endif %}
         {%- endif %}
@@ -315,9 +323,9 @@ impl {{ structName }} {
         {%- set acceptHeaders = operation|accept_headers %}
         {%- if acceptHeaders %}
         {%- if "application/json" in acceptHeaders %}
-        local_req_builder = local_req_builder.header("Accept", "application/json");
+        headers.insert("Accept", "application/json".parse().unwrap());
         {%- else  %}
-        local_req_builder = local_req_builder.header("Accept", "{{ acceptHeaders|join(",") }}");
+        headers.insert("Accept", "{{ acceptHeaders|join(",") }}".parse().expect("failed to parse Accept header"));
         {%- endif %}
         {%- endif %}
         {%- endif %}
@@ -325,15 +333,15 @@ impl {{ structName }} {
         {% for name, parameter in operation|parameters if parameter.in == "header" %}
         {%- if not parameter.required %}
         if let Some(ref local) = {{name|variable_name}} {
-            local_req_builder = local_req_builder.header("{{name}}", &local.to_string());
-        };
+            headers.insert("{{name}}", local.to_string().parse().expect("failed to parse {{name}} header"));
+        }
         {%- else %}
-        local_req_builder = local_req_builder.header("{{name}}", &{{name|variable_name}}.to_string());
+        headers.insert("{{name}}", {{name|variable_name}}.to_string().parse().expect("failed to parse {{name}} header"));
         {%- endif %}
         {%- endfor %}
 
         // build user agent
-        local_req_builder = local_req_builder.header(reqwest::header::USER_AGENT, local_configuration.user_agent.clone());
+        headers.insert(reqwest::header::USER_AGENT, local_configuration.user_agent.clone().parse().expect("failed to parse User Agent header"));
         
         // build auth
         {%- set authMethods = operation.security if "security" in operation else openapi.security %}
@@ -343,7 +351,7 @@ impl {{ structName }} {
         {%- set schema = openapi.components.securitySchemes[name] %}
         {%- if schema.type == "apiKey" and schema.in != "cookie" %}
         if let Some(local_key) = local_configuration.auth_keys.get("{{ name }}") {
-            local_req_builder = local_req_builder.header("{{schema.name}}", &local_key.key);
+            headers.insert("{{schema.name}}", local_key.key.clone().parse().expect("failed to parse {{schema.name}} header"));
         };
         {%- endif %}
         {%- endfor %}
@@ -370,10 +378,56 @@ impl {{ structName }} {
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
         if {{operation.get("x-codegen-request-body-name", "body")|variable_name}}.serialize(&mut ser).is_ok() {
-            local_req_builder = local_req_builder.body(ser.into_inner());
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = DeflateEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(Error::Io(e)),
+                        }
+                    }
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(Error::Io(e)),
+                        }
+                    }
+                    _ => panic!(
+                        "Unsupported content encoding: {}",
+                        content_encoding.to_str().expect("non-ascii content encoding header value")
+                    ),
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
         }
         {%- endif %}
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 

@@ -3,9 +3,15 @@
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
 use async_stream::try_stream;
+use flate2::{
+    write::{DeflateEncoder, GzEncoder},
+    Compression,
+};
 use futures_core::stream::Stream;
 use reqwest;
+use reqwest::header::HeaderMap;
 use serde::{Deserialize, Serialize};
+use std::io::Write;
 
 /// DeleteMonitorOptionalParams is a struct for passing parameters to the method [`MonitorsAPI::delete_monitor`]
 #[non_exhaustive]
@@ -437,22 +443,42 @@ impl MonitorsAPI {
         )]);
 
         // build headers
-        local_req_builder = local_req_builder.header("Accept", "application/json");
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", "application/json".parse().unwrap());
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -879,30 +905,91 @@ impl MonitorsAPI {
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build headers
-        local_req_builder = local_req_builder.header("Content-Type", "application/json");
-        local_req_builder = local_req_builder.header("Accept", "application/json");
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", "application/json".parse().unwrap());
+        headers.insert("Accept", "application/json".parse().unwrap());
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
         if body.serialize(&mut ser).is_ok() {
-            local_req_builder = local_req_builder.body(ser.into_inner());
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = DeflateEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(Error::Io(e)),
+                        }
+                    }
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(Error::Io(e)),
+                        }
+                    }
+                    _ => panic!(
+                        "Unsupported content encoding: {}",
+                        content_encoding
+                            .to_str()
+                            .expect("non-ascii content encoding header value")
+                    ),
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
         }
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -981,22 +1068,42 @@ impl MonitorsAPI {
         };
 
         // build headers
-        local_req_builder = local_req_builder.header("Accept", "application/json");
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", "application/json".parse().unwrap());
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -1079,22 +1186,42 @@ impl MonitorsAPI {
         };
 
         // build headers
-        local_req_builder = local_req_builder.header("Accept", "application/json");
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", "application/json".parse().unwrap());
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -1236,22 +1363,42 @@ impl MonitorsAPI {
         };
 
         // build headers
-        local_req_builder = local_req_builder.header("Accept", "application/json");
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", "application/json".parse().unwrap());
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -1344,22 +1491,42 @@ impl MonitorsAPI {
         };
 
         // build headers
-        local_req_builder = local_req_builder.header("Accept", "application/json");
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", "application/json".parse().unwrap());
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -1454,22 +1621,42 @@ impl MonitorsAPI {
         };
 
         // build headers
-        local_req_builder = local_req_builder.header("Accept", "application/json");
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", "application/json".parse().unwrap());
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -1541,30 +1728,91 @@ impl MonitorsAPI {
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
 
         // build headers
-        local_req_builder = local_req_builder.header("Content-Type", "application/json");
-        local_req_builder = local_req_builder.header("Accept", "application/json");
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", "application/json".parse().unwrap());
+        headers.insert("Accept", "application/json".parse().unwrap());
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
         if body.serialize(&mut ser).is_ok() {
-            local_req_builder = local_req_builder.body(ser.into_inner());
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = DeflateEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(Error::Io(e)),
+                        }
+                    }
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(Error::Io(e)),
+                        }
+                    }
+                    _ => panic!(
+                        "Unsupported content encoding: {}",
+                        content_encoding
+                            .to_str()
+                            .expect("non-ascii content encoding header value")
+                    ),
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
         }
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -1643,30 +1891,91 @@ impl MonitorsAPI {
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build headers
-        local_req_builder = local_req_builder.header("Content-Type", "application/json");
-        local_req_builder = local_req_builder.header("Accept", "application/json");
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", "application/json".parse().unwrap());
+        headers.insert("Accept", "application/json".parse().unwrap());
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
         if body.serialize(&mut ser).is_ok() {
-            local_req_builder = local_req_builder.body(ser.into_inner());
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = DeflateEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(Error::Io(e)),
+                        }
+                    }
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(Error::Io(e)),
+                        }
+                    }
+                    _ => panic!(
+                        "Unsupported content encoding: {}",
+                        content_encoding
+                            .to_str()
+                            .expect("non-ascii content encoding header value")
+                    ),
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
         }
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -1743,30 +2052,91 @@ impl MonitorsAPI {
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build headers
-        local_req_builder = local_req_builder.header("Content-Type", "application/json");
-        local_req_builder = local_req_builder.header("Accept", "application/json");
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", "application/json".parse().unwrap());
+        headers.insert("Accept", "application/json".parse().unwrap());
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
         if body.serialize(&mut ser).is_ok() {
-            local_req_builder = local_req_builder.body(ser.into_inner());
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = DeflateEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(Error::Io(e)),
+                        }
+                    }
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(Error::Io(e)),
+                        }
+                    }
+                    _ => panic!(
+                        "Unsupported content encoding: {}",
+                        content_encoding
+                            .to_str()
+                            .expect("non-ascii content encoding header value")
+                    ),
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
         }
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 

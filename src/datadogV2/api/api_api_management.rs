@@ -4,6 +4,7 @@
 use crate::datadog::*;
 use log::warn;
 use reqwest;
+use reqwest::header::HeaderMap;
 use serde::{Deserialize, Serialize};
 
 /// CreateOpenAPIOptionalParams is a struct for passing parameters to the method [`APIManagementAPI::create_open_api`]
@@ -180,21 +181,45 @@ impl APIManagementAPI {
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build headers
-        local_req_builder = local_req_builder.header("Content-Type", "multipart/form-data");
-        local_req_builder = local_req_builder.header("Accept", "application/json");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Content-Type",
+            "multipart/form-data"
+                .parse()
+                .expect("failed to parse Content-Type header"),
+        );
+        headers.insert("Accept", "application/json".parse().unwrap());
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
         // build form parameters
@@ -207,6 +232,7 @@ impl APIManagementAPI {
             local_req_builder = local_req_builder.multipart(local_form);
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -273,22 +299,45 @@ impl APIManagementAPI {
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
         // build headers
-        local_req_builder = local_req_builder.header("Accept", "*/*");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "*/*".parse().expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -356,22 +405,42 @@ impl APIManagementAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build headers
-        local_req_builder = local_req_builder.header("Accept", "application/json");
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", "application/json".parse().unwrap());
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -453,21 +522,45 @@ impl APIManagementAPI {
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
 
         // build headers
-        local_req_builder = local_req_builder.header("Content-Type", "multipart/form-data");
-        local_req_builder = local_req_builder.header("Accept", "application/json");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Content-Type",
+            "multipart/form-data"
+                .parse()
+                .expect("failed to parse Content-Type header"),
+        );
+        headers.insert("Accept", "application/json".parse().unwrap());
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
         // build form parameters
@@ -480,6 +573,7 @@ impl APIManagementAPI {
             local_req_builder = local_req_builder.multipart(local_form);
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 

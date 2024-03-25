@@ -3,6 +3,7 @@
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
 use reqwest;
+use reqwest::header::HeaderMap;
 use serde::{Deserialize, Serialize};
 
 /// ValidateError is a struct for typed errors of method [`AuthenticationAPI::validate`]
@@ -93,19 +94,32 @@ impl AuthenticationAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build headers
-        local_req_builder = local_req_builder.header("Accept", "application/json");
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", "application/json".parse().unwrap());
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 

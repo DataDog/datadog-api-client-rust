@@ -3,6 +3,7 @@
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
 use reqwest;
+use reqwest::header::HeaderMap;
 use serde::{Deserialize, Serialize};
 
 /// GetDailyCustomReportsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_daily_custom_reports`]
@@ -1292,23 +1293,47 @@ impl UsageMeteringAPI {
         };
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -1443,23 +1468,47 @@ impl UsageMeteringAPI {
         };
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -1550,23 +1599,47 @@ impl UsageMeteringAPI {
         };
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -1655,23 +1728,47 @@ impl UsageMeteringAPI {
         };
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -1773,23 +1870,47 @@ impl UsageMeteringAPI {
         };
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -1934,23 +2055,47 @@ impl UsageMeteringAPI {
         };
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -2033,23 +2178,47 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -2132,23 +2301,47 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -2237,23 +2430,47 @@ impl UsageMeteringAPI {
         };
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -2372,23 +2589,47 @@ impl UsageMeteringAPI {
         };
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -2477,23 +2718,47 @@ impl UsageMeteringAPI {
         };
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -2576,23 +2841,47 @@ impl UsageMeteringAPI {
         };
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -2677,23 +2966,47 @@ impl UsageMeteringAPI {
         };
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -2776,23 +3089,47 @@ impl UsageMeteringAPI {
         };
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -2881,23 +3218,47 @@ impl UsageMeteringAPI {
         };
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -2981,23 +3342,47 @@ impl UsageMeteringAPI {
         };
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -3083,23 +3468,47 @@ impl UsageMeteringAPI {
         };
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -3184,23 +3593,47 @@ impl UsageMeteringAPI {
         };
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -3289,23 +3722,47 @@ impl UsageMeteringAPI {
         };
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -3394,23 +3851,47 @@ impl UsageMeteringAPI {
         };
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -3494,23 +3975,47 @@ impl UsageMeteringAPI {
         };
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -3593,23 +4098,47 @@ impl UsageMeteringAPI {
         };
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -3706,23 +4235,47 @@ impl UsageMeteringAPI {
         };
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -3813,23 +4366,47 @@ impl UsageMeteringAPI {
         };
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -3918,23 +4495,47 @@ impl UsageMeteringAPI {
         };
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -4023,23 +4624,47 @@ impl UsageMeteringAPI {
         };
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -4130,23 +4755,47 @@ impl UsageMeteringAPI {
         };
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -4235,23 +4884,47 @@ impl UsageMeteringAPI {
         };
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -4345,23 +5018,47 @@ impl UsageMeteringAPI {
         };
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -4449,23 +5146,47 @@ impl UsageMeteringAPI {
         };
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -4548,23 +5269,47 @@ impl UsageMeteringAPI {
         };
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -4645,23 +5390,47 @@ impl UsageMeteringAPI {
         };
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -4750,23 +5519,47 @@ impl UsageMeteringAPI {
         };
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -4855,23 +5648,47 @@ impl UsageMeteringAPI {
         };
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -4962,23 +5779,47 @@ impl UsageMeteringAPI {
         };
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -5069,23 +5910,47 @@ impl UsageMeteringAPI {
         };
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -5174,23 +6039,47 @@ impl UsageMeteringAPI {
         };
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -5299,23 +6188,47 @@ impl UsageMeteringAPI {
         };
 
         // build headers
-        local_req_builder =
-            local_req_builder.header("Accept", "application/json;datetime-format=rfc3339");
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            "application/json;datetime-format=rfc3339"
+                .parse()
+                .expect("failed to parse Accept header"),
+        );
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                local_key
+                    .key
+                    .clone()
+                    .parse()
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 

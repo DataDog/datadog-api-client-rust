@@ -3,6 +3,7 @@
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
 use reqwest;
+use reqwest::header::HeaderMap;
 use serde::{Deserialize, Serialize};
 
 /// GetIPRangesError is a struct for typed errors of method [`IPRangesAPI::get_ip_ranges`]
@@ -85,16 +86,22 @@ impl IPRangesAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         // build headers
-        local_req_builder = local_req_builder.header("Accept", "application/json");
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", "application/json".parse().unwrap());
 
         // build user agent
-        local_req_builder = local_req_builder.header(
+        headers.insert(
             reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+            local_configuration
+                .user_agent
+                .clone()
+                .parse()
+                .expect("failed to parse User Agent header"),
         );
 
         // build auth
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
