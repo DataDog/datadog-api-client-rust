@@ -17,7 +17,7 @@ use datadog_api_client::datadogV2::model::ScalarQuery;
 async fn main() {
     let body = ScalarFormulaQueryRequest::new(ScalarFormulaRequest::new(
         ScalarFormulaRequestAttributes::new(
-            1636625471000,
+            1671612804000,
             vec![ScalarQuery::MetricsScalarQuery(Box::new(
                 MetricsScalarQuery::new(
                     MetricsAggregator::AVG,
@@ -26,7 +26,7 @@ async fn main() {
                 )
                 .name("a".to_string()),
             ))],
-            1636629071000,
+            1671620004000,
         )
         .formulas(vec![QueryFormula::new("a".to_string())
             .limit(FormulaLimit::new().count(10).order(QuerySortOrder::DESC))]),

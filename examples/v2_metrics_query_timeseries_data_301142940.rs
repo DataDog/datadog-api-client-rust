@@ -16,7 +16,7 @@ use datadog_api_client::datadogV2::model::TimeseriesQuery;
 async fn main() {
     let body = TimeseriesFormulaQueryRequest::new(TimeseriesFormulaRequest::new(
         TimeseriesFormulaRequestAttributes::new(
-            1636625471000,
+            1671612804000,
             vec![TimeseriesQuery::MetricsTimeseriesQuery(Box::new(
                 MetricsTimeseriesQuery::new(
                     MetricsDataSource::METRICS,
@@ -24,7 +24,7 @@ async fn main() {
                 )
                 .name("a".to_string()),
             ))],
-            1636629071000,
+            1671620004000,
         )
         .formulas(vec![QueryFormula::new("a".to_string())
             .limit(FormulaLimit::new().count(10).order(QuerySortOrder::DESC))])

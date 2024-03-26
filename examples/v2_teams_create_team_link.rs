@@ -11,8 +11,11 @@ async fn main() {
     // there is a valid "dd_team" in the system
     let dd_team_data_id = std::env::var("DD_TEAM_DATA_ID").unwrap();
     let body = TeamLinkCreateRequest::new(TeamLinkCreate::new(
-        TeamLinkAttributes::new("Link label".to_string(), "https://example.com".to_string())
-            .position(0),
+        TeamLinkAttributes::new(
+            "Link label".to_string(),
+            "https://example.com/one".to_string(),
+        )
+        .position(0),
         TeamLinkType::TEAM_LINKS,
     ));
     let configuration = Configuration::new();
