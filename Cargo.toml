@@ -5,6 +5,17 @@ authors = ["support@datadoghq.com"]
 description = "Collection of all Datadog Public endpoints."
 license = "Apache-2.0"
 edition = "2021"
+repository = "https://github.com/DataDog/datadog-api-client-rust"
+include = [
+    "src/**/*",
+    "LICENSE",
+    "README.md",
+    "build.rs",
+    "LICENSE-3rdparty.csv",
+    "Cargo.toml",
+    "NOTICE",
+    "tests/**/*",
+]
 
 [dependencies]
 async-stream = "0.3.5"
