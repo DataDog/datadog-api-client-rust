@@ -1410,7 +1410,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for application security .
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_application_security_monitoring(
         &self,
         start_hr: String,
@@ -1437,7 +1437,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for application security .
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_application_security_monitoring_with_http_info(
         &self,
         start_hr: String,
@@ -1542,7 +1542,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for Lambda traced invocations.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
+    /// **Note:** This endpoint has been deprecated.. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_lambda_traced_invocations(
         &self,
         start_hr: String,
@@ -1569,7 +1569,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for Lambda traced invocations.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
+    /// **Note:** This endpoint has been deprecated.. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_lambda_traced_invocations_with_http_info(
         &self,
         start_hr: String,
@@ -1674,7 +1674,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for observability pipelines.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_observability_pipelines(
         &self,
         start_hr: String,
@@ -1701,7 +1701,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for observability pipelines.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_observability_pipelines_with_http_info(
         &self,
         start_hr: String,
