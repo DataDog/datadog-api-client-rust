@@ -3,7 +3,7 @@
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
 use flate2::{
-    write::{DeflateEncoder, GzEncoder},
+    write::{GzEncoder, ZlibEncoder},
     Compression,
 };
 use log::warn;
@@ -174,7 +174,7 @@ impl DORAMetricsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = DeflateEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -336,7 +336,7 @@ impl DORAMetricsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = DeflateEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {

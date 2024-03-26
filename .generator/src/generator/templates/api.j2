@@ -17,7 +17,7 @@ use log::warn;
 {%- for _, _, operation in operations if operation.requestBody is defined and not operation|form_parameter %}
 {%- if loop.first %}
 use std::io::Write;
-use flate2::{write::{GzEncoder, DeflateEncoder}, Compression};
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
 {%- endif %}
 {%- endfor %}
 
@@ -396,7 +396,7 @@ impl {{ structName }} {
                         }
                     }
                     "deflate" => {
-                        let mut enc = DeflateEncoder::new(
+                        let mut enc = ZlibEncoder::new(
                             Vec::new(),
                             Compression::default(),
                         );

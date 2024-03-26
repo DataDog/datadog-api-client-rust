@@ -4,7 +4,7 @@
 use crate::datadog::*;
 use async_stream::try_stream;
 use flate2::{
-    write::{DeflateEncoder, GzEncoder},
+    write::{GzEncoder, ZlibEncoder},
     Compression,
 };
 use futures_core::stream::Stream;
@@ -277,7 +277,7 @@ impl RUMAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = DeflateEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -434,7 +434,7 @@ impl RUMAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = DeflateEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1128,7 +1128,7 @@ impl RUMAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = DeflateEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1287,7 +1287,7 @@ impl RUMAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = DeflateEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
