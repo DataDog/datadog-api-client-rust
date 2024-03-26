@@ -1424,7 +1424,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for incident management.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_incident_management(
         &self,
         start_hr: String,
@@ -1451,7 +1451,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for incident management.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_incident_management_with_http_info(
         &self,
         start_hr: String,
@@ -1527,7 +1527,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for ingested spans.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_ingested_spans(
         &self,
         start_hr: String,
@@ -1552,7 +1552,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for ingested spans.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_ingested_spans_with_http_info(
         &self,
         start_hr: String,
@@ -2089,7 +2089,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for analyzed logs (Security Monitoring).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_analyzed_logs(
         &self,
         start_hr: String,
@@ -2114,7 +2114,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for analyzed logs (Security Monitoring).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_analyzed_logs_with_http_info(
         &self,
         start_hr: String,
@@ -2386,7 +2386,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for CI visibility (tests, pipeline, and spans).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_ci_app(
         &self,
         start_hr: String,
@@ -2407,7 +2407,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for CI visibility (tests, pipeline, and spans).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_ci_app_with_http_info(
         &self,
         start_hr: String,
@@ -2483,7 +2483,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for cloud workload security.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_cws(
         &self,
         start_hr: String,
@@ -2504,7 +2504,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for cloud workload security.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_cws_with_http_info(
         &self,
         start_hr: String,
@@ -2576,7 +2576,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for cloud security management (CSM) pro.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_cloud_security_posture_management(
         &self,
         start_hr: String,
@@ -2603,7 +2603,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for cloud security management (CSM) pro.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_cloud_security_posture_management_with_http_info(
         &self,
         start_hr: String,
@@ -2680,7 +2680,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for database monitoring
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_dbm(
         &self,
         start_hr: String,
@@ -2701,7 +2701,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for database monitoring
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_dbm_with_http_info(
         &self,
         start_hr: String,
@@ -2773,7 +2773,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for [Fargate](<https://docs.datadoghq.com/integrations/ecs_fargate/>).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_fargate(
         &self,
         start_hr: String,
@@ -2797,7 +2797,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for [Fargate](<https://docs.datadoghq.com/integrations/ecs_fargate/>).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_fargate_with_http_info(
         &self,
         start_hr: String,
@@ -2873,7 +2873,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for hosts and containers.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_hosts(
         &self,
         start_hr: String,
@@ -2894,7 +2894,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for hosts and containers.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_hosts_with_http_info(
         &self,
         start_hr: String,
@@ -2970,7 +2970,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for indexed spans.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_indexed_spans(
         &self,
         start_hr: String,
@@ -2995,7 +2995,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for indexed spans.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_indexed_spans_with_http_info(
         &self,
         start_hr: String,
@@ -3071,7 +3071,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for IoT.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_internet_of_things(
         &self,
         start_hr: String,
@@ -3096,7 +3096,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for IoT.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_internet_of_things_with_http_info(
         &self,
         start_hr: String,
@@ -3171,7 +3171,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for Lambda.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_lambda(
         &self,
         start_hr: String,
@@ -3192,7 +3192,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for Lambda.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_lambda_with_http_info(
         &self,
         start_hr: String,
@@ -3268,7 +3268,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for logs.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_logs(
         &self,
         start_hr: String,
@@ -3289,7 +3289,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for logs.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_logs_with_http_info(
         &self,
         start_hr: String,
@@ -3472,7 +3472,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for indexed logs by retention period.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_logs_by_retention(
         &self,
         start_hr: String,
@@ -3499,7 +3499,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for indexed logs by retention period.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_logs_by_retention_with_http_info(
         &self,
         start_hr: String,
@@ -3575,7 +3575,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for network flows.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_network_flows(
         &self,
         start_hr: String,
@@ -3600,7 +3600,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for network flows.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_network_flows_with_http_info(
         &self,
         start_hr: String,
@@ -3676,7 +3676,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for network hosts.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_network_hosts(
         &self,
         start_hr: String,
@@ -3701,7 +3701,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for network hosts.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_network_hosts_with_http_info(
         &self,
         start_hr: String,
@@ -3777,7 +3777,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for online archive.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_online_archive(
         &self,
         start_hr: String,
@@ -3804,7 +3804,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for online archive.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_online_archive_with_http_info(
         &self,
         start_hr: String,
@@ -3880,7 +3880,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for profiled hosts.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_profiling(
         &self,
         start_hr: String,
@@ -3905,7 +3905,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for profiled hosts.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_profiling_with_http_info(
         &self,
         start_hr: String,
@@ -3981,7 +3981,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for [RUM](<https://docs.datadoghq.com/real_user_monitoring/>) Sessions.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_rum_sessions(
         &self,
         start_hr: String,
@@ -4006,7 +4006,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for [RUM](<https://docs.datadoghq.com/real_user_monitoring/>) Sessions.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_rum_sessions_with_http_info(
         &self,
         start_hr: String,
@@ -4087,7 +4087,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for [RUM](<https://docs.datadoghq.com/real_user_monitoring/>) Units.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_rum_units(
         &self,
         start_hr: String,
@@ -4111,7 +4111,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for [RUM](<https://docs.datadoghq.com/real_user_monitoring/>) Units.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_rum_units_with_http_info(
         &self,
         start_hr: String,
@@ -4187,7 +4187,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for sensitive data scanner.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_sds(
         &self,
         start_hr: String,
@@ -4208,7 +4208,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for sensitive data scanner.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_sds_with_http_info(
         &self,
         start_hr: String,
@@ -4280,7 +4280,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for SNMP devices.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_snmp(
         &self,
         start_hr: String,
@@ -4301,7 +4301,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for SNMP devices.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_snmp_with_http_info(
         &self,
         start_hr: String,
@@ -4476,7 +4476,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for [synthetics checks](<https://docs.datadoghq.com/synthetics/>).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics(
         &self,
         start_hr: String,
@@ -4501,7 +4501,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for [synthetics checks](<https://docs.datadoghq.com/synthetics/>).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics_with_http_info(
         &self,
         start_hr: String,
@@ -4577,7 +4577,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for [synthetics API checks](<https://docs.datadoghq.com/synthetics/>).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics_api(
         &self,
         start_hr: String,
@@ -4604,7 +4604,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for [synthetics API checks](<https://docs.datadoghq.com/synthetics/>).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics_api_with_http_info(
         &self,
         start_hr: String,
@@ -4680,7 +4680,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for synthetics browser checks.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics_browser(
         &self,
         start_hr: String,
@@ -4707,7 +4707,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for synthetics browser checks.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics_browser_with_http_info(
         &self,
         start_hr: String,
@@ -4783,7 +4783,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for [custom metrics](<https://docs.datadoghq.com/developers/metrics/custom_metrics/>).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_timeseries(
         &self,
         start_hr: String,
@@ -4808,7 +4808,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for [custom metrics](<https://docs.datadoghq.com/developers/metrics/custom_metrics/>).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_timeseries_with_http_info(
         &self,
         start_hr: String,
