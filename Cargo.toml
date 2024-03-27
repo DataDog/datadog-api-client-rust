@@ -1,21 +1,21 @@
 [package]
 authors = ["support@datadoghq.com"]
-description = "Collection of all Datadog Public endpoints."
+description = "Rust client for the Datadog API."
 edition = "2021"
 license = "Apache-2.0"
-license-file = "LICENSE"
 name = "datadog-api-client"
+readme = "README.md"
 repository = "https://github.com/DataDog/datadog-api-client-rust"
 version = "0.0.1"
 include = [
-    "build.rs",
-    "Cargo.toml",
-    "LICENSE-3rdparty.csv",
-    "LICENSE",
-    "NOTICE",
-    "README.md",
-    "src/**/*",
-    "tests/**/*",
+    "/build.rs",
+    "/Cargo.toml",
+    "/LICENSE-3rdparty.csv",
+    "/LICENSE",
+    "/NOTICE",
+    "/README.md",
+    "/src/**/*",
+    "/tests/**/*",
 ]
 keywords = [
     "datadog",
