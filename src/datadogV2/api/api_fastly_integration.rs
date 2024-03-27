@@ -7,7 +7,7 @@ use flate2::{
     Compression,
 };
 use reqwest;
-use reqwest::header::HeaderMap;
+use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
@@ -203,18 +203,20 @@ impl FastlyIntegrationAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert("Content-Type", "application/json".parse().unwrap());
-        headers.insert("Accept", "application/json".parse().unwrap());
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -274,12 +276,9 @@ impl FastlyIntegrationAPI {
                             Err(e) => return Err(Error::Io(e)),
                         }
                     }
-                    _ => panic!(
-                        "Unsupported content encoding: {}",
-                        content_encoding
-                            .to_str()
-                            .expect("non-ascii content encoding header value")
-                    ),
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -366,18 +365,20 @@ impl FastlyIntegrationAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert("Content-Type", "application/json".parse().unwrap());
-        headers.insert("Accept", "application/json".parse().unwrap());
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -437,12 +438,9 @@ impl FastlyIntegrationAPI {
                             Err(e) => return Err(Error::Io(e)),
                         }
                     }
-                    _ => panic!(
-                        "Unsupported content encoding: {}",
-                        content_encoding
-                            .to_str()
-                            .expect("non-ascii content encoding header value")
-                    ),
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -512,20 +510,19 @@ impl FastlyIntegrationAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            "*/*".parse().expect("failed to parse Accept header"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -611,20 +608,19 @@ impl FastlyIntegrationAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            "*/*".parse().expect("failed to parse Accept header"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -715,17 +711,19 @@ impl FastlyIntegrationAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert("Accept", "application/json".parse().unwrap());
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -829,17 +827,19 @@ impl FastlyIntegrationAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert("Accept", "application/json".parse().unwrap());
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -935,17 +935,19 @@ impl FastlyIntegrationAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert("Accept", "application/json".parse().unwrap());
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -1044,17 +1046,19 @@ impl FastlyIntegrationAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert("Accept", "application/json".parse().unwrap());
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -1158,18 +1162,20 @@ impl FastlyIntegrationAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert("Content-Type", "application/json".parse().unwrap());
-        headers.insert("Accept", "application/json".parse().unwrap());
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -1229,12 +1235,9 @@ impl FastlyIntegrationAPI {
                             Err(e) => return Err(Error::Io(e)),
                         }
                     }
-                    _ => panic!(
-                        "Unsupported content encoding: {}",
-                        content_encoding
-                            .to_str()
-                            .expect("non-ascii content encoding header value")
-                    ),
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1324,18 +1327,20 @@ impl FastlyIntegrationAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert("Content-Type", "application/json".parse().unwrap());
-        headers.insert("Accept", "application/json".parse().unwrap());
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -1395,12 +1400,9 @@ impl FastlyIntegrationAPI {
                             Err(e) => return Err(Error::Io(e)),
                         }
                     }
-                    _ => panic!(
-                        "Unsupported content encoding: {}",
-                        content_encoding
-                            .to_str()
-                            .expect("non-ascii content encoding header value")
-                    ),
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());

@@ -5,7 +5,7 @@ use crate::datadog::*;
 use async_stream::try_stream;
 use futures_core::stream::Stream;
 use reqwest;
-use reqwest::header::HeaderMap;
+use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 
 /// ListContainerImagesOptionalParams is a struct for passing parameters to the method [`ContainerImagesAPI::list_container_images`]
@@ -209,17 +209,19 @@ impl ContainerImagesAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert("Accept", "application/json".parse().unwrap());
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {

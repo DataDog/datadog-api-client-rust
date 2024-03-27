@@ -2,7 +2,7 @@
 use reqwest;
 use serde::{Serialize, Deserialize};
 use crate::datadog::*;
-use reqwest::header::HeaderMap;
+use reqwest::header::{HeaderMap, HeaderValue};
 {%- for _, _, operation in operations if "x-pagination" in operation %}
 {%- if loop.first %}
 use async_stream::try_stream;
@@ -313,9 +313,9 @@ impl {{ structName }} {
         {%- set contentTypeHeaders = operation.requestBody.content.keys()|list %}
         {%- if contentTypeHeaders %}
         {%- if "application/json" in contentTypeHeaders %}
-        headers.insert("Content-Type", "application/json".parse().unwrap());
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         {%- else %}
-        headers.insert("Content-Type", "{{ contentTypeHeaders[0] }}".parse().expect("failed to parse Content-Type header"));
+        headers.insert("Content-Type", HeaderValue::from_static("{{ contentTypeHeaders[0] }}"));
         {%- endif %}
         {%- endif %}
         {%- endif %}
@@ -323,9 +323,9 @@ impl {{ structName }} {
         {%- set acceptHeaders = operation|accept_headers %}
         {%- if acceptHeaders %}
         {%- if "application/json" in acceptHeaders %}
-        headers.insert("Accept", "application/json".parse().unwrap());
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
         {%- else  %}
-        headers.insert("Accept", "{{ acceptHeaders|join(",") }}".parse().expect("failed to parse Accept header"));
+        headers.insert("Accept", HeaderValue::from_static("{{ acceptHeaders|join(",") }}"));
         {%- endif %}
         {%- endif %}
         {%- endif %}
@@ -341,7 +341,16 @@ impl {{ structName }} {
         {%- endfor %}
 
         // build user agent
-        headers.insert(reqwest::header::USER_AGENT, local_configuration.user_agent.clone().parse().expect("failed to parse User Agent header"));
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
         
         // build auth
         {%- set authMethods = operation.security if "security" in operation else openapi.security %}
@@ -418,10 +427,9 @@ impl {{ structName }} {
                             Err(e) => return Err(Error::Io(e)),
                         }
                     }
-                    _ => panic!(
-                        "Unsupported content encoding: {}",
-                        content_encoding.to_str().expect("non-ascii content encoding header value")
-                    ),
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());

@@ -3,7 +3,7 @@
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
 use reqwest;
-use reqwest::header::HeaderMap;
+use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 
 /// GetDailyCustomReportsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_daily_custom_reports`]
@@ -1236,20 +1236,20 @@ impl UsageMeteringAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Accept",
-            "application/json;datetime-format=rfc3339"
-                .parse()
-                .expect("failed to parse Accept header"),
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -1411,20 +1411,20 @@ impl UsageMeteringAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Accept",
-            "application/json;datetime-format=rfc3339"
-                .parse()
-                .expect("failed to parse Accept header"),
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -1542,20 +1542,20 @@ impl UsageMeteringAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Accept",
-            "application/json;datetime-format=rfc3339"
-                .parse()
-                .expect("failed to parse Accept header"),
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -1671,20 +1671,20 @@ impl UsageMeteringAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Accept",
-            "application/json;datetime-format=rfc3339"
-                .parse()
-                .expect("failed to parse Accept header"),
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -1813,20 +1813,20 @@ impl UsageMeteringAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Accept",
-            "application/json;datetime-format=rfc3339"
-                .parse()
-                .expect("failed to parse Accept header"),
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -1998,20 +1998,20 @@ impl UsageMeteringAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Accept",
-            "application/json;datetime-format=rfc3339"
-                .parse()
-                .expect("failed to parse Accept header"),
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -2121,20 +2121,20 @@ impl UsageMeteringAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Accept",
-            "application/json;datetime-format=rfc3339"
-                .parse()
-                .expect("failed to parse Accept header"),
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -2244,20 +2244,20 @@ impl UsageMeteringAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Accept",
-            "application/json;datetime-format=rfc3339"
-                .parse()
-                .expect("failed to parse Accept header"),
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -2373,20 +2373,20 @@ impl UsageMeteringAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Accept",
-            "application/json;datetime-format=rfc3339"
-                .parse()
-                .expect("failed to parse Accept header"),
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -2502,20 +2502,20 @@ impl UsageMeteringAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Accept",
-            "application/json;datetime-format=rfc3339"
-                .parse()
-                .expect("failed to parse Accept header"),
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -2625,20 +2625,20 @@ impl UsageMeteringAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Accept",
-            "application/json;datetime-format=rfc3339"
-                .parse()
-                .expect("failed to parse Accept header"),
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -2750,20 +2750,20 @@ impl UsageMeteringAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Accept",
-            "application/json;datetime-format=rfc3339"
-                .parse()
-                .expect("failed to parse Accept header"),
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -2873,20 +2873,20 @@ impl UsageMeteringAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Accept",
-            "application/json;datetime-format=rfc3339"
-                .parse()
-                .expect("failed to parse Accept header"),
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -3002,20 +3002,20 @@ impl UsageMeteringAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Accept",
-            "application/json;datetime-format=rfc3339"
-                .parse()
-                .expect("failed to parse Accept header"),
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -3126,20 +3126,20 @@ impl UsageMeteringAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Accept",
-            "application/json;datetime-format=rfc3339"
-                .parse()
-                .expect("failed to parse Accept header"),
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -3252,20 +3252,20 @@ impl UsageMeteringAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Accept",
-            "application/json;datetime-format=rfc3339"
-                .parse()
-                .expect("failed to parse Accept header"),
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -3377,20 +3377,20 @@ impl UsageMeteringAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Accept",
-            "application/json;datetime-format=rfc3339"
-                .parse()
-                .expect("failed to parse Accept header"),
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -3506,20 +3506,20 @@ impl UsageMeteringAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Accept",
-            "application/json;datetime-format=rfc3339"
-                .parse()
-                .expect("failed to parse Accept header"),
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -3635,20 +3635,20 @@ impl UsageMeteringAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Accept",
-            "application/json;datetime-format=rfc3339"
-                .parse()
-                .expect("failed to parse Accept header"),
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -3759,20 +3759,20 @@ impl UsageMeteringAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Accept",
-            "application/json;datetime-format=rfc3339"
-                .parse()
-                .expect("failed to parse Accept header"),
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -3882,20 +3882,20 @@ impl UsageMeteringAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Accept",
-            "application/json;datetime-format=rfc3339"
-                .parse()
-                .expect("failed to parse Accept header"),
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -4019,20 +4019,20 @@ impl UsageMeteringAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Accept",
-            "application/json;datetime-format=rfc3339"
-                .parse()
-                .expect("failed to parse Accept header"),
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -4150,20 +4150,20 @@ impl UsageMeteringAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Accept",
-            "application/json;datetime-format=rfc3339"
-                .parse()
-                .expect("failed to parse Accept header"),
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -4279,20 +4279,20 @@ impl UsageMeteringAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Accept",
-            "application/json;datetime-format=rfc3339"
-                .parse()
-                .expect("failed to parse Accept header"),
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -4408,20 +4408,20 @@ impl UsageMeteringAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Accept",
-            "application/json;datetime-format=rfc3339"
-                .parse()
-                .expect("failed to parse Accept header"),
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -4539,20 +4539,20 @@ impl UsageMeteringAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Accept",
-            "application/json;datetime-format=rfc3339"
-                .parse()
-                .expect("failed to parse Accept header"),
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -4668,20 +4668,20 @@ impl UsageMeteringAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Accept",
-            "application/json;datetime-format=rfc3339"
-                .parse()
-                .expect("failed to parse Accept header"),
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -4802,20 +4802,20 @@ impl UsageMeteringAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Accept",
-            "application/json;datetime-format=rfc3339"
-                .parse()
-                .expect("failed to parse Accept header"),
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -4930,20 +4930,20 @@ impl UsageMeteringAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Accept",
-            "application/json;datetime-format=rfc3339"
-                .parse()
-                .expect("failed to parse Accept header"),
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -5053,20 +5053,20 @@ impl UsageMeteringAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Accept",
-            "application/json;datetime-format=rfc3339"
-                .parse()
-                .expect("failed to parse Accept header"),
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -5174,20 +5174,20 @@ impl UsageMeteringAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Accept",
-            "application/json;datetime-format=rfc3339"
-                .parse()
-                .expect("failed to parse Accept header"),
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -5303,20 +5303,20 @@ impl UsageMeteringAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Accept",
-            "application/json;datetime-format=rfc3339"
-                .parse()
-                .expect("failed to parse Accept header"),
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -5432,20 +5432,20 @@ impl UsageMeteringAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Accept",
-            "application/json;datetime-format=rfc3339"
-                .parse()
-                .expect("failed to parse Accept header"),
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -5563,20 +5563,20 @@ impl UsageMeteringAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Accept",
-            "application/json;datetime-format=rfc3339"
-                .parse()
-                .expect("failed to parse Accept header"),
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -5694,20 +5694,20 @@ impl UsageMeteringAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Accept",
-            "application/json;datetime-format=rfc3339"
-                .parse()
-                .expect("failed to parse Accept header"),
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -5823,20 +5823,20 @@ impl UsageMeteringAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Accept",
-            "application/json;datetime-format=rfc3339"
-                .parse()
-                .expect("failed to parse Accept header"),
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -5972,20 +5972,20 @@ impl UsageMeteringAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Accept",
-            "application/json;datetime-format=rfc3339"
-                .parse()
-                .expect("failed to parse Accept header"),
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {

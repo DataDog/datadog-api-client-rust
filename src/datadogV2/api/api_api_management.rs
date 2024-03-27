@@ -4,7 +4,7 @@
 use crate::datadog::*;
 use log::warn;
 use reqwest;
-use reqwest::header::HeaderMap;
+use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 
 /// CreateOpenAPIOptionalParams is a struct for passing parameters to the method [`APIManagementAPI::create_open_api`]
@@ -184,21 +184,21 @@ impl APIManagementAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Content-Type",
-            "multipart/form-data"
-                .parse()
-                .expect("failed to parse Content-Type header"),
+            HeaderValue::from_static("multipart/form-data"),
         );
-        headers.insert("Accept", "application/json".parse().unwrap());
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -306,20 +306,19 @@ impl APIManagementAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            "*/*".parse().expect("failed to parse Accept header"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -412,17 +411,19 @@ impl APIManagementAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert("Accept", "application/json".parse().unwrap());
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
@@ -531,21 +532,21 @@ impl APIManagementAPI {
         let mut headers = HeaderMap::new();
         headers.insert(
             "Content-Type",
-            "multipart/form-data"
-                .parse()
-                .expect("failed to parse Content-Type header"),
+            HeaderValue::from_static("multipart/form-data"),
         );
-        headers.insert("Accept", "application/json".parse().unwrap());
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
-        headers.insert(
-            reqwest::header::USER_AGENT,
-            local_configuration
-                .user_agent
-                .clone()
-                .parse()
-                .expect("failed to parse User Agent header"),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
