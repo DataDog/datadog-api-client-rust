@@ -125,10 +125,7 @@ pub struct CIVisibilityPipelinesAPI {
 
 impl Default for CIVisibilityPipelinesAPI {
     fn default() -> Self {
-        Self {
-            config: configuration::Configuration::new(),
-            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
-        }
+        Self::with_config(configuration::Configuration::default())
     }
 }
 
