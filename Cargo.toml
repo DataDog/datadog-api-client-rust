@@ -1,20 +1,32 @@
 [package]
-name = "datadog-api-client"
-version = "1.0.0"
 authors = ["support@datadoghq.com"]
 description = "Collection of all Datadog Public endpoints."
-license = "Apache-2.0"
 edition = "2021"
+license = "Apache-2.0"
+license-file = "LICENSE"
+name = "datadog-api-client"
 repository = "https://github.com/DataDog/datadog-api-client-rust"
+version = "0.0.1"
 include = [
-    "src/**/*",
-    "LICENSE",
-    "README.md",
     "build.rs",
-    "LICENSE-3rdparty.csv",
     "Cargo.toml",
+    "LICENSE-3rdparty.csv",
+    "LICENSE",
     "NOTICE",
+    "README.md",
+    "src/**/*",
     "tests/**/*",
+]
+keywords = [
+    "datadog",
+    "api",
+    "client",
+    "openapi"
+]
+categories = [
+    "api-bindings",
+    "config",
+    "web-programming::http-client"
 ]
 
 [dependencies]
