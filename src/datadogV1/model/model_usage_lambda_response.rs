@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response containing the number of lambda functions and sum of the invocations of all lambda functions
+/// Response containing the number of Lambda functions and sum of the invocations of all Lambda functions
 /// for each hour for a given organization.
 #[non_exhaustive]
 #[skip_serializing_none]

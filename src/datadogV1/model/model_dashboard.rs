@@ -35,7 +35,9 @@ pub struct Dashboard {
     /// ID of the dashboard.
     #[serde(rename = "id")]
     pub id: Option<String>,
-    /// Whether this dashboard is read-only. If True, only the author and admins can make changes to it. Prefer using `restricted_roles` to manage write authorization.
+    /// Whether this dashboard is read-only. If True, only the author and admins can make changes to it.
+    ///
+    /// This property is deprecated; please use the [Restriction Policies API](<https://docs.datadoghq.com/api/latest/restriction-policies/>) instead to manage write authorization for individual dashboards.
     #[deprecated]
     #[serde(rename = "is_read_only")]
     pub is_read_only: Option<bool>,
@@ -58,6 +60,9 @@ pub struct Dashboard {
     #[serde(rename = "reflow_type")]
     pub reflow_type: Option<crate::datadogV1::model::DashboardReflowType>,
     /// A list of role identifiers. Only the author and users associated with at least one of these roles can edit this dashboard.
+    ///
+    /// This property is deprecated; please use the [Restriction Policies API](<https://docs.datadoghq.com/api/latest/restriction-policies/>) instead to manage write authorization for individual dashboards.
+    #[deprecated]
     #[serde(rename = "restricted_roles")]
     pub restricted_roles: Option<Vec<String>>,
     /// List of team names representing ownership of a dashboard.

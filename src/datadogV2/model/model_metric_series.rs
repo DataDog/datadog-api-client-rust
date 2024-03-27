@@ -12,7 +12,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MetricSeries {
-    /// If the type of the metric is rate or count, define the corresponding interval.
+    /// If the type of the metric is rate or count, define the corresponding interval in seconds.
     #[serde(rename = "interval")]
     pub interval: Option<i64>,
     /// Metadata for the metric.

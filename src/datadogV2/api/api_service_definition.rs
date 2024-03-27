@@ -475,6 +475,9 @@ impl ServiceDefinitionAPI {
             } else {
                 page_size = params.page_size.unwrap().clone();
             }
+            if params.page_number.is_none() {
+                params.page_number = Some(0);
+            }
             loop {
                 let resp = self.list_service_definitions(params.clone()).await?;
                 let Some(data) = resp.data else { break };
@@ -488,11 +491,7 @@ impl ServiceDefinitionAPI {
                 if count < page_size as usize {
                     break;
                 }
-                if params.page_number.is_none() {
-                    params.page_number = Some(page_size.clone());
-                } else {
-                    params.page_number = Some(params.page_number.unwrap() + page_size.clone());
-                }
+                params.page_number = Some(params.page_number.unwrap() + 1);
             }
         }
     }

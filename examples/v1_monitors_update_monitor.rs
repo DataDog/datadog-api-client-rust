@@ -17,7 +17,7 @@ async fn main() {
                 .new_group_delay(Some(600))
                 .new_host_delay(None)
                 .renotify_interval(None)
-                .thresholds(MonitorThresholds::new().critical(2 as f64).warning(None))
+                .thresholds(MonitorThresholds::new().critical(2.0 as f64).warning(None))
                 .timeout_h(None),
         );
     let configuration = Configuration::new();

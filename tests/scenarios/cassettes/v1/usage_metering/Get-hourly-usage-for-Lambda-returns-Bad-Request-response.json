@@ -1,1 +1,33 @@
-{"http_interactions": [{"request": {"body": "", "headers": {"Accept": ["application/json;datetime-format=rfc3339"]}, "method": "get", "uri": "https://api.datadoghq.com/api/v1/usage/aws_lambda?start_hr=2022-03-29T00%3A41%3A23.917Z&end_hr=2022-03-27T00%3A41%3A23.917Z"}, "response": {"body": {"string": "{\"errors\": [\"start_hr [YYYY-MM-DDThh] must be before end_hr [YYYY-MM-DDThh]\"]}", "encoding": null}, "headers": {"Content-Type": ["application/json"]}, "status": {"code": 400, "message": "Bad Request"}}, "recorded_at": "Fri, 01 Apr 2022 00:41:23 GMT"}], "recorded_with": "VCR 6.0.0"}
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "application/json;datetime-format=rfc3339"
+          ]
+        },
+        "method": "get",
+        "uri": "https://api.datadoghq.com/api/v1/usage/aws_lambda?start_hr=2022-03-29T00%3A41%3A23.917Z&end_hr=2022-03-27T00%3A41%3A23.917Z"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\": [\"start_hr [YYYY-MM-DDThh] must be before end_hr [YYYY-MM-DDThh]\"]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Fri, 01 Apr 2022 00:41:23 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

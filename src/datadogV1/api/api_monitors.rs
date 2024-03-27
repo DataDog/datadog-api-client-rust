@@ -537,7 +537,7 @@ impl MonitorsAPI {
     /// - database-monitoring: `database-monitoring alert`
     ///
     /// **Notes**:
-    /// - Synthetic monitors are created through the Synthetics API. See the [Synthetics API] (<https://docs.datadoghq.com/api/latest/synthetics/>) documentation for more information.
+    /// - Synthetic monitors are created through the Synthetics API. See the [Synthetics API](<https://docs.datadoghq.com/api/latest/synthetics/>) documentation for more information.
     /// - Log monitors require an unscoped App Key.
     ///
     /// #### Query Types
@@ -688,8 +688,6 @@ impl MonitorsAPI {
     /// - `time_window` #m (between 1 and 2880), #h (between 1 and 48).
     /// - `operator` `<`, `<=`, `>`, `>=`, `==`, or `!=`.
     /// - `#` an integer or decimal number used to set the threshold.
-    ///
-    /// **NOTE** Database Monitoring monitors are in alpha on US1.
     pub async fn create_monitor(
         &self,
         body: crate::datadogV1::model::Monitor,
@@ -737,7 +735,7 @@ impl MonitorsAPI {
     /// - database-monitoring: `database-monitoring alert`
     ///
     /// **Notes**:
-    /// - Synthetic monitors are created through the Synthetics API. See the [Synthetics API] (<https://docs.datadoghq.com/api/latest/synthetics/>) documentation for more information.
+    /// - Synthetic monitors are created through the Synthetics API. See the [Synthetics API](<https://docs.datadoghq.com/api/latest/synthetics/>) documentation for more information.
     /// - Log monitors require an unscoped App Key.
     ///
     /// #### Query Types
@@ -888,8 +886,6 @@ impl MonitorsAPI {
     /// - `time_window` #m (between 1 and 2880), #h (between 1 and 48).
     /// - `operator` `<`, `<=`, `>`, `>=`, `==`, or `!=`.
     /// - `#` an integer or decimal number used to set the threshold.
-    ///
-    /// **NOTE** Database Monitoring monitors are in alpha on US1.
     pub async fn create_monitor_with_http_info(
         &self,
         body: crate::datadogV1::model::Monitor,

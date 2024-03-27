@@ -1,1 +1,107 @@
-{"http_interactions": [{"request": {"body": {"string": "{\"app_service_plan_filters\":\"key:value,filter:example\",\"automute\":true,\"client_id\":\"17026645-0000-0000-0000-170266451900\",\"client_secret\":\"testingx./Sw*g/Y33t..R1cH+hScMDt\",\"container_app_filters\":\"key:value,filter:example\",\"cspm_enabled\":true,\"custom_metrics_enabled\":true,\"errors\":[\"*\"],\"host_filters\":\"key:value,filter:example\",\"new_client_id\":\"17026645-0000-0000-0000-170266451900\",\"new_tenant_name\":\"17026645-0000-0000-0000-170266451900\",\"resource_collection_enabled\":true,\"tenant_name\":\"17026645-0000-0000-0000-170266451900\"}", "encoding": null}, "headers": {"Accept": ["application/json"], "Content-Type": ["application/json"]}, "method": "post", "uri": "https://api.datadoghq.com/api/v1/integration/azure"}, "response": {"body": {"string": "{}\n", "encoding": null}, "headers": {"Content-Type": ["application/json"]}, "status": {"code": 200, "message": "OK"}}, "recorded_at": "Fri, 15 Dec 2023 18:21:59 GMT"}, {"request": {"body": {"string": "{\"app_service_plan_filters\":\"key:value,filter:example\",\"automute\":true,\"client_id\":\"17026645-0000-0000-0000-170266451900\",\"client_secret\":\"testingx./Sw*g/Y33t..R1cH+hScMDt\",\"container_app_filters\":\"key:value,filter:example\",\"cspm_enabled\":true,\"custom_metrics_enabled\":true,\"errors\":[\"*\"],\"host_filters\":\"key:value,filter:example\",\"new_client_id\":\"17026645-0000-0000-0000-170266451900\",\"new_tenant_name\":\"17026645-0000-0000-0000-170266451900\",\"resource_collection_enabled\":true,\"tenant_name\":\"17026645-0000-0000-0000-170266451900\"}", "encoding": null}, "headers": {"Accept": ["application/json"], "Content-Type": ["application/json"]}, "method": "put", "uri": "https://api.datadoghq.com/api/v1/integration/azure"}, "response": {"body": {"string": "{}\n", "encoding": null}, "headers": {"Content-Type": ["application/json"]}, "status": {"code": 200, "message": "OK"}}, "recorded_at": "Fri, 15 Dec 2023 18:21:59 GMT"}, {"request": {"body": {"string": "{\"client_id\":\"17026645-0000-0000-0000-170266451900\",\"tenant_name\":\"17026645-0000-0000-0000-170266451900\"}", "encoding": null}, "headers": {"Accept": ["application/json"], "Content-Type": ["application/json"]}, "method": "delete", "uri": "https://api.datadoghq.com/api/v1/integration/azure"}, "response": {"body": {"string": "{}\n", "encoding": null}, "headers": {"Content-Type": ["application/json"]}, "status": {"code": 200, "message": "OK"}}, "recorded_at": "Fri, 15 Dec 2023 18:21:59 GMT"}], "recorded_with": "VCR 6.0.0"}
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"app_service_plan_filters\":\"key:value,filter:example\",\"automute\":true,\"client_id\":\"17091519-0000-0000-0000-170915196000\",\"client_secret\":\"testingx./Sw*g/Y33t..R1cH+hScMDt\",\"container_app_filters\":\"key:value,filter:example\",\"cspm_enabled\":true,\"custom_metrics_enabled\":true,\"errors\":[\"*\"],\"host_filters\":\"key:value,filter:example\",\"new_client_id\":\"17091519-0000-0000-0000-170915196000\",\"new_tenant_name\":\"17091519-0000-0000-0000-170915196000\",\"resource_collection_enabled\":true,\"tenant_name\":\"17091519-0000-0000-0000-170915196000\"}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v1/integration/azure"
+      },
+      "response": {
+        "body": {
+          "string": "{}\n",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Wed, 28 Feb 2024 20:26:00 GMT"
+    },
+    {
+      "request": {
+        "body": {
+          "string": "{\"app_service_plan_filters\":\"key:value,filter:example\",\"automute\":true,\"client_id\":\"17091519-0000-0000-0000-170915196000\",\"client_secret\":\"testingx./Sw*g/Y33t..R1cH+hScMDt\",\"container_app_filters\":\"key:value,filter:example\",\"cspm_enabled\":true,\"custom_metrics_enabled\":true,\"errors\":[\"*\"],\"host_filters\":\"key:value,filter:example\",\"new_client_id\":\"17091519-0000-0000-0000-170915196000\",\"new_tenant_name\":\"17091519-0000-0000-0000-170915196000\",\"resource_collection_enabled\":true,\"tenant_name\":\"17091519-0000-0000-0000-170915196000\"}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "put",
+        "uri": "https://api.datadoghq.com/api/v1/integration/azure"
+      },
+      "response": {
+        "body": {
+          "string": "{}\n",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Wed, 28 Feb 2024 20:26:00 GMT"
+    },
+    {
+      "request": {
+        "body": {
+          "string": "{\"client_id\":\"17091519-0000-0000-0000-170915196000\",\"tenant_name\":\"17091519-0000-0000-0000-170915196000\"}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "delete",
+        "uri": "https://api.datadoghq.com/api/v1/integration/azure"
+      },
+      "response": {
+        "body": {
+          "string": "{}\n",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Wed, 28 Feb 2024 20:26:00 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

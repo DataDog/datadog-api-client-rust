@@ -1,1 +1,67 @@
-{"http_interactions": [{"request": {"body": {"string": "{\"data\":{\"attributes\":{\"enabled\":true,\"filter\":{\"query\":\"@http.status_code:200 service:my-service\"},\"filter_type\":\"spans-sampling-processor\",\"name\":\"my retention filter\",\"rate\":1},\"type\":\"apm_retention_filter\"}}", "encoding": null}, "headers": {"Accept": ["application/json"], "Content-Type": ["application/json"]}, "method": "post", "uri": "https://api.datadoghq.com/api/v2/apm/config/retention-filters"}, "response": {"body": {"string": "{\"data\":{\"id\":\"kkZkTzFaR_Oy4OWzOJQbcw\",\"attributes\":{\"name\":\"my retention filter\",\"rate\":1.0,\"enabled\":true,\"filter_type\":\"spans-sampling-processor\",\"filter\":{\"query\":\"@http.status_code:200 service:my-service\"},\"editable\":true,\"modified_by\":\"9919ec9b-ebc7-49ee-8dc8-03626e717cca\",\"modified_at\":1697718481,\"created_by\":\"9919ec9b-ebc7-49ee-8dc8-03626e717cca\",\"created_at\":1697718481},\"type\":\"apm_retention_filter\"}}\n", "encoding": null}, "headers": {"Content-Type": ["application/json"]}, "status": {"code": 200, "message": "OK"}}, "recorded_at": "Thu, 19 Oct 2023 12:28:01 GMT"}, {"request": {"body": "", "headers": {"Accept": ["*/*"]}, "method": "delete", "uri": "https://api.datadoghq.com/api/v2/apm/config/retention-filters/kkZkTzFaR_Oy4OWzOJQbcw"}, "response": {"body": {"string": "{}\n", "encoding": null}, "headers": {"Content-Type": ["application/json"]}, "status": {"code": 200, "message": "OK"}}, "recorded_at": "Thu, 19 Oct 2023 12:28:01 GMT"}], "recorded_with": "VCR 6.0.0"}
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"enabled\":true,\"filter\":{\"query\":\"@http.status_code:200 service:my-service\"},\"filter_type\":\"spans-sampling-processor\",\"name\":\"my retention filter\",\"rate\":1},\"type\":\"apm_retention_filter\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/apm/config/retention-filters"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":{\"id\":\"kkZkTzFaR_Oy4OWzOJQbcw\",\"attributes\":{\"name\":\"my retention filter\",\"rate\":1.0,\"enabled\":true,\"filter_type\":\"spans-sampling-processor\",\"filter\":{\"query\":\"@http.status_code:200 service:my-service\"},\"editable\":true,\"modified_by\":\"9919ec9b-ebc7-49ee-8dc8-03626e717cca\",\"modified_at\":1697718481,\"created_by\":\"9919ec9b-ebc7-49ee-8dc8-03626e717cca\",\"created_at\":1697718481},\"type\":\"apm_retention_filter\"}}\n",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Thu, 19 Oct 2023 12:28:01 GMT"
+    },
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "*/*"
+          ]
+        },
+        "method": "delete",
+        "uri": "https://api.datadoghq.com/api/v2/apm/config/retention-filters/kkZkTzFaR_Oy4OWzOJQbcw"
+      },
+      "response": {
+        "body": {
+          "string": "{}\n",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Thu, 19 Oct 2023 12:28:01 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

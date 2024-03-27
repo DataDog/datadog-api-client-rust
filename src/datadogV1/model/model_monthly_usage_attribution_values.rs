@@ -47,6 +47,12 @@ pub struct MonthlyUsageAttributionValues {
     /// The Application Security Monitoring host usage by tag(s).
     #[serde(rename = "appsec_usage")]
     pub appsec_usage: Option<f64>,
+    /// The percentage of Application Security Monitoring Serverless traced invocations usage by tag(s).
+    #[serde(rename = "asm_serverless_traced_invocations_percentage")]
+    pub asm_serverless_traced_invocations_percentage: Option<f64>,
+    /// The Application Security Monitoring Serverless traced invocations usage by tag(s).
+    #[serde(rename = "asm_serverless_traced_invocations_usage")]
+    pub asm_serverless_traced_invocations_usage: Option<f64>,
     /// The percentage of synthetic browser test usage by tag(s).
     #[serde(rename = "browser_percentage")]
     pub browser_percentage: Option<f64>,
@@ -143,6 +149,12 @@ pub struct MonthlyUsageAttributionValues {
     /// The Database Monitoring queries usage by tag(s).
     #[serde(rename = "dbm_queries_usage")]
     pub dbm_queries_usage: Option<f64>,
+    /// The percentage of error tracking events usage by tag(s).
+    #[serde(rename = "error_tracking_percentage")]
+    pub error_tracking_percentage: Option<f64>,
+    /// The error tracking events usage by tag(s).
+    #[serde(rename = "error_tracking_usage")]
+    pub error_tracking_usage: Option<f64>,
     /// The percentage of estimated live indexed logs usage by tag(s).
     #[serde(rename = "estimated_indexed_logs_percentage")]
     pub estimated_indexed_logs_percentage: Option<f64>,
@@ -305,6 +317,12 @@ pub struct MonthlyUsageAttributionValues {
     /// The observability pipeline bytes usage by tag(s).
     #[serde(rename = "obs_pipeline_bytes_usage")]
     pub obs_pipeline_bytes_usage: Option<f64>,
+    /// The percentage of observability pipeline per core usage by tag(s).
+    #[serde(rename = "obs_pipelines_vcpu_percentage")]
+    pub obs_pipelines_vcpu_percentage: Option<f64>,
+    /// The observability pipeline per core usage by tag(s).
+    #[serde(rename = "obs_pipelines_vcpu_usage")]
+    pub obs_pipelines_vcpu_usage: Option<f64>,
     /// The percentage of profiled container usage by tag(s).
     #[serde(rename = "profiled_container_percentage")]
     pub profiled_container_percentage: Option<f64>,
@@ -371,6 +389,12 @@ pub struct MonthlyUsageAttributionValues {
     /// The Application Vulnerability Management usage by tag(s).
     #[serde(rename = "vuln_management_hosts_usage")]
     pub vuln_management_hosts_usage: Option<f64>,
+    /// The percentage of workflow executions usage by tag(s).
+    #[serde(rename = "workflow_executions_percentage")]
+    pub workflow_executions_percentage: Option<f64>,
+    /// The total workflow executions usage by tag(s).
+    #[serde(rename = "workflow_executions_usage")]
+    pub workflow_executions_usage: Option<f64>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -391,6 +415,8 @@ impl MonthlyUsageAttributionValues {
             appsec_fargate_usage: None,
             appsec_percentage: None,
             appsec_usage: None,
+            asm_serverless_traced_invocations_percentage: None,
+            asm_serverless_traced_invocations_usage: None,
             browser_percentage: None,
             browser_usage: None,
             ci_pipeline_indexed_spans_percentage: None,
@@ -423,6 +449,8 @@ impl MonthlyUsageAttributionValues {
             dbm_hosts_usage: None,
             dbm_queries_percentage: None,
             dbm_queries_usage: None,
+            error_tracking_percentage: None,
+            error_tracking_usage: None,
             estimated_indexed_logs_percentage: None,
             estimated_indexed_logs_usage: None,
             estimated_indexed_spans_percentage: None,
@@ -477,6 +505,8 @@ impl MonthlyUsageAttributionValues {
             npm_host_usage: None,
             obs_pipeline_bytes_percentage: None,
             obs_pipeline_bytes_usage: None,
+            obs_pipelines_vcpu_percentage: None,
+            obs_pipelines_vcpu_usage: None,
             profiled_container_percentage: None,
             profiled_container_usage: None,
             profiled_fargate_percentage: None,
@@ -499,6 +529,8 @@ impl MonthlyUsageAttributionValues {
             universal_service_monitoring_usage: None,
             vuln_management_hosts_percentage: None,
             vuln_management_hosts_usage: None,
+            workflow_executions_percentage: None,
+            workflow_executions_usage: None,
             _unparsed: false,
         }
     }
@@ -560,6 +592,16 @@ impl MonthlyUsageAttributionValues {
 
     pub fn appsec_usage(mut self, value: f64) -> Self {
         self.appsec_usage = Some(value);
+        self
+    }
+
+    pub fn asm_serverless_traced_invocations_percentage(mut self, value: f64) -> Self {
+        self.asm_serverless_traced_invocations_percentage = Some(value);
+        self
+    }
+
+    pub fn asm_serverless_traced_invocations_usage(mut self, value: f64) -> Self {
+        self.asm_serverless_traced_invocations_usage = Some(value);
         self
     }
 
@@ -720,6 +762,16 @@ impl MonthlyUsageAttributionValues {
 
     pub fn dbm_queries_usage(mut self, value: f64) -> Self {
         self.dbm_queries_usage = Some(value);
+        self
+    }
+
+    pub fn error_tracking_percentage(mut self, value: f64) -> Self {
+        self.error_tracking_percentage = Some(value);
+        self
+    }
+
+    pub fn error_tracking_usage(mut self, value: f64) -> Self {
+        self.error_tracking_usage = Some(value);
         self
     }
 
@@ -993,6 +1045,16 @@ impl MonthlyUsageAttributionValues {
         self
     }
 
+    pub fn obs_pipelines_vcpu_percentage(mut self, value: f64) -> Self {
+        self.obs_pipelines_vcpu_percentage = Some(value);
+        self
+    }
+
+    pub fn obs_pipelines_vcpu_usage(mut self, value: f64) -> Self {
+        self.obs_pipelines_vcpu_usage = Some(value);
+        self
+    }
+
     pub fn profiled_container_percentage(mut self, value: f64) -> Self {
         self.profiled_container_percentage = Some(value);
         self
@@ -1102,6 +1164,16 @@ impl MonthlyUsageAttributionValues {
         self.vuln_management_hosts_usage = Some(value);
         self
     }
+
+    pub fn workflow_executions_percentage(mut self, value: f64) -> Self {
+        self.workflow_executions_percentage = Some(value);
+        self
+    }
+
+    pub fn workflow_executions_usage(mut self, value: f64) -> Self {
+        self.workflow_executions_usage = Some(value);
+        self
+    }
 }
 
 impl Default for MonthlyUsageAttributionValues {
@@ -1139,6 +1211,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                 let mut appsec_fargate_usage: Option<f64> = None;
                 let mut appsec_percentage: Option<f64> = None;
                 let mut appsec_usage: Option<f64> = None;
+                let mut asm_serverless_traced_invocations_percentage: Option<f64> = None;
+                let mut asm_serverless_traced_invocations_usage: Option<f64> = None;
                 let mut browser_percentage: Option<f64> = None;
                 let mut browser_usage: Option<f64> = None;
                 let mut ci_pipeline_indexed_spans_percentage: Option<f64> = None;
@@ -1171,6 +1245,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                 let mut dbm_hosts_usage: Option<f64> = None;
                 let mut dbm_queries_percentage: Option<f64> = None;
                 let mut dbm_queries_usage: Option<f64> = None;
+                let mut error_tracking_percentage: Option<f64> = None;
+                let mut error_tracking_usage: Option<f64> = None;
                 let mut estimated_indexed_logs_percentage: Option<f64> = None;
                 let mut estimated_indexed_logs_usage: Option<f64> = None;
                 let mut estimated_indexed_spans_percentage: Option<f64> = None;
@@ -1225,6 +1301,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                 let mut npm_host_usage: Option<f64> = None;
                 let mut obs_pipeline_bytes_percentage: Option<f64> = None;
                 let mut obs_pipeline_bytes_usage: Option<f64> = None;
+                let mut obs_pipelines_vcpu_percentage: Option<f64> = None;
+                let mut obs_pipelines_vcpu_usage: Option<f64> = None;
                 let mut profiled_container_percentage: Option<f64> = None;
                 let mut profiled_container_usage: Option<f64> = None;
                 let mut profiled_fargate_percentage: Option<f64> = None;
@@ -1247,6 +1325,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                 let mut universal_service_monitoring_usage: Option<f64> = None;
                 let mut vuln_management_hosts_percentage: Option<f64> = None;
                 let mut vuln_management_hosts_usage: Option<f64> = None;
+                let mut workflow_executions_percentage: Option<f64> = None;
+                let mut workflow_executions_usage: Option<f64> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -1332,6 +1412,20 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                                 continue;
                             }
                             appsec_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "asm_serverless_traced_invocations_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            asm_serverless_traced_invocations_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "asm_serverless_traced_invocations_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            asm_serverless_traced_invocations_usage =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "browser_percentage" => {
@@ -1556,6 +1650,20 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                                 continue;
                             }
                             dbm_queries_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "error_tracking_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            error_tracking_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "error_tracking_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            error_tracking_usage =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "estimated_indexed_logs_percentage" => {
@@ -1936,6 +2044,20 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                             obs_pipeline_bytes_usage =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "obs_pipelines_vcpu_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            obs_pipelines_vcpu_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "obs_pipelines_vcpu_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            obs_pipelines_vcpu_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "profiled_container_percentage" => {
                             if v.is_null() {
                                 continue;
@@ -2089,6 +2211,20 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                             vuln_management_hosts_usage =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "workflow_executions_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            workflow_executions_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "workflow_executions_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            workflow_executions_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {}
                     }
                 }
@@ -2106,6 +2242,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                     appsec_fargate_usage,
                     appsec_percentage,
                     appsec_usage,
+                    asm_serverless_traced_invocations_percentage,
+                    asm_serverless_traced_invocations_usage,
                     browser_percentage,
                     browser_usage,
                     ci_pipeline_indexed_spans_percentage,
@@ -2138,6 +2276,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                     dbm_hosts_usage,
                     dbm_queries_percentage,
                     dbm_queries_usage,
+                    error_tracking_percentage,
+                    error_tracking_usage,
                     estimated_indexed_logs_percentage,
                     estimated_indexed_logs_usage,
                     estimated_indexed_spans_percentage,
@@ -2192,6 +2332,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                     npm_host_usage,
                     obs_pipeline_bytes_percentage,
                     obs_pipeline_bytes_usage,
+                    obs_pipelines_vcpu_percentage,
+                    obs_pipelines_vcpu_usage,
                     profiled_container_percentage,
                     profiled_container_usage,
                     profiled_fargate_percentage,
@@ -2214,6 +2356,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                     universal_service_monitoring_usage,
                     vuln_management_hosts_percentage,
                     vuln_management_hosts_usage,
+                    workflow_executions_percentage,
+                    workflow_executions_usage,
                     _unparsed,
                 };
 

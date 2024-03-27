@@ -1,1 +1,39 @@
-{"http_interactions": [{"request": {"body": {"string": "{\"series\":[{\"metric\":\"system.load.1\",\"points\":[{\"timestamp\":1657662336,\"value\":0.7}],\"resources\":[{\"name\":\"dummyhost\",\"type\":\"host\"}],\"type\":0}]}", "encoding": null}, "headers": {"Accept": ["application/json"], "Content-Type": ["application/json"]}, "method": "post", "uri": "https://api.datadoghq.com/api/v2/series"}, "response": {"body": {"string": "{\"errors\":[]}", "encoding": null}, "headers": {"Content-Type": ["application/json"]}, "status": {"code": 202, "message": "Accepted"}}, "recorded_at": "Tue, 12 Jul 2022 21:45:36 GMT"}], "recorded_with": "VCR 6.0.0"}
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"series\":[{\"metric\":\"system.load.1\",\"points\":[{\"timestamp\":1657662336,\"value\":0.7}],\"resources\":[{\"name\":\"dummyhost\",\"type\":\"host\"}],\"type\":0}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/series"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 202,
+          "message": "Accepted"
+        }
+      },
+      "recorded_at": "Tue, 12 Jul 2022 21:45:36 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

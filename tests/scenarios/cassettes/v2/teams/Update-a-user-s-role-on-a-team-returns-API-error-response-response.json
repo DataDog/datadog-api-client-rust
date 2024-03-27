@@ -1,1 +1,97 @@
-{"http_interactions": [{"request": {"body": {"string": "{\"data\":{\"attributes\":{\"handle\":\"test-handle-427b76ae43f10fe0\",\"name\":\"test-name-427b76ae43f10fe0\"},\"type\":\"team\"}}", "encoding": null}, "headers": {"Accept": ["application/json"], "Content-Type": ["application/json"]}, "method": "post", "uri": "https://api.datadoghq.com/api/v2/team"}, "response": {"body": {"string": "{\"data\":{\"type\":\"team\",\"id\":\"33d811ca-405b-11ee-a640-da7ad0900002\",\"attributes\":{\"name\":\"test-name-427b76ae43f10fe0\",\"handle\":\"test-handle-427b76ae43f10fe0\",\"summary\":null,\"description\":null,\"avatar\":null,\"banner\":null,\"visible_modules\":[],\"hidden_modules\":[],\"created_at\":\"2023-08-21T19:44:55.105594+00:00\",\"modified_at\":\"2023-08-21T19:44:55.105599+00:00\",\"user_count\":0,\"link_count\":0},\"relationships\":{\"team_links\":{\"links\":{\"related\":\"/api/v2/team/33d811ca-405b-11ee-a640-da7ad0900002/links\"}},\"user_team_permissions\":{\"links\":{\"related\":\"/api/v2/team/33d811ca-405b-11ee-a640-da7ad0900002/permission-settings\"}}}}}\n", "encoding": null}, "headers": {"Content-Type": ["application/json"]}, "status": {"code": 201, "message": "Created"}}, "recorded_at": "Mon, 21 Aug 2023 19:44:55 GMT"}, {"request": {"body": {"string": "{\"data\":{\"attributes\":{\"role\":\"admin\"},\"type\":\"team_memberships\"}}", "encoding": null}, "headers": {"Accept": ["application/json"], "Content-Type": ["application/json"]}, "method": "patch", "uri": "https://api.datadoghq.com/api/v2/team/33d811ca-405b-11ee-a640-da7ad0900002/memberships/REPLACE.ME"}, "response": {"body": {"string": "{\"errors\":[\"REPLACE.ME is not a valid UUID not found\"]}", "encoding": null}, "headers": {"Content-Type": ["application/json"]}, "status": {"code": 404, "message": "Not Found"}}, "recorded_at": "Mon, 21 Aug 2023 19:44:55 GMT"}, {"request": {"body": "", "headers": {"Accept": ["*/*"]}, "method": "delete", "uri": "https://api.datadoghq.com/api/v2/team/33d811ca-405b-11ee-a640-da7ad0900002"}, "response": {"body": {"string": "", "encoding": null}, "headers": {}, "status": {"code": 204, "message": "No Content"}}, "recorded_at": "Mon, 21 Aug 2023 19:44:55 GMT"}], "recorded_with": "VCR 6.0.0"}
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"handle\":\"test-handle-427b76ae43f10fe0\",\"name\":\"test-name-427b76ae43f10fe0\"},\"type\":\"team\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/team"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":{\"type\":\"team\",\"id\":\"33d811ca-405b-11ee-a640-da7ad0900002\",\"attributes\":{\"name\":\"test-name-427b76ae43f10fe0\",\"handle\":\"test-handle-427b76ae43f10fe0\",\"summary\":null,\"description\":null,\"avatar\":null,\"banner\":null,\"visible_modules\":[],\"hidden_modules\":[],\"created_at\":\"2023-08-21T19:44:55.105594+00:00\",\"modified_at\":\"2023-08-21T19:44:55.105599+00:00\",\"user_count\":0,\"link_count\":0},\"relationships\":{\"team_links\":{\"links\":{\"related\":\"/api/v2/team/33d811ca-405b-11ee-a640-da7ad0900002/links\"}},\"user_team_permissions\":{\"links\":{\"related\":\"/api/v2/team/33d811ca-405b-11ee-a640-da7ad0900002/permission-settings\"}}}}}\n",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 201,
+          "message": "Created"
+        }
+      },
+      "recorded_at": "Mon, 21 Aug 2023 19:44:55 GMT"
+    },
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"role\":\"admin\"},\"type\":\"team_memberships\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "patch",
+        "uri": "https://api.datadoghq.com/api/v2/team/33d811ca-405b-11ee-a640-da7ad0900002/memberships/REPLACE.ME"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[\"REPLACE.ME is not a valid UUID not found\"]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 404,
+          "message": "Not Found"
+        }
+      },
+      "recorded_at": "Mon, 21 Aug 2023 19:44:55 GMT"
+    },
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "*/*"
+          ]
+        },
+        "method": "delete",
+        "uri": "https://api.datadoghq.com/api/v2/team/33d811ca-405b-11ee-a640-da7ad0900002"
+      },
+      "response": {
+        "body": {
+          "string": "",
+          "encoding": null
+        },
+        "headers": {},
+        "status": {
+          "code": 204,
+          "message": "No Content"
+        }
+      },
+      "recorded_at": "Mon, 21 Aug 2023 19:44:55 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

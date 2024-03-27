@@ -5,7 +5,7 @@ use datadog_api_client::datadogV2::model::OnDemandConcurrencyCapAttributes;
 
 #[tokio::main]
 async fn main() {
-    let body = OnDemandConcurrencyCapAttributes::new().on_demand_concurrency_cap(20 as f64);
+    let body = OnDemandConcurrencyCapAttributes::new().on_demand_concurrency_cap(20.0 as f64);
     let configuration = Configuration::new();
     let api = SyntheticsAPI::with_config(configuration);
     let resp = api.set_on_demand_concurrency_cap(body).await;

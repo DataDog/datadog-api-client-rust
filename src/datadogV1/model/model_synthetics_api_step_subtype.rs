@@ -8,6 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SyntheticsAPIStepSubtype {
     HTTP,
+    GRPC,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -15,6 +16,7 @@ impl ToString for SyntheticsAPIStepSubtype {
     fn to_string(&self) -> String {
         match self {
             Self::HTTP => String::from("http"),
+            Self::GRPC => String::from("grpc"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -40,6 +42,7 @@ impl<'de> Deserialize<'de> for SyntheticsAPIStepSubtype {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "http" => Self::HTTP,
+            "grpc" => Self::GRPC,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

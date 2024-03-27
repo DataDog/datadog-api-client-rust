@@ -7,7 +7,9 @@ Feature: Usage Metering
   **Note**: Usage data is delayed by up to 72 hours from when it was
   incurred. It is retained for 15 months.  You can retrieve up to 24 hours
   of hourly usage data for multiple organizations, and up to two months of
-  hourly usage data for a single organization in one request.
+  hourly usage data for a single organization in one request. Learn more on
+  the [usage details documentation](https://docs.datadoghq.com/account_manag
+  ement/billing/usage_details/).
 
   Background:
     Given a valid "apiKeyAuth" key in the system
@@ -486,20 +488,6 @@ Feature: Usage Metering
     Then the response status is 200 OK
 
   @generated @skip @team:DataDog/red-zone-revenue-query
-  Scenario: Get hourly usage for lambda returns "Bad Request" response
-    Given new "GetUsageLambda" request
-    And request contains "start_hr" parameter from "REPLACE.ME"
-    When the request is sent
-    Then the response status is 400 Bad Request
-
-  @generated @skip @team:DataDog/red-zone-revenue-query
-  Scenario: Get hourly usage for lambda returns "OK" response
-    Given new "GetUsageLambda" request
-    And request contains "start_hr" parameter from "REPLACE.ME"
-    When the request is sent
-    Then the response status is 200 OK
-
-  @generated @skip @team:DataDog/red-zone-revenue-query
   Scenario: Get hourly usage for logs by index returns "Bad Request" response
     Given new "GetUsageLogsByIndex" request
     And request contains "start_hr" parameter from "REPLACE.ME"
@@ -710,16 +698,6 @@ Feature: Usage Metering
   Scenario: Get usage across your account returns "OK" response
     Given new "GetUsageSummary" request
     And request contains "start_month" parameter from "REPLACE.ME"
-    When the request is sent
-    Then the response status is 200 OK
-
-  @skip @team:DataDog/red-zone-revenue-query
-  Scenario: Get usage attribution returns "OK" response
-    Given new "GetUsageAttribution" request
-    And request contains "start_month" parameter with value "{{ timeISO('now - 3d') }}"
-    And request contains "fields" parameter with value "*"
-    And request contains "offset" parameter with value 0
-    And request contains "limit" parameter with value 1
     When the request is sent
     Then the response status is 200 OK
 

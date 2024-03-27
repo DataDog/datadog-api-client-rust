@@ -20,6 +20,10 @@ pub struct GCPSTSServiceAccountAttributes {
     /// Your service account email address.
     #[serde(rename = "client_email")]
     pub client_email: Option<String>,
+    /// List of filters to limit the Cloud Run revisions that are pulled into Datadog by using tags.
+    /// Only Cloud Run revision resources that apply to specified filters are imported into Datadog.
+    #[serde(rename = "cloud_run_revision_filters")]
+    pub cloud_run_revision_filters: Option<Vec<String>>,
     /// Your Host Filters.
     #[serde(rename = "host_filters")]
     pub host_filters: Option<Vec<String>>,
@@ -43,6 +47,7 @@ impl GCPSTSServiceAccountAttributes {
             account_tags: None,
             automute: None,
             client_email: None,
+            cloud_run_revision_filters: None,
             host_filters: None,
             is_cspm_enabled: None,
             is_security_command_center_enabled: None,
@@ -63,6 +68,11 @@ impl GCPSTSServiceAccountAttributes {
 
     pub fn client_email(mut self, value: String) -> Self {
         self.client_email = Some(value);
+        self
+    }
+
+    pub fn cloud_run_revision_filters(mut self, value: Vec<String>) -> Self {
+        self.cloud_run_revision_filters = Some(value);
         self
     }
 
@@ -113,6 +123,7 @@ impl<'de> Deserialize<'de> for GCPSTSServiceAccountAttributes {
                 let mut account_tags: Option<Vec<String>> = None;
                 let mut automute: Option<bool> = None;
                 let mut client_email: Option<String> = None;
+                let mut cloud_run_revision_filters: Option<Vec<String>> = None;
                 let mut host_filters: Option<Vec<String>> = None;
                 let mut is_cspm_enabled: Option<bool> = None;
                 let mut is_security_command_center_enabled: Option<bool> = None;
@@ -139,6 +150,13 @@ impl<'de> Deserialize<'de> for GCPSTSServiceAccountAttributes {
                                 continue;
                             }
                             client_email =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cloud_run_revision_filters" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cloud_run_revision_filters =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "host_filters" => {
@@ -177,6 +195,7 @@ impl<'de> Deserialize<'de> for GCPSTSServiceAccountAttributes {
                     account_tags,
                     automute,
                     client_email,
+                    cloud_run_revision_filters,
                     host_filters,
                     is_cspm_enabled,
                     is_security_command_center_enabled,

@@ -126,7 +126,7 @@ async fn main() {
                         SyntheticsTestRequestProxy::new("https://datadoghq.com".to_string())
                             .headers(BTreeMap::from([])),
                     )
-                    .timeout(10 as f64)
+                    .timeout(10.0 as f64)
                     .url("https://datadoghq.com".to_string()),
             ),
         vec!["aws:us-east-2".to_string()],
@@ -144,7 +144,7 @@ async fn main() {
             .retry(
                 SyntheticsTestOptionsRetry::new()
                     .count(3)
-                    .interval(10 as f64),
+                    .interval(10.0 as f64),
             )
             .tick_every(60),
         SyntheticsAPITestType::API,

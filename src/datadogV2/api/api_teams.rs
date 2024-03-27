@@ -1091,6 +1091,40 @@ impl TeamsAPI {
         }
     }
 
+    pub fn get_team_memberships_with_pagination(
+        &self,
+        team_id: String,
+        mut params: GetTeamMembershipsOptionalParams,
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::UserTeam, Error<GetTeamMembershipsError>>> + '_
+    {
+        try_stream! {
+            let mut page_size: i64 = 10;
+            if params.page_size.is_none() {
+                params.page_size = Some(page_size);
+            } else {
+                page_size = params.page_size.unwrap().clone();
+            }
+            if params.page_number.is_none() {
+                params.page_number = Some(0);
+            }
+            loop {
+                let resp = self.get_team_memberships( team_id.clone(),params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                params.page_number = Some(params.page_number.unwrap() + 1);
+            }
+        }
+    }
+
     /// Get a paginated list of members for a team
     pub async fn get_team_memberships_with_http_info(
         &self,

@@ -14,6 +14,12 @@ pub struct LogsIndex {
     /// The number of log events you can send in this index per day before you are rate-limited.
     #[serde(rename = "daily_limit")]
     pub daily_limit: Option<i64>,
+    /// Object containing options to override the default daily limit reset time.
+    #[serde(rename = "daily_limit_reset")]
+    pub daily_limit_reset: Option<crate::datadogV1::model::LogsDailyLimitReset>,
+    /// A percentage threshold of the daily quota at which a Datadog warning event is generated.
+    #[serde(rename = "daily_limit_warning_threshold_percentage")]
+    pub daily_limit_warning_threshold_percentage: Option<f64>,
     /// An array of exclusion objects. The logs are tested against the query of each filter,
     /// following the order of the array. Only the first matching active exclusion matters,
     /// others (if any) are ignored.
@@ -42,6 +48,8 @@ impl LogsIndex {
     pub fn new(filter: crate::datadogV1::model::LogsFilter, name: String) -> LogsIndex {
         LogsIndex {
             daily_limit: None,
+            daily_limit_reset: None,
+            daily_limit_warning_threshold_percentage: None,
             exclusion_filters: None,
             filter,
             is_rate_limited: None,
@@ -53,6 +61,19 @@ impl LogsIndex {
 
     pub fn daily_limit(mut self, value: i64) -> Self {
         self.daily_limit = Some(value);
+        self
+    }
+
+    pub fn daily_limit_reset(
+        mut self,
+        value: crate::datadogV1::model::LogsDailyLimitReset,
+    ) -> Self {
+        self.daily_limit_reset = Some(value);
+        self
+    }
+
+    pub fn daily_limit_warning_threshold_percentage(mut self, value: f64) -> Self {
+        self.daily_limit_warning_threshold_percentage = Some(value);
         self
     }
 
@@ -90,6 +111,9 @@ impl<'de> Deserialize<'de> for LogsIndex {
                 M: MapAccess<'a>,
             {
                 let mut daily_limit: Option<i64> = None;
+                let mut daily_limit_reset: Option<crate::datadogV1::model::LogsDailyLimitReset> =
+                    None;
+                let mut daily_limit_warning_threshold_percentage: Option<f64> = None;
                 let mut exclusion_filters: Option<Vec<crate::datadogV1::model::LogsExclusion>> =
                     None;
                 let mut filter: Option<crate::datadogV1::model::LogsFilter> = None;
@@ -105,6 +129,20 @@ impl<'de> Deserialize<'de> for LogsIndex {
                                 continue;
                             }
                             daily_limit =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "daily_limit_reset" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            daily_limit_reset =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "daily_limit_warning_threshold_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            daily_limit_warning_threshold_percentage =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "exclusion_filters" => {
@@ -142,6 +180,8 @@ impl<'de> Deserialize<'de> for LogsIndex {
 
                 let content = LogsIndex {
                     daily_limit,
+                    daily_limit_reset,
+                    daily_limit_warning_threshold_percentage,
                     exclusion_filters,
                     filter,
                     is_rate_limited,

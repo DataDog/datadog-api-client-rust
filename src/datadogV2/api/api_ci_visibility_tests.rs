@@ -264,7 +264,7 @@ impl CIVisibilityTestsAPI {
         }
     }
 
-    /// List endpoint returns CI Visibility test events that match a [log search query](<https://docs.datadoghq.com/logs/explorer/search_syntax/>).
+    /// List endpoint returns CI Visibility test events that match a [search query](<https://docs.datadoghq.com/continuous_integration/explorer/search_syntax/>).
     /// [Results are paginated similarly to logs](<https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>).
     ///
     /// Use this endpoint to see your latest test events.
@@ -322,7 +322,7 @@ impl CIVisibilityTestsAPI {
         }
     }
 
-    /// List endpoint returns CI Visibility test events that match a [log search query](<https://docs.datadoghq.com/logs/explorer/search_syntax/>).
+    /// List endpoint returns CI Visibility test events that match a [search query](<https://docs.datadoghq.com/continuous_integration/explorer/search_syntax/>).
     /// [Results are paginated similarly to logs](<https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>).
     ///
     /// Use this endpoint to see your latest test events.
@@ -423,7 +423,7 @@ impl CIVisibilityTestsAPI {
         }
     }
 
-    /// List endpoint returns CI Visibility test events that match a [log search query](<https://docs.datadoghq.com/logs/explorer/search_syntax/>).
+    /// List endpoint returns CI Visibility test events that match a [search query](<https://docs.datadoghq.com/continuous_integration/explorer/search_syntax/>).
     /// [Results are paginated similarly to logs](<https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>).
     ///
     /// Use this endpoint to build complex events filtering and search.
@@ -487,7 +487,7 @@ impl CIVisibilityTestsAPI {
         }
     }
 
-    /// List endpoint returns CI Visibility test events that match a [log search query](<https://docs.datadoghq.com/logs/explorer/search_syntax/>).
+    /// List endpoint returns CI Visibility test events that match a [search query](<https://docs.datadoghq.com/continuous_integration/explorer/search_syntax/>).
     /// [Results are paginated similarly to logs](<https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>).
     ///
     /// Use this endpoint to build complex events filtering and search.

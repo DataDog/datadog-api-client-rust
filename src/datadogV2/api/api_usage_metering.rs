@@ -427,7 +427,7 @@ impl UsageMeteringAPI {
         Self { config, client }
     }
 
-    /// Get active billing dimensions for cost attribution. Cost data for a given month becomes available no later than the 17th of the following month.
+    /// Get active billing dimensions for cost attribution. Cost data for a given month becomes available no later than the 19th of the following month.
     pub async fn get_active_billing_dimensions(
         &self,
     ) -> Result<
@@ -448,7 +448,7 @@ impl UsageMeteringAPI {
         }
     }
 
-    /// Get active billing dimensions for cost attribution. Cost data for a given month becomes available no later than the 17th of the following month.
+    /// Get active billing dimensions for cost attribution. Cost data for a given month becomes available no later than the 19th of the following month.
     pub async fn get_active_billing_dimensions_with_http_info(
         &self,
     ) -> Result<
@@ -983,7 +983,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get monthly cost attribution by tag across multi-org and single root-org accounts.
-    /// Cost Attribution data for a given month becomes available no later than the 17th of the following month.
+    /// Cost Attribution data for a given month becomes available no later than the 19th of the following month.
     /// This API endpoint is paginated. To make sure you receive all records, check if the value of `next_record_id` is
     /// set in the response. If it is, make another request and pass `next_record_id` as a parameter.
     /// Pseudo code example:
@@ -1024,7 +1024,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get monthly cost attribution by tag across multi-org and single root-org accounts.
-    /// Cost Attribution data for a given month becomes available no later than the 17th of the following month.
+    /// Cost Attribution data for a given month becomes available no later than the 19th of the following month.
     /// This API endpoint is paginated. To make sure you receive all records, check if the value of `next_record_id` is
     /// set in the response. If it is, make another request and pass `next_record_id` as a parameter.
     /// Pseudo code example:
@@ -1240,7 +1240,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for application security .
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_application_security_monitoring(
         &self,
         start_hr: String,
@@ -1267,7 +1267,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for application security .
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_application_security_monitoring_with_http_info(
         &self,
         start_hr: String,
@@ -1343,8 +1343,8 @@ impl UsageMeteringAPI {
         }
     }
 
-    /// Get hourly usage for lambda traced invocations.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
+    /// Get hourly usage for Lambda traced invocations.
+    /// **Note:** This endpoint has been deprecated.. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_lambda_traced_invocations(
         &self,
         start_hr: String,
@@ -1370,8 +1370,8 @@ impl UsageMeteringAPI {
         }
     }
 
-    /// Get hourly usage for lambda traced invocations.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
+    /// Get hourly usage for Lambda traced invocations.
+    /// **Note:** This endpoint has been deprecated.. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_lambda_traced_invocations_with_http_info(
         &self,
         start_hr: String,
@@ -1448,7 +1448,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for observability pipelines.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_observability_pipelines(
         &self,
         start_hr: String,
@@ -1475,7 +1475,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for observability pipelines.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_observability_pipelines_with_http_info(
         &self,
         start_hr: String,

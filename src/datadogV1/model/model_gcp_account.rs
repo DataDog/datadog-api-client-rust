@@ -30,6 +30,10 @@ pub struct GCPAccount {
     /// where `$CLIENT_EMAIL` is the email found in your JSON service account key.
     #[serde(rename = "client_x509_cert_url")]
     pub client_x509_cert_url: Option<String>,
+    /// Limit the Cloud Run revisions that are pulled into Datadog by using tags.
+    /// Only Cloud Run revision resources that apply to specified filters are imported into Datadog.
+    #[serde(rename = "cloud_run_revision_filters")]
+    pub cloud_run_revision_filters: Option<Vec<String>>,
     /// An array of errors.
     #[serde(rename = "errors")]
     pub errors: Option<Vec<String>>,
@@ -75,6 +79,7 @@ impl GCPAccount {
             client_email: None,
             client_id: None,
             client_x509_cert_url: None,
+            cloud_run_revision_filters: None,
             errors: None,
             host_filters: None,
             is_cspm_enabled: None,
@@ -116,6 +121,11 @@ impl GCPAccount {
 
     pub fn client_x509_cert_url(mut self, value: String) -> Self {
         self.client_x509_cert_url = Some(value);
+        self
+    }
+
+    pub fn cloud_run_revision_filters(mut self, value: Vec<String>) -> Self {
+        self.cloud_run_revision_filters = Some(value);
         self
     }
 
@@ -199,6 +209,7 @@ impl<'de> Deserialize<'de> for GCPAccount {
                 let mut client_email: Option<String> = None;
                 let mut client_id: Option<String> = None;
                 let mut client_x509_cert_url: Option<String> = None;
+                let mut cloud_run_revision_filters: Option<Vec<String>> = None;
                 let mut errors: Option<Vec<String>> = None;
                 let mut host_filters: Option<String> = None;
                 let mut is_cspm_enabled: Option<bool> = None;
@@ -250,6 +261,13 @@ impl<'de> Deserialize<'de> for GCPAccount {
                                 continue;
                             }
                             client_x509_cert_url =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cloud_run_revision_filters" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cloud_run_revision_filters =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "errors" => {
@@ -329,6 +347,7 @@ impl<'de> Deserialize<'de> for GCPAccount {
                     client_email,
                     client_id,
                     client_x509_cert_url,
+                    cloud_run_revision_filters,
                     errors,
                     host_filters,
                     is_cspm_enabled,

@@ -21,7 +21,7 @@ pub struct SLOHistoryMonitor {
     /// For groups in a grouped SLO, this is the group name.
     #[serde(rename = "group")]
     pub group: Option<String>,
-    /// For `monitor` based SLOs, this includes the aggregated history as arrays that include time series and uptime data where `0=monitor` is in `OK` state and `1=monitor` is in `alert` state.
+    /// For `monitor` based SLOs, this includes the aggregated history as arrays that include timeseries and uptime data where `0=monitor` is in `OK` state and `1=monitor` is in `alert` state.
     #[serde(rename = "history")]
     pub history: Option<Vec<Vec<f64>>>,
     /// For `monitor` based SLOs, this is the last modified timestamp in epoch seconds of the monitor.

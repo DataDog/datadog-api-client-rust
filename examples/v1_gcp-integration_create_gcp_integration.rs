@@ -13,6 +13,7 @@ async fn main() {
         .client_x509_cert_url(
             "https://www.googleapis.com/robot/v1/metadata/x509/$CLIENT_EMAIL".to_string(),
         )
+        .cloud_run_revision_filters(vec!["dr:dre".to_string()])
         .host_filters("key:value,filter:example".to_string())
         .is_cspm_enabled(true)
         .is_security_command_center_enabled(true)

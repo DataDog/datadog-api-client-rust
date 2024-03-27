@@ -20,7 +20,8 @@ pub struct SensitiveDataScannerStandardPatternAttributes {
     /// Name of the standard pattern.
     #[serde(rename = "name")]
     pub name: Option<String>,
-    /// Regex to match.
+    /// (Deprecated) Regex to match, optionally documented for older standard rules. Refer to the `description` field to understand what the rule does.
+    #[deprecated]
     #[serde(rename = "pattern")]
     pub pattern: Option<String>,
     /// Integer from 1 (high) to 5 (low) indicating standard pattern issue severity.
@@ -36,6 +37,7 @@ pub struct SensitiveDataScannerStandardPatternAttributes {
 
 impl SensitiveDataScannerStandardPatternAttributes {
     pub fn new() -> SensitiveDataScannerStandardPatternAttributes {
+        #[allow(deprecated)]
         SensitiveDataScannerStandardPatternAttributes {
             description: None,
             included_keywords: None,
@@ -47,31 +49,37 @@ impl SensitiveDataScannerStandardPatternAttributes {
         }
     }
 
+    #[allow(deprecated)]
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn included_keywords(mut self, value: Vec<String>) -> Self {
         self.included_keywords = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn pattern(mut self, value: String) -> Self {
         self.pattern = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn priority(mut self, value: i64) -> Self {
         self.priority = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
@@ -153,6 +161,7 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerStandardPatternAttributes {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = SensitiveDataScannerStandardPatternAttributes {
                     description,
                     included_keywords,

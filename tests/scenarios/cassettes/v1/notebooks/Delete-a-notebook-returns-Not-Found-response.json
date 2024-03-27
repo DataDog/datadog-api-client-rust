@@ -1,1 +1,33 @@
-{"http_interactions": [{"request": {"body": "", "headers": {"Accept": ["*/*"]}, "method": "delete", "uri": "https://api.datadoghq.com/api/v1/notebooks/123456"}, "response": {"body": {"string": "{\"errors\": [\"Notebook not found\"]}", "encoding": null}, "headers": {"Content-Type": ["application/json"]}, "status": {"code": 404, "message": "Not Found"}}, "recorded_at": "Thu, 12 May 2022 09:50:06 GMT"}], "recorded_with": "VCR 6.0.0"}
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "*/*"
+          ]
+        },
+        "method": "delete",
+        "uri": "https://api.datadoghq.com/api/v1/notebooks/123456"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\": [\"Notebook not found\"]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 404,
+          "message": "Not Found"
+        }
+      },
+      "recorded_at": "Thu, 12 May 2022 09:50:06 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

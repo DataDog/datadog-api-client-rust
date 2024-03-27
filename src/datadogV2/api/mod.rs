@@ -2,9 +2,11 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
+pub mod api_api_management;
 pub mod api_apm_retention_filters;
 pub mod api_audit;
 pub mod api_authn_mappings;
+pub mod api_case_management;
 pub mod api_ci_visibility_pipelines;
 pub mod api_ci_visibility_tests;
 pub mod api_cloud_cost_management;
@@ -26,6 +28,7 @@ pub mod api_ip_allowlist;
 pub mod api_key_management;
 pub mod api_logs;
 pub mod api_logs_archives;
+pub mod api_logs_custom_destinations;
 pub mod api_logs_metrics;
 pub mod api_metrics;
 pub mod api_monitors;
