@@ -54,7 +54,7 @@ pub struct DatadogWorld {
     pub parameters: HashMap<String, Value>,
     pub response: Response,
     pub api_name: Option<String>,
-    pub api_instances: ApiInstances,
+    pub api_instances: Box<ApiInstances>,
     undo_operations: Vec<UndoOperation>,
 }
 
