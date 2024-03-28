@@ -74,10 +74,7 @@ pub struct CloudflareIntegrationAPI {
 
 impl Default for CloudflareIntegrationAPI {
     fn default() -> Self {
-        Self {
-            config: configuration::Configuration::new(),
-            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
-        }
+        Self::with_config(configuration::Configuration::default())
     }
 }
 
@@ -93,9 +90,36 @@ impl CloudflareIntegrationAPI {
             reqwest_client_builder = reqwest_client_builder.proxy(proxy);
         }
 
-        let middleware_client_builder =
+        let mut middleware_client_builder =
             reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+
+        if config.enable_retry {
+            struct RetryableStatus;
+            impl reqwest_retry::RetryableStrategy for RetryableStatus {
+                fn handle(
+                    &self,
+                    res: &Result<reqwest::Response, reqwest_middleware::Error>,
+                ) -> Option<reqwest_retry::Retryable> {
+                    match res {
+                        Ok(success) => reqwest_retry::default_on_request_success(success),
+                        Err(_) => None,
+                    }
+                }
+            }
+            let backoff_policy = reqwest_retry::policies::ExponentialBackoff::builder()
+                .build_with_max_retries(config.max_retries);
+
+            let retry_middleware =
+                reqwest_retry::RetryTransientMiddleware::new_with_policy_and_strategy(
+                    backoff_policy,
+                    RetryableStatus,
+                );
+
+            middleware_client_builder = middleware_client_builder.with(retry_middleware);
+        }
+
         let client = middleware_client_builder.build();
+
         Self { config, client }
     }
 

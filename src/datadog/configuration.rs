@@ -51,6 +51,8 @@ pub struct Configuration {
     pub server_operation_index: HashMap<String, usize>,
     pub server_operation_variables: HashMap<String, HashMap<String, String>>,
     pub proxy_url: Option<String>,
+    pub enable_retry: bool,
+    pub max_retries: u32,
 }
 
 impl Configuration {
@@ -116,6 +118,11 @@ impl Configuration {
 
     pub fn set_proxy_url(&mut self, proxy_url: Option<String>) {
         self.proxy_url = proxy_url;
+    }
+
+    pub fn set_retry(&mut self, enable_retry: bool, max_retries: u32) {
+        self.enable_retry = enable_retry;
+        self.max_retries = max_retries;
     }
 }
 
@@ -194,6 +201,8 @@ impl Default for Configuration {
             server_operation_index: HashMap::new(),
             server_operation_variables: HashMap::new(),
             proxy_url: None,
+            enable_retry: false,
+            max_retries: 3,
         }
     }
 }
