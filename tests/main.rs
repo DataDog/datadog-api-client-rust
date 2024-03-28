@@ -1,6 +1,6 @@
 mod scenarios;
 
-use cucumber::{cli, parser, runner, writer, World};
+use cucumber::{cli, parser, runner, writer, StatsWriter, World};
 use lazy_static::lazy_static;
 use regex::Regex;
 use scenarios::fixtures::{
@@ -91,7 +91,7 @@ async fn main() {
         }
     }
 
-    cucumber
+    if cucumber
         .filter_run("tests/scenarios/features/".to_string(), move |_, _, sc| {
             let name_re = parsed_cli.re_filter.clone();
             let name_match = name_re
@@ -109,6 +109,10 @@ async fn main() {
                 true
             }
         })
-        .await;
+        .await
+        .execution_has_failed()
+    {
+        std::process::exit(1);
+    }
 }
 // right now it repeats failed steps, eventually write custom writer logic for repeating failed scenarios

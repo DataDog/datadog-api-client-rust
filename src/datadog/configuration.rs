@@ -51,6 +51,8 @@ pub struct Configuration {
     pub server_operation_index: HashMap<String, usize>,
     pub server_operation_variables: HashMap<String, HashMap<String, String>>,
     pub proxy_url: Option<String>,
+    pub enable_retry: bool,
+    pub max_retries: u32,
 }
 
 impl Configuration {
@@ -117,17 +119,15 @@ impl Configuration {
     pub fn set_proxy_url(&mut self, proxy_url: Option<String>) {
         self.proxy_url = proxy_url;
     }
+
+    pub fn set_retry(&mut self, enable_retry: bool, max_retries: u32) {
+        self.enable_retry = enable_retry;
+        self.max_retries = max_retries;
+    }
 }
 
 impl Default for Configuration {
     fn default() -> Self {
-        let user_agent = format!(
-            "datadog-api-client-rust/{} (rust {}; os {}; arch {})",
-            option_env!("CARGO_PKG_VERSION").unwrap_or("?"),
-            option_env!("DD_RUSTC_VERSION").unwrap_or("?"),
-            env::consts::OS,
-            env::consts::ARCH,
-        );
         let unstable_operations = HashMap::from([
             ("v2.create_open_api".to_owned(), false),
             ("v2.delete_open_api".to_owned(), false),
@@ -193,7 +193,7 @@ impl Default for Configuration {
         );
 
         Self {
-            user_agent,
+            user_agent: DEFAULT_USER_AGENT.clone(),
             unstable_operations,
             auth_keys,
             server_index: 0,
@@ -201,11 +201,20 @@ impl Default for Configuration {
             server_operation_index: HashMap::new(),
             server_operation_variables: HashMap::new(),
             proxy_url: None,
+            enable_retry: false,
+            max_retries: 3,
         }
     }
 }
 
 lazy_static! {
+    pub static ref DEFAULT_USER_AGENT: String = format!(
+        "datadog-api-client-rust/{} (rust {}; os {}; arch {})",
+        option_env!("CARGO_PKG_VERSION").unwrap_or("?"),
+        option_env!("DD_RUSTC_VERSION").unwrap_or("?"),
+        env::consts::OS,
+        env::consts::ARCH,
+    );
     static ref SERVERS: Vec<ServerConfiguration> = {
         vec![
             ServerConfiguration {

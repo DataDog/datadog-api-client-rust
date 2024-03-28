@@ -64,14 +64,14 @@ fn test_{{version}}_{{ operation['operationId'] | snake_case }}(world: &mut Data
     {%- set schema = parameter[1] | parameter_schema %}
     {%- if parameter[1].required %}
     {%- if schema | is_primitive and schema.get("format") == "binary" -%}
-    let {{ parameter[0] | variable_name }} = _parameters.get("{{ parameter[0] }}").unwrap().as_str().unwrap().as_bytes().to_vec();
+    let {{ parameter[0] | variable_name }} = std::fs::read(format!("tests/scenarios/features/v{}/{}", world.api_version, _parameters.get("{{ parameter[0] }}").unwrap().as_str().unwrap())).unwrap();
     {%- else -%}
     let {{ parameter[0] | variable_name }} = serde_json::from_value(_parameters.get("{{ parameter[0] }}").unwrap().clone()).unwrap();
     {%- endif -%}
     {%- else %}
     let {{ parameter[0] | variable_name }} = _parameters.get("{{ parameter[0] }}").and_then(|param| 
         {%- if schema | is_primitive and schema.get("format") == "binary" -%}
-        Some(param.as_str().unwrap().as_bytes().to_vec())
+        std::fs::read(format!("tests/scenarios/features/v{}/{}", world.api_version, param.as_str().unwrap())).ok()
         {%- else -%}
         Some(serde_json::from_value(param.clone()).unwrap())
         {%- endif -%}
@@ -113,14 +113,14 @@ fn test_{{version}}_{{ operation['operationId'] | snake_case }}_with_pagination(
     {%- set schema = parameter[1] | parameter_schema %}
     {%- if parameter[1].required %}
     {%- if schema | is_primitive and schema.get("format") == "binary" -%}
-    let {{ parameter[0] | variable_name }} = _parameters.get("{{ parameter[0] }}").unwrap().as_str().unwrap().as_bytes().to_vec();
+    let {{ parameter[0] | variable_name }} = std::fs::read(_parameters.get("{{ parameter[0] }}").unwrap().as_str().unwrap()).unwrap();
     {%- else -%}
     let {{ parameter[0] | variable_name }} = serde_json::from_value(_parameters.get("{{ parameter[0] }}").unwrap().clone()).unwrap();
     {%- endif -%}
     {%- else %}
     let {{ parameter[0] | variable_name }} = _parameters.get("{{ parameter[0] }}").and_then(|param| 
         {%- if schema | is_primitive and schema.get("format") == "binary" -%}
-        Some(param.as_str().unwrap().as_bytes().to_vec())
+        std::fs::read(param.as_str().unwrap()).ok()
         {%- else -%}
         Some(serde_json::from_value(param.clone()).unwrap())
         {%- endif -%}
