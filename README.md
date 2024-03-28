@@ -64,7 +64,7 @@ configuration.set_auth_key(
 This client includes access to Datadog API endpoints while they are in an unstable state and may undergo breaking changes. An extra configuration step is required to use these endpoints:
 
 ```rust
-configuration.set_unstable_operation_enabled("<OPERATION_NAME>", True)
+configuration.set_unstable_operation_enabled("<OPERATION_NAME>", true)
 ```
 where `<OPERATION_NAME>` is the API version and name of the method used to interact with that endpoint. For example: `v2.list_incidents`, or `v2.query_timeseries_data`
 
