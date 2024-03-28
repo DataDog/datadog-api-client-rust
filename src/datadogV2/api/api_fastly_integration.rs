@@ -207,7 +207,7 @@ impl FastlyIntegrationAPI {
         headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
-        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
             Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
             Err(e) => {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
@@ -222,20 +222,14 @@ impl FastlyIntegrationAPI {
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
             headers.insert(
                 "DD-API-KEY",
-                local_key
-                    .key
-                    .clone()
-                    .parse()
+                HeaderValue::from_str(local_key.key.as_str())
                     .expect("failed to parse DD-API-KEY header"),
             );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
             headers.insert(
                 "DD-APPLICATION-KEY",
-                local_key
-                    .key
-                    .clone()
-                    .parse()
+                HeaderValue::from_str(local_key.key.as_str())
                     .expect("failed to parse DD-APPLICATION-KEY header"),
             );
         };
@@ -369,7 +363,7 @@ impl FastlyIntegrationAPI {
         headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
-        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
             Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
             Err(e) => {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
@@ -384,20 +378,14 @@ impl FastlyIntegrationAPI {
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
             headers.insert(
                 "DD-API-KEY",
-                local_key
-                    .key
-                    .clone()
-                    .parse()
+                HeaderValue::from_str(local_key.key.as_str())
                     .expect("failed to parse DD-API-KEY header"),
             );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
             headers.insert(
                 "DD-APPLICATION-KEY",
-                local_key
-                    .key
-                    .clone()
-                    .parse()
+                HeaderValue::from_str(local_key.key.as_str())
                     .expect("failed to parse DD-APPLICATION-KEY header"),
             );
         };
@@ -513,7 +501,7 @@ impl FastlyIntegrationAPI {
         headers.insert("Accept", HeaderValue::from_static("*/*"));
 
         // build user agent
-        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
             Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
             Err(e) => {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
@@ -528,20 +516,14 @@ impl FastlyIntegrationAPI {
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
             headers.insert(
                 "DD-API-KEY",
-                local_key
-                    .key
-                    .clone()
-                    .parse()
+                HeaderValue::from_str(local_key.key.as_str())
                     .expect("failed to parse DD-API-KEY header"),
             );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
             headers.insert(
                 "DD-APPLICATION-KEY",
-                local_key
-                    .key
-                    .clone()
-                    .parse()
+                HeaderValue::from_str(local_key.key.as_str())
                     .expect("failed to parse DD-APPLICATION-KEY header"),
             );
         };
@@ -611,7 +593,7 @@ impl FastlyIntegrationAPI {
         headers.insert("Accept", HeaderValue::from_static("*/*"));
 
         // build user agent
-        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
             Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
             Err(e) => {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
@@ -626,20 +608,14 @@ impl FastlyIntegrationAPI {
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
             headers.insert(
                 "DD-API-KEY",
-                local_key
-                    .key
-                    .clone()
-                    .parse()
+                HeaderValue::from_str(local_key.key.as_str())
                     .expect("failed to parse DD-API-KEY header"),
             );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
             headers.insert(
                 "DD-APPLICATION-KEY",
-                local_key
-                    .key
-                    .clone()
-                    .parse()
+                HeaderValue::from_str(local_key.key.as_str())
                     .expect("failed to parse DD-APPLICATION-KEY header"),
             );
         };
@@ -714,7 +690,7 @@ impl FastlyIntegrationAPI {
         headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
-        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
             Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
             Err(e) => {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
@@ -729,20 +705,14 @@ impl FastlyIntegrationAPI {
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
             headers.insert(
                 "DD-API-KEY",
-                local_key
-                    .key
-                    .clone()
-                    .parse()
+                HeaderValue::from_str(local_key.key.as_str())
                     .expect("failed to parse DD-API-KEY header"),
             );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
             headers.insert(
                 "DD-APPLICATION-KEY",
-                local_key
-                    .key
-                    .clone()
-                    .parse()
+                HeaderValue::from_str(local_key.key.as_str())
                     .expect("failed to parse DD-APPLICATION-KEY header"),
             );
         };
@@ -830,7 +800,7 @@ impl FastlyIntegrationAPI {
         headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
-        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
             Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
             Err(e) => {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
@@ -845,20 +815,14 @@ impl FastlyIntegrationAPI {
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
             headers.insert(
                 "DD-API-KEY",
-                local_key
-                    .key
-                    .clone()
-                    .parse()
+                HeaderValue::from_str(local_key.key.as_str())
                     .expect("failed to parse DD-API-KEY header"),
             );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
             headers.insert(
                 "DD-APPLICATION-KEY",
-                local_key
-                    .key
-                    .clone()
-                    .parse()
+                HeaderValue::from_str(local_key.key.as_str())
                     .expect("failed to parse DD-APPLICATION-KEY header"),
             );
         };
@@ -938,7 +902,7 @@ impl FastlyIntegrationAPI {
         headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
-        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
             Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
             Err(e) => {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
@@ -953,20 +917,14 @@ impl FastlyIntegrationAPI {
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
             headers.insert(
                 "DD-API-KEY",
-                local_key
-                    .key
-                    .clone()
-                    .parse()
+                HeaderValue::from_str(local_key.key.as_str())
                     .expect("failed to parse DD-API-KEY header"),
             );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
             headers.insert(
                 "DD-APPLICATION-KEY",
-                local_key
-                    .key
-                    .clone()
-                    .parse()
+                HeaderValue::from_str(local_key.key.as_str())
                     .expect("failed to parse DD-APPLICATION-KEY header"),
             );
         };
@@ -1049,7 +1007,7 @@ impl FastlyIntegrationAPI {
         headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
-        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
             Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
             Err(e) => {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
@@ -1064,20 +1022,14 @@ impl FastlyIntegrationAPI {
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
             headers.insert(
                 "DD-API-KEY",
-                local_key
-                    .key
-                    .clone()
-                    .parse()
+                HeaderValue::from_str(local_key.key.as_str())
                     .expect("failed to parse DD-API-KEY header"),
             );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
             headers.insert(
                 "DD-APPLICATION-KEY",
-                local_key
-                    .key
-                    .clone()
-                    .parse()
+                HeaderValue::from_str(local_key.key.as_str())
                     .expect("failed to parse DD-APPLICATION-KEY header"),
             );
         };
@@ -1166,7 +1118,7 @@ impl FastlyIntegrationAPI {
         headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
-        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
             Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
             Err(e) => {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
@@ -1181,20 +1133,14 @@ impl FastlyIntegrationAPI {
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
             headers.insert(
                 "DD-API-KEY",
-                local_key
-                    .key
-                    .clone()
-                    .parse()
+                HeaderValue::from_str(local_key.key.as_str())
                     .expect("failed to parse DD-API-KEY header"),
             );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
             headers.insert(
                 "DD-APPLICATION-KEY",
-                local_key
-                    .key
-                    .clone()
-                    .parse()
+                HeaderValue::from_str(local_key.key.as_str())
                     .expect("failed to parse DD-APPLICATION-KEY header"),
             );
         };
@@ -1331,7 +1277,7 @@ impl FastlyIntegrationAPI {
         headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
-        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
             Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
             Err(e) => {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
@@ -1346,20 +1292,14 @@ impl FastlyIntegrationAPI {
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
             headers.insert(
                 "DD-API-KEY",
-                local_key
-                    .key
-                    .clone()
-                    .parse()
+                HeaderValue::from_str(local_key.key.as_str())
                     .expect("failed to parse DD-API-KEY header"),
             );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
             headers.insert(
                 "DD-APPLICATION-KEY",
-                local_key
-                    .key
-                    .clone()
-                    .parse()
+                HeaderValue::from_str(local_key.key.as_str())
                     .expect("failed to parse DD-APPLICATION-KEY header"),
             );
         };

@@ -90,7 +90,7 @@ impl IPRangesAPI {
         headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
-        match HeaderValue::from_str(local_configuration.user_agent.clone().as_str()) {
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
             Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
             Err(e) => {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
