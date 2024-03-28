@@ -35,7 +35,7 @@ async fn main() {
                     .on_missing_data(OnMissingDataOption::SHOW_AND_NOTIFY_NO_DATA)
                     .renotify_interval(Some(60))
                     .require_full_window(true)
-                    .thresholds(MonitorThresholds::new().critical(2 as f64).warning(Some(1 as f64)))
+                    .thresholds(MonitorThresholds::new().critical(2.0 as f64).warning(Some(1.0 as f64)))
                     .timeout_h(Some(24)),
             )
             .priority(Some(3))

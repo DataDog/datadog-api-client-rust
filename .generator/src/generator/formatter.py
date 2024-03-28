@@ -148,6 +148,7 @@ def simple_type(schema, render_nullable=False, render_option=True, render_new=Fa
             "date": "String",
             "date-time": "chrono::DateTime<chrono::Utc>",
             "email": "String",
+            "uuid": "String",
             "binary": "Vec<u8>",
             None: "String",
         }[type_format]
@@ -427,7 +428,7 @@ def format_data_with_schema(
             def format_double(x):
                 if isinstance(x, (bool, str)):
                     raise TypeError(f"{x} is not supported type {schema}")
-                return str(x), set()
+                return str(float(x)), set()
 
             def format_number(x):
                 if isinstance(x, bool):

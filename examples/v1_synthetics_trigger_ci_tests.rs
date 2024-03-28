@@ -22,7 +22,7 @@ async fn main() {
                 SyntheticsBasicAuthWeb::new("PaSSw0RD!".to_string(), "my_username".to_string())
                     .type_(SyntheticsBasicAuthWebType::WEB),
             )))
-            .device_ids(vec![SyntheticsDeviceID::LAPTOP_LARGE])
+            .device_ids(vec![SyntheticsDeviceID::CHROME_LAPTOP_LARGE])
             .locations(vec!["aws:eu-west-3".to_string()])
             .metadata(
                 SyntheticsCIBatchMetadata::new()

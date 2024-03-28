@@ -4,6 +4,7 @@
 use crate::datadog::*;
 use log::warn;
 use reqwest;
+use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 
 /// GetCostByOrgOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_cost_by_org`]
@@ -368,10 +369,7 @@ pub struct UsageMeteringAPI {
 
 impl Default for UsageMeteringAPI {
     fn default() -> Self {
-        Self {
-            config: configuration::Configuration::new(),
-            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
-        }
+        Self::with_config(configuration::Configuration::default())
     }
 }
 
@@ -387,9 +385,36 @@ impl UsageMeteringAPI {
             reqwest_client_builder = reqwest_client_builder.proxy(proxy);
         }
 
-        let middleware_client_builder =
+        let mut middleware_client_builder =
             reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+
+        if config.enable_retry {
+            struct RetryableStatus;
+            impl reqwest_retry::RetryableStrategy for RetryableStatus {
+                fn handle(
+                    &self,
+                    res: &Result<reqwest::Response, reqwest_middleware::Error>,
+                ) -> Option<reqwest_retry::Retryable> {
+                    match res {
+                        Ok(success) => reqwest_retry::default_on_request_success(success),
+                        Err(_) => None,
+                    }
+                }
+            }
+            let backoff_policy = reqwest_retry::policies::ExponentialBackoff::builder()
+                .build_with_max_retries(config.max_retries);
+
+            let retry_middleware =
+                reqwest_retry::RetryTransientMiddleware::new_with_policy_and_strategy(
+                    backoff_policy,
+                    RetryableStatus,
+                );
+
+            middleware_client_builder = middleware_client_builder.with(retry_middleware);
+        }
+
         let client = middleware_client_builder.build();
+
         Self { config, client }
     }
 
@@ -400,7 +425,7 @@ impl UsageMeteringAPI {
         Self { config, client }
     }
 
-    /// Get active billing dimensions for cost attribution. Cost data for a given month becomes available no later than the 17th of the following month.
+    /// Get active billing dimensions for cost attribution. Cost data for a given month becomes available no later than the 19th of the following month.
     pub async fn get_active_billing_dimensions(
         &self,
     ) -> Result<
@@ -421,7 +446,7 @@ impl UsageMeteringAPI {
         }
     }
 
-    /// Get active billing dimensions for cost attribution. Cost data for a given month becomes available no later than the 17th of the following month.
+    /// Get active billing dimensions for cost attribution. Cost data for a given month becomes available no later than the 19th of the following month.
     pub async fn get_active_billing_dimensions_with_http_info(
         &self,
     ) -> Result<
@@ -448,20 +473,42 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -552,20 +599,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_month", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -668,20 +737,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_date", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -773,20 +864,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_month", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -910,20 +1023,42 @@ impl UsageMeteringAPI {
                 .query(&[("page[next_record_id]", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -956,7 +1091,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get monthly cost attribution by tag across multi-org and single root-org accounts.
-    /// Cost Attribution data for a given month becomes available no later than the 17th of the following month.
+    /// Cost Attribution data for a given month becomes available no later than the 19th of the following month.
     /// This API endpoint is paginated. To make sure you receive all records, check if the value of `next_record_id` is
     /// set in the response. If it is, make another request and pass `next_record_id` as a parameter.
     /// Pseudo code example:
@@ -997,7 +1132,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get monthly cost attribution by tag across multi-org and single root-org accounts.
-    /// Cost Attribution data for a given month becomes available no later than the 17th of the following month.
+    /// Cost Attribution data for a given month becomes available no later than the 19th of the following month.
     /// This API endpoint is paginated. To make sure you receive all records, check if the value of `next_record_id` is
     /// set in the response. If it is, make another request and pass `next_record_id` as a parameter.
     /// Pseudo code example:
@@ -1071,20 +1206,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("include_descendants", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -1167,20 +1324,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("view", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -1213,7 +1392,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for application security .
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_application_security_monitoring(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -1240,7 +1419,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for application security .
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_application_security_monitoring_with_http_info(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -1270,20 +1449,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -1316,8 +1517,8 @@ impl UsageMeteringAPI {
         }
     }
 
-    /// Get hourly usage for lambda traced invocations.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
+    /// Get hourly usage for Lambda traced invocations.
+    /// **Note:** This endpoint has been deprecated.. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_lambda_traced_invocations(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -1343,8 +1544,8 @@ impl UsageMeteringAPI {
         }
     }
 
-    /// Get hourly usage for lambda traced invocations.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
+    /// Get hourly usage for Lambda traced invocations.
+    /// **Note:** This endpoint has been deprecated.. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_lambda_traced_invocations_with_http_info(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -1374,20 +1575,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -1421,7 +1644,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for observability pipelines.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_observability_pipelines(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -1448,7 +1671,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for observability pipelines.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_observability_pipelines_with_http_info(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -1478,20 +1701,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 

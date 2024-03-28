@@ -1,6 +1,7 @@
 // Update an index returns "OK" response
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV1::api::api_logs_indexes::LogsIndexesAPI;
+use datadog_api_client::datadogV1::model::LogsDailyLimitReset;
 use datadog_api_client::datadogV1::model::LogsExclusion;
 use datadog_api_client::datadogV1::model::LogsExclusionFilter;
 use datadog_api_client::datadogV1::model::LogsFilter;
@@ -10,6 +11,12 @@ use datadog_api_client::datadogV1::model::LogsIndexUpdateRequest;
 async fn main() {
     let body = LogsIndexUpdateRequest::new(LogsFilter::new().query("source:python".to_string()))
         .daily_limit(300000000)
+        .daily_limit_reset(
+            LogsDailyLimitReset::new()
+                .reset_time("14:00".to_string())
+                .reset_utc_offset("+02:00".to_string()),
+        )
+        .daily_limit_warning_threshold_percentage(70.0 as f64)
         .disable_daily_limit(false)
         .exclusion_filters(vec![LogsExclusion::new("payment".to_string())
             .filter(LogsExclusionFilter::new(1.0).query("*".to_string()))])

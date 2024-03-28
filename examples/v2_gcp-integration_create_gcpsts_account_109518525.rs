@@ -15,7 +15,7 @@ async fn main() {
                 GCPSTSServiceAccountAttributes::new()
                     .account_tags(vec!["lorem".to_string(), "ipsum".to_string()])
                     .client_email(
-                        "252bf553ef04b351@test-project.iam.gserviceaccount.com".to_string(),
+                        "Test-252bf553ef04b351@test-project.iam.gserviceaccount.com".to_string(),
                     )
                     .host_filters(vec![]),
             )

@@ -24,7 +24,7 @@ pub struct CIAppPipelinesGroupBy {
     /// The value to use for logs that don't have the facet used to group-by.
     #[serde(rename = "missing")]
     pub missing: Option<crate::datadogV2::model::CIAppGroupByMissing>,
-    /// A sort rule.
+    /// A sort rule. The `aggregation` field is required when `type` is `measure`.
     #[serde(rename = "sort")]
     pub sort: Option<crate::datadogV2::model::CIAppAggregateSort>,
     /// A resulting object to put the given computes in over all the matching records.

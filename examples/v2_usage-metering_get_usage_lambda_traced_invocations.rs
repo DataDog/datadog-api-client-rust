@@ -1,4 +1,4 @@
-// Get hourly usage for lambda traced invocations returns "OK" response
+// Get hourly usage for Lambda traced invocations returns "OK" response
 use chrono::{DateTime, Utc};
 use datadog_api_client::datadog::configuration::Configuration;
 use datadog_api_client::datadogV2::api::api_usage_metering::GetUsageLambdaTracedInvocationsOptionalParams;

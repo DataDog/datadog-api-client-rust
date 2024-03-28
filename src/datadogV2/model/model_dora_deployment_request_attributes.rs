@@ -11,7 +11,10 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DORADeploymentRequestAttributes {
-    /// Unix timestamp in nanoseconds when the deployment finished. It should not be older than 3 hours.
+    /// Environment name to where the service was deployed.
+    #[serde(rename = "env")]
+    pub env: Option<String>,
+    /// Unix timestamp in nanoseconds when the deployment finished. It should not be older than 1 hour.
     #[serde(rename = "finished_at")]
     pub finished_at: i64,
     /// Git info for DORA Metrics events.
@@ -41,6 +44,7 @@ impl DORADeploymentRequestAttributes {
         started_at: i64,
     ) -> DORADeploymentRequestAttributes {
         DORADeploymentRequestAttributes {
+            env: None,
             finished_at,
             git: None,
             id: None,
@@ -49,6 +53,11 @@ impl DORADeploymentRequestAttributes {
             version: None,
             _unparsed: false,
         }
+    }
+
+    pub fn env(mut self, value: String) -> Self {
+        self.env = Some(value);
+        self
     }
 
     pub fn git(mut self, value: crate::datadogV2::model::DORAGitInfo) -> Self {
@@ -84,6 +93,7 @@ impl<'de> Deserialize<'de> for DORADeploymentRequestAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut env: Option<String> = None;
                 let mut finished_at: Option<i64> = None;
                 let mut git: Option<crate::datadogV2::model::DORAGitInfo> = None;
                 let mut id: Option<String> = None;
@@ -94,6 +104,12 @@ impl<'de> Deserialize<'de> for DORADeploymentRequestAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "env" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            env = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "finished_at" => {
                             finished_at =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -131,6 +147,7 @@ impl<'de> Deserialize<'de> for DORADeploymentRequestAttributes {
                 let started_at = started_at.ok_or_else(|| M::Error::missing_field("started_at"))?;
 
                 let content = DORADeploymentRequestAttributes {
+                    env,
                     finished_at,
                     git,
                     id,

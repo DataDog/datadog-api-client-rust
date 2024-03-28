@@ -36,6 +36,37 @@
       "type": "idempotent"
     }
   },
+  "DeleteOpenAPI": {
+    "tag": "API Management",
+    "undo": {
+      "type": "idempotent"
+    }
+  },
+  "GetOpenAPI": {
+    "tag": "API Management",
+    "undo": {
+      "type": "safe"
+    }
+  },
+  "UpdateOpenAPI": {
+    "tag": "API Management",
+    "undo": {
+      "type": "idempotent"
+    }
+  },
+  "CreateOpenAPI": {
+    "tag": "API Management",
+    "undo": {
+      "operationId": "DeleteOpenAPI",
+      "parameters": [
+        {
+          "name": "id",
+          "source": "data.id"
+        }
+      ],
+      "type": "unsafe"
+    }
+  },
   "ListSpansMetrics": {
     "tag": "Spans Metrics",
     "undo": {
@@ -185,6 +216,91 @@
   },
   "UpdateAuthNMapping": {
     "tag": "AuthN Mappings",
+    "undo": {
+      "type": "idempotent"
+    }
+  },
+  "SearchCases": {
+    "tag": "Case Management",
+    "undo": {
+      "type": "safe"
+    }
+  },
+  "CreateCase": {
+    "tag": "Case Management",
+    "undo": {
+      "type": "safe"
+    }
+  },
+  "GetProjects": {
+    "tag": "Case Management",
+    "undo": {
+      "type": "safe"
+    }
+  },
+  "CreateProject": {
+    "tag": "Case Management",
+    "undo": {
+      "operationId": "DeleteProject",
+      "parameters": [
+        {
+          "name": "project_id",
+          "source": "data.id"
+        }
+      ],
+      "type": "unsafe"
+    }
+  },
+  "DeleteProject": {
+    "tag": "Case Management",
+    "undo": {
+      "type": "idempotent"
+    }
+  },
+  "GetProject": {
+    "tag": "Case Management",
+    "undo": {
+      "type": "safe"
+    }
+  },
+  "GetCase": {
+    "tag": "Case Management",
+    "undo": {
+      "type": "safe"
+    }
+  },
+  "ArchiveCase": {
+    "tag": "Case Management",
+    "undo": {
+      "type": "idempotent"
+    }
+  },
+  "AssignCase": {
+    "tag": "Case Management",
+    "undo": {
+      "type": "idempotent"
+    }
+  },
+  "UpdatePriority": {
+    "tag": "Case Management",
+    "undo": {
+      "type": "idempotent"
+    }
+  },
+  "UpdateStatus": {
+    "tag": "Case Management",
+    "undo": {
+      "type": "idempotent"
+    }
+  },
+  "UnarchiveCase": {
+    "tag": "Case Management",
+    "undo": {
+      "type": "idempotent"
+    }
+  },
+  "UnassignCase": {
+    "tag": "Case Management",
     "undo": {
       "type": "idempotent"
     }
@@ -960,6 +1076,43 @@
       "type": "unsafe"
     }
   },
+  "ListLogsCustomDestinations": {
+    "tag": "Logs Custom Destinations",
+    "undo": {
+      "type": "safe"
+    }
+  },
+  "CreateLogsCustomDestination": {
+    "tag": "Logs Custom Destinations",
+    "undo": {
+      "operationId": "DeleteLogsCustomDestination",
+      "parameters": [
+        {
+          "name": "custom_destination_id",
+          "source": "data.id"
+        }
+      ],
+      "type": "unsafe"
+    }
+  },
+  "DeleteLogsCustomDestination": {
+    "tag": "Logs Custom Destinations",
+    "undo": {
+      "type": "idempotent"
+    }
+  },
+  "GetLogsCustomDestination": {
+    "tag": "Logs Custom Destinations",
+    "undo": {
+      "type": "safe"
+    }
+  },
+  "UpdateLogsCustomDestination": {
+    "tag": "Logs Custom Destinations",
+    "undo": {
+      "type": "idempotent"
+    }
+  },
   "ListLogsMetrics": {
     "tag": "Logs Metrics",
     "undo": {
@@ -1041,6 +1194,12 @@
     }
   },
   "ListTagsByMetricName": {
+    "tag": "Metrics",
+    "undo": {
+      "type": "safe"
+    }
+  },
+  "ListMetricAssets": {
     "tag": "Metrics",
     "undo": {
       "type": "safe"
@@ -1209,6 +1368,49 @@
     "tag": "Metrics",
     "undo": {
       "type": "idempotent"
+    }
+  },
+  "ListCSMThreatsAgentRules": {
+    "tag": "Cloud Workload Security",
+    "undo": {
+      "type": "safe"
+    }
+  },
+  "CreateCSMThreatsAgentRule": {
+    "tag": "Cloud Workload Security",
+    "undo": {
+      "operationId": "DeleteCSMThreatsAgentRule",
+      "parameters": [
+        {
+          "name": "agent_rule_id",
+          "source": "data.id"
+        }
+      ],
+      "type": "unsafe"
+    }
+  },
+  "DeleteCSMThreatsAgentRule": {
+    "tag": "Cloud Workload Security",
+    "undo": {
+      "type": "idempotent"
+    }
+  },
+  "GetCSMThreatsAgentRule": {
+    "tag": "Cloud Workload Security",
+    "undo": {
+      "type": "safe"
+    }
+  },
+  "UpdateCSMThreatsAgentRule": {
+    "tag": "Cloud Workload Security",
+    "undo": {
+      "type": "idempotent"
+    }
+  },
+  "DownloadCSMThreatsPolicy": {
+    "tag": "Cloud Workload Security",
+    "undo": {
+      "type": "safe"
     }
   },
   "DeleteRestrictionPolicy": {
@@ -1493,6 +1695,43 @@
       "type": "idempotent"
     }
   },
+  "ListSecurityMonitoringSuppressions": {
+    "tag": "Security Monitoring",
+    "undo": {
+      "type": "safe"
+    }
+  },
+  "CreateSecurityMonitoringSuppression": {
+    "tag": "Security Monitoring",
+    "undo": {
+      "operationId": "DeleteSecurityMonitoringSuppression",
+      "parameters": [
+        {
+          "name": "suppression_id",
+          "source": "data.id"
+        }
+      ],
+      "type": "unsafe"
+    }
+  },
+  "DeleteSecurityMonitoringSuppression": {
+    "tag": "Security Monitoring",
+    "undo": {
+      "type": "idempotent"
+    }
+  },
+  "GetSecurityMonitoringSuppression": {
+    "tag": "Security Monitoring",
+    "undo": {
+      "type": "safe"
+    }
+  },
+  "UpdateSecurityMonitoringSuppression": {
+    "tag": "Security Monitoring",
+    "undo": {
+      "type": "idempotent"
+    }
+  },
   "ListSecurityMonitoringRules": {
     "tag": "Security Monitoring",
     "undo": {
@@ -1510,6 +1749,12 @@
         }
       ],
       "type": "unsafe"
+    }
+  },
+  "ValidateSecurityMonitoringRule": {
+    "tag": "Security Monitoring",
+    "undo": {
+      "type": "idempotent"
     }
   },
   "DeleteSecurityMonitoringRule": {

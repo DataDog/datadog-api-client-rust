@@ -3,9 +3,15 @@
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
 use async_stream::try_stream;
+use flate2::{
+    write::{GzEncoder, ZlibEncoder},
+    Compression,
+};
 use futures_core::stream::Stream;
 use reqwest;
+use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
+use std::io::Write;
 
 /// GetTeamMembershipsOptionalParams is a struct for passing parameters to the method [`TeamsAPI::get_team_memberships`]
 #[non_exhaustive]
@@ -282,10 +288,7 @@ pub struct TeamsAPI {
 
 impl Default for TeamsAPI {
     fn default() -> Self {
-        Self {
-            config: configuration::Configuration::new(),
-            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
-        }
+        Self::with_config(configuration::Configuration::default())
     }
 }
 
@@ -301,9 +304,36 @@ impl TeamsAPI {
             reqwest_client_builder = reqwest_client_builder.proxy(proxy);
         }
 
-        let middleware_client_builder =
+        let mut middleware_client_builder =
             reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+
+        if config.enable_retry {
+            struct RetryableStatus;
+            impl reqwest_retry::RetryableStrategy for RetryableStatus {
+                fn handle(
+                    &self,
+                    res: &Result<reqwest::Response, reqwest_middleware::Error>,
+                ) -> Option<reqwest_retry::Retryable> {
+                    match res {
+                        Ok(success) => reqwest_retry::default_on_request_success(success),
+                        Err(_) => None,
+                    }
+                }
+            }
+            let backoff_policy = reqwest_retry::policies::ExponentialBackoff::builder()
+                .build_with_max_retries(config.max_retries);
+
+            let retry_middleware =
+                reqwest_retry::RetryTransientMiddleware::new_with_policy_and_strategy(
+                    backoff_policy,
+                    RetryableStatus,
+                );
+
+            middleware_client_builder = middleware_client_builder.with(retry_middleware);
+        }
+
         let client = middleware_client_builder.build();
+
         Self { config, client }
     }
 
@@ -353,27 +383,85 @@ impl TeamsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
         // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
         if body.serialize(&mut ser).is_ok() {
-            local_req_builder = local_req_builder.body(ser.into_inner());
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(Error::Io(e)),
+                        }
+                    }
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
         }
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -444,27 +532,85 @@ impl TeamsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
         // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
         if body.serialize(&mut ser).is_ok() {
-            local_req_builder = local_req_builder.body(ser.into_inner());
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(Error::Io(e)),
+                        }
+                    }
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
         }
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -540,27 +686,85 @@ impl TeamsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
         // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
         if body.serialize(&mut ser).is_ok() {
-            local_req_builder = local_req_builder.body(ser.into_inner());
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(Error::Io(e)),
+                        }
+                    }
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
         }
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -617,20 +821,39 @@ impl TeamsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
         // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -686,20 +909,39 @@ impl TeamsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
         // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -759,20 +1001,39 @@ impl TeamsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
         // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -834,20 +1095,39 @@ impl TeamsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
         // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -917,20 +1197,39 @@ impl TeamsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
         // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -998,20 +1297,39 @@ impl TeamsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
         // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -1064,6 +1382,40 @@ impl TeamsAPI {
         }
     }
 
+    pub fn get_team_memberships_with_pagination(
+        &self,
+        team_id: String,
+        mut params: GetTeamMembershipsOptionalParams,
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::UserTeam, Error<GetTeamMembershipsError>>> + '_
+    {
+        try_stream! {
+            let mut page_size: i64 = 10;
+            if params.page_size.is_none() {
+                params.page_size = Some(page_size);
+            } else {
+                page_size = params.page_size.unwrap().clone();
+            }
+            if params.page_number.is_none() {
+                params.page_number = Some(0);
+            }
+            loop {
+                let resp = self.get_team_memberships( team_id.clone(),params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                params.page_number = Some(params.page_number.unwrap() + 1);
+            }
+        }
+    }
+
     /// Get a paginated list of members for a team
     pub async fn get_team_memberships_with_http_info(
         &self,
@@ -1109,20 +1461,39 @@ impl TeamsAPI {
                 local_req_builder.query(&[("filter[keyword]", &local_query_param.to_string())]);
         };
 
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
         // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -1199,20 +1570,39 @@ impl TeamsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
         // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -1284,20 +1674,39 @@ impl TeamsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
         // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -1451,20 +1860,39 @@ impl TeamsAPI {
             )]);
         };
 
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
         // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -1535,27 +1963,85 @@ impl TeamsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
         // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
         if body.serialize(&mut ser).is_ok() {
-            local_req_builder = local_req_builder.body(ser.into_inner());
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(Error::Io(e)),
+                        }
+                    }
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
         }
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -1632,27 +2118,85 @@ impl TeamsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
         // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
         if body.serialize(&mut ser).is_ok() {
-            local_req_builder = local_req_builder.body(ser.into_inner());
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(Error::Io(e)),
+                        }
+                    }
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
         }
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -1731,27 +2275,85 @@ impl TeamsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
         // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
         if body.serialize(&mut ser).is_ok() {
-            local_req_builder = local_req_builder.body(ser.into_inner());
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(Error::Io(e)),
+                        }
+                    }
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
         }
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -1833,27 +2435,85 @@ impl TeamsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
 
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
         // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
-        );
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
         if body.serialize(&mut ser).is_ok() {
-            local_req_builder = local_req_builder.body(ser.into_inner());
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(Error::Io(e)),
+                        }
+                    }
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
         }
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 

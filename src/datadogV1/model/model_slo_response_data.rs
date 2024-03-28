@@ -70,6 +70,9 @@ pub struct SLOResponseData {
     /// min of all of those requests.
     #[serde(rename = "query")]
     pub query: Option<crate::datadogV1::model::ServiceLevelObjectiveQuery>,
+    /// A generic SLI specification. This is currently used for time-slice SLOs only.
+    #[serde(rename = "sli_specification")]
+    pub sli_specification: Option<crate::datadogV1::model::SLOSliSpec>,
     /// A list of tags associated with this service level objective.
     /// Always included in service level objective responses (but may be empty).
     /// Optional in create/update requests.
@@ -114,6 +117,7 @@ impl SLOResponseData {
             monitor_tags: None,
             name: None,
             query: None,
+            sli_specification: None,
             tags: None,
             target_threshold: None,
             thresholds: None,
@@ -176,6 +180,11 @@ impl SLOResponseData {
 
     pub fn query(mut self, value: crate::datadogV1::model::ServiceLevelObjectiveQuery) -> Self {
         self.query = Some(value);
+        self
+    }
+
+    pub fn sli_specification(mut self, value: crate::datadogV1::model::SLOSliSpec) -> Self {
+        self.sli_specification = Some(value);
         self
     }
 
@@ -244,6 +253,7 @@ impl<'de> Deserialize<'de> for SLOResponseData {
                 let mut monitor_tags: Option<Vec<String>> = None;
                 let mut name: Option<String> = None;
                 let mut query: Option<crate::datadogV1::model::ServiceLevelObjectiveQuery> = None;
+                let mut sli_specification: Option<crate::datadogV1::model::SLOSliSpec> = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut target_threshold: Option<f64> = None;
                 let mut thresholds: Option<Vec<crate::datadogV1::model::SLOThreshold>> = None;
@@ -322,6 +332,23 @@ impl<'de> Deserialize<'de> for SLOResponseData {
                             }
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "sli_specification" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            sli_specification =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _sli_specification) = sli_specification {
+                                match _sli_specification {
+                                    crate::datadogV1::model::SLOSliSpec::UnparsedObject(
+                                        _sli_specification,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
+                        }
                         "tags" => {
                             if v.is_null() {
                                 continue;
@@ -394,6 +421,7 @@ impl<'de> Deserialize<'de> for SLOResponseData {
                     monitor_tags,
                     name,
                     query,
+                    sli_specification,
                     tags,
                     target_threshold,
                     thresholds,

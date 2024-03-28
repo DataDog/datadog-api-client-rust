@@ -14,6 +14,18 @@
   {
     "parameters": [
       {
+        "name": "openapi_spec_file",
+        "value": "\"openapi-spec.yaml\""
+      }
+    ],
+    "step": "there is a valid \"managed_api\" in the system",
+    "key": "managed_api",
+    "tag": "API Management",
+    "operationId": "CreateOpenAPI"
+  },
+  {
+    "parameters": [
+      {
         "name": "body",
         "value": "{\n  \"data\": {\n    \"id\": \"{{ unique }}\",\n    \"attributes\": {\n      \"filter\": {\n        \"query\": \"source:{{ unique }}\"\n      },\n      \"compute\": {\n        \"aggregation_type\": \"distribution\",\n        \"path\": \"@duration\",\n        \"include_percentiles\": false\n      },\n      \"group_by\": [\n        {\n            \"path\": \"resource_name\",\n            \"tag_name\": \"resource_name\"\n        }\n      ]\n    },\n    \"type\": \"spans_metrics\"\n  }\n}"
       }
@@ -46,6 +58,19 @@
     "key": "authn_mapping",
     "tag": "AuthN Mappings",
     "operationId": "CreateAuthNMapping"
+  },
+  {
+    "parameters": [
+      {
+        "name": "body",
+        "value": "{\n  \"data\": {\n    \"attributes\": {\n      \"title\": \"My new case\",\n      \"type\": \"STANDARD\",\n      \"priority\": \"P4\"\n    },\n    \"relationships\": {\n      \"project\": {\n        \"data\": {\n          \"id\": \"d4bbe1af-f36e-42f1-87c1-493ca35c320e\",\n          \"type\": \"project\"\n        }\n      }\n    },\n    \"type\": \"case\"\n  }\n}"
+      }
+    ],
+    "source": "data",
+    "step": "there is a valid \"case\" in the system",
+    "key": "case",
+    "tag": "Case Management",
+    "operationId": "CreateCase"
   },
   {
     "parameters": [
@@ -167,7 +192,7 @@
     "parameters": [
       {
         "name": "body",
-        "value": "{\n  \"data\": {\n    \"attributes\": {\n      \"client_email\": \"{{ unique_hash }}@example.com\",\n      \"host_filters\": []\n    },\n    \"type\": \"gcp_service_account\"\n  }\n}"
+        "value": "{\n  \"data\": {\n    \"attributes\": {\n      \"client_email\": \"Test-{{ unique_hash }}@example.com\",\n      \"host_filters\": []\n    },\n    \"type\": \"gcp_service_account\"\n  }\n}"
       }
     ],
     "step": "there is a valid \"gcp_sts_account\" in the system",
@@ -191,7 +216,7 @@
     "parameters": [
       {
         "name": "body",
-        "value": "{\n  \"data\": {\n    \"type\": \"cloudflare-accounts\",\n    \"attributes\": {\n      \"api_key\": \"fakekey\",\n      \"name\": \"{{ unique_lower_alnum }}\",\n      \"email\": \"dev@datadog.com\"\n    }\n  }\n}"
+        "value": "{\n  \"data\": {\n    \"type\": \"cloudflare-accounts\",\n    \"attributes\": {\n      \"api_key\": \"fakekey\",\n      \"name\": \"{{ unique_lower_alnum }}\",\n      \"email\": \"dev@datadog.com\",\n      \"zones\": [\"zone-id-1\", \"zone-id-2\"],\n      \"resources\": [\"web\", \"dns\"]\n    }\n  }\n}"
       }
     ],
     "step": "there is a valid \"cloudflare_account\" in the system",
@@ -263,6 +288,18 @@
     "parameters": [
       {
         "name": "body",
+        "value": "{\n  \"data\": {\n    \"attributes\": {\n      \"name\": \"{{ unique }}\",\n      \"query\": \"source:nginx\",\n      \"enabled\": false,\n      \"forwarder_destination\": {\n        \"type\": \"http\",\n        \"endpoint\": \"https://example.com\",\n        \"auth\": {\n          \"type\": \"basic\",\n          \"username\": \"my-username\",\n          \"password\": \"my-password\"\n        }\n      },\n      \"forward_tags_restriction_list_type\": \"BLOCK_LIST\",\n      \"forward_tags_restriction_list\": [\"host\"],\n      \"forward_tags\": false\n    },\n    \"type\": \"custom_destination\"\n  }\n}"
+      }
+    ],
+    "step": "there is a valid \"custom_destination\" in the system",
+    "key": "custom_destination",
+    "tag": "Logs Custom Destinations",
+    "operationId": "CreateLogsCustomDestination"
+  },
+  {
+    "parameters": [
+      {
+        "name": "body",
         "value": "{\n  \"data\": {\n    \"id\": \"{{ unique }}\",\n    \"attributes\": {\n      \"filter\": {\n        \"query\": \"source:{{ unique }}\"\n      },\n      \"compute\": {\n        \"aggregation_type\": \"count\"\n      }\n    },\n    \"type\": \"logs_metrics\"\n  }\n}"
       }
     ],
@@ -329,6 +366,18 @@
     "key": "powerpack",
     "tag": "Powerpack",
     "operationId": "CreatePowerpack"
+  },
+  {
+    "parameters": [
+      {
+        "name": "body",
+        "value": "{\n  \"data\": {\n    \"type\": \"agent_rule\",\n    \"attributes\": {\n      \"name\": \"{{ unique_lower_alnum }}\",\n      \"description\": \"My Agent rule\",\n      \"expression\": \"exec.file.name == \\\"sh\\\"\",\n      \"enabled\": true\n     }\n  }\n}"
+      }
+    ],
+    "step": "there is a valid \"agent_rule_rc\" in the system",
+    "key": "agent_rule",
+    "tag": "Cloud Workload Security",
+    "operationId": "CreateCSMThreatsAgentRule"
   },
   {
     "parameters": [
@@ -421,6 +470,18 @@
     "key": "security_filter",
     "tag": "Security Monitoring",
     "operationId": "CreateSecurityFilter"
+  },
+  {
+    "parameters": [
+      {
+        "name": "body",
+        "value": "{\n  \"data\": {\n    \"type\": \"suppressions\",\n    \"attributes\": {\n      \"enabled\": true,\n      \"name\": \"{{ unique }}\",\n      \"description\": \"{{ unique }}\",\n      \"rule_query\": \"source:cloudtrail\",\n      \"suppression_query\": \"env:test\"\n    }\n  }\n}"
+      }
+    ],
+    "step": "there is a valid \"suppression\" in the system",
+    "key": "suppression",
+    "tag": "Security Monitoring",
+    "operationId": "CreateSecurityMonitoringSuppression"
   },
   {
     "parameters": [

@@ -12,7 +12,7 @@ async fn main() {
     let body = DistributionPointsPayload::new(vec![DistributionPointsSeries::new(
         "system.load.1.dist".to_string(),
         vec![vec![
-            DistributionPointItem::DistributionPointTimestamp(1636629071 as f64),
+            DistributionPointItem::DistributionPointTimestamp(1636629071.0 as f64),
             DistributionPointItem::DistributionPointData(vec![1.0, 2.0]),
         ]],
     )]);

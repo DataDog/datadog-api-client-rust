@@ -1,1 +1,39 @@
-{"http_interactions": [{"request": {"body": {"string": "{\"cases\":[{\"status\":\"info\"}],\"isEnabled\":true,\"message\":\"Test rule\",\"name\":\"Test-Create_a_detection_rule_returns_Bad_Request_response-1666186593\",\"options\":{},\"queries\":[{\"query\":\"\"}],\"tags\":[]}", "encoding": null}, "headers": {"Accept": ["application/json"], "Content-Type": ["application/json"]}, "method": "post", "uri": "https://api.datadoghq.com/api/v2/security_monitoring/rules"}, "response": {"body": {"string": "{\"errors\":[\"Internal error\"]}\n", "encoding": null}, "headers": {"Content-Type": ["application/json"]}, "status": {"code": 400, "message": "Bad Request"}}, "recorded_at": "Wed, 19 Oct 2022 13:36:33 GMT"}], "recorded_with": "VCR 6.0.0"}
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"cases\":[{\"status\":\"info\"}],\"isEnabled\":true,\"message\":\"Test rule\",\"name\":\"Test-Create_a_detection_rule_returns_Bad_Request_response-1666186593\",\"options\":{},\"queries\":[{\"query\":\"\"}],\"tags\":[]}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/security_monitoring/rules"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[\"Internal error\"]}\n",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Wed, 19 Oct 2022 13:36:33 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

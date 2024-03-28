@@ -3,6 +3,7 @@
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog::*;
 use reqwest;
+use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 
 /// GetDailyCustomReportsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_daily_custom_reports`]
@@ -230,57 +231,6 @@ impl GetUsageAnalyzedLogsOptionalParams {
     /// **before** this hour.
     pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
-        self
-    }
-}
-
-/// GetUsageAttributionOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_attribution`]
-#[non_exhaustive]
-#[derive(Clone, Default, Debug)]
-pub struct GetUsageAttributionOptionalParams {
-    /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage ending this month.
-    pub end_month: Option<chrono::DateTime<chrono::Utc>>,
-    /// The direction to sort by: `[desc, asc]`.
-    pub sort_direction: Option<crate::datadogV1::model::UsageSortDirection>,
-    /// The field to sort by.
-    pub sort_name: Option<crate::datadogV1::model::UsageAttributionSort>,
-    /// Include child org usage in the response. Defaults to false.
-    pub include_descendants: Option<bool>,
-    /// Number of records to skip before beginning to return.
-    pub offset: Option<i64>,
-    /// Maximum number of records to be returned.
-    pub limit: Option<i64>,
-}
-
-impl GetUsageAttributionOptionalParams {
-    /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage ending this month.
-    pub fn end_month(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
-        self.end_month = Some(value);
-        self
-    }
-    /// The direction to sort by: `[desc, asc]`.
-    pub fn sort_direction(mut self, value: crate::datadogV1::model::UsageSortDirection) -> Self {
-        self.sort_direction = Some(value);
-        self
-    }
-    /// The field to sort by.
-    pub fn sort_name(mut self, value: crate::datadogV1::model::UsageAttributionSort) -> Self {
-        self.sort_name = Some(value);
-        self
-    }
-    /// Include child org usage in the response. Defaults to false.
-    pub fn include_descendants(mut self, value: bool) -> Self {
-        self.include_descendants = Some(value);
-        self
-    }
-    /// Number of records to skip before beginning to return.
-    pub fn offset(mut self, value: i64) -> Self {
-        self.offset = Some(value);
-        self
-    }
-    /// Maximum number of records to be returned.
-    pub fn limit(mut self, value: i64) -> Self {
-        self.limit = Some(value);
         self
     }
 }
@@ -893,15 +843,6 @@ pub enum GetUsageAnalyzedLogsError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUsageAttributionError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_attribution`]
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum GetUsageAttributionError {
-    Status403(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV1::model::APIErrorResponse>),
-    UnknownValue(serde_json::Value),
-}
-
 /// GetUsageAuditLogsError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_audit_logs`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1190,10 +1131,7 @@ pub struct UsageMeteringAPI {
 
 impl Default for UsageMeteringAPI {
     fn default() -> Self {
-        Self {
-            config: configuration::Configuration::new(),
-            client: reqwest_middleware::ClientBuilder::new(reqwest::Client::new()).build(),
-        }
+        Self::with_config(configuration::Configuration::default())
     }
 }
 
@@ -1209,9 +1147,36 @@ impl UsageMeteringAPI {
             reqwest_client_builder = reqwest_client_builder.proxy(proxy);
         }
 
-        let middleware_client_builder =
+        let mut middleware_client_builder =
             reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+
+        if config.enable_retry {
+            struct RetryableStatus;
+            impl reqwest_retry::RetryableStrategy for RetryableStatus {
+                fn handle(
+                    &self,
+                    res: &Result<reqwest::Response, reqwest_middleware::Error>,
+                ) -> Option<reqwest_retry::Retryable> {
+                    match res {
+                        Ok(success) => reqwest_retry::default_on_request_success(success),
+                        Err(_) => None,
+                    }
+                }
+            }
+            let backoff_policy = reqwest_retry::policies::ExponentialBackoff::builder()
+                .build_with_max_retries(config.max_retries);
+
+            let retry_middleware =
+                reqwest_retry::RetryTransientMiddleware::new_with_policy_and_strategy(
+                    backoff_policy,
+                    RetryableStatus,
+                );
+
+            middleware_client_builder = middleware_client_builder.with(retry_middleware);
+        }
+
         let client = middleware_client_builder.build();
+
         Self { config, client }
     }
 
@@ -1291,20 +1256,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("sort", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -1438,20 +1425,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("include_descendants", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -1484,7 +1493,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for incident management.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_incident_management(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -1511,7 +1520,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for incident management.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_incident_management_with_http_info(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -1541,20 +1550,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -1587,7 +1618,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for ingested spans.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_ingested_spans(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -1612,7 +1643,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for ingested spans.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_ingested_spans_with_http_info(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -1642,20 +1673,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -1756,20 +1809,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("sort", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -1913,20 +1988,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("include_descendants", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -2008,20 +2105,42 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -2103,20 +2222,42 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -2149,7 +2290,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for analyzed logs (Security Monitoring).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_analyzed_logs(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -2174,7 +2315,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for analyzed logs (Security Monitoring).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_analyzed_logs_with_http_info(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -2204,20 +2345,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -2239,137 +2402,6 @@ impl UsageMeteringAPI {
             };
         } else {
             let local_entity: Option<GetUsageAnalyzedLogsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
-            Err(Error::ResponseError(local_error))
-        }
-    }
-
-    /// Get usage attribution.
-    /// **Note:** This endpoint will be fully deprecated on December 1, 2022.
-    /// Refer to [Migrating from v1 to v2 of the Usage Attribution API](<https://docs.datadoghq.com/account_management/guide/usage-attribution-migration/>) for the associated migration guide.
-    pub async fn get_usage_attribution(
-        &self,
-        start_month: chrono::DateTime<chrono::Utc>,
-        fields: crate::datadogV1::model::UsageAttributionSupportedMetrics,
-        params: GetUsageAttributionOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageAttributionResponse, Error<GetUsageAttributionError>>
-    {
-        match self
-            .get_usage_attribution_with_http_info(start_month, fields, params)
-            .await
-        {
-            Ok(response_content) => {
-                if let Some(e) = response_content.entity {
-                    Ok(e)
-                } else {
-                    Err(Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
-                }
-            }
-            Err(err) => Err(err),
-        }
-    }
-
-    /// Get usage attribution.
-    /// **Note:** This endpoint will be fully deprecated on December 1, 2022.
-    /// Refer to [Migrating from v1 to v2 of the Usage Attribution API](<https://docs.datadoghq.com/account_management/guide/usage-attribution-migration/>) for the associated migration guide.
-    pub async fn get_usage_attribution_with_http_info(
-        &self,
-        start_month: chrono::DateTime<chrono::Utc>,
-        fields: crate::datadogV1::model::UsageAttributionSupportedMetrics,
-        params: GetUsageAttributionOptionalParams,
-    ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageAttributionResponse>,
-        Error<GetUsageAttributionError>,
-    > {
-        let local_configuration = &self.config;
-        let operation_id = "v1.get_usage_attribution";
-
-        // unbox and build optional parameters
-        let end_month = params.end_month;
-        let sort_direction = params.sort_direction;
-        let sort_name = params.sort_name;
-        let include_descendants = params.include_descendants;
-        let offset = params.offset;
-        let limit = params.limit;
-
-        let local_client = &self.client;
-
-        let local_uri_str = format!(
-            "{}/api/v1/usage/attribution",
-            local_configuration.get_operation_host(operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
-
-        local_req_builder = local_req_builder.query(&[("start_month", &start_month.to_string())]);
-        local_req_builder = local_req_builder.query(&[("fields", &fields.to_string())]);
-        if let Some(ref local_query_param) = end_month {
-            local_req_builder =
-                local_req_builder.query(&[("end_month", &local_query_param.to_string())]);
-        };
-        if let Some(ref local_query_param) = sort_direction {
-            local_req_builder =
-                local_req_builder.query(&[("sort_direction", &local_query_param.to_string())]);
-        };
-        if let Some(ref local_query_param) = sort_name {
-            local_req_builder =
-                local_req_builder.query(&[("sort_name", &local_query_param.to_string())]);
-        };
-        if let Some(ref local_query_param) = include_descendants {
-            local_req_builder =
-                local_req_builder.query(&[("include_descendants", &local_query_param.to_string())]);
-        };
-        if let Some(ref local_query_param) = offset {
-            local_req_builder =
-                local_req_builder.query(&[("offset", &local_query_param.to_string())]);
-        };
-        if let Some(ref local_query_param) = limit {
-            local_req_builder =
-                local_req_builder.query(&[("limit", &local_query_param.to_string())]);
-        };
-
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
-        );
-
-        // build auth
-        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
-        };
-        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
-        };
-
-        let local_req = local_req_builder.build()?;
-        let local_resp = local_client.execute(local_req).await?;
-
-        let local_status = local_resp.status();
-        let local_content = local_resp.text().await?;
-
-        if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV1::model::UsageAttributionResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
-            };
-        } else {
-            let local_entity: Option<GetUsageAttributionError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
@@ -2436,20 +2468,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -2531,20 +2585,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("month", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -2577,7 +2653,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for CI visibility (tests, pipeline, and spans).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_ci_app(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -2598,7 +2674,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for CI visibility (tests, pipeline, and spans).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_ci_app_with_http_info(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -2628,20 +2704,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -2674,7 +2772,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for cloud workload security.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_cws(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -2695,7 +2793,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for cloud workload security.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_cws_with_http_info(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -2723,20 +2821,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -2767,7 +2887,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for cloud security management (CSM) pro.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_cloud_security_posture_management(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -2794,7 +2914,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for cloud security management (CSM) pro.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_cloud_security_posture_management_with_http_info(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -2824,20 +2944,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -2871,7 +3013,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for database monitoring
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_dbm(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -2892,7 +3034,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for database monitoring
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_dbm_with_http_info(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -2920,20 +3062,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -2964,7 +3128,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for [Fargate](<https://docs.datadoghq.com/integrations/ecs_fargate/>).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_fargate(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -2988,7 +3152,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for [Fargate](<https://docs.datadoghq.com/integrations/ecs_fargate/>).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_fargate_with_http_info(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -3018,20 +3182,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -3064,7 +3250,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for hosts and containers.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_hosts(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -3085,7 +3271,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for hosts and containers.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_hosts_with_http_info(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -3115,20 +3301,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -3161,7 +3369,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for indexed spans.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_indexed_spans(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -3186,7 +3394,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for indexed spans.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_indexed_spans_with_http_info(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -3216,20 +3424,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -3262,7 +3492,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for IoT.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_internet_of_things(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -3287,7 +3517,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for IoT.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_internet_of_things_with_http_info(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -3317,20 +3547,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -3361,8 +3613,8 @@ impl UsageMeteringAPI {
         }
     }
 
-    /// Get hourly usage for lambda.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// Get hourly usage for Lambda.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_lambda(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -3382,8 +3634,8 @@ impl UsageMeteringAPI {
         }
     }
 
-    /// Get hourly usage for lambda.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// Get hourly usage for Lambda.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_lambda_with_http_info(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -3413,20 +3665,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -3459,7 +3733,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for logs.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_logs(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -3480,7 +3754,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for logs.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_logs_with_http_info(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -3508,20 +3782,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -3617,20 +3913,42 @@ impl UsageMeteringAPI {
             )]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -3663,7 +3981,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for indexed logs by retention period.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_logs_by_retention(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -3690,7 +4008,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for indexed logs by retention period.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_logs_by_retention_with_http_info(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -3720,20 +4038,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -3766,7 +4106,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for network flows.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_network_flows(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -3791,7 +4131,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for network flows.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_network_flows_with_http_info(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -3821,20 +4161,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -3867,7 +4229,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for network hosts.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_network_hosts(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -3892,7 +4254,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for network hosts.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_network_hosts_with_http_info(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -3922,20 +4284,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -3968,7 +4352,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for online archive.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_online_archive(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -3995,7 +4379,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for online archive.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_online_archive_with_http_info(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -4025,20 +4409,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -4071,7 +4477,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for profiled hosts.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_profiling(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -4096,7 +4502,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for profiled hosts.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_profiling_with_http_info(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -4126,20 +4532,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -4172,7 +4600,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for [RUM](<https://docs.datadoghq.com/real_user_monitoring/>) Sessions.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_rum_sessions(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -4197,7 +4625,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for [RUM](<https://docs.datadoghq.com/real_user_monitoring/>) Sessions.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_rum_sessions_with_http_info(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -4232,20 +4660,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("type", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -4278,7 +4728,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for [RUM](<https://docs.datadoghq.com/real_user_monitoring/>) Units.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_rum_units(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -4302,7 +4752,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for [RUM](<https://docs.datadoghq.com/real_user_monitoring/>) Units.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_rum_units_with_http_info(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -4332,20 +4782,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -4378,7 +4850,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for sensitive data scanner.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_sds(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -4399,7 +4871,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for sensitive data scanner.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_sds_with_http_info(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -4427,20 +4899,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -4471,7 +4965,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for SNMP devices.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_snmp(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -4492,7 +4986,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for SNMP devices.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_snmp_with_http_info(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -4520,20 +5014,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -4621,20 +5137,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("include_org_details", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -4667,7 +5205,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for [synthetics checks](<https://docs.datadoghq.com/synthetics/>).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -4692,7 +5230,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for [synthetics checks](<https://docs.datadoghq.com/synthetics/>).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics_with_http_info(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -4722,20 +5260,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -4768,7 +5328,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for [synthetics API checks](<https://docs.datadoghq.com/synthetics/>).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics_api(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -4795,7 +5355,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for [synthetics API checks](<https://docs.datadoghq.com/synthetics/>).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics_api_with_http_info(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -4825,20 +5385,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -4871,7 +5453,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for synthetics browser checks.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics_browser(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -4898,7 +5480,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for synthetics browser checks.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics_browser_with_http_info(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -4928,20 +5510,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -4974,7 +5578,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for [custom metrics](<https://docs.datadoghq.com/developers/metrics/custom_metrics/>).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_timeseries(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -4999,7 +5603,7 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for [custom metrics](<https://docs.datadoghq.com/developers/metrics/custom_metrics/>).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_timeseries_with_http_info(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -5029,20 +5633,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -5150,20 +5776,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("next_record_id", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 

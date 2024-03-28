@@ -15,7 +15,7 @@ async fn main() {
         )
             .message("some message".to_string())
             .name("Example-Monitor".to_string())
-            .options(MonitorOptions::new().thresholds(MonitorThresholds::new().critical(1 as f64)))
+            .options(MonitorOptions::new().thresholds(MonitorThresholds::new().critical(1.0 as f64)))
             .priority(Some(3))
             .tags(vec!["test:examplemonitor".to_string(), "env:ci".to_string()]);
     let configuration = Configuration::new();

@@ -17,6 +17,9 @@ pub struct UsageSummaryDate {
     /// Shows the 99th percentile of all Azure app services using APM over all hours in the current date all organizations.
     #[serde(rename = "apm_azure_app_service_host_top99p")]
     pub apm_azure_app_service_host_top99p: Option<i64>,
+    /// Shows the 99th percentile of all APM DevSecOps hosts over all hours in the current date for the given org.
+    #[serde(rename = "apm_devsecops_host_top99p")]
+    pub apm_devsecops_host_top99p: Option<i64>,
     /// Shows the average of all APM ECS Fargate tasks over all hours in the current date for all organizations.
     #[serde(rename = "apm_fargate_count_avg")]
     pub apm_fargate_count_avg: Option<i64>,
@@ -26,6 +29,9 @@ pub struct UsageSummaryDate {
     /// Shows the average of all Application Security Monitoring ECS Fargate tasks over all hours in the current date for all organizations.
     #[serde(rename = "appsec_fargate_count_avg")]
     pub appsec_fargate_count_avg: Option<i64>,
+    /// Shows the sum of all Application Security Monitoring Serverless invocations over all hours in the current date for all organizations.
+    #[serde(rename = "asm_serverless_sum")]
+    pub asm_serverless_sum: Option<i64>,
     /// Shows the sum of audit logs lines indexed over all hours in the current date for all organizations.
     #[deprecated]
     #[serde(rename = "audit_logs_lines_indexed_sum")]
@@ -81,6 +87,9 @@ pub struct UsageSummaryDate {
     /// Host count average of Cloud Cost Management for Azure for the given date and given organization.
     #[serde(rename = "cloud_cost_management_azure_host_count_avg")]
     pub cloud_cost_management_azure_host_count_avg: Option<i64>,
+    /// Host count average of Cloud Cost Management for GCP for the given date and given organization.
+    #[serde(rename = "cloud_cost_management_gcp_host_count_avg")]
+    pub cloud_cost_management_gcp_host_count_avg: Option<i64>,
     /// Host count average of Cloud Cost Management for all cloud providers for the given date and given organization.
     #[serde(rename = "cloud_cost_management_host_count_avg")]
     pub cloud_cost_management_host_count_avg: Option<i64>,
@@ -165,12 +174,30 @@ pub struct UsageSummaryDate {
     /// Shows the average of all normalized Database Monitoring queries over all hours in the current date for all organizations.
     #[serde(rename = "dbm_queries_count_avg")]
     pub dbm_queries_count_avg: Option<i64>,
+    /// Shows the sum of all Error Tracking events over all hours in the current date for the given org.
+    #[serde(rename = "error_tracking_events_sum")]
+    pub error_tracking_events_sum: Option<i64>,
     /// Shows the high-watermark of all Fargate tasks over all hours in the current date for all organizations.
     #[serde(rename = "fargate_tasks_count_avg")]
     pub fargate_tasks_count_avg: Option<i64>,
     /// Shows the average of all Fargate tasks over all hours in the current date for all organizations.
     #[serde(rename = "fargate_tasks_count_hwm")]
     pub fargate_tasks_count_hwm: Option<i64>,
+    /// Shows the average number of Flex Logs Compute Large Instances over all hours in the current date for the given org.
+    #[serde(rename = "flex_logs_compute_large_avg")]
+    pub flex_logs_compute_large_avg: Option<i64>,
+    /// Shows the average number of Flex Logs Compute Medium Instances over all hours in the current date for the given org.
+    #[serde(rename = "flex_logs_compute_medium_avg")]
+    pub flex_logs_compute_medium_avg: Option<i64>,
+    /// Shows the average number of Flex Logs Compute Small Instances over all hours in the current date for the given org.
+    #[serde(rename = "flex_logs_compute_small_avg")]
+    pub flex_logs_compute_small_avg: Option<i64>,
+    /// Shows the average number of Flex Logs Compute Extra Small Instances over all hours in the current date for the given org.
+    #[serde(rename = "flex_logs_compute_xsmall_avg")]
+    pub flex_logs_compute_xsmall_avg: Option<i64>,
+    /// Shows the average of all Flex Stored Logs over all hours in the current date for the given org.
+    #[serde(rename = "flex_stored_logs_avg")]
+    pub flex_stored_logs_avg: Option<i64>,
     /// Shows the sum of all log bytes forwarded over all hours in the current date for all organizations.
     #[serde(rename = "forwarding_events_bytes_sum")]
     pub forwarding_events_bytes_sum: Option<i64>,
@@ -329,9 +356,11 @@ impl UsageSummaryDate {
         UsageSummaryDate {
             agent_host_top99p: None,
             apm_azure_app_service_host_top99p: None,
+            apm_devsecops_host_top99p: None,
             apm_fargate_count_avg: None,
             apm_host_top99p: None,
             appsec_fargate_count_avg: None,
+            asm_serverless_sum: None,
             audit_logs_lines_indexed_sum: None,
             audit_trail_enabled_hwm: None,
             avg_profiled_fargate_tasks: None,
@@ -350,6 +379,7 @@ impl UsageSummaryDate {
             ci_visibility_test_committers_hwm: None,
             cloud_cost_management_aws_host_count_avg: None,
             cloud_cost_management_azure_host_count_avg: None,
+            cloud_cost_management_gcp_host_count_avg: None,
             cloud_cost_management_host_count_avg: None,
             cloud_siem_events_sum: None,
             container_avg: None,
@@ -378,8 +408,14 @@ impl UsageSummaryDate {
             date: None,
             dbm_host_top99p: None,
             dbm_queries_count_avg: None,
+            error_tracking_events_sum: None,
             fargate_tasks_count_avg: None,
             fargate_tasks_count_hwm: None,
+            flex_logs_compute_large_avg: None,
+            flex_logs_compute_medium_avg: None,
+            flex_logs_compute_small_avg: None,
+            flex_logs_compute_xsmall_avg: None,
+            flex_stored_logs_avg: None,
             forwarding_events_bytes_sum: None,
             gcp_host_top99p: None,
             heroku_host_top99p: None,
@@ -446,6 +482,12 @@ impl UsageSummaryDate {
     }
 
     #[allow(deprecated)]
+    pub fn apm_devsecops_host_top99p(mut self, value: i64) -> Self {
+        self.apm_devsecops_host_top99p = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn apm_fargate_count_avg(mut self, value: i64) -> Self {
         self.apm_fargate_count_avg = Some(value);
         self
@@ -460,6 +502,12 @@ impl UsageSummaryDate {
     #[allow(deprecated)]
     pub fn appsec_fargate_count_avg(mut self, value: i64) -> Self {
         self.appsec_fargate_count_avg = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn asm_serverless_sum(mut self, value: i64) -> Self {
+        self.asm_serverless_sum = Some(value);
         self
     }
 
@@ -568,6 +616,12 @@ impl UsageSummaryDate {
     #[allow(deprecated)]
     pub fn cloud_cost_management_azure_host_count_avg(mut self, value: i64) -> Self {
         self.cloud_cost_management_azure_host_count_avg = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn cloud_cost_management_gcp_host_count_avg(mut self, value: i64) -> Self {
+        self.cloud_cost_management_gcp_host_count_avg = Some(value);
         self
     }
 
@@ -740,6 +794,12 @@ impl UsageSummaryDate {
     }
 
     #[allow(deprecated)]
+    pub fn error_tracking_events_sum(mut self, value: i64) -> Self {
+        self.error_tracking_events_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn fargate_tasks_count_avg(mut self, value: i64) -> Self {
         self.fargate_tasks_count_avg = Some(value);
         self
@@ -748,6 +808,36 @@ impl UsageSummaryDate {
     #[allow(deprecated)]
     pub fn fargate_tasks_count_hwm(mut self, value: i64) -> Self {
         self.fargate_tasks_count_hwm = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn flex_logs_compute_large_avg(mut self, value: i64) -> Self {
+        self.flex_logs_compute_large_avg = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn flex_logs_compute_medium_avg(mut self, value: i64) -> Self {
+        self.flex_logs_compute_medium_avg = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn flex_logs_compute_small_avg(mut self, value: i64) -> Self {
+        self.flex_logs_compute_small_avg = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn flex_logs_compute_xsmall_avg(mut self, value: i64) -> Self {
+        self.flex_logs_compute_xsmall_avg = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn flex_stored_logs_avg(mut self, value: i64) -> Self {
+        self.flex_stored_logs_avg = Some(value);
         self
     }
 
@@ -1071,9 +1161,11 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
             {
                 let mut agent_host_top99p: Option<i64> = None;
                 let mut apm_azure_app_service_host_top99p: Option<i64> = None;
+                let mut apm_devsecops_host_top99p: Option<i64> = None;
                 let mut apm_fargate_count_avg: Option<i64> = None;
                 let mut apm_host_top99p: Option<i64> = None;
                 let mut appsec_fargate_count_avg: Option<i64> = None;
+                let mut asm_serverless_sum: Option<i64> = None;
                 let mut audit_logs_lines_indexed_sum: Option<i64> = None;
                 let mut audit_trail_enabled_hwm: Option<i64> = None;
                 let mut avg_profiled_fargate_tasks: Option<i64> = None;
@@ -1092,6 +1184,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                 let mut ci_visibility_test_committers_hwm: Option<i64> = None;
                 let mut cloud_cost_management_aws_host_count_avg: Option<i64> = None;
                 let mut cloud_cost_management_azure_host_count_avg: Option<i64> = None;
+                let mut cloud_cost_management_gcp_host_count_avg: Option<i64> = None;
                 let mut cloud_cost_management_host_count_avg: Option<i64> = None;
                 let mut cloud_siem_events_sum: Option<i64> = None;
                 let mut container_avg: Option<i64> = None;
@@ -1120,8 +1213,14 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                 let mut date: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut dbm_host_top99p: Option<i64> = None;
                 let mut dbm_queries_count_avg: Option<i64> = None;
+                let mut error_tracking_events_sum: Option<i64> = None;
                 let mut fargate_tasks_count_avg: Option<i64> = None;
                 let mut fargate_tasks_count_hwm: Option<i64> = None;
+                let mut flex_logs_compute_large_avg: Option<i64> = None;
+                let mut flex_logs_compute_medium_avg: Option<i64> = None;
+                let mut flex_logs_compute_small_avg: Option<i64> = None;
+                let mut flex_logs_compute_xsmall_avg: Option<i64> = None;
+                let mut flex_stored_logs_avg: Option<i64> = None;
                 let mut forwarding_events_bytes_sum: Option<i64> = None;
                 let mut gcp_host_top99p: Option<i64> = None;
                 let mut heroku_host_top99p: Option<i64> = None;
@@ -1189,6 +1288,13 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                             apm_azure_app_service_host_top99p =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "apm_devsecops_host_top99p" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            apm_devsecops_host_top99p =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "apm_fargate_count_avg" => {
                             if v.is_null() {
                                 continue;
@@ -1208,6 +1314,13 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                                 continue;
                             }
                             appsec_fargate_count_avg =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "asm_serverless_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            asm_serverless_sum =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "audit_logs_lines_indexed_sum" => {
@@ -1334,6 +1447,13 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                                 continue;
                             }
                             cloud_cost_management_azure_host_count_avg =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cloud_cost_management_gcp_host_count_avg" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cloud_cost_management_gcp_host_count_avg =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "cloud_cost_management_host_count_avg" => {
@@ -1531,6 +1651,13 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                             dbm_queries_count_avg =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "error_tracking_events_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            error_tracking_events_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "fargate_tasks_count_avg" => {
                             if v.is_null() {
                                 continue;
@@ -1543,6 +1670,41 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                                 continue;
                             }
                             fargate_tasks_count_hwm =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "flex_logs_compute_large_avg" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            flex_logs_compute_large_avg =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "flex_logs_compute_medium_avg" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            flex_logs_compute_medium_avg =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "flex_logs_compute_small_avg" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            flex_logs_compute_small_avg =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "flex_logs_compute_xsmall_avg" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            flex_logs_compute_xsmall_avg =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "flex_stored_logs_avg" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            flex_stored_logs_avg =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "forwarding_events_bytes_sum" => {
@@ -1895,9 +2057,11 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                 let content = UsageSummaryDate {
                     agent_host_top99p,
                     apm_azure_app_service_host_top99p,
+                    apm_devsecops_host_top99p,
                     apm_fargate_count_avg,
                     apm_host_top99p,
                     appsec_fargate_count_avg,
+                    asm_serverless_sum,
                     audit_logs_lines_indexed_sum,
                     audit_trail_enabled_hwm,
                     avg_profiled_fargate_tasks,
@@ -1916,6 +2080,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                     ci_visibility_test_committers_hwm,
                     cloud_cost_management_aws_host_count_avg,
                     cloud_cost_management_azure_host_count_avg,
+                    cloud_cost_management_gcp_host_count_avg,
                     cloud_cost_management_host_count_avg,
                     cloud_siem_events_sum,
                     container_avg,
@@ -1944,8 +2109,14 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                     date,
                     dbm_host_top99p,
                     dbm_queries_count_avg,
+                    error_tracking_events_sum,
                     fargate_tasks_count_avg,
                     fargate_tasks_count_hwm,
+                    flex_logs_compute_large_avg,
+                    flex_logs_compute_medium_avg,
+                    flex_logs_compute_small_avg,
+                    flex_logs_compute_xsmall_avg,
+                    flex_stored_logs_avg,
                     forwarding_events_bytes_sum,
                     gcp_host_top99p,
                     heroku_host_top99p,

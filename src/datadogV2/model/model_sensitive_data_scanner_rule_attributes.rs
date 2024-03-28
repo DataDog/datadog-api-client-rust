@@ -17,6 +17,13 @@ pub struct SensitiveDataScannerRuleAttributes {
     /// Attributes excluded from the scan. If namespaces is provided, it has to be a sub-path of the namespaces array.
     #[serde(rename = "excluded_namespaces")]
     pub excluded_namespaces: Option<Vec<String>>,
+    /// Object defining a set of keywords and a number of characters that help reduce noise.
+    /// You can provide a list of keywords you would like to check within a defined proximity of the matching pattern.
+    /// If any of the keywords are found within the proximity check, the match is kept.
+    /// If none are found, the match is discarded.
+    #[serde(rename = "included_keyword_configuration")]
+    pub included_keyword_configuration:
+        Option<crate::datadogV2::model::SensitiveDataScannerIncludedKeywordConfiguration>,
     /// Whether or not the rule is enabled.
     #[serde(rename = "is_enabled")]
     pub is_enabled: Option<bool>,
@@ -49,6 +56,7 @@ impl SensitiveDataScannerRuleAttributes {
         SensitiveDataScannerRuleAttributes {
             description: None,
             excluded_namespaces: None,
+            included_keyword_configuration: None,
             is_enabled: None,
             name: None,
             namespaces: None,
@@ -67,6 +75,14 @@ impl SensitiveDataScannerRuleAttributes {
 
     pub fn excluded_namespaces(mut self, value: Vec<String>) -> Self {
         self.excluded_namespaces = Some(value);
+        self
+    }
+
+    pub fn included_keyword_configuration(
+        mut self,
+        value: crate::datadogV2::model::SensitiveDataScannerIncludedKeywordConfiguration,
+    ) -> Self {
+        self.included_keyword_configuration = Some(value);
         self
     }
 
@@ -134,6 +150,9 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerRuleAttributes {
             {
                 let mut description: Option<String> = None;
                 let mut excluded_namespaces: Option<Vec<String>> = None;
+                let mut included_keyword_configuration: Option<
+                    crate::datadogV2::model::SensitiveDataScannerIncludedKeywordConfiguration,
+                > = None;
                 let mut is_enabled: Option<bool> = None;
                 let mut name: Option<String> = None;
                 let mut namespaces: Option<Vec<String>> = None;
@@ -159,6 +178,13 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerRuleAttributes {
                                 continue;
                             }
                             excluded_namespaces =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "included_keyword_configuration" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            included_keyword_configuration =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "is_enabled" => {
@@ -211,6 +237,7 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerRuleAttributes {
                 let content = SensitiveDataScannerRuleAttributes {
                     description,
                     excluded_namespaces,
+                    included_keyword_configuration,
                     is_enabled,
                     name,
                     namespaces,

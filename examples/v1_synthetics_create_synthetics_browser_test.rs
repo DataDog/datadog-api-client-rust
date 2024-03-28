@@ -46,7 +46,7 @@ async fn main() {
         SyntheticsTestOptions::new()
             .accept_self_signed(false)
             .allow_insecure(true)
-            .device_ids(vec![SyntheticsDeviceID::TABLET])
+            .device_ids(vec![SyntheticsDeviceID::CHROME_LAPTOP_LARGE])
             .disable_cors(true)
             .follow_redirects(true)
             .min_failure_duration(10)
@@ -55,7 +55,7 @@ async fn main() {
             .retry(
                 SyntheticsTestOptionsRetry::new()
                     .count(2)
-                    .interval(10 as f64),
+                    .interval(10.0 as f64),
             )
             .tick_every(300),
         SyntheticsBrowserTestType::BROWSER,

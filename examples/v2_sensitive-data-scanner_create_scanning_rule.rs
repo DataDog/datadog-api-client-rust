@@ -4,6 +4,7 @@ use datadog_api_client::datadogV2::api::api_sensitive_data_scanner::SensitiveDat
 use datadog_api_client::datadogV2::model::SensitiveDataScannerGroup;
 use datadog_api_client::datadogV2::model::SensitiveDataScannerGroupData;
 use datadog_api_client::datadogV2::model::SensitiveDataScannerGroupType;
+use datadog_api_client::datadogV2::model::SensitiveDataScannerIncludedKeywordConfiguration;
 use datadog_api_client::datadogV2::model::SensitiveDataScannerMetaVersionOnly;
 use datadog_api_client::datadogV2::model::SensitiveDataScannerRuleAttributes;
 use datadog_api_client::datadogV2::model::SensitiveDataScannerRuleCreate;
@@ -21,6 +22,12 @@ async fn main() {
         SensitiveDataScannerRuleCreate::new(
             SensitiveDataScannerRuleAttributes::new()
                 .excluded_namespaces(vec!["admin.name".to_string()])
+                .included_keyword_configuration(
+                    SensitiveDataScannerIncludedKeywordConfiguration::new(
+                        35,
+                        vec!["credit card".to_string()],
+                    ),
+                )
                 .is_enabled(true)
                 .name("Example-Sensitive-Data-Scanner".to_string())
                 .namespaces(vec!["admin".to_string()])

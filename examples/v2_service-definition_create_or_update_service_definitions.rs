@@ -22,6 +22,7 @@ async fn main() {
             ServiceDefinitionV2Dot2Version::V2_2,
         )
         .application("my-app".to_string())
+        .ci_pipeline_fingerprints(vec!["j88xdEy0J5lc".to_string(), "eZ7LMljCk8vo".to_string()])
         .contacts(vec![ServiceDefinitionV2Dot2Contact::new(
             "https://teams.microsoft.com/myteam".to_string(),
             "slack".to_string(),

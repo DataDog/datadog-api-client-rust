@@ -2,6 +2,8 @@
 **/*.rs.bk
 Cargo.lock
 __pycache__
+.vscode/
+.pytest_cache/
 
 # Environments
 .env

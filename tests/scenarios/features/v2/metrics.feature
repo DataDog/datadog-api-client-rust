@@ -7,7 +7,9 @@ Feature: Metrics
   number of points and as the timeframe over which a metric is viewed
   increases, aggregation between points occurs to stay below that set
   number.  The Post, Patch, and Delete `manage_tags` API methods can only be
-  performed by a user who has the `Manage Tags for Metrics` permission.
+  performed by a user who has the `Manage Tags for Metrics` permission.  See
+  the [Metrics page](https://docs.datadoghq.com/metrics/) for more
+  information.
 
   Background:
     Given a valid "apiKeyAuth" key in the system
@@ -132,7 +134,7 @@ Feature: Metrics
     Then the response status is 200 Success
     And the response "data" has length 0
 
-  @team:DataDog/metrics-experience
+  @replay-only @team:DataDog/metrics-experience
   Scenario: Get a list of metrics with configured filter returns "Success" response
     Given a valid "appKeyAuth" key in the system
     And new "ListTagConfigurations" request
@@ -277,6 +279,24 @@ Feature: Metrics
     When the request is sent
     Then the response status is 200 OK
 
+  @generated @skip @team:DataDog/metrics-experience
+  Scenario: Related Assets to a Metric returns "API error response." response
+    Given a valid "appKeyAuth" key in the system
+    And new "ListMetricAssets" request
+    And request contains "metric_name" parameter from "REPLACE.ME"
+    When the request is sent
+    Then the response status is 404 API error response.
+
+  @team:DataDog/metrics-experience
+  Scenario: Related Assets to a Metric returns "Success" response
+    Given a valid "appKeyAuth" key in the system
+    And new "ListMetricAssets" request
+    And request contains "metric_name" parameter with value "system.cpu.user"
+    When the request is sent
+    Then the response status is 200 Success
+    And the response "data.type" is equal to "metrics"
+    And the response "data.id" is equal to "system.cpu.user"
+
   @team:Datadog/timeseries-query
   Scenario: Scalar cross product query returns "Bad Request" response
     Given a valid "appKeyAuth" key in the system
@@ -291,7 +311,7 @@ Feature: Metrics
     Given a valid "appKeyAuth" key in the system
     And operation "QueryScalarData" enabled
     And new "QueryScalarData" request
-    And body with value {"data": {"attributes": {"formulas": [{"formula": "a", "limit": {"count": 10, "order": "desc"}}], "from": 1671612804000, "queries": [{"aggregator": "avg", "data_source": "metrics", "query": "avg:system.cpu.user{*}", "name": "a"}], "to": 1671620004000}, "type": "scalar_request"}}
+    And body with value {"data": {"attributes": {"formulas": [{"formula": "a", "limit": {"count": 10, "order": "desc"}}], "from": {{ timestamp('now - 1h') }}000, "queries": [{"aggregator": "avg", "data_source": "metrics", "query": "avg:system.cpu.user{*}", "name": "a"}], "to": {{ timestamp('now') }}000}, "type": "scalar_request"}}
     When the request is sent
     Then the response status is 200 OK
     And the response "data.type" is equal to "scalar_response"
@@ -351,7 +371,7 @@ Feature: Metrics
     When the request is sent
     Then the response status is 200 Success
 
-  @skip-rust @team:Datadog/timeseries-query
+  @skip @team:Datadog/timeseries-query
   Scenario: Timeseries cross product query returns "Bad Request" response
     Given a valid "appKeyAuth" key in the system
     And operation "QueryTimeseriesData" enabled
@@ -365,7 +385,7 @@ Feature: Metrics
     Given a valid "appKeyAuth" key in the system
     And operation "QueryTimeseriesData" enabled
     And new "QueryTimeseriesData" request
-    And body with value {"data": {"attributes": {"formulas": [{"formula": "a", "limit": {"count": 10, "order": "desc"}}], "from": 1671612804000, "interval": 5000, "queries": [{"data_source": "metrics", "query": "avg:system.cpu.user{*}", "name": "a"}], "to": 1671620004000}, "type": "timeseries_request"}}
+    And body with value {"data": {"attributes": {"formulas": [{"formula": "a", "limit": {"count": 10, "order": "desc"}}], "from": {{ timestamp('now - 1h') }}000, "interval": 5000, "queries": [{"data_source": "metrics", "query": "avg:system.cpu.user{*}", "name": "a"}], "to": {{ timestamp('now') }}000}, "type": "timeseries_request"}}
     When the request is sent
     Then the response status is 200 OK
     And the response "data.type" is equal to "timeseries_response"
