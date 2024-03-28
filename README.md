@@ -13,7 +13,7 @@ This API client was generated from Datadog's public OpenAPI specs. Generator cod
 Run `cargo add datadog-api-client` or add the following to `Cargo.toml` under `[dependencies]`:
 
 ```
-datadog-api-client = "0.0.1"
+datadog-api-client = "0"
 ```
 
 ## Getting Started
