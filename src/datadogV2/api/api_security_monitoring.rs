@@ -464,6 +464,16 @@ pub enum UpdateSecurityMonitoringSuppressionError {
     UnknownValue(serde_json::Value),
 }
 
+/// ValidateSecurityMonitoringRuleError is a struct for typed errors of method [`SecurityMonitoringAPI::validate_security_monitoring_rule`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ValidateSecurityMonitoringRuleError {
+    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
+    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    UnknownValue(serde_json::Value),
+}
+
 #[derive(Debug, Clone)]
 pub struct SecurityMonitoringAPI {
     config: configuration::Configuration,
@@ -3897,6 +3907,82 @@ impl SecurityMonitoringAPI {
             };
         } else {
             let local_entity: Option<UpdateSecurityMonitoringSuppressionError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(Error::ResponseError(local_error))
+        }
+    }
+
+    /// Validate a detection rule.
+    pub async fn validate_security_monitoring_rule(
+        &self,
+        body: crate::datadogV2::model::SecurityMonitoringRuleCreatePayload,
+    ) -> Result<(), Error<ValidateSecurityMonitoringRuleError>> {
+        match self
+            .validate_security_monitoring_rule_with_http_info(body)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Validate a detection rule.
+    pub async fn validate_security_monitoring_rule_with_http_info(
+        &self,
+        body: crate::datadogV2::model::SecurityMonitoringRuleCreatePayload,
+    ) -> Result<ResponseContent<()>, Error<ValidateSecurityMonitoringRuleError>> {
+        let local_configuration = &self.config;
+        let operation_id = "v2.validate_security_monitoring_rule";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/rules/validation",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build user agent
+        local_req_builder = local_req_builder.header(
+            reqwest::header::USER_AGENT,
+            local_configuration.user_agent.clone(),
+        );
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            local_req_builder = local_req_builder.body(ser.into_inner());
+        }
+
+        let local_req = local_req_builder.build()?;
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<ValidateSecurityMonitoringRuleError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = ResponseContent {
                 status: local_status,
