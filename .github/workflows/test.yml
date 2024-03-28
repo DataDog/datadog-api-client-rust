@@ -8,8 +8,8 @@ on:
   pull_request:
     branches:
       - master
-  # schedule:
-  #   - cron: "0 1 * * *"
+  schedule:
+    - cron: "0 6 * * *"
 
 concurrency:
   group: unit-${{ github.head_ref }}
@@ -25,11 +25,14 @@ jobs:
       github.event_name == 'schedule'
     steps:
       - name: Get GitHub App token
+        if: github.event_name == 'pull_request'
         id: get_token
-        uses: tibdex/github-app-token@v1
+        uses: tibdex/github-app-token@v2.1.0
         with:
           app_id: ${{ secrets.PIPELINE_GITHUB_APP_ID }}
           private_key: ${{ secrets.PIPELINE_GITHUB_APP_PRIVATE_KEY }}
+          installation_retrieval_mode: repository
+          installation_retrieval_payload: DataDog/datadog-api-spec
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
@@ -84,7 +87,7 @@ jobs:
           toolchain: ${{ matrix.rust-version }}
       - uses: Swatinem/rust-cache@v2
       - name: Test
-        run: cargo build
+        run: ./run-tests.sh
 
   examples:
     runs-on: ubuntu-latest

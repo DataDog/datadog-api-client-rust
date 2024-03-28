@@ -2348,6 +2348,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_create_security_monitoring_rule,
     );
     world.function_mappings.insert(
+        "v2.ValidateSecurityMonitoringRule".into(),
+        test_v2_validate_security_monitoring_rule,
+    );
+    world.function_mappings.insert(
         "v2.DeleteSecurityMonitoringRule".into(),
         test_v2_delete_security_monitoring_rule,
     );
@@ -8044,13 +8048,12 @@ fn test_v1_upload_idp_for_org(world: &mut DatadogWorld, _parameters: &HashMap<St
         .as_ref()
         .expect("api instance not found");
     let public_id = serde_json::from_value(_parameters.get("public_id").unwrap().clone()).unwrap();
-    let idp_file = _parameters
-        .get("idp_file")
-        .unwrap()
-        .as_str()
-        .unwrap()
-        .as_bytes()
-        .to_vec();
+    let idp_file = std::fs::read(format!(
+        "tests/scenarios/features/v{}/{}",
+        world.api_version,
+        _parameters.get("idp_file").unwrap().as_str().unwrap()
+    ))
+    .unwrap();
     let response = match block_on(api.upload_idp_for_org_with_http_info(public_id, idp_file)) {
         Ok(response) => response,
         Err(error) => {
@@ -10415,9 +10418,14 @@ fn test_v2_update_open_api(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         .as_ref()
         .expect("api instance not found");
     let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
-    let openapi_spec_file = _parameters
-        .get("openapi_spec_file")
-        .and_then(|param| Some(param.as_str().unwrap().as_bytes().to_vec()));
+    let openapi_spec_file = _parameters.get("openapi_spec_file").and_then(|param| {
+        std::fs::read(format!(
+            "tests/scenarios/features/v{}/{}",
+            world.api_version,
+            param.as_str().unwrap()
+        ))
+        .ok()
+    });
     let mut params = datadogV2::api::api_api_management::UpdateOpenAPIOptionalParams::default();
     params.openapi_spec_file = openapi_spec_file;
     let response = match block_on(api.update_open_api_with_http_info(id, params)) {
@@ -10444,9 +10452,14 @@ fn test_v2_create_open_api(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         .v2_api_api_management
         .as_ref()
         .expect("api instance not found");
-    let openapi_spec_file = _parameters
-        .get("openapi_spec_file")
-        .and_then(|param| Some(param.as_str().unwrap().as_bytes().to_vec()));
+    let openapi_spec_file = _parameters.get("openapi_spec_file").and_then(|param| {
+        std::fs::read(format!(
+            "tests/scenarios/features/v{}/{}",
+            world.api_version,
+            param.as_str().unwrap()
+        ))
+        .ok()
+    });
     let mut params = datadogV2::api::api_api_management::CreateOpenAPIOptionalParams::default();
     params.openapi_spec_file = openapi_spec_file;
     let response = match block_on(api.create_open_api_with_http_info(params)) {
@@ -17660,6 +17673,34 @@ fn test_v2_create_security_monitoring_rule(
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_validate_security_monitoring_rule(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.validate_security_monitoring_rule_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_delete_security_monitoring_rule(
     world: &mut DatadogWorld,
     _parameters: &HashMap<String, Value>,
@@ -19104,9 +19145,14 @@ fn test_v2_upload_idp_metadata(world: &mut DatadogWorld, _parameters: &HashMap<S
         .v2_api_organizations
         .as_ref()
         .expect("api instance not found");
-    let idp_file = _parameters
-        .get("idp_file")
-        .and_then(|param| Some(param.as_str().unwrap().as_bytes().to_vec()));
+    let idp_file = _parameters.get("idp_file").and_then(|param| {
+        std::fs::read(format!(
+            "tests/scenarios/features/v{}/{}",
+            world.api_version,
+            param.as_str().unwrap()
+        ))
+        .ok()
+    });
     let mut params = datadogV2::api::api_organizations::UploadIdPMetadataOptionalParams::default();
     params.idp_file = idp_file;
     let response = match block_on(api.upload_idp_metadata_with_http_info(params)) {

@@ -126,13 +126,6 @@ impl Configuration {
 
 impl Default for Configuration {
     fn default() -> Self {
-        let user_agent = format!(
-            "datadog-api-client-rust/{} (rust {}; os {}; arch {})",
-            option_env!("CARGO_PKG_VERSION").unwrap_or("?"),
-            option_env!("DD_RUSTC_VERSION").unwrap_or("?"),
-            env::consts::OS,
-            env::consts::ARCH,
-        );
         let unstable_operations = HashMap::from([
             {%- for version, api in apis.items() %}
             {%- for operations in api.values() %}
@@ -164,7 +157,7 @@ impl Default for Configuration {
         {%- endif %}
 
         Self {
-            user_agent,
+            user_agent: DEFAULT_USER_AGENT.clone(),
             unstable_operations,
             auth_keys,
             server_index: 0,
@@ -202,6 +195,13 @@ ServerConfiguration {
 {%- endmacro %}
 
 lazy_static! {
+    pub static ref DEFAULT_USER_AGENT: String = format!(
+        "datadog-api-client-rust/{} (rust {}; os {}; arch {})",
+        option_env!("CARGO_PKG_VERSION").unwrap_or("?"),
+        option_env!("DD_RUSTC_VERSION").unwrap_or("?"),
+        env::consts::OS,
+        env::consts::ARCH,
+    );
     static ref SERVERS: Vec<ServerConfiguration> = {
         vec![
             {%- for server in openapi.servers %}
