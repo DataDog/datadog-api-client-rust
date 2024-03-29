@@ -397,44 +397,44 @@ impl {{ structName }} {
         {%- if formParameter.required %}
         let mut local_form = form_data_builder::FormData::new(Vec::new());
         let openapi_spec_cursor = std::io::Cursor::new({{formParameter.name}});
-        local_form
-            .write_file(
-                "{{formParameter.name}}",
-                openapi_spec_cursor,
-                Some("{{formParameter.name}}".as_ref()),
-                "application/octet-stream",
-            )
-            .expect("Failed to build file upload form data");
+        if let Err(e) = local_form.write_file(
+            "{{formParameter.name}}",
+            openapi_spec_cursor,
+            Some("{{formParameter.name}}".as_ref()),
+            "application/octet-stream",
+        ) {
+            return Err(crate::datadog::Error::Io(e));
+        };
         headers.insert(
             "Content-Type",
             local_form.content_type_header().parse().unwrap(),
         );
-        local_req_builder = local_req_builder.body(
-            local_form
-                .finish()
-                .expect("Failed to build file upload form data"),
-        );        
+        let form_result = local_form.finish();
+        match form_result {
+            Ok(form) => local_req_builder = local_req_builder.body(form),
+            Err(e) => return Err(crate::datadog::Error::Io(e)),
+        };
         {%- else %}
         if let Some({{formParameter.name}}) = {{formParameter.name}} {
             let mut local_form = form_data_builder::FormData::new(Vec::new());
             let openapi_spec_cursor = std::io::Cursor::new({{formParameter.name}});
-            local_form
-                .write_file(
-                    "{{formParameter.name}}",
-                    openapi_spec_cursor,
-                    Some("{{formParameter.name}}".as_ref()),
-                    "application/octet-stream",
-                )
-                .expect("Failed to build file upload form data");
+            if let Err(e) = local_form.write_file(
+                "{{formParameter.name}}",
+                openapi_spec_cursor,
+                Some("{{formParameter.name}}".as_ref()),
+                "application/octet-stream",
+            ) {
+                return Err(crate::datadog::Error::Io(e));
+            };
             headers.insert(
                 "Content-Type",
                 local_form.content_type_header().parse().unwrap(),
             );
-            local_req_builder = local_req_builder.body(
-                local_form
-                    .finish()
-                    .expect("Failed to build file upload form data"),
-            );        
+            let form_result = local_form.finish();
+            match form_result {
+                Ok(form) => local_req_builder = local_req_builder.body(form),
+                Err(e) => return Err(crate::datadog::Error::Io(e)),
+            };    
         };
         {%- endif %}
         {%- endif %}

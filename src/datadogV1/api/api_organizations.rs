@@ -848,23 +848,23 @@ impl OrganizationsAPI {
         // build form parameters
         let mut local_form = form_data_builder::FormData::new(Vec::new());
         let openapi_spec_cursor = std::io::Cursor::new(idp_file);
-        local_form
-            .write_file(
-                "idp_file",
-                openapi_spec_cursor,
-                Some("idp_file".as_ref()),
-                "application/octet-stream",
-            )
-            .expect("Failed to build file upload form data");
+        if let Err(e) = local_form.write_file(
+            "idp_file",
+            openapi_spec_cursor,
+            Some("idp_file".as_ref()),
+            "application/octet-stream",
+        ) {
+            return Err(crate::datadog::Error::Io(e));
+        };
         headers.insert(
             "Content-Type",
             local_form.content_type_header().parse().unwrap(),
         );
-        local_req_builder = local_req_builder.body(
-            local_form
-                .finish()
-                .expect("Failed to build file upload form data"),
-        );
+        let form_result = local_form.finish();
+        match form_result {
+            Ok(form) => local_req_builder = local_req_builder.body(form),
+            Err(e) => return Err(crate::datadog::Error::Io(e)),
+        };
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
