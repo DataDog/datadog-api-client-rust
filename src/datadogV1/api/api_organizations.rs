@@ -846,18 +846,25 @@ impl OrganizationsAPI {
         };
 
         // build form parameters
-        let mut local_form = reqwest::multipart::Form::new();
-        local_form = local_form.part(
-            "idp_file",
-            reqwest::multipart::Part::bytes(idp_file).file_name("idp_file"),
-        );
+        let mut local_form = form_data_builder::FormData::new(Vec::new());
+        let openapi_spec_cursor = std::io::Cursor::new(idp_file);
+        local_form
+            .write_file(
+                "idp_file",
+                openapi_spec_cursor,
+                Some("idp_file".as_ref()),
+                "application/octet-stream",
+            )
+            .expect("Failed to build file upload form data");
         headers.insert(
             "Content-Type",
-            format!("multipart/form-data; boundary={}", local_form.boundary())
-                .parse()
-                .unwrap(),
+            local_form.content_type_header().parse().unwrap(),
         );
-        local_req_builder = local_req_builder.multipart(local_form);
+        local_req_builder = local_req_builder.body(
+            local_form
+                .finish()
+                .expect("Failed to build file upload form data"),
+        );
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;

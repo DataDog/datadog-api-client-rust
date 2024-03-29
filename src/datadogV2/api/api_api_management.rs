@@ -242,18 +242,25 @@ impl APIManagementAPI {
 
         // build form parameters
         if let Some(openapi_spec_file) = openapi_spec_file {
-            let mut local_form = reqwest::multipart::Form::new();
-            local_form = local_form.part(
-                "openapi_spec_file",
-                reqwest::multipart::Part::bytes(openapi_spec_file).file_name("openapi_spec_file"),
-            );
+            let mut local_form = form_data_builder::FormData::new(Vec::new());
+            let openapi_spec_cursor = std::io::Cursor::new(openapi_spec_file);
+            local_form
+                .write_file(
+                    "openapi_spec_file",
+                    openapi_spec_cursor,
+                    Some("openapi_spec_file".as_ref()),
+                    "application/octet-stream",
+                )
+                .expect("Failed to build file upload form data");
             headers.insert(
                 "Content-Type",
-                format!("multipart/form-data; boundary={}", local_form.boundary())
-                    .parse()
-                    .unwrap(),
+                local_form.content_type_header().parse().unwrap(),
             );
-            local_req_builder = local_req_builder.multipart(local_form);
+            local_req_builder = local_req_builder.body(
+                local_form
+                    .finish()
+                    .expect("Failed to build file upload form data"),
+            );
         };
 
         local_req_builder = local_req_builder.headers(headers);
@@ -572,18 +579,25 @@ impl APIManagementAPI {
 
         // build form parameters
         if let Some(openapi_spec_file) = openapi_spec_file {
-            let mut local_form = reqwest::multipart::Form::new();
-            local_form = local_form.part(
-                "openapi_spec_file",
-                reqwest::multipart::Part::bytes(openapi_spec_file).file_name("openapi_spec_file"),
-            );
+            let mut local_form = form_data_builder::FormData::new(Vec::new());
+            let openapi_spec_cursor = std::io::Cursor::new(openapi_spec_file);
+            local_form
+                .write_file(
+                    "openapi_spec_file",
+                    openapi_spec_cursor,
+                    Some("openapi_spec_file".as_ref()),
+                    "application/octet-stream",
+                )
+                .expect("Failed to build file upload form data");
             headers.insert(
                 "Content-Type",
-                format!("multipart/form-data; boundary={}", local_form.boundary())
-                    .parse()
-                    .unwrap(),
+                local_form.content_type_header().parse().unwrap(),
             );
-            local_req_builder = local_req_builder.multipart(local_form);
+            local_req_builder = local_req_builder.body(
+                local_form
+                    .finish()
+                    .expect("Failed to build file upload form data"),
+            );
         };
 
         local_req_builder = local_req_builder.headers(headers);
