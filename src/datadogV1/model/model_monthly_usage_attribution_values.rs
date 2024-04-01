@@ -197,6 +197,12 @@ pub struct MonthlyUsageAttributionValues {
     /// The Lambda function usage by tag(s).
     #[serde(rename = "functions_usage")]
     pub functions_usage: Option<f64>,
+    /// The percentage of Incident Management monthly active users usage by tag(s).
+    #[serde(rename = "incident_management_monthly_active_users_percentage")]
+    pub incident_management_monthly_active_users_percentage: Option<f64>,
+    /// The Incident Management monthly active users usage by tag(s).
+    #[serde(rename = "incident_management_monthly_active_users_usage")]
+    pub incident_management_monthly_active_users_usage: Option<f64>,
     /// The percentage of APM Indexed Spans usage by tag(s).
     #[serde(rename = "indexed_spans_percentage")]
     pub indexed_spans_percentage: Option<f64>,
@@ -323,6 +329,12 @@ pub struct MonthlyUsageAttributionValues {
     /// The observability pipeline per core usage by tag(s).
     #[serde(rename = "obs_pipelines_vcpu_usage")]
     pub obs_pipelines_vcpu_usage: Option<f64>,
+    /// The percentage of online archive usage by tag(s).
+    #[serde(rename = "online_archive_percentage")]
+    pub online_archive_percentage: Option<f64>,
+    /// The online archive usage by tag(s).
+    #[serde(rename = "online_archive_usage")]
+    pub online_archive_usage: Option<f64>,
     /// The percentage of profiled container usage by tag(s).
     #[serde(rename = "profiled_container_percentage")]
     pub profiled_container_percentage: Option<f64>,
@@ -465,6 +477,8 @@ impl MonthlyUsageAttributionValues {
             fargate_usage: None,
             functions_percentage: None,
             functions_usage: None,
+            incident_management_monthly_active_users_percentage: None,
+            incident_management_monthly_active_users_usage: None,
             indexed_spans_percentage: None,
             indexed_spans_usage: None,
             infra_host_percentage: None,
@@ -507,6 +521,8 @@ impl MonthlyUsageAttributionValues {
             obs_pipeline_bytes_usage: None,
             obs_pipelines_vcpu_percentage: None,
             obs_pipelines_vcpu_usage: None,
+            online_archive_percentage: None,
+            online_archive_usage: None,
             profiled_container_percentage: None,
             profiled_container_usage: None,
             profiled_fargate_percentage: None,
@@ -845,6 +861,16 @@ impl MonthlyUsageAttributionValues {
         self
     }
 
+    pub fn incident_management_monthly_active_users_percentage(mut self, value: f64) -> Self {
+        self.incident_management_monthly_active_users_percentage = Some(value);
+        self
+    }
+
+    pub fn incident_management_monthly_active_users_usage(mut self, value: f64) -> Self {
+        self.incident_management_monthly_active_users_usage = Some(value);
+        self
+    }
+
     pub fn indexed_spans_percentage(mut self, value: f64) -> Self {
         self.indexed_spans_percentage = Some(value);
         self
@@ -1055,6 +1081,16 @@ impl MonthlyUsageAttributionValues {
         self
     }
 
+    pub fn online_archive_percentage(mut self, value: f64) -> Self {
+        self.online_archive_percentage = Some(value);
+        self
+    }
+
+    pub fn online_archive_usage(mut self, value: f64) -> Self {
+        self.online_archive_usage = Some(value);
+        self
+    }
+
     pub fn profiled_container_percentage(mut self, value: f64) -> Self {
         self.profiled_container_percentage = Some(value);
         self
@@ -1261,6 +1297,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                 let mut fargate_usage: Option<f64> = None;
                 let mut functions_percentage: Option<f64> = None;
                 let mut functions_usage: Option<f64> = None;
+                let mut incident_management_monthly_active_users_percentage: Option<f64> = None;
+                let mut incident_management_monthly_active_users_usage: Option<f64> = None;
                 let mut indexed_spans_percentage: Option<f64> = None;
                 let mut indexed_spans_usage: Option<f64> = None;
                 let mut infra_host_percentage: Option<f64> = None;
@@ -1303,6 +1341,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                 let mut obs_pipeline_bytes_usage: Option<f64> = None;
                 let mut obs_pipelines_vcpu_percentage: Option<f64> = None;
                 let mut obs_pipelines_vcpu_usage: Option<f64> = None;
+                let mut online_archive_percentage: Option<f64> = None;
+                let mut online_archive_usage: Option<f64> = None;
                 let mut profiled_container_percentage: Option<f64> = None;
                 let mut profiled_container_usage: Option<f64> = None;
                 let mut profiled_fargate_percentage: Option<f64> = None;
@@ -1764,6 +1804,20 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                             functions_usage =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "incident_management_monthly_active_users_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            incident_management_monthly_active_users_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "incident_management_monthly_active_users_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            incident_management_monthly_active_users_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "indexed_spans_percentage" => {
                             if v.is_null() {
                                 continue;
@@ -2058,6 +2112,20 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                             obs_pipelines_vcpu_usage =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "online_archive_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            online_archive_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "online_archive_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            online_archive_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "profiled_container_percentage" => {
                             if v.is_null() {
                                 continue;
@@ -2292,6 +2360,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                     fargate_usage,
                     functions_percentage,
                     functions_usage,
+                    incident_management_monthly_active_users_percentage,
+                    incident_management_monthly_active_users_usage,
                     indexed_spans_percentage,
                     indexed_spans_usage,
                     infra_host_percentage,
@@ -2334,6 +2404,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                     obs_pipeline_bytes_usage,
                     obs_pipelines_vcpu_percentage,
                     obs_pipelines_vcpu_usage,
+                    online_archive_percentage,
+                    online_archive_usage,
                     profiled_container_percentage,
                     profiled_container_usage,
                     profiled_fargate_percentage,
