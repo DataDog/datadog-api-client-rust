@@ -170,10 +170,10 @@ impl OrganizationsAPI {
         // build form parameters
         if let Some(idp_file) = idp_file {
             let mut local_form = form_data_builder::FormData::new(Vec::new());
-            let openapi_spec_cursor = std::io::Cursor::new(idp_file);
+            let cursor = std::io::Cursor::new(idp_file);
             if let Err(e) = local_form.write_file(
                 "idp_file",
-                openapi_spec_cursor,
+                cursor,
                 Some("idp_file".as_ref()),
                 "application/octet-stream",
             ) {

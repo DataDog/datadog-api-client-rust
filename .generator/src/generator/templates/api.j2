@@ -396,10 +396,10 @@ impl {{ structName }} {
         // build form parameters
         {%- if formParameter.required %}
         let mut local_form = form_data_builder::FormData::new(Vec::new());
-        let openapi_spec_cursor = std::io::Cursor::new({{formParameter.name}});
+        let cursor = std::io::Cursor::new({{formParameter.name}});
         if let Err(e) = local_form.write_file(
             "{{formParameter.name}}",
-            openapi_spec_cursor,
+            cursor,
             Some("{{formParameter.name}}".as_ref()),
             "application/octet-stream",
         ) {
@@ -417,10 +417,10 @@ impl {{ structName }} {
         {%- else %}
         if let Some({{formParameter.name}}) = {{formParameter.name}} {
             let mut local_form = form_data_builder::FormData::new(Vec::new());
-            let openapi_spec_cursor = std::io::Cursor::new({{formParameter.name}});
+            let cursor = std::io::Cursor::new({{formParameter.name}});
             if let Err(e) = local_form.write_file(
                 "{{formParameter.name}}",
-                openapi_spec_cursor,
+                cursor,
                 Some("{{formParameter.name}}".as_ref()),
                 "application/octet-stream",
             ) {

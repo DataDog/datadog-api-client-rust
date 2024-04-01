@@ -243,10 +243,10 @@ impl APIManagementAPI {
         // build form parameters
         if let Some(openapi_spec_file) = openapi_spec_file {
             let mut local_form = form_data_builder::FormData::new(Vec::new());
-            let openapi_spec_cursor = std::io::Cursor::new(openapi_spec_file);
+            let cursor = std::io::Cursor::new(openapi_spec_file);
             if let Err(e) = local_form.write_file(
                 "openapi_spec_file",
-                openapi_spec_cursor,
+                cursor,
                 Some("openapi_spec_file".as_ref()),
                 "application/octet-stream",
             ) {
@@ -580,10 +580,10 @@ impl APIManagementAPI {
         // build form parameters
         if let Some(openapi_spec_file) = openapi_spec_file {
             let mut local_form = form_data_builder::FormData::new(Vec::new());
-            let openapi_spec_cursor = std::io::Cursor::new(openapi_spec_file);
+            let cursor = std::io::Cursor::new(openapi_spec_file);
             if let Err(e) = local_form.write_file(
                 "openapi_spec_file",
-                openapi_spec_cursor,
+                cursor,
                 Some("openapi_spec_file".as_ref()),
                 "application/octet-stream",
             ) {
