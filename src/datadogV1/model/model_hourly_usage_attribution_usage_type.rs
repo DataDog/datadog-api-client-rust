@@ -40,6 +40,7 @@ pub enum HourlyUsageAttributionUsageType {
     ESTIMATED_RUM_SESSIONS_USAGE,
     FARGATE_USAGE,
     FUNCTIONS_USAGE,
+    INCIDENT_MANAGEMENT_MONTHLY_ACTIVE_USERS_USAGE,
     INDEXED_SPANS_USAGE,
     INFRA_HOST_USAGE,
     INGESTED_LOGS_BYTES_USAGE,
@@ -61,6 +62,7 @@ pub enum HourlyUsageAttributionUsageType {
     NPM_HOST_USAGE,
     OBS_PIPELINE_BYTES_USAGE,
     OBS_PIPELINE_VCPU_USAGE,
+    ONLINE_ARCHIVE_USAGE,
     PROFILED_CONTAINER_USAGE,
     PROFILED_FARGATE_USAGE,
     PROFILED_HOST_USAGE,
@@ -120,6 +122,9 @@ impl ToString for HourlyUsageAttributionUsageType {
             Self::ESTIMATED_RUM_SESSIONS_USAGE => String::from("estimated_rum_sessions_usage"),
             Self::FARGATE_USAGE => String::from("fargate_usage"),
             Self::FUNCTIONS_USAGE => String::from("functions_usage"),
+            Self::INCIDENT_MANAGEMENT_MONTHLY_ACTIVE_USERS_USAGE => {
+                String::from("incident_management_monthly_active_users_usage")
+            }
             Self::INDEXED_SPANS_USAGE => String::from("indexed_spans_usage"),
             Self::INFRA_HOST_USAGE => String::from("infra_host_usage"),
             Self::INGESTED_LOGS_BYTES_USAGE => String::from("ingested_logs_bytes_usage"),
@@ -145,6 +150,7 @@ impl ToString for HourlyUsageAttributionUsageType {
             Self::NPM_HOST_USAGE => String::from("npm_host_usage"),
             Self::OBS_PIPELINE_BYTES_USAGE => String::from("obs_pipeline_bytes_usage"),
             Self::OBS_PIPELINE_VCPU_USAGE => String::from("obs_pipelines_vcpu_usage"),
+            Self::ONLINE_ARCHIVE_USAGE => String::from("online_archive_usage"),
             Self::PROFILED_CONTAINER_USAGE => String::from("profiled_container_usage"),
             Self::PROFILED_FARGATE_USAGE => String::from("profiled_fargate_usage"),
             Self::PROFILED_HOST_USAGE => String::from("profiled_host_usage"),
@@ -222,6 +228,9 @@ impl<'de> Deserialize<'de> for HourlyUsageAttributionUsageType {
             "estimated_rum_sessions_usage" => Self::ESTIMATED_RUM_SESSIONS_USAGE,
             "fargate_usage" => Self::FARGATE_USAGE,
             "functions_usage" => Self::FUNCTIONS_USAGE,
+            "incident_management_monthly_active_users_usage" => {
+                Self::INCIDENT_MANAGEMENT_MONTHLY_ACTIVE_USERS_USAGE
+            }
             "indexed_spans_usage" => Self::INDEXED_SPANS_USAGE,
             "infra_host_usage" => Self::INFRA_HOST_USAGE,
             "ingested_logs_bytes_usage" => Self::INGESTED_LOGS_BYTES_USAGE,
@@ -243,6 +252,7 @@ impl<'de> Deserialize<'de> for HourlyUsageAttributionUsageType {
             "npm_host_usage" => Self::NPM_HOST_USAGE,
             "obs_pipeline_bytes_usage" => Self::OBS_PIPELINE_BYTES_USAGE,
             "obs_pipelines_vcpu_usage" => Self::OBS_PIPELINE_VCPU_USAGE,
+            "online_archive_usage" => Self::ONLINE_ARCHIVE_USAGE,
             "profiled_container_usage" => Self::PROFILED_CONTAINER_USAGE,
             "profiled_fargate_usage" => Self::PROFILED_FARGATE_USAGE,
             "profiled_host_usage" => Self::PROFILED_HOST_USAGE,

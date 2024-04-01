@@ -61,6 +61,8 @@ pub enum MonthlyUsageAttributionSupportedMetrics {
     FARGATE_PERCENTAGE,
     FUNCTIONS_USAGE,
     FUNCTIONS_PERCENTAGE,
+    INCIDENT_MANAGEMENT_MONTHLY_ACTIVE_USERS_USAGE,
+    INCIDENT_MANAGEMENT_MONTHLY_ACTIVE_USERS_PERCENTAGE,
     INFRA_HOST_USAGE,
     INFRA_HOST_PERCENTAGE,
     INVOCATIONS_USAGE,
@@ -77,6 +79,8 @@ pub enum MonthlyUsageAttributionSupportedMetrics {
     OBS_PIPELINE_BYTES_PERCENTAGE,
     OBS_PIPELINES_VCPU_USAGE,
     OBS_PIPELINES_VCPU_PERCENTAGE,
+    ONLINE_ARCHIVE_USAGE,
+    ONLINE_ARCHIVE_PERCENTAGE,
     PROFILED_CONTAINER_USAGE,
     PROFILED_CONTAINER_PERCENTAGE,
     PROFILED_FARGATE_USAGE,
@@ -214,6 +218,12 @@ impl ToString for MonthlyUsageAttributionSupportedMetrics {
             Self::FARGATE_PERCENTAGE => String::from("fargate_percentage"),
             Self::FUNCTIONS_USAGE => String::from("functions_usage"),
             Self::FUNCTIONS_PERCENTAGE => String::from("functions_percentage"),
+            Self::INCIDENT_MANAGEMENT_MONTHLY_ACTIVE_USERS_USAGE => {
+                String::from("incident_management_monthly_active_users_usage")
+            }
+            Self::INCIDENT_MANAGEMENT_MONTHLY_ACTIVE_USERS_PERCENTAGE => {
+                String::from("incident_management_monthly_active_users_percentage")
+            }
             Self::INFRA_HOST_USAGE => String::from("infra_host_usage"),
             Self::INFRA_HOST_PERCENTAGE => String::from("infra_host_percentage"),
             Self::INVOCATIONS_USAGE => String::from("invocations_usage"),
@@ -234,6 +244,8 @@ impl ToString for MonthlyUsageAttributionSupportedMetrics {
             Self::OBS_PIPELINE_BYTES_PERCENTAGE => String::from("obs_pipeline_bytes_percentage"),
             Self::OBS_PIPELINES_VCPU_USAGE => String::from("obs_pipelines_vcpu_usage"),
             Self::OBS_PIPELINES_VCPU_PERCENTAGE => String::from("obs_pipelines_vcpu_percentage"),
+            Self::ONLINE_ARCHIVE_USAGE => String::from("online_archive_usage"),
+            Self::ONLINE_ARCHIVE_PERCENTAGE => String::from("online_archive_percentage"),
             Self::PROFILED_CONTAINER_USAGE => String::from("profiled_container_usage"),
             Self::PROFILED_CONTAINER_PERCENTAGE => String::from("profiled_container_percentage"),
             Self::PROFILED_FARGATE_USAGE => String::from("profiled_fargate_usage"),
@@ -399,6 +411,12 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionSupportedMetrics {
             "fargate_percentage" => Self::FARGATE_PERCENTAGE,
             "functions_usage" => Self::FUNCTIONS_USAGE,
             "functions_percentage" => Self::FUNCTIONS_PERCENTAGE,
+            "incident_management_monthly_active_users_usage" => {
+                Self::INCIDENT_MANAGEMENT_MONTHLY_ACTIVE_USERS_USAGE
+            }
+            "incident_management_monthly_active_users_percentage" => {
+                Self::INCIDENT_MANAGEMENT_MONTHLY_ACTIVE_USERS_PERCENTAGE
+            }
             "infra_host_usage" => Self::INFRA_HOST_USAGE,
             "infra_host_percentage" => Self::INFRA_HOST_PERCENTAGE,
             "invocations_usage" => Self::INVOCATIONS_USAGE,
@@ -415,6 +433,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionSupportedMetrics {
             "obs_pipeline_bytes_percentage" => Self::OBS_PIPELINE_BYTES_PERCENTAGE,
             "obs_pipelines_vcpu_usage" => Self::OBS_PIPELINES_VCPU_USAGE,
             "obs_pipelines_vcpu_percentage" => Self::OBS_PIPELINES_VCPU_PERCENTAGE,
+            "online_archive_usage" => Self::ONLINE_ARCHIVE_USAGE,
+            "online_archive_percentage" => Self::ONLINE_ARCHIVE_PERCENTAGE,
             "profiled_container_usage" => Self::PROFILED_CONTAINER_USAGE,
             "profiled_container_percentage" => Self::PROFILED_CONTAINER_PERCENTAGE,
             "profiled_fargate_usage" => Self::PROFILED_FARGATE_USAGE,
