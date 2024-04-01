@@ -20,7 +20,7 @@ async fn main() {
             vec![TimeseriesQuery::MetricsTimeseriesQuery(Box::new(
                 MetricsTimeseriesQuery::new(
                     MetricsDataSource::METRICS,
-                    "avg:system.cpu.user{*}".to_string(),
+                    "avg:datadog.estimated_usage.metrics.custom{*}".to_string(),
                 )
                 .name("a".to_string()),
             ))],
