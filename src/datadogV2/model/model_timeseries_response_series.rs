@@ -21,8 +21,8 @@ pub struct TimeseriesResponseSeries {
     /// The first element describes the "primary unit" (for example, `bytes` in `bytes per second`).
     /// The second element describes the "per unit" (for example, `second` in `bytes per second`).
     /// If the second element is not present, the API returns null.
-    #[serde(rename = "unit")]
-    pub unit: Option<Vec<Option<crate::datadogV2::model::Unit>>>,
+    #[serde(rename = "unit", default, with = "::serde_with::rust::double_option")]
+    pub unit: Option<Option<Vec<Option<crate::datadogV2::model::Unit>>>>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -48,7 +48,7 @@ impl TimeseriesResponseSeries {
         self
     }
 
-    pub fn unit(mut self, value: Vec<Option<crate::datadogV2::model::Unit>>) -> Self {
+    pub fn unit(mut self, value: Option<Vec<Option<crate::datadogV2::model::Unit>>>) -> Self {
         self.unit = Some(value);
         self
     }
@@ -79,7 +79,7 @@ impl<'de> Deserialize<'de> for TimeseriesResponseSeries {
             {
                 let mut group_tags: Option<Vec<String>> = None;
                 let mut query_index: Option<i32> = None;
-                let mut unit: Option<Vec<Option<crate::datadogV2::model::Unit>>> = None;
+                let mut unit: Option<Option<Vec<Option<crate::datadogV2::model::Unit>>>> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -98,9 +98,6 @@ impl<'de> Deserialize<'de> for TimeseriesResponseSeries {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "unit" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             unit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {}
