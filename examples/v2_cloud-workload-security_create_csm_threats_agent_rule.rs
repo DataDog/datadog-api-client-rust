@@ -12,7 +12,7 @@ async fn main() {
         CloudWorkloadSecurityAgentRuleCreateData::new(
             CloudWorkloadSecurityAgentRuleCreateAttributes::new(
                 r#"exec.file.name == "sh""#.to_string(),
-                "my_agent_rule".to_string(),
+                "examplecloudworkloadsecurity".to_string(),
             )
             .description("My Agent rule".to_string())
             .enabled(true),
