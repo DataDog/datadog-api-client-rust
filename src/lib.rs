@@ -3,6 +3,7 @@
 // Copyright 2019-Present Datadog, Inc.
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
+#![doc = include_str!("../README.md")]
 
 pub mod datadog;
 pub mod datadogV1;
