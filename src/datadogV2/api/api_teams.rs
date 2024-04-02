@@ -8,7 +8,6 @@ use flate2::{
     Compression,
 };
 use futures_core::stream::Stream;
-use reqwest;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;

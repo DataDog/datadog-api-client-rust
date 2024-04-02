@@ -3,7 +3,6 @@
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog;
 use log::warn;
-use reqwest;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 

@@ -6,7 +6,6 @@ use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
 };
-use reqwest;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;

@@ -9,7 +9,6 @@ use flate2::{
 };
 use futures_core::stream::Stream;
 use log::warn;
-use reqwest;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;

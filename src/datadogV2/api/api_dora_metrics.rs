@@ -7,7 +7,6 @@ use flate2::{
     Compression,
 };
 use log::warn;
-use reqwest;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;

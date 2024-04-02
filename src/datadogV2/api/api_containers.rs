@@ -4,7 +4,6 @@
 use crate::datadog;
 use async_stream::try_stream;
 use futures_core::stream::Stream;
-use reqwest;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 
