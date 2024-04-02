@@ -1,7 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use crate::datadog::*;
+use crate::datadog;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
@@ -135,13 +135,13 @@ pub enum UpdateCloudWorkloadSecurityAgentRuleError {
 
 #[derive(Debug, Clone)]
 pub struct CloudWorkloadSecurityAPI {
-    config: configuration::Configuration,
+    config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for CloudWorkloadSecurityAPI {
     fn default() -> Self {
-        Self::with_config(configuration::Configuration::default())
+        Self::with_config(datadog::Configuration::default())
     }
 }
 
@@ -149,7 +149,7 @@ impl CloudWorkloadSecurityAPI {
     pub fn new() -> Self {
         Self::default()
     }
-    pub fn with_config(config: configuration::Configuration) -> Self {
+    pub fn with_config(config: datadog::Configuration) -> Self {
         let mut reqwest_client_builder = reqwest::Client::builder();
 
         if let Some(proxy_url) = &config.proxy_url {
@@ -191,7 +191,7 @@ impl CloudWorkloadSecurityAPI {
     }
 
     pub fn with_client_and_config(
-        config: configuration::Configuration,
+        config: datadog::Configuration,
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
@@ -203,7 +203,7 @@ impl CloudWorkloadSecurityAPI {
         body: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateRequest,
     ) -> Result<
         crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse,
-        Error<CreateCSMThreatsAgentRuleError>,
+        datadog::Error<CreateCSMThreatsAgentRuleError>,
     > {
         match self
             .create_csm_threats_agent_rule_with_http_info(body)
@@ -213,7 +213,7 @@ impl CloudWorkloadSecurityAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -227,8 +227,8 @@ impl CloudWorkloadSecurityAPI {
         &self,
         body: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse>,
-        Error<CreateCSMThreatsAgentRuleError>,
+        datadog::ResponseContent<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse>,
+        datadog::Error<CreateCSMThreatsAgentRuleError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_csm_threats_agent_rule";
@@ -254,7 +254,7 @@ impl CloudWorkloadSecurityAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -277,7 +277,7 @@ impl CloudWorkloadSecurityAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -288,7 +288,7 @@ impl CloudWorkloadSecurityAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -298,7 +298,7 @@ impl CloudWorkloadSecurityAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -308,7 +308,7 @@ impl CloudWorkloadSecurityAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -333,23 +333,23 @@ impl CloudWorkloadSecurityAPI {
             >(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateCSMThreatsAgentRuleError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -359,7 +359,7 @@ impl CloudWorkloadSecurityAPI {
         body: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateRequest,
     ) -> Result<
         crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse,
-        Error<CreateCloudWorkloadSecurityAgentRuleError>,
+        datadog::Error<CreateCloudWorkloadSecurityAgentRuleError>,
     > {
         match self
             .create_cloud_workload_security_agent_rule_with_http_info(body)
@@ -369,7 +369,7 @@ impl CloudWorkloadSecurityAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -383,8 +383,8 @@ impl CloudWorkloadSecurityAPI {
         &self,
         body: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse>,
-        Error<CreateCloudWorkloadSecurityAgentRuleError>,
+        datadog::ResponseContent<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse>,
+        datadog::Error<CreateCloudWorkloadSecurityAgentRuleError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_cloud_workload_security_agent_rule";
@@ -410,7 +410,7 @@ impl CloudWorkloadSecurityAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -433,7 +433,7 @@ impl CloudWorkloadSecurityAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -444,7 +444,7 @@ impl CloudWorkloadSecurityAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -454,7 +454,7 @@ impl CloudWorkloadSecurityAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -464,7 +464,7 @@ impl CloudWorkloadSecurityAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -489,23 +489,23 @@ impl CloudWorkloadSecurityAPI {
             >(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateCloudWorkloadSecurityAgentRuleError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -513,7 +513,7 @@ impl CloudWorkloadSecurityAPI {
     pub async fn delete_csm_threats_agent_rule(
         &self,
         agent_rule_id: String,
-    ) -> Result<(), Error<DeleteCSMThreatsAgentRuleError>> {
+    ) -> Result<(), datadog::Error<DeleteCSMThreatsAgentRuleError>> {
         match self
             .delete_csm_threats_agent_rule_with_http_info(agent_rule_id)
             .await
@@ -527,7 +527,7 @@ impl CloudWorkloadSecurityAPI {
     pub async fn delete_csm_threats_agent_rule_with_http_info(
         &self,
         agent_rule_id: String,
-    ) -> Result<ResponseContent<()>, Error<DeleteCSMThreatsAgentRuleError>> {
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCSMThreatsAgentRuleError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_csm_threats_agent_rule";
 
@@ -536,7 +536,7 @@ impl CloudWorkloadSecurityAPI {
         let local_uri_str = format!(
             "{}/api/v2/remote_config/products/cws/agent_rules/{agent_rule_id}",
             local_configuration.get_operation_host(operation_id),
-            agent_rule_id = urlencode(agent_rule_id)
+            agent_rule_id = datadog::urlencode(agent_rule_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -552,7 +552,7 @@ impl CloudWorkloadSecurityAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -581,7 +581,7 @@ impl CloudWorkloadSecurityAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            Ok(ResponseContent {
+            Ok(datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: None,
@@ -589,12 +589,12 @@ impl CloudWorkloadSecurityAPI {
         } else {
             let local_entity: Option<DeleteCSMThreatsAgentRuleError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -602,7 +602,7 @@ impl CloudWorkloadSecurityAPI {
     pub async fn delete_cloud_workload_security_agent_rule(
         &self,
         agent_rule_id: String,
-    ) -> Result<(), Error<DeleteCloudWorkloadSecurityAgentRuleError>> {
+    ) -> Result<(), datadog::Error<DeleteCloudWorkloadSecurityAgentRuleError>> {
         match self
             .delete_cloud_workload_security_agent_rule_with_http_info(agent_rule_id)
             .await
@@ -616,7 +616,10 @@ impl CloudWorkloadSecurityAPI {
     pub async fn delete_cloud_workload_security_agent_rule_with_http_info(
         &self,
         agent_rule_id: String,
-    ) -> Result<ResponseContent<()>, Error<DeleteCloudWorkloadSecurityAgentRuleError>> {
+    ) -> Result<
+        datadog::ResponseContent<()>,
+        datadog::Error<DeleteCloudWorkloadSecurityAgentRuleError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_cloud_workload_security_agent_rule";
 
@@ -625,7 +628,7 @@ impl CloudWorkloadSecurityAPI {
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/cloud_workload_security/agent_rules/{agent_rule_id}",
             local_configuration.get_operation_host(operation_id),
-            agent_rule_id = urlencode(agent_rule_id)
+            agent_rule_id = datadog::urlencode(agent_rule_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -641,7 +644,7 @@ impl CloudWorkloadSecurityAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -670,7 +673,7 @@ impl CloudWorkloadSecurityAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            Ok(ResponseContent {
+            Ok(datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: None,
@@ -678,12 +681,12 @@ impl CloudWorkloadSecurityAPI {
         } else {
             let local_entity: Option<DeleteCloudWorkloadSecurityAgentRuleError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -692,13 +695,13 @@ impl CloudWorkloadSecurityAPI {
     /// your Agents to update the policy running in your environment.
     pub async fn download_csm_threats_policy(
         &self,
-    ) -> Result<Vec<u8>, Error<DownloadCSMThreatsPolicyError>> {
+    ) -> Result<Vec<u8>, datadog::Error<DownloadCSMThreatsPolicyError>> {
         match self.download_csm_threats_policy_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -712,7 +715,8 @@ impl CloudWorkloadSecurityAPI {
     /// your Agents to update the policy running in your environment.
     pub async fn download_csm_threats_policy_with_http_info(
         &self,
-    ) -> Result<ResponseContent<Vec<u8>>, Error<DownloadCSMThreatsPolicyError>> {
+    ) -> Result<datadog::ResponseContent<Vec<u8>>, datadog::Error<DownloadCSMThreatsPolicyError>>
+    {
         let local_configuration = &self.config;
         let operation_id = "v2.download_csm_threats_policy";
 
@@ -736,7 +740,7 @@ impl CloudWorkloadSecurityAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -765,7 +769,7 @@ impl CloudWorkloadSecurityAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            Ok(ResponseContent {
+            Ok(datadog::ResponseContent {
                 status: local_status,
                 content: local_content.clone(),
                 entity: Some(local_content.into_bytes()),
@@ -773,12 +777,12 @@ impl CloudWorkloadSecurityAPI {
         } else {
             let local_entity: Option<DownloadCSMThreatsPolicyError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -787,7 +791,7 @@ impl CloudWorkloadSecurityAPI {
     /// your Agents to update the policy running in your environment.
     pub async fn download_cloud_workload_policy_file(
         &self,
-    ) -> Result<Vec<u8>, Error<DownloadCloudWorkloadPolicyFileError>> {
+    ) -> Result<Vec<u8>, datadog::Error<DownloadCloudWorkloadPolicyFileError>> {
         match self
             .download_cloud_workload_policy_file_with_http_info()
             .await
@@ -796,7 +800,7 @@ impl CloudWorkloadSecurityAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -810,7 +814,10 @@ impl CloudWorkloadSecurityAPI {
     /// your Agents to update the policy running in your environment.
     pub async fn download_cloud_workload_policy_file_with_http_info(
         &self,
-    ) -> Result<ResponseContent<Vec<u8>>, Error<DownloadCloudWorkloadPolicyFileError>> {
+    ) -> Result<
+        datadog::ResponseContent<Vec<u8>>,
+        datadog::Error<DownloadCloudWorkloadPolicyFileError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v2.download_cloud_workload_policy_file";
 
@@ -834,7 +841,7 @@ impl CloudWorkloadSecurityAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -863,7 +870,7 @@ impl CloudWorkloadSecurityAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            Ok(ResponseContent {
+            Ok(datadog::ResponseContent {
                 status: local_status,
                 content: local_content.clone(),
                 entity: Some(local_content.into_bytes()),
@@ -871,12 +878,12 @@ impl CloudWorkloadSecurityAPI {
         } else {
             let local_entity: Option<DownloadCloudWorkloadPolicyFileError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -886,7 +893,7 @@ impl CloudWorkloadSecurityAPI {
         agent_rule_id: String,
     ) -> Result<
         crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse,
-        Error<GetCSMThreatsAgentRuleError>,
+        datadog::Error<GetCSMThreatsAgentRuleError>,
     > {
         match self
             .get_csm_threats_agent_rule_with_http_info(agent_rule_id)
@@ -896,7 +903,7 @@ impl CloudWorkloadSecurityAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -910,8 +917,8 @@ impl CloudWorkloadSecurityAPI {
         &self,
         agent_rule_id: String,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse>,
-        Error<GetCSMThreatsAgentRuleError>,
+        datadog::ResponseContent<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse>,
+        datadog::Error<GetCSMThreatsAgentRuleError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_csm_threats_agent_rule";
@@ -921,7 +928,7 @@ impl CloudWorkloadSecurityAPI {
         let local_uri_str = format!(
             "{}/api/v2/remote_config/products/cws/agent_rules/{agent_rule_id}",
             local_configuration.get_operation_host(operation_id),
-            agent_rule_id = urlencode(agent_rule_id)
+            agent_rule_id = datadog::urlencode(agent_rule_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -937,7 +944,7 @@ impl CloudWorkloadSecurityAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -971,23 +978,23 @@ impl CloudWorkloadSecurityAPI {
             >(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetCSMThreatsAgentRuleError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -997,7 +1004,7 @@ impl CloudWorkloadSecurityAPI {
         agent_rule_id: String,
     ) -> Result<
         crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse,
-        Error<GetCloudWorkloadSecurityAgentRuleError>,
+        datadog::Error<GetCloudWorkloadSecurityAgentRuleError>,
     > {
         match self
             .get_cloud_workload_security_agent_rule_with_http_info(agent_rule_id)
@@ -1007,7 +1014,7 @@ impl CloudWorkloadSecurityAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1021,8 +1028,8 @@ impl CloudWorkloadSecurityAPI {
         &self,
         agent_rule_id: String,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse>,
-        Error<GetCloudWorkloadSecurityAgentRuleError>,
+        datadog::ResponseContent<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse>,
+        datadog::Error<GetCloudWorkloadSecurityAgentRuleError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_cloud_workload_security_agent_rule";
@@ -1032,7 +1039,7 @@ impl CloudWorkloadSecurityAPI {
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/cloud_workload_security/agent_rules/{agent_rule_id}",
             local_configuration.get_operation_host(operation_id),
-            agent_rule_id = urlencode(agent_rule_id)
+            agent_rule_id = datadog::urlencode(agent_rule_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1048,7 +1055,7 @@ impl CloudWorkloadSecurityAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1082,23 +1089,23 @@ impl CloudWorkloadSecurityAPI {
             >(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetCloudWorkloadSecurityAgentRuleError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1107,14 +1114,14 @@ impl CloudWorkloadSecurityAPI {
         &self,
     ) -> Result<
         crate::datadogV2::model::CloudWorkloadSecurityAgentRulesListResponse,
-        Error<ListCSMThreatsAgentRulesError>,
+        datadog::Error<ListCSMThreatsAgentRulesError>,
     > {
         match self.list_csm_threats_agent_rules_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1127,8 +1134,10 @@ impl CloudWorkloadSecurityAPI {
     pub async fn list_csm_threats_agent_rules_with_http_info(
         &self,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::CloudWorkloadSecurityAgentRulesListResponse>,
-        Error<ListCSMThreatsAgentRulesError>,
+        datadog::ResponseContent<
+            crate::datadogV2::model::CloudWorkloadSecurityAgentRulesListResponse,
+        >,
+        datadog::Error<ListCSMThreatsAgentRulesError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_csm_threats_agent_rules";
@@ -1153,7 +1162,7 @@ impl CloudWorkloadSecurityAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1187,23 +1196,23 @@ impl CloudWorkloadSecurityAPI {
             >(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListCSMThreatsAgentRulesError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1212,7 +1221,7 @@ impl CloudWorkloadSecurityAPI {
         &self,
     ) -> Result<
         crate::datadogV2::model::CloudWorkloadSecurityAgentRulesListResponse,
-        Error<ListCloudWorkloadSecurityAgentRulesError>,
+        datadog::Error<ListCloudWorkloadSecurityAgentRulesError>,
     > {
         match self
             .list_cloud_workload_security_agent_rules_with_http_info()
@@ -1222,7 +1231,7 @@ impl CloudWorkloadSecurityAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1235,8 +1244,10 @@ impl CloudWorkloadSecurityAPI {
     pub async fn list_cloud_workload_security_agent_rules_with_http_info(
         &self,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::CloudWorkloadSecurityAgentRulesListResponse>,
-        Error<ListCloudWorkloadSecurityAgentRulesError>,
+        datadog::ResponseContent<
+            crate::datadogV2::model::CloudWorkloadSecurityAgentRulesListResponse,
+        >,
+        datadog::Error<ListCloudWorkloadSecurityAgentRulesError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_cloud_workload_security_agent_rules";
@@ -1261,7 +1272,7 @@ impl CloudWorkloadSecurityAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1295,23 +1306,23 @@ impl CloudWorkloadSecurityAPI {
             >(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListCloudWorkloadSecurityAgentRulesError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1323,7 +1334,7 @@ impl CloudWorkloadSecurityAPI {
         body: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleUpdateRequest,
     ) -> Result<
         crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse,
-        Error<UpdateCSMThreatsAgentRuleError>,
+        datadog::Error<UpdateCSMThreatsAgentRuleError>,
     > {
         match self
             .update_csm_threats_agent_rule_with_http_info(agent_rule_id, body)
@@ -1333,7 +1344,7 @@ impl CloudWorkloadSecurityAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1349,8 +1360,8 @@ impl CloudWorkloadSecurityAPI {
         agent_rule_id: String,
         body: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleUpdateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse>,
-        Error<UpdateCSMThreatsAgentRuleError>,
+        datadog::ResponseContent<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse>,
+        datadog::Error<UpdateCSMThreatsAgentRuleError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_csm_threats_agent_rule";
@@ -1360,7 +1371,7 @@ impl CloudWorkloadSecurityAPI {
         let local_uri_str = format!(
             "{}/api/v2/remote_config/products/cws/agent_rules/{agent_rule_id}",
             local_configuration.get_operation_host(operation_id),
-            agent_rule_id = urlencode(agent_rule_id)
+            agent_rule_id = datadog::urlencode(agent_rule_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -1377,7 +1388,7 @@ impl CloudWorkloadSecurityAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1400,7 +1411,7 @@ impl CloudWorkloadSecurityAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -1411,7 +1422,7 @@ impl CloudWorkloadSecurityAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -1421,7 +1432,7 @@ impl CloudWorkloadSecurityAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -1431,7 +1442,7 @@ impl CloudWorkloadSecurityAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -1456,23 +1467,23 @@ impl CloudWorkloadSecurityAPI {
             >(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateCSMThreatsAgentRuleError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1484,7 +1495,7 @@ impl CloudWorkloadSecurityAPI {
         body: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleUpdateRequest,
     ) -> Result<
         crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse,
-        Error<UpdateCloudWorkloadSecurityAgentRuleError>,
+        datadog::Error<UpdateCloudWorkloadSecurityAgentRuleError>,
     > {
         match self
             .update_cloud_workload_security_agent_rule_with_http_info(agent_rule_id, body)
@@ -1494,7 +1505,7 @@ impl CloudWorkloadSecurityAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1510,8 +1521,8 @@ impl CloudWorkloadSecurityAPI {
         agent_rule_id: String,
         body: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleUpdateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse>,
-        Error<UpdateCloudWorkloadSecurityAgentRuleError>,
+        datadog::ResponseContent<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse>,
+        datadog::Error<UpdateCloudWorkloadSecurityAgentRuleError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_cloud_workload_security_agent_rule";
@@ -1521,7 +1532,7 @@ impl CloudWorkloadSecurityAPI {
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/cloud_workload_security/agent_rules/{agent_rule_id}",
             local_configuration.get_operation_host(operation_id),
-            agent_rule_id = urlencode(agent_rule_id)
+            agent_rule_id = datadog::urlencode(agent_rule_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -1538,7 +1549,7 @@ impl CloudWorkloadSecurityAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1561,7 +1572,7 @@ impl CloudWorkloadSecurityAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -1572,7 +1583,7 @@ impl CloudWorkloadSecurityAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -1582,7 +1593,7 @@ impl CloudWorkloadSecurityAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -1592,7 +1603,7 @@ impl CloudWorkloadSecurityAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -1617,23 +1628,23 @@ impl CloudWorkloadSecurityAPI {
             >(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateCloudWorkloadSecurityAgentRuleError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 }

@@ -1,7 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use crate::datadog::*;
+use crate::datadog;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
@@ -97,13 +97,13 @@ pub enum UpdateWebhooksIntegrationCustomVariableError {
 
 #[derive(Debug, Clone)]
 pub struct WebhooksIntegrationAPI {
-    config: configuration::Configuration,
+    config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for WebhooksIntegrationAPI {
     fn default() -> Self {
-        Self::with_config(configuration::Configuration::default())
+        Self::with_config(datadog::Configuration::default())
     }
 }
 
@@ -111,7 +111,7 @@ impl WebhooksIntegrationAPI {
     pub fn new() -> Self {
         Self::default()
     }
-    pub fn with_config(config: configuration::Configuration) -> Self {
+    pub fn with_config(config: datadog::Configuration) -> Self {
         let mut reqwest_client_builder = reqwest::Client::builder();
 
         if let Some(proxy_url) = &config.proxy_url {
@@ -153,7 +153,7 @@ impl WebhooksIntegrationAPI {
     }
 
     pub fn with_client_and_config(
-        config: configuration::Configuration,
+        config: datadog::Configuration,
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
@@ -163,14 +163,16 @@ impl WebhooksIntegrationAPI {
     pub async fn create_webhooks_integration(
         &self,
         body: crate::datadogV1::model::WebhooksIntegration,
-    ) -> Result<crate::datadogV1::model::WebhooksIntegration, Error<CreateWebhooksIntegrationError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::WebhooksIntegration,
+        datadog::Error<CreateWebhooksIntegrationError>,
+    > {
         match self.create_webhooks_integration_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -184,8 +186,8 @@ impl WebhooksIntegrationAPI {
         &self,
         body: crate::datadogV1::model::WebhooksIntegration,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::WebhooksIntegration>,
-        Error<CreateWebhooksIntegrationError>,
+        datadog::ResponseContent<crate::datadogV1::model::WebhooksIntegration>,
+        datadog::Error<CreateWebhooksIntegrationError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.create_webhooks_integration";
@@ -211,7 +213,7 @@ impl WebhooksIntegrationAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -234,7 +236,7 @@ impl WebhooksIntegrationAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -245,7 +247,7 @@ impl WebhooksIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -255,7 +257,7 @@ impl WebhooksIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -265,7 +267,7 @@ impl WebhooksIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -289,23 +291,23 @@ impl WebhooksIntegrationAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateWebhooksIntegrationError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -315,7 +317,7 @@ impl WebhooksIntegrationAPI {
         body: crate::datadogV1::model::WebhooksIntegrationCustomVariable,
     ) -> Result<
         crate::datadogV1::model::WebhooksIntegrationCustomVariableResponse,
-        Error<CreateWebhooksIntegrationCustomVariableError>,
+        datadog::Error<CreateWebhooksIntegrationCustomVariableError>,
     > {
         match self
             .create_webhooks_integration_custom_variable_with_http_info(body)
@@ -325,7 +327,7 @@ impl WebhooksIntegrationAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -339,8 +341,10 @@ impl WebhooksIntegrationAPI {
         &self,
         body: crate::datadogV1::model::WebhooksIntegrationCustomVariable,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::WebhooksIntegrationCustomVariableResponse>,
-        Error<CreateWebhooksIntegrationCustomVariableError>,
+        datadog::ResponseContent<
+            crate::datadogV1::model::WebhooksIntegrationCustomVariableResponse,
+        >,
+        datadog::Error<CreateWebhooksIntegrationCustomVariableError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.create_webhooks_integration_custom_variable";
@@ -366,7 +370,7 @@ impl WebhooksIntegrationAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -389,7 +393,7 @@ impl WebhooksIntegrationAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -400,7 +404,7 @@ impl WebhooksIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -410,7 +414,7 @@ impl WebhooksIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -420,7 +424,7 @@ impl WebhooksIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -445,23 +449,23 @@ impl WebhooksIntegrationAPI {
             >(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateWebhooksIntegrationCustomVariableError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -469,7 +473,7 @@ impl WebhooksIntegrationAPI {
     pub async fn delete_webhooks_integration(
         &self,
         webhook_name: String,
-    ) -> Result<(), Error<DeleteWebhooksIntegrationError>> {
+    ) -> Result<(), datadog::Error<DeleteWebhooksIntegrationError>> {
         match self
             .delete_webhooks_integration_with_http_info(webhook_name)
             .await
@@ -483,7 +487,7 @@ impl WebhooksIntegrationAPI {
     pub async fn delete_webhooks_integration_with_http_info(
         &self,
         webhook_name: String,
-    ) -> Result<ResponseContent<()>, Error<DeleteWebhooksIntegrationError>> {
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteWebhooksIntegrationError>> {
         let local_configuration = &self.config;
         let operation_id = "v1.delete_webhooks_integration";
 
@@ -492,7 +496,7 @@ impl WebhooksIntegrationAPI {
         let local_uri_str = format!(
             "{}/api/v1/integration/webhooks/configuration/webhooks/{webhook_name}",
             local_configuration.get_operation_host(operation_id),
-            webhook_name = urlencode(webhook_name)
+            webhook_name = datadog::urlencode(webhook_name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -508,7 +512,7 @@ impl WebhooksIntegrationAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -537,7 +541,7 @@ impl WebhooksIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            Ok(ResponseContent {
+            Ok(datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: None,
@@ -545,12 +549,12 @@ impl WebhooksIntegrationAPI {
         } else {
             let local_entity: Option<DeleteWebhooksIntegrationError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -558,7 +562,7 @@ impl WebhooksIntegrationAPI {
     pub async fn delete_webhooks_integration_custom_variable(
         &self,
         custom_variable_name: String,
-    ) -> Result<(), Error<DeleteWebhooksIntegrationCustomVariableError>> {
+    ) -> Result<(), datadog::Error<DeleteWebhooksIntegrationCustomVariableError>> {
         match self
             .delete_webhooks_integration_custom_variable_with_http_info(custom_variable_name)
             .await
@@ -572,7 +576,10 @@ impl WebhooksIntegrationAPI {
     pub async fn delete_webhooks_integration_custom_variable_with_http_info(
         &self,
         custom_variable_name: String,
-    ) -> Result<ResponseContent<()>, Error<DeleteWebhooksIntegrationCustomVariableError>> {
+    ) -> Result<
+        datadog::ResponseContent<()>,
+        datadog::Error<DeleteWebhooksIntegrationCustomVariableError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.delete_webhooks_integration_custom_variable";
 
@@ -581,7 +588,7 @@ impl WebhooksIntegrationAPI {
         let local_uri_str = format!(
             "{}/api/v1/integration/webhooks/configuration/custom-variables/{custom_variable_name}",
             local_configuration.get_operation_host(operation_id),
-            custom_variable_name = urlencode(custom_variable_name)
+            custom_variable_name = datadog::urlencode(custom_variable_name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -597,7 +604,7 @@ impl WebhooksIntegrationAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -626,7 +633,7 @@ impl WebhooksIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            Ok(ResponseContent {
+            Ok(datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: None,
@@ -634,12 +641,12 @@ impl WebhooksIntegrationAPI {
         } else {
             let local_entity: Option<DeleteWebhooksIntegrationCustomVariableError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -647,8 +654,10 @@ impl WebhooksIntegrationAPI {
     pub async fn get_webhooks_integration(
         &self,
         webhook_name: String,
-    ) -> Result<crate::datadogV1::model::WebhooksIntegration, Error<GetWebhooksIntegrationError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::WebhooksIntegration,
+        datadog::Error<GetWebhooksIntegrationError>,
+    > {
         match self
             .get_webhooks_integration_with_http_info(webhook_name)
             .await
@@ -657,7 +666,7 @@ impl WebhooksIntegrationAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -671,8 +680,8 @@ impl WebhooksIntegrationAPI {
         &self,
         webhook_name: String,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::WebhooksIntegration>,
-        Error<GetWebhooksIntegrationError>,
+        datadog::ResponseContent<crate::datadogV1::model::WebhooksIntegration>,
+        datadog::Error<GetWebhooksIntegrationError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_webhooks_integration";
@@ -682,7 +691,7 @@ impl WebhooksIntegrationAPI {
         let local_uri_str = format!(
             "{}/api/v1/integration/webhooks/configuration/webhooks/{webhook_name}",
             local_configuration.get_operation_host(operation_id),
-            webhook_name = urlencode(webhook_name)
+            webhook_name = datadog::urlencode(webhook_name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -698,7 +707,7 @@ impl WebhooksIntegrationAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -731,23 +740,23 @@ impl WebhooksIntegrationAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetWebhooksIntegrationError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -760,7 +769,7 @@ impl WebhooksIntegrationAPI {
         custom_variable_name: String,
     ) -> Result<
         crate::datadogV1::model::WebhooksIntegrationCustomVariableResponse,
-        Error<GetWebhooksIntegrationCustomVariableError>,
+        datadog::Error<GetWebhooksIntegrationCustomVariableError>,
     > {
         match self
             .get_webhooks_integration_custom_variable_with_http_info(custom_variable_name)
@@ -770,7 +779,7 @@ impl WebhooksIntegrationAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -787,8 +796,10 @@ impl WebhooksIntegrationAPI {
         &self,
         custom_variable_name: String,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::WebhooksIntegrationCustomVariableResponse>,
-        Error<GetWebhooksIntegrationCustomVariableError>,
+        datadog::ResponseContent<
+            crate::datadogV1::model::WebhooksIntegrationCustomVariableResponse,
+        >,
+        datadog::Error<GetWebhooksIntegrationCustomVariableError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_webhooks_integration_custom_variable";
@@ -798,7 +809,7 @@ impl WebhooksIntegrationAPI {
         let local_uri_str = format!(
             "{}/api/v1/integration/webhooks/configuration/custom-variables/{custom_variable_name}",
             local_configuration.get_operation_host(operation_id),
-            custom_variable_name = urlencode(custom_variable_name)
+            custom_variable_name = datadog::urlencode(custom_variable_name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -814,7 +825,7 @@ impl WebhooksIntegrationAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -848,23 +859,23 @@ impl WebhooksIntegrationAPI {
             >(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetWebhooksIntegrationCustomVariableError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -873,8 +884,10 @@ impl WebhooksIntegrationAPI {
         &self,
         webhook_name: String,
         body: crate::datadogV1::model::WebhooksIntegrationUpdateRequest,
-    ) -> Result<crate::datadogV1::model::WebhooksIntegration, Error<UpdateWebhooksIntegrationError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::WebhooksIntegration,
+        datadog::Error<UpdateWebhooksIntegrationError>,
+    > {
         match self
             .update_webhooks_integration_with_http_info(webhook_name, body)
             .await
@@ -883,7 +896,7 @@ impl WebhooksIntegrationAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -898,8 +911,8 @@ impl WebhooksIntegrationAPI {
         webhook_name: String,
         body: crate::datadogV1::model::WebhooksIntegrationUpdateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::WebhooksIntegration>,
-        Error<UpdateWebhooksIntegrationError>,
+        datadog::ResponseContent<crate::datadogV1::model::WebhooksIntegration>,
+        datadog::Error<UpdateWebhooksIntegrationError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.update_webhooks_integration";
@@ -909,7 +922,7 @@ impl WebhooksIntegrationAPI {
         let local_uri_str = format!(
             "{}/api/v1/integration/webhooks/configuration/webhooks/{webhook_name}",
             local_configuration.get_operation_host(operation_id),
-            webhook_name = urlencode(webhook_name)
+            webhook_name = datadog::urlencode(webhook_name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
@@ -926,7 +939,7 @@ impl WebhooksIntegrationAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -949,7 +962,7 @@ impl WebhooksIntegrationAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -960,7 +973,7 @@ impl WebhooksIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -970,7 +983,7 @@ impl WebhooksIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -980,7 +993,7 @@ impl WebhooksIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -1004,23 +1017,23 @@ impl WebhooksIntegrationAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateWebhooksIntegrationError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1031,7 +1044,7 @@ impl WebhooksIntegrationAPI {
         body: crate::datadogV1::model::WebhooksIntegrationCustomVariableUpdateRequest,
     ) -> Result<
         crate::datadogV1::model::WebhooksIntegrationCustomVariableResponse,
-        Error<UpdateWebhooksIntegrationCustomVariableError>,
+        datadog::Error<UpdateWebhooksIntegrationCustomVariableError>,
     > {
         match self
             .update_webhooks_integration_custom_variable_with_http_info(custom_variable_name, body)
@@ -1041,7 +1054,7 @@ impl WebhooksIntegrationAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1056,8 +1069,10 @@ impl WebhooksIntegrationAPI {
         custom_variable_name: String,
         body: crate::datadogV1::model::WebhooksIntegrationCustomVariableUpdateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::WebhooksIntegrationCustomVariableResponse>,
-        Error<UpdateWebhooksIntegrationCustomVariableError>,
+        datadog::ResponseContent<
+            crate::datadogV1::model::WebhooksIntegrationCustomVariableResponse,
+        >,
+        datadog::Error<UpdateWebhooksIntegrationCustomVariableError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.update_webhooks_integration_custom_variable";
@@ -1067,7 +1082,7 @@ impl WebhooksIntegrationAPI {
         let local_uri_str = format!(
             "{}/api/v1/integration/webhooks/configuration/custom-variables/{custom_variable_name}",
             local_configuration.get_operation_host(operation_id),
-            custom_variable_name = urlencode(custom_variable_name)
+            custom_variable_name = datadog::urlencode(custom_variable_name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
@@ -1084,7 +1099,7 @@ impl WebhooksIntegrationAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1107,7 +1122,7 @@ impl WebhooksIntegrationAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -1118,7 +1133,7 @@ impl WebhooksIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -1128,7 +1143,7 @@ impl WebhooksIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -1138,7 +1153,7 @@ impl WebhooksIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -1163,23 +1178,23 @@ impl WebhooksIntegrationAPI {
             >(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateWebhooksIntegrationCustomVariableError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 }

@@ -1,5 +1,5 @@
 // Update permission setting for team returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_teams::TeamsAPI;
 use datadog_api_client::datadogV2::model::TeamPermissionSettingType;
 use datadog_api_client::datadogV2::model::TeamPermissionSettingUpdate;
@@ -18,7 +18,7 @@ async fn main() {
                     .value(TeamPermissionSettingValue::ADMINS),
             ),
     );
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = TeamsAPI::with_config(configuration);
     let resp = api
         .update_team_permission_setting(

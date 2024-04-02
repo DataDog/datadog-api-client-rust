@@ -1,5 +1,5 @@
 // Create a global variable from test returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api::api_synthetics::SyntheticsAPI;
 use datadog_api_client::datadogV1::model::SyntheticsGlobalVariable;
 use datadog_api_client::datadogV1::model::SyntheticsGlobalVariableOptions;
@@ -35,7 +35,7 @@ async fn main() {
         .local_variable_name("EXTRACTED_VALUE".to_string()),
     )
     .parse_test_public_id(synthetics_api_test_multi_step_public_id.clone());
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = SyntheticsAPI::with_config(configuration);
     let resp = api.create_global_variable(body).await;
     if let Ok(value) = resp {

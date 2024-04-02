@@ -1,5 +1,5 @@
 // Create a monitor configuration policy returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_monitors::MonitorsAPI;
 use datadog_api_client::datadogV2::model::MonitorConfigPolicyAttributeCreateRequest;
 use datadog_api_client::datadogV2::model::MonitorConfigPolicyCreateData;
@@ -24,7 +24,7 @@ async fn main() {
         ),
         MonitorConfigPolicyResourceType::MONITOR_CONFIG_POLICY,
     ));
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = MonitorsAPI::with_config(configuration);
     let resp = api.create_monitor_config_policy(body).await;
     if let Ok(value) = resp {

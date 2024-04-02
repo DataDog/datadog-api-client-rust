@@ -1,7 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use crate::datadog::*;
+use crate::datadog;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
@@ -130,13 +130,13 @@ pub enum UpdateServiceAccountApplicationKeyError {
 
 #[derive(Debug, Clone)]
 pub struct ServiceAccountsAPI {
-    config: configuration::Configuration,
+    config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for ServiceAccountsAPI {
     fn default() -> Self {
-        Self::with_config(configuration::Configuration::default())
+        Self::with_config(datadog::Configuration::default())
     }
 }
 
@@ -144,7 +144,7 @@ impl ServiceAccountsAPI {
     pub fn new() -> Self {
         Self::default()
     }
-    pub fn with_config(config: configuration::Configuration) -> Self {
+    pub fn with_config(config: datadog::Configuration) -> Self {
         let mut reqwest_client_builder = reqwest::Client::builder();
 
         if let Some(proxy_url) = &config.proxy_url {
@@ -186,7 +186,7 @@ impl ServiceAccountsAPI {
     }
 
     pub fn with_client_and_config(
-        config: configuration::Configuration,
+        config: datadog::Configuration,
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
@@ -196,13 +196,14 @@ impl ServiceAccountsAPI {
     pub async fn create_service_account(
         &self,
         body: crate::datadogV2::model::ServiceAccountCreateRequest,
-    ) -> Result<crate::datadogV2::model::UserResponse, Error<CreateServiceAccountError>> {
+    ) -> Result<crate::datadogV2::model::UserResponse, datadog::Error<CreateServiceAccountError>>
+    {
         match self.create_service_account_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -216,8 +217,8 @@ impl ServiceAccountsAPI {
         &self,
         body: crate::datadogV2::model::ServiceAccountCreateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::UserResponse>,
-        Error<CreateServiceAccountError>,
+        datadog::ResponseContent<crate::datadogV2::model::UserResponse>,
+        datadog::Error<CreateServiceAccountError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_service_account";
@@ -243,7 +244,7 @@ impl ServiceAccountsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -266,7 +267,7 @@ impl ServiceAccountsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -277,7 +278,7 @@ impl ServiceAccountsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -287,7 +288,7 @@ impl ServiceAccountsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -297,7 +298,7 @@ impl ServiceAccountsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -319,23 +320,23 @@ impl ServiceAccountsAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::UserResponse>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateServiceAccountError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -346,7 +347,7 @@ impl ServiceAccountsAPI {
         body: crate::datadogV2::model::ApplicationKeyCreateRequest,
     ) -> Result<
         crate::datadogV2::model::ApplicationKeyResponse,
-        Error<CreateServiceAccountApplicationKeyError>,
+        datadog::Error<CreateServiceAccountApplicationKeyError>,
     > {
         match self
             .create_service_account_application_key_with_http_info(service_account_id, body)
@@ -356,7 +357,7 @@ impl ServiceAccountsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -371,8 +372,8 @@ impl ServiceAccountsAPI {
         service_account_id: String,
         body: crate::datadogV2::model::ApplicationKeyCreateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::ApplicationKeyResponse>,
-        Error<CreateServiceAccountApplicationKeyError>,
+        datadog::ResponseContent<crate::datadogV2::model::ApplicationKeyResponse>,
+        datadog::Error<CreateServiceAccountApplicationKeyError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_service_account_application_key";
@@ -382,7 +383,7 @@ impl ServiceAccountsAPI {
         let local_uri_str = format!(
             "{}/api/v2/service_accounts/{service_account_id}/application_keys",
             local_configuration.get_operation_host(operation_id),
-            service_account_id = urlencode(service_account_id)
+            service_account_id = datadog::urlencode(service_account_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -399,7 +400,7 @@ impl ServiceAccountsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -422,7 +423,7 @@ impl ServiceAccountsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -433,7 +434,7 @@ impl ServiceAccountsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -443,7 +444,7 @@ impl ServiceAccountsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -453,7 +454,7 @@ impl ServiceAccountsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -477,23 +478,23 @@ impl ServiceAccountsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateServiceAccountApplicationKeyError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -502,7 +503,7 @@ impl ServiceAccountsAPI {
         &self,
         service_account_id: String,
         app_key_id: String,
-    ) -> Result<(), Error<DeleteServiceAccountApplicationKeyError>> {
+    ) -> Result<(), datadog::Error<DeleteServiceAccountApplicationKeyError>> {
         match self
             .delete_service_account_application_key_with_http_info(service_account_id, app_key_id)
             .await
@@ -517,7 +518,8 @@ impl ServiceAccountsAPI {
         &self,
         service_account_id: String,
         app_key_id: String,
-    ) -> Result<ResponseContent<()>, Error<DeleteServiceAccountApplicationKeyError>> {
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteServiceAccountApplicationKeyError>>
+    {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_service_account_application_key";
 
@@ -526,8 +528,8 @@ impl ServiceAccountsAPI {
         let local_uri_str = format!(
             "{}/api/v2/service_accounts/{service_account_id}/application_keys/{app_key_id}",
             local_configuration.get_operation_host(operation_id),
-            service_account_id = urlencode(service_account_id),
-            app_key_id = urlencode(app_key_id)
+            service_account_id = datadog::urlencode(service_account_id),
+            app_key_id = datadog::urlencode(app_key_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -543,7 +545,7 @@ impl ServiceAccountsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -572,7 +574,7 @@ impl ServiceAccountsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            Ok(ResponseContent {
+            Ok(datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: None,
@@ -580,12 +582,12 @@ impl ServiceAccountsAPI {
         } else {
             let local_entity: Option<DeleteServiceAccountApplicationKeyError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -596,7 +598,7 @@ impl ServiceAccountsAPI {
         app_key_id: String,
     ) -> Result<
         crate::datadogV2::model::PartialApplicationKeyResponse,
-        Error<GetServiceAccountApplicationKeyError>,
+        datadog::Error<GetServiceAccountApplicationKeyError>,
     > {
         match self
             .get_service_account_application_key_with_http_info(service_account_id, app_key_id)
@@ -606,7 +608,7 @@ impl ServiceAccountsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -621,8 +623,8 @@ impl ServiceAccountsAPI {
         service_account_id: String,
         app_key_id: String,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::PartialApplicationKeyResponse>,
-        Error<GetServiceAccountApplicationKeyError>,
+        datadog::ResponseContent<crate::datadogV2::model::PartialApplicationKeyResponse>,
+        datadog::Error<GetServiceAccountApplicationKeyError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_service_account_application_key";
@@ -632,8 +634,8 @@ impl ServiceAccountsAPI {
         let local_uri_str = format!(
             "{}/api/v2/service_accounts/{service_account_id}/application_keys/{app_key_id}",
             local_configuration.get_operation_host(operation_id),
-            service_account_id = urlencode(service_account_id),
-            app_key_id = urlencode(app_key_id)
+            service_account_id = datadog::urlencode(service_account_id),
+            app_key_id = datadog::urlencode(app_key_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -649,7 +651,7 @@ impl ServiceAccountsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -682,23 +684,23 @@ impl ServiceAccountsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetServiceAccountApplicationKeyError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -709,7 +711,7 @@ impl ServiceAccountsAPI {
         params: ListServiceAccountApplicationKeysOptionalParams,
     ) -> Result<
         crate::datadogV2::model::ListApplicationKeysResponse,
-        Error<ListServiceAccountApplicationKeysError>,
+        datadog::Error<ListServiceAccountApplicationKeysError>,
     > {
         match self
             .list_service_account_application_keys_with_http_info(service_account_id, params)
@@ -719,7 +721,7 @@ impl ServiceAccountsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -734,8 +736,8 @@ impl ServiceAccountsAPI {
         service_account_id: String,
         params: ListServiceAccountApplicationKeysOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::ListApplicationKeysResponse>,
-        Error<ListServiceAccountApplicationKeysError>,
+        datadog::ResponseContent<crate::datadogV2::model::ListApplicationKeysResponse>,
+        datadog::Error<ListServiceAccountApplicationKeysError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_service_account_application_keys";
@@ -753,7 +755,7 @@ impl ServiceAccountsAPI {
         let local_uri_str = format!(
             "{}/api/v2/service_accounts/{service_account_id}/application_keys",
             local_configuration.get_operation_host(operation_id),
-            service_account_id = urlencode(service_account_id)
+            service_account_id = datadog::urlencode(service_account_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -794,7 +796,7 @@ impl ServiceAccountsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -827,23 +829,23 @@ impl ServiceAccountsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListServiceAccountApplicationKeysError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -855,7 +857,7 @@ impl ServiceAccountsAPI {
         body: crate::datadogV2::model::ApplicationKeyUpdateRequest,
     ) -> Result<
         crate::datadogV2::model::PartialApplicationKeyResponse,
-        Error<UpdateServiceAccountApplicationKeyError>,
+        datadog::Error<UpdateServiceAccountApplicationKeyError>,
     > {
         match self
             .update_service_account_application_key_with_http_info(
@@ -869,7 +871,7 @@ impl ServiceAccountsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -885,8 +887,8 @@ impl ServiceAccountsAPI {
         app_key_id: String,
         body: crate::datadogV2::model::ApplicationKeyUpdateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::PartialApplicationKeyResponse>,
-        Error<UpdateServiceAccountApplicationKeyError>,
+        datadog::ResponseContent<crate::datadogV2::model::PartialApplicationKeyResponse>,
+        datadog::Error<UpdateServiceAccountApplicationKeyError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_service_account_application_key";
@@ -896,8 +898,8 @@ impl ServiceAccountsAPI {
         let local_uri_str = format!(
             "{}/api/v2/service_accounts/{service_account_id}/application_keys/{app_key_id}",
             local_configuration.get_operation_host(operation_id),
-            service_account_id = urlencode(service_account_id),
-            app_key_id = urlencode(app_key_id)
+            service_account_id = datadog::urlencode(service_account_id),
+            app_key_id = datadog::urlencode(app_key_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -914,7 +916,7 @@ impl ServiceAccountsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -937,7 +939,7 @@ impl ServiceAccountsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -948,7 +950,7 @@ impl ServiceAccountsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -958,7 +960,7 @@ impl ServiceAccountsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -968,7 +970,7 @@ impl ServiceAccountsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -992,23 +994,23 @@ impl ServiceAccountsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateServiceAccountApplicationKeyError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 }

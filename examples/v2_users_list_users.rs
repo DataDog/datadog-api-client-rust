@@ -1,5 +1,5 @@
 // List all users returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_users::ListUsersOptionalParams;
 use datadog_api_client::datadogV2::api::api_users::UsersAPI;
 
@@ -7,7 +7,7 @@ use datadog_api_client::datadogV2::api::api_users::UsersAPI;
 async fn main() {
     // there is a valid "user" in the system
     let user_data_attributes_email = std::env::var("USER_DATA_ATTRIBUTES_EMAIL").unwrap();
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = UsersAPI::with_config(configuration);
     let resp = api
         .list_users(ListUsersOptionalParams::default().filter(user_data_attributes_email.clone()))

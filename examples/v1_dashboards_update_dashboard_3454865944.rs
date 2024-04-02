@@ -1,5 +1,5 @@
 // Update a dashboard with tags returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api::api_dashboards::DashboardsAPI;
 use datadog_api_client::datadogV1::model::Dashboard;
 use datadog_api_client::datadogV1::model::DashboardLayoutType;
@@ -37,7 +37,7 @@ async fn main() {
     )
     .description(Some("Updated description".to_string()))
     .tags(Some(vec!["team:foo".to_string(), "team:bar".to_string()]));
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = DashboardsAPI::with_config(configuration);
     let resp = api.update_dashboard(dashboard_id.clone(), body).await;
     if let Ok(value) = resp {

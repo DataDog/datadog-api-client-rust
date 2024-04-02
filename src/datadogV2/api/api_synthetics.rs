@@ -1,7 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use crate::datadog::*;
+use crate::datadog;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
@@ -29,13 +29,13 @@ pub enum SetOnDemandConcurrencyCapError {
 
 #[derive(Debug, Clone)]
 pub struct SyntheticsAPI {
-    config: configuration::Configuration,
+    config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for SyntheticsAPI {
     fn default() -> Self {
-        Self::with_config(configuration::Configuration::default())
+        Self::with_config(datadog::Configuration::default())
     }
 }
 
@@ -43,7 +43,7 @@ impl SyntheticsAPI {
     pub fn new() -> Self {
         Self::default()
     }
-    pub fn with_config(config: configuration::Configuration) -> Self {
+    pub fn with_config(config: datadog::Configuration) -> Self {
         let mut reqwest_client_builder = reqwest::Client::builder();
 
         if let Some(proxy_url) = &config.proxy_url {
@@ -85,7 +85,7 @@ impl SyntheticsAPI {
     }
 
     pub fn with_client_and_config(
-        config: configuration::Configuration,
+        config: datadog::Configuration,
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
@@ -96,14 +96,14 @@ impl SyntheticsAPI {
         &self,
     ) -> Result<
         crate::datadogV2::model::OnDemandConcurrencyCapResponse,
-        Error<GetOnDemandConcurrencyCapError>,
+        datadog::Error<GetOnDemandConcurrencyCapError>,
     > {
         match self.get_on_demand_concurrency_cap_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -116,8 +116,8 @@ impl SyntheticsAPI {
     pub async fn get_on_demand_concurrency_cap_with_http_info(
         &self,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::OnDemandConcurrencyCapResponse>,
-        Error<GetOnDemandConcurrencyCapError>,
+        datadog::ResponseContent<crate::datadogV2::model::OnDemandConcurrencyCapResponse>,
+        datadog::Error<GetOnDemandConcurrencyCapError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_on_demand_concurrency_cap";
@@ -142,7 +142,7 @@ impl SyntheticsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -175,23 +175,23 @@ impl SyntheticsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetOnDemandConcurrencyCapError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -201,7 +201,7 @@ impl SyntheticsAPI {
         body: crate::datadogV2::model::OnDemandConcurrencyCapAttributes,
     ) -> Result<
         crate::datadogV2::model::OnDemandConcurrencyCapResponse,
-        Error<SetOnDemandConcurrencyCapError>,
+        datadog::Error<SetOnDemandConcurrencyCapError>,
     > {
         match self
             .set_on_demand_concurrency_cap_with_http_info(body)
@@ -211,7 +211,7 @@ impl SyntheticsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -225,8 +225,8 @@ impl SyntheticsAPI {
         &self,
         body: crate::datadogV2::model::OnDemandConcurrencyCapAttributes,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::OnDemandConcurrencyCapResponse>,
-        Error<SetOnDemandConcurrencyCapError>,
+        datadog::ResponseContent<crate::datadogV2::model::OnDemandConcurrencyCapResponse>,
+        datadog::Error<SetOnDemandConcurrencyCapError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.set_on_demand_concurrency_cap";
@@ -252,7 +252,7 @@ impl SyntheticsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -275,7 +275,7 @@ impl SyntheticsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -286,7 +286,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -296,7 +296,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -306,7 +306,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -330,23 +330,23 @@ impl SyntheticsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<SetOnDemandConcurrencyCapError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 }

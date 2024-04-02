@@ -1,7 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use crate::datadog::*;
+use crate::datadog;
 use async_stream::try_stream;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
@@ -385,13 +385,13 @@ pub enum UpdateTestPauseStatusError {
 
 #[derive(Debug, Clone)]
 pub struct SyntheticsAPI {
-    config: configuration::Configuration,
+    config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for SyntheticsAPI {
     fn default() -> Self {
-        Self::with_config(configuration::Configuration::default())
+        Self::with_config(datadog::Configuration::default())
     }
 }
 
@@ -399,7 +399,7 @@ impl SyntheticsAPI {
     pub fn new() -> Self {
         Self::default()
     }
-    pub fn with_config(config: configuration::Configuration) -> Self {
+    pub fn with_config(config: datadog::Configuration) -> Self {
         let mut reqwest_client_builder = reqwest::Client::builder();
 
         if let Some(proxy_url) = &config.proxy_url {
@@ -441,7 +441,7 @@ impl SyntheticsAPI {
     }
 
     pub fn with_client_and_config(
-        config: configuration::Configuration,
+        config: datadog::Configuration,
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
@@ -451,14 +451,16 @@ impl SyntheticsAPI {
     pub async fn create_global_variable(
         &self,
         body: crate::datadogV1::model::SyntheticsGlobalVariable,
-    ) -> Result<crate::datadogV1::model::SyntheticsGlobalVariable, Error<CreateGlobalVariableError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::SyntheticsGlobalVariable,
+        datadog::Error<CreateGlobalVariableError>,
+    > {
         match self.create_global_variable_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -472,8 +474,8 @@ impl SyntheticsAPI {
         &self,
         body: crate::datadogV1::model::SyntheticsGlobalVariable,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::SyntheticsGlobalVariable>,
-        Error<CreateGlobalVariableError>,
+        datadog::ResponseContent<crate::datadogV1::model::SyntheticsGlobalVariable>,
+        datadog::Error<CreateGlobalVariableError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.create_global_variable";
@@ -499,7 +501,7 @@ impl SyntheticsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -522,7 +524,7 @@ impl SyntheticsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -533,7 +535,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -543,7 +545,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -553,7 +555,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -577,23 +579,23 @@ impl SyntheticsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateGlobalVariableError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -603,14 +605,14 @@ impl SyntheticsAPI {
         body: crate::datadogV1::model::SyntheticsPrivateLocation,
     ) -> Result<
         crate::datadogV1::model::SyntheticsPrivateLocationCreationResponse,
-        Error<CreatePrivateLocationError>,
+        datadog::Error<CreatePrivateLocationError>,
     > {
         match self.create_private_location_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -624,8 +626,10 @@ impl SyntheticsAPI {
         &self,
         body: crate::datadogV1::model::SyntheticsPrivateLocation,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::SyntheticsPrivateLocationCreationResponse>,
-        Error<CreatePrivateLocationError>,
+        datadog::ResponseContent<
+            crate::datadogV1::model::SyntheticsPrivateLocationCreationResponse,
+        >,
+        datadog::Error<CreatePrivateLocationError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.create_private_location";
@@ -651,7 +655,7 @@ impl SyntheticsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -674,7 +678,7 @@ impl SyntheticsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -685,7 +689,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -695,7 +699,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -705,7 +709,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -730,23 +734,23 @@ impl SyntheticsAPI {
             >(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreatePrivateLocationError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -754,14 +758,16 @@ impl SyntheticsAPI {
     pub async fn create_synthetics_api_test(
         &self,
         body: crate::datadogV1::model::SyntheticsAPITest,
-    ) -> Result<crate::datadogV1::model::SyntheticsAPITest, Error<CreateSyntheticsAPITestError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::SyntheticsAPITest,
+        datadog::Error<CreateSyntheticsAPITestError>,
+    > {
         match self.create_synthetics_api_test_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -775,8 +781,8 @@ impl SyntheticsAPI {
         &self,
         body: crate::datadogV1::model::SyntheticsAPITest,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::SyntheticsAPITest>,
-        Error<CreateSyntheticsAPITestError>,
+        datadog::ResponseContent<crate::datadogV1::model::SyntheticsAPITest>,
+        datadog::Error<CreateSyntheticsAPITestError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.create_synthetics_api_test";
@@ -802,7 +808,7 @@ impl SyntheticsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -825,7 +831,7 @@ impl SyntheticsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -836,7 +842,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -846,7 +852,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -856,7 +862,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -879,23 +885,23 @@ impl SyntheticsAPI {
             match serde_json::from_str::<crate::datadogV1::model::SyntheticsAPITest>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateSyntheticsAPITestError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -905,7 +911,7 @@ impl SyntheticsAPI {
         body: crate::datadogV1::model::SyntheticsBrowserTest,
     ) -> Result<
         crate::datadogV1::model::SyntheticsBrowserTest,
-        Error<CreateSyntheticsBrowserTestError>,
+        datadog::Error<CreateSyntheticsBrowserTestError>,
     > {
         match self
             .create_synthetics_browser_test_with_http_info(body)
@@ -915,7 +921,7 @@ impl SyntheticsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -929,8 +935,8 @@ impl SyntheticsAPI {
         &self,
         body: crate::datadogV1::model::SyntheticsBrowserTest,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::SyntheticsBrowserTest>,
-        Error<CreateSyntheticsBrowserTestError>,
+        datadog::ResponseContent<crate::datadogV1::model::SyntheticsBrowserTest>,
+        datadog::Error<CreateSyntheticsBrowserTestError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.create_synthetics_browser_test";
@@ -956,7 +962,7 @@ impl SyntheticsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -979,7 +985,7 @@ impl SyntheticsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -990,7 +996,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -1000,7 +1006,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -1010,7 +1016,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -1034,23 +1040,23 @@ impl SyntheticsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateSyntheticsBrowserTestError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1058,7 +1064,7 @@ impl SyntheticsAPI {
     pub async fn delete_global_variable(
         &self,
         variable_id: String,
-    ) -> Result<(), Error<DeleteGlobalVariableError>> {
+    ) -> Result<(), datadog::Error<DeleteGlobalVariableError>> {
         match self
             .delete_global_variable_with_http_info(variable_id)
             .await
@@ -1072,7 +1078,7 @@ impl SyntheticsAPI {
     pub async fn delete_global_variable_with_http_info(
         &self,
         variable_id: String,
-    ) -> Result<ResponseContent<()>, Error<DeleteGlobalVariableError>> {
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteGlobalVariableError>> {
         let local_configuration = &self.config;
         let operation_id = "v1.delete_global_variable";
 
@@ -1081,7 +1087,7 @@ impl SyntheticsAPI {
         let local_uri_str = format!(
             "{}/api/v1/synthetics/variables/{variable_id}",
             local_configuration.get_operation_host(operation_id),
-            variable_id = urlencode(variable_id)
+            variable_id = datadog::urlencode(variable_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -1097,7 +1103,7 @@ impl SyntheticsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1126,7 +1132,7 @@ impl SyntheticsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            Ok(ResponseContent {
+            Ok(datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: None,
@@ -1134,12 +1140,12 @@ impl SyntheticsAPI {
         } else {
             let local_entity: Option<DeleteGlobalVariableError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1147,7 +1153,7 @@ impl SyntheticsAPI {
     pub async fn delete_private_location(
         &self,
         location_id: String,
-    ) -> Result<(), Error<DeletePrivateLocationError>> {
+    ) -> Result<(), datadog::Error<DeletePrivateLocationError>> {
         match self
             .delete_private_location_with_http_info(location_id)
             .await
@@ -1161,7 +1167,7 @@ impl SyntheticsAPI {
     pub async fn delete_private_location_with_http_info(
         &self,
         location_id: String,
-    ) -> Result<ResponseContent<()>, Error<DeletePrivateLocationError>> {
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeletePrivateLocationError>> {
         let local_configuration = &self.config;
         let operation_id = "v1.delete_private_location";
 
@@ -1170,7 +1176,7 @@ impl SyntheticsAPI {
         let local_uri_str = format!(
             "{}/api/v1/synthetics/private-locations/{location_id}",
             local_configuration.get_operation_host(operation_id),
-            location_id = urlencode(location_id)
+            location_id = datadog::urlencode(location_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -1186,7 +1192,7 @@ impl SyntheticsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1215,7 +1221,7 @@ impl SyntheticsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            Ok(ResponseContent {
+            Ok(datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: None,
@@ -1223,12 +1229,12 @@ impl SyntheticsAPI {
         } else {
             let local_entity: Option<DeletePrivateLocationError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1236,14 +1242,16 @@ impl SyntheticsAPI {
     pub async fn delete_tests(
         &self,
         body: crate::datadogV1::model::SyntheticsDeleteTestsPayload,
-    ) -> Result<crate::datadogV1::model::SyntheticsDeleteTestsResponse, Error<DeleteTestsError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::SyntheticsDeleteTestsResponse,
+        datadog::Error<DeleteTestsError>,
+    > {
         match self.delete_tests_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1257,8 +1265,8 @@ impl SyntheticsAPI {
         &self,
         body: crate::datadogV1::model::SyntheticsDeleteTestsPayload,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::SyntheticsDeleteTestsResponse>,
-        Error<DeleteTestsError>,
+        datadog::ResponseContent<crate::datadogV1::model::SyntheticsDeleteTestsResponse>,
+        datadog::Error<DeleteTestsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.delete_tests";
@@ -1284,7 +1292,7 @@ impl SyntheticsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1307,7 +1315,7 @@ impl SyntheticsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -1318,7 +1326,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -1328,7 +1336,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -1338,7 +1346,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -1362,22 +1370,22 @@ impl SyntheticsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<DeleteTestsError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1386,8 +1394,10 @@ impl SyntheticsAPI {
         &self,
         variable_id: String,
         body: crate::datadogV1::model::SyntheticsGlobalVariable,
-    ) -> Result<crate::datadogV1::model::SyntheticsGlobalVariable, Error<EditGlobalVariableError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::SyntheticsGlobalVariable,
+        datadog::Error<EditGlobalVariableError>,
+    > {
         match self
             .edit_global_variable_with_http_info(variable_id, body)
             .await
@@ -1396,7 +1406,7 @@ impl SyntheticsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1411,8 +1421,8 @@ impl SyntheticsAPI {
         variable_id: String,
         body: crate::datadogV1::model::SyntheticsGlobalVariable,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::SyntheticsGlobalVariable>,
-        Error<EditGlobalVariableError>,
+        datadog::ResponseContent<crate::datadogV1::model::SyntheticsGlobalVariable>,
+        datadog::Error<EditGlobalVariableError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.edit_global_variable";
@@ -1422,7 +1432,7 @@ impl SyntheticsAPI {
         let local_uri_str = format!(
             "{}/api/v1/synthetics/variables/{variable_id}",
             local_configuration.get_operation_host(operation_id),
-            variable_id = urlencode(variable_id)
+            variable_id = datadog::urlencode(variable_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
@@ -1439,7 +1449,7 @@ impl SyntheticsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1462,7 +1472,7 @@ impl SyntheticsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -1473,7 +1483,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -1483,7 +1493,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -1493,7 +1503,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -1517,23 +1527,23 @@ impl SyntheticsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<EditGlobalVariableError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1542,13 +1552,13 @@ impl SyntheticsAPI {
     pub async fn get_api_test(
         &self,
         public_id: String,
-    ) -> Result<crate::datadogV1::model::SyntheticsAPITest, Error<GetAPITestError>> {
+    ) -> Result<crate::datadogV1::model::SyntheticsAPITest, datadog::Error<GetAPITestError>> {
         match self.get_api_test_with_http_info(public_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1562,8 +1572,10 @@ impl SyntheticsAPI {
     pub async fn get_api_test_with_http_info(
         &self,
         public_id: String,
-    ) -> Result<ResponseContent<crate::datadogV1::model::SyntheticsAPITest>, Error<GetAPITestError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::SyntheticsAPITest>,
+        datadog::Error<GetAPITestError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_api_test";
 
@@ -1572,7 +1584,7 @@ impl SyntheticsAPI {
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/api/{public_id}",
             local_configuration.get_operation_host(operation_id),
-            public_id = urlencode(public_id)
+            public_id = datadog::urlencode(public_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1588,7 +1600,7 @@ impl SyntheticsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1620,22 +1632,22 @@ impl SyntheticsAPI {
             match serde_json::from_str::<crate::datadogV1::model::SyntheticsAPITest>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetAPITestError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1646,7 +1658,7 @@ impl SyntheticsAPI {
         params: GetAPITestLatestResultsOptionalParams,
     ) -> Result<
         crate::datadogV1::model::SyntheticsGetAPITestLatestResultsResponse,
-        Error<GetAPITestLatestResultsError>,
+        datadog::Error<GetAPITestLatestResultsError>,
     > {
         match self
             .get_api_test_latest_results_with_http_info(public_id, params)
@@ -1656,7 +1668,7 @@ impl SyntheticsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1671,8 +1683,10 @@ impl SyntheticsAPI {
         public_id: String,
         params: GetAPITestLatestResultsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::SyntheticsGetAPITestLatestResultsResponse>,
-        Error<GetAPITestLatestResultsError>,
+        datadog::ResponseContent<
+            crate::datadogV1::model::SyntheticsGetAPITestLatestResultsResponse,
+        >,
+        datadog::Error<GetAPITestLatestResultsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_api_test_latest_results";
@@ -1687,7 +1701,7 @@ impl SyntheticsAPI {
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/{public_id}/results",
             local_configuration.get_operation_host(operation_id),
-            public_id = urlencode(public_id)
+            public_id = datadog::urlencode(public_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1723,7 +1737,7 @@ impl SyntheticsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1757,23 +1771,23 @@ impl SyntheticsAPI {
             >(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetAPITestLatestResultsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1782,8 +1796,10 @@ impl SyntheticsAPI {
         &self,
         public_id: String,
         result_id: String,
-    ) -> Result<crate::datadogV1::model::SyntheticsAPITestResultFull, Error<GetAPITestResultError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::SyntheticsAPITestResultFull,
+        datadog::Error<GetAPITestResultError>,
+    > {
         match self
             .get_api_test_result_with_http_info(public_id, result_id)
             .await
@@ -1792,7 +1808,7 @@ impl SyntheticsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1807,8 +1823,8 @@ impl SyntheticsAPI {
         public_id: String,
         result_id: String,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::SyntheticsAPITestResultFull>,
-        Error<GetAPITestResultError>,
+        datadog::ResponseContent<crate::datadogV1::model::SyntheticsAPITestResultFull>,
+        datadog::Error<GetAPITestResultError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_api_test_result";
@@ -1818,8 +1834,8 @@ impl SyntheticsAPI {
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/{public_id}/results/{result_id}",
             local_configuration.get_operation_host(operation_id),
-            public_id = urlencode(public_id),
-            result_id = urlencode(result_id)
+            public_id = datadog::urlencode(public_id),
+            result_id = datadog::urlencode(result_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1835,7 +1851,7 @@ impl SyntheticsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1868,23 +1884,23 @@ impl SyntheticsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetAPITestResultError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1893,13 +1909,14 @@ impl SyntheticsAPI {
     pub async fn get_browser_test(
         &self,
         public_id: String,
-    ) -> Result<crate::datadogV1::model::SyntheticsBrowserTest, Error<GetBrowserTestError>> {
+    ) -> Result<crate::datadogV1::model::SyntheticsBrowserTest, datadog::Error<GetBrowserTestError>>
+    {
         match self.get_browser_test_with_http_info(public_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1914,8 +1931,8 @@ impl SyntheticsAPI {
         &self,
         public_id: String,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::SyntheticsBrowserTest>,
-        Error<GetBrowserTestError>,
+        datadog::ResponseContent<crate::datadogV1::model::SyntheticsBrowserTest>,
+        datadog::Error<GetBrowserTestError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_browser_test";
@@ -1925,7 +1942,7 @@ impl SyntheticsAPI {
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/browser/{public_id}",
             local_configuration.get_operation_host(operation_id),
-            public_id = urlencode(public_id)
+            public_id = datadog::urlencode(public_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1941,7 +1958,7 @@ impl SyntheticsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1974,23 +1991,23 @@ impl SyntheticsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetBrowserTestError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -2001,7 +2018,7 @@ impl SyntheticsAPI {
         params: GetBrowserTestLatestResultsOptionalParams,
     ) -> Result<
         crate::datadogV1::model::SyntheticsGetBrowserTestLatestResultsResponse,
-        Error<GetBrowserTestLatestResultsError>,
+        datadog::Error<GetBrowserTestLatestResultsError>,
     > {
         match self
             .get_browser_test_latest_results_with_http_info(public_id, params)
@@ -2011,7 +2028,7 @@ impl SyntheticsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -2026,8 +2043,10 @@ impl SyntheticsAPI {
         public_id: String,
         params: GetBrowserTestLatestResultsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::SyntheticsGetBrowserTestLatestResultsResponse>,
-        Error<GetBrowserTestLatestResultsError>,
+        datadog::ResponseContent<
+            crate::datadogV1::model::SyntheticsGetBrowserTestLatestResultsResponse,
+        >,
+        datadog::Error<GetBrowserTestLatestResultsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_browser_test_latest_results";
@@ -2042,7 +2061,7 @@ impl SyntheticsAPI {
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/browser/{public_id}/results",
             local_configuration.get_operation_host(operation_id),
-            public_id = urlencode(public_id)
+            public_id = datadog::urlencode(public_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2078,7 +2097,7 @@ impl SyntheticsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -2112,23 +2131,23 @@ impl SyntheticsAPI {
             >(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetBrowserTestLatestResultsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -2139,7 +2158,7 @@ impl SyntheticsAPI {
         result_id: String,
     ) -> Result<
         crate::datadogV1::model::SyntheticsBrowserTestResultFull,
-        Error<GetBrowserTestResultError>,
+        datadog::Error<GetBrowserTestResultError>,
     > {
         match self
             .get_browser_test_result_with_http_info(public_id, result_id)
@@ -2149,7 +2168,7 @@ impl SyntheticsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -2164,8 +2183,8 @@ impl SyntheticsAPI {
         public_id: String,
         result_id: String,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::SyntheticsBrowserTestResultFull>,
-        Error<GetBrowserTestResultError>,
+        datadog::ResponseContent<crate::datadogV1::model::SyntheticsBrowserTestResultFull>,
+        datadog::Error<GetBrowserTestResultError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_browser_test_result";
@@ -2175,8 +2194,8 @@ impl SyntheticsAPI {
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/browser/{public_id}/results/{result_id}",
             local_configuration.get_operation_host(operation_id),
-            public_id = urlencode(public_id),
-            result_id = urlencode(result_id)
+            public_id = datadog::urlencode(public_id),
+            result_id = datadog::urlencode(result_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2192,7 +2211,7 @@ impl SyntheticsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -2225,23 +2244,23 @@ impl SyntheticsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetBrowserTestResultError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -2249,14 +2268,16 @@ impl SyntheticsAPI {
     pub async fn get_global_variable(
         &self,
         variable_id: String,
-    ) -> Result<crate::datadogV1::model::SyntheticsGlobalVariable, Error<GetGlobalVariableError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::SyntheticsGlobalVariable,
+        datadog::Error<GetGlobalVariableError>,
+    > {
         match self.get_global_variable_with_http_info(variable_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -2270,8 +2291,8 @@ impl SyntheticsAPI {
         &self,
         variable_id: String,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::SyntheticsGlobalVariable>,
-        Error<GetGlobalVariableError>,
+        datadog::ResponseContent<crate::datadogV1::model::SyntheticsGlobalVariable>,
+        datadog::Error<GetGlobalVariableError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_global_variable";
@@ -2281,7 +2302,7 @@ impl SyntheticsAPI {
         let local_uri_str = format!(
             "{}/api/v1/synthetics/variables/{variable_id}",
             local_configuration.get_operation_host(operation_id),
-            variable_id = urlencode(variable_id)
+            variable_id = datadog::urlencode(variable_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2297,7 +2318,7 @@ impl SyntheticsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -2330,23 +2351,23 @@ impl SyntheticsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetGlobalVariableError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -2354,14 +2375,16 @@ impl SyntheticsAPI {
     pub async fn get_private_location(
         &self,
         location_id: String,
-    ) -> Result<crate::datadogV1::model::SyntheticsPrivateLocation, Error<GetPrivateLocationError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::SyntheticsPrivateLocation,
+        datadog::Error<GetPrivateLocationError>,
+    > {
         match self.get_private_location_with_http_info(location_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -2375,8 +2398,8 @@ impl SyntheticsAPI {
         &self,
         location_id: String,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::SyntheticsPrivateLocation>,
-        Error<GetPrivateLocationError>,
+        datadog::ResponseContent<crate::datadogV1::model::SyntheticsPrivateLocation>,
+        datadog::Error<GetPrivateLocationError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_private_location";
@@ -2386,7 +2409,7 @@ impl SyntheticsAPI {
         let local_uri_str = format!(
             "{}/api/v1/synthetics/private-locations/{location_id}",
             local_configuration.get_operation_host(operation_id),
-            location_id = urlencode(location_id)
+            location_id = datadog::urlencode(location_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2402,7 +2425,7 @@ impl SyntheticsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -2435,23 +2458,23 @@ impl SyntheticsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetPrivateLocationError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -2459,14 +2482,16 @@ impl SyntheticsAPI {
     pub async fn get_synthetics_ci_batch(
         &self,
         batch_id: String,
-    ) -> Result<crate::datadogV1::model::SyntheticsBatchDetails, Error<GetSyntheticsCIBatchError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::SyntheticsBatchDetails,
+        datadog::Error<GetSyntheticsCIBatchError>,
+    > {
         match self.get_synthetics_ci_batch_with_http_info(batch_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -2480,8 +2505,8 @@ impl SyntheticsAPI {
         &self,
         batch_id: String,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::SyntheticsBatchDetails>,
-        Error<GetSyntheticsCIBatchError>,
+        datadog::ResponseContent<crate::datadogV1::model::SyntheticsBatchDetails>,
+        datadog::Error<GetSyntheticsCIBatchError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_synthetics_ci_batch";
@@ -2491,7 +2516,7 @@ impl SyntheticsAPI {
         let local_uri_str = format!(
             "{}/api/v1/synthetics/ci/batch/{batch_id}",
             local_configuration.get_operation_host(operation_id),
-            batch_id = urlencode(batch_id)
+            batch_id = datadog::urlencode(batch_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2507,7 +2532,7 @@ impl SyntheticsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -2540,36 +2565,36 @@ impl SyntheticsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetSyntheticsCIBatchError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// Get the default locations settings.
     pub async fn get_synthetics_default_locations(
         &self,
-    ) -> Result<Vec<String>, Error<GetSyntheticsDefaultLocationsError>> {
+    ) -> Result<Vec<String>, datadog::Error<GetSyntheticsDefaultLocationsError>> {
         match self.get_synthetics_default_locations_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -2581,7 +2606,10 @@ impl SyntheticsAPI {
     /// Get the default locations settings.
     pub async fn get_synthetics_default_locations_with_http_info(
         &self,
-    ) -> Result<ResponseContent<Vec<String>>, Error<GetSyntheticsDefaultLocationsError>> {
+    ) -> Result<
+        datadog::ResponseContent<Vec<String>>,
+        datadog::Error<GetSyntheticsDefaultLocationsError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_synthetics_default_locations";
 
@@ -2605,7 +2633,7 @@ impl SyntheticsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -2636,23 +2664,23 @@ impl SyntheticsAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<Vec<String>>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetSyntheticsDefaultLocationsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -2660,13 +2688,13 @@ impl SyntheticsAPI {
     pub async fn get_test(
         &self,
         public_id: String,
-    ) -> Result<crate::datadogV1::model::SyntheticsTestDetails, Error<GetTestError>> {
+    ) -> Result<crate::datadogV1::model::SyntheticsTestDetails, datadog::Error<GetTestError>> {
         match self.get_test_with_http_info(public_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -2679,8 +2707,10 @@ impl SyntheticsAPI {
     pub async fn get_test_with_http_info(
         &self,
         public_id: String,
-    ) -> Result<ResponseContent<crate::datadogV1::model::SyntheticsTestDetails>, Error<GetTestError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::SyntheticsTestDetails>,
+        datadog::Error<GetTestError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_test";
 
@@ -2689,7 +2719,7 @@ impl SyntheticsAPI {
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/{public_id}",
             local_configuration.get_operation_host(operation_id),
-            public_id = urlencode(public_id)
+            public_id = datadog::urlencode(public_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2705,7 +2735,7 @@ impl SyntheticsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -2738,22 +2768,22 @@ impl SyntheticsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetTestError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -2762,14 +2792,14 @@ impl SyntheticsAPI {
         &self,
     ) -> Result<
         crate::datadogV1::model::SyntheticsListGlobalVariablesResponse,
-        Error<ListGlobalVariablesError>,
+        datadog::Error<ListGlobalVariablesError>,
     > {
         match self.list_global_variables_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -2782,8 +2812,8 @@ impl SyntheticsAPI {
     pub async fn list_global_variables_with_http_info(
         &self,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::SyntheticsListGlobalVariablesResponse>,
-        Error<ListGlobalVariablesError>,
+        datadog::ResponseContent<crate::datadogV1::model::SyntheticsListGlobalVariablesResponse>,
+        datadog::Error<ListGlobalVariablesError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.list_global_variables";
@@ -2808,7 +2838,7 @@ impl SyntheticsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -2842,23 +2872,23 @@ impl SyntheticsAPI {
             >(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListGlobalVariablesError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -2866,13 +2896,14 @@ impl SyntheticsAPI {
     /// tests. No arguments required.
     pub async fn list_locations(
         &self,
-    ) -> Result<crate::datadogV1::model::SyntheticsLocations, Error<ListLocationsError>> {
+    ) -> Result<crate::datadogV1::model::SyntheticsLocations, datadog::Error<ListLocationsError>>
+    {
         match self.list_locations_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -2886,8 +2917,8 @@ impl SyntheticsAPI {
     pub async fn list_locations_with_http_info(
         &self,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::SyntheticsLocations>,
-        Error<ListLocationsError>,
+        datadog::ResponseContent<crate::datadogV1::model::SyntheticsLocations>,
+        datadog::Error<ListLocationsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.list_locations";
@@ -2912,7 +2943,7 @@ impl SyntheticsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -2945,23 +2976,23 @@ impl SyntheticsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListLocationsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -2969,13 +3000,14 @@ impl SyntheticsAPI {
     pub async fn list_tests(
         &self,
         params: ListTestsOptionalParams,
-    ) -> Result<crate::datadogV1::model::SyntheticsListTestsResponse, Error<ListTestsError>> {
+    ) -> Result<crate::datadogV1::model::SyntheticsListTestsResponse, datadog::Error<ListTestsError>>
+    {
         match self.list_tests_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -2988,7 +3020,10 @@ impl SyntheticsAPI {
         &self,
         mut params: ListTestsOptionalParams,
     ) -> impl Stream<
-        Item = Result<crate::datadogV1::model::SyntheticsTestDetails, Error<ListTestsError>>,
+        Item = Result<
+            crate::datadogV1::model::SyntheticsTestDetails,
+            datadog::Error<ListTestsError>,
+        >,
     > + '_ {
         try_stream! {
             let mut page_size: i64 = 100;
@@ -3023,8 +3058,8 @@ impl SyntheticsAPI {
         &self,
         params: ListTestsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::SyntheticsListTestsResponse>,
-        Error<ListTestsError>,
+        datadog::ResponseContent<crate::datadogV1::model::SyntheticsListTestsResponse>,
+        datadog::Error<ListTestsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.list_tests";
@@ -3062,7 +3097,7 @@ impl SyntheticsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -3095,22 +3130,22 @@ impl SyntheticsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListTestsError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -3119,13 +3154,14 @@ impl SyntheticsAPI {
         &self,
         public_id: String,
         body: crate::datadogV1::model::SyntheticsPatchTestBody,
-    ) -> Result<crate::datadogV1::model::SyntheticsTestDetails, Error<PatchTestError>> {
+    ) -> Result<crate::datadogV1::model::SyntheticsTestDetails, datadog::Error<PatchTestError>>
+    {
         match self.patch_test_with_http_info(public_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -3140,8 +3176,8 @@ impl SyntheticsAPI {
         public_id: String,
         body: crate::datadogV1::model::SyntheticsPatchTestBody,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::SyntheticsTestDetails>,
-        Error<PatchTestError>,
+        datadog::ResponseContent<crate::datadogV1::model::SyntheticsTestDetails>,
+        datadog::Error<PatchTestError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.patch_test";
@@ -3151,7 +3187,7 @@ impl SyntheticsAPI {
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/{public_id}",
             local_configuration.get_operation_host(operation_id),
-            public_id = urlencode(public_id)
+            public_id = datadog::urlencode(public_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -3168,7 +3204,7 @@ impl SyntheticsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -3191,7 +3227,7 @@ impl SyntheticsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -3202,7 +3238,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -3212,7 +3248,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -3222,7 +3258,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -3246,22 +3282,22 @@ impl SyntheticsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<PatchTestError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -3269,14 +3305,16 @@ impl SyntheticsAPI {
     pub async fn trigger_ci_tests(
         &self,
         body: crate::datadogV1::model::SyntheticsCITestBody,
-    ) -> Result<crate::datadogV1::model::SyntheticsTriggerCITestsResponse, Error<TriggerCITestsError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::SyntheticsTriggerCITestsResponse,
+        datadog::Error<TriggerCITestsError>,
+    > {
         match self.trigger_ci_tests_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -3290,8 +3328,8 @@ impl SyntheticsAPI {
         &self,
         body: crate::datadogV1::model::SyntheticsCITestBody,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::SyntheticsTriggerCITestsResponse>,
-        Error<TriggerCITestsError>,
+        datadog::ResponseContent<crate::datadogV1::model::SyntheticsTriggerCITestsResponse>,
+        datadog::Error<TriggerCITestsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.trigger_ci_tests";
@@ -3317,7 +3355,7 @@ impl SyntheticsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -3340,7 +3378,7 @@ impl SyntheticsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -3351,7 +3389,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -3361,7 +3399,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -3371,7 +3409,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -3395,23 +3433,23 @@ impl SyntheticsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<TriggerCITestsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -3419,14 +3457,16 @@ impl SyntheticsAPI {
     pub async fn trigger_tests(
         &self,
         body: crate::datadogV1::model::SyntheticsTriggerBody,
-    ) -> Result<crate::datadogV1::model::SyntheticsTriggerCITestsResponse, Error<TriggerTestsError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::SyntheticsTriggerCITestsResponse,
+        datadog::Error<TriggerTestsError>,
+    > {
         match self.trigger_tests_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -3440,8 +3480,8 @@ impl SyntheticsAPI {
         &self,
         body: crate::datadogV1::model::SyntheticsTriggerBody,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::SyntheticsTriggerCITestsResponse>,
-        Error<TriggerTestsError>,
+        datadog::ResponseContent<crate::datadogV1::model::SyntheticsTriggerCITestsResponse>,
+        datadog::Error<TriggerTestsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.trigger_tests";
@@ -3467,7 +3507,7 @@ impl SyntheticsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -3490,7 +3530,7 @@ impl SyntheticsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -3501,7 +3541,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -3511,7 +3551,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -3521,7 +3561,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -3545,22 +3585,22 @@ impl SyntheticsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<TriggerTestsError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -3569,13 +3609,14 @@ impl SyntheticsAPI {
         &self,
         public_id: String,
         body: crate::datadogV1::model::SyntheticsAPITest,
-    ) -> Result<crate::datadogV1::model::SyntheticsAPITest, Error<UpdateAPITestError>> {
+    ) -> Result<crate::datadogV1::model::SyntheticsAPITest, datadog::Error<UpdateAPITestError>>
+    {
         match self.update_api_test_with_http_info(public_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -3590,8 +3631,8 @@ impl SyntheticsAPI {
         public_id: String,
         body: crate::datadogV1::model::SyntheticsAPITest,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::SyntheticsAPITest>,
-        Error<UpdateAPITestError>,
+        datadog::ResponseContent<crate::datadogV1::model::SyntheticsAPITest>,
+        datadog::Error<UpdateAPITestError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.update_api_test";
@@ -3601,7 +3642,7 @@ impl SyntheticsAPI {
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/api/{public_id}",
             local_configuration.get_operation_host(operation_id),
-            public_id = urlencode(public_id)
+            public_id = datadog::urlencode(public_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
@@ -3618,7 +3659,7 @@ impl SyntheticsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -3641,7 +3682,7 @@ impl SyntheticsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -3652,7 +3693,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -3662,7 +3703,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -3672,7 +3713,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -3695,23 +3736,23 @@ impl SyntheticsAPI {
             match serde_json::from_str::<crate::datadogV1::model::SyntheticsAPITest>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateAPITestError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -3720,7 +3761,10 @@ impl SyntheticsAPI {
         &self,
         public_id: String,
         body: crate::datadogV1::model::SyntheticsBrowserTest,
-    ) -> Result<crate::datadogV1::model::SyntheticsBrowserTest, Error<UpdateBrowserTestError>> {
+    ) -> Result<
+        crate::datadogV1::model::SyntheticsBrowserTest,
+        datadog::Error<UpdateBrowserTestError>,
+    > {
         match self
             .update_browser_test_with_http_info(public_id, body)
             .await
@@ -3729,7 +3773,7 @@ impl SyntheticsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -3744,8 +3788,8 @@ impl SyntheticsAPI {
         public_id: String,
         body: crate::datadogV1::model::SyntheticsBrowserTest,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::SyntheticsBrowserTest>,
-        Error<UpdateBrowserTestError>,
+        datadog::ResponseContent<crate::datadogV1::model::SyntheticsBrowserTest>,
+        datadog::Error<UpdateBrowserTestError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.update_browser_test";
@@ -3755,7 +3799,7 @@ impl SyntheticsAPI {
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/browser/{public_id}",
             local_configuration.get_operation_host(operation_id),
-            public_id = urlencode(public_id)
+            public_id = datadog::urlencode(public_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
@@ -3772,7 +3816,7 @@ impl SyntheticsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -3795,7 +3839,7 @@ impl SyntheticsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -3806,7 +3850,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -3816,7 +3860,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -3826,7 +3870,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -3850,23 +3894,23 @@ impl SyntheticsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateBrowserTestError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -3875,8 +3919,10 @@ impl SyntheticsAPI {
         &self,
         location_id: String,
         body: crate::datadogV1::model::SyntheticsPrivateLocation,
-    ) -> Result<crate::datadogV1::model::SyntheticsPrivateLocation, Error<UpdatePrivateLocationError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::SyntheticsPrivateLocation,
+        datadog::Error<UpdatePrivateLocationError>,
+    > {
         match self
             .update_private_location_with_http_info(location_id, body)
             .await
@@ -3885,7 +3931,7 @@ impl SyntheticsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -3900,8 +3946,8 @@ impl SyntheticsAPI {
         location_id: String,
         body: crate::datadogV1::model::SyntheticsPrivateLocation,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::SyntheticsPrivateLocation>,
-        Error<UpdatePrivateLocationError>,
+        datadog::ResponseContent<crate::datadogV1::model::SyntheticsPrivateLocation>,
+        datadog::Error<UpdatePrivateLocationError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.update_private_location";
@@ -3911,7 +3957,7 @@ impl SyntheticsAPI {
         let local_uri_str = format!(
             "{}/api/v1/synthetics/private-locations/{location_id}",
             local_configuration.get_operation_host(operation_id),
-            location_id = urlencode(location_id)
+            location_id = datadog::urlencode(location_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
@@ -3928,7 +3974,7 @@ impl SyntheticsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -3951,7 +3997,7 @@ impl SyntheticsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -3962,7 +4008,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -3972,7 +4018,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -3982,7 +4028,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -4006,23 +4052,23 @@ impl SyntheticsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdatePrivateLocationError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -4031,7 +4077,7 @@ impl SyntheticsAPI {
         &self,
         public_id: String,
         body: crate::datadogV1::model::SyntheticsUpdateTestPauseStatusPayload,
-    ) -> Result<bool, Error<UpdateTestPauseStatusError>> {
+    ) -> Result<bool, datadog::Error<UpdateTestPauseStatusError>> {
         match self
             .update_test_pause_status_with_http_info(public_id, body)
             .await
@@ -4040,7 +4086,7 @@ impl SyntheticsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -4054,7 +4100,7 @@ impl SyntheticsAPI {
         &self,
         public_id: String,
         body: crate::datadogV1::model::SyntheticsUpdateTestPauseStatusPayload,
-    ) -> Result<ResponseContent<bool>, Error<UpdateTestPauseStatusError>> {
+    ) -> Result<datadog::ResponseContent<bool>, datadog::Error<UpdateTestPauseStatusError>> {
         let local_configuration = &self.config;
         let operation_id = "v1.update_test_pause_status";
 
@@ -4063,7 +4109,7 @@ impl SyntheticsAPI {
         let local_uri_str = format!(
             "{}/api/v1/synthetics/tests/{public_id}/status",
             local_configuration.get_operation_host(operation_id),
-            public_id = urlencode(public_id)
+            public_id = datadog::urlencode(public_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
@@ -4080,7 +4126,7 @@ impl SyntheticsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -4103,7 +4149,7 @@ impl SyntheticsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -4114,7 +4160,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -4124,7 +4170,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -4134,7 +4180,7 @@ impl SyntheticsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -4156,23 +4202,23 @@ impl SyntheticsAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<bool>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateTestPauseStatusError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 }

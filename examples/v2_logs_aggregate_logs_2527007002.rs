@@ -1,5 +1,5 @@
 // Aggregate compute events returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_logs::LogsAPI;
 use datadog_api_client::datadogV2::model::LogsAggregateRequest;
 use datadog_api_client::datadogV2::model::LogsAggregationFunction;
@@ -20,7 +20,7 @@ async fn main() {
                 .query("*".to_string())
                 .to("now".to_string()),
         );
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = LogsAPI::with_config(configuration);
     let resp = api.aggregate_logs(body).await;
     if let Ok(value) = resp {

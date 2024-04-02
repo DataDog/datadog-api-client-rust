@@ -1,5 +1,5 @@
 // Update an API returns "API updated successfully" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_api_management::APIManagementAPI;
 use datadog_api_client::datadogV2::api::api_api_management::UpdateOpenAPIOptionalParams;
 use std::fs;
@@ -8,7 +8,7 @@ use std::fs;
 async fn main() {
     // there is a valid "managed_api" in the system
     let managed_api_data_id = std::env::var("MANAGED_API_DATA_ID").unwrap();
-    let mut configuration = Configuration::new();
+    let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.UpdateOpenAPI", true);
     let api = APIManagementAPI::with_config(configuration);
     let resp = api

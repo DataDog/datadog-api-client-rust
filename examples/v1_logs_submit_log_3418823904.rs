@@ -1,6 +1,6 @@
 // Send deflate logs returns "Response from server (always 200 empty JSON)."
 // response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api::api_logs::LogsAPI;
 use datadog_api_client::datadogV1::api::api_logs::SubmitLogOptionalParams;
 use datadog_api_client::datadogV1::model::ContentEncoding;
@@ -12,7 +12,7 @@ async fn main() {
     let body = vec![HTTPLogItem::new("Example-Log".to_string())
         .ddtags("host:ExampleLog".to_string())
         .additional_properties(BTreeMap::from([]))];
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = LogsAPI::with_config(configuration);
     let resp = api
         .submit_log(

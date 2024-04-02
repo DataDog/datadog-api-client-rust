@@ -1,7 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use crate::datadog::*;
+use crate::datadog;
 use async_stream::try_stream;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
@@ -155,13 +155,13 @@ pub enum UpdateDowntimeError {
 
 #[derive(Debug, Clone)]
 pub struct DowntimesAPI {
-    config: configuration::Configuration,
+    config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for DowntimesAPI {
     fn default() -> Self {
-        Self::with_config(configuration::Configuration::default())
+        Self::with_config(datadog::Configuration::default())
     }
 }
 
@@ -169,7 +169,7 @@ impl DowntimesAPI {
     pub fn new() -> Self {
         Self::default()
     }
-    pub fn with_config(config: configuration::Configuration) -> Self {
+    pub fn with_config(config: datadog::Configuration) -> Self {
         let mut reqwest_client_builder = reqwest::Client::builder();
 
         if let Some(proxy_url) = &config.proxy_url {
@@ -211,7 +211,7 @@ impl DowntimesAPI {
     }
 
     pub fn with_client_and_config(
-        config: configuration::Configuration,
+        config: datadog::Configuration,
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
@@ -221,7 +221,7 @@ impl DowntimesAPI {
     pub async fn cancel_downtime(
         &self,
         downtime_id: String,
-    ) -> Result<(), Error<CancelDowntimeError>> {
+    ) -> Result<(), datadog::Error<CancelDowntimeError>> {
         match self.cancel_downtime_with_http_info(downtime_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
@@ -232,7 +232,7 @@ impl DowntimesAPI {
     pub async fn cancel_downtime_with_http_info(
         &self,
         downtime_id: String,
-    ) -> Result<ResponseContent<()>, Error<CancelDowntimeError>> {
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<CancelDowntimeError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.cancel_downtime";
 
@@ -241,7 +241,7 @@ impl DowntimesAPI {
         let local_uri_str = format!(
             "{}/api/v2/downtime/{downtime_id}",
             local_configuration.get_operation_host(operation_id),
-            downtime_id = urlencode(downtime_id)
+            downtime_id = datadog::urlencode(downtime_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -257,7 +257,7 @@ impl DowntimesAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -286,7 +286,7 @@ impl DowntimesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            Ok(ResponseContent {
+            Ok(datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: None,
@@ -294,12 +294,12 @@ impl DowntimesAPI {
         } else {
             let local_entity: Option<CancelDowntimeError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -307,13 +307,14 @@ impl DowntimesAPI {
     pub async fn create_downtime(
         &self,
         body: crate::datadogV2::model::DowntimeCreateRequest,
-    ) -> Result<crate::datadogV2::model::DowntimeResponse, Error<CreateDowntimeError>> {
+    ) -> Result<crate::datadogV2::model::DowntimeResponse, datadog::Error<CreateDowntimeError>>
+    {
         match self.create_downtime_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -327,8 +328,8 @@ impl DowntimesAPI {
         &self,
         body: crate::datadogV2::model::DowntimeCreateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::DowntimeResponse>,
-        Error<CreateDowntimeError>,
+        datadog::ResponseContent<crate::datadogV2::model::DowntimeResponse>,
+        datadog::Error<CreateDowntimeError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_downtime";
@@ -354,7 +355,7 @@ impl DowntimesAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -377,7 +378,7 @@ impl DowntimesAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -388,7 +389,7 @@ impl DowntimesAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -398,7 +399,7 @@ impl DowntimesAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -408,7 +409,7 @@ impl DowntimesAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -431,23 +432,23 @@ impl DowntimesAPI {
             match serde_json::from_str::<crate::datadogV2::model::DowntimeResponse>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateDowntimeError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -456,13 +457,13 @@ impl DowntimesAPI {
         &self,
         downtime_id: String,
         params: GetDowntimeOptionalParams,
-    ) -> Result<crate::datadogV2::model::DowntimeResponse, Error<GetDowntimeError>> {
+    ) -> Result<crate::datadogV2::model::DowntimeResponse, datadog::Error<GetDowntimeError>> {
         match self.get_downtime_with_http_info(downtime_id, params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -476,8 +477,10 @@ impl DowntimesAPI {
         &self,
         downtime_id: String,
         params: GetDowntimeOptionalParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::DowntimeResponse>, Error<GetDowntimeError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::DowntimeResponse>,
+        datadog::Error<GetDowntimeError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_downtime";
 
@@ -489,7 +492,7 @@ impl DowntimesAPI {
         let local_uri_str = format!(
             "{}/api/v2/downtime/{downtime_id}",
             local_configuration.get_operation_host(operation_id),
-            downtime_id = urlencode(downtime_id)
+            downtime_id = datadog::urlencode(downtime_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -510,7 +513,7 @@ impl DowntimesAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -542,22 +545,22 @@ impl DowntimesAPI {
             match serde_json::from_str::<crate::datadogV2::model::DowntimeResponse>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetDowntimeError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -565,13 +568,14 @@ impl DowntimesAPI {
     pub async fn list_downtimes(
         &self,
         params: ListDowntimesOptionalParams,
-    ) -> Result<crate::datadogV2::model::ListDowntimesResponse, Error<ListDowntimesError>> {
+    ) -> Result<crate::datadogV2::model::ListDowntimesResponse, datadog::Error<ListDowntimesError>>
+    {
         match self.list_downtimes_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -584,7 +588,10 @@ impl DowntimesAPI {
         &self,
         mut params: ListDowntimesOptionalParams,
     ) -> impl Stream<
-        Item = Result<crate::datadogV2::model::DowntimeResponseData, Error<ListDowntimesError>>,
+        Item = Result<
+            crate::datadogV2::model::DowntimeResponseData,
+            datadog::Error<ListDowntimesError>,
+        >,
     > + '_ {
         try_stream! {
             let mut page_size: i64 = 30;
@@ -620,8 +627,8 @@ impl DowntimesAPI {
         &self,
         params: ListDowntimesOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::ListDowntimesResponse>,
-        Error<ListDowntimesError>,
+        datadog::ResponseContent<crate::datadogV2::model::ListDowntimesResponse>,
+        datadog::Error<ListDowntimesError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_downtimes";
@@ -669,7 +676,7 @@ impl DowntimesAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -702,23 +709,23 @@ impl DowntimesAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListDowntimesError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -729,7 +736,7 @@ impl DowntimesAPI {
         params: ListMonitorDowntimesOptionalParams,
     ) -> Result<
         crate::datadogV2::model::MonitorDowntimeMatchResponse,
-        Error<ListMonitorDowntimesError>,
+        datadog::Error<ListMonitorDowntimesError>,
     > {
         match self
             .list_monitor_downtimes_with_http_info(monitor_id, params)
@@ -739,7 +746,7 @@ impl DowntimesAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -755,7 +762,7 @@ impl DowntimesAPI {
     ) -> impl Stream<
         Item = Result<
             crate::datadogV2::model::MonitorDowntimeMatchResponseData,
-            Error<ListMonitorDowntimesError>,
+            datadog::Error<ListMonitorDowntimesError>,
         >,
     > + '_ {
         try_stream! {
@@ -793,8 +800,8 @@ impl DowntimesAPI {
         monitor_id: i64,
         params: ListMonitorDowntimesOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::MonitorDowntimeMatchResponse>,
-        Error<ListMonitorDowntimesError>,
+        datadog::ResponseContent<crate::datadogV2::model::MonitorDowntimeMatchResponse>,
+        datadog::Error<ListMonitorDowntimesError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_monitor_downtimes";
@@ -833,7 +840,7 @@ impl DowntimesAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -866,23 +873,23 @@ impl DowntimesAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListMonitorDowntimesError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -891,13 +898,14 @@ impl DowntimesAPI {
         &self,
         downtime_id: String,
         body: crate::datadogV2::model::DowntimeUpdateRequest,
-    ) -> Result<crate::datadogV2::model::DowntimeResponse, Error<UpdateDowntimeError>> {
+    ) -> Result<crate::datadogV2::model::DowntimeResponse, datadog::Error<UpdateDowntimeError>>
+    {
         match self.update_downtime_with_http_info(downtime_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -912,8 +920,8 @@ impl DowntimesAPI {
         downtime_id: String,
         body: crate::datadogV2::model::DowntimeUpdateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::DowntimeResponse>,
-        Error<UpdateDowntimeError>,
+        datadog::ResponseContent<crate::datadogV2::model::DowntimeResponse>,
+        datadog::Error<UpdateDowntimeError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_downtime";
@@ -923,7 +931,7 @@ impl DowntimesAPI {
         let local_uri_str = format!(
             "{}/api/v2/downtime/{downtime_id}",
             local_configuration.get_operation_host(operation_id),
-            downtime_id = urlencode(downtime_id)
+            downtime_id = datadog::urlencode(downtime_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -940,7 +948,7 @@ impl DowntimesAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -963,7 +971,7 @@ impl DowntimesAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -974,7 +982,7 @@ impl DowntimesAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -984,7 +992,7 @@ impl DowntimesAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -994,7 +1002,7 @@ impl DowntimesAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -1017,23 +1025,23 @@ impl DowntimesAPI {
             match serde_json::from_str::<crate::datadogV2::model::DowntimeResponse>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateDowntimeError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 }

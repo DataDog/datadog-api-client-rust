@@ -1,5 +1,5 @@
 // Create a new incident team returns "CREATED" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_incident_teams::IncidentTeamsAPI;
 use datadog_api_client::datadogV2::model::IncidentTeamCreateAttributes;
 use datadog_api_client::datadogV2::model::IncidentTeamCreateData;
@@ -13,7 +13,7 @@ async fn main() {
             IncidentTeamCreateAttributes::new("Example-Incident-Team".to_string()),
         ),
     );
-    let mut configuration = Configuration::new();
+    let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.CreateIncidentTeam", true);
     let api = IncidentTeamsAPI::with_config(configuration);
     let resp = api.create_incident_team(body).await;

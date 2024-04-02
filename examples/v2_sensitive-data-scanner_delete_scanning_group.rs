@@ -1,5 +1,5 @@
 // Delete Scanning Group returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_sensitive_data_scanner::SensitiveDataScannerAPI;
 use datadog_api_client::datadogV2::model::SensitiveDataScannerGroupDeleteRequest;
 use datadog_api_client::datadogV2::model::SensitiveDataScannerMetaVersionOnly;
@@ -10,7 +10,7 @@ async fn main() {
     let group_data_id = std::env::var("GROUP_DATA_ID").unwrap();
     let body =
         SensitiveDataScannerGroupDeleteRequest::new(SensitiveDataScannerMetaVersionOnly::new());
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = SensitiveDataScannerAPI::with_config(configuration);
     let resp = api.delete_scanning_group(group_data_id.clone(), body).await;
     if let Ok(value) = resp {

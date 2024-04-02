@@ -1,5 +1,5 @@
 // Update an SLO returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api::api_service_level_objectives::ServiceLevelObjectivesAPI;
 use datadog_api_client::datadogV1::model::SLOThreshold;
 use datadog_api_client::datadogV1::model::SLOTimeframe;
@@ -24,7 +24,7 @@ async fn main() {
     .target_threshold(97.0 as f64)
     .timeframe(SLOTimeframe::SEVEN_DAYS)
     .warning_threshold(98.0 as f64);
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = ServiceLevelObjectivesAPI::with_config(configuration);
     let resp = api.update_slo(slo_data_0_id.clone(), body).await;
     if let Ok(value) = resp {

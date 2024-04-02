@@ -1,5 +1,5 @@
 // Get incident todo details returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_incidents::IncidentsAPI;
 
 #[tokio::main]
@@ -9,7 +9,7 @@ async fn main() {
 
     // the "incident" has an "incident_todo"
     let incident_todo_data_id = std::env::var("INCIDENT_TODO_DATA_ID").unwrap();
-    let mut configuration = Configuration::new();
+    let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.GetIncidentTodo", true);
     let api = IncidentsAPI::with_config(configuration);
     let resp = api

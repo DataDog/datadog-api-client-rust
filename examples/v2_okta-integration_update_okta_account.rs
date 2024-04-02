@@ -1,5 +1,5 @@
 // Update Okta account returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_okta_integration::OktaIntegrationAPI;
 use datadog_api_client::datadogV2::model::OktaAccountType;
 use datadog_api_client::datadogV2::model::OktaAccountUpdateRequest;
@@ -22,7 +22,7 @@ async fn main() {
             )
             .type_(OktaAccountType::OKTA_ACCOUNTS),
     );
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = OktaIntegrationAPI::with_config(configuration);
     let resp = api
         .update_okta_account(okta_account_data_id.clone(), body)

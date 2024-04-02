@@ -1,7 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use crate::datadog::*;
+use crate::datadog;
 use async_stream::try_stream;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
@@ -282,13 +282,13 @@ pub enum UpdateTeamPermissionSettingError {
 
 #[derive(Debug, Clone)]
 pub struct TeamsAPI {
-    config: configuration::Configuration,
+    config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for TeamsAPI {
     fn default() -> Self {
-        Self::with_config(configuration::Configuration::default())
+        Self::with_config(datadog::Configuration::default())
     }
 }
 
@@ -296,7 +296,7 @@ impl TeamsAPI {
     pub fn new() -> Self {
         Self::default()
     }
-    pub fn with_config(config: configuration::Configuration) -> Self {
+    pub fn with_config(config: datadog::Configuration) -> Self {
         let mut reqwest_client_builder = reqwest::Client::builder();
 
         if let Some(proxy_url) = &config.proxy_url {
@@ -338,7 +338,7 @@ impl TeamsAPI {
     }
 
     pub fn with_client_and_config(
-        config: configuration::Configuration,
+        config: datadog::Configuration,
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
@@ -349,13 +349,13 @@ impl TeamsAPI {
     pub async fn create_team(
         &self,
         body: crate::datadogV2::model::TeamCreateRequest,
-    ) -> Result<crate::datadogV2::model::TeamResponse, Error<CreateTeamError>> {
+    ) -> Result<crate::datadogV2::model::TeamResponse, datadog::Error<CreateTeamError>> {
         match self.create_team_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -369,8 +369,10 @@ impl TeamsAPI {
     pub async fn create_team_with_http_info(
         &self,
         body: crate::datadogV2::model::TeamCreateRequest,
-    ) -> Result<ResponseContent<crate::datadogV2::model::TeamResponse>, Error<CreateTeamError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::TeamResponse>,
+        datadog::Error<CreateTeamError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_team";
 
@@ -395,7 +397,7 @@ impl TeamsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -418,7 +420,7 @@ impl TeamsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -429,7 +431,7 @@ impl TeamsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -439,7 +441,7 @@ impl TeamsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -449,7 +451,7 @@ impl TeamsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -471,22 +473,22 @@ impl TeamsAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::TeamResponse>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateTeamError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -495,13 +497,14 @@ impl TeamsAPI {
         &self,
         team_id: String,
         body: crate::datadogV2::model::TeamLinkCreateRequest,
-    ) -> Result<crate::datadogV2::model::TeamLinkResponse, Error<CreateTeamLinkError>> {
+    ) -> Result<crate::datadogV2::model::TeamLinkResponse, datadog::Error<CreateTeamLinkError>>
+    {
         match self.create_team_link_with_http_info(team_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -516,8 +519,8 @@ impl TeamsAPI {
         team_id: String,
         body: crate::datadogV2::model::TeamLinkCreateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::TeamLinkResponse>,
-        Error<CreateTeamLinkError>,
+        datadog::ResponseContent<crate::datadogV2::model::TeamLinkResponse>,
+        datadog::Error<CreateTeamLinkError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_team_link";
@@ -527,7 +530,7 @@ impl TeamsAPI {
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/links",
             local_configuration.get_operation_host(operation_id),
-            team_id = urlencode(team_id)
+            team_id = datadog::urlencode(team_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -544,7 +547,7 @@ impl TeamsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -567,7 +570,7 @@ impl TeamsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -578,7 +581,7 @@ impl TeamsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -588,7 +591,7 @@ impl TeamsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -598,7 +601,7 @@ impl TeamsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -621,23 +624,23 @@ impl TeamsAPI {
             match serde_json::from_str::<crate::datadogV2::model::TeamLinkResponse>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateTeamLinkError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -646,7 +649,8 @@ impl TeamsAPI {
         &self,
         team_id: String,
         body: crate::datadogV2::model::UserTeamRequest,
-    ) -> Result<crate::datadogV2::model::UserTeamResponse, Error<CreateTeamMembershipError>> {
+    ) -> Result<crate::datadogV2::model::UserTeamResponse, datadog::Error<CreateTeamMembershipError>>
+    {
         match self
             .create_team_membership_with_http_info(team_id, body)
             .await
@@ -655,7 +659,7 @@ impl TeamsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -670,8 +674,8 @@ impl TeamsAPI {
         team_id: String,
         body: crate::datadogV2::model::UserTeamRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::UserTeamResponse>,
-        Error<CreateTeamMembershipError>,
+        datadog::ResponseContent<crate::datadogV2::model::UserTeamResponse>,
+        datadog::Error<CreateTeamMembershipError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_team_membership";
@@ -681,7 +685,7 @@ impl TeamsAPI {
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/memberships",
             local_configuration.get_operation_host(operation_id),
-            team_id = urlencode(team_id)
+            team_id = datadog::urlencode(team_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -698,7 +702,7 @@ impl TeamsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -721,7 +725,7 @@ impl TeamsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -732,7 +736,7 @@ impl TeamsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -742,7 +746,7 @@ impl TeamsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -752,7 +756,7 @@ impl TeamsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -775,28 +779,31 @@ impl TeamsAPI {
             match serde_json::from_str::<crate::datadogV2::model::UserTeamResponse>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateTeamMembershipError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// Remove a team using the team's `id`.
-    pub async fn delete_team(&self, team_id: String) -> Result<(), Error<DeleteTeamError>> {
+    pub async fn delete_team(
+        &self,
+        team_id: String,
+    ) -> Result<(), datadog::Error<DeleteTeamError>> {
         match self.delete_team_with_http_info(team_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
@@ -807,7 +814,7 @@ impl TeamsAPI {
     pub async fn delete_team_with_http_info(
         &self,
         team_id: String,
-    ) -> Result<ResponseContent<()>, Error<DeleteTeamError>> {
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTeamError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_team";
 
@@ -816,7 +823,7 @@ impl TeamsAPI {
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}",
             local_configuration.get_operation_host(operation_id),
-            team_id = urlencode(team_id)
+            team_id = datadog::urlencode(team_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -832,7 +839,7 @@ impl TeamsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -861,19 +868,19 @@ impl TeamsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            Ok(ResponseContent {
+            Ok(datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: None,
             })
         } else {
             let local_entity: Option<DeleteTeamError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -882,7 +889,7 @@ impl TeamsAPI {
         &self,
         team_id: String,
         link_id: String,
-    ) -> Result<(), Error<DeleteTeamLinkError>> {
+    ) -> Result<(), datadog::Error<DeleteTeamLinkError>> {
         match self.delete_team_link_with_http_info(team_id, link_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
@@ -894,7 +901,7 @@ impl TeamsAPI {
         &self,
         team_id: String,
         link_id: String,
-    ) -> Result<ResponseContent<()>, Error<DeleteTeamLinkError>> {
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTeamLinkError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_team_link";
 
@@ -903,8 +910,8 @@ impl TeamsAPI {
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/links/{link_id}",
             local_configuration.get_operation_host(operation_id),
-            team_id = urlencode(team_id),
-            link_id = urlencode(link_id)
+            team_id = datadog::urlencode(team_id),
+            link_id = datadog::urlencode(link_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -920,7 +927,7 @@ impl TeamsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -949,7 +956,7 @@ impl TeamsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            Ok(ResponseContent {
+            Ok(datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: None,
@@ -957,12 +964,12 @@ impl TeamsAPI {
         } else {
             let local_entity: Option<DeleteTeamLinkError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -971,7 +978,7 @@ impl TeamsAPI {
         &self,
         team_id: String,
         user_id: String,
-    ) -> Result<(), Error<DeleteTeamMembershipError>> {
+    ) -> Result<(), datadog::Error<DeleteTeamMembershipError>> {
         match self
             .delete_team_membership_with_http_info(team_id, user_id)
             .await
@@ -986,7 +993,7 @@ impl TeamsAPI {
         &self,
         team_id: String,
         user_id: String,
-    ) -> Result<ResponseContent<()>, Error<DeleteTeamMembershipError>> {
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTeamMembershipError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_team_membership";
 
@@ -995,8 +1002,8 @@ impl TeamsAPI {
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/memberships/{user_id}",
             local_configuration.get_operation_host(operation_id),
-            team_id = urlencode(team_id),
-            user_id = urlencode(user_id)
+            team_id = datadog::urlencode(team_id),
+            user_id = datadog::urlencode(user_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -1012,7 +1019,7 @@ impl TeamsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1041,7 +1048,7 @@ impl TeamsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            Ok(ResponseContent {
+            Ok(datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: None,
@@ -1049,12 +1056,12 @@ impl TeamsAPI {
         } else {
             let local_entity: Option<DeleteTeamMembershipError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1062,13 +1069,13 @@ impl TeamsAPI {
     pub async fn get_team(
         &self,
         team_id: String,
-    ) -> Result<crate::datadogV2::model::TeamResponse, Error<GetTeamError>> {
+    ) -> Result<crate::datadogV2::model::TeamResponse, datadog::Error<GetTeamError>> {
         match self.get_team_with_http_info(team_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1081,7 +1088,10 @@ impl TeamsAPI {
     pub async fn get_team_with_http_info(
         &self,
         team_id: String,
-    ) -> Result<ResponseContent<crate::datadogV2::model::TeamResponse>, Error<GetTeamError>> {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::TeamResponse>,
+        datadog::Error<GetTeamError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_team";
 
@@ -1090,7 +1100,7 @@ impl TeamsAPI {
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}",
             local_configuration.get_operation_host(operation_id),
-            team_id = urlencode(team_id)
+            team_id = datadog::urlencode(team_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1106,7 +1116,7 @@ impl TeamsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1137,22 +1147,22 @@ impl TeamsAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::TeamResponse>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetTeamError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1161,13 +1171,13 @@ impl TeamsAPI {
         &self,
         team_id: String,
         link_id: String,
-    ) -> Result<crate::datadogV2::model::TeamLinkResponse, Error<GetTeamLinkError>> {
+    ) -> Result<crate::datadogV2::model::TeamLinkResponse, datadog::Error<GetTeamLinkError>> {
         match self.get_team_link_with_http_info(team_id, link_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1181,8 +1191,10 @@ impl TeamsAPI {
         &self,
         team_id: String,
         link_id: String,
-    ) -> Result<ResponseContent<crate::datadogV2::model::TeamLinkResponse>, Error<GetTeamLinkError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::TeamLinkResponse>,
+        datadog::Error<GetTeamLinkError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_team_link";
 
@@ -1191,8 +1203,8 @@ impl TeamsAPI {
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/links/{link_id}",
             local_configuration.get_operation_host(operation_id),
-            team_id = urlencode(team_id),
-            link_id = urlencode(link_id)
+            team_id = datadog::urlencode(team_id),
+            link_id = datadog::urlencode(link_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1208,7 +1220,7 @@ impl TeamsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1240,22 +1252,22 @@ impl TeamsAPI {
             match serde_json::from_str::<crate::datadogV2::model::TeamLinkResponse>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetTeamLinkError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1263,13 +1275,13 @@ impl TeamsAPI {
     pub async fn get_team_links(
         &self,
         team_id: String,
-    ) -> Result<crate::datadogV2::model::TeamLinksResponse, Error<GetTeamLinksError>> {
+    ) -> Result<crate::datadogV2::model::TeamLinksResponse, datadog::Error<GetTeamLinksError>> {
         match self.get_team_links_with_http_info(team_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1282,8 +1294,10 @@ impl TeamsAPI {
     pub async fn get_team_links_with_http_info(
         &self,
         team_id: String,
-    ) -> Result<ResponseContent<crate::datadogV2::model::TeamLinksResponse>, Error<GetTeamLinksError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::TeamLinksResponse>,
+        datadog::Error<GetTeamLinksError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_team_links";
 
@@ -1292,7 +1306,7 @@ impl TeamsAPI {
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/links",
             local_configuration.get_operation_host(operation_id),
-            team_id = urlencode(team_id)
+            team_id = datadog::urlencode(team_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1308,7 +1322,7 @@ impl TeamsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1340,22 +1354,22 @@ impl TeamsAPI {
             match serde_json::from_str::<crate::datadogV2::model::TeamLinksResponse>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetTeamLinksError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1364,7 +1378,8 @@ impl TeamsAPI {
         &self,
         team_id: String,
         params: GetTeamMembershipsOptionalParams,
-    ) -> Result<crate::datadogV2::model::UserTeamsResponse, Error<GetTeamMembershipsError>> {
+    ) -> Result<crate::datadogV2::model::UserTeamsResponse, datadog::Error<GetTeamMembershipsError>>
+    {
         match self
             .get_team_memberships_with_http_info(team_id, params)
             .await
@@ -1373,7 +1388,7 @@ impl TeamsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1386,8 +1401,9 @@ impl TeamsAPI {
         &self,
         team_id: String,
         mut params: GetTeamMembershipsOptionalParams,
-    ) -> impl Stream<Item = Result<crate::datadogV2::model::UserTeam, Error<GetTeamMembershipsError>>> + '_
-    {
+    ) -> impl Stream<
+        Item = Result<crate::datadogV2::model::UserTeam, datadog::Error<GetTeamMembershipsError>>,
+    > + '_ {
         try_stream! {
             let mut page_size: i64 = 10;
             if params.page_size.is_none() {
@@ -1422,8 +1438,8 @@ impl TeamsAPI {
         team_id: String,
         params: GetTeamMembershipsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::UserTeamsResponse>,
-        Error<GetTeamMembershipsError>,
+        datadog::ResponseContent<crate::datadogV2::model::UserTeamsResponse>,
+        datadog::Error<GetTeamMembershipsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_team_memberships";
@@ -1439,7 +1455,7 @@ impl TeamsAPI {
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/memberships",
             local_configuration.get_operation_host(operation_id),
-            team_id = urlencode(team_id)
+            team_id = datadog::urlencode(team_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1472,7 +1488,7 @@ impl TeamsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1504,23 +1520,23 @@ impl TeamsAPI {
             match serde_json::from_str::<crate::datadogV2::model::UserTeamsResponse>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetTeamMembershipsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1530,7 +1546,7 @@ impl TeamsAPI {
         team_id: String,
     ) -> Result<
         crate::datadogV2::model::TeamPermissionSettingsResponse,
-        Error<GetTeamPermissionSettingsError>,
+        datadog::Error<GetTeamPermissionSettingsError>,
     > {
         match self
             .get_team_permission_settings_with_http_info(team_id)
@@ -1540,7 +1556,7 @@ impl TeamsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1554,8 +1570,8 @@ impl TeamsAPI {
         &self,
         team_id: String,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::TeamPermissionSettingsResponse>,
-        Error<GetTeamPermissionSettingsError>,
+        datadog::ResponseContent<crate::datadogV2::model::TeamPermissionSettingsResponse>,
+        datadog::Error<GetTeamPermissionSettingsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_team_permission_settings";
@@ -1565,7 +1581,7 @@ impl TeamsAPI {
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/permission-settings",
             local_configuration.get_operation_host(operation_id),
-            team_id = urlencode(team_id)
+            team_id = datadog::urlencode(team_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1581,7 +1597,7 @@ impl TeamsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1614,23 +1630,23 @@ impl TeamsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetTeamPermissionSettingsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1638,13 +1654,14 @@ impl TeamsAPI {
     pub async fn get_user_memberships(
         &self,
         user_uuid: String,
-    ) -> Result<crate::datadogV2::model::UserTeamsResponse, Error<GetUserMembershipsError>> {
+    ) -> Result<crate::datadogV2::model::UserTeamsResponse, datadog::Error<GetUserMembershipsError>>
+    {
         match self.get_user_memberships_with_http_info(user_uuid).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1658,8 +1675,8 @@ impl TeamsAPI {
         &self,
         user_uuid: String,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::UserTeamsResponse>,
-        Error<GetUserMembershipsError>,
+        datadog::ResponseContent<crate::datadogV2::model::UserTeamsResponse>,
+        datadog::Error<GetUserMembershipsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_user_memberships";
@@ -1669,7 +1686,7 @@ impl TeamsAPI {
         let local_uri_str = format!(
             "{}/api/v2/users/{user_uuid}/memberships",
             local_configuration.get_operation_host(operation_id),
-            user_uuid = urlencode(user_uuid)
+            user_uuid = datadog::urlencode(user_uuid)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1685,7 +1702,7 @@ impl TeamsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1717,23 +1734,23 @@ impl TeamsAPI {
             match serde_json::from_str::<crate::datadogV2::model::UserTeamsResponse>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUserMembershipsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1742,13 +1759,13 @@ impl TeamsAPI {
     pub async fn list_teams(
         &self,
         params: ListTeamsOptionalParams,
-    ) -> Result<crate::datadogV2::model::TeamsResponse, Error<ListTeamsError>> {
+    ) -> Result<crate::datadogV2::model::TeamsResponse, datadog::Error<ListTeamsError>> {
         match self.list_teams_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1760,7 +1777,8 @@ impl TeamsAPI {
     pub fn list_teams_with_pagination(
         &self,
         mut params: ListTeamsOptionalParams,
-    ) -> impl Stream<Item = Result<crate::datadogV2::model::Team, Error<ListTeamsError>>> + '_ {
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::Team, datadog::Error<ListTeamsError>>> + '_
+    {
         try_stream! {
             let mut page_size: i64 = 10;
             if params.page_size.is_none() {
@@ -1794,8 +1812,10 @@ impl TeamsAPI {
     pub async fn list_teams_with_http_info(
         &self,
         params: ListTeamsOptionalParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::TeamsResponse>, Error<ListTeamsError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::TeamsResponse>,
+        datadog::Error<ListTeamsError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_teams";
 
@@ -1871,7 +1891,7 @@ impl TeamsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1902,22 +1922,22 @@ impl TeamsAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::TeamsResponse>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListTeamsError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1927,13 +1947,13 @@ impl TeamsAPI {
         &self,
         team_id: String,
         body: crate::datadogV2::model::TeamUpdateRequest,
-    ) -> Result<crate::datadogV2::model::TeamResponse, Error<UpdateTeamError>> {
+    ) -> Result<crate::datadogV2::model::TeamResponse, datadog::Error<UpdateTeamError>> {
         match self.update_team_with_http_info(team_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1948,8 +1968,10 @@ impl TeamsAPI {
         &self,
         team_id: String,
         body: crate::datadogV2::model::TeamUpdateRequest,
-    ) -> Result<ResponseContent<crate::datadogV2::model::TeamResponse>, Error<UpdateTeamError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::TeamResponse>,
+        datadog::Error<UpdateTeamError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_team";
 
@@ -1958,7 +1980,7 @@ impl TeamsAPI {
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}",
             local_configuration.get_operation_host(operation_id),
-            team_id = urlencode(team_id)
+            team_id = datadog::urlencode(team_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -1975,7 +1997,7 @@ impl TeamsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1998,7 +2020,7 @@ impl TeamsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -2009,7 +2031,7 @@ impl TeamsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -2019,7 +2041,7 @@ impl TeamsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -2029,7 +2051,7 @@ impl TeamsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -2051,22 +2073,22 @@ impl TeamsAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::TeamResponse>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateTeamError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -2076,7 +2098,8 @@ impl TeamsAPI {
         team_id: String,
         link_id: String,
         body: crate::datadogV2::model::TeamLinkCreateRequest,
-    ) -> Result<crate::datadogV2::model::TeamLinkResponse, Error<UpdateTeamLinkError>> {
+    ) -> Result<crate::datadogV2::model::TeamLinkResponse, datadog::Error<UpdateTeamLinkError>>
+    {
         match self
             .update_team_link_with_http_info(team_id, link_id, body)
             .await
@@ -2085,7 +2108,7 @@ impl TeamsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -2101,8 +2124,8 @@ impl TeamsAPI {
         link_id: String,
         body: crate::datadogV2::model::TeamLinkCreateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::TeamLinkResponse>,
-        Error<UpdateTeamLinkError>,
+        datadog::ResponseContent<crate::datadogV2::model::TeamLinkResponse>,
+        datadog::Error<UpdateTeamLinkError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_team_link";
@@ -2112,8 +2135,8 @@ impl TeamsAPI {
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/links/{link_id}",
             local_configuration.get_operation_host(operation_id),
-            team_id = urlencode(team_id),
-            link_id = urlencode(link_id)
+            team_id = datadog::urlencode(team_id),
+            link_id = datadog::urlencode(link_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -2130,7 +2153,7 @@ impl TeamsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -2153,7 +2176,7 @@ impl TeamsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -2164,7 +2187,7 @@ impl TeamsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -2174,7 +2197,7 @@ impl TeamsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -2184,7 +2207,7 @@ impl TeamsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -2207,23 +2230,23 @@ impl TeamsAPI {
             match serde_json::from_str::<crate::datadogV2::model::TeamLinkResponse>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateTeamLinkError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -2233,7 +2256,8 @@ impl TeamsAPI {
         team_id: String,
         user_id: String,
         body: crate::datadogV2::model::UserTeamUpdateRequest,
-    ) -> Result<crate::datadogV2::model::UserTeamResponse, Error<UpdateTeamMembershipError>> {
+    ) -> Result<crate::datadogV2::model::UserTeamResponse, datadog::Error<UpdateTeamMembershipError>>
+    {
         match self
             .update_team_membership_with_http_info(team_id, user_id, body)
             .await
@@ -2242,7 +2266,7 @@ impl TeamsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -2258,8 +2282,8 @@ impl TeamsAPI {
         user_id: String,
         body: crate::datadogV2::model::UserTeamUpdateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::UserTeamResponse>,
-        Error<UpdateTeamMembershipError>,
+        datadog::ResponseContent<crate::datadogV2::model::UserTeamResponse>,
+        datadog::Error<UpdateTeamMembershipError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_team_membership";
@@ -2269,8 +2293,8 @@ impl TeamsAPI {
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/memberships/{user_id}",
             local_configuration.get_operation_host(operation_id),
-            team_id = urlencode(team_id),
-            user_id = urlencode(user_id)
+            team_id = datadog::urlencode(team_id),
+            user_id = datadog::urlencode(user_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -2287,7 +2311,7 @@ impl TeamsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -2310,7 +2334,7 @@ impl TeamsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -2321,7 +2345,7 @@ impl TeamsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -2331,7 +2355,7 @@ impl TeamsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -2341,7 +2365,7 @@ impl TeamsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -2364,23 +2388,23 @@ impl TeamsAPI {
             match serde_json::from_str::<crate::datadogV2::model::UserTeamResponse>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateTeamMembershipError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -2392,7 +2416,7 @@ impl TeamsAPI {
         body: crate::datadogV2::model::TeamPermissionSettingUpdateRequest,
     ) -> Result<
         crate::datadogV2::model::TeamPermissionSettingResponse,
-        Error<UpdateTeamPermissionSettingError>,
+        datadog::Error<UpdateTeamPermissionSettingError>,
     > {
         match self
             .update_team_permission_setting_with_http_info(team_id, action, body)
@@ -2402,7 +2426,7 @@ impl TeamsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -2418,8 +2442,8 @@ impl TeamsAPI {
         action: String,
         body: crate::datadogV2::model::TeamPermissionSettingUpdateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::TeamPermissionSettingResponse>,
-        Error<UpdateTeamPermissionSettingError>,
+        datadog::ResponseContent<crate::datadogV2::model::TeamPermissionSettingResponse>,
+        datadog::Error<UpdateTeamPermissionSettingError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_team_permission_setting";
@@ -2429,8 +2453,8 @@ impl TeamsAPI {
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/permission-settings/{action}",
             local_configuration.get_operation_host(operation_id),
-            team_id = urlencode(team_id),
-            action = urlencode(action)
+            team_id = datadog::urlencode(team_id),
+            action = datadog::urlencode(action)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
@@ -2447,7 +2471,7 @@ impl TeamsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -2470,7 +2494,7 @@ impl TeamsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -2481,7 +2505,7 @@ impl TeamsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -2491,7 +2515,7 @@ impl TeamsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -2501,7 +2525,7 @@ impl TeamsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -2525,23 +2549,23 @@ impl TeamsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateTeamPermissionSettingError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 }

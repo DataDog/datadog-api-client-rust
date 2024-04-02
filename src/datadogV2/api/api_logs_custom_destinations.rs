@@ -1,7 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use crate::datadog::*;
+use crate::datadog;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
@@ -67,13 +67,13 @@ pub enum UpdateLogsCustomDestinationError {
 
 #[derive(Debug, Clone)]
 pub struct LogsCustomDestinationsAPI {
-    config: configuration::Configuration,
+    config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for LogsCustomDestinationsAPI {
     fn default() -> Self {
-        Self::with_config(configuration::Configuration::default())
+        Self::with_config(datadog::Configuration::default())
     }
 }
 
@@ -81,7 +81,7 @@ impl LogsCustomDestinationsAPI {
     pub fn new() -> Self {
         Self::default()
     }
-    pub fn with_config(config: configuration::Configuration) -> Self {
+    pub fn with_config(config: datadog::Configuration) -> Self {
         let mut reqwest_client_builder = reqwest::Client::builder();
 
         if let Some(proxy_url) = &config.proxy_url {
@@ -123,7 +123,7 @@ impl LogsCustomDestinationsAPI {
     }
 
     pub fn with_client_and_config(
-        config: configuration::Configuration,
+        config: datadog::Configuration,
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
@@ -135,7 +135,7 @@ impl LogsCustomDestinationsAPI {
         body: crate::datadogV2::model::CustomDestinationCreateRequest,
     ) -> Result<
         crate::datadogV2::model::CustomDestinationResponse,
-        Error<CreateLogsCustomDestinationError>,
+        datadog::Error<CreateLogsCustomDestinationError>,
     > {
         match self
             .create_logs_custom_destination_with_http_info(body)
@@ -145,7 +145,7 @@ impl LogsCustomDestinationsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -159,8 +159,8 @@ impl LogsCustomDestinationsAPI {
         &self,
         body: crate::datadogV2::model::CustomDestinationCreateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::CustomDestinationResponse>,
-        Error<CreateLogsCustomDestinationError>,
+        datadog::ResponseContent<crate::datadogV2::model::CustomDestinationResponse>,
+        datadog::Error<CreateLogsCustomDestinationError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_logs_custom_destination";
@@ -186,7 +186,7 @@ impl LogsCustomDestinationsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -209,7 +209,7 @@ impl LogsCustomDestinationsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -220,7 +220,7 @@ impl LogsCustomDestinationsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -230,7 +230,7 @@ impl LogsCustomDestinationsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -240,7 +240,7 @@ impl LogsCustomDestinationsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -264,23 +264,23 @@ impl LogsCustomDestinationsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateLogsCustomDestinationError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -288,7 +288,7 @@ impl LogsCustomDestinationsAPI {
     pub async fn delete_logs_custom_destination(
         &self,
         custom_destination_id: String,
-    ) -> Result<(), Error<DeleteLogsCustomDestinationError>> {
+    ) -> Result<(), datadog::Error<DeleteLogsCustomDestinationError>> {
         match self
             .delete_logs_custom_destination_with_http_info(custom_destination_id)
             .await
@@ -302,7 +302,8 @@ impl LogsCustomDestinationsAPI {
     pub async fn delete_logs_custom_destination_with_http_info(
         &self,
         custom_destination_id: String,
-    ) -> Result<ResponseContent<()>, Error<DeleteLogsCustomDestinationError>> {
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteLogsCustomDestinationError>>
+    {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_logs_custom_destination";
 
@@ -311,7 +312,7 @@ impl LogsCustomDestinationsAPI {
         let local_uri_str = format!(
             "{}/api/v2/logs/config/custom-destinations/{custom_destination_id}",
             local_configuration.get_operation_host(operation_id),
-            custom_destination_id = urlencode(custom_destination_id)
+            custom_destination_id = datadog::urlencode(custom_destination_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -327,7 +328,7 @@ impl LogsCustomDestinationsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -356,7 +357,7 @@ impl LogsCustomDestinationsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            Ok(ResponseContent {
+            Ok(datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: None,
@@ -364,12 +365,12 @@ impl LogsCustomDestinationsAPI {
         } else {
             let local_entity: Option<DeleteLogsCustomDestinationError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -379,7 +380,7 @@ impl LogsCustomDestinationsAPI {
         custom_destination_id: String,
     ) -> Result<
         crate::datadogV2::model::CustomDestinationResponse,
-        Error<GetLogsCustomDestinationError>,
+        datadog::Error<GetLogsCustomDestinationError>,
     > {
         match self
             .get_logs_custom_destination_with_http_info(custom_destination_id)
@@ -389,7 +390,7 @@ impl LogsCustomDestinationsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -403,8 +404,8 @@ impl LogsCustomDestinationsAPI {
         &self,
         custom_destination_id: String,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::CustomDestinationResponse>,
-        Error<GetLogsCustomDestinationError>,
+        datadog::ResponseContent<crate::datadogV2::model::CustomDestinationResponse>,
+        datadog::Error<GetLogsCustomDestinationError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_logs_custom_destination";
@@ -414,7 +415,7 @@ impl LogsCustomDestinationsAPI {
         let local_uri_str = format!(
             "{}/api/v2/logs/config/custom-destinations/{custom_destination_id}",
             local_configuration.get_operation_host(operation_id),
-            custom_destination_id = urlencode(custom_destination_id)
+            custom_destination_id = datadog::urlencode(custom_destination_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -430,7 +431,7 @@ impl LogsCustomDestinationsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -463,23 +464,23 @@ impl LogsCustomDestinationsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetLogsCustomDestinationError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -488,14 +489,14 @@ impl LogsCustomDestinationsAPI {
         &self,
     ) -> Result<
         crate::datadogV2::model::CustomDestinationsResponse,
-        Error<ListLogsCustomDestinationsError>,
+        datadog::Error<ListLogsCustomDestinationsError>,
     > {
         match self.list_logs_custom_destinations_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -508,8 +509,8 @@ impl LogsCustomDestinationsAPI {
     pub async fn list_logs_custom_destinations_with_http_info(
         &self,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::CustomDestinationsResponse>,
-        Error<ListLogsCustomDestinationsError>,
+        datadog::ResponseContent<crate::datadogV2::model::CustomDestinationsResponse>,
+        datadog::Error<ListLogsCustomDestinationsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_logs_custom_destinations";
@@ -534,7 +535,7 @@ impl LogsCustomDestinationsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -567,23 +568,23 @@ impl LogsCustomDestinationsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListLogsCustomDestinationsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -594,7 +595,7 @@ impl LogsCustomDestinationsAPI {
         body: crate::datadogV2::model::CustomDestinationUpdateRequest,
     ) -> Result<
         crate::datadogV2::model::CustomDestinationResponse,
-        Error<UpdateLogsCustomDestinationError>,
+        datadog::Error<UpdateLogsCustomDestinationError>,
     > {
         match self
             .update_logs_custom_destination_with_http_info(custom_destination_id, body)
@@ -604,7 +605,7 @@ impl LogsCustomDestinationsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -619,8 +620,8 @@ impl LogsCustomDestinationsAPI {
         custom_destination_id: String,
         body: crate::datadogV2::model::CustomDestinationUpdateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::CustomDestinationResponse>,
-        Error<UpdateLogsCustomDestinationError>,
+        datadog::ResponseContent<crate::datadogV2::model::CustomDestinationResponse>,
+        datadog::Error<UpdateLogsCustomDestinationError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_logs_custom_destination";
@@ -630,7 +631,7 @@ impl LogsCustomDestinationsAPI {
         let local_uri_str = format!(
             "{}/api/v2/logs/config/custom-destinations/{custom_destination_id}",
             local_configuration.get_operation_host(operation_id),
-            custom_destination_id = urlencode(custom_destination_id)
+            custom_destination_id = datadog::urlencode(custom_destination_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -647,7 +648,7 @@ impl LogsCustomDestinationsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -670,7 +671,7 @@ impl LogsCustomDestinationsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -681,7 +682,7 @@ impl LogsCustomDestinationsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -691,7 +692,7 @@ impl LogsCustomDestinationsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -701,7 +702,7 @@ impl LogsCustomDestinationsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -725,23 +726,23 @@ impl LogsCustomDestinationsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateLogsCustomDestinationError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 }

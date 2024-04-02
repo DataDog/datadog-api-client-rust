@@ -1,7 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use crate::datadog::*;
+use crate::datadog;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
@@ -327,13 +327,13 @@ pub enum UpdateTagConfigurationError {
 
 #[derive(Debug, Clone)]
 pub struct MetricsAPI {
-    config: configuration::Configuration,
+    config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for MetricsAPI {
     fn default() -> Self {
-        Self::with_config(configuration::Configuration::default())
+        Self::with_config(datadog::Configuration::default())
     }
 }
 
@@ -341,7 +341,7 @@ impl MetricsAPI {
     pub fn new() -> Self {
         Self::default()
     }
-    pub fn with_config(config: configuration::Configuration) -> Self {
+    pub fn with_config(config: datadog::Configuration) -> Self {
         let mut reqwest_client_builder = reqwest::Client::builder();
 
         if let Some(proxy_url) = &config.proxy_url {
@@ -383,7 +383,7 @@ impl MetricsAPI {
     }
 
     pub fn with_client_and_config(
-        config: configuration::Configuration,
+        config: datadog::Configuration,
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
@@ -401,7 +401,7 @@ impl MetricsAPI {
         body: crate::datadogV2::model::MetricBulkTagConfigCreateRequest,
     ) -> Result<
         crate::datadogV2::model::MetricBulkTagConfigResponse,
-        Error<CreateBulkTagsMetricsConfigurationError>,
+        datadog::Error<CreateBulkTagsMetricsConfigurationError>,
     > {
         match self
             .create_bulk_tags_metrics_configuration_with_http_info(body)
@@ -411,7 +411,7 @@ impl MetricsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -431,8 +431,8 @@ impl MetricsAPI {
         &self,
         body: crate::datadogV2::model::MetricBulkTagConfigCreateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::MetricBulkTagConfigResponse>,
-        Error<CreateBulkTagsMetricsConfigurationError>,
+        datadog::ResponseContent<crate::datadogV2::model::MetricBulkTagConfigResponse>,
+        datadog::Error<CreateBulkTagsMetricsConfigurationError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_bulk_tags_metrics_configuration";
@@ -458,7 +458,7 @@ impl MetricsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -481,7 +481,7 @@ impl MetricsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -492,7 +492,7 @@ impl MetricsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -502,7 +502,7 @@ impl MetricsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -512,7 +512,7 @@ impl MetricsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -536,23 +536,23 @@ impl MetricsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateBulkTagsMetricsConfigurationError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -567,7 +567,7 @@ impl MetricsAPI {
         body: crate::datadogV2::model::MetricTagConfigurationCreateRequest,
     ) -> Result<
         crate::datadogV2::model::MetricTagConfigurationResponse,
-        Error<CreateTagConfigurationError>,
+        datadog::Error<CreateTagConfigurationError>,
     > {
         match self
             .create_tag_configuration_with_http_info(metric_name, body)
@@ -577,7 +577,7 @@ impl MetricsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -596,8 +596,8 @@ impl MetricsAPI {
         metric_name: String,
         body: crate::datadogV2::model::MetricTagConfigurationCreateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::MetricTagConfigurationResponse>,
-        Error<CreateTagConfigurationError>,
+        datadog::ResponseContent<crate::datadogV2::model::MetricTagConfigurationResponse>,
+        datadog::Error<CreateTagConfigurationError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_tag_configuration";
@@ -607,7 +607,7 @@ impl MetricsAPI {
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/tags",
             local_configuration.get_operation_host(operation_id),
-            metric_name = urlencode(metric_name)
+            metric_name = datadog::urlencode(metric_name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -624,7 +624,7 @@ impl MetricsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -647,7 +647,7 @@ impl MetricsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -658,7 +658,7 @@ impl MetricsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -668,7 +668,7 @@ impl MetricsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -678,7 +678,7 @@ impl MetricsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -702,23 +702,23 @@ impl MetricsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateTagConfigurationError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -731,7 +731,7 @@ impl MetricsAPI {
         body: crate::datadogV2::model::MetricBulkTagConfigDeleteRequest,
     ) -> Result<
         crate::datadogV2::model::MetricBulkTagConfigResponse,
-        Error<DeleteBulkTagsMetricsConfigurationError>,
+        datadog::Error<DeleteBulkTagsMetricsConfigurationError>,
     > {
         match self
             .delete_bulk_tags_metrics_configuration_with_http_info(body)
@@ -741,7 +741,7 @@ impl MetricsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -758,8 +758,8 @@ impl MetricsAPI {
         &self,
         body: crate::datadogV2::model::MetricBulkTagConfigDeleteRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::MetricBulkTagConfigResponse>,
-        Error<DeleteBulkTagsMetricsConfigurationError>,
+        datadog::ResponseContent<crate::datadogV2::model::MetricBulkTagConfigResponse>,
+        datadog::Error<DeleteBulkTagsMetricsConfigurationError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_bulk_tags_metrics_configuration";
@@ -785,7 +785,7 @@ impl MetricsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -808,7 +808,7 @@ impl MetricsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -819,7 +819,7 @@ impl MetricsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -829,7 +829,7 @@ impl MetricsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -839,7 +839,7 @@ impl MetricsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -863,23 +863,23 @@ impl MetricsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<DeleteBulkTagsMetricsConfigurationError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -888,7 +888,7 @@ impl MetricsAPI {
     pub async fn delete_tag_configuration(
         &self,
         metric_name: String,
-    ) -> Result<(), Error<DeleteTagConfigurationError>> {
+    ) -> Result<(), datadog::Error<DeleteTagConfigurationError>> {
         match self
             .delete_tag_configuration_with_http_info(metric_name)
             .await
@@ -903,7 +903,7 @@ impl MetricsAPI {
     pub async fn delete_tag_configuration_with_http_info(
         &self,
         metric_name: String,
-    ) -> Result<ResponseContent<()>, Error<DeleteTagConfigurationError>> {
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTagConfigurationError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_tag_configuration";
 
@@ -912,7 +912,7 @@ impl MetricsAPI {
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/tags",
             local_configuration.get_operation_host(operation_id),
-            metric_name = urlencode(metric_name)
+            metric_name = datadog::urlencode(metric_name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -928,7 +928,7 @@ impl MetricsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -957,7 +957,7 @@ impl MetricsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            Ok(ResponseContent {
+            Ok(datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: None,
@@ -965,12 +965,12 @@ impl MetricsAPI {
         } else {
             let local_entity: Option<DeleteTagConfigurationError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -981,7 +981,7 @@ impl MetricsAPI {
         params: EstimateMetricsOutputSeriesOptionalParams,
     ) -> Result<
         crate::datadogV2::model::MetricEstimateResponse,
-        Error<EstimateMetricsOutputSeriesError>,
+        datadog::Error<EstimateMetricsOutputSeriesError>,
     > {
         match self
             .estimate_metrics_output_series_with_http_info(metric_name, params)
@@ -991,7 +991,7 @@ impl MetricsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1006,8 +1006,8 @@ impl MetricsAPI {
         metric_name: String,
         params: EstimateMetricsOutputSeriesOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::MetricEstimateResponse>,
-        Error<EstimateMetricsOutputSeriesError>,
+        datadog::ResponseContent<crate::datadogV2::model::MetricEstimateResponse>,
+        datadog::Error<EstimateMetricsOutputSeriesError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.estimate_metrics_output_series";
@@ -1024,7 +1024,7 @@ impl MetricsAPI {
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/estimate",
             local_configuration.get_operation_host(operation_id),
-            metric_name = urlencode(metric_name)
+            metric_name = datadog::urlencode(metric_name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1061,7 +1061,7 @@ impl MetricsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1094,23 +1094,23 @@ impl MetricsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<EstimateMetricsOutputSeriesError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1121,7 +1121,7 @@ impl MetricsAPI {
         params: ListActiveMetricConfigurationsOptionalParams,
     ) -> Result<
         crate::datadogV2::model::MetricSuggestedTagsAndAggregationsResponse,
-        Error<ListActiveMetricConfigurationsError>,
+        datadog::Error<ListActiveMetricConfigurationsError>,
     > {
         match self
             .list_active_metric_configurations_with_http_info(metric_name, params)
@@ -1131,7 +1131,7 @@ impl MetricsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1146,8 +1146,10 @@ impl MetricsAPI {
         metric_name: String,
         params: ListActiveMetricConfigurationsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::MetricSuggestedTagsAndAggregationsResponse>,
-        Error<ListActiveMetricConfigurationsError>,
+        datadog::ResponseContent<
+            crate::datadogV2::model::MetricSuggestedTagsAndAggregationsResponse,
+        >,
+        datadog::Error<ListActiveMetricConfigurationsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_active_metric_configurations";
@@ -1160,7 +1162,7 @@ impl MetricsAPI {
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/active-configurations",
             local_configuration.get_operation_host(operation_id),
-            metric_name = urlencode(metric_name)
+            metric_name = datadog::urlencode(metric_name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1181,7 +1183,7 @@ impl MetricsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1215,23 +1217,23 @@ impl MetricsAPI {
             >(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListActiveMetricConfigurationsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1239,13 +1241,14 @@ impl MetricsAPI {
     pub async fn list_metric_assets(
         &self,
         metric_name: String,
-    ) -> Result<crate::datadogV2::model::MetricAssetsResponse, Error<ListMetricAssetsError>> {
+    ) -> Result<crate::datadogV2::model::MetricAssetsResponse, datadog::Error<ListMetricAssetsError>>
+    {
         match self.list_metric_assets_with_http_info(metric_name).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1259,8 +1262,8 @@ impl MetricsAPI {
         &self,
         metric_name: String,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::MetricAssetsResponse>,
-        Error<ListMetricAssetsError>,
+        datadog::ResponseContent<crate::datadogV2::model::MetricAssetsResponse>,
+        datadog::Error<ListMetricAssetsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_metric_assets";
@@ -1270,7 +1273,7 @@ impl MetricsAPI {
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/assets",
             local_configuration.get_operation_host(operation_id),
-            metric_name = urlencode(metric_name)
+            metric_name = datadog::urlencode(metric_name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1286,7 +1289,7 @@ impl MetricsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1319,23 +1322,23 @@ impl MetricsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListMetricAssetsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1345,7 +1348,7 @@ impl MetricsAPI {
         metric_name: String,
     ) -> Result<
         crate::datadogV2::model::MetricTagConfigurationResponse,
-        Error<ListTagConfigurationByNameError>,
+        datadog::Error<ListTagConfigurationByNameError>,
     > {
         match self
             .list_tag_configuration_by_name_with_http_info(metric_name)
@@ -1355,7 +1358,7 @@ impl MetricsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1369,8 +1372,8 @@ impl MetricsAPI {
         &self,
         metric_name: String,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::MetricTagConfigurationResponse>,
-        Error<ListTagConfigurationByNameError>,
+        datadog::ResponseContent<crate::datadogV2::model::MetricTagConfigurationResponse>,
+        datadog::Error<ListTagConfigurationByNameError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_tag_configuration_by_name";
@@ -1380,7 +1383,7 @@ impl MetricsAPI {
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/tags",
             local_configuration.get_operation_host(operation_id),
-            metric_name = urlencode(metric_name)
+            metric_name = datadog::urlencode(metric_name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1396,7 +1399,7 @@ impl MetricsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1429,23 +1432,23 @@ impl MetricsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListTagConfigurationByNameError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1455,14 +1458,14 @@ impl MetricsAPI {
         params: ListTagConfigurationsOptionalParams,
     ) -> Result<
         crate::datadogV2::model::MetricsAndMetricTagConfigurationsResponse,
-        Error<ListTagConfigurationsError>,
+        datadog::Error<ListTagConfigurationsError>,
     > {
         match self.list_tag_configurations_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1476,8 +1479,10 @@ impl MetricsAPI {
         &self,
         params: ListTagConfigurationsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::MetricsAndMetricTagConfigurationsResponse>,
-        Error<ListTagConfigurationsError>,
+        datadog::ResponseContent<
+            crate::datadogV2::model::MetricsAndMetricTagConfigurationsResponse,
+        >,
+        datadog::Error<ListTagConfigurationsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_tag_configurations";
@@ -1542,7 +1547,7 @@ impl MetricsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1576,23 +1581,23 @@ impl MetricsAPI {
             >(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListTagConfigurationsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1600,8 +1605,10 @@ impl MetricsAPI {
     pub async fn list_tags_by_metric_name(
         &self,
         metric_name: String,
-    ) -> Result<crate::datadogV2::model::MetricAllTagsResponse, Error<ListTagsByMetricNameError>>
-    {
+    ) -> Result<
+        crate::datadogV2::model::MetricAllTagsResponse,
+        datadog::Error<ListTagsByMetricNameError>,
+    > {
         match self
             .list_tags_by_metric_name_with_http_info(metric_name)
             .await
@@ -1610,7 +1617,7 @@ impl MetricsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1624,8 +1631,8 @@ impl MetricsAPI {
         &self,
         metric_name: String,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::MetricAllTagsResponse>,
-        Error<ListTagsByMetricNameError>,
+        datadog::ResponseContent<crate::datadogV2::model::MetricAllTagsResponse>,
+        datadog::Error<ListTagsByMetricNameError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_tags_by_metric_name";
@@ -1635,7 +1642,7 @@ impl MetricsAPI {
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/all-tags",
             local_configuration.get_operation_host(operation_id),
-            metric_name = urlencode(metric_name)
+            metric_name = datadog::urlencode(metric_name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1651,7 +1658,7 @@ impl MetricsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1684,23 +1691,23 @@ impl MetricsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListTagsByMetricNameError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1710,8 +1717,10 @@ impl MetricsAPI {
     pub async fn list_volumes_by_metric_name(
         &self,
         metric_name: String,
-    ) -> Result<crate::datadogV2::model::MetricVolumesResponse, Error<ListVolumesByMetricNameError>>
-    {
+    ) -> Result<
+        crate::datadogV2::model::MetricVolumesResponse,
+        datadog::Error<ListVolumesByMetricNameError>,
+    > {
         match self
             .list_volumes_by_metric_name_with_http_info(metric_name)
             .await
@@ -1720,7 +1729,7 @@ impl MetricsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1736,8 +1745,8 @@ impl MetricsAPI {
         &self,
         metric_name: String,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::MetricVolumesResponse>,
-        Error<ListVolumesByMetricNameError>,
+        datadog::ResponseContent<crate::datadogV2::model::MetricVolumesResponse>,
+        datadog::Error<ListVolumesByMetricNameError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_volumes_by_metric_name";
@@ -1747,7 +1756,7 @@ impl MetricsAPI {
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/volumes",
             local_configuration.get_operation_host(operation_id),
-            metric_name = urlencode(metric_name)
+            metric_name = datadog::urlencode(metric_name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1763,7 +1772,7 @@ impl MetricsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1796,23 +1805,23 @@ impl MetricsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListVolumesByMetricNameError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1822,14 +1831,16 @@ impl MetricsAPI {
     pub async fn query_scalar_data(
         &self,
         body: crate::datadogV2::model::ScalarFormulaQueryRequest,
-    ) -> Result<crate::datadogV2::model::ScalarFormulaQueryResponse, Error<QueryScalarDataError>>
-    {
+    ) -> Result<
+        crate::datadogV2::model::ScalarFormulaQueryResponse,
+        datadog::Error<QueryScalarDataError>,
+    > {
         match self.query_scalar_data_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1845,18 +1856,18 @@ impl MetricsAPI {
         &self,
         body: crate::datadogV2::model::ScalarFormulaQueryRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::ScalarFormulaQueryResponse>,
-        Error<QueryScalarDataError>,
+        datadog::ResponseContent<crate::datadogV2::model::ScalarFormulaQueryResponse>,
+        datadog::Error<QueryScalarDataError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.query_scalar_data";
         if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {operation_id}");
         } else {
-            let local_error = UnstableOperationDisabledError {
+            let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.query_scalar_data' is not enabled".to_string(),
             };
-            return Err(Error::UnstableOperationDisabledError(local_error));
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
         let local_client = &self.client;
@@ -1880,7 +1891,7 @@ impl MetricsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1903,7 +1914,7 @@ impl MetricsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -1914,7 +1925,7 @@ impl MetricsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -1924,7 +1935,7 @@ impl MetricsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -1934,7 +1945,7 @@ impl MetricsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -1958,23 +1969,23 @@ impl MetricsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<QueryScalarDataError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1985,14 +1996,14 @@ impl MetricsAPI {
         body: crate::datadogV2::model::TimeseriesFormulaQueryRequest,
     ) -> Result<
         crate::datadogV2::model::TimeseriesFormulaQueryResponse,
-        Error<QueryTimeseriesDataError>,
+        datadog::Error<QueryTimeseriesDataError>,
     > {
         match self.query_timeseries_data_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -2007,18 +2018,18 @@ impl MetricsAPI {
         &self,
         body: crate::datadogV2::model::TimeseriesFormulaQueryRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::TimeseriesFormulaQueryResponse>,
-        Error<QueryTimeseriesDataError>,
+        datadog::ResponseContent<crate::datadogV2::model::TimeseriesFormulaQueryResponse>,
+        datadog::Error<QueryTimeseriesDataError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.query_timeseries_data";
         if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {operation_id}");
         } else {
-            let local_error = UnstableOperationDisabledError {
+            let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.query_timeseries_data' is not enabled".to_string(),
             };
-            return Err(Error::UnstableOperationDisabledError(local_error));
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
         let local_client = &self.client;
@@ -2042,7 +2053,7 @@ impl MetricsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -2065,7 +2076,7 @@ impl MetricsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -2076,7 +2087,7 @@ impl MetricsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -2086,7 +2097,7 @@ impl MetricsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -2096,7 +2107,7 @@ impl MetricsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -2120,23 +2131,23 @@ impl MetricsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<QueryTimeseriesDataError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -2156,13 +2167,14 @@ impl MetricsAPI {
         &self,
         body: crate::datadogV2::model::MetricPayload,
         params: SubmitMetricsOptionalParams,
-    ) -> Result<crate::datadogV2::model::IntakePayloadAccepted, Error<SubmitMetricsError>> {
+    ) -> Result<crate::datadogV2::model::IntakePayloadAccepted, datadog::Error<SubmitMetricsError>>
+    {
         match self.submit_metrics_with_http_info(body, params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -2188,8 +2200,8 @@ impl MetricsAPI {
         body: crate::datadogV2::model::MetricPayload,
         params: SubmitMetricsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::IntakePayloadAccepted>,
-        Error<SubmitMetricsError>,
+        datadog::ResponseContent<crate::datadogV2::model::IntakePayloadAccepted>,
+        datadog::Error<SubmitMetricsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.submit_metrics";
@@ -2228,7 +2240,7 @@ impl MetricsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -2244,7 +2256,7 @@ impl MetricsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -2255,7 +2267,7 @@ impl MetricsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -2265,7 +2277,7 @@ impl MetricsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -2275,7 +2287,7 @@ impl MetricsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -2299,23 +2311,23 @@ impl MetricsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<SubmitMetricsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -2330,7 +2342,7 @@ impl MetricsAPI {
         body: crate::datadogV2::model::MetricTagConfigurationUpdateRequest,
     ) -> Result<
         crate::datadogV2::model::MetricTagConfigurationResponse,
-        Error<UpdateTagConfigurationError>,
+        datadog::Error<UpdateTagConfigurationError>,
     > {
         match self
             .update_tag_configuration_with_http_info(metric_name, body)
@@ -2340,7 +2352,7 @@ impl MetricsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -2359,8 +2371,8 @@ impl MetricsAPI {
         metric_name: String,
         body: crate::datadogV2::model::MetricTagConfigurationUpdateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::MetricTagConfigurationResponse>,
-        Error<UpdateTagConfigurationError>,
+        datadog::ResponseContent<crate::datadogV2::model::MetricTagConfigurationResponse>,
+        datadog::Error<UpdateTagConfigurationError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_tag_configuration";
@@ -2370,7 +2382,7 @@ impl MetricsAPI {
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/tags",
             local_configuration.get_operation_host(operation_id),
-            metric_name = urlencode(metric_name)
+            metric_name = datadog::urlencode(metric_name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -2387,7 +2399,7 @@ impl MetricsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -2410,7 +2422,7 @@ impl MetricsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -2421,7 +2433,7 @@ impl MetricsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -2431,7 +2443,7 @@ impl MetricsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -2441,7 +2453,7 @@ impl MetricsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -2465,23 +2477,23 @@ impl MetricsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateTagConfigurationError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 }

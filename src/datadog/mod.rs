@@ -2,6 +2,9 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use std::error;
 use std::fmt;
 
+mod configuration;
+pub use configuration::{APIKey, Configuration, DEFAULT_USER_AGENT};
+
 #[derive(Debug, Clone)]
 pub struct ResponseContent<T> {
     pub status: reqwest::StatusCode,
@@ -120,8 +123,6 @@ impl serde_json::ser::Formatter for DDFormatter {
         write!(writer, "{}", value.to_string())
     }
 }
-
-pub mod configuration;
 
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct UnparsedObject {

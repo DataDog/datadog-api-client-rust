@@ -1,7 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use crate::datadog::*;
+use crate::datadog;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
@@ -101,13 +101,13 @@ pub enum ListEventsError {
 
 #[derive(Debug, Clone)]
 pub struct EventsAPI {
-    config: configuration::Configuration,
+    config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for EventsAPI {
     fn default() -> Self {
-        Self::with_config(configuration::Configuration::default())
+        Self::with_config(datadog::Configuration::default())
     }
 }
 
@@ -115,7 +115,7 @@ impl EventsAPI {
     pub fn new() -> Self {
         Self::default()
     }
-    pub fn with_config(config: configuration::Configuration) -> Self {
+    pub fn with_config(config: datadog::Configuration) -> Self {
         let mut reqwest_client_builder = reqwest::Client::builder();
 
         if let Some(proxy_url) = &config.proxy_url {
@@ -157,7 +157,7 @@ impl EventsAPI {
     }
 
     pub fn with_client_and_config(
-        config: configuration::Configuration,
+        config: datadog::Configuration,
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
@@ -168,13 +168,14 @@ impl EventsAPI {
     pub async fn create_event(
         &self,
         body: crate::datadogV1::model::EventCreateRequest,
-    ) -> Result<crate::datadogV1::model::EventCreateResponse, Error<CreateEventError>> {
+    ) -> Result<crate::datadogV1::model::EventCreateResponse, datadog::Error<CreateEventError>>
+    {
         match self.create_event_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -189,8 +190,8 @@ impl EventsAPI {
         &self,
         body: crate::datadogV1::model::EventCreateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::EventCreateResponse>,
-        Error<CreateEventError>,
+        datadog::ResponseContent<crate::datadogV1::model::EventCreateResponse>,
+        datadog::Error<CreateEventError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.create_event";
@@ -216,7 +217,7 @@ impl EventsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -232,7 +233,7 @@ impl EventsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -243,7 +244,7 @@ impl EventsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -253,7 +254,7 @@ impl EventsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -263,7 +264,7 @@ impl EventsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -287,22 +288,22 @@ impl EventsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateEventError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -313,13 +314,13 @@ impl EventsAPI {
     pub async fn get_event(
         &self,
         event_id: i64,
-    ) -> Result<crate::datadogV1::model::EventResponse, Error<GetEventError>> {
+    ) -> Result<crate::datadogV1::model::EventResponse, datadog::Error<GetEventError>> {
         match self.get_event_with_http_info(event_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -335,7 +336,10 @@ impl EventsAPI {
     pub async fn get_event_with_http_info(
         &self,
         event_id: i64,
-    ) -> Result<ResponseContent<crate::datadogV1::model::EventResponse>, Error<GetEventError>> {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::EventResponse>,
+        datadog::Error<GetEventError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_event";
 
@@ -360,7 +364,7 @@ impl EventsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -391,22 +395,22 @@ impl EventsAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::EventResponse>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetEventError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -424,13 +428,13 @@ impl EventsAPI {
         start: i64,
         end: i64,
         params: ListEventsOptionalParams,
-    ) -> Result<crate::datadogV1::model::EventListResponse, Error<ListEventsError>> {
+    ) -> Result<crate::datadogV1::model::EventListResponse, datadog::Error<ListEventsError>> {
         match self.list_events_with_http_info(start, end, params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -453,8 +457,10 @@ impl EventsAPI {
         start: i64,
         end: i64,
         params: ListEventsOptionalParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::EventListResponse>, Error<ListEventsError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::EventListResponse>,
+        datadog::Error<ListEventsError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.list_events";
 
@@ -513,7 +519,7 @@ impl EventsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -545,22 +551,22 @@ impl EventsAPI {
             match serde_json::from_str::<crate::datadogV1::model::EventListResponse>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListEventsError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 }

@@ -1,5 +1,5 @@
 // Update IP Allowlist returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_ip_allowlist::IPAllowlistAPI;
 use datadog_api_client::datadogV2::model::IPAllowlistAttributes;
 use datadog_api_client::datadogV2::model::IPAllowlistData;
@@ -25,7 +25,7 @@ async fn main() {
                 )]),
         ),
     );
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = IPAllowlistAPI::with_config(configuration);
     let resp = api.update_ip_allowlist(body).await;
     if let Ok(value) = resp {

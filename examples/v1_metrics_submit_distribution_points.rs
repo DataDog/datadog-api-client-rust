@@ -1,5 +1,5 @@
 // Submit distribution points returns "Payload accepted" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api::api_metrics::MetricsAPI;
 use datadog_api_client::datadogV1::api::api_metrics::SubmitDistributionPointsOptionalParams;
 use datadog_api_client::datadogV1::model::DistributionPointItem;
@@ -15,7 +15,7 @@ async fn main() {
             DistributionPointItem::DistributionPointData(vec![1.0, 2.0]),
         ]],
     )]);
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = MetricsAPI::with_config(configuration);
     let resp = api
         .submit_distribution_points(body, SubmitDistributionPointsOptionalParams::default())

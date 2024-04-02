@@ -1,5 +1,5 @@
 // Check permissions for log services returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api::api_aws_logs_integration::AWSLogsIntegrationAPI;
 use datadog_api_client::datadogV1::model::AWSLogsServicesRequest;
 
@@ -16,7 +16,7 @@ async fn main() {
             "lambda".to_string(),
         ],
     );
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = AWSLogsIntegrationAPI::with_config(configuration);
     let resp = api.check_aws_logs_services_async(body).await;
     if let Ok(value) = resp {

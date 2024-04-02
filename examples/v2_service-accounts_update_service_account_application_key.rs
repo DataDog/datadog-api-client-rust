@@ -1,5 +1,5 @@
 // Edit an application key for this service account returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_service_accounts::ServiceAccountsAPI;
 use datadog_api_client::datadogV2::model::ApplicationKeyUpdateAttributes;
 use datadog_api_client::datadogV2::model::ApplicationKeyUpdateData;
@@ -20,7 +20,7 @@ async fn main() {
         service_account_application_key_data_id.clone(),
         ApplicationKeysType::APPLICATION_KEYS,
     ));
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = ServiceAccountsAPI::with_config(configuration);
     let resp = api
         .update_service_account_application_key(

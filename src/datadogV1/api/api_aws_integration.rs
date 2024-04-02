@@ -1,7 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use crate::datadog::*;
+use crate::datadog;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
@@ -199,13 +199,13 @@ pub enum UpdateAWSAccountError {
 
 #[derive(Debug, Clone)]
 pub struct AWSIntegrationAPI {
-    config: configuration::Configuration,
+    config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for AWSIntegrationAPI {
     fn default() -> Self {
-        Self::with_config(configuration::Configuration::default())
+        Self::with_config(datadog::Configuration::default())
     }
 }
 
@@ -213,7 +213,7 @@ impl AWSIntegrationAPI {
     pub fn new() -> Self {
         Self::default()
     }
-    pub fn with_config(config: configuration::Configuration) -> Self {
+    pub fn with_config(config: datadog::Configuration) -> Self {
         let mut reqwest_client_builder = reqwest::Client::builder();
 
         if let Some(proxy_url) = &config.proxy_url {
@@ -255,7 +255,7 @@ impl AWSIntegrationAPI {
     }
 
     pub fn with_client_and_config(
-        config: configuration::Configuration,
+        config: datadog::Configuration,
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
@@ -268,14 +268,16 @@ impl AWSIntegrationAPI {
     pub async fn create_aws_account(
         &self,
         body: crate::datadogV1::model::AWSAccount,
-    ) -> Result<crate::datadogV1::model::AWSAccountCreateResponse, Error<CreateAWSAccountError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::AWSAccountCreateResponse,
+        datadog::Error<CreateAWSAccountError>,
+    > {
         match self.create_aws_account_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -292,8 +294,8 @@ impl AWSIntegrationAPI {
         &self,
         body: crate::datadogV1::model::AWSAccount,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::AWSAccountCreateResponse>,
-        Error<CreateAWSAccountError>,
+        datadog::ResponseContent<crate::datadogV1::model::AWSAccountCreateResponse>,
+        datadog::Error<CreateAWSAccountError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.create_aws_account";
@@ -319,7 +321,7 @@ impl AWSIntegrationAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -342,7 +344,7 @@ impl AWSIntegrationAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -353,7 +355,7 @@ impl AWSIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -363,7 +365,7 @@ impl AWSIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -373,7 +375,7 @@ impl AWSIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -397,23 +399,23 @@ impl AWSIntegrationAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateAWSAccountError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -423,7 +425,7 @@ impl AWSIntegrationAPI {
         body: crate::datadogV1::model::AWSEventBridgeCreateRequest,
     ) -> Result<
         crate::datadogV1::model::AWSEventBridgeCreateResponse,
-        Error<CreateAWSEventBridgeSourceError>,
+        datadog::Error<CreateAWSEventBridgeSourceError>,
     > {
         match self
             .create_aws_event_bridge_source_with_http_info(body)
@@ -433,7 +435,7 @@ impl AWSIntegrationAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -447,8 +449,8 @@ impl AWSIntegrationAPI {
         &self,
         body: crate::datadogV1::model::AWSEventBridgeCreateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::AWSEventBridgeCreateResponse>,
-        Error<CreateAWSEventBridgeSourceError>,
+        datadog::ResponseContent<crate::datadogV1::model::AWSEventBridgeCreateResponse>,
+        datadog::Error<CreateAWSEventBridgeSourceError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.create_aws_event_bridge_source";
@@ -474,7 +476,7 @@ impl AWSIntegrationAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -497,7 +499,7 @@ impl AWSIntegrationAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -508,7 +510,7 @@ impl AWSIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -518,7 +520,7 @@ impl AWSIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -528,7 +530,7 @@ impl AWSIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -552,23 +554,23 @@ impl AWSIntegrationAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateAWSEventBridgeSourceError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -576,14 +578,16 @@ impl AWSIntegrationAPI {
     pub async fn create_aws_tag_filter(
         &self,
         body: crate::datadogV1::model::AWSTagFilterCreateRequest,
-    ) -> Result<std::collections::BTreeMap<String, serde_json::Value>, Error<CreateAWSTagFilterError>>
-    {
+    ) -> Result<
+        std::collections::BTreeMap<String, serde_json::Value>,
+        datadog::Error<CreateAWSTagFilterError>,
+    > {
         match self.create_aws_tag_filter_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -597,8 +601,8 @@ impl AWSIntegrationAPI {
         &self,
         body: crate::datadogV1::model::AWSTagFilterCreateRequest,
     ) -> Result<
-        ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
-        Error<CreateAWSTagFilterError>,
+        datadog::ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
+        datadog::Error<CreateAWSTagFilterError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.create_aws_tag_filter";
@@ -624,7 +628,7 @@ impl AWSIntegrationAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -647,7 +651,7 @@ impl AWSIntegrationAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -658,7 +662,7 @@ impl AWSIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -668,7 +672,7 @@ impl AWSIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -678,7 +682,7 @@ impl AWSIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -702,23 +706,23 @@ impl AWSIntegrationAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateAWSTagFilterError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -726,14 +730,16 @@ impl AWSIntegrationAPI {
     pub async fn create_new_aws_external_id(
         &self,
         body: crate::datadogV1::model::AWSAccount,
-    ) -> Result<crate::datadogV1::model::AWSAccountCreateResponse, Error<CreateNewAWSExternalIDError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::AWSAccountCreateResponse,
+        datadog::Error<CreateNewAWSExternalIDError>,
+    > {
         match self.create_new_aws_external_id_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -747,8 +753,8 @@ impl AWSIntegrationAPI {
         &self,
         body: crate::datadogV1::model::AWSAccount,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::AWSAccountCreateResponse>,
-        Error<CreateNewAWSExternalIDError>,
+        datadog::ResponseContent<crate::datadogV1::model::AWSAccountCreateResponse>,
+        datadog::Error<CreateNewAWSExternalIDError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.create_new_aws_external_id";
@@ -774,7 +780,7 @@ impl AWSIntegrationAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -797,7 +803,7 @@ impl AWSIntegrationAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -808,7 +814,7 @@ impl AWSIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -818,7 +824,7 @@ impl AWSIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -828,7 +834,7 @@ impl AWSIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -852,23 +858,23 @@ impl AWSIntegrationAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateNewAWSExternalIDError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -876,14 +882,16 @@ impl AWSIntegrationAPI {
     pub async fn delete_aws_account(
         &self,
         body: crate::datadogV1::model::AWSAccountDeleteRequest,
-    ) -> Result<std::collections::BTreeMap<String, serde_json::Value>, Error<DeleteAWSAccountError>>
-    {
+    ) -> Result<
+        std::collections::BTreeMap<String, serde_json::Value>,
+        datadog::Error<DeleteAWSAccountError>,
+    > {
         match self.delete_aws_account_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -897,8 +905,8 @@ impl AWSIntegrationAPI {
         &self,
         body: crate::datadogV1::model::AWSAccountDeleteRequest,
     ) -> Result<
-        ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
-        Error<DeleteAWSAccountError>,
+        datadog::ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
+        datadog::Error<DeleteAWSAccountError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.delete_aws_account";
@@ -924,7 +932,7 @@ impl AWSIntegrationAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -947,7 +955,7 @@ impl AWSIntegrationAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -958,7 +966,7 @@ impl AWSIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -968,7 +976,7 @@ impl AWSIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -978,7 +986,7 @@ impl AWSIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -1002,23 +1010,23 @@ impl AWSIntegrationAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<DeleteAWSAccountError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1028,7 +1036,7 @@ impl AWSIntegrationAPI {
         body: crate::datadogV1::model::AWSEventBridgeDeleteRequest,
     ) -> Result<
         crate::datadogV1::model::AWSEventBridgeDeleteResponse,
-        Error<DeleteAWSEventBridgeSourceError>,
+        datadog::Error<DeleteAWSEventBridgeSourceError>,
     > {
         match self
             .delete_aws_event_bridge_source_with_http_info(body)
@@ -1038,7 +1046,7 @@ impl AWSIntegrationAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1052,8 +1060,8 @@ impl AWSIntegrationAPI {
         &self,
         body: crate::datadogV1::model::AWSEventBridgeDeleteRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::AWSEventBridgeDeleteResponse>,
-        Error<DeleteAWSEventBridgeSourceError>,
+        datadog::ResponseContent<crate::datadogV1::model::AWSEventBridgeDeleteResponse>,
+        datadog::Error<DeleteAWSEventBridgeSourceError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.delete_aws_event_bridge_source";
@@ -1079,7 +1087,7 @@ impl AWSIntegrationAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1102,7 +1110,7 @@ impl AWSIntegrationAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -1113,7 +1121,7 @@ impl AWSIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -1123,7 +1131,7 @@ impl AWSIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -1133,7 +1141,7 @@ impl AWSIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -1157,23 +1165,23 @@ impl AWSIntegrationAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<DeleteAWSEventBridgeSourceError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1181,14 +1189,16 @@ impl AWSIntegrationAPI {
     pub async fn delete_aws_tag_filter(
         &self,
         body: crate::datadogV1::model::AWSTagFilterDeleteRequest,
-    ) -> Result<std::collections::BTreeMap<String, serde_json::Value>, Error<DeleteAWSTagFilterError>>
-    {
+    ) -> Result<
+        std::collections::BTreeMap<String, serde_json::Value>,
+        datadog::Error<DeleteAWSTagFilterError>,
+    > {
         match self.delete_aws_tag_filter_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1202,8 +1212,8 @@ impl AWSIntegrationAPI {
         &self,
         body: crate::datadogV1::model::AWSTagFilterDeleteRequest,
     ) -> Result<
-        ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
-        Error<DeleteAWSTagFilterError>,
+        datadog::ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
+        datadog::Error<DeleteAWSTagFilterError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.delete_aws_tag_filter";
@@ -1229,7 +1239,7 @@ impl AWSIntegrationAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1252,7 +1262,7 @@ impl AWSIntegrationAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -1263,7 +1273,7 @@ impl AWSIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -1273,7 +1283,7 @@ impl AWSIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -1283,7 +1293,7 @@ impl AWSIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -1307,23 +1317,23 @@ impl AWSIntegrationAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<DeleteAWSTagFilterError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1331,13 +1341,14 @@ impl AWSIntegrationAPI {
     pub async fn list_aws_accounts(
         &self,
         params: ListAWSAccountsOptionalParams,
-    ) -> Result<crate::datadogV1::model::AWSAccountListResponse, Error<ListAWSAccountsError>> {
+    ) -> Result<crate::datadogV1::model::AWSAccountListResponse, datadog::Error<ListAWSAccountsError>>
+    {
         match self.list_aws_accounts_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1351,8 +1362,8 @@ impl AWSIntegrationAPI {
         &self,
         params: ListAWSAccountsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::AWSAccountListResponse>,
-        Error<ListAWSAccountsError>,
+        datadog::ResponseContent<crate::datadogV1::model::AWSAccountListResponse>,
+        datadog::Error<ListAWSAccountsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.list_aws_accounts";
@@ -1395,7 +1406,7 @@ impl AWSIntegrationAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1428,23 +1439,23 @@ impl AWSIntegrationAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListAWSAccountsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1453,14 +1464,14 @@ impl AWSIntegrationAPI {
         &self,
     ) -> Result<
         crate::datadogV1::model::AWSEventBridgeListResponse,
-        Error<ListAWSEventBridgeSourcesError>,
+        datadog::Error<ListAWSEventBridgeSourcesError>,
     > {
         match self.list_aws_event_bridge_sources_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1473,8 +1484,8 @@ impl AWSIntegrationAPI {
     pub async fn list_aws_event_bridge_sources_with_http_info(
         &self,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::AWSEventBridgeListResponse>,
-        Error<ListAWSEventBridgeSourcesError>,
+        datadog::ResponseContent<crate::datadogV1::model::AWSEventBridgeListResponse>,
+        datadog::Error<ListAWSEventBridgeSourcesError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.list_aws_event_bridge_sources";
@@ -1499,7 +1510,7 @@ impl AWSIntegrationAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1532,23 +1543,23 @@ impl AWSIntegrationAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListAWSEventBridgeSourcesError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1556,14 +1567,16 @@ impl AWSIntegrationAPI {
     pub async fn list_aws_tag_filters(
         &self,
         account_id: String,
-    ) -> Result<crate::datadogV1::model::AWSTagFilterListResponse, Error<ListAWSTagFiltersError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::AWSTagFilterListResponse,
+        datadog::Error<ListAWSTagFiltersError>,
+    > {
         match self.list_aws_tag_filters_with_http_info(account_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1577,8 +1590,8 @@ impl AWSIntegrationAPI {
         &self,
         account_id: String,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::AWSTagFilterListResponse>,
-        Error<ListAWSTagFiltersError>,
+        datadog::ResponseContent<crate::datadogV1::model::AWSTagFilterListResponse>,
+        datadog::Error<ListAWSTagFiltersError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.list_aws_tag_filters";
@@ -1605,7 +1618,7 @@ impl AWSIntegrationAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1638,36 +1651,36 @@ impl AWSIntegrationAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListAWSTagFiltersError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// List all namespace rules for a given Datadog-AWS integration. This endpoint takes no arguments.
     pub async fn list_available_aws_namespaces(
         &self,
-    ) -> Result<Vec<String>, Error<ListAvailableAWSNamespacesError>> {
+    ) -> Result<Vec<String>, datadog::Error<ListAvailableAWSNamespacesError>> {
         match self.list_available_aws_namespaces_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1679,7 +1692,10 @@ impl AWSIntegrationAPI {
     /// List all namespace rules for a given Datadog-AWS integration. This endpoint takes no arguments.
     pub async fn list_available_aws_namespaces_with_http_info(
         &self,
-    ) -> Result<ResponseContent<Vec<String>>, Error<ListAvailableAWSNamespacesError>> {
+    ) -> Result<
+        datadog::ResponseContent<Vec<String>>,
+        datadog::Error<ListAvailableAWSNamespacesError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.list_available_aws_namespaces";
 
@@ -1703,7 +1719,7 @@ impl AWSIntegrationAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1734,23 +1750,23 @@ impl AWSIntegrationAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<Vec<String>>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListAvailableAWSNamespacesError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1759,14 +1775,16 @@ impl AWSIntegrationAPI {
         &self,
         body: crate::datadogV1::model::AWSAccount,
         params: UpdateAWSAccountOptionalParams,
-    ) -> Result<std::collections::BTreeMap<String, serde_json::Value>, Error<UpdateAWSAccountError>>
-    {
+    ) -> Result<
+        std::collections::BTreeMap<String, serde_json::Value>,
+        datadog::Error<UpdateAWSAccountError>,
+    > {
         match self.update_aws_account_with_http_info(body, params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1781,8 +1799,8 @@ impl AWSIntegrationAPI {
         body: crate::datadogV1::model::AWSAccount,
         params: UpdateAWSAccountOptionalParams,
     ) -> Result<
-        ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
-        Error<UpdateAWSAccountError>,
+        datadog::ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
+        datadog::Error<UpdateAWSAccountError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.update_aws_account";
@@ -1826,7 +1844,7 @@ impl AWSIntegrationAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1849,7 +1867,7 @@ impl AWSIntegrationAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -1860,7 +1878,7 @@ impl AWSIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -1870,7 +1888,7 @@ impl AWSIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -1880,7 +1898,7 @@ impl AWSIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -1904,23 +1922,23 @@ impl AWSIntegrationAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateAWSAccountError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 }

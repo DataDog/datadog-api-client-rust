@@ -1,5 +1,5 @@
 // Update Fastly service returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_fastly_integration::FastlyIntegrationAPI;
 use datadog_api_client::datadogV2::model::FastlyServiceAttributes;
 use datadog_api_client::datadogV2::model::FastlyServiceData;
@@ -15,7 +15,7 @@ async fn main() {
                     .tags(vec!["myTag".to_string(), "myTag2:myValue".to_string()]),
             ),
     );
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = FastlyIntegrationAPI::with_config(configuration);
     let resp = api
         .update_fastly_service("account_id".to_string(), "service_id".to_string(), body)

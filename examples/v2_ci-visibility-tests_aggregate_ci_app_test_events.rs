@@ -1,5 +1,5 @@
 // Aggregate tests events returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_ci_visibility_tests::CIVisibilityTestsAPI;
 use datadog_api_client::datadogV2::model::CIAppAggregateSort;
 use datadog_api_client::datadogV2::model::CIAppAggregationFunction;
@@ -29,7 +29,7 @@ async fn main() {
             .sort(CIAppAggregateSort::new().order(CIAppSortOrder::ASCENDING))
             .total(CIAppGroupByTotal::CIAppGroupByTotalBoolean(false))])
         .options(CIAppQueryOptions::new().timezone("GMT".to_string()));
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = CIVisibilityTestsAPI::with_config(configuration);
     let resp = api.aggregate_ci_app_test_events(body).await;
     if let Ok(value) = resp {

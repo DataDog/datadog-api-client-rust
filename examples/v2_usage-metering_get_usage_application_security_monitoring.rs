@@ -1,11 +1,11 @@
 // Get hourly usage for application security returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_usage_metering::GetUsageApplicationSecurityMonitoringOptionalParams;
 use datadog_api_client::datadogV2::api::api_usage_metering::UsageMeteringAPI;
 
 #[tokio::main]
 async fn main() {
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = UsageMeteringAPI::with_config(configuration);
     let resp = api
         .get_usage_application_security_monitoring(

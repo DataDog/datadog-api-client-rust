@@ -1,5 +1,5 @@
 // Get details of an incident service returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_incident_services::GetIncidentServiceOptionalParams;
 use datadog_api_client::datadogV2::api::api_incident_services::IncidentServicesAPI;
 
@@ -7,7 +7,7 @@ use datadog_api_client::datadogV2::api::api_incident_services::IncidentServicesA
 async fn main() {
     // there is a valid "service" in the system
     let service_data_id = std::env::var("SERVICE_DATA_ID").unwrap();
-    let mut configuration = Configuration::new();
+    let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.GetIncidentService", true);
     let api = IncidentServicesAPI::with_config(configuration);
     let resp = api

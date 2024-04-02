@@ -1,5 +1,5 @@
 // Aggregate RUM events returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_rum::RUMAPI;
 use datadog_api_client::datadogV2::model::RUMAggregateRequest;
 use datadog_api_client::datadogV2::model::RUMAggregationFunction;
@@ -28,7 +28,7 @@ async fn main() {
             .total(RUMGroupByTotal::RUMGroupByTotalBoolean(false))])
         .options(RUMQueryOptions::new().timezone("GMT".to_string()))
         .page(RUMQueryPageOptions::new().limit(25));
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = RUMAPI::with_config(configuration);
     let resp = api.aggregate_rum_events(body).await;
     if let Ok(value) = resp {

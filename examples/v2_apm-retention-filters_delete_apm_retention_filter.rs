@@ -1,12 +1,12 @@
 // Delete a retention filter returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_apm_retention_filters::APMRetentionFiltersAPI;
 
 #[tokio::main]
 async fn main() {
     // there is a valid "retention_filter" in the system
     let retention_filter_data_id = std::env::var("RETENTION_FILTER_DATA_ID").unwrap();
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = APMRetentionFiltersAPI::with_config(configuration);
     let resp = api
         .delete_apm_retention_filter(retention_filter_data_id.clone())

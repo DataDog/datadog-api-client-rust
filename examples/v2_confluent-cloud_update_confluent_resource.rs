@@ -1,5 +1,5 @@
 // Update resource in Confluent account returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_confluent_cloud::ConfluentCloudAPI;
 use datadog_api_client::datadogV2::model::ConfluentResourceRequest;
 use datadog_api_client::datadogV2::model::ConfluentResourceRequestAttributes;
@@ -15,7 +15,7 @@ async fn main() {
         "resource-id-123".to_string(),
         ConfluentResourceType::CONFLUENT_CLOUD_RESOURCES,
     ));
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = ConfluentCloudAPI::with_config(configuration);
     let resp = api
         .update_confluent_resource("account_id".to_string(), "resource_id".to_string(), body)

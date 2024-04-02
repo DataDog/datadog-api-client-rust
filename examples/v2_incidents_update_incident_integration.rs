@@ -1,5 +1,5 @@
 // Update an existing incident integration metadata returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_incidents::IncidentsAPI;
 use datadog_api_client::datadogV2::model::IncidentIntegrationMetadataAttributes;
 use datadog_api_client::datadogV2::model::IncidentIntegrationMetadataMetadata;
@@ -34,7 +34,7 @@ async fn main() {
             .incident_id(incident_data_id.clone()),
             IncidentIntegrationMetadataType::INCIDENT_INTEGRATIONS,
         ));
-    let mut configuration = Configuration::new();
+    let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.UpdateIncidentIntegration", true);
     let api = IncidentsAPI::with_config(configuration);
     let resp = api

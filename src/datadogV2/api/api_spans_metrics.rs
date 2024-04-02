@@ -1,7 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use crate::datadog::*;
+use crate::datadog;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
@@ -64,13 +64,13 @@ pub enum UpdateSpansMetricError {
 
 #[derive(Debug, Clone)]
 pub struct SpansMetricsAPI {
-    config: configuration::Configuration,
+    config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for SpansMetricsAPI {
     fn default() -> Self {
-        Self::with_config(configuration::Configuration::default())
+        Self::with_config(datadog::Configuration::default())
     }
 }
 
@@ -78,7 +78,7 @@ impl SpansMetricsAPI {
     pub fn new() -> Self {
         Self::default()
     }
-    pub fn with_config(config: configuration::Configuration) -> Self {
+    pub fn with_config(config: datadog::Configuration) -> Self {
         let mut reqwest_client_builder = reqwest::Client::builder();
 
         if let Some(proxy_url) = &config.proxy_url {
@@ -120,7 +120,7 @@ impl SpansMetricsAPI {
     }
 
     pub fn with_client_and_config(
-        config: configuration::Configuration,
+        config: datadog::Configuration,
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
@@ -131,13 +131,14 @@ impl SpansMetricsAPI {
     pub async fn create_spans_metric(
         &self,
         body: crate::datadogV2::model::SpansMetricCreateRequest,
-    ) -> Result<crate::datadogV2::model::SpansMetricResponse, Error<CreateSpansMetricError>> {
+    ) -> Result<crate::datadogV2::model::SpansMetricResponse, datadog::Error<CreateSpansMetricError>>
+    {
         match self.create_spans_metric_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -152,8 +153,8 @@ impl SpansMetricsAPI {
         &self,
         body: crate::datadogV2::model::SpansMetricCreateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::SpansMetricResponse>,
-        Error<CreateSpansMetricError>,
+        datadog::ResponseContent<crate::datadogV2::model::SpansMetricResponse>,
+        datadog::Error<CreateSpansMetricError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_spans_metric";
@@ -179,7 +180,7 @@ impl SpansMetricsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -202,7 +203,7 @@ impl SpansMetricsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -213,7 +214,7 @@ impl SpansMetricsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -223,7 +224,7 @@ impl SpansMetricsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -233,7 +234,7 @@ impl SpansMetricsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -257,23 +258,23 @@ impl SpansMetricsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateSpansMetricError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -281,7 +282,7 @@ impl SpansMetricsAPI {
     pub async fn delete_spans_metric(
         &self,
         metric_id: String,
-    ) -> Result<(), Error<DeleteSpansMetricError>> {
+    ) -> Result<(), datadog::Error<DeleteSpansMetricError>> {
         match self.delete_spans_metric_with_http_info(metric_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
@@ -292,7 +293,7 @@ impl SpansMetricsAPI {
     pub async fn delete_spans_metric_with_http_info(
         &self,
         metric_id: String,
-    ) -> Result<ResponseContent<()>, Error<DeleteSpansMetricError>> {
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteSpansMetricError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_spans_metric";
 
@@ -301,7 +302,7 @@ impl SpansMetricsAPI {
         let local_uri_str = format!(
             "{}/api/v2/apm/config/metrics/{metric_id}",
             local_configuration.get_operation_host(operation_id),
-            metric_id = urlencode(metric_id)
+            metric_id = datadog::urlencode(metric_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -317,7 +318,7 @@ impl SpansMetricsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -346,7 +347,7 @@ impl SpansMetricsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            Ok(ResponseContent {
+            Ok(datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: None,
@@ -354,12 +355,12 @@ impl SpansMetricsAPI {
         } else {
             let local_entity: Option<DeleteSpansMetricError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -367,13 +368,14 @@ impl SpansMetricsAPI {
     pub async fn get_spans_metric(
         &self,
         metric_id: String,
-    ) -> Result<crate::datadogV2::model::SpansMetricResponse, Error<GetSpansMetricError>> {
+    ) -> Result<crate::datadogV2::model::SpansMetricResponse, datadog::Error<GetSpansMetricError>>
+    {
         match self.get_spans_metric_with_http_info(metric_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -387,8 +389,8 @@ impl SpansMetricsAPI {
         &self,
         metric_id: String,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::SpansMetricResponse>,
-        Error<GetSpansMetricError>,
+        datadog::ResponseContent<crate::datadogV2::model::SpansMetricResponse>,
+        datadog::Error<GetSpansMetricError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_spans_metric";
@@ -398,7 +400,7 @@ impl SpansMetricsAPI {
         let local_uri_str = format!(
             "{}/api/v2/apm/config/metrics/{metric_id}",
             local_configuration.get_operation_host(operation_id),
-            metric_id = urlencode(metric_id)
+            metric_id = datadog::urlencode(metric_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -414,7 +416,7 @@ impl SpansMetricsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -447,36 +449,37 @@ impl SpansMetricsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetSpansMetricError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// Get the list of configured span-based metrics with their definitions.
     pub async fn list_spans_metrics(
         &self,
-    ) -> Result<crate::datadogV2::model::SpansMetricsResponse, Error<ListSpansMetricsError>> {
+    ) -> Result<crate::datadogV2::model::SpansMetricsResponse, datadog::Error<ListSpansMetricsError>>
+    {
         match self.list_spans_metrics_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -489,8 +492,8 @@ impl SpansMetricsAPI {
     pub async fn list_spans_metrics_with_http_info(
         &self,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::SpansMetricsResponse>,
-        Error<ListSpansMetricsError>,
+        datadog::ResponseContent<crate::datadogV2::model::SpansMetricsResponse>,
+        datadog::Error<ListSpansMetricsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_spans_metrics";
@@ -515,7 +518,7 @@ impl SpansMetricsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -548,23 +551,23 @@ impl SpansMetricsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListSpansMetricsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -574,7 +577,8 @@ impl SpansMetricsAPI {
         &self,
         metric_id: String,
         body: crate::datadogV2::model::SpansMetricUpdateRequest,
-    ) -> Result<crate::datadogV2::model::SpansMetricResponse, Error<UpdateSpansMetricError>> {
+    ) -> Result<crate::datadogV2::model::SpansMetricResponse, datadog::Error<UpdateSpansMetricError>>
+    {
         match self
             .update_spans_metric_with_http_info(metric_id, body)
             .await
@@ -583,7 +587,7 @@ impl SpansMetricsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -599,8 +603,8 @@ impl SpansMetricsAPI {
         metric_id: String,
         body: crate::datadogV2::model::SpansMetricUpdateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::SpansMetricResponse>,
-        Error<UpdateSpansMetricError>,
+        datadog::ResponseContent<crate::datadogV2::model::SpansMetricResponse>,
+        datadog::Error<UpdateSpansMetricError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_spans_metric";
@@ -610,7 +614,7 @@ impl SpansMetricsAPI {
         let local_uri_str = format!(
             "{}/api/v2/apm/config/metrics/{metric_id}",
             local_configuration.get_operation_host(operation_id),
-            metric_id = urlencode(metric_id)
+            metric_id = datadog::urlencode(metric_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -627,7 +631,7 @@ impl SpansMetricsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -650,7 +654,7 @@ impl SpansMetricsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -661,7 +665,7 @@ impl SpansMetricsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -671,7 +675,7 @@ impl SpansMetricsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -681,7 +685,7 @@ impl SpansMetricsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -705,23 +709,23 @@ impl SpansMetricsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateSpansMetricError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 }

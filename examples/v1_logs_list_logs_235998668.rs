@@ -1,5 +1,5 @@
 // Search test logs returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api::api_logs::LogsAPI;
 use datadog_api_client::datadogV1::model::LogsListRequest;
 use datadog_api_client::datadogV1::model::LogsListRequestTime;
@@ -17,7 +17,7 @@ async fn main() {
     .index("main".to_string())
     .query("host:Test*".to_string())
     .sort(LogsSort::TIME_ASCENDING);
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = LogsAPI::with_config(configuration);
     let resp = api.list_logs(body).await;
     if let Ok(value) = resp {

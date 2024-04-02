@@ -1,5 +1,5 @@
 // Edit a browser test returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api::api_synthetics::SyntheticsAPI;
 use datadog_api_client::datadogV1::model::SyntheticsBasicAuth;
 use datadog_api_client::datadogV1::model::SyntheticsBasicAuthWeb;
@@ -102,7 +102,7 @@ async fn main() {
         SyntheticsStep::new().type_(SyntheticsStepType::ASSERT_ELEMENT_CONTENT)
     ])
     .tags(vec!["env:prod".to_string()]);
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = SyntheticsAPI::with_config(configuration);
     let resp = api.update_browser_test("public_id".to_string(), body).await;
     if let Ok(value) = resp {

@@ -1,5 +1,5 @@
 // Update a user returns "User updated" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api::api_users::UsersAPI;
 use datadog_api_client::datadogV1::model::AccessRole;
 use datadog_api_client::datadogV1::model::User;
@@ -12,7 +12,7 @@ async fn main() {
         .email("test@datadoghq.com".to_string())
         .handle("test@datadoghq.com".to_string())
         .name("test user".to_string());
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = UsersAPI::with_config(configuration);
     let resp = api
         .update_user("test@datadoghq.com".to_string(), body)

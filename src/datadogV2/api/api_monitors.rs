@@ -1,7 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use crate::datadog::*;
+use crate::datadog;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
@@ -64,13 +64,13 @@ pub enum UpdateMonitorConfigPolicyError {
 
 #[derive(Debug, Clone)]
 pub struct MonitorsAPI {
-    config: configuration::Configuration,
+    config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for MonitorsAPI {
     fn default() -> Self {
-        Self::with_config(configuration::Configuration::default())
+        Self::with_config(datadog::Configuration::default())
     }
 }
 
@@ -78,7 +78,7 @@ impl MonitorsAPI {
     pub fn new() -> Self {
         Self::default()
     }
-    pub fn with_config(config: configuration::Configuration) -> Self {
+    pub fn with_config(config: datadog::Configuration) -> Self {
         let mut reqwest_client_builder = reqwest::Client::builder();
 
         if let Some(proxy_url) = &config.proxy_url {
@@ -120,7 +120,7 @@ impl MonitorsAPI {
     }
 
     pub fn with_client_and_config(
-        config: configuration::Configuration,
+        config: datadog::Configuration,
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
@@ -132,14 +132,14 @@ impl MonitorsAPI {
         body: crate::datadogV2::model::MonitorConfigPolicyCreateRequest,
     ) -> Result<
         crate::datadogV2::model::MonitorConfigPolicyResponse,
-        Error<CreateMonitorConfigPolicyError>,
+        datadog::Error<CreateMonitorConfigPolicyError>,
     > {
         match self.create_monitor_config_policy_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -153,8 +153,8 @@ impl MonitorsAPI {
         &self,
         body: crate::datadogV2::model::MonitorConfigPolicyCreateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::MonitorConfigPolicyResponse>,
-        Error<CreateMonitorConfigPolicyError>,
+        datadog::ResponseContent<crate::datadogV2::model::MonitorConfigPolicyResponse>,
+        datadog::Error<CreateMonitorConfigPolicyError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_monitor_config_policy";
@@ -180,7 +180,7 @@ impl MonitorsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -203,7 +203,7 @@ impl MonitorsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -214,7 +214,7 @@ impl MonitorsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -224,7 +224,7 @@ impl MonitorsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -234,7 +234,7 @@ impl MonitorsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -258,23 +258,23 @@ impl MonitorsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateMonitorConfigPolicyError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -282,7 +282,7 @@ impl MonitorsAPI {
     pub async fn delete_monitor_config_policy(
         &self,
         policy_id: String,
-    ) -> Result<(), Error<DeleteMonitorConfigPolicyError>> {
+    ) -> Result<(), datadog::Error<DeleteMonitorConfigPolicyError>> {
         match self
             .delete_monitor_config_policy_with_http_info(policy_id)
             .await
@@ -296,7 +296,7 @@ impl MonitorsAPI {
     pub async fn delete_monitor_config_policy_with_http_info(
         &self,
         policy_id: String,
-    ) -> Result<ResponseContent<()>, Error<DeleteMonitorConfigPolicyError>> {
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteMonitorConfigPolicyError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_monitor_config_policy";
 
@@ -305,7 +305,7 @@ impl MonitorsAPI {
         let local_uri_str = format!(
             "{}/api/v2/monitor/policy/{policy_id}",
             local_configuration.get_operation_host(operation_id),
-            policy_id = urlencode(policy_id)
+            policy_id = datadog::urlencode(policy_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -321,7 +321,7 @@ impl MonitorsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -350,7 +350,7 @@ impl MonitorsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            Ok(ResponseContent {
+            Ok(datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: None,
@@ -358,12 +358,12 @@ impl MonitorsAPI {
         } else {
             let local_entity: Option<DeleteMonitorConfigPolicyError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -373,7 +373,7 @@ impl MonitorsAPI {
         policy_id: String,
     ) -> Result<
         crate::datadogV2::model::MonitorConfigPolicyResponse,
-        Error<GetMonitorConfigPolicyError>,
+        datadog::Error<GetMonitorConfigPolicyError>,
     > {
         match self
             .get_monitor_config_policy_with_http_info(policy_id)
@@ -383,7 +383,7 @@ impl MonitorsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -397,8 +397,8 @@ impl MonitorsAPI {
         &self,
         policy_id: String,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::MonitorConfigPolicyResponse>,
-        Error<GetMonitorConfigPolicyError>,
+        datadog::ResponseContent<crate::datadogV2::model::MonitorConfigPolicyResponse>,
+        datadog::Error<GetMonitorConfigPolicyError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_monitor_config_policy";
@@ -408,7 +408,7 @@ impl MonitorsAPI {
         let local_uri_str = format!(
             "{}/api/v2/monitor/policy/{policy_id}",
             local_configuration.get_operation_host(operation_id),
-            policy_id = urlencode(policy_id)
+            policy_id = datadog::urlencode(policy_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -424,7 +424,7 @@ impl MonitorsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -457,23 +457,23 @@ impl MonitorsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetMonitorConfigPolicyError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -482,14 +482,14 @@ impl MonitorsAPI {
         &self,
     ) -> Result<
         crate::datadogV2::model::MonitorConfigPolicyListResponse,
-        Error<ListMonitorConfigPoliciesError>,
+        datadog::Error<ListMonitorConfigPoliciesError>,
     > {
         match self.list_monitor_config_policies_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -502,8 +502,8 @@ impl MonitorsAPI {
     pub async fn list_monitor_config_policies_with_http_info(
         &self,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::MonitorConfigPolicyListResponse>,
-        Error<ListMonitorConfigPoliciesError>,
+        datadog::ResponseContent<crate::datadogV2::model::MonitorConfigPolicyListResponse>,
+        datadog::Error<ListMonitorConfigPoliciesError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_monitor_config_policies";
@@ -528,7 +528,7 @@ impl MonitorsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -561,23 +561,23 @@ impl MonitorsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListMonitorConfigPoliciesError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -588,7 +588,7 @@ impl MonitorsAPI {
         body: crate::datadogV2::model::MonitorConfigPolicyEditRequest,
     ) -> Result<
         crate::datadogV2::model::MonitorConfigPolicyResponse,
-        Error<UpdateMonitorConfigPolicyError>,
+        datadog::Error<UpdateMonitorConfigPolicyError>,
     > {
         match self
             .update_monitor_config_policy_with_http_info(policy_id, body)
@@ -598,7 +598,7 @@ impl MonitorsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -613,8 +613,8 @@ impl MonitorsAPI {
         policy_id: String,
         body: crate::datadogV2::model::MonitorConfigPolicyEditRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::MonitorConfigPolicyResponse>,
-        Error<UpdateMonitorConfigPolicyError>,
+        datadog::ResponseContent<crate::datadogV2::model::MonitorConfigPolicyResponse>,
+        datadog::Error<UpdateMonitorConfigPolicyError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_monitor_config_policy";
@@ -624,7 +624,7 @@ impl MonitorsAPI {
         let local_uri_str = format!(
             "{}/api/v2/monitor/policy/{policy_id}",
             local_configuration.get_operation_host(operation_id),
-            policy_id = urlencode(policy_id)
+            policy_id = datadog::urlencode(policy_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -641,7 +641,7 @@ impl MonitorsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -664,7 +664,7 @@ impl MonitorsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -675,7 +675,7 @@ impl MonitorsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -685,7 +685,7 @@ impl MonitorsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -695,7 +695,7 @@ impl MonitorsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -719,23 +719,23 @@ impl MonitorsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateMonitorConfigPolicyError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 }

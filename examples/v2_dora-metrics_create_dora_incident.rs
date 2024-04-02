@@ -1,5 +1,5 @@
 // Send an incident event for DORA Metrics returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_dora_metrics::DORAMetricsAPI;
 use datadog_api_client::datadogV2::model::DORAGitInfo;
 use datadog_api_client::datadogV2::model::DORAIncidentRequest;
@@ -21,7 +21,7 @@ async fn main() {
             .team("backend".to_string())
             .version("v1.12.07".to_string()),
     ));
-    let mut configuration = Configuration::new();
+    let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.CreateDORAIncident", true);
     let api = DORAMetricsAPI::with_config(configuration);
     let resp = api.create_dora_incident(body).await;

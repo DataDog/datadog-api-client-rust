@@ -1,5 +1,5 @@
 // Reorder Groups returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_sensitive_data_scanner::SensitiveDataScannerAPI;
 use datadog_api_client::datadogV2::model::SensitiveDataScannerConfigRequest;
 use datadog_api_client::datadogV2::model::SensitiveDataScannerConfigurationRelationships;
@@ -32,7 +32,7 @@ async fn main() {
             .type_(SensitiveDataScannerConfigurationType::SENSITIVE_DATA_SCANNER_CONFIGURATIONS),
         SensitiveDataScannerMetaVersionOnly::new(),
     );
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = SensitiveDataScannerAPI::with_config(configuration);
     let resp = api.reorder_scanning_groups(body).await;
     if let Ok(value) = resp {

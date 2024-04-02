@@ -1,5 +1,5 @@
 // Update indexes order returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api::api_logs_indexes::LogsIndexesAPI;
 use datadog_api_client::datadogV1::model::LogsIndexesOrder;
 
@@ -10,7 +10,7 @@ async fn main() {
         "payments".to_string(),
         "web".to_string(),
     ]);
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = LogsIndexesAPI::with_config(configuration);
     let resp = api.update_logs_index_order(body).await;
     if let Ok(value) = resp {

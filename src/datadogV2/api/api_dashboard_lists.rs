@@ -1,7 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use crate::datadog::*;
+use crate::datadog;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
@@ -56,13 +56,13 @@ pub enum UpdateDashboardListItemsError {
 
 #[derive(Debug, Clone)]
 pub struct DashboardListsAPI {
-    config: configuration::Configuration,
+    config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for DashboardListsAPI {
     fn default() -> Self {
-        Self::with_config(configuration::Configuration::default())
+        Self::with_config(datadog::Configuration::default())
     }
 }
 
@@ -70,7 +70,7 @@ impl DashboardListsAPI {
     pub fn new() -> Self {
         Self::default()
     }
-    pub fn with_config(config: configuration::Configuration) -> Self {
+    pub fn with_config(config: datadog::Configuration) -> Self {
         let mut reqwest_client_builder = reqwest::Client::builder();
 
         if let Some(proxy_url) = &config.proxy_url {
@@ -112,7 +112,7 @@ impl DashboardListsAPI {
     }
 
     pub fn with_client_and_config(
-        config: configuration::Configuration,
+        config: datadog::Configuration,
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
@@ -125,7 +125,7 @@ impl DashboardListsAPI {
         body: crate::datadogV2::model::DashboardListAddItemsRequest,
     ) -> Result<
         crate::datadogV2::model::DashboardListAddItemsResponse,
-        Error<CreateDashboardListItemsError>,
+        datadog::Error<CreateDashboardListItemsError>,
     > {
         match self
             .create_dashboard_list_items_with_http_info(dashboard_list_id, body)
@@ -135,7 +135,7 @@ impl DashboardListsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -150,8 +150,8 @@ impl DashboardListsAPI {
         dashboard_list_id: i64,
         body: crate::datadogV2::model::DashboardListAddItemsRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::DashboardListAddItemsResponse>,
-        Error<CreateDashboardListItemsError>,
+        datadog::ResponseContent<crate::datadogV2::model::DashboardListAddItemsResponse>,
+        datadog::Error<CreateDashboardListItemsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_dashboard_list_items";
@@ -178,7 +178,7 @@ impl DashboardListsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -201,7 +201,7 @@ impl DashboardListsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -212,7 +212,7 @@ impl DashboardListsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -222,7 +222,7 @@ impl DashboardListsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -232,7 +232,7 @@ impl DashboardListsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -256,23 +256,23 @@ impl DashboardListsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateDashboardListItemsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -283,7 +283,7 @@ impl DashboardListsAPI {
         body: crate::datadogV2::model::DashboardListDeleteItemsRequest,
     ) -> Result<
         crate::datadogV2::model::DashboardListDeleteItemsResponse,
-        Error<DeleteDashboardListItemsError>,
+        datadog::Error<DeleteDashboardListItemsError>,
     > {
         match self
             .delete_dashboard_list_items_with_http_info(dashboard_list_id, body)
@@ -293,7 +293,7 @@ impl DashboardListsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -308,8 +308,8 @@ impl DashboardListsAPI {
         dashboard_list_id: i64,
         body: crate::datadogV2::model::DashboardListDeleteItemsRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::DashboardListDeleteItemsResponse>,
-        Error<DeleteDashboardListItemsError>,
+        datadog::ResponseContent<crate::datadogV2::model::DashboardListDeleteItemsResponse>,
+        datadog::Error<DeleteDashboardListItemsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_dashboard_list_items";
@@ -336,7 +336,7 @@ impl DashboardListsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -359,7 +359,7 @@ impl DashboardListsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -370,7 +370,7 @@ impl DashboardListsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -380,7 +380,7 @@ impl DashboardListsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -390,7 +390,7 @@ impl DashboardListsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -414,23 +414,23 @@ impl DashboardListsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<DeleteDashboardListItemsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -438,8 +438,10 @@ impl DashboardListsAPI {
     pub async fn get_dashboard_list_items(
         &self,
         dashboard_list_id: i64,
-    ) -> Result<crate::datadogV2::model::DashboardListItems, Error<GetDashboardListItemsError>>
-    {
+    ) -> Result<
+        crate::datadogV2::model::DashboardListItems,
+        datadog::Error<GetDashboardListItemsError>,
+    > {
         match self
             .get_dashboard_list_items_with_http_info(dashboard_list_id)
             .await
@@ -448,7 +450,7 @@ impl DashboardListsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -462,8 +464,8 @@ impl DashboardListsAPI {
         &self,
         dashboard_list_id: i64,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::DashboardListItems>,
-        Error<GetDashboardListItemsError>,
+        datadog::ResponseContent<crate::datadogV2::model::DashboardListItems>,
+        datadog::Error<GetDashboardListItemsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_dashboard_list_items";
@@ -489,7 +491,7 @@ impl DashboardListsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -522,23 +524,23 @@ impl DashboardListsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetDashboardListItemsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -549,7 +551,7 @@ impl DashboardListsAPI {
         body: crate::datadogV2::model::DashboardListUpdateItemsRequest,
     ) -> Result<
         crate::datadogV2::model::DashboardListUpdateItemsResponse,
-        Error<UpdateDashboardListItemsError>,
+        datadog::Error<UpdateDashboardListItemsError>,
     > {
         match self
             .update_dashboard_list_items_with_http_info(dashboard_list_id, body)
@@ -559,7 +561,7 @@ impl DashboardListsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -574,8 +576,8 @@ impl DashboardListsAPI {
         dashboard_list_id: i64,
         body: crate::datadogV2::model::DashboardListUpdateItemsRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::DashboardListUpdateItemsResponse>,
-        Error<UpdateDashboardListItemsError>,
+        datadog::ResponseContent<crate::datadogV2::model::DashboardListUpdateItemsResponse>,
+        datadog::Error<UpdateDashboardListItemsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_dashboard_list_items";
@@ -602,7 +604,7 @@ impl DashboardListsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -625,7 +627,7 @@ impl DashboardListsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -636,7 +638,7 @@ impl DashboardListsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -646,7 +648,7 @@ impl DashboardListsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -656,7 +658,7 @@ impl DashboardListsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -680,23 +682,23 @@ impl DashboardListsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateDashboardListItemsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 }

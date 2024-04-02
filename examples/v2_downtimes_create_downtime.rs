@@ -1,5 +1,5 @@
 // Schedule a downtime returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_downtimes::DowntimesAPI;
 use datadog_api_client::datadogV2::model::DowntimeCreateRequest;
 use datadog_api_client::datadogV2::model::DowntimeCreateRequestAttributes;
@@ -27,7 +27,7 @@ async fn main() {
         ),
         DowntimeResourceType::DOWNTIME,
     ));
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = DowntimesAPI::with_config(configuration);
     let resp = api.create_downtime(body).await;
     if let Ok(value) = resp {

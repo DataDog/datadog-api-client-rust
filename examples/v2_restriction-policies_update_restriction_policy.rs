@@ -1,5 +1,5 @@
 // Update a restriction policy returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_restriction_policies::RestrictionPoliciesAPI;
 use datadog_api_client::datadogV2::model::RestrictionPolicy;
 use datadog_api_client::datadogV2::model::RestrictionPolicyAttributes;
@@ -18,7 +18,7 @@ async fn main() {
         "dashboard:test-update".to_string(),
         RestrictionPolicyType::RESTRICTION_POLICY,
     ));
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = RestrictionPoliciesAPI::with_config(configuration);
     let resp = api
         .update_restriction_policy("dashboard:test-update".to_string(), body)

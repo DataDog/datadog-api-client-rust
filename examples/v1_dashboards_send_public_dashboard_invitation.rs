@@ -1,5 +1,5 @@
 // Send shared dashboard invitation email returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api::api_dashboards::DashboardsAPI;
 use datadog_api_client::datadogV1::model::DashboardInviteType;
 use datadog_api_client::datadogV1::model::SharedDashboardInvites;
@@ -20,7 +20,7 @@ async fn main() {
             ),
         )),
     );
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = DashboardsAPI::with_config(configuration);
     let resp = api
         .send_public_dashboard_invitation(shared_dashboard_token.clone(), body)

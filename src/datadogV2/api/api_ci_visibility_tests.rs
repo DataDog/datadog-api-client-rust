@@ -1,7 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use crate::datadog::*;
+use crate::datadog;
 use async_stream::try_stream;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
@@ -110,13 +110,13 @@ pub enum SearchCIAppTestEventsError {
 
 #[derive(Debug, Clone)]
 pub struct CIVisibilityTestsAPI {
-    config: configuration::Configuration,
+    config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for CIVisibilityTestsAPI {
     fn default() -> Self {
-        Self::with_config(configuration::Configuration::default())
+        Self::with_config(datadog::Configuration::default())
     }
 }
 
@@ -124,7 +124,7 @@ impl CIVisibilityTestsAPI {
     pub fn new() -> Self {
         Self::default()
     }
-    pub fn with_config(config: configuration::Configuration) -> Self {
+    pub fn with_config(config: datadog::Configuration) -> Self {
         let mut reqwest_client_builder = reqwest::Client::builder();
 
         if let Some(proxy_url) = &config.proxy_url {
@@ -166,7 +166,7 @@ impl CIVisibilityTestsAPI {
     }
 
     pub fn with_client_and_config(
-        config: configuration::Configuration,
+        config: datadog::Configuration,
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
@@ -178,14 +178,14 @@ impl CIVisibilityTestsAPI {
         body: crate::datadogV2::model::CIAppTestsAggregateRequest,
     ) -> Result<
         crate::datadogV2::model::CIAppTestsAnalyticsAggregateResponse,
-        Error<AggregateCIAppTestEventsError>,
+        datadog::Error<AggregateCIAppTestEventsError>,
     > {
         match self.aggregate_ci_app_test_events_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -199,8 +199,8 @@ impl CIVisibilityTestsAPI {
         &self,
         body: crate::datadogV2::model::CIAppTestsAggregateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::CIAppTestsAnalyticsAggregateResponse>,
-        Error<AggregateCIAppTestEventsError>,
+        datadog::ResponseContent<crate::datadogV2::model::CIAppTestsAnalyticsAggregateResponse>,
+        datadog::Error<AggregateCIAppTestEventsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.aggregate_ci_app_test_events";
@@ -226,7 +226,7 @@ impl CIVisibilityTestsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -249,7 +249,7 @@ impl CIVisibilityTestsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -260,7 +260,7 @@ impl CIVisibilityTestsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -270,7 +270,7 @@ impl CIVisibilityTestsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -280,7 +280,7 @@ impl CIVisibilityTestsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -305,23 +305,23 @@ impl CIVisibilityTestsAPI {
             >(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<AggregateCIAppTestEventsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -332,14 +332,16 @@ impl CIVisibilityTestsAPI {
     pub async fn list_ci_app_test_events(
         &self,
         params: ListCIAppTestEventsOptionalParams,
-    ) -> Result<crate::datadogV2::model::CIAppTestEventsResponse, Error<ListCIAppTestEventsError>>
-    {
+    ) -> Result<
+        crate::datadogV2::model::CIAppTestEventsResponse,
+        datadog::Error<ListCIAppTestEventsError>,
+    > {
         match self.list_ci_app_test_events_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -352,7 +354,10 @@ impl CIVisibilityTestsAPI {
         &self,
         mut params: ListCIAppTestEventsOptionalParams,
     ) -> impl Stream<
-        Item = Result<crate::datadogV2::model::CIAppTestEvent, Error<ListCIAppTestEventsError>>,
+        Item = Result<
+            crate::datadogV2::model::CIAppTestEvent,
+            datadog::Error<ListCIAppTestEventsError>,
+        >,
     > + '_ {
         try_stream! {
             let mut page_size: i32 = 10;
@@ -391,8 +396,8 @@ impl CIVisibilityTestsAPI {
         &self,
         params: ListCIAppTestEventsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::CIAppTestEventsResponse>,
-        Error<ListCIAppTestEventsError>,
+        datadog::ResponseContent<crate::datadogV2::model::CIAppTestEventsResponse>,
+        datadog::Error<ListCIAppTestEventsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_ci_app_test_events";
@@ -450,7 +455,7 @@ impl CIVisibilityTestsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -483,23 +488,23 @@ impl CIVisibilityTestsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListCIAppTestEventsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -510,14 +515,16 @@ impl CIVisibilityTestsAPI {
     pub async fn search_ci_app_test_events(
         &self,
         params: SearchCIAppTestEventsOptionalParams,
-    ) -> Result<crate::datadogV2::model::CIAppTestEventsResponse, Error<SearchCIAppTestEventsError>>
-    {
+    ) -> Result<
+        crate::datadogV2::model::CIAppTestEventsResponse,
+        datadog::Error<SearchCIAppTestEventsError>,
+    > {
         match self.search_ci_app_test_events_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -530,7 +537,10 @@ impl CIVisibilityTestsAPI {
         &self,
         mut params: SearchCIAppTestEventsOptionalParams,
     ) -> impl Stream<
-        Item = Result<crate::datadogV2::model::CIAppTestEvent, Error<SearchCIAppTestEventsError>>,
+        Item = Result<
+            crate::datadogV2::model::CIAppTestEvent,
+            datadog::Error<SearchCIAppTestEventsError>,
+        >,
     > + '_ {
         try_stream! {
             let mut page_size: i32 = 10;
@@ -575,8 +585,8 @@ impl CIVisibilityTestsAPI {
         &self,
         params: SearchCIAppTestEventsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::CIAppTestEventsResponse>,
-        Error<SearchCIAppTestEventsError>,
+        datadog::ResponseContent<crate::datadogV2::model::CIAppTestEventsResponse>,
+        datadog::Error<SearchCIAppTestEventsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.search_ci_app_test_events";
@@ -605,7 +615,7 @@ impl CIVisibilityTestsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -628,7 +638,7 @@ impl CIVisibilityTestsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -639,7 +649,7 @@ impl CIVisibilityTestsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -649,7 +659,7 @@ impl CIVisibilityTestsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -659,7 +669,7 @@ impl CIVisibilityTestsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -683,23 +693,23 @@ impl CIVisibilityTestsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<SearchCIAppTestEventsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 }

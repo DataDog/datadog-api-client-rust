@@ -1,5 +1,5 @@
 // Create a shared dashboard returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api::api_dashboards::DashboardsAPI;
 use datadog_api_client::datadogV1::model::DashboardGlobalTime;
 use datadog_api_client::datadogV1::model::DashboardGlobalTimeLiveSpan;
@@ -16,7 +16,7 @@ async fn main() {
             DashboardGlobalTime::new().live_span(DashboardGlobalTimeLiveSpan::PAST_ONE_HOUR),
         )
         .share_type(Some(DashboardShareType::OPEN));
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = DashboardsAPI::with_config(configuration);
     let resp = api.create_public_dashboard(body).await;
     if let Ok(value) = resp {

@@ -9,7 +9,7 @@ use cucumber::{
     gherkin::{Feature, Rule, Scenario},
     given, then, when, World,
 };
-use datadog_api_client::datadog::configuration::{APIKey, Configuration};
+use datadog_api_client::datadog::{APIKey, Configuration};
 use lazy_static::lazy_static;
 use minijinja::{Environment, State};
 use regex::Regex;

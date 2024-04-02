@@ -1,7 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use crate::datadog::*;
+use crate::datadog;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
@@ -73,13 +73,13 @@ pub enum UploadIdPForOrgError {
 
 #[derive(Debug, Clone)]
 pub struct OrganizationsAPI {
-    config: configuration::Configuration,
+    config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for OrganizationsAPI {
     fn default() -> Self {
-        Self::with_config(configuration::Configuration::default())
+        Self::with_config(datadog::Configuration::default())
     }
 }
 
@@ -87,7 +87,7 @@ impl OrganizationsAPI {
     pub fn new() -> Self {
         Self::default()
     }
-    pub fn with_config(config: configuration::Configuration) -> Self {
+    pub fn with_config(config: datadog::Configuration) -> Self {
         let mut reqwest_client_builder = reqwest::Client::builder();
 
         if let Some(proxy_url) = &config.proxy_url {
@@ -129,7 +129,7 @@ impl OrganizationsAPI {
     }
 
     pub fn with_client_and_config(
-        config: configuration::Configuration,
+        config: datadog::Configuration,
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
@@ -148,14 +148,16 @@ impl OrganizationsAPI {
     pub async fn create_child_org(
         &self,
         body: crate::datadogV1::model::OrganizationCreateBody,
-    ) -> Result<crate::datadogV1::model::OrganizationCreateResponse, Error<CreateChildOrgError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::OrganizationCreateResponse,
+        datadog::Error<CreateChildOrgError>,
+    > {
         match self.create_child_org_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -178,8 +180,8 @@ impl OrganizationsAPI {
         &self,
         body: crate::datadogV1::model::OrganizationCreateBody,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::OrganizationCreateResponse>,
-        Error<CreateChildOrgError>,
+        datadog::ResponseContent<crate::datadogV1::model::OrganizationCreateResponse>,
+        datadog::Error<CreateChildOrgError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.create_child_org";
@@ -205,7 +207,7 @@ impl OrganizationsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -228,7 +230,7 @@ impl OrganizationsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -239,7 +241,7 @@ impl OrganizationsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -249,7 +251,7 @@ impl OrganizationsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -259,7 +261,7 @@ impl OrganizationsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -283,23 +285,23 @@ impl OrganizationsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateChildOrgError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -307,13 +309,14 @@ impl OrganizationsAPI {
     pub async fn downgrade_org(
         &self,
         public_id: String,
-    ) -> Result<crate::datadogV1::model::OrgDowngradedResponse, Error<DowngradeOrgError>> {
+    ) -> Result<crate::datadogV1::model::OrgDowngradedResponse, datadog::Error<DowngradeOrgError>>
+    {
         match self.downgrade_org_with_http_info(public_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -327,8 +330,8 @@ impl OrganizationsAPI {
         &self,
         public_id: String,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::OrgDowngradedResponse>,
-        Error<DowngradeOrgError>,
+        datadog::ResponseContent<crate::datadogV1::model::OrgDowngradedResponse>,
+        datadog::Error<DowngradeOrgError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.downgrade_org";
@@ -338,7 +341,7 @@ impl OrganizationsAPI {
         let local_uri_str = format!(
             "{}/api/v1/org/{public_id}/downgrade",
             local_configuration.get_operation_host(operation_id),
-            public_id = urlencode(public_id)
+            public_id = datadog::urlencode(public_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -354,7 +357,7 @@ impl OrganizationsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -387,22 +390,22 @@ impl OrganizationsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<DowngradeOrgError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -410,13 +413,13 @@ impl OrganizationsAPI {
     pub async fn get_org(
         &self,
         public_id: String,
-    ) -> Result<crate::datadogV1::model::OrganizationResponse, Error<GetOrgError>> {
+    ) -> Result<crate::datadogV1::model::OrganizationResponse, datadog::Error<GetOrgError>> {
         match self.get_org_with_http_info(public_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -429,8 +432,10 @@ impl OrganizationsAPI {
     pub async fn get_org_with_http_info(
         &self,
         public_id: String,
-    ) -> Result<ResponseContent<crate::datadogV1::model::OrganizationResponse>, Error<GetOrgError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::OrganizationResponse>,
+        datadog::Error<GetOrgError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_org";
 
@@ -439,7 +444,7 @@ impl OrganizationsAPI {
         let local_uri_str = format!(
             "{}/api/v1/org/{public_id}",
             local_configuration.get_operation_host(operation_id),
-            public_id = urlencode(public_id)
+            public_id = datadog::urlencode(public_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -455,7 +460,7 @@ impl OrganizationsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -488,35 +493,36 @@ impl OrganizationsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetOrgError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// This endpoint returns data on your top-level organization.
     pub async fn list_orgs(
         &self,
-    ) -> Result<crate::datadogV1::model::OrganizationListResponse, Error<ListOrgsError>> {
+    ) -> Result<crate::datadogV1::model::OrganizationListResponse, datadog::Error<ListOrgsError>>
+    {
         match self.list_orgs_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -529,8 +535,8 @@ impl OrganizationsAPI {
     pub async fn list_orgs_with_http_info(
         &self,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::OrganizationListResponse>,
-        Error<ListOrgsError>,
+        datadog::ResponseContent<crate::datadogV1::model::OrganizationListResponse>,
+        datadog::Error<ListOrgsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.list_orgs";
@@ -555,7 +561,7 @@ impl OrganizationsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -588,22 +594,22 @@ impl OrganizationsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListOrgsError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -612,13 +618,13 @@ impl OrganizationsAPI {
         &self,
         public_id: String,
         body: crate::datadogV1::model::Organization,
-    ) -> Result<crate::datadogV1::model::OrganizationResponse, Error<UpdateOrgError>> {
+    ) -> Result<crate::datadogV1::model::OrganizationResponse, datadog::Error<UpdateOrgError>> {
         match self.update_org_with_http_info(public_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -632,8 +638,10 @@ impl OrganizationsAPI {
         &self,
         public_id: String,
         body: crate::datadogV1::model::Organization,
-    ) -> Result<ResponseContent<crate::datadogV1::model::OrganizationResponse>, Error<UpdateOrgError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::OrganizationResponse>,
+        datadog::Error<UpdateOrgError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.update_org";
 
@@ -642,7 +650,7 @@ impl OrganizationsAPI {
         let local_uri_str = format!(
             "{}/api/v1/org/{public_id}",
             local_configuration.get_operation_host(operation_id),
-            public_id = urlencode(public_id)
+            public_id = datadog::urlencode(public_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
@@ -659,7 +667,7 @@ impl OrganizationsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -682,7 +690,7 @@ impl OrganizationsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -693,7 +701,7 @@ impl OrganizationsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -703,7 +711,7 @@ impl OrganizationsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -713,7 +721,7 @@ impl OrganizationsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -737,22 +745,22 @@ impl OrganizationsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateOrgError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -766,7 +774,7 @@ impl OrganizationsAPI {
         &self,
         public_id: String,
         idp_file: Vec<u8>,
-    ) -> Result<crate::datadogV1::model::IdpResponse, Error<UploadIdPForOrgError>> {
+    ) -> Result<crate::datadogV1::model::IdpResponse, datadog::Error<UploadIdPForOrgError>> {
         match self
             .upload_idp_for_org_with_http_info(public_id, idp_file)
             .await
@@ -775,7 +783,7 @@ impl OrganizationsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -794,8 +802,10 @@ impl OrganizationsAPI {
         &self,
         public_id: String,
         idp_file: Vec<u8>,
-    ) -> Result<ResponseContent<crate::datadogV1::model::IdpResponse>, Error<UploadIdPForOrgError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::IdpResponse>,
+        datadog::Error<UploadIdPForOrgError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.upload_idp_for_org";
 
@@ -804,7 +814,7 @@ impl OrganizationsAPI {
         let local_uri_str = format!(
             "{}/api/v1/org/{public_id}/idp_metadata",
             local_configuration.get_operation_host(operation_id),
-            public_id = urlencode(public_id)
+            public_id = datadog::urlencode(public_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -824,7 +834,7 @@ impl OrganizationsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -869,23 +879,23 @@ impl OrganizationsAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::IdpResponse>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UploadIdPForOrgError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 }

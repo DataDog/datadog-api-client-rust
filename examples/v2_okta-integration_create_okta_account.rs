@@ -1,5 +1,5 @@
 // Add Okta account returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_okta_integration::OktaIntegrationAPI;
 use datadog_api_client::datadogV2::model::OktaAccount;
 use datadog_api_client::datadogV2::model::OktaAccountAttributes;
@@ -21,7 +21,7 @@ async fn main() {
         )
         .id("f749daaf-682e-4208-a38d-c9b43162c609".to_string()),
     );
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = OktaIntegrationAPI::with_config(configuration);
     let resp = api.create_okta_account(body).await;
     if let Ok(value) = resp {

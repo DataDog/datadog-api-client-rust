@@ -1,5 +1,5 @@
 // Validate a detection rule returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_security_monitoring::SecurityMonitoringAPI;
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleCaseCreate;
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleCreatePayload;
@@ -44,7 +44,7 @@ async fn main() {
             .tags(vec!["env:prod".to_string(), "team:security".to_string()])
             .type_(SecurityMonitoringRuleTypeCreate::LOG_DETECTION),
         ));
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api.validate_security_monitoring_rule(body).await;
     if let Ok(value) = resp {

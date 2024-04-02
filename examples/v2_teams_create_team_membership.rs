@@ -1,6 +1,6 @@
 // Add a user to a team returns "Represents a user's association to a team"
 // response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_teams::TeamsAPI;
 use datadog_api_client::datadogV2::model::RelationshipToUserTeamTeam;
 use datadog_api_client::datadogV2::model::RelationshipToUserTeamTeamData;
@@ -36,7 +36,7 @@ async fn main() {
                     )),
             ),
     );
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = TeamsAPI::with_config(configuration);
     let resp = api
         .create_team_membership("team_id".to_string(), body)

@@ -1,7 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use crate::datadog::*;
+use crate::datadog;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
@@ -68,13 +68,13 @@ pub enum UpdateCloudflareAccountError {
 
 #[derive(Debug, Clone)]
 pub struct CloudflareIntegrationAPI {
-    config: configuration::Configuration,
+    config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for CloudflareIntegrationAPI {
     fn default() -> Self {
-        Self::with_config(configuration::Configuration::default())
+        Self::with_config(datadog::Configuration::default())
     }
 }
 
@@ -82,7 +82,7 @@ impl CloudflareIntegrationAPI {
     pub fn new() -> Self {
         Self::default()
     }
-    pub fn with_config(config: configuration::Configuration) -> Self {
+    pub fn with_config(config: datadog::Configuration) -> Self {
         let mut reqwest_client_builder = reqwest::Client::builder();
 
         if let Some(proxy_url) = &config.proxy_url {
@@ -124,7 +124,7 @@ impl CloudflareIntegrationAPI {
     }
 
     pub fn with_client_and_config(
-        config: configuration::Configuration,
+        config: datadog::Configuration,
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
@@ -136,14 +136,14 @@ impl CloudflareIntegrationAPI {
         body: crate::datadogV2::model::CloudflareAccountCreateRequest,
     ) -> Result<
         crate::datadogV2::model::CloudflareAccountResponse,
-        Error<CreateCloudflareAccountError>,
+        datadog::Error<CreateCloudflareAccountError>,
     > {
         match self.create_cloudflare_account_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -157,8 +157,8 @@ impl CloudflareIntegrationAPI {
         &self,
         body: crate::datadogV2::model::CloudflareAccountCreateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::CloudflareAccountResponse>,
-        Error<CreateCloudflareAccountError>,
+        datadog::ResponseContent<crate::datadogV2::model::CloudflareAccountResponse>,
+        datadog::Error<CreateCloudflareAccountError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_cloudflare_account";
@@ -184,7 +184,7 @@ impl CloudflareIntegrationAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -207,7 +207,7 @@ impl CloudflareIntegrationAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -218,7 +218,7 @@ impl CloudflareIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -228,7 +228,7 @@ impl CloudflareIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -238,7 +238,7 @@ impl CloudflareIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -262,23 +262,23 @@ impl CloudflareIntegrationAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateCloudflareAccountError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -286,7 +286,7 @@ impl CloudflareIntegrationAPI {
     pub async fn delete_cloudflare_account(
         &self,
         account_id: String,
-    ) -> Result<(), Error<DeleteCloudflareAccountError>> {
+    ) -> Result<(), datadog::Error<DeleteCloudflareAccountError>> {
         match self
             .delete_cloudflare_account_with_http_info(account_id)
             .await
@@ -300,7 +300,7 @@ impl CloudflareIntegrationAPI {
     pub async fn delete_cloudflare_account_with_http_info(
         &self,
         account_id: String,
-    ) -> Result<ResponseContent<()>, Error<DeleteCloudflareAccountError>> {
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCloudflareAccountError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_cloudflare_account";
 
@@ -309,7 +309,7 @@ impl CloudflareIntegrationAPI {
         let local_uri_str = format!(
             "{}/api/v2/integrations/cloudflare/accounts/{account_id}",
             local_configuration.get_operation_host(operation_id),
-            account_id = urlencode(account_id)
+            account_id = datadog::urlencode(account_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -325,7 +325,7 @@ impl CloudflareIntegrationAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -354,7 +354,7 @@ impl CloudflareIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            Ok(ResponseContent {
+            Ok(datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: None,
@@ -362,12 +362,12 @@ impl CloudflareIntegrationAPI {
         } else {
             let local_entity: Option<DeleteCloudflareAccountError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -375,14 +375,16 @@ impl CloudflareIntegrationAPI {
     pub async fn get_cloudflare_account(
         &self,
         account_id: String,
-    ) -> Result<crate::datadogV2::model::CloudflareAccountResponse, Error<GetCloudflareAccountError>>
-    {
+    ) -> Result<
+        crate::datadogV2::model::CloudflareAccountResponse,
+        datadog::Error<GetCloudflareAccountError>,
+    > {
         match self.get_cloudflare_account_with_http_info(account_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -396,8 +398,8 @@ impl CloudflareIntegrationAPI {
         &self,
         account_id: String,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::CloudflareAccountResponse>,
-        Error<GetCloudflareAccountError>,
+        datadog::ResponseContent<crate::datadogV2::model::CloudflareAccountResponse>,
+        datadog::Error<GetCloudflareAccountError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_cloudflare_account";
@@ -407,7 +409,7 @@ impl CloudflareIntegrationAPI {
         let local_uri_str = format!(
             "{}/api/v2/integrations/cloudflare/accounts/{account_id}",
             local_configuration.get_operation_host(operation_id),
-            account_id = urlencode(account_id)
+            account_id = datadog::urlencode(account_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -423,7 +425,7 @@ impl CloudflareIntegrationAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -456,23 +458,23 @@ impl CloudflareIntegrationAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetCloudflareAccountError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -481,14 +483,14 @@ impl CloudflareIntegrationAPI {
         &self,
     ) -> Result<
         crate::datadogV2::model::CloudflareAccountsResponse,
-        Error<ListCloudflareAccountsError>,
+        datadog::Error<ListCloudflareAccountsError>,
     > {
         match self.list_cloudflare_accounts_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -501,8 +503,8 @@ impl CloudflareIntegrationAPI {
     pub async fn list_cloudflare_accounts_with_http_info(
         &self,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::CloudflareAccountsResponse>,
-        Error<ListCloudflareAccountsError>,
+        datadog::ResponseContent<crate::datadogV2::model::CloudflareAccountsResponse>,
+        datadog::Error<ListCloudflareAccountsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_cloudflare_accounts";
@@ -527,7 +529,7 @@ impl CloudflareIntegrationAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -560,23 +562,23 @@ impl CloudflareIntegrationAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListCloudflareAccountsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -587,7 +589,7 @@ impl CloudflareIntegrationAPI {
         body: crate::datadogV2::model::CloudflareAccountUpdateRequest,
     ) -> Result<
         crate::datadogV2::model::CloudflareAccountResponse,
-        Error<UpdateCloudflareAccountError>,
+        datadog::Error<UpdateCloudflareAccountError>,
     > {
         match self
             .update_cloudflare_account_with_http_info(account_id, body)
@@ -597,7 +599,7 @@ impl CloudflareIntegrationAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -612,8 +614,8 @@ impl CloudflareIntegrationAPI {
         account_id: String,
         body: crate::datadogV2::model::CloudflareAccountUpdateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::CloudflareAccountResponse>,
-        Error<UpdateCloudflareAccountError>,
+        datadog::ResponseContent<crate::datadogV2::model::CloudflareAccountResponse>,
+        datadog::Error<UpdateCloudflareAccountError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_cloudflare_account";
@@ -623,7 +625,7 @@ impl CloudflareIntegrationAPI {
         let local_uri_str = format!(
             "{}/api/v2/integrations/cloudflare/accounts/{account_id}",
             local_configuration.get_operation_host(operation_id),
-            account_id = urlencode(account_id)
+            account_id = datadog::urlencode(account_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -640,7 +642,7 @@ impl CloudflareIntegrationAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -663,7 +665,7 @@ impl CloudflareIntegrationAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -674,7 +676,7 @@ impl CloudflareIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -684,7 +686,7 @@ impl CloudflareIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -694,7 +696,7 @@ impl CloudflareIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -718,23 +720,23 @@ impl CloudflareIntegrationAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateCloudflareAccountError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 }

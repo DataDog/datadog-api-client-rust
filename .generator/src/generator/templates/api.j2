@@ -1,7 +1,7 @@
 {% include "partial_header.j2" %}
 use reqwest;
 use serde::{Serialize, Deserialize};
-use crate::datadog::*;
+use crate::datadog;
 use reqwest::header::{HeaderMap, HeaderValue};
 {%- for _, _, operation in operations if "x-pagination" in operation %}
 {%- if loop.first %}
@@ -84,13 +84,13 @@ pub enum {{operation.operationId}}Error {
 
 #[derive(Debug, Clone)]
 pub struct {{ structName }} {
-    config: configuration::Configuration,
+    config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for {{ structName }} {
     fn default() -> Self {
-        Self::with_config(configuration::Configuration::default())
+        Self::with_config(datadog::Configuration::default())
     }
 }
 
@@ -98,7 +98,7 @@ impl {{ structName }} {
     pub fn new() -> Self {
         Self::default()
     }
-    pub fn with_config(config: configuration::Configuration) -> Self {
+    pub fn with_config(config: datadog::Configuration) -> Self {
          let mut reqwest_client_builder = reqwest::Client::builder();
 
         if let Some(proxy_url) = &config.proxy_url {
@@ -140,7 +140,7 @@ impl {{ structName }} {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(config: configuration::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
         Self {config, client}
     }
 
@@ -152,14 +152,14 @@ impl {{ structName }} {
     {% if operation.description is defined %}
     {{ operation.description | block_comment }}
     {%- endif %}
-    pub async fn {{operation.operationId | snake_case}}(&self{% for name, parameter in requiredParams %}, {{name|variable_name}}: {{ get_type_for_parameter(parameter, version) }}{% endfor %}{% if operation|has_optional_parameter %}, params: {{operation.operationId}}OptionalParams{% endif %}) -> Result<{% if returnType %}{{returnType}}{% else %}(){% endif %}, Error<{{operation.operationId}}Error>> {
+    pub async fn {{operation.operationId | snake_case}}(&self{% for name, parameter in requiredParams %}, {{name|variable_name}}: {{ get_type_for_parameter(parameter, version) }}{% endfor %}{% if operation|has_optional_parameter %}, params: {{operation.operationId}}OptionalParams{% endif %}) -> Result<{% if returnType %}{{returnType}}{% else %}(){% endif %}, datadog::Error<{{operation.operationId}}Error>> {
         match self.{{operation.operationId | snake_case}}_with_http_info({% for name, parameter in requiredParams %}{{name|variable_name}}{% if loop.last %}{% if operation|has_optional_parameter %}, {% endif %}{% else %}, {% endif %}{% endfor %}{% if operation|has_optional_parameter %} params{% endif %}).await {
             {%- if returnType %}
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom("response content was None")))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
             },
             {%- else%}
@@ -178,7 +178,7 @@ impl {{ structName }} {
 
     pub fn {{operation.operationId | snake_case}}_with_pagination(
         &self{% for name, parameter in requiredParams %}, {% if limitParamParts[0] == name|variable_name %}mut {% endif %} {{name|variable_name}}: {{ get_type_for_parameter(parameter, version) }}{% endfor %}{% if operation|has_optional_parameter %}, mut params: {{operation.operationId}}OptionalParams{% endif %}
-    ) -> impl Stream<Item = Result<{{ itemType }}, Error<{{ operation.operationId }}Error>>> + '_
+    ) -> impl Stream<Item = Result<{{ itemType }}, datadog::Error<{{ operation.operationId }}Error>>> + '_
     {
         try_stream! {
             {#- Limit param part fields #}
@@ -280,17 +280,17 @@ impl {{ structName }} {
     {% if operation.description is defined %}
     {{ operation.description | block_comment }}
     {%- endif %}
-    pub async fn {{operation.operationId | snake_case}}_with_http_info(&self{% for name, parameter in requiredParams %}, {{name|variable_name}}: {{ get_type_for_parameter(parameter, version) }}{% endfor %}{% if operation|has_optional_parameter %}, params: {{operation.operationId}}OptionalParams{% endif %}) -> Result<ResponseContent<{% if returnType %}{{returnType}}{% else %}(){% endif %}>, Error<{{operation.operationId}}Error>> {
+    pub async fn {{operation.operationId | snake_case}}_with_http_info(&self{% for name, parameter in requiredParams %}, {{name|variable_name}}: {{ get_type_for_parameter(parameter, version) }}{% endfor %}{% if operation|has_optional_parameter %}, params: {{operation.operationId}}OptionalParams{% endif %}) -> Result<datadog::ResponseContent<{% if returnType %}{{returnType}}{% else %}(){% endif %}>, datadog::Error<{{operation.operationId}}Error>> {
         let local_configuration = &self.config;
         let operation_id = "{{ version }}.{{ operation.operationId | snake_case }}";
         {%- if "x-unstable" in operation %}
         if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {operation_id}");
         } else {
-            let local_error = UnstableOperationDisabledError {
+            let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation '{{ version }}.{{ operation.operationId | snake_case }}' is not enabled".to_string(),
             };
-            return Err(Error::UnstableOperationDisabledError(local_error));
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
         {%- endif %}
 
@@ -308,7 +308,7 @@ impl {{ structName }} {
             local_configuration.get_operation_host(operation_id)
             {%- for name, parameter in operation|parameters if parameter.in == "path" %}, {{ name|variable_name }}=
             {%- if parameter.schema.type == "string" %}
-            urlencode({{ name|variable_name }}{% if not parameter.required %}.unwrap(){% elif parameter.schema.nullable %}.unwrap(){% endif %}{% if parameter.schema.type == "array" %}.join(",").as_ref(){% endif %})
+            datadog::urlencode({{ name|variable_name }}{% if not parameter.required %}.unwrap(){% elif parameter.schema.nullable %}.unwrap(){% endif %}{% if parameter.schema.type == "array" %}.join(",").as_ref(){% endif %})
             {%- else %}
             {{ name|variable_name }}{% if not parameter.required %}.unwrap(){% elif parameter.schema.nullable %}.unwrap(){% endif %}{% if parameter.schema.type == "array" %}.join(",").as_ref(){% endif %}
             {%- endif %}
@@ -372,7 +372,7 @@ impl {{ structName }} {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -412,7 +412,7 @@ impl {{ structName }} {
         {%- if operation.requestBody is defined and not formParameter %}
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if {{operation.get("x-codegen-request-body-name", "body")|variable_name}}.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -426,7 +426,7 @@ impl {{ structName }} {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -439,7 +439,7 @@ impl {{ structName }} {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -449,7 +449,7 @@ impl {{ structName }} {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -471,22 +471,22 @@ impl {{ structName }} {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             {%- if returnType == "Vec<u8>" %}
-            Ok(ResponseContent {
+            Ok(datadog::ResponseContent {
                 status: local_status,
                 content: local_content.clone(),
                 entity: Some(local_content.into_bytes()),
             })
             {%- elif returnType %}
             match serde_json::from_str::<{{ returnType }}>(&local_content) {
-                Ok(e) => return Ok(ResponseContent {
+                Ok(e) => return Ok(datadog::ResponseContent {
                     status: local_status,
                     content: local_content,
                     entity: Some(e),
                 }),
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
             {%- else %}
-            Ok(ResponseContent {
+            Ok(datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: None,
@@ -494,8 +494,8 @@ impl {{ structName }} {
             {%- endif %}
         } else {
             let local_entity: Option<{{operation.operationId}}Error> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent { status: local_status, content: local_content, entity: local_entity };
-            Err(Error::ResponseError(local_error))
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
     {%- endfor %}

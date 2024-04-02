@@ -1,5 +1,5 @@
 // Create a new rule returns "Created" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_service_scorecards::ServiceScorecardsAPI;
 use datadog_api_client::datadogV2::model::CreateRuleRequest;
 use datadog_api_client::datadogV2::model::CreateRuleRequestData;
@@ -18,7 +18,7 @@ async fn main() {
             )
             .type_(RuleType::RULE),
     );
-    let mut configuration = Configuration::new();
+    let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.CreateScorecardRule", true);
     let api = ServiceScorecardsAPI::with_config(configuration);
     let resp = api.create_scorecard_rule(body).await;

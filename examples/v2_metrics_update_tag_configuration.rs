@@ -1,5 +1,5 @@
 // Update a tag configuration returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_metrics::MetricsAPI;
 use datadog_api_client::datadogV2::model::MetricTagConfigurationType;
 use datadog_api_client::datadogV2::model::MetricTagConfigurationUpdateAttributes;
@@ -18,7 +18,7 @@ async fn main() {
         )
         .attributes(MetricTagConfigurationUpdateAttributes::new().tags(vec!["app".to_string()])),
     );
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = MetricsAPI::with_config(configuration);
     let resp = api
         .update_tag_configuration(metric_tag_configuration_data_id.clone(), body)

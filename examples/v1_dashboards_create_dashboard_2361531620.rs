@@ -1,5 +1,5 @@
 // Create a new dashboard with list_stream widget with a valid sort parameter DESC
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api::api_dashboards::DashboardsAPI;
 use datadog_api_client::datadogV1::model::Dashboard;
 use datadog_api_client::datadogV1::model::DashboardLayoutType;
@@ -41,7 +41,7 @@ async fn main() {
             )),
         ))],
     );
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = DashboardsAPI::with_config(configuration);
     let resp = api.create_dashboard(body).await;
     if let Ok(value) = resp {

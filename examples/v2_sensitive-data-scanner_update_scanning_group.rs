@@ -1,5 +1,5 @@
 // Update Scanning Group returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_sensitive_data_scanner::SensitiveDataScannerAPI;
 use datadog_api_client::datadogV2::model::SensitiveDataScannerConfiguration;
 use datadog_api_client::datadogV2::model::SensitiveDataScannerConfigurationData;
@@ -49,7 +49,7 @@ async fn main() {
                 .type_(SensitiveDataScannerGroupType::SENSITIVE_DATA_SCANNER_GROUP),
             SensitiveDataScannerMetaVersionOnly::new(),
         );
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = SensitiveDataScannerAPI::with_config(configuration);
     let resp = api.update_scanning_group(group_data_id.clone(), body).await;
     if let Ok(value) = resp {

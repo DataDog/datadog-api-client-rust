@@ -1,5 +1,5 @@
 // Send invitation emails returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_users::UsersAPI;
 use datadog_api_client::datadogV2::model::RelationshipToUser;
 use datadog_api_client::datadogV2::model::RelationshipToUserData;
@@ -20,7 +20,7 @@ async fn main() {
         ))),
         UserInvitationsType::USER_INVITATIONS,
     )]);
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = UsersAPI::with_config(configuration);
     let resp = api.send_invitations(body).await;
     if let Ok(value) = resp {

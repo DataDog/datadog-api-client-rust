@@ -1,7 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use crate::datadog::*;
+use crate::datadog;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
@@ -103,13 +103,13 @@ pub enum UpdateAuthNMappingError {
 
 #[derive(Debug, Clone)]
 pub struct AuthNMappingsAPI {
-    config: configuration::Configuration,
+    config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for AuthNMappingsAPI {
     fn default() -> Self {
-        Self::with_config(configuration::Configuration::default())
+        Self::with_config(datadog::Configuration::default())
     }
 }
 
@@ -117,7 +117,7 @@ impl AuthNMappingsAPI {
     pub fn new() -> Self {
         Self::default()
     }
-    pub fn with_config(config: configuration::Configuration) -> Self {
+    pub fn with_config(config: datadog::Configuration) -> Self {
         let mut reqwest_client_builder = reqwest::Client::builder();
 
         if let Some(proxy_url) = &config.proxy_url {
@@ -159,7 +159,7 @@ impl AuthNMappingsAPI {
     }
 
     pub fn with_client_and_config(
-        config: configuration::Configuration,
+        config: datadog::Configuration,
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
@@ -169,13 +169,16 @@ impl AuthNMappingsAPI {
     pub async fn create_authn_mapping(
         &self,
         body: crate::datadogV2::model::AuthNMappingCreateRequest,
-    ) -> Result<crate::datadogV2::model::AuthNMappingResponse, Error<CreateAuthNMappingError>> {
+    ) -> Result<
+        crate::datadogV2::model::AuthNMappingResponse,
+        datadog::Error<CreateAuthNMappingError>,
+    > {
         match self.create_authn_mapping_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -189,8 +192,8 @@ impl AuthNMappingsAPI {
         &self,
         body: crate::datadogV2::model::AuthNMappingCreateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::AuthNMappingResponse>,
-        Error<CreateAuthNMappingError>,
+        datadog::ResponseContent<crate::datadogV2::model::AuthNMappingResponse>,
+        datadog::Error<CreateAuthNMappingError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_authn_mapping";
@@ -216,7 +219,7 @@ impl AuthNMappingsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -239,7 +242,7 @@ impl AuthNMappingsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -250,7 +253,7 @@ impl AuthNMappingsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -260,7 +263,7 @@ impl AuthNMappingsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -270,7 +273,7 @@ impl AuthNMappingsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -294,23 +297,23 @@ impl AuthNMappingsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateAuthNMappingError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -318,7 +321,7 @@ impl AuthNMappingsAPI {
     pub async fn delete_authn_mapping(
         &self,
         authn_mapping_id: String,
-    ) -> Result<(), Error<DeleteAuthNMappingError>> {
+    ) -> Result<(), datadog::Error<DeleteAuthNMappingError>> {
         match self
             .delete_authn_mapping_with_http_info(authn_mapping_id)
             .await
@@ -332,7 +335,7 @@ impl AuthNMappingsAPI {
     pub async fn delete_authn_mapping_with_http_info(
         &self,
         authn_mapping_id: String,
-    ) -> Result<ResponseContent<()>, Error<DeleteAuthNMappingError>> {
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteAuthNMappingError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_authn_mapping";
 
@@ -341,7 +344,7 @@ impl AuthNMappingsAPI {
         let local_uri_str = format!(
             "{}/api/v2/authn_mappings/{authn_mapping_id}",
             local_configuration.get_operation_host(operation_id),
-            authn_mapping_id = urlencode(authn_mapping_id)
+            authn_mapping_id = datadog::urlencode(authn_mapping_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -357,7 +360,7 @@ impl AuthNMappingsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -386,7 +389,7 @@ impl AuthNMappingsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            Ok(ResponseContent {
+            Ok(datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: None,
@@ -394,12 +397,12 @@ impl AuthNMappingsAPI {
         } else {
             let local_entity: Option<DeleteAuthNMappingError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -407,7 +410,8 @@ impl AuthNMappingsAPI {
     pub async fn get_authn_mapping(
         &self,
         authn_mapping_id: String,
-    ) -> Result<crate::datadogV2::model::AuthNMappingResponse, Error<GetAuthNMappingError>> {
+    ) -> Result<crate::datadogV2::model::AuthNMappingResponse, datadog::Error<GetAuthNMappingError>>
+    {
         match self
             .get_authn_mapping_with_http_info(authn_mapping_id)
             .await
@@ -416,7 +420,7 @@ impl AuthNMappingsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -430,8 +434,8 @@ impl AuthNMappingsAPI {
         &self,
         authn_mapping_id: String,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::AuthNMappingResponse>,
-        Error<GetAuthNMappingError>,
+        datadog::ResponseContent<crate::datadogV2::model::AuthNMappingResponse>,
+        datadog::Error<GetAuthNMappingError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_authn_mapping";
@@ -441,7 +445,7 @@ impl AuthNMappingsAPI {
         let local_uri_str = format!(
             "{}/api/v2/authn_mappings/{authn_mapping_id}",
             local_configuration.get_operation_host(operation_id),
-            authn_mapping_id = urlencode(authn_mapping_id)
+            authn_mapping_id = datadog::urlencode(authn_mapping_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -457,7 +461,7 @@ impl AuthNMappingsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -490,23 +494,23 @@ impl AuthNMappingsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetAuthNMappingError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -514,13 +518,16 @@ impl AuthNMappingsAPI {
     pub async fn list_authn_mappings(
         &self,
         params: ListAuthNMappingsOptionalParams,
-    ) -> Result<crate::datadogV2::model::AuthNMappingsResponse, Error<ListAuthNMappingsError>> {
+    ) -> Result<
+        crate::datadogV2::model::AuthNMappingsResponse,
+        datadog::Error<ListAuthNMappingsError>,
+    > {
         match self.list_authn_mappings_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -534,8 +541,8 @@ impl AuthNMappingsAPI {
         &self,
         params: ListAuthNMappingsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::AuthNMappingsResponse>,
-        Error<ListAuthNMappingsError>,
+        datadog::ResponseContent<crate::datadogV2::model::AuthNMappingsResponse>,
+        datadog::Error<ListAuthNMappingsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_authn_mappings";
@@ -583,7 +590,7 @@ impl AuthNMappingsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -616,23 +623,23 @@ impl AuthNMappingsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListAuthNMappingsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -641,7 +648,10 @@ impl AuthNMappingsAPI {
         &self,
         authn_mapping_id: String,
         body: crate::datadogV2::model::AuthNMappingUpdateRequest,
-    ) -> Result<crate::datadogV2::model::AuthNMappingResponse, Error<UpdateAuthNMappingError>> {
+    ) -> Result<
+        crate::datadogV2::model::AuthNMappingResponse,
+        datadog::Error<UpdateAuthNMappingError>,
+    > {
         match self
             .update_authn_mapping_with_http_info(authn_mapping_id, body)
             .await
@@ -650,7 +660,7 @@ impl AuthNMappingsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -665,8 +675,8 @@ impl AuthNMappingsAPI {
         authn_mapping_id: String,
         body: crate::datadogV2::model::AuthNMappingUpdateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::AuthNMappingResponse>,
-        Error<UpdateAuthNMappingError>,
+        datadog::ResponseContent<crate::datadogV2::model::AuthNMappingResponse>,
+        datadog::Error<UpdateAuthNMappingError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_authn_mapping";
@@ -676,7 +686,7 @@ impl AuthNMappingsAPI {
         let local_uri_str = format!(
             "{}/api/v2/authn_mappings/{authn_mapping_id}",
             local_configuration.get_operation_host(operation_id),
-            authn_mapping_id = urlencode(authn_mapping_id)
+            authn_mapping_id = datadog::urlencode(authn_mapping_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -693,7 +703,7 @@ impl AuthNMappingsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -716,7 +726,7 @@ impl AuthNMappingsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -727,7 +737,7 @@ impl AuthNMappingsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -737,7 +747,7 @@ impl AuthNMappingsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -747,7 +757,7 @@ impl AuthNMappingsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -771,23 +781,23 @@ impl AuthNMappingsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateAuthNMappingError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 }

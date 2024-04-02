@@ -1,5 +1,5 @@
 // Search events returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_events::EventsAPI;
 use datadog_api_client::datadogV2::api::api_events::SearchEventsOptionalParams;
 use datadog_api_client::datadogV2::model::EventsListRequest;
@@ -18,7 +18,7 @@ async fn main() {
         )
         .page(EventsRequestPage::new().limit(5))
         .sort(EventsSort::TIMESTAMP_ASCENDING);
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = EventsAPI::with_config(configuration);
     let resp = api
         .search_events(SearchEventsOptionalParams::default().body(body))

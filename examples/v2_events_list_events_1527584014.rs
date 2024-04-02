@@ -1,5 +1,5 @@
 // Get a list of events returns "OK" response with pagination
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_events::EventsAPI;
 use datadog_api_client::datadogV2::api::api_events::ListEventsOptionalParams;
 use futures_util::pin_mut;
@@ -7,7 +7,7 @@ use futures_util::stream::StreamExt;
 
 #[tokio::main]
 async fn main() {
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = EventsAPI::with_config(configuration);
     let response = api.list_events_with_pagination(
         ListEventsOptionalParams::default()

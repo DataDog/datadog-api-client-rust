@@ -1,5 +1,5 @@
 // Delete dashboards returns "No Content" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api::api_dashboards::DashboardsAPI;
 use datadog_api_client::datadogV1::model::DashboardBulkActionData;
 use datadog_api_client::datadogV1::model::DashboardBulkDeleteRequest;
@@ -13,7 +13,7 @@ async fn main() {
         dashboard_id.clone(),
         DashboardResourceType::DASHBOARD,
     )]);
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = DashboardsAPI::with_config(configuration);
     let resp = api.delete_dashboards(body).await;
     if let Ok(value) = resp {

@@ -1,5 +1,5 @@
 // Create a pipeline returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api::api_logs_pipelines::LogsPipelinesAPI;
 use datadog_api_client::datadogV1::model::LogsFilter;
 use datadog_api_client::datadogV1::model::LogsGrokParser;
@@ -32,7 +32,7 @@ rule_name_2 bar
             .is_enabled(false)
             .samples(vec![]),
         ))]);
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = LogsPipelinesAPI::with_config(configuration);
     let resp = api.create_logs_pipeline(body).await;
     if let Ok(value) = resp {

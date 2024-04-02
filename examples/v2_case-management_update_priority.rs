@@ -1,5 +1,5 @@
 // Update case priority returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_case_management::CaseManagementAPI;
 use datadog_api_client::datadogV2::model::CasePriority;
 use datadog_api_client::datadogV2::model::CaseResourceType;
@@ -15,7 +15,7 @@ async fn main() {
         CaseUpdatePriorityAttributes::new(CasePriority::P3),
         CaseResourceType::CASE,
     ));
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = CaseManagementAPI::with_config(configuration);
     let resp = api.update_priority(case_id.clone(), body).await;
     if let Ok(value) = resp {

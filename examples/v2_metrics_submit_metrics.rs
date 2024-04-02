@@ -1,5 +1,5 @@
 // Submit metrics returns "Payload accepted" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_metrics::MetricsAPI;
 use datadog_api_client::datadogV2::api::api_metrics::SubmitMetricsOptionalParams;
 use datadog_api_client::datadogV2::model::MetricIntakeType;
@@ -18,7 +18,7 @@ async fn main() {
         .name("dummyhost".to_string())
         .type_("host".to_string())])
     .type_(MetricIntakeType::UNSPECIFIED)]);
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = MetricsAPI::with_config(configuration);
     let resp = api
         .submit_metrics(body, SubmitMetricsOptionalParams::default())

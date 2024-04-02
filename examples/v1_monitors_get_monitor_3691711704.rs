@@ -1,5 +1,5 @@
 // Get a synthetics monitor's details
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api::api_monitors::GetMonitorOptionalParams;
 use datadog_api_client::datadogV1::api::api_monitors::MonitorsAPI;
 
@@ -10,7 +10,7 @@ async fn main() {
         .unwrap()
         .parse()
         .unwrap();
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = MonitorsAPI::with_config(configuration);
     let resp = api
         .get_monitor(

@@ -1,11 +1,11 @@
 // Upload IdP metadata returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api::api_organizations::OrganizationsAPI;
 use std::fs;
 
 #[tokio::main]
 async fn main() {
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = OrganizationsAPI::with_config(configuration);
     let resp = api
         .upload_idp_for_org(

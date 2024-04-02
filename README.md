@@ -20,8 +20,8 @@ datadog-api-client = "0"
 
 Please follow the [installation](#installation) instructions and try the following snippet to validate your Datadog API key:
 
-```Rust
-use datadog_api_client::datadog::configuration::Configuration;
+```rust
+use datadog_api_client::datadog::Configuration;
 use datadog_api_client::datadogV1::api::api_authentication::AuthenticationAPI;
 
 #[tokio::main]

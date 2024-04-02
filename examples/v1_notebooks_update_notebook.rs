@@ -1,5 +1,5 @@
 // Update a notebook returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api::api_notebooks::NotebooksAPI;
 use datadog_api_client::datadogV1::model::NotebookCellCreateRequest;
 use datadog_api_client::datadogV1::model::NotebookCellCreateRequestAttributes;
@@ -92,7 +92,7 @@ y = 6;
         .status(NotebookStatus::PUBLISHED),
         NotebookResourceType::NOTEBOOKS,
     ));
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = NotebooksAPI::with_config(configuration);
     let resp = api.update_notebook(notebook_data_id.clone(), body).await;
     if let Ok(value) = resp {

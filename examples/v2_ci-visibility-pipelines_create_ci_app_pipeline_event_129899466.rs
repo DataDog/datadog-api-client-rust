@@ -1,5 +1,5 @@
 // Send pipeline job event returns "Request accepted for processing" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_ci_visibility_pipelines::CIVisibilityPipelinesAPI;
 use datadog_api_client::datadogV2::model::CIAppCreatePipelineEventRequest;
 use datadog_api_client::datadogV2::model::CIAppCreatePipelineEventRequestAttributes;
@@ -31,7 +31,7 @@ async fn main() {
             ))
             .type_(CIAppCreatePipelineEventRequestDataType::CIPIPELINE_RESOURCE_REQUEST),
     );
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = CIVisibilityPipelinesAPI::with_config(configuration);
     let resp = api.create_ci_app_pipeline_event(body).await;
     if let Ok(value) = resp {

@@ -1,5 +1,5 @@
 // Add Fastly account returns "CREATED" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_fastly_integration::FastlyIntegrationAPI;
 use datadog_api_client::datadogV2::model::FastlyAccountCreateRequest;
 use datadog_api_client::datadogV2::model::FastlyAccountCreateRequestAttributes;
@@ -16,7 +16,7 @@ async fn main() {
         .services(vec![]),
         FastlyAccountType::FASTLY_ACCOUNTS,
     ));
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = FastlyIntegrationAPI::with_config(configuration);
     let resp = api.create_fastly_account(body).await;
     if let Ok(value) = resp {

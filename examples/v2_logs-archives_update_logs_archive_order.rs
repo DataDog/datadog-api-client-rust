@@ -1,5 +1,5 @@
 // Update archive order returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_logs_archives::LogsArchivesAPI;
 use datadog_api_client::datadogV2::model::LogsArchiveOrder;
 use datadog_api_client::datadogV2::model::LogsArchiveOrderAttributes;
@@ -16,7 +16,7 @@ async fn main() {
         ]),
         LogsArchiveOrderDefinitionType::ARCHIVE_ORDER,
     ));
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = LogsArchivesAPI::with_config(configuration);
     let resp = api.update_logs_archive_order(body).await;
     if let Ok(value) = resp {

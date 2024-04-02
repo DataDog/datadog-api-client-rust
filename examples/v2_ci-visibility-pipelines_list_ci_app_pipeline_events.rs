@@ -1,11 +1,11 @@
 // Get a list of pipelines events returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api::api_ci_visibility_pipelines::CIVisibilityPipelinesAPI;
 use datadog_api_client::datadogV2::api::api_ci_visibility_pipelines::ListCIAppPipelineEventsOptionalParams;
 
 #[tokio::main]
 async fn main() {
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = CIVisibilityPipelinesAPI::with_config(configuration);
     let resp = api
         .list_ci_app_pipeline_events(

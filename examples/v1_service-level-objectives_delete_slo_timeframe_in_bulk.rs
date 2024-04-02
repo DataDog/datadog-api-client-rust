@@ -1,5 +1,5 @@
 // Bulk Delete SLO Timeframes returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
+use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api::api_service_level_objectives::ServiceLevelObjectivesAPI;
 use datadog_api_client::datadogV1::model::SLOTimeframe;
 use std::collections::BTreeMap;
@@ -16,7 +16,7 @@ async fn main() {
             vec![SLOTimeframe::SEVEN_DAYS, SLOTimeframe::THIRTY_DAYS],
         ),
     ]);
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = ServiceLevelObjectivesAPI::with_config(configuration);
     let resp = api.delete_slo_timeframe_in_bulk(body).await;
     if let Ok(value) = resp {

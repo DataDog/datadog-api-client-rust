@@ -1,7 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use crate::datadog::*;
+use crate::datadog;
 use async_stream::try_stream;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
@@ -213,13 +213,13 @@ pub enum UpdateStatusError {
 
 #[derive(Debug, Clone)]
 pub struct CaseManagementAPI {
-    config: configuration::Configuration,
+    config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for CaseManagementAPI {
     fn default() -> Self {
-        Self::with_config(configuration::Configuration::default())
+        Self::with_config(datadog::Configuration::default())
     }
 }
 
@@ -227,7 +227,7 @@ impl CaseManagementAPI {
     pub fn new() -> Self {
         Self::default()
     }
-    pub fn with_config(config: configuration::Configuration) -> Self {
+    pub fn with_config(config: datadog::Configuration) -> Self {
         let mut reqwest_client_builder = reqwest::Client::builder();
 
         if let Some(proxy_url) = &config.proxy_url {
@@ -269,7 +269,7 @@ impl CaseManagementAPI {
     }
 
     pub fn with_client_and_config(
-        config: configuration::Configuration,
+        config: datadog::Configuration,
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
@@ -280,13 +280,13 @@ impl CaseManagementAPI {
         &self,
         case_id: String,
         body: crate::datadogV2::model::CaseEmptyRequest,
-    ) -> Result<crate::datadogV2::model::CaseResponse, Error<ArchiveCaseError>> {
+    ) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<ArchiveCaseError>> {
         match self.archive_case_with_http_info(case_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -300,8 +300,10 @@ impl CaseManagementAPI {
         &self,
         case_id: String,
         body: crate::datadogV2::model::CaseEmptyRequest,
-    ) -> Result<ResponseContent<crate::datadogV2::model::CaseResponse>, Error<ArchiveCaseError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::CaseResponse>,
+        datadog::Error<ArchiveCaseError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v2.archive_case";
 
@@ -310,7 +312,7 @@ impl CaseManagementAPI {
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/archive",
             local_configuration.get_operation_host(operation_id),
-            case_id = urlencode(case_id)
+            case_id = datadog::urlencode(case_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -327,7 +329,7 @@ impl CaseManagementAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -350,7 +352,7 @@ impl CaseManagementAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -361,7 +363,7 @@ impl CaseManagementAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -371,7 +373,7 @@ impl CaseManagementAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -381,7 +383,7 @@ impl CaseManagementAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -403,22 +405,22 @@ impl CaseManagementAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::CaseResponse>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ArchiveCaseError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -427,13 +429,13 @@ impl CaseManagementAPI {
         &self,
         case_id: String,
         body: crate::datadogV2::model::CaseAssignRequest,
-    ) -> Result<crate::datadogV2::model::CaseResponse, Error<AssignCaseError>> {
+    ) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<AssignCaseError>> {
         match self.assign_case_with_http_info(case_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -447,8 +449,10 @@ impl CaseManagementAPI {
         &self,
         case_id: String,
         body: crate::datadogV2::model::CaseAssignRequest,
-    ) -> Result<ResponseContent<crate::datadogV2::model::CaseResponse>, Error<AssignCaseError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::CaseResponse>,
+        datadog::Error<AssignCaseError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v2.assign_case";
 
@@ -457,7 +461,7 @@ impl CaseManagementAPI {
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/assign",
             local_configuration.get_operation_host(operation_id),
-            case_id = urlencode(case_id)
+            case_id = datadog::urlencode(case_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -474,7 +478,7 @@ impl CaseManagementAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -497,7 +501,7 @@ impl CaseManagementAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -508,7 +512,7 @@ impl CaseManagementAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -518,7 +522,7 @@ impl CaseManagementAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -528,7 +532,7 @@ impl CaseManagementAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -550,22 +554,22 @@ impl CaseManagementAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::CaseResponse>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<AssignCaseError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -573,13 +577,13 @@ impl CaseManagementAPI {
     pub async fn create_case(
         &self,
         body: crate::datadogV2::model::CaseCreateRequest,
-    ) -> Result<crate::datadogV2::model::CaseResponse, Error<CreateCaseError>> {
+    ) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<CreateCaseError>> {
         match self.create_case_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -592,8 +596,10 @@ impl CaseManagementAPI {
     pub async fn create_case_with_http_info(
         &self,
         body: crate::datadogV2::model::CaseCreateRequest,
-    ) -> Result<ResponseContent<crate::datadogV2::model::CaseResponse>, Error<CreateCaseError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::CaseResponse>,
+        datadog::Error<CreateCaseError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_case";
 
@@ -618,7 +624,7 @@ impl CaseManagementAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -641,7 +647,7 @@ impl CaseManagementAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -652,7 +658,7 @@ impl CaseManagementAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -662,7 +668,7 @@ impl CaseManagementAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -672,7 +678,7 @@ impl CaseManagementAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -694,22 +700,22 @@ impl CaseManagementAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::CaseResponse>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateCaseError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -717,13 +723,13 @@ impl CaseManagementAPI {
     pub async fn create_project(
         &self,
         body: crate::datadogV2::model::ProjectCreateRequest,
-    ) -> Result<crate::datadogV2::model::ProjectResponse, Error<CreateProjectError>> {
+    ) -> Result<crate::datadogV2::model::ProjectResponse, datadog::Error<CreateProjectError>> {
         match self.create_project_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -736,8 +742,10 @@ impl CaseManagementAPI {
     pub async fn create_project_with_http_info(
         &self,
         body: crate::datadogV2::model::ProjectCreateRequest,
-    ) -> Result<ResponseContent<crate::datadogV2::model::ProjectResponse>, Error<CreateProjectError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::ProjectResponse>,
+        datadog::Error<CreateProjectError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_project";
 
@@ -762,7 +770,7 @@ impl CaseManagementAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -785,7 +793,7 @@ impl CaseManagementAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -796,7 +804,7 @@ impl CaseManagementAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -806,7 +814,7 @@ impl CaseManagementAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -816,7 +824,7 @@ impl CaseManagementAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -838,23 +846,23 @@ impl CaseManagementAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::ProjectResponse>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateProjectError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -862,7 +870,7 @@ impl CaseManagementAPI {
     pub async fn delete_project(
         &self,
         project_id: String,
-    ) -> Result<(), Error<DeleteProjectError>> {
+    ) -> Result<(), datadog::Error<DeleteProjectError>> {
         match self.delete_project_with_http_info(project_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
@@ -873,7 +881,7 @@ impl CaseManagementAPI {
     pub async fn delete_project_with_http_info(
         &self,
         project_id: String,
-    ) -> Result<ResponseContent<()>, Error<DeleteProjectError>> {
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteProjectError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_project";
 
@@ -882,7 +890,7 @@ impl CaseManagementAPI {
         let local_uri_str = format!(
             "{}/api/v2/cases/projects/{project_id}",
             local_configuration.get_operation_host(operation_id),
-            project_id = urlencode(project_id)
+            project_id = datadog::urlencode(project_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -898,7 +906,7 @@ impl CaseManagementAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -927,7 +935,7 @@ impl CaseManagementAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            Ok(ResponseContent {
+            Ok(datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: None,
@@ -935,12 +943,12 @@ impl CaseManagementAPI {
         } else {
             let local_entity: Option<DeleteProjectError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -948,13 +956,13 @@ impl CaseManagementAPI {
     pub async fn get_case(
         &self,
         case_id: String,
-    ) -> Result<crate::datadogV2::model::CaseResponse, Error<GetCaseError>> {
+    ) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<GetCaseError>> {
         match self.get_case_with_http_info(case_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -967,7 +975,10 @@ impl CaseManagementAPI {
     pub async fn get_case_with_http_info(
         &self,
         case_id: String,
-    ) -> Result<ResponseContent<crate::datadogV2::model::CaseResponse>, Error<GetCaseError>> {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::CaseResponse>,
+        datadog::Error<GetCaseError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_case";
 
@@ -976,7 +987,7 @@ impl CaseManagementAPI {
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}",
             local_configuration.get_operation_host(operation_id),
-            case_id = urlencode(case_id)
+            case_id = datadog::urlencode(case_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -992,7 +1003,7 @@ impl CaseManagementAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1023,22 +1034,22 @@ impl CaseManagementAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::CaseResponse>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetCaseError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1046,13 +1057,13 @@ impl CaseManagementAPI {
     pub async fn get_project(
         &self,
         project_id: String,
-    ) -> Result<crate::datadogV2::model::ProjectResponse, Error<GetProjectError>> {
+    ) -> Result<crate::datadogV2::model::ProjectResponse, datadog::Error<GetProjectError>> {
         match self.get_project_with_http_info(project_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1065,8 +1076,10 @@ impl CaseManagementAPI {
     pub async fn get_project_with_http_info(
         &self,
         project_id: String,
-    ) -> Result<ResponseContent<crate::datadogV2::model::ProjectResponse>, Error<GetProjectError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::ProjectResponse>,
+        datadog::Error<GetProjectError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_project";
 
@@ -1075,7 +1088,7 @@ impl CaseManagementAPI {
         let local_uri_str = format!(
             "{}/api/v2/cases/projects/{project_id}",
             local_configuration.get_operation_host(operation_id),
-            project_id = urlencode(project_id)
+            project_id = datadog::urlencode(project_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1091,7 +1104,7 @@ impl CaseManagementAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1122,35 +1135,35 @@ impl CaseManagementAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::ProjectResponse>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetProjectError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// Get all projects.
     pub async fn get_projects(
         &self,
-    ) -> Result<crate::datadogV2::model::ProjectsResponse, Error<GetProjectsError>> {
+    ) -> Result<crate::datadogV2::model::ProjectsResponse, datadog::Error<GetProjectsError>> {
         match self.get_projects_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1162,8 +1175,10 @@ impl CaseManagementAPI {
     /// Get all projects.
     pub async fn get_projects_with_http_info(
         &self,
-    ) -> Result<ResponseContent<crate::datadogV2::model::ProjectsResponse>, Error<GetProjectsError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::ProjectsResponse>,
+        datadog::Error<GetProjectsError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_projects";
 
@@ -1187,7 +1202,7 @@ impl CaseManagementAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1219,22 +1234,22 @@ impl CaseManagementAPI {
             match serde_json::from_str::<crate::datadogV2::model::ProjectsResponse>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetProjectsError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1242,13 +1257,13 @@ impl CaseManagementAPI {
     pub async fn search_cases(
         &self,
         params: SearchCasesOptionalParams,
-    ) -> Result<crate::datadogV2::model::CasesResponse, Error<SearchCasesError>> {
+    ) -> Result<crate::datadogV2::model::CasesResponse, datadog::Error<SearchCasesError>> {
         match self.search_cases_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1260,7 +1275,7 @@ impl CaseManagementAPI {
     pub fn search_cases_with_pagination(
         &self,
         mut params: SearchCasesOptionalParams,
-    ) -> impl Stream<Item = Result<crate::datadogV2::model::Case, Error<SearchCasesError>>> + '_
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::Case, datadog::Error<SearchCasesError>>> + '_
     {
         try_stream! {
             let mut page_size: i64 = 10;
@@ -1295,8 +1310,10 @@ impl CaseManagementAPI {
     pub async fn search_cases_with_http_info(
         &self,
         params: SearchCasesOptionalParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::CasesResponse>, Error<SearchCasesError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::CasesResponse>,
+        datadog::Error<SearchCasesError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v2.search_cases";
 
@@ -1348,7 +1365,7 @@ impl CaseManagementAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1379,22 +1396,22 @@ impl CaseManagementAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::CasesResponse>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<SearchCasesError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1403,13 +1420,13 @@ impl CaseManagementAPI {
         &self,
         case_id: String,
         body: crate::datadogV2::model::CaseEmptyRequest,
-    ) -> Result<crate::datadogV2::model::CaseResponse, Error<UnarchiveCaseError>> {
+    ) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<UnarchiveCaseError>> {
         match self.unarchive_case_with_http_info(case_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1423,8 +1440,10 @@ impl CaseManagementAPI {
         &self,
         case_id: String,
         body: crate::datadogV2::model::CaseEmptyRequest,
-    ) -> Result<ResponseContent<crate::datadogV2::model::CaseResponse>, Error<UnarchiveCaseError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::CaseResponse>,
+        datadog::Error<UnarchiveCaseError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v2.unarchive_case";
 
@@ -1433,7 +1452,7 @@ impl CaseManagementAPI {
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/unarchive",
             local_configuration.get_operation_host(operation_id),
-            case_id = urlencode(case_id)
+            case_id = datadog::urlencode(case_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1450,7 +1469,7 @@ impl CaseManagementAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1473,7 +1492,7 @@ impl CaseManagementAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -1484,7 +1503,7 @@ impl CaseManagementAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -1494,7 +1513,7 @@ impl CaseManagementAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -1504,7 +1523,7 @@ impl CaseManagementAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -1526,23 +1545,23 @@ impl CaseManagementAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::CaseResponse>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UnarchiveCaseError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1551,13 +1570,13 @@ impl CaseManagementAPI {
         &self,
         case_id: String,
         body: crate::datadogV2::model::CaseEmptyRequest,
-    ) -> Result<crate::datadogV2::model::CaseResponse, Error<UnassignCaseError>> {
+    ) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<UnassignCaseError>> {
         match self.unassign_case_with_http_info(case_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1571,8 +1590,10 @@ impl CaseManagementAPI {
         &self,
         case_id: String,
         body: crate::datadogV2::model::CaseEmptyRequest,
-    ) -> Result<ResponseContent<crate::datadogV2::model::CaseResponse>, Error<UnassignCaseError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::CaseResponse>,
+        datadog::Error<UnassignCaseError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v2.unassign_case";
 
@@ -1581,7 +1602,7 @@ impl CaseManagementAPI {
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/unassign",
             local_configuration.get_operation_host(operation_id),
-            case_id = urlencode(case_id)
+            case_id = datadog::urlencode(case_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1598,7 +1619,7 @@ impl CaseManagementAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1621,7 +1642,7 @@ impl CaseManagementAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -1632,7 +1653,7 @@ impl CaseManagementAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -1642,7 +1663,7 @@ impl CaseManagementAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -1652,7 +1673,7 @@ impl CaseManagementAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -1674,22 +1695,22 @@ impl CaseManagementAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::CaseResponse>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UnassignCaseError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1698,13 +1719,13 @@ impl CaseManagementAPI {
         &self,
         case_id: String,
         body: crate::datadogV2::model::CaseUpdatePriorityRequest,
-    ) -> Result<crate::datadogV2::model::CaseResponse, Error<UpdatePriorityError>> {
+    ) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<UpdatePriorityError>> {
         match self.update_priority_with_http_info(case_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1718,8 +1739,10 @@ impl CaseManagementAPI {
         &self,
         case_id: String,
         body: crate::datadogV2::model::CaseUpdatePriorityRequest,
-    ) -> Result<ResponseContent<crate::datadogV2::model::CaseResponse>, Error<UpdatePriorityError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::CaseResponse>,
+        datadog::Error<UpdatePriorityError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_priority";
 
@@ -1728,7 +1751,7 @@ impl CaseManagementAPI {
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/priority",
             local_configuration.get_operation_host(operation_id),
-            case_id = urlencode(case_id)
+            case_id = datadog::urlencode(case_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1745,7 +1768,7 @@ impl CaseManagementAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1768,7 +1791,7 @@ impl CaseManagementAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -1779,7 +1802,7 @@ impl CaseManagementAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -1789,7 +1812,7 @@ impl CaseManagementAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -1799,7 +1822,7 @@ impl CaseManagementAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -1821,23 +1844,23 @@ impl CaseManagementAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::CaseResponse>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdatePriorityError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1846,13 +1869,13 @@ impl CaseManagementAPI {
         &self,
         case_id: String,
         body: crate::datadogV2::model::CaseUpdateStatusRequest,
-    ) -> Result<crate::datadogV2::model::CaseResponse, Error<UpdateStatusError>> {
+    ) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<UpdateStatusError>> {
         match self.update_status_with_http_info(case_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1866,8 +1889,10 @@ impl CaseManagementAPI {
         &self,
         case_id: String,
         body: crate::datadogV2::model::CaseUpdateStatusRequest,
-    ) -> Result<ResponseContent<crate::datadogV2::model::CaseResponse>, Error<UpdateStatusError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::CaseResponse>,
+        datadog::Error<UpdateStatusError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_status";
 
@@ -1876,7 +1901,7 @@ impl CaseManagementAPI {
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/status",
             local_configuration.get_operation_host(operation_id),
-            case_id = urlencode(case_id)
+            case_id = datadog::urlencode(case_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1893,7 +1918,7 @@ impl CaseManagementAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1916,7 +1941,7 @@ impl CaseManagementAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -1927,7 +1952,7 @@ impl CaseManagementAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -1937,7 +1962,7 @@ impl CaseManagementAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -1947,7 +1972,7 @@ impl CaseManagementAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -1969,22 +1994,22 @@ impl CaseManagementAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::CaseResponse>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateStatusError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 }
