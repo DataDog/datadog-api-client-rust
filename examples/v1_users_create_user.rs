@@ -1,6 +1,6 @@
 // Create a user returns "User created" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_users::UsersAPI;
+use datadog_api_client::datadogV1::api_users::UsersAPI;
 use datadog_api_client::datadogV1::model::AccessRole;
 use datadog_api_client::datadogV1::model::User;
 

@@ -1,6 +1,6 @@
 // Delete a notebook returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_notebooks::NotebooksAPI;
+use datadog_api_client::datadogV1::api_notebooks::NotebooksAPI;
 
 #[tokio::main]
 async fn main() {

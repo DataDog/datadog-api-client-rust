@@ -1,7 +1,7 @@
 // Get hourly usage for Fargate returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_usage_metering::GetUsageFargateOptionalParams;
-use datadog_api_client::datadogV1::api::api_usage_metering::UsageMeteringAPI;
+use datadog_api_client::datadogV1::api_usage_metering::GetUsageFargateOptionalParams;
+use datadog_api_client::datadogV1::api_usage_metering::UsageMeteringAPI;
 
 #[tokio::main]
 async fn main() {

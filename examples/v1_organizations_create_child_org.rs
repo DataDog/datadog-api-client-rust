@@ -1,6 +1,6 @@
 // Create a child organization returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_organizations::OrganizationsAPI;
+use datadog_api_client::datadogV1::api_organizations::OrganizationsAPI;
 use datadog_api_client::datadogV1::model::OrganizationBilling;
 use datadog_api_client::datadogV1::model::OrganizationCreateBody;
 use datadog_api_client::datadogV1::model::OrganizationSubscription;

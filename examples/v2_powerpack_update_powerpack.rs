@@ -1,6 +1,6 @@
 // Update a powerpack returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_powerpack::PowerpackAPI;
+use datadog_api_client::datadogV2::api_powerpack::PowerpackAPI;
 use datadog_api_client::datadogV2::model::Powerpack;
 use datadog_api_client::datadogV2::model::PowerpackAttributes;
 use datadog_api_client::datadogV2::model::PowerpackData;

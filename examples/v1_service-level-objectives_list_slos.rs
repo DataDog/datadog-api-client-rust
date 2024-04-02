@@ -1,7 +1,7 @@
 // Get all SLOs returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_service_level_objectives::ListSLOsOptionalParams;
-use datadog_api_client::datadogV1::api::api_service_level_objectives::ServiceLevelObjectivesAPI;
+use datadog_api_client::datadogV1::api_service_level_objectives::ListSLOsOptionalParams;
+use datadog_api_client::datadogV1::api_service_level_objectives::ServiceLevelObjectivesAPI;
 
 #[tokio::main]
 async fn main() {

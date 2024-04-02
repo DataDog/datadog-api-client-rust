@@ -1,7 +1,7 @@
 // Create an API test with multi subtype returns "OK - Returns the created test
 // details." response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_synthetics::SyntheticsAPI;
+use datadog_api_client::datadogV1::api_synthetics::SyntheticsAPI;
 use datadog_api_client::datadogV1::model::SyntheticsAPIStep;
 use datadog_api_client::datadogV1::model::SyntheticsAPIStepSubtype;
 use datadog_api_client::datadogV1::model::SyntheticsAPITest;

@@ -1,6 +1,6 @@
 // Delete Cloudflare account returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_cloudflare_integration::CloudflareIntegrationAPI;
+use datadog_api_client::datadogV2::api_cloudflare_integration::CloudflareIntegrationAPI;
 
 #[tokio::main]
 async fn main() {

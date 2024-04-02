@@ -1,6 +1,6 @@
 // Create a new role by cloning an existing role returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_roles::RolesAPI;
+use datadog_api_client::datadogV2::api_roles::RolesAPI;
 use datadog_api_client::datadogV2::model::RoleClone;
 use datadog_api_client::datadogV2::model::RoleCloneAttributes;
 use datadog_api_client::datadogV2::model::RoleCloneRequest;

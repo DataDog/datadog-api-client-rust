@@ -1,6 +1,6 @@
 // Create a ci-pipelines monitor returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_monitors::MonitorsAPI;
+use datadog_api_client::datadogV1::api_monitors::MonitorsAPI;
 use datadog_api_client::datadogV1::model::Monitor;
 use datadog_api_client::datadogV1::model::MonitorOptions;
 use datadog_api_client::datadogV1::model::MonitorThresholds;

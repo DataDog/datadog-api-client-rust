@@ -1,6 +1,6 @@
 // Get an API test result returns result with failure object
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_synthetics::SyntheticsAPI;
+use datadog_api_client::datadogV1::api_synthetics::SyntheticsAPI;
 
 #[tokio::main]
 async fn main() {

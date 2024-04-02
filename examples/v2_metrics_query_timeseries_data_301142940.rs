@@ -1,6 +1,6 @@
 // Timeseries cross product query returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_metrics::MetricsAPI;
+use datadog_api_client::datadogV2::api_metrics::MetricsAPI;
 use datadog_api_client::datadogV2::model::FormulaLimit;
 use datadog_api_client::datadogV2::model::MetricsDataSource;
 use datadog_api_client::datadogV2::model::MetricsTimeseriesQuery;

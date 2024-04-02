@@ -1,7 +1,7 @@
 // List findings returns "OK" response with pagination
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_security_monitoring::ListFindingsOptionalParams;
-use datadog_api_client::datadogV2::api::api_security_monitoring::SecurityMonitoringAPI;
+use datadog_api_client::datadogV2::api_security_monitoring::ListFindingsOptionalParams;
+use datadog_api_client::datadogV2::api_security_monitoring::SecurityMonitoringAPI;
 use futures_util::pin_mut;
 use futures_util::stream::StreamExt;
 

@@ -1,7 +1,7 @@
 // Get API key returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_key_management::GetAPIKeyOptionalParams;
-use datadog_api_client::datadogV2::api::api_key_management::KeyManagementAPI;
+use datadog_api_client::datadogV2::api_key_management::GetAPIKeyOptionalParams;
+use datadog_api_client::datadogV2::api_key_management::KeyManagementAPI;
 
 #[tokio::main]
 async fn main() {

@@ -1,6 +1,6 @@
 // Update a user returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_users::UsersAPI;
+use datadog_api_client::datadogV2::api_users::UsersAPI;
 use datadog_api_client::datadogV2::model::UserUpdateAttributes;
 use datadog_api_client::datadogV2::model::UserUpdateData;
 use datadog_api_client::datadogV2::model::UserUpdateRequest;

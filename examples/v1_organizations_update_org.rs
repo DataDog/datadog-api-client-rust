@@ -1,6 +1,6 @@
 // Update your organization returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_organizations::OrganizationsAPI;
+use datadog_api_client::datadogV1::api_organizations::OrganizationsAPI;
 use datadog_api_client::datadogV1::model::AccessRole;
 use datadog_api_client::datadogV1::model::Organization;
 use datadog_api_client::datadogV1::model::OrganizationBilling;

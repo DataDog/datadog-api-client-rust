@@ -1,6 +1,6 @@
 // Delete an Azure integration returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_azure_integration::AzureIntegrationAPI;
+use datadog_api_client::datadogV1::api_azure_integration::AzureIntegrationAPI;
 use datadog_api_client::datadogV1::model::AzureAccount;
 
 #[tokio::main]

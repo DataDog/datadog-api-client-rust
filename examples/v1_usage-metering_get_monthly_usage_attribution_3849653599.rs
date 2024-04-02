@@ -1,7 +1,7 @@
 // Paginate monthly usage attribution
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_usage_metering::GetMonthlyUsageAttributionOptionalParams;
-use datadog_api_client::datadogV1::api::api_usage_metering::UsageMeteringAPI;
+use datadog_api_client::datadogV1::api_usage_metering::GetMonthlyUsageAttributionOptionalParams;
+use datadog_api_client::datadogV1::api_usage_metering::UsageMeteringAPI;
 use datadog_api_client::datadogV1::model::MonthlyUsageAttributionSupportedMetrics;
 
 #[tokio::main]

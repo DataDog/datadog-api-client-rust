@@ -1,7 +1,7 @@
 // Get All Containers returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_containers::ContainersAPI;
-use datadog_api_client::datadogV2::api::api_containers::ListContainersOptionalParams;
+use datadog_api_client::datadogV2::api_containers::ContainersAPI;
+use datadog_api_client::datadogV2::api_containers::ListContainersOptionalParams;
 
 #[tokio::main]
 async fn main() {

@@ -1,6 +1,6 @@
 // Revoke permission returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_roles::RolesAPI;
+use datadog_api_client::datadogV2::api_roles::RolesAPI;
 use datadog_api_client::datadogV2::model::PermissionsType;
 use datadog_api_client::datadogV2::model::RelationshipToPermission;
 use datadog_api_client::datadogV2::model::RelationshipToPermissionData;

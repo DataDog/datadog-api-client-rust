@@ -1,6 +1,6 @@
 // Add AWS Log Lambda ARN returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_aws_logs_integration::AWSLogsIntegrationAPI;
+use datadog_api_client::datadogV1::api_aws_logs_integration::AWSLogsIntegrationAPI;
 use datadog_api_client::datadogV1::model::AWSAccountAndLambdaRequest;
 
 #[tokio::main]

@@ -1,6 +1,6 @@
 // Update an SLO correction returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_service_level_objective_corrections::ServiceLevelObjectiveCorrectionsAPI;
+use datadog_api_client::datadogV1::api_service_level_objective_corrections::ServiceLevelObjectiveCorrectionsAPI;
 use datadog_api_client::datadogV1::model::SLOCorrectionCategory;
 use datadog_api_client::datadogV1::model::SLOCorrectionType;
 use datadog_api_client::datadogV1::model::SLOCorrectionUpdateData;

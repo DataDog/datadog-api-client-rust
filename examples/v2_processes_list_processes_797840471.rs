@@ -1,7 +1,7 @@
 // Get all processes returns "OK" response with pagination
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_processes::ListProcessesOptionalParams;
-use datadog_api_client::datadogV2::api::api_processes::ProcessesAPI;
+use datadog_api_client::datadogV2::api_processes::ListProcessesOptionalParams;
+use datadog_api_client::datadogV2::api_processes::ProcessesAPI;
 use futures_util::pin_mut;
 use futures_util::stream::StreamExt;
 

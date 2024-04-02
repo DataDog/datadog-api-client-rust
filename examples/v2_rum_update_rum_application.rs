@@ -1,6 +1,6 @@
 // Update a RUM application returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_rum::RUMAPI;
+use datadog_api_client::datadogV2::api_rum::RUMAPI;
 use datadog_api_client::datadogV2::model::RUMApplicationUpdate;
 use datadog_api_client::datadogV2::model::RUMApplicationUpdateAttributes;
 use datadog_api_client::datadogV2::model::RUMApplicationUpdateRequest;

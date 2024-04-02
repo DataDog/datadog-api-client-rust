@@ -1,6 +1,6 @@
 // Reorder Groups returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_sensitive_data_scanner::SensitiveDataScannerAPI;
+use datadog_api_client::datadogV2::api_sensitive_data_scanner::SensitiveDataScannerAPI;
 use datadog_api_client::datadogV2::model::SensitiveDataScannerConfigRequest;
 use datadog_api_client::datadogV2::model::SensitiveDataScannerConfigurationRelationships;
 use datadog_api_client::datadogV2::model::SensitiveDataScannerConfigurationType;

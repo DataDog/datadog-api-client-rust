@@ -1,7 +1,7 @@
 // Search logs returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_logs::ListLogsOptionalParams;
-use datadog_api_client::datadogV2::api::api_logs::LogsAPI;
+use datadog_api_client::datadogV2::api_logs::ListLogsOptionalParams;
+use datadog_api_client::datadogV2::api_logs::LogsAPI;
 use datadog_api_client::datadogV2::model::LogsListRequest;
 use datadog_api_client::datadogV2::model::LogsListRequestPage;
 use datadog_api_client::datadogV2::model::LogsQueryFilter;

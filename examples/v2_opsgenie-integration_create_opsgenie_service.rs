@@ -1,6 +1,6 @@
 // Create a new service object returns "CREATED" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_opsgenie_integration::OpsgenieIntegrationAPI;
+use datadog_api_client::datadogV2::api_opsgenie_integration::OpsgenieIntegrationAPI;
 use datadog_api_client::datadogV2::model::OpsgenieServiceCreateAttributes;
 use datadog_api_client::datadogV2::model::OpsgenieServiceCreateData;
 use datadog_api_client::datadogV2::model::OpsgenieServiceCreateRequest;

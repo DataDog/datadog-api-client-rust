@@ -1,6 +1,6 @@
 // Validate API key returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_authentication::AuthenticationAPI;
+use datadog_api_client::datadogV1::api_authentication::AuthenticationAPI;
 
 #[tokio::main]
 async fn main() {

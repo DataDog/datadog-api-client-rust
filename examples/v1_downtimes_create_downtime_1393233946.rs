@@ -1,6 +1,6 @@
 // Schedule a downtime with until occurrences
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_downtimes::DowntimesAPI;
+use datadog_api_client::datadogV1::api_downtimes::DowntimesAPI;
 use datadog_api_client::datadogV1::model::Downtime;
 use datadog_api_client::datadogV1::model::DowntimeRecurrence;
 

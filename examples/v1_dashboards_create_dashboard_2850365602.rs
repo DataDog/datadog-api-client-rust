@@ -1,7 +1,7 @@
 // Create a new dashboard with template variable presets using values returns "OK"
 // response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_dashboards::DashboardsAPI;
+use datadog_api_client::datadogV1::api_dashboards::DashboardsAPI;
 use datadog_api_client::datadogV1::model::Dashboard;
 use datadog_api_client::datadogV1::model::DashboardLayoutType;
 use datadog_api_client::datadogV1::model::DashboardReflowType;

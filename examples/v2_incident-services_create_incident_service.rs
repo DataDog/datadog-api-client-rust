@@ -1,6 +1,6 @@
 // Create a new incident service returns "CREATED" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_incident_services::IncidentServicesAPI;
+use datadog_api_client::datadogV2::api_incident_services::IncidentServicesAPI;
 use datadog_api_client::datadogV2::model::IncidentServiceCreateAttributes;
 use datadog_api_client::datadogV2::model::IncidentServiceCreateData;
 use datadog_api_client::datadogV2::model::IncidentServiceCreateRequest;

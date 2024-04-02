@@ -1,6 +1,6 @@
 // Delete Cloud Cost Management AWS CUR config returns "No Content" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_cloud_cost_management::CloudCostManagementAPI;
+use datadog_api_client::datadogV2::api_cloud_cost_management::CloudCostManagementAPI;
 
 #[tokio::main]
 async fn main() {

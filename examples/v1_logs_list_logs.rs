@@ -1,6 +1,6 @@
 // Search logs returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_logs::LogsAPI;
+use datadog_api_client::datadogV1::api_logs::LogsAPI;
 use datadog_api_client::datadogV1::model::LogsListRequest;
 use datadog_api_client::datadogV1::model::LogsListRequestTime;
 use datadog_api_client::datadogV1::model::LogsSort;

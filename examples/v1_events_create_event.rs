@@ -1,6 +1,6 @@
 // Post an event returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_events::EventsAPI;
+use datadog_api_client::datadogV1::api_events::EventsAPI;
 use datadog_api_client::datadogV1::model::EventCreateRequest;
 
 #[tokio::main]

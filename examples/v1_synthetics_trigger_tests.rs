@@ -1,6 +1,6 @@
 // Trigger Synthetic tests returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_synthetics::SyntheticsAPI;
+use datadog_api_client::datadogV1::api_synthetics::SyntheticsAPI;
 use datadog_api_client::datadogV1::model::SyntheticsTriggerBody;
 use datadog_api_client::datadogV1::model::SyntheticsTriggerTest;
 

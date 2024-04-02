@@ -1,6 +1,6 @@
 // Create a Slack integration channel returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_slack_integration::SlackIntegrationAPI;
+use datadog_api_client::datadogV1::api_slack_integration::SlackIntegrationAPI;
 use datadog_api_client::datadogV1::model::SlackIntegrationChannel;
 use datadog_api_client::datadogV1::model::SlackIntegrationChannelDisplay;
 

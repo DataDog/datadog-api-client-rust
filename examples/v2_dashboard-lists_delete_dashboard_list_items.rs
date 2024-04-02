@@ -1,6 +1,6 @@
 // Delete items from a dashboard list returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_dashboard_lists::DashboardListsAPI;
+use datadog_api_client::datadogV2::api_dashboard_lists::DashboardListsAPI;
 use datadog_api_client::datadogV2::model::DashboardListDeleteItemsRequest;
 use datadog_api_client::datadogV2::model::DashboardListItemRequest;
 use datadog_api_client::datadogV2::model::DashboardType;

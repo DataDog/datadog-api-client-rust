@@ -1,6 +1,6 @@
 // Create a new dashboard with alert_graph widget
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_dashboards::DashboardsAPI;
+use datadog_api_client::datadogV1::api_dashboards::DashboardsAPI;
 use datadog_api_client::datadogV1::model::AlertGraphWidgetDefinition;
 use datadog_api_client::datadogV1::model::AlertGraphWidgetDefinitionType;
 use datadog_api_client::datadogV1::model::Dashboard;

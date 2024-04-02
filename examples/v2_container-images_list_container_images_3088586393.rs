@@ -1,7 +1,7 @@
 // Get all Container Images returns "OK" response with pagination
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_container_images::ContainerImagesAPI;
-use datadog_api_client::datadogV2::api::api_container_images::ListContainerImagesOptionalParams;
+use datadog_api_client::datadogV2::api_container_images::ContainerImagesAPI;
+use datadog_api_client::datadogV2::api_container_images::ListContainerImagesOptionalParams;
 use futures_util::pin_mut;
 use futures_util::stream::StreamExt;
 

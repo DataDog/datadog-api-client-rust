@@ -1,6 +1,6 @@
 // Delete dashboards returns "No Content" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_dashboards::DashboardsAPI;
+use datadog_api_client::datadogV1::api_dashboards::DashboardsAPI;
 use datadog_api_client::datadogV1::model::DashboardBulkActionData;
 use datadog_api_client::datadogV1::model::DashboardBulkDeleteRequest;
 use datadog_api_client::datadogV1::model::DashboardResourceType;

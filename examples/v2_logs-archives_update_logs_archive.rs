@@ -1,6 +1,6 @@
 // Update an archive returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_logs_archives::LogsArchivesAPI;
+use datadog_api_client::datadogV2::api_logs_archives::LogsArchivesAPI;
 use datadog_api_client::datadogV2::model::LogsArchiveCreateRequest;
 use datadog_api_client::datadogV2::model::LogsArchiveCreateRequestAttributes;
 use datadog_api_client::datadogV2::model::LogsArchiveCreateRequestDefinition;

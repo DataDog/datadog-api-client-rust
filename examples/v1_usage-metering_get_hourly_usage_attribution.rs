@@ -1,7 +1,7 @@
 // Get hourly usage attribution returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_usage_metering::GetHourlyUsageAttributionOptionalParams;
-use datadog_api_client::datadogV1::api::api_usage_metering::UsageMeteringAPI;
+use datadog_api_client::datadogV1::api_usage_metering::GetHourlyUsageAttributionOptionalParams;
+use datadog_api_client::datadogV1::api_usage_metering::UsageMeteringAPI;
 use datadog_api_client::datadogV1::model::HourlyUsageAttributionUsageType;
 
 #[tokio::main]

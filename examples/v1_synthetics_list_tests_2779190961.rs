@@ -1,7 +1,7 @@
 // Client is resilient to enum and oneOf deserialization errors
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_synthetics::ListTestsOptionalParams;
-use datadog_api_client::datadogV1::api::api_synthetics::SyntheticsAPI;
+use datadog_api_client::datadogV1::api_synthetics::ListTestsOptionalParams;
+use datadog_api_client::datadogV1::api_synthetics::SyntheticsAPI;
 
 #[tokio::main]
 async fn main() {

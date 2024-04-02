@@ -1,7 +1,7 @@
 // Create a detection rule with detection method 'third_party' returns "OK"
 // response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_security_monitoring::SecurityMonitoringAPI;
+use datadog_api_client::datadogV2::api_security_monitoring::SecurityMonitoringAPI;
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleCreatePayload;
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleDetectionMethod;
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleKeepAlive;

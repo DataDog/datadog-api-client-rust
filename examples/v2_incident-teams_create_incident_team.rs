@@ -1,6 +1,6 @@
 // Create a new incident team returns "CREATED" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_incident_teams::IncidentTeamsAPI;
+use datadog_api_client::datadogV2::api_incident_teams::IncidentTeamsAPI;
 use datadog_api_client::datadogV2::model::IncidentTeamCreateAttributes;
 use datadog_api_client::datadogV2::model::IncidentTeamCreateData;
 use datadog_api_client::datadogV2::model::IncidentTeamCreateRequest;

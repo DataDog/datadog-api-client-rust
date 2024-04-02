@@ -1,6 +1,6 @@
 // Re-order retention filters returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_apm_retention_filters::APMRetentionFiltersAPI;
+use datadog_api_client::datadogV2::api_apm_retention_filters::APMRetentionFiltersAPI;
 use datadog_api_client::datadogV2::model::ApmRetentionFilterType;
 use datadog_api_client::datadogV2::model::ReorderRetentionFiltersRequest;
 use datadog_api_client::datadogV2::model::RetentionFilterWithoutAttributes;

@@ -1,6 +1,6 @@
 // Update a cloud configuration rule's details returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_security_monitoring::SecurityMonitoringAPI;
+use datadog_api_client::datadogV2::api_security_monitoring::SecurityMonitoringAPI;
 use datadog_api_client::datadogV2::model::CloudConfigurationComplianceRuleOptions;
 use datadog_api_client::datadogV2::model::CloudConfigurationRegoRule;
 use datadog_api_client::datadogV2::model::CloudConfigurationRuleComplianceSignalOptions;

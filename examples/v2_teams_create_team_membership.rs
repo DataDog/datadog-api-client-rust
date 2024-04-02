@@ -1,7 +1,7 @@
 // Add a user to a team returns "Represents a user's association to a team"
 // response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_teams::TeamsAPI;
+use datadog_api_client::datadogV2::api_teams::TeamsAPI;
 use datadog_api_client::datadogV2::model::RelationshipToUserTeamTeam;
 use datadog_api_client::datadogV2::model::RelationshipToUserTeamTeamData;
 use datadog_api_client::datadogV2::model::RelationshipToUserTeamUser;

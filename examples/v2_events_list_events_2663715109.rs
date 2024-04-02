@@ -1,7 +1,7 @@
 // Get a quick list of events returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_events::EventsAPI;
-use datadog_api_client::datadogV2::api::api_events::ListEventsOptionalParams;
+use datadog_api_client::datadogV2::api_events::EventsAPI;
+use datadog_api_client::datadogV2::api_events::ListEventsOptionalParams;
 
 #[tokio::main]
 async fn main() {

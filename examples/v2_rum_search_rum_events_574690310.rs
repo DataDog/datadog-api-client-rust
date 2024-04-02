@@ -1,6 +1,6 @@
 // Search RUM events returns "OK" response with pagination
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_rum::RUMAPI;
+use datadog_api_client::datadogV2::api_rum::RUMAPI;
 use datadog_api_client::datadogV2::model::RUMQueryFilter;
 use datadog_api_client::datadogV2::model::RUMQueryOptions;
 use datadog_api_client::datadogV2::model::RUMQueryPageOptions;

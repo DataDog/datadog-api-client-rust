@@ -1,6 +1,6 @@
 // Delete an existing incident service returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_incident_services::IncidentServicesAPI;
+use datadog_api_client::datadogV2::api_incident_services::IncidentServicesAPI;
 
 #[tokio::main]
 async fn main() {

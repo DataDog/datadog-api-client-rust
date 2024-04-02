@@ -1,6 +1,6 @@
 // Create an API key returns "Created" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_key_management::KeyManagementAPI;
+use datadog_api_client::datadogV2::api_key_management::KeyManagementAPI;
 use datadog_api_client::datadogV2::model::APIKeyCreateAttributes;
 use datadog_api_client::datadogV2::model::APIKeyCreateData;
 use datadog_api_client::datadogV2::model::APIKeyCreateRequest;

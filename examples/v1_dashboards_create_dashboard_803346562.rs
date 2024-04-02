@@ -1,6 +1,6 @@
 // Create a new dashboard with distribution widget and apm stats data
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_dashboards::DashboardsAPI;
+use datadog_api_client::datadogV1::api_dashboards::DashboardsAPI;
 use datadog_api_client::datadogV1::model::ApmStatsQueryDefinition;
 use datadog_api_client::datadogV1::model::ApmStatsQueryRowType;
 use datadog_api_client::datadogV1::model::Dashboard;

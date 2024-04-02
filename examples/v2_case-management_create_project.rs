@@ -1,6 +1,6 @@
 // Create a project returns "CREATED" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_case_management::CaseManagementAPI;
+use datadog_api_client::datadogV2::api_case_management::CaseManagementAPI;
 use datadog_api_client::datadogV2::model::ProjectCreate;
 use datadog_api_client::datadogV2::model::ProjectCreateAttributes;
 use datadog_api_client::datadogV2::model::ProjectCreateRequest;

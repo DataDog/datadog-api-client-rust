@@ -1,6 +1,6 @@
 // Update Cloud Cost Management Azure config returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_cloud_cost_management::CloudCostManagementAPI;
+use datadog_api_client::datadogV2::api_cloud_cost_management::CloudCostManagementAPI;
 use datadog_api_client::datadogV2::model::AzureUCConfigPatchData;
 use datadog_api_client::datadogV2::model::AzureUCConfigPatchRequest;
 use datadog_api_client::datadogV2::model::AzureUCConfigPatchRequestAttributes;

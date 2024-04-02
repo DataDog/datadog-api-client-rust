@@ -1,6 +1,6 @@
 // Delete an AuthN Mapping returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_authn_mappings::AuthNMappingsAPI;
+use datadog_api_client::datadogV2::api_authn_mappings::AuthNMappingsAPI;
 
 #[tokio::main]
 async fn main() {

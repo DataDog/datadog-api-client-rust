@@ -1,6 +1,6 @@
 // Create a new dashboard with check_status widget
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_dashboards::DashboardsAPI;
+use datadog_api_client::datadogV1::api_dashboards::DashboardsAPI;
 use datadog_api_client::datadogV1::model::CheckStatusWidgetDefinition;
 use datadog_api_client::datadogV1::model::CheckStatusWidgetDefinitionType;
 use datadog_api_client::datadogV1::model::Dashboard;

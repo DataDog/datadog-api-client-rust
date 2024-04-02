@@ -1,6 +1,6 @@
 // Delete Okta account returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_okta_integration::OktaIntegrationAPI;
+use datadog_api_client::datadogV2::api_okta_integration::OktaIntegrationAPI;
 
 #[tokio::main]
 async fn main() {

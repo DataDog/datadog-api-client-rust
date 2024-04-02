@@ -1,6 +1,6 @@
 // Create a user returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_users::UsersAPI;
+use datadog_api_client::datadogV2::api_users::UsersAPI;
 use datadog_api_client::datadogV2::model::UserCreateAttributes;
 use datadog_api_client::datadogV2::model::UserCreateData;
 use datadog_api_client::datadogV2::model::UserCreateRequest;

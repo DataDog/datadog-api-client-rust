@@ -1,7 +1,7 @@
 // Search cases returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_case_management::CaseManagementAPI;
-use datadog_api_client::datadogV2::api::api_case_management::SearchCasesOptionalParams;
+use datadog_api_client::datadogV2::api_case_management::CaseManagementAPI;
+use datadog_api_client::datadogV2::api_case_management::SearchCasesOptionalParams;
 
 #[tokio::main]
 async fn main() {

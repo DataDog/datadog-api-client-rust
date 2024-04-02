@@ -1,6 +1,6 @@
 // Update a dashboard list returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_dashboard_lists::DashboardListsAPI;
+use datadog_api_client::datadogV1::api_dashboard_lists::DashboardListsAPI;
 use datadog_api_client::datadogV1::model::DashboardList;
 
 #[tokio::main]

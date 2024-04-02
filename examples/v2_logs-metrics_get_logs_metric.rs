@@ -1,6 +1,6 @@
 // Get a log-based metric returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_logs_metrics::LogsMetricsAPI;
+use datadog_api_client::datadogV2::api_logs_metrics::LogsMetricsAPI;
 
 #[tokio::main]
 async fn main() {

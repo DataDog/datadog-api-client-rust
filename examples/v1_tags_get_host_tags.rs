@@ -1,7 +1,7 @@
 // Get host tags returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_tags::GetHostTagsOptionalParams;
-use datadog_api_client::datadogV1::api::api_tags::TagsAPI;
+use datadog_api_client::datadogV1::api_tags::GetHostTagsOptionalParams;
+use datadog_api_client::datadogV1::api_tags::TagsAPI;
 
 #[tokio::main]
 async fn main() {

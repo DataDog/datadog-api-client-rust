@@ -1,6 +1,6 @@
 // Trigger tests from CI/CD pipelines returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_synthetics::SyntheticsAPI;
+use datadog_api_client::datadogV1::api_synthetics::SyntheticsAPI;
 use datadog_api_client::datadogV1::model::SyntheticsBasicAuth;
 use datadog_api_client::datadogV1::model::SyntheticsBasicAuthWeb;
 use datadog_api_client::datadogV1::model::SyntheticsBasicAuthWebType;

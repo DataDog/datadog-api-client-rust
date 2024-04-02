@@ -1,6 +1,6 @@
 // Delete tags for multiple metrics returns "Accepted" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_metrics::MetricsAPI;
+use datadog_api_client::datadogV2::api_metrics::MetricsAPI;
 use datadog_api_client::datadogV2::model::MetricBulkConfigureTagsType;
 use datadog_api_client::datadogV2::model::MetricBulkTagConfigDelete;
 use datadog_api_client::datadogV2::model::MetricBulkTagConfigDeleteAttributes;

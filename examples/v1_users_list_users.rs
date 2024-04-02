@@ -1,6 +1,6 @@
 // List all users returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_users::UsersAPI;
+use datadog_api_client::datadogV1::api_users::UsersAPI;
 
 #[tokio::main]
 async fn main() {

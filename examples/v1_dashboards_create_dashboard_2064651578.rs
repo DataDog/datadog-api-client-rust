@@ -1,6 +1,6 @@
 // Create a new dashboard with team tags returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_dashboards::DashboardsAPI;
+use datadog_api_client::datadogV1::api_dashboards::DashboardsAPI;
 use datadog_api_client::datadogV1::model::ChangeWidgetDefinition;
 use datadog_api_client::datadogV1::model::ChangeWidgetDefinitionType;
 use datadog_api_client::datadogV1::model::ChangeWidgetRequest;

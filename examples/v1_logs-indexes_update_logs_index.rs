@@ -1,6 +1,6 @@
 // Update an index returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_logs_indexes::LogsIndexesAPI;
+use datadog_api_client::datadogV1::api_logs_indexes::LogsIndexesAPI;
 use datadog_api_client::datadogV1::model::LogsDailyLimitReset;
 use datadog_api_client::datadogV1::model::LogsExclusion;
 use datadog_api_client::datadogV1::model::LogsExclusionFilter;

@@ -1,6 +1,6 @@
 // Update an existing rule returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_security_monitoring::SecurityMonitoringAPI;
+use datadog_api_client::datadogV2::api_security_monitoring::SecurityMonitoringAPI;
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleCase;
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleEvaluationWindow;
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleKeepAlive;

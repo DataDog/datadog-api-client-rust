@@ -1,7 +1,7 @@
 // Get a list of pipelines events returns "OK" response with pagination
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_ci_visibility_pipelines::CIVisibilityPipelinesAPI;
-use datadog_api_client::datadogV2::api::api_ci_visibility_pipelines::ListCIAppPipelineEventsOptionalParams;
+use datadog_api_client::datadogV2::api_ci_visibility_pipelines::CIVisibilityPipelinesAPI;
+use datadog_api_client::datadogV2::api_ci_visibility_pipelines::ListCIAppPipelineEventsOptionalParams;
 use futures_util::pin_mut;
 use futures_util::stream::StreamExt;
 

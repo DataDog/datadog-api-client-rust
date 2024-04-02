@@ -1,6 +1,6 @@
 // Create a browser test returns "OK - Returns the created test details." response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_synthetics::SyntheticsAPI;
+use datadog_api_client::datadogV1::api_synthetics::SyntheticsAPI;
 use datadog_api_client::datadogV1::model::SyntheticsBrowserTest;
 use datadog_api_client::datadogV1::model::SyntheticsBrowserTestConfig;
 use datadog_api_client::datadogV1::model::SyntheticsBrowserTestType;

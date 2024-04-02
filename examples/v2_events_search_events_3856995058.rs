@@ -1,7 +1,7 @@
 // Search events returns "OK" response with pagination
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_events::EventsAPI;
-use datadog_api_client::datadogV2::api::api_events::SearchEventsOptionalParams;
+use datadog_api_client::datadogV2::api_events::EventsAPI;
+use datadog_api_client::datadogV2::api_events::SearchEventsOptionalParams;
 use datadog_api_client::datadogV2::model::EventsListRequest;
 use datadog_api_client::datadogV2::model::EventsQueryFilter;
 use datadog_api_client::datadogV2::model::EventsQueryOptions;

@@ -1,6 +1,6 @@
 // Create a monitor configuration policy returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_monitors::MonitorsAPI;
+use datadog_api_client::datadogV2::api_monitors::MonitorsAPI;
 use datadog_api_client::datadogV2::model::MonitorConfigPolicyAttributeCreateRequest;
 use datadog_api_client::datadogV2::model::MonitorConfigPolicyCreateData;
 use datadog_api_client::datadogV2::model::MonitorConfigPolicyCreateRequest;

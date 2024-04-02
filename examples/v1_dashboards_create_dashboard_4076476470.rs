@@ -1,6 +1,6 @@
 // Create a new dashboard with rum_issue_stream list_stream widget
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_dashboards::DashboardsAPI;
+use datadog_api_client::datadogV1::api_dashboards::DashboardsAPI;
 use datadog_api_client::datadogV1::model::Dashboard;
 use datadog_api_client::datadogV1::model::DashboardLayoutType;
 use datadog_api_client::datadogV1::model::ListStreamColumn;

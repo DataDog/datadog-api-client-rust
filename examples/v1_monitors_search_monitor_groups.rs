@@ -1,7 +1,7 @@
 // Monitors group search returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_monitors::MonitorsAPI;
-use datadog_api_client::datadogV1::api::api_monitors::SearchMonitorGroupsOptionalParams;
+use datadog_api_client::datadogV1::api_monitors::MonitorsAPI;
+use datadog_api_client::datadogV1::api_monitors::SearchMonitorGroupsOptionalParams;
 
 #[tokio::main]
 async fn main() {

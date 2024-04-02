@@ -1,6 +1,6 @@
 // Create a webhooks integration returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_webhooks_integration::WebhooksIntegrationAPI;
+use datadog_api_client::datadogV1::api_webhooks_integration::WebhooksIntegrationAPI;
 use datadog_api_client::datadogV1::model::WebhooksIntegration;
 
 #[tokio::main]

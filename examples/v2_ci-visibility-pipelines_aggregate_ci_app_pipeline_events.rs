@@ -1,6 +1,6 @@
 // Aggregate pipelines events returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_ci_visibility_pipelines::CIVisibilityPipelinesAPI;
+use datadog_api_client::datadogV2::api_ci_visibility_pipelines::CIVisibilityPipelinesAPI;
 use datadog_api_client::datadogV2::model::CIAppAggregationFunction;
 use datadog_api_client::datadogV2::model::CIAppCompute;
 use datadog_api_client::datadogV2::model::CIAppComputeType;

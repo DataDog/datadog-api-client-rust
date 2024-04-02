@@ -1,6 +1,6 @@
 // Get all pipelines returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_logs_pipelines::LogsPipelinesAPI;
+use datadog_api_client::datadogV1::api_logs_pipelines::LogsPipelinesAPI;
 
 #[tokio::main]
 async fn main() {

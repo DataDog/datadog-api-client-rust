@@ -1,7 +1,7 @@
 // Submit distribution points returns "Payload accepted" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_metrics::MetricsAPI;
-use datadog_api_client::datadogV1::api::api_metrics::SubmitDistributionPointsOptionalParams;
+use datadog_api_client::datadogV1::api_metrics::MetricsAPI;
+use datadog_api_client::datadogV1::api_metrics::SubmitDistributionPointsOptionalParams;
 use datadog_api_client::datadogV1::model::DistributionPointItem;
 use datadog_api_client::datadogV1::model::DistributionPointsPayload;
 use datadog_api_client::datadogV1::model::DistributionPointsSeries;

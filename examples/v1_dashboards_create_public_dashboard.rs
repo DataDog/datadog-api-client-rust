@@ -1,6 +1,6 @@
 // Create a shared dashboard returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_dashboards::DashboardsAPI;
+use datadog_api_client::datadogV1::api_dashboards::DashboardsAPI;
 use datadog_api_client::datadogV1::model::DashboardGlobalTime;
 use datadog_api_client::datadogV1::model::DashboardGlobalTimeLiveSpan;
 use datadog_api_client::datadogV1::model::DashboardShareType;

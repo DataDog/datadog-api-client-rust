@@ -1,7 +1,7 @@
 // Get a list of events returns "OK" response with pagination
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_events::EventsAPI;
-use datadog_api_client::datadogV2::api::api_events::ListEventsOptionalParams;
+use datadog_api_client::datadogV2::api_events::EventsAPI;
+use datadog_api_client::datadogV2::api_events::ListEventsOptionalParams;
 use futures_util::pin_mut;
 use futures_util::stream::StreamExt;
 

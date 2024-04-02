@@ -1,7 +1,7 @@
 // Get a list of spans returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_spans::ListSpansGetOptionalParams;
-use datadog_api_client::datadogV2::api::api_spans::SpansAPI;
+use datadog_api_client::datadogV2::api_spans::ListSpansGetOptionalParams;
+use datadog_api_client::datadogV2::api_spans::SpansAPI;
 
 #[tokio::main]
 async fn main() {

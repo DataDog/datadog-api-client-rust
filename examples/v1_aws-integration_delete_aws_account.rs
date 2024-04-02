@@ -1,6 +1,6 @@
 // Delete an AWS integration returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_aws_integration::AWSIntegrationAPI;
+use datadog_api_client::datadogV1::api_aws_integration::AWSIntegrationAPI;
 use datadog_api_client::datadogV1::model::AWSAccountDeleteRequest;
 
 #[tokio::main]

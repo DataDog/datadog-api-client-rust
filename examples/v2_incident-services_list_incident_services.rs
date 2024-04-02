@@ -1,7 +1,7 @@
 // Get a list of all incident services returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_incident_services::IncidentServicesAPI;
-use datadog_api_client::datadogV2::api::api_incident_services::ListIncidentServicesOptionalParams;
+use datadog_api_client::datadogV2::api_incident_services::IncidentServicesAPI;
+use datadog_api_client::datadogV2::api_incident_services::ListIncidentServicesOptionalParams;
 
 #[tokio::main]
 async fn main() {

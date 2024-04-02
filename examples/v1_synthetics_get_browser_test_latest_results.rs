@@ -1,7 +1,7 @@
 // Get a browser test's latest results summaries returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_synthetics::GetBrowserTestLatestResultsOptionalParams;
-use datadog_api_client::datadogV1::api::api_synthetics::SyntheticsAPI;
+use datadog_api_client::datadogV1::api_synthetics::GetBrowserTestLatestResultsOptionalParams;
+use datadog_api_client::datadogV1::api_synthetics::SyntheticsAPI;
 
 #[tokio::main]
 async fn main() {

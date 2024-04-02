@@ -1,6 +1,6 @@
 // Add a security signal to an incident returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_security_monitoring::SecurityMonitoringAPI;
+use datadog_api_client::datadogV1::api_security_monitoring::SecurityMonitoringAPI;
 use datadog_api_client::datadogV1::model::AddSignalToIncidentRequest;
 
 #[tokio::main]

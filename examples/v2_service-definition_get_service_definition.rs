@@ -1,7 +1,7 @@
 // Get a single service definition returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_service_definition::GetServiceDefinitionOptionalParams;
-use datadog_api_client::datadogV2::api::api_service_definition::ServiceDefinitionAPI;
+use datadog_api_client::datadogV2::api_service_definition::GetServiceDefinitionOptionalParams;
+use datadog_api_client::datadogV2::api_service_definition::ServiceDefinitionAPI;
 use datadog_api_client::datadogV2::model::ServiceDefinitionSchemaVersions;
 
 #[tokio::main]

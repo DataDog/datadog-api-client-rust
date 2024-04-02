@@ -1,6 +1,6 @@
 // Update Scanning Rule returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_sensitive_data_scanner::SensitiveDataScannerAPI;
+use datadog_api_client::datadogV2::api_sensitive_data_scanner::SensitiveDataScannerAPI;
 use datadog_api_client::datadogV2::model::SensitiveDataScannerIncludedKeywordConfiguration;
 use datadog_api_client::datadogV2::model::SensitiveDataScannerMetaVersionOnly;
 use datadog_api_client::datadogV2::model::SensitiveDataScannerRuleAttributes;

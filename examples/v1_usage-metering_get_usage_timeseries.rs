@@ -1,7 +1,7 @@
 // Get hourly usage for custom metrics returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_usage_metering::GetUsageTimeseriesOptionalParams;
-use datadog_api_client::datadogV1::api::api_usage_metering::UsageMeteringAPI;
+use datadog_api_client::datadogV1::api_usage_metering::GetUsageTimeseriesOptionalParams;
+use datadog_api_client::datadogV1::api_usage_metering::UsageMeteringAPI;
 
 #[tokio::main]
 async fn main() {

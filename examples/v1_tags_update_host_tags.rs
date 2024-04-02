@@ -1,7 +1,7 @@
 // Update host tags returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_tags::TagsAPI;
-use datadog_api_client::datadogV1::api::api_tags::UpdateHostTagsOptionalParams;
+use datadog_api_client::datadogV1::api_tags::TagsAPI;
+use datadog_api_client::datadogV1::api_tags::UpdateHostTagsOptionalParams;
 use datadog_api_client::datadogV1::model::HostTags;
 
 #[tokio::main]

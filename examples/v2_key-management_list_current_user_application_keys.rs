@@ -1,7 +1,7 @@
 // Get all application keys owned by current user returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_key_management::KeyManagementAPI;
-use datadog_api_client::datadogV2::api::api_key_management::ListCurrentUserApplicationKeysOptionalParams;
+use datadog_api_client::datadogV2::api_key_management::KeyManagementAPI;
+use datadog_api_client::datadogV2::api_key_management::ListCurrentUserApplicationKeysOptionalParams;
 
 #[tokio::main]
 async fn main() {

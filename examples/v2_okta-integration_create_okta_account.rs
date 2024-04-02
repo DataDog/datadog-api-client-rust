@@ -1,6 +1,6 @@
 // Add Okta account returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_okta_integration::OktaIntegrationAPI;
+use datadog_api_client::datadogV2::api_okta_integration::OktaIntegrationAPI;
 use datadog_api_client::datadogV2::model::OktaAccount;
 use datadog_api_client::datadogV2::model::OktaAccountAttributes;
 use datadog_api_client::datadogV2::model::OktaAccountRequest;

@@ -1,6 +1,6 @@
 // Update a restriction policy returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_restriction_policies::RestrictionPoliciesAPI;
+use datadog_api_client::datadogV2::api_restriction_policies::RestrictionPoliciesAPI;
 use datadog_api_client::datadogV2::model::RestrictionPolicy;
 use datadog_api_client::datadogV2::model::RestrictionPolicyAttributes;
 use datadog_api_client::datadogV2::model::RestrictionPolicyBinding;

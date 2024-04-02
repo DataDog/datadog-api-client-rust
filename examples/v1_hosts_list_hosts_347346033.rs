@@ -1,7 +1,7 @@
 // Get all hosts with metadata deserializes successfully
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_hosts::HostsAPI;
-use datadog_api_client::datadogV1::api::api_hosts::ListHostsOptionalParams;
+use datadog_api_client::datadogV1::api_hosts::HostsAPI;
+use datadog_api_client::datadogV1::api_hosts::ListHostsOptionalParams;
 
 #[tokio::main]
 async fn main() {

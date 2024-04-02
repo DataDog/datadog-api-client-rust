@@ -1,6 +1,6 @@
 // Create a Cloud Workload Security Agent rule returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_cloud_workload_security::CloudWorkloadSecurityAPI;
+use datadog_api_client::datadogV2::api_cloud_workload_security::CloudWorkloadSecurityAPI;
 use datadog_api_client::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateAttributes;
 use datadog_api_client::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateData;
 use datadog_api_client::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateRequest;

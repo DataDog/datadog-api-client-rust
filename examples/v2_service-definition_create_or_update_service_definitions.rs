@@ -1,6 +1,6 @@
 // Create or update service definition returns "CREATED" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_service_definition::ServiceDefinitionAPI;
+use datadog_api_client::datadogV2::api_service_definition::ServiceDefinitionAPI;
 use datadog_api_client::datadogV2::model::ServiceDefinitionV2Dot2;
 use datadog_api_client::datadogV2::model::ServiceDefinitionV2Dot2Contact;
 use datadog_api_client::datadogV2::model::ServiceDefinitionV2Dot2Integrations;

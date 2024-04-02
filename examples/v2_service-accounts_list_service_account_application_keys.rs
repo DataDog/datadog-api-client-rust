@@ -1,7 +1,7 @@
 // List application keys for this service account returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_service_accounts::ListServiceAccountApplicationKeysOptionalParams;
-use datadog_api_client::datadogV2::api::api_service_accounts::ServiceAccountsAPI;
+use datadog_api_client::datadogV2::api_service_accounts::ListServiceAccountApplicationKeysOptionalParams;
+use datadog_api_client::datadogV2::api_service_accounts::ServiceAccountsAPI;
 
 #[tokio::main]
 async fn main() {

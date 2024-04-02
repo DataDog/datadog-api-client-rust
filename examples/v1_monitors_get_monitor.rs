@@ -1,7 +1,7 @@
 // Get a monitor's details returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_monitors::GetMonitorOptionalParams;
-use datadog_api_client::datadogV1::api::api_monitors::MonitorsAPI;
+use datadog_api_client::datadogV1::api_monitors::GetMonitorOptionalParams;
+use datadog_api_client::datadogV1::api_monitors::MonitorsAPI;
 
 #[tokio::main]
 async fn main() {

@@ -1,6 +1,6 @@
 // Add Confluent account returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_confluent_cloud::ConfluentCloudAPI;
+use datadog_api_client::datadogV2::api_confluent_cloud::ConfluentCloudAPI;
 use datadog_api_client::datadogV2::model::ConfluentAccountCreateRequest;
 use datadog_api_client::datadogV2::model::ConfluentAccountCreateRequestAttributes;
 use datadog_api_client::datadogV2::model::ConfluentAccountCreateRequestData;

@@ -1,6 +1,6 @@
 // Search metrics returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_metrics::MetricsAPI;
+use datadog_api_client::datadogV1::api_metrics::MetricsAPI;
 
 #[tokio::main]
 async fn main() {

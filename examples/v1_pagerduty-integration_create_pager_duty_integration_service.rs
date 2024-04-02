@@ -1,6 +1,6 @@
 // Create a new service object returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV1::api::api_pager_duty_integration::PagerDutyIntegrationAPI;
+use datadog_api_client::datadogV1::api_pager_duty_integration::PagerDutyIntegrationAPI;
 use datadog_api_client::datadogV1::model::PagerDutyService;
 
 #[tokio::main]

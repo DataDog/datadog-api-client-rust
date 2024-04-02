@@ -1,7 +1,7 @@
 // Get a list of logs returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_logs::ListLogsGetOptionalParams;
-use datadog_api_client::datadogV2::api::api_logs::LogsAPI;
+use datadog_api_client::datadogV2::api_logs::ListLogsGetOptionalParams;
+use datadog_api_client::datadogV2::api_logs::LogsAPI;
 
 #[tokio::main]
 async fn main() {

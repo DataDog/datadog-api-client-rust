@@ -1,6 +1,6 @@
 // Create a new rule returns "Created" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_service_scorecards::ServiceScorecardsAPI;
+use datadog_api_client::datadogV2::api_service_scorecards::ServiceScorecardsAPI;
 use datadog_api_client::datadogV2::model::CreateRuleRequest;
 use datadog_api_client::datadogV2::model::CreateRuleRequestData;
 use datadog_api_client::datadogV2::model::RuleAttributes;

@@ -1,6 +1,6 @@
 // Aggregate compute events with group by returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_logs::LogsAPI;
+use datadog_api_client::datadogV2::api_logs::LogsAPI;
 use datadog_api_client::datadogV2::model::LogsAggregateRequest;
 use datadog_api_client::datadogV2::model::LogsAggregateSort;
 use datadog_api_client::datadogV2::model::LogsAggregateSortType;

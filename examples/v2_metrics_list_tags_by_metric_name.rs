@@ -1,6 +1,6 @@
 // List tags by metric name returns "Success" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_metrics::MetricsAPI;
+use datadog_api_client::datadogV2::api_metrics::MetricsAPI;
 
 #[tokio::main]
 async fn main() {

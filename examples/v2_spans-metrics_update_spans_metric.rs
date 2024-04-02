@@ -1,6 +1,6 @@
 // Update a span-based metric returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_spans_metrics::SpansMetricsAPI;
+use datadog_api_client::datadogV2::api_spans_metrics::SpansMetricsAPI;
 use datadog_api_client::datadogV2::model::SpansMetricFilter;
 use datadog_api_client::datadogV2::model::SpansMetricGroupBy;
 use datadog_api_client::datadogV2::model::SpansMetricType;

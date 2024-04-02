@@ -1,7 +1,7 @@
 // Create an Application key with scopes for current user returns "Created"
 // response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_key_management::KeyManagementAPI;
+use datadog_api_client::datadogV2::api_key_management::KeyManagementAPI;
 use datadog_api_client::datadogV2::model::ApplicationKeyCreateAttributes;
 use datadog_api_client::datadogV2::model::ApplicationKeyCreateData;
 use datadog_api_client::datadogV2::model::ApplicationKeyCreateRequest;

@@ -1,6 +1,6 @@
 // Send pipeline job event returns "Request accepted for processing" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_ci_visibility_pipelines::CIVisibilityPipelinesAPI;
+use datadog_api_client::datadogV2::api_ci_visibility_pipelines::CIVisibilityPipelinesAPI;
 use datadog_api_client::datadogV2::model::CIAppCreatePipelineEventRequest;
 use datadog_api_client::datadogV2::model::CIAppCreatePipelineEventRequestAttributes;
 use datadog_api_client::datadogV2::model::CIAppCreatePipelineEventRequestAttributesResource;

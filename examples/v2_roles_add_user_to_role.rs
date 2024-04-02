@@ -1,6 +1,6 @@
 // Add a user to a role returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_roles::RolesAPI;
+use datadog_api_client::datadogV2::api_roles::RolesAPI;
 use datadog_api_client::datadogV2::model::RelationshipToUser;
 use datadog_api_client::datadogV2::model::RelationshipToUserData;
 use datadog_api_client::datadogV2::model::UsersType;

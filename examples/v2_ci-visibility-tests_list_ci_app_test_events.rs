@@ -1,7 +1,7 @@
 // Get a list of tests events returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api::api_ci_visibility_tests::CIVisibilityTestsAPI;
-use datadog_api_client::datadogV2::api::api_ci_visibility_tests::ListCIAppTestEventsOptionalParams;
+use datadog_api_client::datadogV2::api_ci_visibility_tests::CIVisibilityTestsAPI;
+use datadog_api_client::datadogV2::api_ci_visibility_tests::ListCIAppTestEventsOptionalParams;
 
 #[tokio::main]
 async fn main() {
