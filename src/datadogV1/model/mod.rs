@@ -1084,6 +1084,8 @@ pub mod model_slo_formula;
 pub use self::model_slo_formula::SLOFormula;
 pub mod model_slo_data_source_query_definition;
 pub use self::model_slo_data_source_query_definition::SLODataSourceQueryDefinition;
+pub mod model_slo_time_slice_interval;
+pub use self::model_slo_time_slice_interval::SLOTimeSliceInterval;
 pub mod model_slo_sli_spec;
 pub use self::model_slo_sli_spec::SLOSliSpec;
 pub mod model_slo_threshold;
