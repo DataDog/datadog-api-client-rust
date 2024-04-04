@@ -148,6 +148,8 @@ pub struct MonitorOptions {
     )]
     pub renotify_occurrences: Option<Option<i64>>,
     /// The types of monitor statuses for which re-notification messages are sent.
+    /// Default: **null** if `renotify_interval` is **null**.
+    /// If `renotify_interval` is set, defaults to renotify on `Alert` and `No Data`.
     #[serde(
         rename = "renotify_statuses",
         default,
