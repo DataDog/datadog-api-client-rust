@@ -16,6 +16,7 @@ include = [
     "/README.md",
     "/src/**/*",
     "/tests/**/*",
+    "/examples/*",
 ]
 keywords = [
     "datadog",
@@ -66,3 +67,10 @@ vcr-cassette = "2.0.1"
 [[test]]
 harness = false # allows Cucumber to print output instead of libtest
 name = "main"
+
+[[example]] # signal to Cargo that dev-dependencies are allowed for examples
+doc-scrape-examples = true
+name="v1_authentication_validate"
+
+[package.metadata.docs.rs]
+cargo-args = ["-Zunstable-options", "-Zrustdoc-scrape-examples"]
