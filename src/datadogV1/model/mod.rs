@@ -1322,6 +1322,8 @@ pub mod model_synthetics_test_request_certificate;
 pub use self::model_synthetics_test_request_certificate::SyntheticsTestRequestCertificate;
 pub mod model_synthetics_test_request_certificate_item;
 pub use self::model_synthetics_test_request_certificate_item::SyntheticsTestRequestCertificateItem;
+pub mod model_synthetics_test_request_body_file;
+pub use self::model_synthetics_test_request_body_file::SyntheticsTestRequestBodyFile;
 pub mod model_synthetics_test_options_http_version;
 pub use self::model_synthetics_test_options_http_version::SyntheticsTestOptionsHTTPVersion;
 pub mod model_synthetics_test_request_proxy;
