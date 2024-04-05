@@ -7,7 +7,7 @@ use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
 /// The time-slice condition, composed of 3 parts: 1. the metric timeseries query, 2. the comparator,
-/// and 3. the threshold.
+/// and 3. the threshold. Optionally, a fourth part, the query interval, can be provided.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -18,6 +18,11 @@ pub struct SLOTimeSliceCondition {
     /// The queries and formula used to calculate the SLI value.
     #[serde(rename = "query")]
     pub query: crate::datadogV1::model::SLOTimeSliceQuery,
+    /// The interval used when querying data, which defines the size of a time slice.
+    /// Two values are allowed: 60 (1 minute) and 300 (5 minutes).
+    /// If not provided, the value defaults to 300 (5 minutes).
+    #[serde(rename = "query_interval_seconds")]
+    pub query_interval_seconds: Option<crate::datadogV1::model::SLOTimeSliceInterval>,
     /// The threshold value to which each SLI value will be compared.
     #[serde(rename = "threshold")]
     pub threshold: f64,
@@ -35,9 +40,18 @@ impl SLOTimeSliceCondition {
         SLOTimeSliceCondition {
             comparator,
             query,
+            query_interval_seconds: None,
             threshold,
             _unparsed: false,
         }
+    }
+
+    pub fn query_interval_seconds(
+        mut self,
+        value: crate::datadogV1::model::SLOTimeSliceInterval,
+    ) -> Self {
+        self.query_interval_seconds = Some(value);
+        self
     }
 }
 
@@ -60,6 +74,9 @@ impl<'de> Deserialize<'de> for SLOTimeSliceCondition {
             {
                 let mut comparator: Option<crate::datadogV1::model::SLOTimeSliceComparator> = None;
                 let mut query: Option<crate::datadogV1::model::SLOTimeSliceQuery> = None;
+                let mut query_interval_seconds: Option<
+                    crate::datadogV1::model::SLOTimeSliceInterval,
+                > = None;
                 let mut threshold: Option<f64> = None;
                 let mut _unparsed = false;
 
@@ -79,6 +96,21 @@ impl<'de> Deserialize<'de> for SLOTimeSliceCondition {
                         "query" => {
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "query_interval_seconds" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            query_interval_seconds =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _query_interval_seconds) = query_interval_seconds {
+                                match _query_interval_seconds {
+                                    crate::datadogV1::model::SLOTimeSliceInterval::UnparsedObject(_query_interval_seconds) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
                         "threshold" => {
                             threshold = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -92,6 +124,7 @@ impl<'de> Deserialize<'de> for SLOTimeSliceCondition {
                 let content = SLOTimeSliceCondition {
                     comparator,
                     query,
+                    query_interval_seconds,
                     threshold,
                     _unparsed,
                 };

@@ -23,7 +23,7 @@ pub struct SecurityMonitoringSignalRuleResponse {
     /// When the rule will be deprecated, timestamp in milliseconds.
     #[serde(rename = "deprecationDate")]
     pub deprecation_date: Option<i64>,
-    /// Additional queries to filter matched events before they are processed.
+    /// Additional queries to filter matched events before they are processed. This field is deprecated for log detection, signal correlation, and workload security rules.
     #[serde(rename = "filters")]
     pub filters: Option<Vec<crate::datadogV2::model::SecurityMonitoringFilter>>,
     /// Whether the notifications include the triggering group-by values in their title.
