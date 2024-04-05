@@ -16,6 +16,7 @@ include = [
     "/README.md",
     "/src/**/*",
     "/tests/**/*",
+    "/examples/*",
 ]
 keywords = [
     "datadog",
@@ -32,6 +33,7 @@ version = "0.0.1"
 [dependencies]
 async-stream = "0.3.5"
 flate2 = "1.0.28"
+form-data-builder = "1.0.1"
 futures-core = "0.3.30"
 lazy_static = "1.4.0"
 log = "0.4.20"
@@ -65,3 +67,10 @@ vcr-cassette = "2.0.1"
 [[test]]
 harness = false # allows Cucumber to print output instead of libtest
 name = "main"
+
+[[example]] # signal to Cargo that dev-dependencies are allowed for examples
+doc-scrape-examples = true
+name="v1_authentication_validate"
+
+[package.metadata.docs.rs]
+cargo-args = ["-Zunstable-options", "-Zrustdoc-scrape-examples"]

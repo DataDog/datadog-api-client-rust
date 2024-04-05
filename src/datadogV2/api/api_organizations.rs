@@ -168,18 +168,25 @@ impl OrganizationsAPI {
 
         // build form parameters
         if let Some(idp_file) = idp_file {
-            let mut local_form = reqwest::multipart::Form::new();
-            local_form = local_form.part(
+            let mut local_form = form_data_builder::FormData::new(Vec::new());
+            let cursor = std::io::Cursor::new(idp_file);
+            if let Err(e) = local_form.write_file(
                 "idp_file",
-                reqwest::multipart::Part::bytes(idp_file).file_name("idp_file"),
-            );
+                cursor,
+                Some("idp_file".as_ref()),
+                "application/octet-stream",
+            ) {
+                return Err(crate::datadog::Error::Io(e));
+            };
             headers.insert(
                 "Content-Type",
-                format!("multipart/form-data; boundary={}", local_form.boundary())
-                    .parse()
-                    .unwrap(),
+                local_form.content_type_header().parse().unwrap(),
             );
-            local_req_builder = local_req_builder.multipart(local_form);
+            let form_result = local_form.finish();
+            match form_result {
+                Ok(form) => local_req_builder = local_req_builder.body(form),
+                Err(e) => return Err(crate::datadog::Error::Io(e)),
+            };
         };
 
         local_req_builder = local_req_builder.headers(headers);

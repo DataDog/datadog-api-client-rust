@@ -17283,7 +17283,8 @@ components:
           $ref: '#/components/schemas/CloudConfigurationRuleComplianceSignalOptions'
         filters:
           description: Additional queries to filter matched events before they are
-            processed.
+            processed. This field is deprecated for log detection, signal correlation,
+            and workload security rules.
           items:
             $ref: '#/components/schemas/SecurityMonitoringFilter'
           type: array
@@ -17531,7 +17532,8 @@ components:
           type: array
         filters:
           description: Additional queries to filter matched events before they are
-            processed.
+            processed. This field is deprecated for log detection, signal correlation,
+            and workload security rules.
           items:
             $ref: '#/components/schemas/SecurityMonitoringFilter'
           type: array
@@ -17633,7 +17635,8 @@ components:
           type: integer
         filters:
           description: Additional queries to filter matched events before they are
-            processed.
+            processed. This field is deprecated for log detection, signal correlation,
+            and workload security rules.
           items:
             $ref: '#/components/schemas/SecurityMonitoringFilter'
           type: array
@@ -17912,7 +17915,8 @@ components:
           type: array
         filters:
           description: Additional queries to filter matched events before they are
-            processed.
+            processed. This field is deprecated for log detection, signal correlation,
+            and workload security rules.
           items:
             $ref: '#/components/schemas/SecurityMonitoringFilter'
           type: array
@@ -18039,7 +18043,8 @@ components:
           type: integer
         filters:
           description: Additional queries to filter matched events before they are
-            processed.
+            processed. This field is deprecated for log detection, signal correlation,
+            and workload security rules.
           items:
             $ref: '#/components/schemas/SecurityMonitoringFilter'
           type: array
@@ -21742,6 +21747,7 @@ components:
             If the second element is not present, the API returns null.'
           items:
             $ref: '#/components/schemas/Unit'
+          nullable: true
           type: array
       type: object
     TimeseriesResponseSeriesList:
@@ -29029,8 +29035,8 @@ paths:
       x-codegen-request-body-name: body
   /api/v2/metrics/{metric_name}/active-configurations:
     get:
-      description: List tags and aggregations that are actively queried on dashboards
-        and monitors for a given metric name.
+      description: List tags and aggregations that are actively queried on dashboards,
+        notebooks, monitors, and the Metrics Explorer for a given metric name.
       operationId: ListActiveMetricConfigurations
       parameters:
       - $ref: '#/components/parameters/MetricName'

@@ -26,6 +26,7 @@ use datadog_api_client::datadogV1::model::SyntheticsTestOptionsScheduling;
 use datadog_api_client::datadogV1::model::SyntheticsTestOptionsSchedulingTimeframe;
 use datadog_api_client::datadogV1::model::SyntheticsTestPauseStatus;
 use datadog_api_client::datadogV1::model::SyntheticsTestRequest;
+use datadog_api_client::datadogV1::model::SyntheticsTestRequestBodyFile;
 use datadog_api_client::datadogV1::model::SyntheticsTestRequestBodyType;
 use datadog_api_client::datadogV1::model::SyntheticsTestRequestCertificate;
 use datadog_api_client::datadogV1::model::SyntheticsTestRequestCertificateItem;
@@ -49,6 +50,7 @@ async fn main() {
                         .key(SyntheticsTestRequestCertificateItem::new()),
                 )
                 .certificate_domains(vec![])
+                .files(vec![SyntheticsTestRequestBodyFile::new()])
                 .http_version(SyntheticsTestOptionsHTTPVersion::HTTP1)
                 .proxy(SyntheticsTestRequestProxy::new(
                     "https://example.com".to_string(),
