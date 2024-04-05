@@ -13,6 +13,8 @@ pub enum SyntheticsTestRequestBodyType {
     TEXT_HTML,
     APPLICATION_X_WWW_FORM_URLENCODED,
     GRAPHQL,
+    APPLICATION_OCTET_STREAM,
+    MULTIPART_FORM_DATA,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -27,6 +29,8 @@ impl ToString for SyntheticsTestRequestBodyType {
                 String::from("application/x-www-form-urlencoded")
             }
             Self::GRAPHQL => String::from("graphql"),
+            Self::APPLICATION_OCTET_STREAM => String::from("application/octet-stream"),
+            Self::MULTIPART_FORM_DATA => String::from("multipart/form-data"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -57,6 +61,8 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequestBodyType {
             "text/html" => Self::TEXT_HTML,
             "application/x-www-form-urlencoded" => Self::APPLICATION_X_WWW_FORM_URLENCODED,
             "graphql" => Self::GRAPHQL,
+            "application/octet-stream" => Self::APPLICATION_OCTET_STREAM,
+            "multipart/form-data" => Self::MULTIPART_FORM_DATA,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
