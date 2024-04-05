@@ -395,16 +395,46 @@ impl {{ structName }} {
         {% if formParameter %}
         // build form parameters
         {%- if formParameter.required %}
-        let mut local_form = reqwest::multipart::Form::new();
-        local_form = local_form.part("{{formParameter.name}}", reqwest::multipart::Part::bytes({{formParameter.name}}).file_name("{{formParameter.name}}"));
-        headers.insert("Content-Type", format!("multipart/form-data; boundary={}", local_form.boundary()).parse().unwrap());
-        local_req_builder = local_req_builder.multipart(local_form);
+        let mut local_form = form_data_builder::FormData::new(Vec::new());
+        let cursor = std::io::Cursor::new({{formParameter.name}});
+        if let Err(e) = local_form.write_file(
+            "{{formParameter.name}}",
+            cursor,
+            Some("{{formParameter.name}}".as_ref()),
+            "application/octet-stream",
+        ) {
+            return Err(crate::datadog::Error::Io(e));
+        };
+        headers.insert(
+            "Content-Type",
+            local_form.content_type_header().parse().unwrap(),
+        );
+        let form_result = local_form.finish();
+        match form_result {
+            Ok(form) => local_req_builder = local_req_builder.body(form),
+            Err(e) => return Err(crate::datadog::Error::Io(e)),
+        };
         {%- else %}
         if let Some({{formParameter.name}}) = {{formParameter.name}} {
-            let mut local_form = reqwest::multipart::Form::new();
-            local_form = local_form.part("{{formParameter.name}}", reqwest::multipart::Part::bytes({{formParameter.name}}).file_name("{{formParameter.name}}"));
-            headers.insert("Content-Type", format!("multipart/form-data; boundary={}", local_form.boundary()).parse().unwrap());
-            local_req_builder = local_req_builder.multipart(local_form);
+            let mut local_form = form_data_builder::FormData::new(Vec::new());
+            let cursor = std::io::Cursor::new({{formParameter.name}});
+            if let Err(e) = local_form.write_file(
+                "{{formParameter.name}}",
+                cursor,
+                Some("{{formParameter.name}}".as_ref()),
+                "application/octet-stream",
+            ) {
+                return Err(crate::datadog::Error::Io(e));
+            };
+            headers.insert(
+                "Content-Type",
+                local_form.content_type_header().parse().unwrap(),
+            );
+            let form_result = local_form.finish();
+            match form_result {
+                Ok(form) => local_req_builder = local_req_builder.body(form),
+                Err(e) => return Err(crate::datadog::Error::Io(e)),
+            };    
         };
         {%- endif %}
         {%- endif %}
