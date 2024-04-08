@@ -18,7 +18,7 @@ pub struct SecurityMonitoringRuleUpdatePayload {
     #[serde(rename = "complianceSignalOptions")]
     pub compliance_signal_options:
         Option<crate::datadogV2::model::CloudConfigurationRuleComplianceSignalOptions>,
-    /// Additional queries to filter matched events before they are processed.
+    /// Additional queries to filter matched events before they are processed. This field is deprecated for log detection, signal correlation, and workload security rules.
     #[serde(rename = "filters")]
     pub filters: Option<Vec<crate::datadogV2::model::SecurityMonitoringFilter>>,
     /// Whether the notifications include the triggering group-by values in their title.

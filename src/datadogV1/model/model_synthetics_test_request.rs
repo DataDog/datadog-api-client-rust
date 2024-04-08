@@ -44,6 +44,9 @@ pub struct SyntheticsTestRequest {
     /// DNS server port to use for DNS tests.
     #[serde(rename = "dnsServerPort")]
     pub dns_server_port: Option<i32>,
+    /// Files to be used as part of the request in the test.
+    #[serde(rename = "files")]
+    pub files: Option<Vec<crate::datadogV1::model::SyntheticsTestRequestBodyFile>>,
     /// Specifies whether or not the request follows redirects.
     #[serde(rename = "follow_redirects")]
     pub follow_redirects: Option<bool>,
@@ -119,6 +122,7 @@ impl SyntheticsTestRequest {
             compressed_proto_file: None,
             dns_server: None,
             dns_server_port: None,
+            files: None,
             follow_redirects: None,
             headers: None,
             host: None,
@@ -199,6 +203,14 @@ impl SyntheticsTestRequest {
 
     pub fn dns_server_port(mut self, value: i32) -> Self {
         self.dns_server_port = Some(value);
+        self
+    }
+
+    pub fn files(
+        mut self,
+        value: Vec<crate::datadogV1::model::SyntheticsTestRequestBodyFile>,
+    ) -> Self {
+        self.files = Some(value);
         self
     }
 
@@ -333,6 +345,8 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                 let mut compressed_proto_file: Option<String> = None;
                 let mut dns_server: Option<String> = None;
                 let mut dns_server_port: Option<i32> = None;
+                let mut files: Option<Vec<crate::datadogV1::model::SyntheticsTestRequestBodyFile>> =
+                    None;
                 let mut follow_redirects: Option<bool> = None;
                 let mut headers: Option<std::collections::BTreeMap<String, String>> = None;
                 let mut host: Option<String> = None;
@@ -452,6 +466,12 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                             }
                             dns_server_port =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "files" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            files = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "follow_redirects" => {
                             if v.is_null() {
@@ -591,6 +611,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                     compressed_proto_file,
                     dns_server,
                     dns_server_port,
+                    files,
                     follow_redirects,
                     headers,
                     host,
