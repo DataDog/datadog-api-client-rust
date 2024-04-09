@@ -1,8 +1,8 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use crate::datadog::*;
-use reqwest;
+use crate::datadog;
+use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 
 /// GetDailyCustomReportsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_daily_custom_reports`]
@@ -230,57 +230,6 @@ impl GetUsageAnalyzedLogsOptionalParams {
     /// **before** this hour.
     pub fn end_hr(mut self, value: String) -> Self {
         self.end_hr = Some(value);
-        self
-    }
-}
-
-/// GetUsageAttributionOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_attribution`]
-#[non_exhaustive]
-#[derive(Clone, Default, Debug)]
-pub struct GetUsageAttributionOptionalParams {
-    /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage ending this month.
-    pub end_month: Option<String>,
-    /// The direction to sort by: `[desc, asc]`.
-    pub sort_direction: Option<crate::datadogV1::model::UsageSortDirection>,
-    /// The field to sort by.
-    pub sort_name: Option<crate::datadogV1::model::UsageAttributionSort>,
-    /// Include child org usage in the response. Defaults to false.
-    pub include_descendants: Option<bool>,
-    /// Number of records to skip before beginning to return.
-    pub offset: Option<i64>,
-    /// Maximum number of records to be returned.
-    pub limit: Option<i64>,
-}
-
-impl GetUsageAttributionOptionalParams {
-    /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage ending this month.
-    pub fn end_month(mut self, value: String) -> Self {
-        self.end_month = Some(value);
-        self
-    }
-    /// The direction to sort by: `[desc, asc]`.
-    pub fn sort_direction(mut self, value: crate::datadogV1::model::UsageSortDirection) -> Self {
-        self.sort_direction = Some(value);
-        self
-    }
-    /// The field to sort by.
-    pub fn sort_name(mut self, value: crate::datadogV1::model::UsageAttributionSort) -> Self {
-        self.sort_name = Some(value);
-        self
-    }
-    /// Include child org usage in the response. Defaults to false.
-    pub fn include_descendants(mut self, value: bool) -> Self {
-        self.include_descendants = Some(value);
-        self
-    }
-    /// Number of records to skip before beginning to return.
-    pub fn offset(mut self, value: i64) -> Self {
-        self.offset = Some(value);
-        self
-    }
-    /// Maximum number of records to be returned.
-    pub fn limit(mut self, value: i64) -> Self {
-        self.limit = Some(value);
         self
     }
 }
@@ -893,15 +842,6 @@ pub enum GetUsageAnalyzedLogsError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUsageAttributionError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_attribution`]
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum GetUsageAttributionError {
-    Status403(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV1::model::APIErrorResponse>),
-    UnknownValue(serde_json::Value),
-}
-
 /// GetUsageAuditLogsError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_audit_logs`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1184,14 +1124,13 @@ pub enum GetUsageTopAvgMetricsError {
 
 #[derive(Debug, Clone)]
 pub struct UsageMeteringAPI {
-    config: configuration::Configuration,
+    config: datadog::Configuration,
+    client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for UsageMeteringAPI {
     fn default() -> Self {
-        Self {
-            config: configuration::Configuration::new(),
-        }
+        Self::with_config(datadog::Configuration::default())
     }
 }
 
@@ -1199,8 +1138,52 @@ impl UsageMeteringAPI {
     pub fn new() -> Self {
         Self::default()
     }
-    pub fn with_config(config: configuration::Configuration) -> Self {
-        Self { config }
+    pub fn with_config(config: datadog::Configuration) -> Self {
+        let mut reqwest_client_builder = reqwest::Client::builder();
+
+        if let Some(proxy_url) = &config.proxy_url {
+            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
+            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
+        }
+
+        let mut middleware_client_builder =
+            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+
+        if config.enable_retry {
+            struct RetryableStatus;
+            impl reqwest_retry::RetryableStrategy for RetryableStatus {
+                fn handle(
+                    &self,
+                    res: &Result<reqwest::Response, reqwest_middleware::Error>,
+                ) -> Option<reqwest_retry::Retryable> {
+                    match res {
+                        Ok(success) => reqwest_retry::default_on_request_success(success),
+                        Err(_) => None,
+                    }
+                }
+            }
+            let backoff_policy = reqwest_retry::policies::ExponentialBackoff::builder()
+                .build_with_max_retries(config.max_retries);
+
+            let retry_middleware =
+                reqwest_retry::RetryTransientMiddleware::new_with_policy_and_strategy(
+                    backoff_policy,
+                    RetryableStatus,
+                );
+
+            middleware_client_builder = middleware_client_builder.with(retry_middleware);
+        }
+
+        let client = middleware_client_builder.build();
+
+        Self { config, client }
+    }
+
+    pub fn with_client_and_config(
+        config: datadog::Configuration,
+        client: reqwest_middleware::ClientWithMiddleware,
+    ) -> Self {
+        Self { config, client }
     }
 
     /// Get daily custom reports.
@@ -1211,14 +1194,14 @@ impl UsageMeteringAPI {
         params: GetDailyCustomReportsOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageCustomReportsResponse,
-        Error<GetDailyCustomReportsError>,
+        datadog::Error<GetDailyCustomReportsError>,
     > {
         match self.get_daily_custom_reports_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1234,8 +1217,8 @@ impl UsageMeteringAPI {
         &self,
         params: GetDailyCustomReportsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageCustomReportsResponse>,
-        Error<GetDailyCustomReportsError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageCustomReportsResponse>,
+        datadog::Error<GetDailyCustomReportsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_daily_custom_reports";
@@ -1246,7 +1229,7 @@ impl UsageMeteringAPI {
         let sort_dir = params.sort_dir;
         let sort = params.sort;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/daily_custom_reports",
@@ -1272,20 +1255,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("sort", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -1297,23 +1302,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetDailyCustomReportsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1339,7 +1344,7 @@ impl UsageMeteringAPI {
         params: GetHourlyUsageAttributionOptionalParams,
     ) -> Result<
         crate::datadogV1::model::HourlyUsageAttributionResponse,
-        Error<GetHourlyUsageAttributionError>,
+        datadog::Error<GetHourlyUsageAttributionError>,
     > {
         match self
             .get_hourly_usage_attribution_with_http_info(start_hr, usage_type, params)
@@ -1349,7 +1354,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1379,8 +1384,8 @@ impl UsageMeteringAPI {
         usage_type: crate::datadogV1::model::HourlyUsageAttributionUsageType,
         params: GetHourlyUsageAttributionOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::HourlyUsageAttributionResponse>,
-        Error<GetHourlyUsageAttributionError>,
+        datadog::ResponseContent<crate::datadogV1::model::HourlyUsageAttributionResponse>,
+        datadog::Error<GetHourlyUsageAttributionError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_hourly_usage_attribution";
@@ -1391,7 +1396,7 @@ impl UsageMeteringAPI {
         let tag_breakdown_keys = params.tag_breakdown_keys;
         let include_descendants = params.include_descendants;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/hourly-attribution",
@@ -1419,20 +1424,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("include_descendants", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -1444,35 +1471,35 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetHourlyUsageAttributionError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// Get hourly usage for incident management.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_incident_management(
         &self,
         start_hr: String,
         params: GetIncidentManagementOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageIncidentManagementResponse,
-        Error<GetIncidentManagementError>,
+        datadog::Error<GetIncidentManagementError>,
     > {
         match self
             .get_incident_management_with_http_info(start_hr, params)
@@ -1482,7 +1509,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1492,14 +1519,14 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for incident management.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_incident_management_with_http_info(
         &self,
         start_hr: String,
         params: GetIncidentManagementOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageIncidentManagementResponse>,
-        Error<GetIncidentManagementError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageIncidentManagementResponse>,
+        datadog::Error<GetIncidentManagementError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_incident_management";
@@ -1507,7 +1534,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/incident-management",
@@ -1522,20 +1549,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -1547,34 +1596,36 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetIncidentManagementError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// Get hourly usage for ingested spans.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_ingested_spans(
         &self,
         start_hr: String,
         params: GetIngestedSpansOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageIngestedSpansResponse, Error<GetIngestedSpansError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::UsageIngestedSpansResponse,
+        datadog::Error<GetIngestedSpansError>,
+    > {
         match self
             .get_ingested_spans_with_http_info(start_hr, params)
             .await
@@ -1583,7 +1634,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1593,14 +1644,14 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for ingested spans.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_ingested_spans_with_http_info(
         &self,
         start_hr: String,
         params: GetIngestedSpansOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageIngestedSpansResponse>,
-        Error<GetIngestedSpansError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageIngestedSpansResponse>,
+        datadog::Error<GetIngestedSpansError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_ingested_spans";
@@ -1608,7 +1659,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/ingested-spans",
@@ -1623,20 +1674,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -1648,23 +1721,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetIngestedSpansError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1676,14 +1749,14 @@ impl UsageMeteringAPI {
         params: GetMonthlyCustomReportsOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageCustomReportsResponse,
-        Error<GetMonthlyCustomReportsError>,
+        datadog::Error<GetMonthlyCustomReportsError>,
     > {
         match self.get_monthly_custom_reports_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1699,8 +1772,8 @@ impl UsageMeteringAPI {
         &self,
         params: GetMonthlyCustomReportsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageCustomReportsResponse>,
-        Error<GetMonthlyCustomReportsError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageCustomReportsResponse>,
+        datadog::Error<GetMonthlyCustomReportsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_monthly_custom_reports";
@@ -1711,7 +1784,7 @@ impl UsageMeteringAPI {
         let sort_dir = params.sort_dir;
         let sort = params.sort;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/monthly_custom_reports",
@@ -1737,20 +1810,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("sort", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -1762,23 +1857,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetMonthlyCustomReportsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1804,7 +1899,7 @@ impl UsageMeteringAPI {
         params: GetMonthlyUsageAttributionOptionalParams,
     ) -> Result<
         crate::datadogV1::model::MonthlyUsageAttributionResponse,
-        Error<GetMonthlyUsageAttributionError>,
+        datadog::Error<GetMonthlyUsageAttributionError>,
     > {
         match self
             .get_monthly_usage_attribution_with_http_info(start_month, fields, params)
@@ -1814,7 +1909,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1844,8 +1939,8 @@ impl UsageMeteringAPI {
         fields: crate::datadogV1::model::MonthlyUsageAttributionSupportedMetrics,
         params: GetMonthlyUsageAttributionOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::MonthlyUsageAttributionResponse>,
-        Error<GetMonthlyUsageAttributionError>,
+        datadog::ResponseContent<crate::datadogV1::model::MonthlyUsageAttributionResponse>,
+        datadog::Error<GetMonthlyUsageAttributionError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_monthly_usage_attribution";
@@ -1858,7 +1953,7 @@ impl UsageMeteringAPI {
         let next_record_id = params.next_record_id;
         let include_descendants = params.include_descendants;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/monthly-attribution",
@@ -1894,20 +1989,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("include_descendants", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -1919,23 +2036,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetMonthlyUsageAttributionError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1947,7 +2064,7 @@ impl UsageMeteringAPI {
         report_id: String,
     ) -> Result<
         crate::datadogV1::model::UsageSpecifiedCustomReportsResponse,
-        Error<GetSpecifiedDailyCustomReportsError>,
+        datadog::Error<GetSpecifiedDailyCustomReportsError>,
     > {
         match self
             .get_specified_daily_custom_reports_with_http_info(report_id)
@@ -1957,7 +2074,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1973,36 +2090,58 @@ impl UsageMeteringAPI {
         &self,
         report_id: String,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageSpecifiedCustomReportsResponse>,
-        Error<GetSpecifiedDailyCustomReportsError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageSpecifiedCustomReportsResponse>,
+        datadog::Error<GetSpecifiedDailyCustomReportsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_specified_daily_custom_reports";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/daily_custom_reports/{report_id}",
             local_configuration.get_operation_host(operation_id),
-            report_id = urlencode(report_id)
+            report_id = datadog::urlencode(report_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -2014,23 +2153,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetSpecifiedDailyCustomReportsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -2042,7 +2181,7 @@ impl UsageMeteringAPI {
         report_id: String,
     ) -> Result<
         crate::datadogV1::model::UsageSpecifiedCustomReportsResponse,
-        Error<GetSpecifiedMonthlyCustomReportsError>,
+        datadog::Error<GetSpecifiedMonthlyCustomReportsError>,
     > {
         match self
             .get_specified_monthly_custom_reports_with_http_info(report_id)
@@ -2052,7 +2191,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -2068,36 +2207,58 @@ impl UsageMeteringAPI {
         &self,
         report_id: String,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageSpecifiedCustomReportsResponse>,
-        Error<GetSpecifiedMonthlyCustomReportsError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageSpecifiedCustomReportsResponse>,
+        datadog::Error<GetSpecifiedMonthlyCustomReportsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_specified_monthly_custom_reports";
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/monthly_custom_reports/{report_id}",
             local_configuration.get_operation_host(operation_id),
-            report_id = urlencode(report_id)
+            report_id = datadog::urlencode(report_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -2109,34 +2270,36 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetSpecifiedMonthlyCustomReportsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// Get hourly usage for analyzed logs (Security Monitoring).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_analyzed_logs(
         &self,
         start_hr: String,
         params: GetUsageAnalyzedLogsOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageAnalyzedLogsResponse, Error<GetUsageAnalyzedLogsError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::UsageAnalyzedLogsResponse,
+        datadog::Error<GetUsageAnalyzedLogsError>,
+    > {
         match self
             .get_usage_analyzed_logs_with_http_info(start_hr, params)
             .await
@@ -2145,7 +2308,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -2155,14 +2318,14 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for analyzed logs (Security Monitoring).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_analyzed_logs_with_http_info(
         &self,
         start_hr: String,
         params: GetUsageAnalyzedLogsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageAnalyzedLogsResponse>,
-        Error<GetUsageAnalyzedLogsError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageAnalyzedLogsResponse>,
+        datadog::Error<GetUsageAnalyzedLogsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_analyzed_logs";
@@ -2170,7 +2333,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/analyzed_logs",
@@ -2185,20 +2348,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -2210,154 +2395,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageAnalyzedLogsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
-        }
-    }
-
-    /// Get usage attribution.
-    /// **Note:** This endpoint will be fully deprecated on December 1, 2022.
-    /// Refer to [Migrating from v1 to v2 of the Usage Attribution API](<https://docs.datadoghq.com/account_management/guide/usage-attribution-migration/>) for the associated migration guide.
-    pub async fn get_usage_attribution(
-        &self,
-        start_month: String,
-        fields: crate::datadogV1::model::UsageAttributionSupportedMetrics,
-        params: GetUsageAttributionOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageAttributionResponse, Error<GetUsageAttributionError>>
-    {
-        match self
-            .get_usage_attribution_with_http_info(start_month, fields, params)
-            .await
-        {
-            Ok(response_content) => {
-                if let Some(e) = response_content.entity {
-                    Ok(e)
-                } else {
-                    Err(Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
-                }
-            }
-            Err(err) => Err(err),
-        }
-    }
-
-    /// Get usage attribution.
-    /// **Note:** This endpoint will be fully deprecated on December 1, 2022.
-    /// Refer to [Migrating from v1 to v2 of the Usage Attribution API](<https://docs.datadoghq.com/account_management/guide/usage-attribution-migration/>) for the associated migration guide.
-    pub async fn get_usage_attribution_with_http_info(
-        &self,
-        start_month: String,
-        fields: crate::datadogV1::model::UsageAttributionSupportedMetrics,
-        params: GetUsageAttributionOptionalParams,
-    ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageAttributionResponse>,
-        Error<GetUsageAttributionError>,
-    > {
-        let local_configuration = &self.config;
-        let operation_id = "v1.get_usage_attribution";
-
-        // unbox and build optional parameters
-        let end_month = params.end_month;
-        let sort_direction = params.sort_direction;
-        let sort_name = params.sort_name;
-        let include_descendants = params.include_descendants;
-        let offset = params.offset;
-        let limit = params.limit;
-
-        let local_client = &local_configuration.client;
-
-        let local_uri_str = format!(
-            "{}/api/v1/usage/attribution",
-            local_configuration.get_operation_host(operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
-
-        local_req_builder = local_req_builder.query(&[("start_month", &start_month.to_string())]);
-        local_req_builder = local_req_builder.query(&[("fields", &fields.to_string())]);
-        if let Some(ref local_query_param) = end_month {
-            local_req_builder =
-                local_req_builder.query(&[("end_month", &local_query_param.to_string())]);
-        };
-        if let Some(ref local_query_param) = sort_direction {
-            local_req_builder =
-                local_req_builder.query(&[("sort_direction", &local_query_param.to_string())]);
-        };
-        if let Some(ref local_query_param) = sort_name {
-            local_req_builder =
-                local_req_builder.query(&[("sort_name", &local_query_param.to_string())]);
-        };
-        if let Some(ref local_query_param) = include_descendants {
-            local_req_builder =
-                local_req_builder.query(&[("include_descendants", &local_query_param.to_string())]);
-        };
-        if let Some(ref local_query_param) = offset {
-            local_req_builder =
-                local_req_builder.query(&[("offset", &local_query_param.to_string())]);
-        };
-        if let Some(ref local_query_param) = limit {
-            local_req_builder =
-                local_req_builder.query(&[("limit", &local_query_param.to_string())]);
-        };
-
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
-        );
-
-        // build auth
-        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
-        };
-        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
-        };
-
-        let local_req = local_req_builder.build()?;
-        let local_resp = local_client.execute(local_req).await?;
-
-        let local_status = local_resp.status();
-        let local_content = local_resp.text().await?;
-
-        if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV1::model::UsageAttributionResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
-            };
-        } else {
-            let local_entity: Option<GetUsageAttributionError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -2367,8 +2421,10 @@ impl UsageMeteringAPI {
         &self,
         start_hr: String,
         params: GetUsageAuditLogsOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageAuditLogsResponse, Error<GetUsageAuditLogsError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::UsageAuditLogsResponse,
+        datadog::Error<GetUsageAuditLogsError>,
+    > {
         match self
             .get_usage_audit_logs_with_http_info(start_hr, params)
             .await
@@ -2377,7 +2433,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -2393,8 +2449,8 @@ impl UsageMeteringAPI {
         start_hr: String,
         params: GetUsageAuditLogsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageAuditLogsResponse>,
-        Error<GetUsageAuditLogsError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageAuditLogsResponse>,
+        datadog::Error<GetUsageAuditLogsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_audit_logs";
@@ -2402,7 +2458,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/audit_logs",
@@ -2417,20 +2473,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -2442,23 +2520,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageAuditLogsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -2468,14 +2546,14 @@ impl UsageMeteringAPI {
         params: GetUsageBillableSummaryOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageBillableSummaryResponse,
-        Error<GetUsageBillableSummaryError>,
+        datadog::Error<GetUsageBillableSummaryError>,
     > {
         match self.get_usage_billable_summary_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -2489,8 +2567,8 @@ impl UsageMeteringAPI {
         &self,
         params: GetUsageBillableSummaryOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageBillableSummaryResponse>,
-        Error<GetUsageBillableSummaryError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageBillableSummaryResponse>,
+        datadog::Error<GetUsageBillableSummaryError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_billable_summary";
@@ -2498,7 +2576,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let month = params.month;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/billable-summary",
@@ -2512,20 +2590,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("month", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -2537,39 +2637,42 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageBillableSummaryError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// Get hourly usage for CI visibility (tests, pipeline, and spans).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_ci_app(
         &self,
         start_hr: String,
         params: GetUsageCIAppOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageCIVisibilityResponse, Error<GetUsageCIAppError>> {
+    ) -> Result<
+        crate::datadogV1::model::UsageCIVisibilityResponse,
+        datadog::Error<GetUsageCIAppError>,
+    > {
         match self.get_usage_ci_app_with_http_info(start_hr, params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -2579,14 +2682,14 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for CI visibility (tests, pipeline, and spans).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_ci_app_with_http_info(
         &self,
         start_hr: String,
         params: GetUsageCIAppOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageCIVisibilityResponse>,
-        Error<GetUsageCIAppError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageCIVisibilityResponse>,
+        datadog::Error<GetUsageCIAppError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_ci_app";
@@ -2594,7 +2697,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/ci-app",
@@ -2609,20 +2712,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -2634,39 +2759,39 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageCIAppError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// Get hourly usage for cloud workload security.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_cws(
         &self,
         start_hr: String,
         params: GetUsageCWSOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageCWSResponse, Error<GetUsageCWSError>> {
+    ) -> Result<crate::datadogV1::model::UsageCWSResponse, datadog::Error<GetUsageCWSError>> {
         match self.get_usage_cws_with_http_info(start_hr, params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -2676,20 +2801,22 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for cloud workload security.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_cws_with_http_info(
         &self,
         start_hr: String,
         params: GetUsageCWSOptionalParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::UsageCWSResponse>, Error<GetUsageCWSError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::UsageCWSResponse>,
+        datadog::Error<GetUsageCWSError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_cws";
 
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/cws",
@@ -2704,20 +2831,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -2728,34 +2877,34 @@ impl UsageMeteringAPI {
             match serde_json::from_str::<crate::datadogV1::model::UsageCWSResponse>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageCWSError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// Get hourly usage for cloud security management (CSM) pro.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_cloud_security_posture_management(
         &self,
         start_hr: String,
         params: GetUsageCloudSecurityPostureManagementOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageCloudSecurityPostureManagementResponse,
-        Error<GetUsageCloudSecurityPostureManagementError>,
+        datadog::Error<GetUsageCloudSecurityPostureManagementError>,
     > {
         match self
             .get_usage_cloud_security_posture_management_with_http_info(start_hr, params)
@@ -2765,7 +2914,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -2775,14 +2924,16 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for cloud security management (CSM) pro.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_cloud_security_posture_management_with_http_info(
         &self,
         start_hr: String,
         params: GetUsageCloudSecurityPostureManagementOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageCloudSecurityPostureManagementResponse>,
-        Error<GetUsageCloudSecurityPostureManagementError>,
+        datadog::ResponseContent<
+            crate::datadogV1::model::UsageCloudSecurityPostureManagementResponse,
+        >,
+        datadog::Error<GetUsageCloudSecurityPostureManagementError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_cloud_security_posture_management";
@@ -2790,7 +2941,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/cspm",
@@ -2805,20 +2956,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -2831,39 +3004,39 @@ impl UsageMeteringAPI {
             >(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageCloudSecurityPostureManagementError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// Get hourly usage for database monitoring
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_dbm(
         &self,
         start_hr: String,
         params: GetUsageDBMOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageDBMResponse, Error<GetUsageDBMError>> {
+    ) -> Result<crate::datadogV1::model::UsageDBMResponse, datadog::Error<GetUsageDBMError>> {
         match self.get_usage_dbm_with_http_info(start_hr, params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -2873,20 +3046,22 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for database monitoring
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_dbm_with_http_info(
         &self,
         start_hr: String,
         params: GetUsageDBMOptionalParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::UsageDBMResponse>, Error<GetUsageDBMError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::UsageDBMResponse>,
+        datadog::Error<GetUsageDBMError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_dbm";
 
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/dbm",
@@ -2901,20 +3076,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -2925,32 +3122,33 @@ impl UsageMeteringAPI {
             match serde_json::from_str::<crate::datadogV1::model::UsageDBMResponse>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageDBMError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// Get hourly usage for [Fargate](<https://docs.datadoghq.com/integrations/ecs_fargate/>).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_fargate(
         &self,
         start_hr: String,
         params: GetUsageFargateOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageFargateResponse, Error<GetUsageFargateError>> {
+    ) -> Result<crate::datadogV1::model::UsageFargateResponse, datadog::Error<GetUsageFargateError>>
+    {
         match self
             .get_usage_fargate_with_http_info(start_hr, params)
             .await
@@ -2959,7 +3157,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -2969,14 +3167,14 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for [Fargate](<https://docs.datadoghq.com/integrations/ecs_fargate/>).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_fargate_with_http_info(
         &self,
         start_hr: String,
         params: GetUsageFargateOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageFargateResponse>,
-        Error<GetUsageFargateError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageFargateResponse>,
+        datadog::Error<GetUsageFargateError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_fargate";
@@ -2984,7 +3182,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/fargate",
@@ -2999,20 +3197,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -3024,39 +3244,40 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageFargateError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// Get hourly usage for hosts and containers.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_hosts(
         &self,
         start_hr: String,
         params: GetUsageHostsOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageHostsResponse, Error<GetUsageHostsError>> {
+    ) -> Result<crate::datadogV1::model::UsageHostsResponse, datadog::Error<GetUsageHostsError>>
+    {
         match self.get_usage_hosts_with_http_info(start_hr, params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -3066,14 +3287,14 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for hosts and containers.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_hosts_with_http_info(
         &self,
         start_hr: String,
         params: GetUsageHostsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageHostsResponse>,
-        Error<GetUsageHostsError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageHostsResponse>,
+        datadog::Error<GetUsageHostsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_hosts";
@@ -3081,7 +3302,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/hosts",
@@ -3096,20 +3317,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -3121,34 +3364,36 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageHostsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// Get hourly usage for indexed spans.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_indexed_spans(
         &self,
         start_hr: String,
         params: GetUsageIndexedSpansOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageIndexedSpansResponse, Error<GetUsageIndexedSpansError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::UsageIndexedSpansResponse,
+        datadog::Error<GetUsageIndexedSpansError>,
+    > {
         match self
             .get_usage_indexed_spans_with_http_info(start_hr, params)
             .await
@@ -3157,7 +3402,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -3167,14 +3412,14 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for indexed spans.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_indexed_spans_with_http_info(
         &self,
         start_hr: String,
         params: GetUsageIndexedSpansOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageIndexedSpansResponse>,
-        Error<GetUsageIndexedSpansError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageIndexedSpansResponse>,
+        datadog::Error<GetUsageIndexedSpansError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_indexed_spans";
@@ -3182,7 +3427,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/indexed-spans",
@@ -3197,20 +3442,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -3222,34 +3489,36 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageIndexedSpansError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// Get hourly usage for IoT.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_internet_of_things(
         &self,
         start_hr: String,
         params: GetUsageInternetOfThingsOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageIoTResponse, Error<GetUsageInternetOfThingsError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::UsageIoTResponse,
+        datadog::Error<GetUsageInternetOfThingsError>,
+    > {
         match self
             .get_usage_internet_of_things_with_http_info(start_hr, params)
             .await
@@ -3258,7 +3527,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -3268,14 +3537,14 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for IoT.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_internet_of_things_with_http_info(
         &self,
         start_hr: String,
         params: GetUsageInternetOfThingsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageIoTResponse>,
-        Error<GetUsageInternetOfThingsError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageIoTResponse>,
+        datadog::Error<GetUsageInternetOfThingsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_internet_of_things";
@@ -3283,7 +3552,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/iot",
@@ -3298,20 +3567,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -3322,39 +3613,40 @@ impl UsageMeteringAPI {
             match serde_json::from_str::<crate::datadogV1::model::UsageIoTResponse>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageInternetOfThingsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
-    /// Get hourly usage for lambda.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// Get hourly usage for Lambda.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_lambda(
         &self,
         start_hr: String,
         params: GetUsageLambdaOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageLambdaResponse, Error<GetUsageLambdaError>> {
+    ) -> Result<crate::datadogV1::model::UsageLambdaResponse, datadog::Error<GetUsageLambdaError>>
+    {
         match self.get_usage_lambda_with_http_info(start_hr, params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -3363,15 +3655,15 @@ impl UsageMeteringAPI {
         }
     }
 
-    /// Get hourly usage for lambda.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// Get hourly usage for Lambda.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_lambda_with_http_info(
         &self,
         start_hr: String,
         params: GetUsageLambdaOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageLambdaResponse>,
-        Error<GetUsageLambdaError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageLambdaResponse>,
+        datadog::Error<GetUsageLambdaError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_lambda";
@@ -3379,7 +3671,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/aws_lambda",
@@ -3394,20 +3686,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -3419,39 +3733,39 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageLambdaError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// Get hourly usage for logs.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_logs(
         &self,
         start_hr: String,
         params: GetUsageLogsOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageLogsResponse, Error<GetUsageLogsError>> {
+    ) -> Result<crate::datadogV1::model::UsageLogsResponse, datadog::Error<GetUsageLogsError>> {
         match self.get_usage_logs_with_http_info(start_hr, params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -3461,20 +3775,22 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for logs.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_logs_with_http_info(
         &self,
         start_hr: String,
         params: GetUsageLogsOptionalParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::UsageLogsResponse>, Error<GetUsageLogsError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::UsageLogsResponse>,
+        datadog::Error<GetUsageLogsError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_logs";
 
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/logs",
@@ -3489,20 +3805,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -3513,22 +3851,22 @@ impl UsageMeteringAPI {
             match serde_json::from_str::<crate::datadogV1::model::UsageLogsResponse>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageLogsError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -3537,8 +3875,10 @@ impl UsageMeteringAPI {
         &self,
         start_hr: String,
         params: GetUsageLogsByIndexOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageLogsByIndexResponse, Error<GetUsageLogsByIndexError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::UsageLogsByIndexResponse,
+        datadog::Error<GetUsageLogsByIndexError>,
+    > {
         match self
             .get_usage_logs_by_index_with_http_info(start_hr, params)
             .await
@@ -3547,7 +3887,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -3562,8 +3902,8 @@ impl UsageMeteringAPI {
         start_hr: String,
         params: GetUsageLogsByIndexOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageLogsByIndexResponse>,
-        Error<GetUsageLogsByIndexError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageLogsByIndexResponse>,
+        datadog::Error<GetUsageLogsByIndexError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_logs_by_index";
@@ -3572,7 +3912,7 @@ impl UsageMeteringAPI {
         let end_hr = params.end_hr;
         let index_name = params.index_name;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/logs_by_index",
@@ -3598,20 +3938,42 @@ impl UsageMeteringAPI {
             )]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -3623,35 +3985,35 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageLogsByIndexError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// Get hourly usage for indexed logs by retention period.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_logs_by_retention(
         &self,
         start_hr: String,
         params: GetUsageLogsByRetentionOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageLogsByRetentionResponse,
-        Error<GetUsageLogsByRetentionError>,
+        datadog::Error<GetUsageLogsByRetentionError>,
     > {
         match self
             .get_usage_logs_by_retention_with_http_info(start_hr, params)
@@ -3661,7 +4023,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -3671,14 +4033,14 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for indexed logs by retention period.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_logs_by_retention_with_http_info(
         &self,
         start_hr: String,
         params: GetUsageLogsByRetentionOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageLogsByRetentionResponse>,
-        Error<GetUsageLogsByRetentionError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageLogsByRetentionResponse>,
+        datadog::Error<GetUsageLogsByRetentionError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_logs_by_retention";
@@ -3686,7 +4048,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/logs-by-retention",
@@ -3701,20 +4063,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -3726,34 +4110,36 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageLogsByRetentionError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// Get hourly usage for network flows.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_network_flows(
         &self,
         start_hr: String,
         params: GetUsageNetworkFlowsOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageNetworkFlowsResponse, Error<GetUsageNetworkFlowsError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::UsageNetworkFlowsResponse,
+        datadog::Error<GetUsageNetworkFlowsError>,
+    > {
         match self
             .get_usage_network_flows_with_http_info(start_hr, params)
             .await
@@ -3762,7 +4148,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -3772,14 +4158,14 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for network flows.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_network_flows_with_http_info(
         &self,
         start_hr: String,
         params: GetUsageNetworkFlowsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageNetworkFlowsResponse>,
-        Error<GetUsageNetworkFlowsError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageNetworkFlowsResponse>,
+        datadog::Error<GetUsageNetworkFlowsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_network_flows";
@@ -3787,7 +4173,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/network_flows",
@@ -3802,20 +4188,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -3827,34 +4235,36 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageNetworkFlowsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// Get hourly usage for network hosts.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_network_hosts(
         &self,
         start_hr: String,
         params: GetUsageNetworkHostsOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageNetworkHostsResponse, Error<GetUsageNetworkHostsError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::UsageNetworkHostsResponse,
+        datadog::Error<GetUsageNetworkHostsError>,
+    > {
         match self
             .get_usage_network_hosts_with_http_info(start_hr, params)
             .await
@@ -3863,7 +4273,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -3873,14 +4283,14 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for network hosts.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_network_hosts_with_http_info(
         &self,
         start_hr: String,
         params: GetUsageNetworkHostsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageNetworkHostsResponse>,
-        Error<GetUsageNetworkHostsError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageNetworkHostsResponse>,
+        datadog::Error<GetUsageNetworkHostsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_network_hosts";
@@ -3888,7 +4298,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/network_hosts",
@@ -3903,20 +4313,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -3928,35 +4360,35 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageNetworkHostsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// Get hourly usage for online archive.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_online_archive(
         &self,
         start_hr: String,
         params: GetUsageOnlineArchiveOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageOnlineArchiveResponse,
-        Error<GetUsageOnlineArchiveError>,
+        datadog::Error<GetUsageOnlineArchiveError>,
     > {
         match self
             .get_usage_online_archive_with_http_info(start_hr, params)
@@ -3966,7 +4398,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -3976,14 +4408,14 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for online archive.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_online_archive_with_http_info(
         &self,
         start_hr: String,
         params: GetUsageOnlineArchiveOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageOnlineArchiveResponse>,
-        Error<GetUsageOnlineArchiveError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageOnlineArchiveResponse>,
+        datadog::Error<GetUsageOnlineArchiveError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_online_archive";
@@ -3991,7 +4423,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/online-archive",
@@ -4006,20 +4438,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -4031,34 +4485,36 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageOnlineArchiveError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// Get hourly usage for profiled hosts.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_profiling(
         &self,
         start_hr: String,
         params: GetUsageProfilingOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageProfilingResponse, Error<GetUsageProfilingError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::UsageProfilingResponse,
+        datadog::Error<GetUsageProfilingError>,
+    > {
         match self
             .get_usage_profiling_with_http_info(start_hr, params)
             .await
@@ -4067,7 +4523,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -4077,14 +4533,14 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for profiled hosts.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_profiling_with_http_info(
         &self,
         start_hr: String,
         params: GetUsageProfilingOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageProfilingResponse>,
-        Error<GetUsageProfilingError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageProfilingResponse>,
+        datadog::Error<GetUsageProfilingError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_profiling";
@@ -4092,7 +4548,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/profiling",
@@ -4107,20 +4563,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -4132,34 +4610,36 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageProfilingError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// Get hourly usage for [RUM](<https://docs.datadoghq.com/real_user_monitoring/>) Sessions.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_rum_sessions(
         &self,
         start_hr: String,
         params: GetUsageRumSessionsOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageRumSessionsResponse, Error<GetUsageRumSessionsError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::UsageRumSessionsResponse,
+        datadog::Error<GetUsageRumSessionsError>,
+    > {
         match self
             .get_usage_rum_sessions_with_http_info(start_hr, params)
             .await
@@ -4168,7 +4648,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -4178,14 +4658,14 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for [RUM](<https://docs.datadoghq.com/real_user_monitoring/>) Sessions.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_rum_sessions_with_http_info(
         &self,
         start_hr: String,
         params: GetUsageRumSessionsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageRumSessionsResponse>,
-        Error<GetUsageRumSessionsError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageRumSessionsResponse>,
+        datadog::Error<GetUsageRumSessionsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_rum_sessions";
@@ -4194,7 +4674,7 @@ impl UsageMeteringAPI {
         let end_hr = params.end_hr;
         let type_ = params.type_;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/rum_sessions",
@@ -4213,20 +4693,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("type", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -4238,33 +4740,34 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageRumSessionsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// Get hourly usage for [RUM](<https://docs.datadoghq.com/real_user_monitoring/>) Units.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_rum_units(
         &self,
         start_hr: String,
         params: GetUsageRumUnitsOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageRumUnitsResponse, Error<GetUsageRumUnitsError>> {
+    ) -> Result<crate::datadogV1::model::UsageRumUnitsResponse, datadog::Error<GetUsageRumUnitsError>>
+    {
         match self
             .get_usage_rum_units_with_http_info(start_hr, params)
             .await
@@ -4273,7 +4776,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -4283,14 +4786,14 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for [RUM](<https://docs.datadoghq.com/real_user_monitoring/>) Units.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_rum_units_with_http_info(
         &self,
         start_hr: String,
         params: GetUsageRumUnitsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageRumUnitsResponse>,
-        Error<GetUsageRumUnitsError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageRumUnitsResponse>,
+        datadog::Error<GetUsageRumUnitsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_rum_units";
@@ -4298,7 +4801,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/rum",
@@ -4313,20 +4816,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -4338,39 +4863,39 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageRumUnitsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// Get hourly usage for sensitive data scanner.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_sds(
         &self,
         start_hr: String,
         params: GetUsageSDSOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageSDSResponse, Error<GetUsageSDSError>> {
+    ) -> Result<crate::datadogV1::model::UsageSDSResponse, datadog::Error<GetUsageSDSError>> {
         match self.get_usage_sds_with_http_info(start_hr, params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -4380,20 +4905,22 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for sensitive data scanner.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_sds_with_http_info(
         &self,
         start_hr: String,
         params: GetUsageSDSOptionalParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::UsageSDSResponse>, Error<GetUsageSDSError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::UsageSDSResponse>,
+        datadog::Error<GetUsageSDSError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_sds";
 
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/sds",
@@ -4408,20 +4935,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -4432,38 +4981,38 @@ impl UsageMeteringAPI {
             match serde_json::from_str::<crate::datadogV1::model::UsageSDSResponse>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageSDSError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// Get hourly usage for SNMP devices.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_snmp(
         &self,
         start_hr: String,
         params: GetUsageSNMPOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageSNMPResponse, Error<GetUsageSNMPError>> {
+    ) -> Result<crate::datadogV1::model::UsageSNMPResponse, datadog::Error<GetUsageSNMPError>> {
         match self.get_usage_snmp_with_http_info(start_hr, params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -4473,20 +5022,22 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for SNMP devices.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_snmp_with_http_info(
         &self,
         start_hr: String,
         params: GetUsageSNMPOptionalParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::UsageSNMPResponse>, Error<GetUsageSNMPError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::UsageSNMPResponse>,
+        datadog::Error<GetUsageSNMPError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_snmp";
 
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/snmp",
@@ -4501,20 +5052,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -4525,22 +5098,22 @@ impl UsageMeteringAPI {
             match serde_json::from_str::<crate::datadogV1::model::UsageSNMPResponse>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageSNMPError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -4549,7 +5122,8 @@ impl UsageMeteringAPI {
         &self,
         start_month: String,
         params: GetUsageSummaryOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageSummaryResponse, Error<GetUsageSummaryError>> {
+    ) -> Result<crate::datadogV1::model::UsageSummaryResponse, datadog::Error<GetUsageSummaryError>>
+    {
         match self
             .get_usage_summary_with_http_info(start_month, params)
             .await
@@ -4558,7 +5132,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -4573,8 +5147,8 @@ impl UsageMeteringAPI {
         start_month: String,
         params: GetUsageSummaryOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageSummaryResponse>,
-        Error<GetUsageSummaryError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageSummaryResponse>,
+        datadog::Error<GetUsageSummaryError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_summary";
@@ -4583,7 +5157,7 @@ impl UsageMeteringAPI {
         let end_month = params.end_month;
         let include_org_details = params.include_org_details;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/summary",
@@ -4602,20 +5176,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("include_org_details", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -4627,34 +5223,36 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageSummaryError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// Get hourly usage for [synthetics checks](<https://docs.datadoghq.com/synthetics/>).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics(
         &self,
         start_hr: String,
         params: GetUsageSyntheticsOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageSyntheticsResponse, Error<GetUsageSyntheticsError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::UsageSyntheticsResponse,
+        datadog::Error<GetUsageSyntheticsError>,
+    > {
         match self
             .get_usage_synthetics_with_http_info(start_hr, params)
             .await
@@ -4663,7 +5261,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -4673,14 +5271,14 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for [synthetics checks](<https://docs.datadoghq.com/synthetics/>).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics_with_http_info(
         &self,
         start_hr: String,
         params: GetUsageSyntheticsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageSyntheticsResponse>,
-        Error<GetUsageSyntheticsError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageSyntheticsResponse>,
+        datadog::Error<GetUsageSyntheticsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_synthetics";
@@ -4688,7 +5286,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/synthetics",
@@ -4703,20 +5301,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -4728,35 +5348,35 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageSyntheticsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// Get hourly usage for [synthetics API checks](<https://docs.datadoghq.com/synthetics/>).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics_api(
         &self,
         start_hr: String,
         params: GetUsageSyntheticsAPIOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageSyntheticsAPIResponse,
-        Error<GetUsageSyntheticsAPIError>,
+        datadog::Error<GetUsageSyntheticsAPIError>,
     > {
         match self
             .get_usage_synthetics_api_with_http_info(start_hr, params)
@@ -4766,7 +5386,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -4776,14 +5396,14 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for [synthetics API checks](<https://docs.datadoghq.com/synthetics/>).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics_api_with_http_info(
         &self,
         start_hr: String,
         params: GetUsageSyntheticsAPIOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageSyntheticsAPIResponse>,
-        Error<GetUsageSyntheticsAPIError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageSyntheticsAPIResponse>,
+        datadog::Error<GetUsageSyntheticsAPIError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_synthetics_api";
@@ -4791,7 +5411,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/synthetics_api",
@@ -4806,20 +5426,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -4831,35 +5473,35 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageSyntheticsAPIError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// Get hourly usage for synthetics browser checks.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics_browser(
         &self,
         start_hr: String,
         params: GetUsageSyntheticsBrowserOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageSyntheticsBrowserResponse,
-        Error<GetUsageSyntheticsBrowserError>,
+        datadog::Error<GetUsageSyntheticsBrowserError>,
     > {
         match self
             .get_usage_synthetics_browser_with_http_info(start_hr, params)
@@ -4869,7 +5511,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -4879,14 +5521,14 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for synthetics browser checks.
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics_browser_with_http_info(
         &self,
         start_hr: String,
         params: GetUsageSyntheticsBrowserOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageSyntheticsBrowserResponse>,
-        Error<GetUsageSyntheticsBrowserError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageSyntheticsBrowserResponse>,
+        datadog::Error<GetUsageSyntheticsBrowserError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_synthetics_browser";
@@ -4894,7 +5536,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/synthetics_browser",
@@ -4909,20 +5551,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -4934,34 +5598,36 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageSyntheticsBrowserError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// Get hourly usage for [custom metrics](<https://docs.datadoghq.com/developers/metrics/custom_metrics/>).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_timeseries(
         &self,
         start_hr: String,
         params: GetUsageTimeseriesOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageTimeseriesResponse, Error<GetUsageTimeseriesError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::UsageTimeseriesResponse,
+        datadog::Error<GetUsageTimeseriesError>,
+    > {
         match self
             .get_usage_timeseries_with_http_info(start_hr, params)
             .await
@@ -4970,7 +5636,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -4980,14 +5646,14 @@ impl UsageMeteringAPI {
     }
 
     /// Get hourly usage for [custom metrics](<https://docs.datadoghq.com/developers/metrics/custom_metrics/>).
-    /// **Note:** hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
+    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_timeseries_with_http_info(
         &self,
         start_hr: String,
         params: GetUsageTimeseriesOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageTimeseriesResponse>,
-        Error<GetUsageTimeseriesError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageTimeseriesResponse>,
+        datadog::Error<GetUsageTimeseriesError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_timeseries";
@@ -4995,7 +5661,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/timeseries",
@@ -5010,20 +5676,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -5035,23 +5723,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageTimeseriesError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -5061,14 +5749,14 @@ impl UsageMeteringAPI {
         params: GetUsageTopAvgMetricsOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageTopAvgMetricsResponse,
-        Error<GetUsageTopAvgMetricsError>,
+        datadog::Error<GetUsageTopAvgMetricsError>,
     > {
         match self.get_usage_top_avg_metrics_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -5082,8 +5770,8 @@ impl UsageMeteringAPI {
         &self,
         params: GetUsageTopAvgMetricsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageTopAvgMetricsResponse>,
-        Error<GetUsageTopAvgMetricsError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageTopAvgMetricsResponse>,
+        datadog::Error<GetUsageTopAvgMetricsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_top_avg_metrics";
@@ -5095,7 +5783,7 @@ impl UsageMeteringAPI {
         let limit = params.limit;
         let next_record_id = params.next_record_id;
 
-        let local_client = &local_configuration.client;
+        let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/usage/top_avg_metrics",
@@ -5131,20 +5819,42 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("next_record_id", &local_query_param.to_string())]);
         };
 
-        // build user agent
-        local_req_builder = local_req_builder.header(
-            reqwest::header::USER_AGENT,
-            local_configuration.user_agent.clone(),
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
         );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
 
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-API-KEY", &local_key.key);
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            local_req_builder = local_req_builder.header("DD-APPLICATION-KEY", &local_key.key);
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
         };
 
+        local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         let local_resp = local_client.execute(local_req).await?;
 
@@ -5156,23 +5866,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageTopAvgMetricsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 }

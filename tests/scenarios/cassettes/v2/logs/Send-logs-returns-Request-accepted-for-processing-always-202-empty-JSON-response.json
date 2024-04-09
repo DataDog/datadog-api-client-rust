@@ -1,1 +1,39 @@
-{"http_interactions": [{"request": {"body": {"string": "[{\"ddsource\":\"nginx\",\"ddtags\":\"env:staging,version:5.1\",\"hostname\":\"i-012345678\",\"message\":\"2019-11-19T14:37:58,995 INFO [process.name][20081] Hello World\",\"service\":\"payment\",\"status\":\"info\"}]", "encoding": null}, "headers": {"Accept": ["application/json"], "Content-Type": ["application/json"]}, "method": "post", "uri": "https://http-intake.logs.datadoghq.com/api/v2/logs"}, "response": {"body": {"string": "{}", "encoding": null}, "headers": {"Content-Type": ["application/json"]}, "status": {"code": 202, "message": "Accepted"}}, "recorded_at": "Thu, 13 Apr 2023 18:28:45 GMT"}], "recorded_with": "VCR 6.0.0"}
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "[{\"ddsource\":\"nginx\",\"ddtags\":\"env:staging,version:5.1\",\"hostname\":\"i-012345678\",\"message\":\"2019-11-19T14:37:58,995 INFO [process.name][20081] Hello World\",\"service\":\"payment\",\"status\":\"info\"}]",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://http-intake.logs.datadoghq.com/api/v2/logs"
+      },
+      "response": {
+        "body": {
+          "string": "{}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 202,
+          "message": "Accepted"
+        }
+      },
+      "recorded_at": "Thu, 13 Apr 2023 18:28:45 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

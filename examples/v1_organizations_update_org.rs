@@ -1,6 +1,6 @@
 // Update your organization returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_organizations::OrganizationsAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV1::api_organizations::OrganizationsAPI;
 use datadog_api_client::datadogV1::model::AccessRole;
 use datadog_api_client::datadogV1::model::Organization;
 use datadog_api_client::datadogV1::model::OrganizationBilling;
@@ -39,7 +39,7 @@ async fn main() {
         )
         .subscription(OrganizationSubscription::new().type_("pro".to_string()))
         .trial(false);
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = OrganizationsAPI::with_config(configuration);
     let resp = api.update_org("abc123".to_string(), body).await;
     if let Ok(value) = resp {

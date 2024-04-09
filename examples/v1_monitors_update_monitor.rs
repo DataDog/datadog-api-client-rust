@@ -1,6 +1,6 @@
 // Edit a monitor returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_monitors::MonitorsAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV1::api_monitors::MonitorsAPI;
 use datadog_api_client::datadogV1::model::MonitorOptions;
 use datadog_api_client::datadogV1::model::MonitorThresholds;
 use datadog_api_client::datadogV1::model::MonitorUpdateRequest;
@@ -17,10 +17,10 @@ async fn main() {
                 .new_group_delay(Some(600))
                 .new_host_delay(None)
                 .renotify_interval(None)
-                .thresholds(MonitorThresholds::new().critical(2 as f64).warning(None))
+                .thresholds(MonitorThresholds::new().critical(2.0 as f64).warning(None))
                 .timeout_h(None),
         );
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = MonitorsAPI::with_config(configuration);
     let resp = api.update_monitor(monitor_id.clone(), body).await;
     if let Ok(value) = resp {

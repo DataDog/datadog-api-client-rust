@@ -1,6 +1,6 @@
 // Create a metric monitor with a custom schedule returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_monitors::MonitorsAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV1::api_monitors::MonitorsAPI;
 use datadog_api_client::datadogV1::model::Monitor;
 use datadog_api_client::datadogV1::model::MonitorOptions;
 use datadog_api_client::datadogV1::model::MonitorOptionsCustomSchedule;
@@ -39,7 +39,7 @@ async fn main() {
             .thresholds(MonitorThresholds::new().critical(0.5 as f64)),
     )
     .tags(vec![]);
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = MonitorsAPI::with_config(configuration);
     let resp = api.create_monitor(body).await;
     if let Ok(value) = resp {

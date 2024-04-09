@@ -52,7 +52,7 @@ pub struct SLOCorrectionResponseAttributes {
     )]
     pub modifier: Option<Option<crate::datadogV1::model::SLOCorrectionResponseAttributesModifier>>,
     /// The recurrence rules as defined in the iCalendar RFC 5545. The supported rules for SLO corrections
-    /// are `FREQ`, `INTERVAL`, `COUNT`, and `UNTIL`.
+    /// are `FREQ`, `INTERVAL`, `COUNT`, `UNTIL` and `BYDAY`.
     #[serde(rename = "rrule", default, with = "::serde_with::rust::double_option")]
     pub rrule: Option<Option<String>>,
     /// ID of the SLO that this correction applies to.

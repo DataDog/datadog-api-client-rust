@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MetricPayload {
-    /// A list of time series to submit to Datadog.
+    /// A list of timeseries to submit to Datadog.
     #[serde(rename = "series")]
     pub series: Vec<crate::datadogV2::model::MetricSeries>,
     #[serde(skip)]

@@ -148,6 +148,7 @@ def simple_type(schema, render_nullable=False, render_option=True, render_new=Fa
             "date": "String",
             "date-time": "String",
             "email": "String",
+            "uuid": "String",
             "binary": "Vec<u8>",
             "uuid": "uuid::Uuid",
             None: "String",
@@ -307,7 +308,7 @@ def format_parameters(data, spec, replace_values=None, has_body=False, **kwargs)
     if has_body and body_is_required:
         parameters += "body, "
     if has_optional or body_is_required is False:
-        imports.add(f"datadog_api_client::datadog{kwargs.get('version', '')}::api::api_{kwargs.get('api')}::{spec['operationId']}OptionalParams")
+        imports.add(f"datadog_api_client::datadog{kwargs.get('version', '')}::api_{kwargs.get('api')}::{spec['operationId']}OptionalParams")
         parameters += f"{spec['operationId']}OptionalParams::default()"
         if has_body and not body_is_required:
             parameters += ".body(body)"
@@ -429,7 +430,7 @@ def format_data_with_schema(
             def format_double(x):
                 if isinstance(x, (bool, str)):
                     raise TypeError(f"{x} is not supported type {schema}")
-                return str(x), set()
+                return str(float(x)), set()
 
             def format_number(x):
                 if isinstance(x, bool):

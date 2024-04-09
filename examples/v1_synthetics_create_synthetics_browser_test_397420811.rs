@@ -1,7 +1,7 @@
 // Create a browser test with advanced scheduling options returns "OK - Returns
 // the created test details." response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_synthetics::SyntheticsAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV1::api_synthetics::SyntheticsAPI;
 use datadog_api_client::datadogV1::model::SyntheticsBrowserTest;
 use datadog_api_client::datadogV1::model::SyntheticsBrowserTestConfig;
 use datadog_api_client::datadogV1::model::SyntheticsBrowserTestType;
@@ -48,7 +48,7 @@ async fn main() {
             .retry(
                 SyntheticsTestOptionsRetry::new()
                     .count(2)
-                    .interval(10 as f64),
+                    .interval(10.0 as f64),
             )
             .scheduling(
                 SyntheticsTestOptionsScheduling::new()
@@ -74,7 +74,7 @@ async fn main() {
         .params(BTreeMap::new())
         .type_(SyntheticsStepType::REFRESH)])
     .tags(vec!["testing:browser".to_string()]);
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = SyntheticsAPI::with_config(configuration);
     let resp = api.create_synthetics_browser_test(body).await;
     if let Ok(value) = resp {

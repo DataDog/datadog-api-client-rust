@@ -1,6 +1,6 @@
 // Re-order retention filters returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_apm_retention_filters::APMRetentionFiltersAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_apm_retention_filters::APMRetentionFiltersAPI;
 use datadog_api_client::datadogV2::model::ApmRetentionFilterType;
 use datadog_api_client::datadogV2::model::ReorderRetentionFiltersRequest;
 use datadog_api_client::datadogV2::model::RetentionFilterWithoutAttributes;
@@ -17,7 +17,7 @@ async fn main() {
             ApmRetentionFilterType::apm_retention_filter,
         ),
     ]);
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = APMRetentionFiltersAPI::with_config(configuration);
     let resp = api.reorder_apm_retention_filters(body).await;
     if let Ok(value) = resp {

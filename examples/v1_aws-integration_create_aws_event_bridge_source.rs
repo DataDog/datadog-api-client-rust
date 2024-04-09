@@ -1,6 +1,6 @@
 // Create an Amazon EventBridge source returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_aws_integration::AWSIntegrationAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV1::api_aws_integration::AWSIntegrationAPI;
 use datadog_api_client::datadogV1::model::AWSEventBridgeCreateRequest;
 
 #[tokio::main]
@@ -10,7 +10,7 @@ async fn main() {
         .create_event_bus(true)
         .event_generator_name("app-alerts".to_string())
         .region("us-east-1".to_string());
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = AWSIntegrationAPI::with_config(configuration);
     let resp = api.create_aws_event_bridge_source(body).await;
     if let Ok(value) = resp {

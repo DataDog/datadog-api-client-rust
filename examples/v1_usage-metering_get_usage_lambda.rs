@@ -1,16 +1,16 @@
-// Get hourly usage for lambda returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_usage_metering::GetUsageLambdaOptionalParams;
-use datadog_api_client::datadogV1::api::api_usage_metering::UsageMeteringAPI;
+// Get hourly usage for Lambda returns "OK" response
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV1::api_usage_metering::GetUsageLambdaOptionalParams;
+use datadog_api_client::datadogV1::api_usage_metering::UsageMeteringAPI;
 
 #[tokio::main]
 async fn main() {
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = UsageMeteringAPI::with_config(configuration);
     let resp = api
         .get_usage_lambda(
-            "2021-11-11T11:11:11.111000+00:00".to_string(),
-            GetUsageLambdaOptionalParams::default(),
+            "2021-11-06T11:11:11+00:00".to_string(),
+            GetUsageLambdaOptionalParams::default().end_hr("2021-11-08T11:11:11+00:00".to_string()),
         )
         .await;
     if let Ok(value) = resp {

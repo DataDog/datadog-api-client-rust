@@ -1,4 +1,8 @@
 {% include "partial_header.j2" %}
 
 pub mod api;
+{%- for name, operations in apis.items() %}
+{%- set classname = "api_"+name%}
+pub use self::api::{{classname | snake_case}};
+{%- endfor %}
 pub mod model;

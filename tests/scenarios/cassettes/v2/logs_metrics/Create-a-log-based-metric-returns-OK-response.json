@@ -1,1 +1,67 @@
-{"http_interactions": [{"request": {"body": {"string": "{\"data\":{\"attributes\":{\"compute\":{\"aggregation_type\":\"distribution\",\"include_percentiles\":true,\"path\":\"@duration\"}},\"id\":\"TestCreatealogbasedmetricreturnsOKresponse1686138855\",\"type\":\"logs_metrics\"}}", "encoding": null}, "headers": {"Accept": ["application/json"], "Content-Type": ["application/json"]}, "method": "post", "uri": "https://api.datadoghq.com/api/v2/logs/config/metrics"}, "response": {"body": {"string": "{\"data\":{\"id\":\"TestCreatealogbasedmetricreturnsOKresponse1686138855\",\"attributes\":{\"filter\":{\"query\":\"*\"},\"group_by\":[],\"compute\":{\"aggregation_type\":\"distribution\",\"path\":\"@duration\",\"include_percentiles\":true}},\"type\":\"logs_metrics\"}}\n", "encoding": null}, "headers": {"Content-Type": ["application/json"]}, "status": {"code": 200, "message": "OK"}}, "recorded_at": "Wed, 07 Jun 2023 11:54:15 GMT"}, {"request": {"body": "", "headers": {"Accept": ["*/*"]}, "method": "delete", "uri": "https://api.datadoghq.com/api/v2/logs/config/metrics/TestCreatealogbasedmetricreturnsOKresponse1686138855"}, "response": {"body": {"string": "", "encoding": null}, "headers": {"Content-Type": ["text/html; charset=utf-8"]}, "status": {"code": 204, "message": "No Content"}}, "recorded_at": "Wed, 07 Jun 2023 11:54:15 GMT"}], "recorded_with": "VCR 6.0.0"}
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"compute\":{\"aggregation_type\":\"distribution\",\"include_percentiles\":true,\"path\":\"@duration\"}},\"id\":\"TestCreatealogbasedmetricreturnsOKresponse1686138855\",\"type\":\"logs_metrics\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/logs/config/metrics"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":{\"id\":\"TestCreatealogbasedmetricreturnsOKresponse1686138855\",\"attributes\":{\"filter\":{\"query\":\"*\"},\"group_by\":[],\"compute\":{\"aggregation_type\":\"distribution\",\"path\":\"@duration\",\"include_percentiles\":true}},\"type\":\"logs_metrics\"}}\n",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Wed, 07 Jun 2023 11:54:15 GMT"
+    },
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "*/*"
+          ]
+        },
+        "method": "delete",
+        "uri": "https://api.datadoghq.com/api/v2/logs/config/metrics/TestCreatealogbasedmetricreturnsOKresponse1686138855"
+      },
+      "response": {
+        "body": {
+          "string": "",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "text/html; charset=utf-8"
+          ]
+        },
+        "status": {
+          "code": 204,
+          "message": "No Content"
+        }
+      },
+      "recorded_at": "Wed, 07 Jun 2023 11:54:15 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

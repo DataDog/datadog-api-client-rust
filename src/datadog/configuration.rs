@@ -44,22 +44,20 @@ pub struct APIKey {
 #[derive(Debug, Clone)]
 pub struct Configuration {
     pub(crate) user_agent: String,
-    pub(crate) client: reqwest_middleware::ClientWithMiddleware,
     pub(crate) unstable_operations: HashMap<String, bool>,
     pub(crate) auth_keys: HashMap<String, APIKey>,
     pub server_index: usize,
     pub server_variables: HashMap<String, String>,
     pub server_operation_index: HashMap<String, usize>,
     pub server_operation_variables: HashMap<String, HashMap<String, String>>,
+    pub proxy_url: Option<String>,
+    pub enable_retry: bool,
+    pub max_retries: u32,
 }
 
 impl Configuration {
     pub fn new() -> Self {
         Self::default()
-    }
-
-    pub fn client(&mut self, client: reqwest_middleware::ClientWithMiddleware) {
-        self.client = client;
     }
 
     pub fn get_operation_host(&self, operation_str: &str) -> String {
@@ -117,19 +115,24 @@ impl Configuration {
     pub fn set_auth_key(&mut self, operation_str: &str, api_key: APIKey) {
         self.auth_keys.insert(operation_str.to_string(), api_key);
     }
+
+    pub fn set_proxy_url(&mut self, proxy_url: Option<String>) {
+        self.proxy_url = proxy_url;
+    }
+
+    pub fn set_retry(&mut self, enable_retry: bool, max_retries: u32) {
+        self.enable_retry = enable_retry;
+        self.max_retries = max_retries;
+    }
 }
 
 impl Default for Configuration {
     fn default() -> Self {
-        let http_client = reqwest_middleware::ClientBuilder::new(reqwest::Client::new());
-        let user_agent = format!(
-            "datadog-api-client-rust/{} (rust {}; os {}; arch {})",
-            option_env!("CARGO_PKG_VERSION").unwrap_or("?"),
-            option_env!("DD_RUSTC_VERSION").unwrap_or("?"),
-            env::consts::OS,
-            env::consts::ARCH,
-        );
         let unstable_operations = HashMap::from([
+            ("v2.create_open_api".to_owned(), false),
+            ("v2.delete_open_api".to_owned(), false),
+            ("v2.get_open_api".to_owned(), false),
+            ("v2.update_open_api".to_owned(), false),
             ("v2.get_active_billing_dimensions".to_owned(), false),
             ("v2.get_monthly_cost_attribution".to_owned(), false),
             ("v2.create_dora_deployment".to_owned(), false),
@@ -190,19 +193,28 @@ impl Default for Configuration {
         );
 
         Self {
-            user_agent,
-            client: http_client.build(),
+            user_agent: DEFAULT_USER_AGENT.clone(),
             unstable_operations,
             auth_keys,
             server_index: 0,
             server_variables: HashMap::new(),
             server_operation_index: HashMap::new(),
             server_operation_variables: HashMap::new(),
+            proxy_url: None,
+            enable_retry: false,
+            max_retries: 3,
         }
     }
 }
 
 lazy_static! {
+    pub static ref DEFAULT_USER_AGENT: String = format!(
+        "datadog-api-client-rust/{} (rust {}; os {}; arch {})",
+        option_env!("CARGO_PKG_VERSION").unwrap_or("?"),
+        option_env!("DD_RUSTC_VERSION").unwrap_or("?"),
+        env::consts::OS,
+        env::consts::ARCH,
+    );
     static ref SERVERS: Vec<ServerConfiguration> = {
         vec![
             ServerConfiguration {

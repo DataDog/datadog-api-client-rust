@@ -1,6 +1,6 @@
 // Aggregate spans returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_spans::SpansAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_spans::SpansAPI;
 use datadog_api_client::datadogV2::model::SpansAggregateData;
 use datadog_api_client::datadogV2::model::SpansAggregateRequest;
 use datadog_api_client::datadogV2::model::SpansAggregateRequestAttributes;
@@ -28,7 +28,7 @@ async fn main() {
             )
             .type_(SpansAggregateRequestType::AGGREGATE_REQUEST),
     );
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = SpansAPI::with_config(configuration);
     let resp = api.aggregate_spans(body).await;
     if let Ok(value) = resp {

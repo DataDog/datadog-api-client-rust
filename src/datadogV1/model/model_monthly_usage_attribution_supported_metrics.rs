@@ -19,6 +19,8 @@ pub enum MonthlyUsageAttributionSupportedMetrics {
     APM_USM_PERCENTAGE,
     APPSEC_USAGE,
     APPSEC_PERCENTAGE,
+    ASM_SERVERLESS_TRACED_INVOCATIONS_USAGE,
+    ASM_SERVERLESS_TRACED_INVOCATIONS_PERCENTAGE,
     BROWSER_USAGE,
     BROWSER_PERCENTAGE,
     CI_VISIBILITY_ITR_USAGE,
@@ -45,6 +47,8 @@ pub enum MonthlyUsageAttributionSupportedMetrics {
     DBM_HOSTS_USAGE,
     DBM_QUERIES_PERCENTAGE,
     DBM_QUERIES_USAGE,
+    ERROR_TRACKING_USAGE,
+    ERROR_TRACKING_PERCENTAGE,
     ESTIMATED_INDEXED_LOGS_USAGE,
     ESTIMATED_INDEXED_LOGS_PERCENTAGE,
     ESTIMATED_INGESTED_LOGS_USAGE,
@@ -57,6 +61,8 @@ pub enum MonthlyUsageAttributionSupportedMetrics {
     FARGATE_PERCENTAGE,
     FUNCTIONS_USAGE,
     FUNCTIONS_PERCENTAGE,
+    INCIDENT_MANAGEMENT_MONTHLY_ACTIVE_USERS_USAGE,
+    INCIDENT_MANAGEMENT_MONTHLY_ACTIVE_USERS_PERCENTAGE,
     INFRA_HOST_USAGE,
     INFRA_HOST_PERCENTAGE,
     INVOCATIONS_USAGE,
@@ -71,6 +77,10 @@ pub enum MonthlyUsageAttributionSupportedMetrics {
     NPM_HOST_PERCENTAGE,
     OBS_PIPELINE_BYTES_USAGE,
     OBS_PIPELINE_BYTES_PERCENTAGE,
+    OBS_PIPELINES_VCPU_USAGE,
+    OBS_PIPELINES_VCPU_PERCENTAGE,
+    ONLINE_ARCHIVE_USAGE,
+    ONLINE_ARCHIVE_PERCENTAGE,
     PROFILED_CONTAINER_USAGE,
     PROFILED_CONTAINER_PERCENTAGE,
     PROFILED_FARGATE_USAGE,
@@ -127,6 +137,8 @@ pub enum MonthlyUsageAttributionSupportedMetrics {
     INGESTED_SPANS_BYTES_PERCENTAGE,
     SIEM_INGESTED_BYTES_USAGE,
     SIEM_INGESTED_BYTES_PERCENTAGE,
+    WORKFLOW_EXECUTIONS_USAGE,
+    WORKFLOW_EXECUTIONS_PERCENTAGE,
     ALL,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
@@ -146,6 +158,12 @@ impl ToString for MonthlyUsageAttributionSupportedMetrics {
             Self::APM_USM_PERCENTAGE => String::from("apm_usm_percentage"),
             Self::APPSEC_USAGE => String::from("appsec_usage"),
             Self::APPSEC_PERCENTAGE => String::from("appsec_percentage"),
+            Self::ASM_SERVERLESS_TRACED_INVOCATIONS_USAGE => {
+                String::from("asm_serverless_traced_invocations_usage")
+            }
+            Self::ASM_SERVERLESS_TRACED_INVOCATIONS_PERCENTAGE => {
+                String::from("asm_serverless_traced_invocations_percentage")
+            }
             Self::BROWSER_USAGE => String::from("browser_usage"),
             Self::BROWSER_PERCENTAGE => String::from("browser_percentage"),
             Self::CI_VISIBILITY_ITR_USAGE => String::from("ci_visibility_itr_usage"),
@@ -178,6 +196,8 @@ impl ToString for MonthlyUsageAttributionSupportedMetrics {
             Self::DBM_HOSTS_USAGE => String::from("dbm_hosts_usage"),
             Self::DBM_QUERIES_PERCENTAGE => String::from("dbm_queries_percentage"),
             Self::DBM_QUERIES_USAGE => String::from("dbm_queries_usage"),
+            Self::ERROR_TRACKING_USAGE => String::from("error_tracking_usage"),
+            Self::ERROR_TRACKING_PERCENTAGE => String::from("error_tracking_percentage"),
             Self::ESTIMATED_INDEXED_LOGS_USAGE => String::from("estimated_indexed_logs_usage"),
             Self::ESTIMATED_INDEXED_LOGS_PERCENTAGE => {
                 String::from("estimated_indexed_logs_percentage")
@@ -198,6 +218,12 @@ impl ToString for MonthlyUsageAttributionSupportedMetrics {
             Self::FARGATE_PERCENTAGE => String::from("fargate_percentage"),
             Self::FUNCTIONS_USAGE => String::from("functions_usage"),
             Self::FUNCTIONS_PERCENTAGE => String::from("functions_percentage"),
+            Self::INCIDENT_MANAGEMENT_MONTHLY_ACTIVE_USERS_USAGE => {
+                String::from("incident_management_monthly_active_users_usage")
+            }
+            Self::INCIDENT_MANAGEMENT_MONTHLY_ACTIVE_USERS_PERCENTAGE => {
+                String::from("incident_management_monthly_active_users_percentage")
+            }
             Self::INFRA_HOST_USAGE => String::from("infra_host_usage"),
             Self::INFRA_HOST_PERCENTAGE => String::from("infra_host_percentage"),
             Self::INVOCATIONS_USAGE => String::from("invocations_usage"),
@@ -216,6 +242,10 @@ impl ToString for MonthlyUsageAttributionSupportedMetrics {
             Self::NPM_HOST_PERCENTAGE => String::from("npm_host_percentage"),
             Self::OBS_PIPELINE_BYTES_USAGE => String::from("obs_pipeline_bytes_usage"),
             Self::OBS_PIPELINE_BYTES_PERCENTAGE => String::from("obs_pipeline_bytes_percentage"),
+            Self::OBS_PIPELINES_VCPU_USAGE => String::from("obs_pipelines_vcpu_usage"),
+            Self::OBS_PIPELINES_VCPU_PERCENTAGE => String::from("obs_pipelines_vcpu_percentage"),
+            Self::ONLINE_ARCHIVE_USAGE => String::from("online_archive_usage"),
+            Self::ONLINE_ARCHIVE_PERCENTAGE => String::from("online_archive_percentage"),
             Self::PROFILED_CONTAINER_USAGE => String::from("profiled_container_usage"),
             Self::PROFILED_CONTAINER_PERCENTAGE => String::from("profiled_container_percentage"),
             Self::PROFILED_FARGATE_USAGE => String::from("profiled_fargate_usage"),
@@ -296,6 +326,8 @@ impl ToString for MonthlyUsageAttributionSupportedMetrics {
             }
             Self::SIEM_INGESTED_BYTES_USAGE => String::from("siem_ingested_bytes_usage"),
             Self::SIEM_INGESTED_BYTES_PERCENTAGE => String::from("siem_ingested_bytes_percentage"),
+            Self::WORKFLOW_EXECUTIONS_USAGE => String::from("workflow_executions_usage"),
+            Self::WORKFLOW_EXECUTIONS_PERCENTAGE => String::from("workflow_executions_percentage"),
             Self::ALL => String::from("*"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
@@ -333,6 +365,12 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionSupportedMetrics {
             "apm_usm_percentage" => Self::APM_USM_PERCENTAGE,
             "appsec_usage" => Self::APPSEC_USAGE,
             "appsec_percentage" => Self::APPSEC_PERCENTAGE,
+            "asm_serverless_traced_invocations_usage" => {
+                Self::ASM_SERVERLESS_TRACED_INVOCATIONS_USAGE
+            }
+            "asm_serverless_traced_invocations_percentage" => {
+                Self::ASM_SERVERLESS_TRACED_INVOCATIONS_PERCENTAGE
+            }
             "browser_usage" => Self::BROWSER_USAGE,
             "browser_percentage" => Self::BROWSER_PERCENTAGE,
             "ci_visibility_itr_usage" => Self::CI_VISIBILITY_ITR_USAGE,
@@ -359,6 +397,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionSupportedMetrics {
             "dbm_hosts_usage" => Self::DBM_HOSTS_USAGE,
             "dbm_queries_percentage" => Self::DBM_QUERIES_PERCENTAGE,
             "dbm_queries_usage" => Self::DBM_QUERIES_USAGE,
+            "error_tracking_usage" => Self::ERROR_TRACKING_USAGE,
+            "error_tracking_percentage" => Self::ERROR_TRACKING_PERCENTAGE,
             "estimated_indexed_logs_usage" => Self::ESTIMATED_INDEXED_LOGS_USAGE,
             "estimated_indexed_logs_percentage" => Self::ESTIMATED_INDEXED_LOGS_PERCENTAGE,
             "estimated_ingested_logs_usage" => Self::ESTIMATED_INGESTED_LOGS_USAGE,
@@ -371,6 +411,12 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionSupportedMetrics {
             "fargate_percentage" => Self::FARGATE_PERCENTAGE,
             "functions_usage" => Self::FUNCTIONS_USAGE,
             "functions_percentage" => Self::FUNCTIONS_PERCENTAGE,
+            "incident_management_monthly_active_users_usage" => {
+                Self::INCIDENT_MANAGEMENT_MONTHLY_ACTIVE_USERS_USAGE
+            }
+            "incident_management_monthly_active_users_percentage" => {
+                Self::INCIDENT_MANAGEMENT_MONTHLY_ACTIVE_USERS_PERCENTAGE
+            }
             "infra_host_usage" => Self::INFRA_HOST_USAGE,
             "infra_host_percentage" => Self::INFRA_HOST_PERCENTAGE,
             "invocations_usage" => Self::INVOCATIONS_USAGE,
@@ -385,6 +431,10 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionSupportedMetrics {
             "npm_host_percentage" => Self::NPM_HOST_PERCENTAGE,
             "obs_pipeline_bytes_usage" => Self::OBS_PIPELINE_BYTES_USAGE,
             "obs_pipeline_bytes_percentage" => Self::OBS_PIPELINE_BYTES_PERCENTAGE,
+            "obs_pipelines_vcpu_usage" => Self::OBS_PIPELINES_VCPU_USAGE,
+            "obs_pipelines_vcpu_percentage" => Self::OBS_PIPELINES_VCPU_PERCENTAGE,
+            "online_archive_usage" => Self::ONLINE_ARCHIVE_USAGE,
+            "online_archive_percentage" => Self::ONLINE_ARCHIVE_PERCENTAGE,
             "profiled_container_usage" => Self::PROFILED_CONTAINER_USAGE,
             "profiled_container_percentage" => Self::PROFILED_CONTAINER_PERCENTAGE,
             "profiled_fargate_usage" => Self::PROFILED_FARGATE_USAGE,
@@ -447,6 +497,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionSupportedMetrics {
             "ingested_spans_bytes_percentage" => Self::INGESTED_SPANS_BYTES_PERCENTAGE,
             "siem_ingested_bytes_usage" => Self::SIEM_INGESTED_BYTES_USAGE,
             "siem_ingested_bytes_percentage" => Self::SIEM_INGESTED_BYTES_PERCENTAGE,
+            "workflow_executions_usage" => Self::WORKFLOW_EXECUTIONS_USAGE,
+            "workflow_executions_percentage" => Self::WORKFLOW_EXECUTIONS_PERCENTAGE,
             "*" => Self::ALL,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),

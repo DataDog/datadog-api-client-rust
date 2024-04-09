@@ -1,1 +1,39 @@
-{"http_interactions": [{"request": {"body": {"string": "{\"data\":{\"attributes\":{\"description\":\"Sample powerpack\",\"group_widget\":{\"definition\":{\"layout_type\":\"ordered\",\"show_title\":true,\"title\":\"Sample Powerpack\",\"type\":\"group\",\"widgets\":[{\"definition\":{\"content\":\"test\",\"type\":\"note\"}}]},\"layout\":{\"height\":3,\"width\":12,\"x\":0,\"y\":0},\"live_span\":\"1h\"},\"name\":\"Test-Update_a_powerpack_returns_Powerpack_Not_Found_response-1698172334\",\"tags\":[\"tag:sample\"],\"template_variables\":[{\"defaults\":[\"*\"],\"name\":\"sample\"}]},\"type\":\"powerpack\"}}", "encoding": null}, "headers": {"Accept": ["application/json"], "Content-Type": ["application/json"]}, "method": "patch", "uri": "https://api.datadoghq.com/api/v2/powerpacks/made-up-id"}, "response": {"body": {"string": "{\"errors\":[\"Powerpack has invalid UUID made-up-id not found\"]}", "encoding": null}, "headers": {"Content-Type": ["application/json"]}, "status": {"code": 404, "message": "Not Found"}}, "recorded_at": "Tue, 24 Oct 2023 18:32:14 GMT"}], "recorded_with": "VCR 6.0.0"}
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"description\":\"Sample powerpack\",\"group_widget\":{\"definition\":{\"layout_type\":\"ordered\",\"show_title\":true,\"title\":\"Sample Powerpack\",\"type\":\"group\",\"widgets\":[{\"definition\":{\"content\":\"test\",\"type\":\"note\"}}]},\"layout\":{\"height\":3,\"width\":12,\"x\":0,\"y\":0},\"live_span\":\"1h\"},\"name\":\"Test-Update_a_powerpack_returns_Powerpack_Not_Found_response-1698172334\",\"tags\":[\"tag:sample\"],\"template_variables\":[{\"defaults\":[\"*\"],\"name\":\"sample\"}]},\"type\":\"powerpack\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "patch",
+        "uri": "https://api.datadoghq.com/api/v2/powerpacks/made-up-id"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[\"Powerpack has invalid UUID made-up-id not found\"]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 404,
+          "message": "Not Found"
+        }
+      },
+      "recorded_at": "Tue, 24 Oct 2023 18:32:14 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

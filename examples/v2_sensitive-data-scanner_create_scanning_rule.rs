@@ -1,9 +1,10 @@
 // Create Scanning Rule returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_sensitive_data_scanner::SensitiveDataScannerAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_sensitive_data_scanner::SensitiveDataScannerAPI;
 use datadog_api_client::datadogV2::model::SensitiveDataScannerGroup;
 use datadog_api_client::datadogV2::model::SensitiveDataScannerGroupData;
 use datadog_api_client::datadogV2::model::SensitiveDataScannerGroupType;
+use datadog_api_client::datadogV2::model::SensitiveDataScannerIncludedKeywordConfiguration;
 use datadog_api_client::datadogV2::model::SensitiveDataScannerMetaVersionOnly;
 use datadog_api_client::datadogV2::model::SensitiveDataScannerRuleAttributes;
 use datadog_api_client::datadogV2::model::SensitiveDataScannerRuleCreate;
@@ -21,6 +22,12 @@ async fn main() {
         SensitiveDataScannerRuleCreate::new(
             SensitiveDataScannerRuleAttributes::new()
                 .excluded_namespaces(vec!["admin.name".to_string()])
+                .included_keyword_configuration(
+                    SensitiveDataScannerIncludedKeywordConfiguration::new(
+                        35,
+                        vec!["credit card".to_string()],
+                    ),
+                )
                 .is_enabled(true)
                 .name("Example-Sensitive-Data-Scanner".to_string())
                 .namespaces(vec!["admin".to_string()])
@@ -42,7 +49,7 @@ async fn main() {
         ),
         SensitiveDataScannerMetaVersionOnly::new(),
     );
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = SensitiveDataScannerAPI::with_config(configuration);
     let resp = api.create_scanning_rule(body).await;
     if let Ok(value) = resp {

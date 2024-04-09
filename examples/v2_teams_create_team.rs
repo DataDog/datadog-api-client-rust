@@ -1,6 +1,6 @@
 // Create a team returns "CREATED" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_teams::TeamsAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_teams::TeamsAPI;
 use datadog_api_client::datadogV2::model::RelationshipToUsers;
 use datadog_api_client::datadogV2::model::TeamCreate;
 use datadog_api_client::datadogV2::model::TeamCreateAttributes;
@@ -20,7 +20,7 @@ async fn main() {
         )
         .relationships(TeamCreateRelationships::new().users(RelationshipToUsers::new(vec![]))),
     );
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = TeamsAPI::with_config(configuration);
     let resp = api.create_team(body).await;
     if let Ok(value) = resp {

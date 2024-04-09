@@ -1,6 +1,6 @@
 // Create a Cloud Workload Security Agent rule returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_cloud_workload_security::CloudWorkloadSecurityAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_cloud_workload_security::CloudWorkloadSecurityAPI;
 use datadog_api_client::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateAttributes;
 use datadog_api_client::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateData;
 use datadog_api_client::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateRequest;
@@ -19,7 +19,7 @@ async fn main() {
             CloudWorkloadSecurityAgentRuleType::AGENT_RULE,
         ),
     );
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = CloudWorkloadSecurityAPI::with_config(configuration);
     let resp = api.create_cloud_workload_security_agent_rule(body).await;
     if let Ok(value) = resp {

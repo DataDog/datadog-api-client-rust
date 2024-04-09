@@ -1,6 +1,6 @@
 // Create an API test returns "OK - Returns the created test details." response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_synthetics::SyntheticsAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV1::api_synthetics::SyntheticsAPI;
 use datadog_api_client::datadogV1::model::SyntheticsAPITest;
 use datadog_api_client::datadogV1::model::SyntheticsAPITestConfig;
 use datadog_api_client::datadogV1::model::SyntheticsAPITestType;
@@ -45,7 +45,7 @@ async fn main() {
         SyntheticsTestOptions::new()
             .ci(SyntheticsTestCiOptions::new()
                 .execution_rule(SyntheticsTestExecutionRule::BLOCKING))
-            .device_ids(vec![SyntheticsDeviceID::LAPTOP_LARGE])
+            .device_ids(vec![SyntheticsDeviceID::CHROME_LAPTOP_LARGE])
             .http_version(SyntheticsTestOptionsHTTPVersion::HTTP1)
             .monitor_options(SyntheticsTestOptionsMonitorOptions::new())
             .restricted_roles(vec!["xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx".to_string()])
@@ -74,7 +74,7 @@ async fn main() {
     .status(SyntheticsTestPauseStatus::LIVE)
     .subtype(SyntheticsTestDetailsSubType::HTTP)
     .tags(vec!["env:production".to_string()]);
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = SyntheticsAPI::with_config(configuration);
     let resp = api.create_synthetics_api_test(body).await;
     if let Ok(value) = resp {

@@ -1,1 +1,33 @@
-{"http_interactions": [{"request": {"body": "", "headers": {"Accept": ["application/json"]}, "method": "get", "uri": "https://api.datadoghq.com/api/v1/monitor?group_states=notagroupstate"}, "response": {"body": {"string": "{\"errors\":[\"Invalid group_state filters.\"]}", "encoding": null}, "headers": {"Content-Type": ["application/json"]}, "status": {"code": 400, "message": "Bad Request"}}, "recorded_at": "Thu, 06 Jan 2022 00:50:59 GMT"}], "recorded_with": "VCR 6.0.0"}
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "application/json"
+          ]
+        },
+        "method": "get",
+        "uri": "https://api.datadoghq.com/api/v1/monitor?group_states=notagroupstate"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[\"Invalid group_state filters.\"]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Thu, 06 Jan 2022 00:50:59 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

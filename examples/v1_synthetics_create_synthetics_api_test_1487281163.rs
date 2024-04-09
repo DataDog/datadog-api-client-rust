@@ -1,7 +1,7 @@
 // Create an API HTTP test returns "OK - Returns the created test details."
 // response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_synthetics::SyntheticsAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV1::api_synthetics::SyntheticsAPI;
 use datadog_api_client::datadogV1::model::SyntheticsAPITest;
 use datadog_api_client::datadogV1::model::SyntheticsAPITestConfig;
 use datadog_api_client::datadogV1::model::SyntheticsAPITestType;
@@ -126,7 +126,7 @@ async fn main() {
                         SyntheticsTestRequestProxy::new("https://datadoghq.com".to_string())
                             .headers(BTreeMap::from([])),
                     )
-                    .timeout(10 as f64)
+                    .timeout(10.0 as f64)
                     .url("https://datadoghq.com".to_string()),
             ),
         vec!["aws:us-east-2".to_string()],
@@ -144,14 +144,14 @@ async fn main() {
             .retry(
                 SyntheticsTestOptionsRetry::new()
                     .count(3)
-                    .interval(10 as f64),
+                    .interval(10.0 as f64),
             )
             .tick_every(60),
         SyntheticsAPITestType::API,
     )
     .subtype(SyntheticsTestDetailsSubType::HTTP)
     .tags(vec!["testing:api".to_string()]);
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = SyntheticsAPI::with_config(configuration);
     let resp = api.create_synthetics_api_test(body).await;
     if let Ok(value) = resp {

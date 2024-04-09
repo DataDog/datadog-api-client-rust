@@ -14,7 +14,7 @@ pub struct Log {
     /// JSON object containing all log attributes and their associated values.
     #[serde(rename = "content")]
     pub content: Option<crate::datadogV1::model::LogContent>,
-    /// Unique ID of the Log.
+    /// ID of the Log.
     #[serde(rename = "id")]
     pub id: Option<String>,
     #[serde(skip)]

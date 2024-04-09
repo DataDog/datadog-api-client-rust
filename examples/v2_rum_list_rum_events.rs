@@ -1,11 +1,11 @@
 // Get a list of RUM events returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_rum::ListRUMEventsOptionalParams;
-use datadog_api_client::datadogV2::api::api_rum::RUMAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_rum::ListRUMEventsOptionalParams;
+use datadog_api_client::datadogV2::api_rum::RUMAPI;
 
 #[tokio::main]
 async fn main() {
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = RUMAPI::with_config(configuration);
     let resp = api
         .list_rum_events(ListRUMEventsOptionalParams::default())

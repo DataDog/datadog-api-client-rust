@@ -16,19 +16,24 @@ pub struct LogsArchiveIntegrationGCS {
     pub client_email: String,
     /// A project ID.
     #[serde(rename = "project_id")]
-    pub project_id: String,
+    pub project_id: Option<String>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
 }
 
 impl LogsArchiveIntegrationGCS {
-    pub fn new(client_email: String, project_id: String) -> LogsArchiveIntegrationGCS {
+    pub fn new(client_email: String) -> LogsArchiveIntegrationGCS {
         LogsArchiveIntegrationGCS {
             client_email,
-            project_id,
+            project_id: None,
             _unparsed: false,
         }
+    }
+
+    pub fn project_id(mut self, value: String) -> Self {
+        self.project_id = Some(value);
+        self
     }
 }
 
@@ -60,6 +65,9 @@ impl<'de> Deserialize<'de> for LogsArchiveIntegrationGCS {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "project_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             project_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {}
@@ -67,7 +75,6 @@ impl<'de> Deserialize<'de> for LogsArchiveIntegrationGCS {
                 }
                 let client_email =
                     client_email.ok_or_else(|| M::Error::missing_field("client_email"))?;
-                let project_id = project_id.ok_or_else(|| M::Error::missing_field("project_id"))?;
 
                 let content = LogsArchiveIntegrationGCS {
                     client_email,

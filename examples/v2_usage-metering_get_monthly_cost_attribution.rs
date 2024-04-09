@@ -1,11 +1,11 @@
 // Get Monthly Cost Attribution returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_usage_metering::GetMonthlyCostAttributionOptionalParams;
-use datadog_api_client::datadogV2::api::api_usage_metering::UsageMeteringAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_usage_metering::GetMonthlyCostAttributionOptionalParams;
+use datadog_api_client::datadogV2::api_usage_metering::UsageMeteringAPI;
 
 #[tokio::main]
 async fn main() {
-    let mut configuration = Configuration::new();
+    let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.GetMonthlyCostAttribution", true);
     let api = UsageMeteringAPI::with_config(configuration);
     let resp = api

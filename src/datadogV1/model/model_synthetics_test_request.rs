@@ -35,12 +35,18 @@ pub struct SyntheticsTestRequest {
     /// A protobuf JSON descriptor that needs to be gzipped first then base64 encoded.
     #[serde(rename = "compressedJsonDescriptor")]
     pub compressed_json_descriptor: Option<String>,
+    /// A protobuf file that needs to be gzipped first then base64 encoded.
+    #[serde(rename = "compressedProtoFile")]
+    pub compressed_proto_file: Option<String>,
     /// DNS server to use for DNS tests.
     #[serde(rename = "dnsServer")]
     pub dns_server: Option<String>,
     /// DNS server port to use for DNS tests.
     #[serde(rename = "dnsServerPort")]
     pub dns_server_port: Option<i32>,
+    /// Files to be used as part of the request in the test.
+    #[serde(rename = "files")]
+    pub files: Option<Vec<crate::datadogV1::model::SyntheticsTestRequestBodyFile>>,
     /// Specifies whether or not the request follows redirects.
     #[serde(rename = "follow_redirects")]
     pub follow_redirects: Option<bool>,
@@ -50,6 +56,9 @@ pub struct SyntheticsTestRequest {
     /// Host name to perform the test with.
     #[serde(rename = "host")]
     pub host: Option<String>,
+    /// HTTP version to use for a Synthetic test.
+    #[serde(rename = "httpVersion")]
+    pub http_version: Option<crate::datadogV1::model::SyntheticsTestOptionsHTTPVersion>,
     /// Message to send for UDP or WebSocket tests.
     #[serde(rename = "message")]
     pub message: Option<String>,
@@ -110,11 +119,14 @@ impl SyntheticsTestRequest {
             certificate: None,
             certificate_domains: None,
             compressed_json_descriptor: None,
+            compressed_proto_file: None,
             dns_server: None,
             dns_server_port: None,
+            files: None,
             follow_redirects: None,
             headers: None,
             host: None,
+            http_version: None,
             message: None,
             metadata: None,
             method: None,
@@ -179,6 +191,11 @@ impl SyntheticsTestRequest {
         self
     }
 
+    pub fn compressed_proto_file(mut self, value: String) -> Self {
+        self.compressed_proto_file = Some(value);
+        self
+    }
+
     pub fn dns_server(mut self, value: String) -> Self {
         self.dns_server = Some(value);
         self
@@ -186,6 +203,14 @@ impl SyntheticsTestRequest {
 
     pub fn dns_server_port(mut self, value: i32) -> Self {
         self.dns_server_port = Some(value);
+        self
+    }
+
+    pub fn files(
+        mut self,
+        value: Vec<crate::datadogV1::model::SyntheticsTestRequestBodyFile>,
+    ) -> Self {
+        self.files = Some(value);
         self
     }
 
@@ -201,6 +226,14 @@ impl SyntheticsTestRequest {
 
     pub fn host(mut self, value: String) -> Self {
         self.host = Some(value);
+        self
+    }
+
+    pub fn http_version(
+        mut self,
+        value: crate::datadogV1::model::SyntheticsTestOptionsHTTPVersion,
+    ) -> Self {
+        self.http_version = Some(value);
         self
     }
 
@@ -309,11 +342,17 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                 > = None;
                 let mut certificate_domains: Option<Vec<String>> = None;
                 let mut compressed_json_descriptor: Option<String> = None;
+                let mut compressed_proto_file: Option<String> = None;
                 let mut dns_server: Option<String> = None;
                 let mut dns_server_port: Option<i32> = None;
+                let mut files: Option<Vec<crate::datadogV1::model::SyntheticsTestRequestBodyFile>> =
+                    None;
                 let mut follow_redirects: Option<bool> = None;
                 let mut headers: Option<std::collections::BTreeMap<String, String>> = None;
                 let mut host: Option<String> = None;
+                let mut http_version: Option<
+                    crate::datadogV1::model::SyntheticsTestOptionsHTTPVersion,
+                > = None;
                 let mut message: Option<String> = None;
                 let mut metadata: Option<std::collections::BTreeMap<String, String>> = None;
                 let mut method: Option<String> = None;
@@ -408,6 +447,13 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                             compressed_json_descriptor =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "compressedProtoFile" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            compressed_proto_file =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "dnsServer" => {
                             if v.is_null() {
                                 continue;
@@ -420,6 +466,12 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                             }
                             dns_server_port =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "files" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            files = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "follow_redirects" => {
                             if v.is_null() {
@@ -439,6 +491,21 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                                 continue;
                             }
                             host = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "httpVersion" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            http_version =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _http_version) = http_version {
+                                match _http_version {
+                                    crate::datadogV1::model::SyntheticsTestOptionsHTTPVersion::UnparsedObject(_http_version) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "message" => {
                             if v.is_null() {
@@ -541,11 +608,14 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                     certificate,
                     certificate_domains,
                     compressed_json_descriptor,
+                    compressed_proto_file,
                     dns_server,
                     dns_server_port,
+                    files,
                     follow_redirects,
                     headers,
                     host,
+                    http_version,
                     message,
                     metadata,
                     method,

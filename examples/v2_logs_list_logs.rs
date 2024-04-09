@@ -1,7 +1,7 @@
 // Search logs returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_logs::ListLogsOptionalParams;
-use datadog_api_client::datadogV2::api::api_logs::LogsAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_logs::ListLogsOptionalParams;
+use datadog_api_client::datadogV2::api_logs::LogsAPI;
 use datadog_api_client::datadogV2::model::LogsListRequest;
 use datadog_api_client::datadogV2::model::LogsListRequestPage;
 use datadog_api_client::datadogV2::model::LogsQueryFilter;
@@ -19,7 +19,7 @@ async fn main() {
         )
         .page(LogsListRequestPage::new().limit(5))
         .sort(LogsSort::TIMESTAMP_ASCENDING);
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = LogsAPI::with_config(configuration);
     let resp = api
         .list_logs(ListLogsOptionalParams::default().body(body))

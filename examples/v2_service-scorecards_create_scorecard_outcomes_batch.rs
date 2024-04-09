@@ -1,6 +1,6 @@
 // Create outcomes batch returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_service_scorecards::ServiceScorecardsAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_service_scorecards::ServiceScorecardsAPI;
 use datadog_api_client::datadogV2::model::OutcomesBatchAttributes;
 use datadog_api_client::datadogV2::model::OutcomesBatchRequest;
 use datadog_api_client::datadogV2::model::OutcomesBatchRequestData;
@@ -26,7 +26,7 @@ async fn main() {
             )
             .type_(OutcomesBatchType::BATCHED_OUTCOME),
     );
-    let mut configuration = Configuration::new();
+    let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.CreateScorecardOutcomesBatch", true);
     let api = ServiceScorecardsAPI::with_config(configuration);
     let resp = api.create_scorecard_outcomes_batch(body).await;

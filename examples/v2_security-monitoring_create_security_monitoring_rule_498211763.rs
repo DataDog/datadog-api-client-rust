@@ -1,6 +1,6 @@
 // Create a detection rule with type 'workload_security' returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_security_monitoring::SecurityMonitoringAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_security_monitoring::SecurityMonitoringAPI;
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleCaseCreate;
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleCreatePayload;
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleEvaluationWindow;
@@ -42,7 +42,7 @@ async fn main() {
             .tags(vec![])
             .type_(SecurityMonitoringRuleTypeCreate::WORKLOAD_SECURITY),
         ));
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api.create_security_monitoring_rule(body).await;
     if let Ok(value) = resp {

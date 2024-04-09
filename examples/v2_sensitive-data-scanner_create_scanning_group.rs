@@ -1,6 +1,6 @@
 // Create Scanning Group returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_sensitive_data_scanner::SensitiveDataScannerAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_sensitive_data_scanner::SensitiveDataScannerAPI;
 use datadog_api_client::datadogV2::model::SensitiveDataScannerConfiguration;
 use datadog_api_client::datadogV2::model::SensitiveDataScannerConfigurationData;
 use datadog_api_client::datadogV2::model::SensitiveDataScannerConfigurationType;
@@ -44,7 +44,7 @@ async fn main() {
                 ),
             )
             .meta(SensitiveDataScannerMetaVersionOnly::new());
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = SensitiveDataScannerAPI::with_config(configuration);
     let resp = api.create_scanning_group(body).await;
     if let Ok(value) = resp {

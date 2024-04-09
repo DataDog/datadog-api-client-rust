@@ -1,6 +1,6 @@
 // Edit a browser test returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_synthetics::SyntheticsAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV1::api_synthetics::SyntheticsAPI;
 use datadog_api_client::datadogV1::model::SyntheticsBasicAuth;
 use datadog_api_client::datadogV1::model::SyntheticsBasicAuthWeb;
 use datadog_api_client::datadogV1::model::SyntheticsBasicAuthWebType;
@@ -26,6 +26,7 @@ use datadog_api_client::datadogV1::model::SyntheticsTestOptionsScheduling;
 use datadog_api_client::datadogV1::model::SyntheticsTestOptionsSchedulingTimeframe;
 use datadog_api_client::datadogV1::model::SyntheticsTestPauseStatus;
 use datadog_api_client::datadogV1::model::SyntheticsTestRequest;
+use datadog_api_client::datadogV1::model::SyntheticsTestRequestBodyFile;
 use datadog_api_client::datadogV1::model::SyntheticsTestRequestBodyType;
 use datadog_api_client::datadogV1::model::SyntheticsTestRequestCertificate;
 use datadog_api_client::datadogV1::model::SyntheticsTestRequestCertificateItem;
@@ -49,6 +50,8 @@ async fn main() {
                         .key(SyntheticsTestRequestCertificateItem::new()),
                 )
                 .certificate_domains(vec![])
+                .files(vec![SyntheticsTestRequestBodyFile::new()])
+                .http_version(SyntheticsTestOptionsHTTPVersion::HTTP1)
                 .proxy(SyntheticsTestRequestProxy::new(
                     "https://example.com".to_string(),
                 ))
@@ -70,7 +73,7 @@ async fn main() {
         SyntheticsTestOptions::new()
             .ci(SyntheticsTestCiOptions::new()
                 .execution_rule(SyntheticsTestExecutionRule::BLOCKING))
-            .device_ids(vec![SyntheticsDeviceID::LAPTOP_LARGE])
+            .device_ids(vec![SyntheticsDeviceID::CHROME_LAPTOP_LARGE])
             .http_version(SyntheticsTestOptionsHTTPVersion::HTTP1)
             .monitor_options(SyntheticsTestOptionsMonitorOptions::new())
             .restricted_roles(vec!["xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx".to_string()])
@@ -101,7 +104,7 @@ async fn main() {
         SyntheticsStep::new().type_(SyntheticsStepType::ASSERT_ELEMENT_CONTENT)
     ])
     .tags(vec!["env:prod".to_string()]);
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = SyntheticsAPI::with_config(configuration);
     let resp = api.update_browser_test("public_id".to_string(), body).await;
     if let Ok(value) = resp {

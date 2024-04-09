@@ -1,7 +1,7 @@
 // Create an application key with scopes for this service account returns
 // "Created" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_service_accounts::ServiceAccountsAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_service_accounts::ServiceAccountsAPI;
 use datadog_api_client::datadogV2::model::ApplicationKeyCreateAttributes;
 use datadog_api_client::datadogV2::model::ApplicationKeyCreateData;
 use datadog_api_client::datadogV2::model::ApplicationKeyCreateRequest;
@@ -21,7 +21,7 @@ async fn main() {
         )),
         ApplicationKeysType::APPLICATION_KEYS,
     ));
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = ServiceAccountsAPI::with_config(configuration);
     let resp = api
         .create_service_account_application_key(service_account_user_data_id.clone(), body)

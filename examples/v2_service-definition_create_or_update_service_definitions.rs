@@ -1,6 +1,6 @@
 // Create or update service definition returns "CREATED" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_service_definition::ServiceDefinitionAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_service_definition::ServiceDefinitionAPI;
 use datadog_api_client::datadogV2::model::ServiceDefinitionV2Dot2;
 use datadog_api_client::datadogV2::model::ServiceDefinitionV2Dot2Contact;
 use datadog_api_client::datadogV2::model::ServiceDefinitionV2Dot2Integrations;
@@ -22,6 +22,7 @@ async fn main() {
             ServiceDefinitionV2Dot2Version::V2_2,
         )
         .application("my-app".to_string())
+        .ci_pipeline_fingerprints(vec!["j88xdEy0J5lc".to_string(), "eZ7LMljCk8vo".to_string()])
         .contacts(vec![ServiceDefinitionV2Dot2Contact::new(
             "https://teams.microsoft.com/myteam".to_string(),
             "slack".to_string(),
@@ -67,7 +68,7 @@ async fn main() {
         .tier("High".to_string())
         .type_(ServiceDefinitionV2Dot2Type::WEB),
     ));
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = ServiceDefinitionAPI::with_config(configuration);
     let resp = api.create_or_update_service_definitions(body).await;
     if let Ok(value) = resp {

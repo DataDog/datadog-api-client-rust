@@ -2,6 +2,9 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use std::error;
 use std::fmt;
 
+mod configuration;
+pub use configuration::{APIKey, Configuration, DEFAULT_USER_AGENT};
+
 #[derive(Debug, Clone)]
 pub struct ResponseContent<T> {
     pub status: reqwest::StatusCode,
@@ -77,40 +80,11 @@ impl<T> From<std::io::Error> for Error<T> {
     }
 }
 
-pub fn urlencode<T: AsRef<str>>(s: T) -> String {
+pub(crate) fn urlencode<T: AsRef<str>>(s: T) -> String {
     ::url::form_urlencoded::byte_serialize(s.as_ref().as_bytes()).collect()
 }
 
-pub fn parse_deep_object(prefix: &str, value: &serde_json::Value) -> Vec<(String, String)> {
-    if let serde_json::Value::Object(object) = value {
-        let mut params = vec![];
-
-        for (key, value) in object {
-            match value {
-                serde_json::Value::Object(_) => params.append(&mut parse_deep_object(
-                    &format!("{}[{}]", prefix, key),
-                    value,
-                )),
-                serde_json::Value::Array(array) => {
-                    for (i, value) in array.iter().enumerate() {
-                        params.append(&mut parse_deep_object(
-                            &format!("{}[{}][{}]", prefix, key, i),
-                            value,
-                        ));
-                    }
-                }
-                serde_json::Value::String(s) => {
-                    params.push((format!("{}[{}]", prefix, key), s.clone()))
-                }
-                _ => params.push((format!("{}[{}]", prefix, key), value.to_string())),
-            }
-        }
-        return params;
-    }
-    unimplemented!("Only objects are supported with style=deepObject")
-}
-
-pub struct DDFormatter;
+pub(crate) struct DDFormatter;
 
 impl serde_json::ser::Formatter for DDFormatter {
     fn write_f64<W>(&mut self, writer: &mut W, value: f64) -> std::io::Result<()>
@@ -120,8 +94,6 @@ impl serde_json::ser::Formatter for DDFormatter {
         write!(writer, "{}", value.to_string())
     }
 }
-
-pub mod configuration;
 
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct UnparsedObject {

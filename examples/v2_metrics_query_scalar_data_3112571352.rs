@@ -1,6 +1,6 @@
 // Scalar cross product query returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_metrics::MetricsAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_metrics::MetricsAPI;
 use datadog_api_client::datadogV2::model::FormulaLimit;
 use datadog_api_client::datadogV2::model::MetricsAggregator;
 use datadog_api_client::datadogV2::model::MetricsDataSource;
@@ -17,7 +17,7 @@ use datadog_api_client::datadogV2::model::ScalarQuery;
 async fn main() {
     let body = ScalarFormulaQueryRequest::new(ScalarFormulaRequest::new(
         ScalarFormulaRequestAttributes::new(
-            1671612804000,
+            1636625471000,
             vec![ScalarQuery::MetricsScalarQuery(Box::new(
                 MetricsScalarQuery::new(
                     MetricsAggregator::AVG,
@@ -26,13 +26,13 @@ async fn main() {
                 )
                 .name("a".to_string()),
             ))],
-            1671620004000,
+            1636629071000,
         )
         .formulas(vec![QueryFormula::new("a".to_string())
             .limit(FormulaLimit::new().count(10).order(QuerySortOrder::DESC))]),
         ScalarFormulaRequestType::SCALAR_REQUEST,
     ));
-    let mut configuration = Configuration::new();
+    let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.QueryScalarData", true);
     let api = MetricsAPI::with_config(configuration);
     let resp = api.query_scalar_data(body).await;

@@ -1,6 +1,6 @@
 // Search logs returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_logs::LogsAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV1::api_logs::LogsAPI;
 use datadog_api_client::datadogV1::model::LogsListRequest;
 use datadog_api_client::datadogV1::model::LogsListRequestTime;
 use datadog_api_client::datadogV1::model::LogsSort;
@@ -14,7 +14,7 @@ async fn main() {
     .index("retention-3,retention-15".to_string())
     .query("service:web* AND @http.status_code:[200 TO 299]".to_string())
     .sort(LogsSort::TIME_ASCENDING);
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = LogsAPI::with_config(configuration);
     let resp = api.list_logs(body).await;
     if let Ok(value) = resp {

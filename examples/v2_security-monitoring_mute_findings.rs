@@ -1,6 +1,6 @@
 // Mute or unmute a batch of findings returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_security_monitoring::SecurityMonitoringAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_security_monitoring::SecurityMonitoringAPI;
 use datadog_api_client::datadogV2::model::BulkMuteFindingsRequest;
 use datadog_api_client::datadogV2::model::BulkMuteFindingsRequestAttributes;
 use datadog_api_client::datadogV2::model::BulkMuteFindingsRequestData;
@@ -24,7 +24,7 @@ async fn main() {
             )]),
         FindingType::FINDING,
     ));
-    let mut configuration = Configuration::new();
+    let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.MuteFindings", true);
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api.mute_findings(body).await;

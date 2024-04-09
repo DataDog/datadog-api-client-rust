@@ -1,13 +1,13 @@
 // List all rules returns "OK" response with pagination
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_service_scorecards::ListScorecardRulesOptionalParams;
-use datadog_api_client::datadogV2::api::api_service_scorecards::ServiceScorecardsAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_service_scorecards::ListScorecardRulesOptionalParams;
+use datadog_api_client::datadogV2::api_service_scorecards::ServiceScorecardsAPI;
 use futures_util::pin_mut;
 use futures_util::stream::StreamExt;
 
 #[tokio::main]
 async fn main() {
-    let mut configuration = Configuration::new();
+    let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.ListScorecardRules", true);
     let api = ServiceScorecardsAPI::with_config(configuration);
     let response = api.list_scorecard_rules_with_pagination(

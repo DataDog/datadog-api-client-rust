@@ -1,6 +1,6 @@
 // Update an existing incident team returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_incident_teams::IncidentTeamsAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_incident_teams::IncidentTeamsAPI;
 use datadog_api_client::datadogV2::model::IncidentTeamType;
 use datadog_api_client::datadogV2::model::IncidentTeamUpdateAttributes;
 use datadog_api_client::datadogV2::model::IncidentTeamUpdateData;
@@ -15,7 +15,7 @@ async fn main() {
             IncidentTeamUpdateAttributes::new("team name-updated".to_string()),
         ),
     );
-    let mut configuration = Configuration::new();
+    let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.UpdateIncidentTeam", true);
     let api = IncidentTeamsAPI::with_config(configuration);
     let resp = api.update_incident_team(team_data_id.clone(), body).await;

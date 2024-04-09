@@ -1,6 +1,6 @@
 // Create an archive returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_logs_archives::LogsArchivesAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_logs_archives::LogsArchivesAPI;
 use datadog_api_client::datadogV2::model::LogsArchiveCreateRequest;
 use datadog_api_client::datadogV2::model::LogsArchiveCreateRequestAttributes;
 use datadog_api_client::datadogV2::model::LogsArchiveCreateRequestDefinition;
@@ -33,7 +33,7 @@ async fn main() {
             .rehydration_tags(vec!["team:intake".to_string(), "team:app".to_string()]),
         ),
     );
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = LogsArchivesAPI::with_config(configuration);
     let resp = api.create_logs_archive(body).await;
     if let Ok(value) = resp {

@@ -1,1 +1,101 @@
-{"http_interactions": [{"request": {"body": {"string": "{\"data\":{\"attributes\":{\"exclusion_filters\":[{\"name\":\"Exclude logs from staging\",\"query\":\"source:staging\"}],\"filtered_data_type\":\"logs\",\"is_enabled\":true,\"name\":\"Test-Update_a_security_filter_returns_OK_response-1666186606\",\"query\":\"service:TestUpdateasecurityfilterreturnsOKresponse1666186606\"},\"type\":\"security_filters\"}}", "encoding": null}, "headers": {"Accept": ["application/json"], "Content-Type": ["application/json"]}, "method": "post", "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/security_filters"}, "response": {"body": {"string": "{\"data\":{\"attributes\":{\"is_enabled\":true,\"name\":\"Test-Update_a_security_filter_returns_OK_response-1666186606\",\"filtered_data_type\":\"logs\",\"exclusion_filters\":[{\"query\":\"source:staging\",\"name\":\"Exclude logs from staging\"}],\"version\":1,\"query\":\"service:TestUpdateasecurityfilterreturnsOKresponse1666186606\",\"is_builtin\":false},\"type\":\"security_filters\",\"id\":\"dtb-n4z-x9c\"}}\n", "encoding": null}, "headers": {"Content-Type": ["application/json"]}, "status": {"code": 200, "message": "OK"}}, "recorded_at": "Wed, 19 Oct 2022 13:36:46 GMT"}, {"request": {"body": {"string": "{\"data\":{\"attributes\":{\"exclusion_filters\":[],\"filtered_data_type\":\"logs\",\"is_enabled\":true,\"name\":\"Test-Update_a_security_filter_returns_OK_response-1666186606\",\"query\":\"service:TestUpdateasecurityfilterreturnsOKresponse1666186606\",\"version\":1},\"type\":\"security_filters\"}}", "encoding": null}, "headers": {"Accept": ["application/json"], "Content-Type": ["application/json"]}, "method": "patch", "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/security_filters/dtb-n4z-x9c"}, "response": {"body": {"string": "{\"data\":{\"attributes\":{\"is_enabled\":true,\"name\":\"Test-Update_a_security_filter_returns_OK_response-1666186606\",\"filtered_data_type\":\"logs\",\"exclusion_filters\":[],\"version\":2,\"query\":\"service:TestUpdateasecurityfilterreturnsOKresponse1666186606\",\"is_builtin\":false},\"type\":\"security_filters\",\"id\":\"dtb-n4z-x9c\"}}\n", "encoding": null}, "headers": {"Content-Type": ["application/json"]}, "status": {"code": 200, "message": "OK"}}, "recorded_at": "Wed, 19 Oct 2022 13:36:46 GMT"}, {"request": {"body": "", "headers": {"Accept": ["*/*"]}, "method": "delete", "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/security_filters/dtb-n4z-x9c"}, "response": {"body": {"string": "", "encoding": null}, "headers": {"Content-Type": ["text/html; charset=utf-8"]}, "status": {"code": 204, "message": "No Content"}}, "recorded_at": "Wed, 19 Oct 2022 13:36:46 GMT"}], "recorded_with": "VCR 6.0.0"}
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"exclusion_filters\":[{\"name\":\"Exclude logs from staging\",\"query\":\"source:staging\"}],\"filtered_data_type\":\"logs\",\"is_enabled\":true,\"name\":\"Test-Update_a_security_filter_returns_OK_response-1666186606\",\"query\":\"service:TestUpdateasecurityfilterreturnsOKresponse1666186606\"},\"type\":\"security_filters\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/security_filters"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"is_enabled\":true,\"name\":\"Test-Update_a_security_filter_returns_OK_response-1666186606\",\"filtered_data_type\":\"logs\",\"exclusion_filters\":[{\"query\":\"source:staging\",\"name\":\"Exclude logs from staging\"}],\"version\":1,\"query\":\"service:TestUpdateasecurityfilterreturnsOKresponse1666186606\",\"is_builtin\":false},\"type\":\"security_filters\",\"id\":\"dtb-n4z-x9c\"}}\n",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Wed, 19 Oct 2022 13:36:46 GMT"
+    },
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"exclusion_filters\":[],\"filtered_data_type\":\"logs\",\"is_enabled\":true,\"name\":\"Test-Update_a_security_filter_returns_OK_response-1666186606\",\"query\":\"service:TestUpdateasecurityfilterreturnsOKresponse1666186606\",\"version\":1},\"type\":\"security_filters\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "patch",
+        "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/security_filters/dtb-n4z-x9c"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"is_enabled\":true,\"name\":\"Test-Update_a_security_filter_returns_OK_response-1666186606\",\"filtered_data_type\":\"logs\",\"exclusion_filters\":[],\"version\":2,\"query\":\"service:TestUpdateasecurityfilterreturnsOKresponse1666186606\",\"is_builtin\":false},\"type\":\"security_filters\",\"id\":\"dtb-n4z-x9c\"}}\n",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Wed, 19 Oct 2022 13:36:46 GMT"
+    },
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "*/*"
+          ]
+        },
+        "method": "delete",
+        "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/security_filters/dtb-n4z-x9c"
+      },
+      "response": {
+        "body": {
+          "string": "",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "text/html; charset=utf-8"
+          ]
+        },
+        "status": {
+          "code": 204,
+          "message": "No Content"
+        }
+      },
+      "recorded_at": "Wed, 19 Oct 2022 13:36:46 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

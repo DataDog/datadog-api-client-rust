@@ -1,7 +1,7 @@
 // Search pipelines events returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_ci_visibility_pipelines::CIVisibilityPipelinesAPI;
-use datadog_api_client::datadogV2::api::api_ci_visibility_pipelines::SearchCIAppPipelineEventsOptionalParams;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_ci_visibility_pipelines::CIVisibilityPipelinesAPI;
+use datadog_api_client::datadogV2::api_ci_visibility_pipelines::SearchCIAppPipelineEventsOptionalParams;
 use datadog_api_client::datadogV2::model::CIAppPipelineEventsRequest;
 use datadog_api_client::datadogV2::model::CIAppPipelinesQueryFilter;
 use datadog_api_client::datadogV2::model::CIAppQueryOptions;
@@ -20,7 +20,7 @@ async fn main() {
         .options(CIAppQueryOptions::new().timezone("GMT".to_string()))
         .page(CIAppQueryPageOptions::new().limit(5))
         .sort(CIAppSort::TIMESTAMP_ASCENDING);
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = CIVisibilityPipelinesAPI::with_config(configuration);
     let resp = api
         .search_ci_app_pipeline_events(

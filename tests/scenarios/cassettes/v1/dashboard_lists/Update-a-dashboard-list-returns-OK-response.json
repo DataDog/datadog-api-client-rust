@@ -1,1 +1,101 @@
-{"http_interactions": [{"request": {"body": {"string": "{\"name\":\"Test-Update_a_dashboard_list_returns_OK_response-1641430223\"}", "encoding": null}, "headers": {"Accept": ["application/json"], "Content-Type": ["application/json"]}, "method": "post", "uri": "https://api.datadoghq.com/api/v1/dashboard/lists/manual"}, "response": {"body": {"string": "{\"is_favorite\":false,\"name\":\"Test-Update_a_dashboard_list_returns_OK_response-1641430223\",\"dashboard_count\":0,\"author\":{\"handle\":\"frog@datadoghq.com\",\"name\":null},\"created\":\"2022-01-06T00:50:23.876774+00:00\",\"type\":\"manual_dashboard_list\",\"dashboards\":null,\"modified\":\"2022-01-06T00:50:23.876799+00:00\",\"id\":269882}", "encoding": null}, "headers": {"Content-Type": ["application/json"]}, "status": {"code": 200, "message": "OK"}}, "recorded_at": "Thu, 06 Jan 2022 00:50:23 GMT"}, {"request": {"body": {"string": "{\"name\":\"updated Test-Update_a_dashboard_list_returns_OK_response-1641430223\"}", "encoding": null}, "headers": {"Accept": ["application/json"], "Content-Type": ["application/json"]}, "method": "put", "uri": "https://api.datadoghq.com/api/v1/dashboard/lists/manual/269882"}, "response": {"body": {"string": "{\"is_favorite\":false,\"name\":\"updated Test-Update_a_dashboard_list_returns_OK_response-1641430223\",\"dashboard_count\":0,\"author\":{\"handle\":\"frog@datadoghq.com\",\"name\":null},\"created\":\"2022-01-06T00:50:23.876774+00:00\",\"type\":\"manual_dashboard_list\",\"dashboards\":null,\"modified\":\"2022-01-06T00:50:24.060886+00:00\",\"id\":269882}", "encoding": null}, "headers": {"Content-Type": ["application/json"]}, "status": {"code": 200, "message": "OK"}}, "recorded_at": "Thu, 06 Jan 2022 00:50:23 GMT"}, {"request": {"body": "", "headers": {"Accept": ["application/json"]}, "method": "delete", "uri": "https://api.datadoghq.com/api/v1/dashboard/lists/manual/269882"}, "response": {"body": {"string": "{\"deleted_dashboard_list_id\":269882}", "encoding": null}, "headers": {"Content-Type": ["application/json"]}, "status": {"code": 200, "message": "OK"}}, "recorded_at": "Thu, 06 Jan 2022 00:50:23 GMT"}], "recorded_with": "VCR 6.0.0"}
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"name\":\"Test-Update_a_dashboard_list_returns_OK_response-1641430223\"}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v1/dashboard/lists/manual"
+      },
+      "response": {
+        "body": {
+          "string": "{\"is_favorite\":false,\"name\":\"Test-Update_a_dashboard_list_returns_OK_response-1641430223\",\"dashboard_count\":0,\"author\":{\"handle\":\"frog@datadoghq.com\",\"name\":null},\"created\":\"2022-01-06T00:50:23.876774+00:00\",\"type\":\"manual_dashboard_list\",\"dashboards\":null,\"modified\":\"2022-01-06T00:50:23.876799+00:00\",\"id\":269882}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Thu, 06 Jan 2022 00:50:23 GMT"
+    },
+    {
+      "request": {
+        "body": {
+          "string": "{\"name\":\"updated Test-Update_a_dashboard_list_returns_OK_response-1641430223\"}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "put",
+        "uri": "https://api.datadoghq.com/api/v1/dashboard/lists/manual/269882"
+      },
+      "response": {
+        "body": {
+          "string": "{\"is_favorite\":false,\"name\":\"updated Test-Update_a_dashboard_list_returns_OK_response-1641430223\",\"dashboard_count\":0,\"author\":{\"handle\":\"frog@datadoghq.com\",\"name\":null},\"created\":\"2022-01-06T00:50:23.876774+00:00\",\"type\":\"manual_dashboard_list\",\"dashboards\":null,\"modified\":\"2022-01-06T00:50:24.060886+00:00\",\"id\":269882}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Thu, 06 Jan 2022 00:50:23 GMT"
+    },
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "application/json"
+          ]
+        },
+        "method": "delete",
+        "uri": "https://api.datadoghq.com/api/v1/dashboard/lists/manual/269882"
+      },
+      "response": {
+        "body": {
+          "string": "{\"deleted_dashboard_list_id\":269882}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Thu, 06 Jan 2022 00:50:23 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
