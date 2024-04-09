@@ -419,12 +419,16 @@ impl CIVisibilityTestsAPI {
                 local_req_builder.query(&[("filter[query]", &local_query_param.to_string())]);
         };
         if let Some(ref local_query_param) = filter_from {
-            local_req_builder =
-                local_req_builder.query(&[("filter[from]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "filter[from]",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
         if let Some(ref local_query_param) = filter_to {
-            local_req_builder =
-                local_req_builder.query(&[("filter[to]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "filter[to]",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
         if let Some(ref local_query_param) = sort {
             local_req_builder =

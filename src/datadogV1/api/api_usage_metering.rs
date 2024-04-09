@@ -1406,11 +1406,16 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         local_req_builder = local_req_builder.query(&[("usage_type", &usage_type.to_string())]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
         if let Some(ref local_query_param) = next_record_id {
             local_req_builder =
@@ -1544,10 +1549,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -1667,10 +1677,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -1961,11 +1976,16 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_month", &start_month.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_month",
+            &start_month.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         local_req_builder = local_req_builder.query(&[("fields", &fields.to_string())]);
         if let Some(ref local_query_param) = end_month {
-            local_req_builder =
-                local_req_builder.query(&[("end_month", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_month",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
         if let Some(ref local_query_param) = sort_direction {
             local_req_builder =
@@ -2339,10 +2359,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -2462,10 +2487,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -2581,8 +2611,10 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         if let Some(ref local_query_param) = month {
-            local_req_builder =
-                local_req_builder.query(&[("month", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "month",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -2698,10 +2730,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -2815,10 +2852,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -2938,10 +2980,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -3056,10 +3103,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -3176,10 +3228,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -3295,10 +3352,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -3418,10 +3480,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -3541,10 +3608,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -3659,10 +3731,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -3776,10 +3853,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -3896,10 +3978,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
         if let Some(ref local) = index_name {
             local_req_builder = local_req_builder.query(&[(
@@ -4032,10 +4119,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -4155,10 +4247,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -4278,10 +4375,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -4403,10 +4505,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -4526,10 +4633,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -4650,10 +4762,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
         if let Some(ref local_query_param) = type_ {
             local_req_builder =
@@ -4776,10 +4893,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -4893,10 +5015,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -5008,10 +5135,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -5127,10 +5259,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_month", &start_month.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_month",
+            &start_month.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_month {
-            local_req_builder =
-                local_req_builder.query(&[("end_month", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_month",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
         if let Some(ref local_query_param) = include_org_details {
             local_req_builder =
@@ -5254,10 +5391,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -5379,10 +5521,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -5504,10 +5651,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -5627,10 +5779,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -5750,11 +5907,16 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         if let Some(ref local_query_param) = month {
-            local_req_builder =
-                local_req_builder.query(&[("month", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "month",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
         if let Some(ref local_query_param) = day {
-            local_req_builder = local_req_builder.query(&[("day", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "day",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
         if let Some(ref local) = names {
             local_req_builder = local_req_builder.query(&[(
