@@ -1,0 +1,33 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "text/csv, application/json"
+          ]
+        },
+        "method": "get",
+        "uri": "https://api.datadoghq.com/api/v2/slo/report/invalid-report-id/download"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"title\":\"Invalid Argument\",\"detail\":\"invalid report ID: invalid-report-id\"}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Tue, 09 Apr 2024 17:56:36 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
