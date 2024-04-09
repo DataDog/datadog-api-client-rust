@@ -5,6 +5,7 @@ use datadog_api_client::datadogV2::model::AuthNMappingCreateAttributes;
 use datadog_api_client::datadogV2::model::AuthNMappingCreateData;
 use datadog_api_client::datadogV2::model::AuthNMappingCreateRelationships;
 use datadog_api_client::datadogV2::model::AuthNMappingCreateRequest;
+use datadog_api_client::datadogV2::model::AuthNMappingRelationshipToRole;
 use datadog_api_client::datadogV2::model::AuthNMappingsType;
 use datadog_api_client::datadogV2::model::RelationshipToRole;
 use datadog_api_client::datadogV2::model::RelationshipToRoleData;
@@ -22,13 +23,15 @@ async fn main() {
                     .attribute_value("Example-AuthN-Mapping".to_string()),
             )
             .relationships(
-                AuthNMappingCreateRelationships::new().role(
-                    RelationshipToRole::new().data(
-                        RelationshipToRoleData::new()
-                            .id(role_data_id.clone())
-                            .type_(RolesType::ROLES),
+                AuthNMappingCreateRelationships::AuthNMappingRelationshipToRole(Box::new(
+                    AuthNMappingRelationshipToRole::new(
+                        RelationshipToRole::new().data(
+                            RelationshipToRoleData::new()
+                                .id(role_data_id.clone())
+                                .type_(RolesType::ROLES),
+                        ),
                     ),
-                ),
+                )),
             ),
     );
     let configuration = datadog::Configuration::new();

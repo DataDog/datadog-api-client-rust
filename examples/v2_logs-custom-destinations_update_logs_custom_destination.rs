@@ -1,6 +1,7 @@
 // Update a custom destination returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_logs_custom_destinations::LogsCustomDestinationsAPI;
+use datadog_api_client::datadogV2::model::CustomDestinationAttributeTagsRestrictionListType;
 use datadog_api_client::datadogV2::model::CustomDestinationType;
 use datadog_api_client::datadogV2::model::CustomDestinationUpdateRequest;
 use datadog_api_client::datadogV2::model::CustomDestinationUpdateRequestAttributes;
@@ -17,7 +18,13 @@ async fn main() {
         )
         .attributes(
             CustomDestinationUpdateRequestAttributes::new()
-                .name("Nginx logs (Updated)".to_string()),
+                .enabled(false)
+                .forward_tags(false)
+                .forward_tags_restriction_list_type(
+                    CustomDestinationAttributeTagsRestrictionListType::BLOCK_LIST,
+                )
+                .name("Nginx logs (Updated)".to_string())
+                .query("source:nginx".to_string()),
         ),
     );
     let configuration = datadog::Configuration::new();

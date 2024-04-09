@@ -10,6 +10,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 pub enum AuthNMappingIncluded {
     SAMLAssertionAttribute(Box<crate::datadogV2::model::SAMLAssertionAttribute>),
     Role(Box<crate::datadogV2::model::Role>),
+    AuthNMappingTeam(Box<crate::datadogV2::model::AuthNMappingTeam>),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -30,6 +31,13 @@ impl<'de> Deserialize<'de> for AuthNMappingIncluded {
         {
             if !_v._unparsed {
                 return Ok(AuthNMappingIncluded::Role(_v));
+            }
+        }
+        if let Ok(_v) =
+            serde_json::from_value::<Box<crate::datadogV2::model::AuthNMappingTeam>>(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(AuthNMappingIncluded::AuthNMappingTeam(_v));
             }
         }
 
