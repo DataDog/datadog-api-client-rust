@@ -14,7 +14,7 @@ pub struct AuthNMappingCreateData {
     /// Key/Value pair of attributes used for create request.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::AuthNMappingCreateAttributes>,
-    /// Relationship of AuthN Mapping create object to Role.
+    /// Relationship of AuthN Mapping create object to a Role or Team.
     #[serde(rename = "relationships")]
     pub relationships: Option<crate::datadogV2::model::AuthNMappingCreateRelationships>,
     /// AuthN Mappings resource type.
@@ -91,6 +91,14 @@ impl<'de> Deserialize<'de> for AuthNMappingCreateData {
                             }
                             relationships =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _relationships) = relationships {
+                                match _relationships {
+                                    crate::datadogV2::model::AuthNMappingCreateRelationships::UnparsedObject(_relationships) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
