@@ -1,6 +1,6 @@
 // Create a time-slice SLO object returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_service_level_objectives::ServiceLevelObjectivesAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV1::api_service_level_objectives::ServiceLevelObjectivesAPI;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionMetricDataSource;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionMetricQueryDefinition;
 use datadog_api_client::datadogV1::model::SLODataSourceQueryDefinition;
@@ -48,7 +48,7 @@ async fn main() {
     .target_threshold(97.0 as f64)
     .timeframe(SLOTimeframe::SEVEN_DAYS)
     .warning_threshold(98.0 as f64);
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = ServiceLevelObjectivesAPI::with_config(configuration);
     let resp = api.create_slo(body).await;
     if let Ok(value) = resp {

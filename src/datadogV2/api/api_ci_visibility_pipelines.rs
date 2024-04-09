@@ -1,14 +1,13 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use crate::datadog::*;
+use crate::datadog;
 use async_stream::try_stream;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
 };
 use futures_core::stream::Stream;
-use reqwest;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
@@ -125,13 +124,13 @@ pub enum SearchCIAppPipelineEventsError {
 
 #[derive(Debug, Clone)]
 pub struct CIVisibilityPipelinesAPI {
-    config: configuration::Configuration,
+    config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for CIVisibilityPipelinesAPI {
     fn default() -> Self {
-        Self::with_config(configuration::Configuration::default())
+        Self::with_config(datadog::Configuration::default())
     }
 }
 
@@ -139,7 +138,7 @@ impl CIVisibilityPipelinesAPI {
     pub fn new() -> Self {
         Self::default()
     }
-    pub fn with_config(config: configuration::Configuration) -> Self {
+    pub fn with_config(config: datadog::Configuration) -> Self {
         let mut reqwest_client_builder = reqwest::Client::builder();
 
         if let Some(proxy_url) = &config.proxy_url {
@@ -181,7 +180,7 @@ impl CIVisibilityPipelinesAPI {
     }
 
     pub fn with_client_and_config(
-        config: configuration::Configuration,
+        config: datadog::Configuration,
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
@@ -193,7 +192,7 @@ impl CIVisibilityPipelinesAPI {
         body: crate::datadogV2::model::CIAppPipelinesAggregateRequest,
     ) -> Result<
         crate::datadogV2::model::CIAppPipelinesAnalyticsAggregateResponse,
-        Error<AggregateCIAppPipelineEventsError>,
+        datadog::Error<AggregateCIAppPipelineEventsError>,
     > {
         match self
             .aggregate_ci_app_pipeline_events_with_http_info(body)
@@ -203,7 +202,7 @@ impl CIVisibilityPipelinesAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -217,8 +216,8 @@ impl CIVisibilityPipelinesAPI {
         &self,
         body: crate::datadogV2::model::CIAppPipelinesAggregateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::CIAppPipelinesAnalyticsAggregateResponse>,
-        Error<AggregateCIAppPipelineEventsError>,
+        datadog::ResponseContent<crate::datadogV2::model::CIAppPipelinesAnalyticsAggregateResponse>,
+        datadog::Error<AggregateCIAppPipelineEventsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.aggregate_ci_app_pipeline_events";
@@ -244,7 +243,7 @@ impl CIVisibilityPipelinesAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -267,7 +266,7 @@ impl CIVisibilityPipelinesAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -278,7 +277,7 @@ impl CIVisibilityPipelinesAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -288,7 +287,7 @@ impl CIVisibilityPipelinesAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -298,7 +297,7 @@ impl CIVisibilityPipelinesAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -323,23 +322,23 @@ impl CIVisibilityPipelinesAPI {
             >(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<AggregateCIAppPipelineEventsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -351,14 +350,14 @@ impl CIVisibilityPipelinesAPI {
         body: crate::datadogV2::model::CIAppCreatePipelineEventRequest,
     ) -> Result<
         std::collections::BTreeMap<String, serde_json::Value>,
-        Error<CreateCIAppPipelineEventError>,
+        datadog::Error<CreateCIAppPipelineEventError>,
     > {
         match self.create_ci_app_pipeline_event_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -374,8 +373,8 @@ impl CIVisibilityPipelinesAPI {
         &self,
         body: crate::datadogV2::model::CIAppCreatePipelineEventRequest,
     ) -> Result<
-        ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
-        Error<CreateCIAppPipelineEventError>,
+        datadog::ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
+        datadog::Error<CreateCIAppPipelineEventError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_ci_app_pipeline_event";
@@ -401,7 +400,7 @@ impl CIVisibilityPipelinesAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -417,7 +416,7 @@ impl CIVisibilityPipelinesAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -428,7 +427,7 @@ impl CIVisibilityPipelinesAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -438,7 +437,7 @@ impl CIVisibilityPipelinesAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -448,7 +447,7 @@ impl CIVisibilityPipelinesAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -472,23 +471,23 @@ impl CIVisibilityPipelinesAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateCIAppPipelineEventError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -501,7 +500,7 @@ impl CIVisibilityPipelinesAPI {
         params: ListCIAppPipelineEventsOptionalParams,
     ) -> Result<
         crate::datadogV2::model::CIAppPipelineEventsResponse,
-        Error<ListCIAppPipelineEventsError>,
+        datadog::Error<ListCIAppPipelineEventsError>,
     > {
         match self
             .list_ci_app_pipeline_events_with_http_info(params)
@@ -511,7 +510,7 @@ impl CIVisibilityPipelinesAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -526,7 +525,7 @@ impl CIVisibilityPipelinesAPI {
     ) -> impl Stream<
         Item = Result<
             crate::datadogV2::model::CIAppPipelineEvent,
-            Error<ListCIAppPipelineEventsError>,
+            datadog::Error<ListCIAppPipelineEventsError>,
         >,
     > + '_ {
         try_stream! {
@@ -566,8 +565,8 @@ impl CIVisibilityPipelinesAPI {
         &self,
         params: ListCIAppPipelineEventsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::CIAppPipelineEventsResponse>,
-        Error<ListCIAppPipelineEventsError>,
+        datadog::ResponseContent<crate::datadogV2::model::CIAppPipelineEventsResponse>,
+        datadog::Error<ListCIAppPipelineEventsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_ci_app_pipeline_events";
@@ -625,7 +624,7 @@ impl CIVisibilityPipelinesAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -658,23 +657,23 @@ impl CIVisibilityPipelinesAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListCIAppPipelineEventsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -687,7 +686,7 @@ impl CIVisibilityPipelinesAPI {
         params: SearchCIAppPipelineEventsOptionalParams,
     ) -> Result<
         crate::datadogV2::model::CIAppPipelineEventsResponse,
-        Error<SearchCIAppPipelineEventsError>,
+        datadog::Error<SearchCIAppPipelineEventsError>,
     > {
         match self
             .search_ci_app_pipeline_events_with_http_info(params)
@@ -697,7 +696,7 @@ impl CIVisibilityPipelinesAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -712,7 +711,7 @@ impl CIVisibilityPipelinesAPI {
     ) -> impl Stream<
         Item = Result<
             crate::datadogV2::model::CIAppPipelineEvent,
-            Error<SearchCIAppPipelineEventsError>,
+            datadog::Error<SearchCIAppPipelineEventsError>,
         >,
     > + '_ {
         try_stream! {
@@ -758,8 +757,8 @@ impl CIVisibilityPipelinesAPI {
         &self,
         params: SearchCIAppPipelineEventsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::CIAppPipelineEventsResponse>,
-        Error<SearchCIAppPipelineEventsError>,
+        datadog::ResponseContent<crate::datadogV2::model::CIAppPipelineEventsResponse>,
+        datadog::Error<SearchCIAppPipelineEventsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.search_ci_app_pipeline_events";
@@ -788,7 +787,7 @@ impl CIVisibilityPipelinesAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -811,7 +810,7 @@ impl CIVisibilityPipelinesAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -822,7 +821,7 @@ impl CIVisibilityPipelinesAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -832,7 +831,7 @@ impl CIVisibilityPipelinesAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -842,7 +841,7 @@ impl CIVisibilityPipelinesAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -866,23 +865,23 @@ impl CIVisibilityPipelinesAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<SearchCIAppPipelineEventsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 }

@@ -1,6 +1,6 @@
 // Create a case returns "CREATED" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_case_management::CaseManagementAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_case_management::CaseManagementAPI;
 use datadog_api_client::datadogV2::model::CaseCreate;
 use datadog_api_client::datadogV2::model::CaseCreateAttributes;
 use datadog_api_client::datadogV2::model::CaseCreateRelationships;
@@ -38,7 +38,7 @@ async fn main() {
             )))),
         ),
     );
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = CaseManagementAPI::with_config(configuration);
     let resp = api.create_case(body).await;
     if let Ok(value) = resp {

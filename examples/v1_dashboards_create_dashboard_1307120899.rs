@@ -1,6 +1,6 @@
 // Create a new timeseries widget with ci_tests data source
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_dashboards::DashboardsAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV1::api_dashboards::DashboardsAPI;
 use datadog_api_client::datadogV1::model::Dashboard;
 use datadog_api_client::datadogV1::model::DashboardLayoutType;
 use datadog_api_client::datadogV1::model::DashboardReflowType;
@@ -91,7 +91,7 @@ async fn main() {
                 )
             ],
         ).reflow_type(DashboardReflowType::AUTO);
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = DashboardsAPI::with_config(configuration);
     let resp = api.create_dashboard(body).await;
     if let Ok(value) = resp {

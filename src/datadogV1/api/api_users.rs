@@ -1,12 +1,11 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use crate::datadog::*;
+use crate::datadog;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
 };
-use reqwest;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
@@ -65,13 +64,13 @@ pub enum UpdateUserError {
 
 #[derive(Debug, Clone)]
 pub struct UsersAPI {
-    config: configuration::Configuration,
+    config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for UsersAPI {
     fn default() -> Self {
-        Self::with_config(configuration::Configuration::default())
+        Self::with_config(datadog::Configuration::default())
     }
 }
 
@@ -79,7 +78,7 @@ impl UsersAPI {
     pub fn new() -> Self {
         Self::default()
     }
-    pub fn with_config(config: configuration::Configuration) -> Self {
+    pub fn with_config(config: datadog::Configuration) -> Self {
         let mut reqwest_client_builder = reqwest::Client::builder();
 
         if let Some(proxy_url) = &config.proxy_url {
@@ -121,7 +120,7 @@ impl UsersAPI {
     }
 
     pub fn with_client_and_config(
-        config: configuration::Configuration,
+        config: datadog::Configuration,
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
@@ -134,13 +133,13 @@ impl UsersAPI {
     pub async fn create_user(
         &self,
         body: crate::datadogV1::model::User,
-    ) -> Result<crate::datadogV1::model::UserResponse, Error<CreateUserError>> {
+    ) -> Result<crate::datadogV1::model::UserResponse, datadog::Error<CreateUserError>> {
         match self.create_user_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -156,8 +155,10 @@ impl UsersAPI {
     pub async fn create_user_with_http_info(
         &self,
         body: crate::datadogV1::model::User,
-    ) -> Result<ResponseContent<crate::datadogV1::model::UserResponse>, Error<CreateUserError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::UserResponse>,
+        datadog::Error<CreateUserError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.create_user";
 
@@ -182,7 +183,7 @@ impl UsersAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -205,7 +206,7 @@ impl UsersAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -216,7 +217,7 @@ impl UsersAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -226,7 +227,7 @@ impl UsersAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -236,7 +237,7 @@ impl UsersAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -258,22 +259,22 @@ impl UsersAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::UserResponse>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateUserError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -284,13 +285,14 @@ impl UsersAPI {
     pub async fn disable_user(
         &self,
         user_handle: String,
-    ) -> Result<crate::datadogV1::model::UserDisableResponse, Error<DisableUserError>> {
+    ) -> Result<crate::datadogV1::model::UserDisableResponse, datadog::Error<DisableUserError>>
+    {
         match self.disable_user_with_http_info(user_handle).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -307,8 +309,8 @@ impl UsersAPI {
         &self,
         user_handle: String,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UserDisableResponse>,
-        Error<DisableUserError>,
+        datadog::ResponseContent<crate::datadogV1::model::UserDisableResponse>,
+        datadog::Error<DisableUserError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.disable_user";
@@ -318,7 +320,7 @@ impl UsersAPI {
         let local_uri_str = format!(
             "{}/api/v1/user/{user_handle}",
             local_configuration.get_operation_host(operation_id),
-            user_handle = urlencode(user_handle)
+            user_handle = datadog::urlencode(user_handle)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -334,7 +336,7 @@ impl UsersAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -367,22 +369,22 @@ impl UsersAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<DisableUserError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -390,13 +392,13 @@ impl UsersAPI {
     pub async fn get_user(
         &self,
         user_handle: String,
-    ) -> Result<crate::datadogV1::model::UserResponse, Error<GetUserError>> {
+    ) -> Result<crate::datadogV1::model::UserResponse, datadog::Error<GetUserError>> {
         match self.get_user_with_http_info(user_handle).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -409,7 +411,10 @@ impl UsersAPI {
     pub async fn get_user_with_http_info(
         &self,
         user_handle: String,
-    ) -> Result<ResponseContent<crate::datadogV1::model::UserResponse>, Error<GetUserError>> {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::UserResponse>,
+        datadog::Error<GetUserError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_user";
 
@@ -418,7 +423,7 @@ impl UsersAPI {
         let local_uri_str = format!(
             "{}/api/v1/user/{user_handle}",
             local_configuration.get_operation_host(operation_id),
-            user_handle = urlencode(user_handle)
+            user_handle = datadog::urlencode(user_handle)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -434,7 +439,7 @@ impl UsersAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -465,35 +470,35 @@ impl UsersAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::UserResponse>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUserError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// List all users for your organization.
     pub async fn list_users(
         &self,
-    ) -> Result<crate::datadogV1::model::UserListResponse, Error<ListUsersError>> {
+    ) -> Result<crate::datadogV1::model::UserListResponse, datadog::Error<ListUsersError>> {
         match self.list_users_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -505,8 +510,10 @@ impl UsersAPI {
     /// List all users for your organization.
     pub async fn list_users_with_http_info(
         &self,
-    ) -> Result<ResponseContent<crate::datadogV1::model::UserListResponse>, Error<ListUsersError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::UserListResponse>,
+        datadog::Error<ListUsersError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.list_users";
 
@@ -530,7 +537,7 @@ impl UsersAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -562,22 +569,22 @@ impl UsersAPI {
             match serde_json::from_str::<crate::datadogV1::model::UserListResponse>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListUsersError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -588,13 +595,13 @@ impl UsersAPI {
         &self,
         user_handle: String,
         body: crate::datadogV1::model::User,
-    ) -> Result<crate::datadogV1::model::UserResponse, Error<UpdateUserError>> {
+    ) -> Result<crate::datadogV1::model::UserResponse, datadog::Error<UpdateUserError>> {
         match self.update_user_with_http_info(user_handle, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -610,8 +617,10 @@ impl UsersAPI {
         &self,
         user_handle: String,
         body: crate::datadogV1::model::User,
-    ) -> Result<ResponseContent<crate::datadogV1::model::UserResponse>, Error<UpdateUserError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::UserResponse>,
+        datadog::Error<UpdateUserError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.update_user";
 
@@ -620,7 +629,7 @@ impl UsersAPI {
         let local_uri_str = format!(
             "{}/api/v1/user/{user_handle}",
             local_configuration.get_operation_host(operation_id),
-            user_handle = urlencode(user_handle)
+            user_handle = datadog::urlencode(user_handle)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
@@ -637,7 +646,7 @@ impl UsersAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -660,7 +669,7 @@ impl UsersAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -671,7 +680,7 @@ impl UsersAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -681,7 +690,7 @@ impl UsersAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -691,7 +700,7 @@ impl UsersAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -713,22 +722,22 @@ impl UsersAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::UserResponse>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateUserError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 }

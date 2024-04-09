@@ -1,6 +1,6 @@
 // Search RUM events returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_rum::RUMAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_rum::RUMAPI;
 use datadog_api_client::datadogV2::model::RUMQueryFilter;
 use datadog_api_client::datadogV2::model::RUMQueryOptions;
 use datadog_api_client::datadogV2::model::RUMQueryPageOptions;
@@ -23,7 +23,7 @@ async fn main() {
         )
         .page(RUMQueryPageOptions::new().limit(25))
         .sort(RUMSort::TIMESTAMP_ASCENDING);
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = RUMAPI::with_config(configuration);
     let resp = api.search_rum_events(body).await;
     if let Ok(value) = resp {

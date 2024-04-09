@@ -1,12 +1,12 @@
 // Create a new API returns "API created successfully" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_api_management::APIManagementAPI;
-use datadog_api_client::datadogV2::api::api_api_management::CreateOpenAPIOptionalParams;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_api_management::APIManagementAPI;
+use datadog_api_client::datadogV2::api_api_management::CreateOpenAPIOptionalParams;
 use std::fs;
 
 #[tokio::main]
 async fn main() {
-    let mut configuration = Configuration::new();
+    let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.CreateOpenAPI", true);
     let api = APIManagementAPI::with_config(configuration);
     let resp = api

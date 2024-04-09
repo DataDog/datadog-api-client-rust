@@ -1,6 +1,6 @@
 // Create a new RUM application returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_rum::RUMAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_rum::RUMAPI;
 use datadog_api_client::datadogV2::model::RUMApplicationCreate;
 use datadog_api_client::datadogV2::model::RUMApplicationCreateAttributes;
 use datadog_api_client::datadogV2::model::RUMApplicationCreateRequest;
@@ -13,7 +13,7 @@ async fn main() {
             .type_("ios".to_string()),
         RUMApplicationCreateType::RUM_APPLICATION_CREATE,
     ));
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = RUMAPI::with_config(configuration);
     let resp = api.create_rum_application(body).await;
     if let Ok(value) = resp {

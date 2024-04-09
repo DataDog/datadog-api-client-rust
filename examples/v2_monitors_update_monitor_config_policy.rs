@@ -1,6 +1,6 @@
 // Edit a monitor configuration policy returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_monitors::MonitorsAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_monitors::MonitorsAPI;
 use datadog_api_client::datadogV2::model::MonitorConfigPolicyAttributeEditRequest;
 use datadog_api_client::datadogV2::model::MonitorConfigPolicyEditData;
 use datadog_api_client::datadogV2::model::MonitorConfigPolicyEditRequest;
@@ -27,7 +27,7 @@ async fn main() {
         monitor_configuration_policy_data_id.clone(),
         MonitorConfigPolicyResourceType::MONITOR_CONFIG_POLICY,
     ));
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = MonitorsAPI::with_config(configuration);
     let resp = api
         .update_monitor_config_policy(monitor_configuration_policy_data_id.clone(), body)

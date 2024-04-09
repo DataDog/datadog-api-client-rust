@@ -1,6 +1,6 @@
 // Edit an application key owned by current user returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_key_management::KeyManagementAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_key_management::KeyManagementAPI;
 use datadog_api_client::datadogV2::model::ApplicationKeyUpdateAttributes;
 use datadog_api_client::datadogV2::model::ApplicationKeyUpdateData;
 use datadog_api_client::datadogV2::model::ApplicationKeyUpdateRequest;
@@ -16,7 +16,7 @@ async fn main() {
         application_key_data_id.clone(),
         ApplicationKeysType::APPLICATION_KEYS,
     ));
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = KeyManagementAPI::with_config(configuration);
     let resp = api
         .update_current_user_application_key(application_key_data_id.clone(), body)

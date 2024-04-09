@@ -1,13 +1,12 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use crate::datadog::*;
+use crate::datadog;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
 };
 use log::warn;
-use reqwest;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
@@ -127,13 +126,13 @@ pub enum UpdateIncidentServiceError {
 
 #[derive(Debug, Clone)]
 pub struct IncidentServicesAPI {
-    config: configuration::Configuration,
+    config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for IncidentServicesAPI {
     fn default() -> Self {
-        Self::with_config(configuration::Configuration::default())
+        Self::with_config(datadog::Configuration::default())
     }
 }
 
@@ -141,7 +140,7 @@ impl IncidentServicesAPI {
     pub fn new() -> Self {
         Self::default()
     }
-    pub fn with_config(config: configuration::Configuration) -> Self {
+    pub fn with_config(config: datadog::Configuration) -> Self {
         let mut reqwest_client_builder = reqwest::Client::builder();
 
         if let Some(proxy_url) = &config.proxy_url {
@@ -183,7 +182,7 @@ impl IncidentServicesAPI {
     }
 
     pub fn with_client_and_config(
-        config: configuration::Configuration,
+        config: datadog::Configuration,
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
@@ -193,14 +192,16 @@ impl IncidentServicesAPI {
     pub async fn create_incident_service(
         &self,
         body: crate::datadogV2::model::IncidentServiceCreateRequest,
-    ) -> Result<crate::datadogV2::model::IncidentServiceResponse, Error<CreateIncidentServiceError>>
-    {
+    ) -> Result<
+        crate::datadogV2::model::IncidentServiceResponse,
+        datadog::Error<CreateIncidentServiceError>,
+    > {
         match self.create_incident_service_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -214,18 +215,18 @@ impl IncidentServicesAPI {
         &self,
         body: crate::datadogV2::model::IncidentServiceCreateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::IncidentServiceResponse>,
-        Error<CreateIncidentServiceError>,
+        datadog::ResponseContent<crate::datadogV2::model::IncidentServiceResponse>,
+        datadog::Error<CreateIncidentServiceError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_incident_service";
         if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {operation_id}");
         } else {
-            let local_error = UnstableOperationDisabledError {
+            let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_incident_service' is not enabled".to_string(),
             };
-            return Err(Error::UnstableOperationDisabledError(local_error));
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
         let local_client = &self.client;
@@ -249,7 +250,7 @@ impl IncidentServicesAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -272,7 +273,7 @@ impl IncidentServicesAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -283,7 +284,7 @@ impl IncidentServicesAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -293,7 +294,7 @@ impl IncidentServicesAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -303,7 +304,7 @@ impl IncidentServicesAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -327,23 +328,23 @@ impl IncidentServicesAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateIncidentServiceError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -351,7 +352,7 @@ impl IncidentServicesAPI {
     pub async fn delete_incident_service(
         &self,
         service_id: String,
-    ) -> Result<(), Error<DeleteIncidentServiceError>> {
+    ) -> Result<(), datadog::Error<DeleteIncidentServiceError>> {
         match self
             .delete_incident_service_with_http_info(service_id)
             .await
@@ -365,16 +366,16 @@ impl IncidentServicesAPI {
     pub async fn delete_incident_service_with_http_info(
         &self,
         service_id: String,
-    ) -> Result<ResponseContent<()>, Error<DeleteIncidentServiceError>> {
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentServiceError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_incident_service";
         if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {operation_id}");
         } else {
-            let local_error = UnstableOperationDisabledError {
+            let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_incident_service' is not enabled".to_string(),
             };
-            return Err(Error::UnstableOperationDisabledError(local_error));
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
         let local_client = &self.client;
@@ -382,7 +383,7 @@ impl IncidentServicesAPI {
         let local_uri_str = format!(
             "{}/api/v2/services/{service_id}",
             local_configuration.get_operation_host(operation_id),
-            service_id = urlencode(service_id)
+            service_id = datadog::urlencode(service_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -398,7 +399,7 @@ impl IncidentServicesAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -427,7 +428,7 @@ impl IncidentServicesAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            Ok(ResponseContent {
+            Ok(datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: None,
@@ -435,12 +436,12 @@ impl IncidentServicesAPI {
         } else {
             let local_entity: Option<DeleteIncidentServiceError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -450,8 +451,10 @@ impl IncidentServicesAPI {
         &self,
         service_id: String,
         params: GetIncidentServiceOptionalParams,
-    ) -> Result<crate::datadogV2::model::IncidentServiceResponse, Error<GetIncidentServiceError>>
-    {
+    ) -> Result<
+        crate::datadogV2::model::IncidentServiceResponse,
+        datadog::Error<GetIncidentServiceError>,
+    > {
         match self
             .get_incident_service_with_http_info(service_id, params)
             .await
@@ -460,7 +463,7 @@ impl IncidentServicesAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -476,18 +479,18 @@ impl IncidentServicesAPI {
         service_id: String,
         params: GetIncidentServiceOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::IncidentServiceResponse>,
-        Error<GetIncidentServiceError>,
+        datadog::ResponseContent<crate::datadogV2::model::IncidentServiceResponse>,
+        datadog::Error<GetIncidentServiceError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_incident_service";
         if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {operation_id}");
         } else {
-            let local_error = UnstableOperationDisabledError {
+            let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_incident_service' is not enabled".to_string(),
             };
-            return Err(Error::UnstableOperationDisabledError(local_error));
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
         // unbox and build optional parameters
@@ -498,7 +501,7 @@ impl IncidentServicesAPI {
         let local_uri_str = format!(
             "{}/api/v2/services/{service_id}",
             local_configuration.get_operation_host(operation_id),
-            service_id = urlencode(service_id)
+            service_id = datadog::urlencode(service_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -519,7 +522,7 @@ impl IncidentServicesAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -552,23 +555,23 @@ impl IncidentServicesAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetIncidentServiceError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -576,14 +579,16 @@ impl IncidentServicesAPI {
     pub async fn list_incident_services(
         &self,
         params: ListIncidentServicesOptionalParams,
-    ) -> Result<crate::datadogV2::model::IncidentServicesResponse, Error<ListIncidentServicesError>>
-    {
+    ) -> Result<
+        crate::datadogV2::model::IncidentServicesResponse,
+        datadog::Error<ListIncidentServicesError>,
+    > {
         match self.list_incident_services_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -597,18 +602,18 @@ impl IncidentServicesAPI {
         &self,
         params: ListIncidentServicesOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::IncidentServicesResponse>,
-        Error<ListIncidentServicesError>,
+        datadog::ResponseContent<crate::datadogV2::model::IncidentServicesResponse>,
+        datadog::Error<ListIncidentServicesError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_incident_services";
         if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {operation_id}");
         } else {
-            let local_error = UnstableOperationDisabledError {
+            let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_incident_services' is not enabled".to_string(),
             };
-            return Err(Error::UnstableOperationDisabledError(local_error));
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
         // unbox and build optional parameters
@@ -654,7 +659,7 @@ impl IncidentServicesAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -687,23 +692,23 @@ impl IncidentServicesAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListIncidentServicesError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -712,8 +717,10 @@ impl IncidentServicesAPI {
         &self,
         service_id: String,
         body: crate::datadogV2::model::IncidentServiceUpdateRequest,
-    ) -> Result<crate::datadogV2::model::IncidentServiceResponse, Error<UpdateIncidentServiceError>>
-    {
+    ) -> Result<
+        crate::datadogV2::model::IncidentServiceResponse,
+        datadog::Error<UpdateIncidentServiceError>,
+    > {
         match self
             .update_incident_service_with_http_info(service_id, body)
             .await
@@ -722,7 +729,7 @@ impl IncidentServicesAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -737,18 +744,18 @@ impl IncidentServicesAPI {
         service_id: String,
         body: crate::datadogV2::model::IncidentServiceUpdateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::IncidentServiceResponse>,
-        Error<UpdateIncidentServiceError>,
+        datadog::ResponseContent<crate::datadogV2::model::IncidentServiceResponse>,
+        datadog::Error<UpdateIncidentServiceError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_incident_service";
         if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {operation_id}");
         } else {
-            let local_error = UnstableOperationDisabledError {
+            let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_incident_service' is not enabled".to_string(),
             };
-            return Err(Error::UnstableOperationDisabledError(local_error));
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
         let local_client = &self.client;
@@ -756,7 +763,7 @@ impl IncidentServicesAPI {
         let local_uri_str = format!(
             "{}/api/v2/services/{service_id}",
             local_configuration.get_operation_host(operation_id),
-            service_id = urlencode(service_id)
+            service_id = datadog::urlencode(service_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -773,7 +780,7 @@ impl IncidentServicesAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -796,7 +803,7 @@ impl IncidentServicesAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -807,7 +814,7 @@ impl IncidentServicesAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -817,7 +824,7 @@ impl IncidentServicesAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -827,7 +834,7 @@ impl IncidentServicesAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -851,23 +858,23 @@ impl IncidentServicesAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateIncidentServiceError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 }

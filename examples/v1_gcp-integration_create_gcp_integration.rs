@@ -1,6 +1,6 @@
 // Create a GCP integration returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_gcp_integration::GCPIntegrationAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV1::api_gcp_integration::GCPIntegrationAPI;
 use datadog_api_client::datadogV1::model::GCPAccount;
 
 #[tokio::main]
@@ -23,7 +23,7 @@ async fn main() {
         .resource_collection_enabled(true)
         .token_uri("https://accounts.google.com/o/oauth2/token".to_string())
         .type_("service_account".to_string());
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = GCPIntegrationAPI::with_config(configuration);
     let resp = api.create_gcp_integration(body).await;
     if let Ok(value) = resp {

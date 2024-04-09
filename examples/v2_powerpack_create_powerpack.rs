@@ -1,6 +1,6 @@
 // Create a new powerpack returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_powerpack::PowerpackAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_powerpack::PowerpackAPI;
 use datadog_api_client::datadogV2::model::Powerpack;
 use datadog_api_client::datadogV2::model::PowerpackAttributes;
 use datadog_api_client::datadogV2::model::PowerpackData;
@@ -42,7 +42,7 @@ async fn main() {
             )
             .type_("powerpack".to_string()),
     );
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = PowerpackAPI::with_config(configuration);
     let resp = api.create_powerpack(body).await;
     if let Ok(value) = resp {

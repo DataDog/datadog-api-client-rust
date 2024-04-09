@@ -1,14 +1,13 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use crate::datadog::*;
+use crate::datadog;
 use async_stream::try_stream;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
 };
 use futures_core::stream::Stream;
-use reqwest;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
@@ -100,13 +99,13 @@ pub enum SearchAuditLogsError {
 
 #[derive(Debug, Clone)]
 pub struct AuditAPI {
-    config: configuration::Configuration,
+    config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for AuditAPI {
     fn default() -> Self {
-        Self::with_config(configuration::Configuration::default())
+        Self::with_config(datadog::Configuration::default())
     }
 }
 
@@ -114,7 +113,7 @@ impl AuditAPI {
     pub fn new() -> Self {
         Self::default()
     }
-    pub fn with_config(config: configuration::Configuration) -> Self {
+    pub fn with_config(config: datadog::Configuration) -> Self {
         let mut reqwest_client_builder = reqwest::Client::builder();
 
         if let Some(proxy_url) = &config.proxy_url {
@@ -156,7 +155,7 @@ impl AuditAPI {
     }
 
     pub fn with_client_and_config(
-        config: configuration::Configuration,
+        config: datadog::Configuration,
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
@@ -171,13 +170,14 @@ impl AuditAPI {
     pub async fn list_audit_logs(
         &self,
         params: ListAuditLogsOptionalParams,
-    ) -> Result<crate::datadogV2::model::AuditLogsEventsResponse, Error<ListAuditLogsError>> {
+    ) -> Result<crate::datadogV2::model::AuditLogsEventsResponse, datadog::Error<ListAuditLogsError>>
+    {
         match self.list_audit_logs_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -189,8 +189,9 @@ impl AuditAPI {
     pub fn list_audit_logs_with_pagination(
         &self,
         mut params: ListAuditLogsOptionalParams,
-    ) -> impl Stream<Item = Result<crate::datadogV2::model::AuditLogsEvent, Error<ListAuditLogsError>>>
-           + '_ {
+    ) -> impl Stream<
+        Item = Result<crate::datadogV2::model::AuditLogsEvent, datadog::Error<ListAuditLogsError>>,
+    > + '_ {
         try_stream! {
             let mut page_size: i32 = 10;
             if params.page_limit.is_none() {
@@ -230,8 +231,8 @@ impl AuditAPI {
         &self,
         params: ListAuditLogsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::AuditLogsEventsResponse>,
-        Error<ListAuditLogsError>,
+        datadog::ResponseContent<crate::datadogV2::model::AuditLogsEventsResponse>,
+        datadog::Error<ListAuditLogsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_audit_logs";
@@ -289,7 +290,7 @@ impl AuditAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -322,23 +323,23 @@ impl AuditAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListAuditLogsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -351,13 +352,16 @@ impl AuditAPI {
     pub async fn search_audit_logs(
         &self,
         params: SearchAuditLogsOptionalParams,
-    ) -> Result<crate::datadogV2::model::AuditLogsEventsResponse, Error<SearchAuditLogsError>> {
+    ) -> Result<
+        crate::datadogV2::model::AuditLogsEventsResponse,
+        datadog::Error<SearchAuditLogsError>,
+    > {
         match self.search_audit_logs_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -370,7 +374,10 @@ impl AuditAPI {
         &self,
         mut params: SearchAuditLogsOptionalParams,
     ) -> impl Stream<
-        Item = Result<crate::datadogV2::model::AuditLogsEvent, Error<SearchAuditLogsError>>,
+        Item = Result<
+            crate::datadogV2::model::AuditLogsEvent,
+            datadog::Error<SearchAuditLogsError>,
+        >,
     > + '_ {
         try_stream! {
             let mut page_size: i32 = 10;
@@ -417,8 +424,8 @@ impl AuditAPI {
         &self,
         params: SearchAuditLogsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::AuditLogsEventsResponse>,
-        Error<SearchAuditLogsError>,
+        datadog::ResponseContent<crate::datadogV2::model::AuditLogsEventsResponse>,
+        datadog::Error<SearchAuditLogsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.search_audit_logs";
@@ -447,7 +454,7 @@ impl AuditAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -470,7 +477,7 @@ impl AuditAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -481,7 +488,7 @@ impl AuditAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -491,7 +498,7 @@ impl AuditAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -501,7 +508,7 @@ impl AuditAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -525,23 +532,23 @@ impl AuditAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<SearchAuditLogsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 }

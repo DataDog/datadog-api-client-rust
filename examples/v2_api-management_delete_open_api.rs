@@ -1,12 +1,12 @@
 // Delete an API returns "API deleted successfully" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_api_management::APIManagementAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_api_management::APIManagementAPI;
 
 #[tokio::main]
 async fn main() {
     // there is a valid "managed_api" in the system
     let managed_api_data_id = std::env::var("MANAGED_API_DATA_ID").unwrap();
-    let mut configuration = Configuration::new();
+    let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.DeleteOpenAPI", true);
     let api = APIManagementAPI::with_config(configuration);
     let resp = api.delete_open_api(managed_api_data_id.clone()).await;

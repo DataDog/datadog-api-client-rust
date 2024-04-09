@@ -1,6 +1,6 @@
 // Create an AuthN Mapping returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_authn_mappings::AuthNMappingsAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_authn_mappings::AuthNMappingsAPI;
 use datadog_api_client::datadogV2::model::AuthNMappingCreateAttributes;
 use datadog_api_client::datadogV2::model::AuthNMappingCreateData;
 use datadog_api_client::datadogV2::model::AuthNMappingCreateRelationships;
@@ -34,7 +34,7 @@ async fn main() {
                 )),
             ),
     );
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = AuthNMappingsAPI::with_config(configuration);
     let resp = api.create_authn_mapping(body).await;
     if let Ok(value) = resp {

@@ -1,6 +1,6 @@
 // Create a team link returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_teams::TeamsAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_teams::TeamsAPI;
 use datadog_api_client::datadogV2::model::TeamLinkAttributes;
 use datadog_api_client::datadogV2::model::TeamLinkCreate;
 use datadog_api_client::datadogV2::model::TeamLinkCreateRequest;
@@ -15,7 +15,7 @@ async fn main() {
             .position(0),
         TeamLinkType::TEAM_LINKS,
     ));
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = TeamsAPI::with_config(configuration);
     let resp = api.create_team_link(dd_team_data_id.clone(), body).await;
     if let Ok(value) = resp {

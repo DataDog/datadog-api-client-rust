@@ -1,6 +1,6 @@
 // Create Cloud Cost Management Azure configs returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_cloud_cost_management::CloudCostManagementAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_cloud_cost_management::CloudCostManagementAPI;
 use datadog_api_client::datadogV2::model::AzureUCConfigPostData;
 use datadog_api_client::datadogV2::model::AzureUCConfigPostRequest;
 use datadog_api_client::datadogV2::model::AzureUCConfigPostRequestAttributes;
@@ -30,7 +30,7 @@ async fn main() {
         .is_enabled(true),
         AzureUCConfigPostRequestType::AZURE_UC_CONFIG_POST_REQUEST,
     ));
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = CloudCostManagementAPI::with_config(configuration);
     let resp = api.create_cost_azure_uc_configs(body).await;
     if let Ok(value) = resp {

@@ -1,6 +1,6 @@
 // Create a log-based metric returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_logs_metrics::LogsMetricsAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_logs_metrics::LogsMetricsAPI;
 use datadog_api_client::datadogV2::model::LogsMetricCompute;
 use datadog_api_client::datadogV2::model::LogsMetricComputeAggregationType;
 use datadog_api_client::datadogV2::model::LogsMetricCreateAttributes;
@@ -19,7 +19,7 @@ async fn main() {
         "ExampleLogsMetric".to_string(),
         LogsMetricType::LOGS_METRICS,
     ));
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = LogsMetricsAPI::with_config(configuration);
     let resp = api.create_logs_metric(body).await;
     if let Ok(value) = resp {

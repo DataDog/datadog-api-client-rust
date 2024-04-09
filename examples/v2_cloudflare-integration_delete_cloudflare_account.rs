@@ -1,10 +1,10 @@
 // Delete Cloudflare account returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_cloudflare_integration::CloudflareIntegrationAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_cloudflare_integration::CloudflareIntegrationAPI;
 
 #[tokio::main]
 async fn main() {
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = CloudflareIntegrationAPI::with_config(configuration);
     let resp = api
         .delete_cloudflare_account("account_id".to_string())

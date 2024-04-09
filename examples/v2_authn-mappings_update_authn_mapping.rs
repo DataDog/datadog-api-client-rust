@@ -1,6 +1,6 @@
 // Edit an AuthN Mapping returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_authn_mappings::AuthNMappingsAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_authn_mappings::AuthNMappingsAPI;
 use datadog_api_client::datadogV2::model::AuthNMappingRelationshipToRole;
 use datadog_api_client::datadogV2::model::AuthNMappingUpdateAttributes;
 use datadog_api_client::datadogV2::model::AuthNMappingUpdateData;
@@ -40,7 +40,7 @@ async fn main() {
             )),
         ),
     );
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = AuthNMappingsAPI::with_config(configuration);
     let resp = api
         .update_authn_mapping(authn_mapping_data_id.clone(), body)

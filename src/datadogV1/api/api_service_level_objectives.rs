@@ -1,14 +1,13 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use crate::datadog::*;
+use crate::datadog;
 use async_stream::try_stream;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
 };
 use futures_core::stream::Stream;
-use reqwest;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
@@ -270,13 +269,13 @@ pub enum UpdateSLOError {
 
 #[derive(Debug, Clone)]
 pub struct ServiceLevelObjectivesAPI {
-    config: configuration::Configuration,
+    config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for ServiceLevelObjectivesAPI {
     fn default() -> Self {
-        Self::with_config(configuration::Configuration::default())
+        Self::with_config(datadog::Configuration::default())
     }
 }
 
@@ -284,7 +283,7 @@ impl ServiceLevelObjectivesAPI {
     pub fn new() -> Self {
         Self::default()
     }
-    pub fn with_config(config: configuration::Configuration) -> Self {
+    pub fn with_config(config: datadog::Configuration) -> Self {
         let mut reqwest_client_builder = reqwest::Client::builder();
 
         if let Some(proxy_url) = &config.proxy_url {
@@ -326,7 +325,7 @@ impl ServiceLevelObjectivesAPI {
     }
 
     pub fn with_client_and_config(
-        config: configuration::Configuration,
+        config: datadog::Configuration,
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
@@ -337,14 +336,16 @@ impl ServiceLevelObjectivesAPI {
     pub async fn check_can_delete_slo(
         &self,
         ids: String,
-    ) -> Result<crate::datadogV1::model::CheckCanDeleteSLOResponse, Error<CheckCanDeleteSLOError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::CheckCanDeleteSLOResponse,
+        datadog::Error<CheckCanDeleteSLOError>,
+    > {
         match self.check_can_delete_slo_with_http_info(ids).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -359,8 +360,8 @@ impl ServiceLevelObjectivesAPI {
         &self,
         ids: String,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::CheckCanDeleteSLOResponse>,
-        Error<CheckCanDeleteSLOError>,
+        datadog::ResponseContent<crate::datadogV1::model::CheckCanDeleteSLOResponse>,
+        datadog::Error<CheckCanDeleteSLOError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.check_can_delete_slo";
@@ -387,7 +388,7 @@ impl ServiceLevelObjectivesAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -420,23 +421,23 @@ impl ServiceLevelObjectivesAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CheckCanDeleteSLOError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -444,13 +445,13 @@ impl ServiceLevelObjectivesAPI {
     pub async fn create_slo(
         &self,
         body: crate::datadogV1::model::ServiceLevelObjectiveRequest,
-    ) -> Result<crate::datadogV1::model::SLOListResponse, Error<CreateSLOError>> {
+    ) -> Result<crate::datadogV1::model::SLOListResponse, datadog::Error<CreateSLOError>> {
         match self.create_slo_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -463,8 +464,10 @@ impl ServiceLevelObjectivesAPI {
     pub async fn create_slo_with_http_info(
         &self,
         body: crate::datadogV1::model::ServiceLevelObjectiveRequest,
-    ) -> Result<ResponseContent<crate::datadogV1::model::SLOListResponse>, Error<CreateSLOError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::SLOListResponse>,
+        datadog::Error<CreateSLOError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.create_slo";
 
@@ -489,7 +492,7 @@ impl ServiceLevelObjectivesAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -512,7 +515,7 @@ impl ServiceLevelObjectivesAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -523,7 +526,7 @@ impl ServiceLevelObjectivesAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -533,7 +536,7 @@ impl ServiceLevelObjectivesAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -543,7 +546,7 @@ impl ServiceLevelObjectivesAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -565,22 +568,22 @@ impl ServiceLevelObjectivesAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::SLOListResponse>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateSLOError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -592,13 +595,13 @@ impl ServiceLevelObjectivesAPI {
         &self,
         slo_id: String,
         params: DeleteSLOOptionalParams,
-    ) -> Result<crate::datadogV1::model::SLODeleteResponse, Error<DeleteSLOError>> {
+    ) -> Result<crate::datadogV1::model::SLODeleteResponse, datadog::Error<DeleteSLOError>> {
         match self.delete_slo_with_http_info(slo_id, params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -615,8 +618,10 @@ impl ServiceLevelObjectivesAPI {
         &self,
         slo_id: String,
         params: DeleteSLOOptionalParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::SLODeleteResponse>, Error<DeleteSLOError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::SLODeleteResponse>,
+        datadog::Error<DeleteSLOError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.delete_slo";
 
@@ -628,7 +633,7 @@ impl ServiceLevelObjectivesAPI {
         let local_uri_str = format!(
             "{}/api/v1/slo/{slo_id}",
             local_configuration.get_operation_host(operation_id),
-            slo_id = urlencode(slo_id)
+            slo_id = datadog::urlencode(slo_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -649,7 +654,7 @@ impl ServiceLevelObjectivesAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -681,22 +686,22 @@ impl ServiceLevelObjectivesAPI {
             match serde_json::from_str::<crate::datadogV1::model::SLODeleteResponse>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<DeleteSLOError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -708,14 +713,16 @@ impl ServiceLevelObjectivesAPI {
     pub async fn delete_slo_timeframe_in_bulk(
         &self,
         body: std::collections::BTreeMap<String, Vec<crate::datadogV1::model::SLOTimeframe>>,
-    ) -> Result<crate::datadogV1::model::SLOBulkDeleteResponse, Error<DeleteSLOTimeframeInBulkError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::SLOBulkDeleteResponse,
+        datadog::Error<DeleteSLOTimeframeInBulkError>,
+    > {
         match self.delete_slo_timeframe_in_bulk_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -733,8 +740,8 @@ impl ServiceLevelObjectivesAPI {
         &self,
         body: std::collections::BTreeMap<String, Vec<crate::datadogV1::model::SLOTimeframe>>,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::SLOBulkDeleteResponse>,
-        Error<DeleteSLOTimeframeInBulkError>,
+        datadog::ResponseContent<crate::datadogV1::model::SLOBulkDeleteResponse>,
+        datadog::Error<DeleteSLOTimeframeInBulkError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.delete_slo_timeframe_in_bulk";
@@ -760,7 +767,7 @@ impl ServiceLevelObjectivesAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -783,7 +790,7 @@ impl ServiceLevelObjectivesAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -794,7 +801,7 @@ impl ServiceLevelObjectivesAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -804,7 +811,7 @@ impl ServiceLevelObjectivesAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -814,7 +821,7 @@ impl ServiceLevelObjectivesAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -838,23 +845,23 @@ impl ServiceLevelObjectivesAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<DeleteSLOTimeframeInBulkError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -863,13 +870,13 @@ impl ServiceLevelObjectivesAPI {
         &self,
         slo_id: String,
         params: GetSLOOptionalParams,
-    ) -> Result<crate::datadogV1::model::SLOResponse, Error<GetSLOError>> {
+    ) -> Result<crate::datadogV1::model::SLOResponse, datadog::Error<GetSLOError>> {
         match self.get_slo_with_http_info(slo_id, params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -883,7 +890,10 @@ impl ServiceLevelObjectivesAPI {
         &self,
         slo_id: String,
         params: GetSLOOptionalParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::SLOResponse>, Error<GetSLOError>> {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::SLOResponse>,
+        datadog::Error<GetSLOError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_slo";
 
@@ -895,7 +905,7 @@ impl ServiceLevelObjectivesAPI {
         let local_uri_str = format!(
             "{}/api/v1/slo/{slo_id}",
             local_configuration.get_operation_host(operation_id),
-            slo_id = urlencode(slo_id)
+            slo_id = datadog::urlencode(slo_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -916,7 +926,7 @@ impl ServiceLevelObjectivesAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -947,22 +957,22 @@ impl ServiceLevelObjectivesAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::SLOResponse>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetSLOError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -970,14 +980,16 @@ impl ServiceLevelObjectivesAPI {
     pub async fn get_slo_corrections(
         &self,
         slo_id: String,
-    ) -> Result<crate::datadogV1::model::SLOCorrectionListResponse, Error<GetSLOCorrectionsError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::SLOCorrectionListResponse,
+        datadog::Error<GetSLOCorrectionsError>,
+    > {
         match self.get_slo_corrections_with_http_info(slo_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -991,8 +1003,8 @@ impl ServiceLevelObjectivesAPI {
         &self,
         slo_id: String,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::SLOCorrectionListResponse>,
-        Error<GetSLOCorrectionsError>,
+        datadog::ResponseContent<crate::datadogV1::model::SLOCorrectionListResponse>,
+        datadog::Error<GetSLOCorrectionsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_slo_corrections";
@@ -1002,7 +1014,7 @@ impl ServiceLevelObjectivesAPI {
         let local_uri_str = format!(
             "{}/api/v1/slo/{slo_id}/corrections",
             local_configuration.get_operation_host(operation_id),
-            slo_id = urlencode(slo_id)
+            slo_id = datadog::urlencode(slo_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1018,7 +1030,7 @@ impl ServiceLevelObjectivesAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1051,23 +1063,23 @@ impl ServiceLevelObjectivesAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetSLOCorrectionsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1085,7 +1097,8 @@ impl ServiceLevelObjectivesAPI {
         from_ts: i64,
         to_ts: i64,
         params: GetSLOHistoryOptionalParams,
-    ) -> Result<crate::datadogV1::model::SLOHistoryResponse, Error<GetSLOHistoryError>> {
+    ) -> Result<crate::datadogV1::model::SLOHistoryResponse, datadog::Error<GetSLOHistoryError>>
+    {
         match self
             .get_slo_history_with_http_info(slo_id, from_ts, to_ts, params)
             .await
@@ -1094,7 +1107,7 @@ impl ServiceLevelObjectivesAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1118,8 +1131,8 @@ impl ServiceLevelObjectivesAPI {
         to_ts: i64,
         params: GetSLOHistoryOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::SLOHistoryResponse>,
-        Error<GetSLOHistoryError>,
+        datadog::ResponseContent<crate::datadogV1::model::SLOHistoryResponse>,
+        datadog::Error<GetSLOHistoryError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_slo_history";
@@ -1133,7 +1146,7 @@ impl ServiceLevelObjectivesAPI {
         let local_uri_str = format!(
             "{}/api/v1/slo/{slo_id}/history",
             local_configuration.get_operation_host(operation_id),
-            slo_id = urlencode(slo_id)
+            slo_id = datadog::urlencode(slo_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1160,7 +1173,7 @@ impl ServiceLevelObjectivesAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1193,23 +1206,23 @@ impl ServiceLevelObjectivesAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetSLOHistoryError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1217,13 +1230,13 @@ impl ServiceLevelObjectivesAPI {
     pub async fn list_slos(
         &self,
         params: ListSLOsOptionalParams,
-    ) -> Result<crate::datadogV1::model::SLOListResponse, Error<ListSLOsError>> {
+    ) -> Result<crate::datadogV1::model::SLOListResponse, datadog::Error<ListSLOsError>> {
         match self.list_slos_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1236,7 +1249,10 @@ impl ServiceLevelObjectivesAPI {
         &self,
         mut params: ListSLOsOptionalParams,
     ) -> impl Stream<
-        Item = Result<crate::datadogV1::model::ServiceLevelObjective, Error<ListSLOsError>>,
+        Item = Result<
+            crate::datadogV1::model::ServiceLevelObjective,
+            datadog::Error<ListSLOsError>,
+        >,
     > + '_ {
         try_stream! {
             let mut page_size: i64 = 1000;
@@ -1271,8 +1287,10 @@ impl ServiceLevelObjectivesAPI {
     pub async fn list_slos_with_http_info(
         &self,
         params: ListSLOsOptionalParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::SLOListResponse>, Error<ListSLOsError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::SLOListResponse>,
+        datadog::Error<ListSLOsError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.list_slos";
 
@@ -1328,7 +1346,7 @@ impl ServiceLevelObjectivesAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1359,22 +1377,22 @@ impl ServiceLevelObjectivesAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::SLOListResponse>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListSLOsError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1382,13 +1400,13 @@ impl ServiceLevelObjectivesAPI {
     pub async fn search_slo(
         &self,
         params: SearchSLOOptionalParams,
-    ) -> Result<crate::datadogV1::model::SearchSLOResponse, Error<SearchSLOError>> {
+    ) -> Result<crate::datadogV1::model::SearchSLOResponse, datadog::Error<SearchSLOError>> {
         match self.search_slo_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1401,8 +1419,10 @@ impl ServiceLevelObjectivesAPI {
     pub async fn search_slo_with_http_info(
         &self,
         params: SearchSLOOptionalParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::SearchSLOResponse>, Error<SearchSLOError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::SearchSLOResponse>,
+        datadog::Error<SearchSLOError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.search_slo";
 
@@ -1449,7 +1469,7 @@ impl ServiceLevelObjectivesAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1481,22 +1501,22 @@ impl ServiceLevelObjectivesAPI {
             match serde_json::from_str::<crate::datadogV1::model::SearchSLOResponse>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<SearchSLOError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1505,13 +1525,13 @@ impl ServiceLevelObjectivesAPI {
         &self,
         slo_id: String,
         body: crate::datadogV1::model::ServiceLevelObjective,
-    ) -> Result<crate::datadogV1::model::SLOListResponse, Error<UpdateSLOError>> {
+    ) -> Result<crate::datadogV1::model::SLOListResponse, datadog::Error<UpdateSLOError>> {
         match self.update_slo_with_http_info(slo_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1525,8 +1545,10 @@ impl ServiceLevelObjectivesAPI {
         &self,
         slo_id: String,
         body: crate::datadogV1::model::ServiceLevelObjective,
-    ) -> Result<ResponseContent<crate::datadogV1::model::SLOListResponse>, Error<UpdateSLOError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::SLOListResponse>,
+        datadog::Error<UpdateSLOError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.update_slo";
 
@@ -1535,7 +1557,7 @@ impl ServiceLevelObjectivesAPI {
         let local_uri_str = format!(
             "{}/api/v1/slo/{slo_id}",
             local_configuration.get_operation_host(operation_id),
-            slo_id = urlencode(slo_id)
+            slo_id = datadog::urlencode(slo_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
@@ -1552,7 +1574,7 @@ impl ServiceLevelObjectivesAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1575,7 +1597,7 @@ impl ServiceLevelObjectivesAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -1586,7 +1608,7 @@ impl ServiceLevelObjectivesAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -1596,7 +1618,7 @@ impl ServiceLevelObjectivesAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -1606,7 +1628,7 @@ impl ServiceLevelObjectivesAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -1628,22 +1650,22 @@ impl ServiceLevelObjectivesAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::SLOListResponse>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateSLOError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 }

@@ -1,6 +1,6 @@
 // Create a service account returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_service_accounts::ServiceAccountsAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_service_accounts::ServiceAccountsAPI;
 use datadog_api_client::datadogV2::model::RelationshipToRoleData;
 use datadog_api_client::datadogV2::model::RelationshipToRoles;
 use datadog_api_client::datadogV2::model::RolesType;
@@ -30,7 +30,7 @@ async fn main() {
                     .type_(RolesType::ROLES)]),
             )),
         );
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = ServiceAccountsAPI::with_config(configuration);
     let resp = api.create_service_account(body).await;
     if let Ok(value) = resp {

@@ -1,6 +1,6 @@
 // Create a team with V2 fields returns "CREATED" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_teams::TeamsAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_teams::TeamsAPI;
 use datadog_api_client::datadogV2::model::TeamCreate;
 use datadog_api_client::datadogV2::model::TeamCreateAttributes;
 use datadog_api_client::datadogV2::model::TeamCreateRequest;
@@ -19,7 +19,7 @@ async fn main() {
         .visible_modules(vec!["m1".to_string(), "m2".to_string()]),
         TeamType::TEAM,
     ));
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = TeamsAPI::with_config(configuration);
     let resp = api.create_team(body).await;
     if let Ok(value) = resp {

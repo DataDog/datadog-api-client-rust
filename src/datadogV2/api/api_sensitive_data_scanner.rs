@@ -1,12 +1,11 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use crate::datadog::*;
+use crate::datadog;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
 };
-use reqwest;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
@@ -107,13 +106,13 @@ pub enum UpdateScanningRuleError {
 
 #[derive(Debug, Clone)]
 pub struct SensitiveDataScannerAPI {
-    config: configuration::Configuration,
+    config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for SensitiveDataScannerAPI {
     fn default() -> Self {
-        Self::with_config(configuration::Configuration::default())
+        Self::with_config(datadog::Configuration::default())
     }
 }
 
@@ -121,7 +120,7 @@ impl SensitiveDataScannerAPI {
     pub fn new() -> Self {
         Self::default()
     }
-    pub fn with_config(config: configuration::Configuration) -> Self {
+    pub fn with_config(config: datadog::Configuration) -> Self {
         let mut reqwest_client_builder = reqwest::Client::builder();
 
         if let Some(proxy_url) = &config.proxy_url {
@@ -163,7 +162,7 @@ impl SensitiveDataScannerAPI {
     }
 
     pub fn with_client_and_config(
-        config: configuration::Configuration,
+        config: datadog::Configuration,
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
@@ -179,14 +178,14 @@ impl SensitiveDataScannerAPI {
         body: crate::datadogV2::model::SensitiveDataScannerGroupCreateRequest,
     ) -> Result<
         crate::datadogV2::model::SensitiveDataScannerCreateGroupResponse,
-        Error<CreateScanningGroupError>,
+        datadog::Error<CreateScanningGroupError>,
     > {
         match self.create_scanning_group_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -204,8 +203,8 @@ impl SensitiveDataScannerAPI {
         &self,
         body: crate::datadogV2::model::SensitiveDataScannerGroupCreateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::SensitiveDataScannerCreateGroupResponse>,
-        Error<CreateScanningGroupError>,
+        datadog::ResponseContent<crate::datadogV2::model::SensitiveDataScannerCreateGroupResponse>,
+        datadog::Error<CreateScanningGroupError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_scanning_group";
@@ -231,7 +230,7 @@ impl SensitiveDataScannerAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -254,7 +253,7 @@ impl SensitiveDataScannerAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -265,7 +264,7 @@ impl SensitiveDataScannerAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -275,7 +274,7 @@ impl SensitiveDataScannerAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -285,7 +284,7 @@ impl SensitiveDataScannerAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -310,23 +309,23 @@ impl SensitiveDataScannerAPI {
             >(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateScanningGroupError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -340,14 +339,14 @@ impl SensitiveDataScannerAPI {
         body: crate::datadogV2::model::SensitiveDataScannerRuleCreateRequest,
     ) -> Result<
         crate::datadogV2::model::SensitiveDataScannerCreateRuleResponse,
-        Error<CreateScanningRuleError>,
+        datadog::Error<CreateScanningRuleError>,
     > {
         match self.create_scanning_rule_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -365,8 +364,8 @@ impl SensitiveDataScannerAPI {
         &self,
         body: crate::datadogV2::model::SensitiveDataScannerRuleCreateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::SensitiveDataScannerCreateRuleResponse>,
-        Error<CreateScanningRuleError>,
+        datadog::ResponseContent<crate::datadogV2::model::SensitiveDataScannerCreateRuleResponse>,
+        datadog::Error<CreateScanningRuleError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_scanning_rule";
@@ -392,7 +391,7 @@ impl SensitiveDataScannerAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -415,7 +414,7 @@ impl SensitiveDataScannerAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -426,7 +425,7 @@ impl SensitiveDataScannerAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -436,7 +435,7 @@ impl SensitiveDataScannerAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -446,7 +445,7 @@ impl SensitiveDataScannerAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -471,23 +470,23 @@ impl SensitiveDataScannerAPI {
             >(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateScanningRuleError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -498,7 +497,7 @@ impl SensitiveDataScannerAPI {
         body: crate::datadogV2::model::SensitiveDataScannerGroupDeleteRequest,
     ) -> Result<
         crate::datadogV2::model::SensitiveDataScannerGroupDeleteResponse,
-        Error<DeleteScanningGroupError>,
+        datadog::Error<DeleteScanningGroupError>,
     > {
         match self
             .delete_scanning_group_with_http_info(group_id, body)
@@ -508,7 +507,7 @@ impl SensitiveDataScannerAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -523,8 +522,8 @@ impl SensitiveDataScannerAPI {
         group_id: String,
         body: crate::datadogV2::model::SensitiveDataScannerGroupDeleteRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::SensitiveDataScannerGroupDeleteResponse>,
-        Error<DeleteScanningGroupError>,
+        datadog::ResponseContent<crate::datadogV2::model::SensitiveDataScannerGroupDeleteResponse>,
+        datadog::Error<DeleteScanningGroupError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_scanning_group";
@@ -534,7 +533,7 @@ impl SensitiveDataScannerAPI {
         let local_uri_str = format!(
             "{}/api/v2/sensitive-data-scanner/config/groups/{group_id}",
             local_configuration.get_operation_host(operation_id),
-            group_id = urlencode(group_id)
+            group_id = datadog::urlencode(group_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -551,7 +550,7 @@ impl SensitiveDataScannerAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -574,7 +573,7 @@ impl SensitiveDataScannerAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -585,7 +584,7 @@ impl SensitiveDataScannerAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -595,7 +594,7 @@ impl SensitiveDataScannerAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -605,7 +604,7 @@ impl SensitiveDataScannerAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -630,23 +629,23 @@ impl SensitiveDataScannerAPI {
             >(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<DeleteScanningGroupError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -657,7 +656,7 @@ impl SensitiveDataScannerAPI {
         body: crate::datadogV2::model::SensitiveDataScannerRuleDeleteRequest,
     ) -> Result<
         crate::datadogV2::model::SensitiveDataScannerRuleDeleteResponse,
-        Error<DeleteScanningRuleError>,
+        datadog::Error<DeleteScanningRuleError>,
     > {
         match self
             .delete_scanning_rule_with_http_info(rule_id, body)
@@ -667,7 +666,7 @@ impl SensitiveDataScannerAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -682,8 +681,8 @@ impl SensitiveDataScannerAPI {
         rule_id: String,
         body: crate::datadogV2::model::SensitiveDataScannerRuleDeleteRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::SensitiveDataScannerRuleDeleteResponse>,
-        Error<DeleteScanningRuleError>,
+        datadog::ResponseContent<crate::datadogV2::model::SensitiveDataScannerRuleDeleteResponse>,
+        datadog::Error<DeleteScanningRuleError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_scanning_rule";
@@ -693,7 +692,7 @@ impl SensitiveDataScannerAPI {
         let local_uri_str = format!(
             "{}/api/v2/sensitive-data-scanner/config/rules/{rule_id}",
             local_configuration.get_operation_host(operation_id),
-            rule_id = urlencode(rule_id)
+            rule_id = datadog::urlencode(rule_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -710,7 +709,7 @@ impl SensitiveDataScannerAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -733,7 +732,7 @@ impl SensitiveDataScannerAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -744,7 +743,7 @@ impl SensitiveDataScannerAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -754,7 +753,7 @@ impl SensitiveDataScannerAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -764,7 +763,7 @@ impl SensitiveDataScannerAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -789,23 +788,23 @@ impl SensitiveDataScannerAPI {
             >(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<DeleteScanningRuleError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -814,14 +813,14 @@ impl SensitiveDataScannerAPI {
         &self,
     ) -> Result<
         crate::datadogV2::model::SensitiveDataScannerGetConfigResponse,
-        Error<ListScanningGroupsError>,
+        datadog::Error<ListScanningGroupsError>,
     > {
         match self.list_scanning_groups_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -834,8 +833,8 @@ impl SensitiveDataScannerAPI {
     pub async fn list_scanning_groups_with_http_info(
         &self,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::SensitiveDataScannerGetConfigResponse>,
-        Error<ListScanningGroupsError>,
+        datadog::ResponseContent<crate::datadogV2::model::SensitiveDataScannerGetConfigResponse>,
+        datadog::Error<ListScanningGroupsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_scanning_groups";
@@ -860,7 +859,7 @@ impl SensitiveDataScannerAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -894,23 +893,23 @@ impl SensitiveDataScannerAPI {
             >(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListScanningGroupsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -919,14 +918,14 @@ impl SensitiveDataScannerAPI {
         &self,
     ) -> Result<
         crate::datadogV2::model::SensitiveDataScannerStandardPatternsResponseData,
-        Error<ListStandardPatternsError>,
+        datadog::Error<ListStandardPatternsError>,
     > {
         match self.list_standard_patterns_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -939,8 +938,10 @@ impl SensitiveDataScannerAPI {
     pub async fn list_standard_patterns_with_http_info(
         &self,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::SensitiveDataScannerStandardPatternsResponseData>,
-        Error<ListStandardPatternsError>,
+        datadog::ResponseContent<
+            crate::datadogV2::model::SensitiveDataScannerStandardPatternsResponseData,
+        >,
+        datadog::Error<ListStandardPatternsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_standard_patterns";
@@ -965,7 +966,7 @@ impl SensitiveDataScannerAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -999,23 +1000,23 @@ impl SensitiveDataScannerAPI {
             >(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListStandardPatternsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1025,14 +1026,14 @@ impl SensitiveDataScannerAPI {
         body: crate::datadogV2::model::SensitiveDataScannerConfigRequest,
     ) -> Result<
         crate::datadogV2::model::SensitiveDataScannerReorderGroupsResponse,
-        Error<ReorderScanningGroupsError>,
+        datadog::Error<ReorderScanningGroupsError>,
     > {
         match self.reorder_scanning_groups_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1046,8 +1047,10 @@ impl SensitiveDataScannerAPI {
         &self,
         body: crate::datadogV2::model::SensitiveDataScannerConfigRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::SensitiveDataScannerReorderGroupsResponse>,
-        Error<ReorderScanningGroupsError>,
+        datadog::ResponseContent<
+            crate::datadogV2::model::SensitiveDataScannerReorderGroupsResponse,
+        >,
+        datadog::Error<ReorderScanningGroupsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.reorder_scanning_groups";
@@ -1073,7 +1076,7 @@ impl SensitiveDataScannerAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1096,7 +1099,7 @@ impl SensitiveDataScannerAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -1107,7 +1110,7 @@ impl SensitiveDataScannerAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -1117,7 +1120,7 @@ impl SensitiveDataScannerAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -1127,7 +1130,7 @@ impl SensitiveDataScannerAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -1152,23 +1155,23 @@ impl SensitiveDataScannerAPI {
             >(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ReorderScanningGroupsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1182,7 +1185,7 @@ impl SensitiveDataScannerAPI {
         body: crate::datadogV2::model::SensitiveDataScannerGroupUpdateRequest,
     ) -> Result<
         crate::datadogV2::model::SensitiveDataScannerGroupUpdateResponse,
-        Error<UpdateScanningGroupError>,
+        datadog::Error<UpdateScanningGroupError>,
     > {
         match self
             .update_scanning_group_with_http_info(group_id, body)
@@ -1192,7 +1195,7 @@ impl SensitiveDataScannerAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1210,8 +1213,8 @@ impl SensitiveDataScannerAPI {
         group_id: String,
         body: crate::datadogV2::model::SensitiveDataScannerGroupUpdateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::SensitiveDataScannerGroupUpdateResponse>,
-        Error<UpdateScanningGroupError>,
+        datadog::ResponseContent<crate::datadogV2::model::SensitiveDataScannerGroupUpdateResponse>,
+        datadog::Error<UpdateScanningGroupError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_scanning_group";
@@ -1221,7 +1224,7 @@ impl SensitiveDataScannerAPI {
         let local_uri_str = format!(
             "{}/api/v2/sensitive-data-scanner/config/groups/{group_id}",
             local_configuration.get_operation_host(operation_id),
-            group_id = urlencode(group_id)
+            group_id = datadog::urlencode(group_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -1238,7 +1241,7 @@ impl SensitiveDataScannerAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1261,7 +1264,7 @@ impl SensitiveDataScannerAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -1272,7 +1275,7 @@ impl SensitiveDataScannerAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -1282,7 +1285,7 @@ impl SensitiveDataScannerAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -1292,7 +1295,7 @@ impl SensitiveDataScannerAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -1317,23 +1320,23 @@ impl SensitiveDataScannerAPI {
             >(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateScanningGroupError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1347,7 +1350,7 @@ impl SensitiveDataScannerAPI {
         body: crate::datadogV2::model::SensitiveDataScannerRuleUpdateRequest,
     ) -> Result<
         crate::datadogV2::model::SensitiveDataScannerRuleUpdateResponse,
-        Error<UpdateScanningRuleError>,
+        datadog::Error<UpdateScanningRuleError>,
     > {
         match self
             .update_scanning_rule_with_http_info(rule_id, body)
@@ -1357,7 +1360,7 @@ impl SensitiveDataScannerAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1375,8 +1378,8 @@ impl SensitiveDataScannerAPI {
         rule_id: String,
         body: crate::datadogV2::model::SensitiveDataScannerRuleUpdateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::SensitiveDataScannerRuleUpdateResponse>,
-        Error<UpdateScanningRuleError>,
+        datadog::ResponseContent<crate::datadogV2::model::SensitiveDataScannerRuleUpdateResponse>,
+        datadog::Error<UpdateScanningRuleError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_scanning_rule";
@@ -1386,7 +1389,7 @@ impl SensitiveDataScannerAPI {
         let local_uri_str = format!(
             "{}/api/v2/sensitive-data-scanner/config/rules/{rule_id}",
             local_configuration.get_operation_host(operation_id),
-            rule_id = urlencode(rule_id)
+            rule_id = datadog::urlencode(rule_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -1403,7 +1406,7 @@ impl SensitiveDataScannerAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1426,7 +1429,7 @@ impl SensitiveDataScannerAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -1437,7 +1440,7 @@ impl SensitiveDataScannerAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -1447,7 +1450,7 @@ impl SensitiveDataScannerAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -1457,7 +1460,7 @@ impl SensitiveDataScannerAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -1482,23 +1485,23 @@ impl SensitiveDataScannerAPI {
             >(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateScanningRuleError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 }
