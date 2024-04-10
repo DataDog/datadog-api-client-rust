@@ -104,6 +104,8 @@ pub struct ApiInstances {
     pub v2_api_service_accounts: Option<datadogV2::api_service_accounts::ServiceAccountsAPI>,
     pub v2_api_incident_services: Option<datadogV2::api_incident_services::IncidentServicesAPI>,
     pub v2_api_service_definition: Option<datadogV2::api_service_definition::ServiceDefinitionAPI>,
+    pub v2_api_service_level_objectives:
+        Option<datadogV2::api_service_level_objectives::ServiceLevelObjectivesAPI>,
     pub v2_api_spans: Option<datadogV2::api_spans::SpansAPI>,
     pub v2_api_synthetics: Option<datadogV2::api_synthetics::SyntheticsAPI>,
     pub v2_api_teams: Option<datadogV2::api_teams::TeamsAPI>,
@@ -372,6 +374,10 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         }
         "ServiceLevelObjectives" => {
             world.api_instances.v1_api_service_level_objectives = Some(datadogV1::api_service_level_objectives::ServiceLevelObjectivesAPI::with_client_and_config(
+                world.config.clone(),
+                world.http_client.as_ref().unwrap().clone()
+            ));
+            world.api_instances.v2_api_service_level_objectives = Some(datadogV2::api_service_level_objectives::ServiceLevelObjectivesAPI::with_client_and_config(
                 world.config.clone(),
                 world.http_client.as_ref().unwrap().clone()
             ));
@@ -2674,6 +2680,17 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.GetServiceDefinition".into(),
         test_v2_get_service_definition,
+    );
+    world.function_mappings.insert(
+        "v2.CreateSLOReportJob".into(),
+        test_v2_create_slo_report_job,
+    );
+    world
+        .function_mappings
+        .insert("v2.GetSLOReport".into(), test_v2_get_slo_report);
+    world.function_mappings.insert(
+        "v2.GetSLOReportJobStatus".into(),
+        test_v2_get_slo_report_job_status,
     );
     world
         .function_mappings
@@ -20307,6 +20324,84 @@ fn test_v2_get_service_definition(world: &mut DatadogWorld, _parameters: &HashMa
         datadogV2::api_service_definition::GetServiceDefinitionOptionalParams::default();
     params.schema_version = schema_version;
     let response = match block_on(api.get_service_definition_with_http_info(service_name, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_slo_report_job(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_service_level_objectives
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_slo_report_job_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_slo_report(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_service_level_objectives
+        .as_ref()
+        .expect("api instance not found");
+    let report_id = serde_json::from_value(_parameters.get("report_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_slo_report_with_http_info(report_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_slo_report_job_status(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_service_level_objectives
+        .as_ref()
+        .expect("api instance not found");
+    let report_id = serde_json::from_value(_parameters.get("report_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_slo_report_job_status_with_http_info(report_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
