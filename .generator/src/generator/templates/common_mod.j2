@@ -116,34 +116,3 @@ impl Serialize for UnparsedObject {
         self.value.serialize(serializer)
     }
 }
-
-pub fn serialize_datetime<S>(
-    datetime: &Option<chrono::DateTime<chrono::Utc>>,
-    serializer: S,
-) -> Result<S::Ok, S::Error>
-where
-    S: Serializer,
-{
-    if let Some(datetime) = datetime {
-        let formatted_datetime = datetime.to_rfc3339_opts(chrono::SecondsFormat::Millis, true);
-        serializer.serialize_str(&formatted_datetime)
-    } else {
-        serializer.serialize_none()
-    }
-}
-
-pub fn deserialize_datetime<'de, D>(
-    deserializer: D,
-) -> Result<Option<chrono::DateTime<chrono::Utc>>, D::Error>
-where
-    D: Deserializer<'de>,
-{
-    let datetime_str = Option::<String>::deserialize(deserializer)?;
-    if let Some(datetime_str) = datetime_str {
-        let datetime =
-            DateTime::parse_from_rfc3339(&datetime_str).map_err(serde::de::Error::custom)?;
-        Ok(Some(datetime.with_timezone(&Utc)))
-    } else {
-        Ok(None)
-    }
-}
