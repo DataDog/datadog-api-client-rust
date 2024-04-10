@@ -382,6 +382,13 @@ pub enum UpdateTestPauseStatusError {
     UnknownValue(serde_json::Value),
 }
 
+/// Datadog Synthetic Monitoring uses simulated user requests and browser rendering to help you ensure uptime,
+/// identify regional issues, and track your application performance. Synthetic tests come in
+/// two different flavors, [API tests](<https://docs.datadoghq.com/synthetics/api_tests/?tab=httptest>)
+/// and [browser tests](<https://docs.datadoghq.com/synthetics/browser_tests>). You can use Datadog’s API to
+/// manage both test types programmatically.
+///
+/// For more information, see the [Synthetic Monitoring documentation](<https://docs.datadoghq.com/synthetics/>).
 #[derive(Debug, Clone)]
 pub struct SyntheticsAPI {
     config: datadog::Configuration,

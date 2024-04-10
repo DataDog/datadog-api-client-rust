@@ -70,6 +70,7 @@ pub enum UploadIdPForOrgError {
     UnknownValue(serde_json::Value),
 }
 
+/// Create, edit, and manage your organizations. Read more about [multi-org accounts](<https://docs.datadoghq.com/account_management/multi_organization>).
 #[derive(Debug, Clone)]
 pub struct OrganizationsAPI {
     config: datadog::Configuration,

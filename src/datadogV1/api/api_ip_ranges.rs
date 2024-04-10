@@ -13,6 +13,7 @@ pub enum GetIPRangesError {
     UnknownValue(serde_json::Value),
 }
 
+/// Get a list of IP prefixes belonging to Datadog.
 #[derive(Debug, Clone)]
 pub struct IPRangesAPI {
     config: datadog::Configuration,

@@ -124,6 +124,7 @@ pub enum UpdateIncidentTeamError {
     UnknownValue(serde_json::Value),
 }
 
+/// The Incident Teams endpoints are deprecated. See the [Teams API endpoints](<https://docs.datadoghq.com/api/latest/teams/>) to create, update, delete, and retrieve teams which can be associated with incidents.
 #[derive(Debug, Clone)]
 pub struct IncidentTeamsAPI {
     config: datadog::Configuration,

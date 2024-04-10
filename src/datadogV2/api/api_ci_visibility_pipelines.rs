@@ -122,6 +122,7 @@ pub enum SearchCIAppPipelineEventsError {
     UnknownValue(serde_json::Value),
 }
 
+/// Search or aggregate your CI Visibility pipeline events and send them to your Datadog site over HTTP. See the [CI Pipeline Visibility in Datadog page](<https://docs.datadoghq.com/continuous_integration/pipelines/>) for more information.
 #[derive(Debug, Clone)]
 pub struct CIVisibilityPipelinesAPI {
     config: datadog::Configuration,

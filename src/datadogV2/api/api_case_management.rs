@@ -210,6 +210,7 @@ pub enum UpdateStatusError {
     UnknownValue(serde_json::Value),
 }
 
+/// View and manage cases and projects within Case Management. See the [Case Management page](<https://docs.datadoghq.com/service_management/case_management/>) for more information.
 #[derive(Debug, Clone)]
 pub struct CaseManagementAPI {
     config: datadog::Configuration,

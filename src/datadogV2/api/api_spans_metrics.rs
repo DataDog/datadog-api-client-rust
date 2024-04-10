@@ -61,6 +61,7 @@ pub enum UpdateSpansMetricError {
     UnknownValue(serde_json::Value),
 }
 
+/// Manage configuration of [span-based metrics](<https://app.datadoghq.com/apm/traces/generate-metrics>) for your organization. See [Generate Metrics from Spans](<https://docs.datadoghq.com/tracing/trace_pipeline/generate_metrics/>) for more information.
 #[derive(Debug, Clone)]
 pub struct SpansMetricsAPI {
     config: datadog::Configuration,

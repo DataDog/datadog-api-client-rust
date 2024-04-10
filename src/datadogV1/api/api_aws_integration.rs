@@ -196,6 +196,8 @@ pub enum UpdateAWSAccountError {
     UnknownValue(serde_json::Value),
 }
 
+/// Configure your Datadog-AWS integration directly through the Datadog API.
+/// For more information, see the [AWS integration page](<https://docs.datadoghq.com/integrations/amazon_web_services>).
 #[derive(Debug, Clone)]
 pub struct AWSIntegrationAPI {
     config: datadog::Configuration,

@@ -71,6 +71,7 @@ pub enum UpdateApmRetentionFilterError {
     UnknownValue(serde_json::Value),
 }
 
+/// Manage configuration of [APM retention filters](<https://app.datadoghq.com/apm/traces/retention-filters>) for your organization. You need an API and application key with Admin rights to interact with this endpoint. See [retention filters](<https://docs.datadoghq.com/tracing/trace_pipeline/trace_retention/#retention-filters>) on the Trace Retention page for more information.
 #[derive(Debug, Clone)]
 pub struct APMRetentionFiltersAPI {
     config: datadog::Configuration,

@@ -127,6 +127,7 @@ pub enum UpdateServiceAccountApplicationKeyError {
     UnknownValue(serde_json::Value),
 }
 
+/// Create, edit, and disable service accounts. See the [Service Accounts page](<https://docs.datadoghq.com/account_management/org_settings/service_accounts/>) for more information.
 #[derive(Debug, Clone)]
 pub struct ServiceAccountsAPI {
     config: datadog::Configuration,

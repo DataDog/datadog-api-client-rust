@@ -131,6 +131,7 @@ pub enum UnmuteHostError {
     UnknownValue(serde_json::Value),
 }
 
+/// Get information about your infrastructure hosts in Datadog, and mute or unmute any notifications from your hosts. See the [Infrastructure page](<https://docs.datadoghq.com/infrastructure/>) for more information.
 #[derive(Debug, Clone)]
 pub struct HostsAPI {
     config: datadog::Configuration,

@@ -65,6 +65,8 @@ pub enum UpdateOpsgenieServiceError {
     UnknownValue(serde_json::Value),
 }
 
+/// Configure your [Datadog Opsgenie integration](<https://docs.datadoghq.com/integrations/opsgenie/>)
+/// directly through the Datadog API.
 #[derive(Debug, Clone)]
 pub struct OpsgenieIntegrationAPI {
     config: datadog::Configuration,

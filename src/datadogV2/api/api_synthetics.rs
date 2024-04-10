@@ -26,6 +26,13 @@ pub enum SetOnDemandConcurrencyCapError {
     UnknownValue(serde_json::Value),
 }
 
+/// Datadog Synthetics uses simulated user requests and browser rendering to help you ensure uptime,
+/// identify regional issues, and track your application performance. Datadog Synthetics tests come in
+/// two different flavors, [API tests](<https://docs.datadoghq.com/synthetics/api_tests/>)
+/// and [browser tests](<https://docs.datadoghq.com/synthetics/browser_tests>). You can use Datadog’s API to
+/// manage both test types programmatically.
+///
+/// For more information about Synthetics, see the [Synthetics overview](<https://docs.datadoghq.com/synthetics/>).
 #[derive(Debug, Clone)]
 pub struct SyntheticsAPI {
     config: datadog::Configuration,

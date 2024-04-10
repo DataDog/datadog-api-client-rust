@@ -132,6 +132,7 @@ pub enum UpdateCloudWorkloadSecurityAgentRuleError {
     UnknownValue(serde_json::Value),
 }
 
+/// Workload activity security rules for generating events using the Datadog security Agent. See the [Setting up CSM Workload Security page](<https://docs.datadoghq.com/security/cloud_security_management/setup/csm_workload_security/>) for more information.
 #[derive(Debug, Clone)]
 pub struct CloudWorkloadSecurityAPI {
     config: datadog::Configuration,

@@ -97,6 +97,7 @@ pub enum SearchAuditLogsError {
     UnknownValue(serde_json::Value),
 }
 
+/// Search your Audit Logs events over HTTP.
 #[derive(Debug, Clone)]
 pub struct AuditAPI {
     config: datadog::Configuration,

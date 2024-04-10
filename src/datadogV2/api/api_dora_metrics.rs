@@ -31,6 +31,7 @@ pub enum CreateDORAIncidentError {
     UnknownValue(serde_json::Value),
 }
 
+/// Send events for DORA Metrics to measure and improve software delivery. See the [DORA Metrics page](<https://docs.datadoghq.com/dora_metrics/>) for more information.
 #[derive(Debug, Clone)]
 pub struct DORAMetricsAPI {
     config: datadog::Configuration,

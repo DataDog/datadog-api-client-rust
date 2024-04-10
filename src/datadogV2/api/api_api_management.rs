@@ -81,6 +81,7 @@ pub enum UpdateOpenAPIError {
     UnknownValue(serde_json::Value),
 }
 
+/// Configure your API endpoints through the Datadog API.
 #[derive(Debug, Clone)]
 pub struct APIManagementAPI {
     config: datadog::Configuration,
