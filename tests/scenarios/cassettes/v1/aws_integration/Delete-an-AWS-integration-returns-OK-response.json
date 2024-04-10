@@ -3,7 +3,7 @@
     {
       "request": {
         "body": {
-          "string": "{\"account_id\":\"170059471500\",\"account_specific_namespace_rules\":{\"auto_scaling\":false},\"cspm_resource_collection_enabled\":true,\"excluded_regions\":[\"us-east-1\",\"us-west-2\"],\"filter_tags\":[\"$KEY:$VALUE\"],\"host_tags\":[\"$KEY:$VALUE\"],\"metrics_collection_enabled\":false,\"resource_collection_enabled\":true,\"role_name\":\"DatadogAWSIntegrationRole\"}",
+          "string": "{\"account_id\":\"171234183200\",\"account_specific_namespace_rules\":{\"auto_scaling\":false},\"cspm_resource_collection_enabled\":true,\"excluded_regions\":[\"us-east-1\",\"us-west-2\"],\"extended_resource_collection_enabled\":true,\"filter_tags\":[\"$KEY:$VALUE\"],\"host_tags\":[\"$KEY:$VALUE\"],\"metrics_collection_enabled\":false,\"role_name\":\"DatadogAWSIntegrationRole\"}",
           "encoding": null
         },
         "headers": {
@@ -19,7 +19,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"external_id\":\"77c77ead62584b0fa1bb6a9fe7d2fa28\"}\n",
+          "string": "{\"external_id\":\"6aa1bf95e5dc4c9985593e94169bd2f6\"}\n",
           "encoding": null
         },
         "headers": {
@@ -32,12 +32,12 @@
           "message": "OK"
         }
       },
-      "recorded_at": "Tue, 21 Nov 2023 19:25:15 GMT"
+      "recorded_at": "Fri, 05 Apr 2024 18:30:32 GMT"
     },
     {
       "request": {
         "body": {
-          "string": "{\"account_id\":\"170059471500\",\"role_name\":\"DatadogAWSIntegrationRole\"}",
+          "string": "{\"account_id\":\"171234183200\",\"role_name\":\"DatadogAWSIntegrationRole\"}",
           "encoding": null
         },
         "headers": {
@@ -66,12 +66,12 @@
           "message": "OK"
         }
       },
-      "recorded_at": "Tue, 21 Nov 2023 19:25:15 GMT"
+      "recorded_at": "Fri, 05 Apr 2024 18:30:32 GMT"
     },
     {
       "request": {
         "body": {
-          "string": "{\"account_id\":\"170059471500\",\"role_name\":\"DatadogAWSIntegrationRole\"}",
+          "string": "{\"account_id\":\"171234183200\",\"role_name\":\"DatadogAWSIntegrationRole\"}",
           "encoding": null
         },
         "headers": {
@@ -87,7 +87,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"errors\":[\"AWS account 170059471500 does not exist in integration\"]}",
+          "string": "{\"errors\":[\"AWS account 171234183200 does not exist in integration\"]}",
           "encoding": null
         },
         "headers": {
@@ -100,7 +100,7 @@
           "message": "Bad Request"
         }
       },
-      "recorded_at": "Tue, 21 Nov 2023 19:25:15 GMT"
+      "recorded_at": "Fri, 05 Apr 2024 18:30:32 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"
