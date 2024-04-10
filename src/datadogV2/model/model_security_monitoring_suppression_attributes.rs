@@ -17,6 +17,9 @@ pub struct SecurityMonitoringSuppressionAttributes {
     /// A user.
     #[serde(rename = "creator")]
     pub creator: Option<crate::datadogV2::model::SecurityMonitoringUser>,
+    /// An exclusion query on the input data of the security rules, which could be logs, Agent events, or other types of data based on the security rule. Events matching this query are ignored by any detection rules referenced in the suppression rule.
+    #[serde(rename = "data_exclusion_query")]
+    pub data_exclusion_query: Option<String>,
     /// A description for the suppression rule.
     #[serde(rename = "description")]
     pub description: Option<String>,
@@ -54,6 +57,7 @@ impl SecurityMonitoringSuppressionAttributes {
         SecurityMonitoringSuppressionAttributes {
             creation_date: None,
             creator: None,
+            data_exclusion_query: None,
             description: None,
             enabled: None,
             expiration_date: None,
@@ -74,6 +78,11 @@ impl SecurityMonitoringSuppressionAttributes {
 
     pub fn creator(mut self, value: crate::datadogV2::model::SecurityMonitoringUser) -> Self {
         self.creator = Some(value);
+        self
+    }
+
+    pub fn data_exclusion_query(mut self, value: String) -> Self {
+        self.data_exclusion_query = Some(value);
         self
     }
 
@@ -148,6 +157,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSuppressionAttributes {
             {
                 let mut creation_date: Option<i64> = None;
                 let mut creator: Option<crate::datadogV2::model::SecurityMonitoringUser> = None;
+                let mut data_exclusion_query: Option<String> = None;
                 let mut description: Option<String> = None;
                 let mut enabled: Option<bool> = None;
                 let mut expiration_date: Option<i64> = None;
@@ -173,6 +183,13 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSuppressionAttributes {
                                 continue;
                             }
                             creator = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "data_exclusion_query" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            data_exclusion_query =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "description" => {
                             if v.is_null() {
@@ -239,6 +256,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSuppressionAttributes {
                 let content = SecurityMonitoringSuppressionAttributes {
                     creation_date,
                     creator,
+                    data_exclusion_query,
                     description,
                     enabled,
                     expiration_date,

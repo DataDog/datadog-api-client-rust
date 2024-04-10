@@ -15,7 +15,7 @@ pub struct Series {
     /// The name of the host that produced the metric.
     #[serde(rename = "host")]
     pub host: Option<String>,
-    /// If the type of the metric is rate or count, define the corresponding interval.
+    /// If the type of the metric is rate or count, define the corresponding interval in seconds.
     #[serde(
         rename = "interval",
         default,

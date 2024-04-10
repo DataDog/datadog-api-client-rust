@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SecurityMonitoringSuppressionUpdateAttributes {
+    /// An exclusion query on the input data of the security rules, which could be logs, Agent events, or other types of data based on the security rule. Events matching this query are ignored by any detection rules referenced in the suppression rule.
+    #[serde(rename = "data_exclusion_query")]
+    pub data_exclusion_query: Option<String>,
     /// A description for the suppression rule.
     #[serde(rename = "description")]
     pub description: Option<String>,
@@ -44,6 +47,7 @@ pub struct SecurityMonitoringSuppressionUpdateAttributes {
 impl SecurityMonitoringSuppressionUpdateAttributes {
     pub fn new() -> SecurityMonitoringSuppressionUpdateAttributes {
         SecurityMonitoringSuppressionUpdateAttributes {
+            data_exclusion_query: None,
             description: None,
             enabled: None,
             expiration_date: None,
@@ -53,6 +57,11 @@ impl SecurityMonitoringSuppressionUpdateAttributes {
             version: None,
             _unparsed: false,
         }
+    }
+
+    pub fn data_exclusion_query(mut self, value: String) -> Self {
+        self.data_exclusion_query = Some(value);
+        self
     }
 
     pub fn description(mut self, value: String) -> Self {
@@ -114,6 +123,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSuppressionUpdateAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut data_exclusion_query: Option<String> = None;
                 let mut description: Option<String> = None;
                 let mut enabled: Option<bool> = None;
                 let mut expiration_date: Option<Option<i64>> = None;
@@ -125,6 +135,13 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSuppressionUpdateAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "data_exclusion_query" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            data_exclusion_query =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "description" => {
                             if v.is_null() {
                                 continue;
@@ -172,6 +189,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSuppressionUpdateAttributes {
                 }
 
                 let content = SecurityMonitoringSuppressionUpdateAttributes {
+                    data_exclusion_query,
                     description,
                     enabled,
                     expiration_date,
