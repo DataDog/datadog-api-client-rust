@@ -1,6 +1,6 @@
 // Create an API key returns "Created" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_key_management::KeyManagementAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_key_management::KeyManagementAPI;
 use datadog_api_client::datadogV2::model::APIKeyCreateAttributes;
 use datadog_api_client::datadogV2::model::APIKeyCreateData;
 use datadog_api_client::datadogV2::model::APIKeyCreateRequest;
@@ -12,7 +12,7 @@ async fn main() {
         APIKeyCreateAttributes::new("Example-Key-Management".to_string()),
         APIKeysType::API_KEYS,
     ));
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = KeyManagementAPI::with_config(configuration);
     let resp = api.create_api_key(body).await;
     if let Ok(value) = resp {

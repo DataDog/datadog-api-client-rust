@@ -1,6 +1,6 @@
 // Create a ci-tests formula and functions monitor returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_monitors::MonitorsAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV1::api_monitors::MonitorsAPI;
 use datadog_api_client::datadogV1::model::Monitor;
 use datadog_api_client::datadogV1::model::MonitorFormulaAndFunctionEventAggregation;
 use datadog_api_client::datadogV1::model::MonitorFormulaAndFunctionEventQueryDefinition;
@@ -65,7 +65,7 @@ async fn main() {
             )
             .priority(Some(3))
             .tags(vec!["test:examplemonitor".to_string(), "env:ci".to_string()]);
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = MonitorsAPI::with_config(configuration);
     let resp = api.create_monitor(body).await;
     if let Ok(value) = resp {

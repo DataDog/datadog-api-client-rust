@@ -7,7 +7,7 @@ use datadog_api_client::datadogV1::model::MonthlyUsageAttributionSupportedMetric
 
 #[tokio::main]
 async fn main() {
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = UsageMeteringAPI::with_config(configuration);
     let resp = api
         .get_monthly_usage_attribution(

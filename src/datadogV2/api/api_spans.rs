@@ -1,14 +1,13 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use crate::datadog::*;
+use crate::datadog;
 use async_stream::try_stream;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
 };
 use futures_core::stream::Stream;
-use reqwest;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
@@ -98,13 +97,13 @@ pub enum ListSpansGetError {
 
 #[derive(Debug, Clone)]
 pub struct SpansAPI {
-    config: configuration::Configuration,
+    config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for SpansAPI {
     fn default() -> Self {
-        Self::with_config(configuration::Configuration::default())
+        Self::with_config(datadog::Configuration::default())
     }
 }
 
@@ -112,7 +111,7 @@ impl SpansAPI {
     pub fn new() -> Self {
         Self::default()
     }
-    pub fn with_config(config: configuration::Configuration) -> Self {
+    pub fn with_config(config: datadog::Configuration) -> Self {
         let mut reqwest_client_builder = reqwest::Client::builder();
 
         if let Some(proxy_url) = &config.proxy_url {
@@ -154,7 +153,7 @@ impl SpansAPI {
     }
 
     pub fn with_client_and_config(
-        config: configuration::Configuration,
+        config: datadog::Configuration,
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
@@ -165,13 +164,14 @@ impl SpansAPI {
     pub async fn aggregate_spans(
         &self,
         body: crate::datadogV2::model::SpansAggregateRequest,
-    ) -> Result<crate::datadogV2::model::SpansAggregateResponse, Error<AggregateSpansError>> {
+    ) -> Result<crate::datadogV2::model::SpansAggregateResponse, datadog::Error<AggregateSpansError>>
+    {
         match self.aggregate_spans_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -186,8 +186,8 @@ impl SpansAPI {
         &self,
         body: crate::datadogV2::model::SpansAggregateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::SpansAggregateResponse>,
-        Error<AggregateSpansError>,
+        datadog::ResponseContent<crate::datadogV2::model::SpansAggregateResponse>,
+        datadog::Error<AggregateSpansError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.aggregate_spans";
@@ -213,7 +213,7 @@ impl SpansAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -236,7 +236,7 @@ impl SpansAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -247,7 +247,7 @@ impl SpansAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -257,7 +257,7 @@ impl SpansAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -267,7 +267,7 @@ impl SpansAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -291,23 +291,23 @@ impl SpansAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<AggregateSpansError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -321,13 +321,13 @@ impl SpansAPI {
     pub async fn list_spans(
         &self,
         body: crate::datadogV2::model::SpansListRequest,
-    ) -> Result<crate::datadogV2::model::SpansListResponse, Error<ListSpansError>> {
+    ) -> Result<crate::datadogV2::model::SpansListResponse, datadog::Error<ListSpansError>> {
         match self.list_spans_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -339,7 +339,8 @@ impl SpansAPI {
     pub fn list_spans_with_pagination(
         &self,
         mut body: crate::datadogV2::model::SpansListRequest,
-    ) -> impl Stream<Item = Result<crate::datadogV2::model::Span, Error<ListSpansError>>> + '_ {
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::Span, datadog::Error<ListSpansError>>> + '_
+    {
         try_stream! {
             let mut page_size: i32 = 10;
             if body.data.is_none() {
@@ -388,8 +389,10 @@ impl SpansAPI {
     pub async fn list_spans_with_http_info(
         &self,
         body: crate::datadogV2::model::SpansListRequest,
-    ) -> Result<ResponseContent<crate::datadogV2::model::SpansListResponse>, Error<ListSpansError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SpansListResponse>,
+        datadog::Error<ListSpansError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_spans";
 
@@ -414,7 +417,7 @@ impl SpansAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -437,7 +440,7 @@ impl SpansAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -448,7 +451,7 @@ impl SpansAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -458,7 +461,7 @@ impl SpansAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -468,7 +471,7 @@ impl SpansAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -491,22 +494,22 @@ impl SpansAPI {
             match serde_json::from_str::<crate::datadogV2::model::SpansListResponse>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListSpansError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -520,13 +523,13 @@ impl SpansAPI {
     pub async fn list_spans_get(
         &self,
         params: ListSpansGetOptionalParams,
-    ) -> Result<crate::datadogV2::model::SpansListResponse, Error<ListSpansGetError>> {
+    ) -> Result<crate::datadogV2::model::SpansListResponse, datadog::Error<ListSpansGetError>> {
         match self.list_spans_get_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -538,7 +541,7 @@ impl SpansAPI {
     pub fn list_spans_get_with_pagination(
         &self,
         mut params: ListSpansGetOptionalParams,
-    ) -> impl Stream<Item = Result<crate::datadogV2::model::Span, Error<ListSpansGetError>>> + '_
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::Span, datadog::Error<ListSpansGetError>>> + '_
     {
         try_stream! {
             let mut page_size: i32 = 10;
@@ -579,8 +582,10 @@ impl SpansAPI {
     pub async fn list_spans_get_with_http_info(
         &self,
         params: ListSpansGetOptionalParams,
-    ) -> Result<ResponseContent<crate::datadogV2::model::SpansListResponse>, Error<ListSpansGetError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SpansListResponse>,
+        datadog::Error<ListSpansGetError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_spans_get";
 
@@ -637,7 +642,7 @@ impl SpansAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -669,22 +674,22 @@ impl SpansAPI {
             match serde_json::from_str::<crate::datadogV2::model::SpansListResponse>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListSpansGetError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 }

@@ -1,6 +1,6 @@
 // Edit an API key returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_key_management::KeyManagementAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_key_management::KeyManagementAPI;
 use datadog_api_client::datadogV2::model::APIKeyUpdateAttributes;
 use datadog_api_client::datadogV2::model::APIKeyUpdateData;
 use datadog_api_client::datadogV2::model::APIKeyUpdateRequest;
@@ -15,7 +15,7 @@ async fn main() {
         api_key_data_id.clone(),
         APIKeysType::API_KEYS,
     ));
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = KeyManagementAPI::with_config(configuration);
     let resp = api.update_api_key(api_key_data_id.clone(), body).await;
     if let Ok(value) = resp {

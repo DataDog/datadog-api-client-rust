@@ -1,6 +1,6 @@
 // Create a security filter returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_security_monitoring::SecurityMonitoringAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_security_monitoring::SecurityMonitoringAPI;
 use datadog_api_client::datadogV2::model::SecurityFilterCreateAttributes;
 use datadog_api_client::datadogV2::model::SecurityFilterCreateData;
 use datadog_api_client::datadogV2::model::SecurityFilterCreateRequest;
@@ -23,7 +23,7 @@ async fn main() {
         ),
         SecurityFilterType::SECURITY_FILTERS,
     ));
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api.create_security_filter(body).await;
     if let Ok(value) = resp {

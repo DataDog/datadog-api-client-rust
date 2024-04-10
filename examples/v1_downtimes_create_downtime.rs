@@ -1,6 +1,6 @@
 // Schedule a downtime returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_downtimes::DowntimesAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV1::api_downtimes::DowntimesAPI;
 use datadog_api_client::datadogV1::model::Downtime;
 use datadog_api_client::datadogV1::model::DowntimeRecurrence;
 use datadog_api_client::datadogV1::model::NotifyEndState;
@@ -33,7 +33,7 @@ async fn main() {
         .scope(vec!["test:exampledowntime".to_string()])
         .start(1636629071)
         .timezone("Etc/UTC".to_string());
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = DowntimesAPI::with_config(configuration);
     let resp = api.create_downtime(body).await;
     if let Ok(value) = resp {

@@ -1,6 +1,6 @@
 // Update items of a dashboard list returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_dashboard_lists::DashboardListsAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_dashboard_lists::DashboardListsAPI;
 use datadog_api_client::datadogV2::model::DashboardListItemRequest;
 use datadog_api_client::datadogV2::model::DashboardListUpdateItemsRequest;
 use datadog_api_client::datadogV2::model::DashboardType;
@@ -17,7 +17,7 @@ async fn main() {
             screenboard_dashboard_id.clone(),
             DashboardType::CUSTOM_SCREENBOARD,
         )]);
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = DashboardListsAPI::with_config(configuration);
     let resp = api
         .update_dashboard_list_items(dashboard_list_id.clone(), body)

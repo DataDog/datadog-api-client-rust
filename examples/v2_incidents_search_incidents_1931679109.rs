@@ -1,13 +1,13 @@
 // Search for incidents returns "OK" response with pagination
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_incidents::IncidentsAPI;
-use datadog_api_client::datadogV2::api::api_incidents::SearchIncidentsOptionalParams;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_incidents::IncidentsAPI;
+use datadog_api_client::datadogV2::api_incidents::SearchIncidentsOptionalParams;
 use futures_util::pin_mut;
 use futures_util::stream::StreamExt;
 
 #[tokio::main]
 async fn main() {
-    let mut configuration = Configuration::new();
+    let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.SearchIncidents", true);
     let api = IncidentsAPI::with_config(configuration);
     let response = api.search_incidents_with_pagination(

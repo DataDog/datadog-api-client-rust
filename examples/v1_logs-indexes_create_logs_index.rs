@@ -1,6 +1,6 @@
 // Create an index returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_logs_indexes::LogsIndexesAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV1::api_logs_indexes::LogsIndexesAPI;
 use datadog_api_client::datadogV1::model::LogsDailyLimitReset;
 use datadog_api_client::datadogV1::model::LogsExclusion;
 use datadog_api_client::datadogV1::model::LogsExclusionFilter;
@@ -23,7 +23,7 @@ async fn main() {
     .exclusion_filters(vec![LogsExclusion::new("payment".to_string())
         .filter(LogsExclusionFilter::new(1.0).query("*".to_string()))])
     .num_retention_days(15);
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = LogsIndexesAPI::with_config(configuration);
     let resp = api.create_logs_index(body).await;
     if let Ok(value) = resp {

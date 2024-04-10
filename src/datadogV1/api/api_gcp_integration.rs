@@ -1,12 +1,11 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use crate::datadog::*;
+use crate::datadog;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
 };
-use reqwest;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
@@ -53,13 +52,13 @@ pub enum UpdateGCPIntegrationError {
 
 #[derive(Debug, Clone)]
 pub struct GCPIntegrationAPI {
-    config: configuration::Configuration,
+    config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for GCPIntegrationAPI {
     fn default() -> Self {
-        Self::with_config(configuration::Configuration::default())
+        Self::with_config(datadog::Configuration::default())
     }
 }
 
@@ -67,7 +66,7 @@ impl GCPIntegrationAPI {
     pub fn new() -> Self {
         Self::default()
     }
-    pub fn with_config(config: configuration::Configuration) -> Self {
+    pub fn with_config(config: datadog::Configuration) -> Self {
         let mut reqwest_client_builder = reqwest::Client::builder();
 
         if let Some(proxy_url) = &config.proxy_url {
@@ -109,7 +108,7 @@ impl GCPIntegrationAPI {
     }
 
     pub fn with_client_and_config(
-        config: configuration::Configuration,
+        config: datadog::Configuration,
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
@@ -121,14 +120,14 @@ impl GCPIntegrationAPI {
         body: crate::datadogV1::model::GCPAccount,
     ) -> Result<
         std::collections::BTreeMap<String, serde_json::Value>,
-        Error<CreateGCPIntegrationError>,
+        datadog::Error<CreateGCPIntegrationError>,
     > {
         match self.create_gcp_integration_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -142,8 +141,8 @@ impl GCPIntegrationAPI {
         &self,
         body: crate::datadogV1::model::GCPAccount,
     ) -> Result<
-        ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
-        Error<CreateGCPIntegrationError>,
+        datadog::ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
+        datadog::Error<CreateGCPIntegrationError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.create_gcp_integration";
@@ -169,7 +168,7 @@ impl GCPIntegrationAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -192,7 +191,7 @@ impl GCPIntegrationAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -203,7 +202,7 @@ impl GCPIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -213,7 +212,7 @@ impl GCPIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -223,7 +222,7 @@ impl GCPIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -247,23 +246,23 @@ impl GCPIntegrationAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateGCPIntegrationError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -273,14 +272,14 @@ impl GCPIntegrationAPI {
         body: crate::datadogV1::model::GCPAccount,
     ) -> Result<
         std::collections::BTreeMap<String, serde_json::Value>,
-        Error<DeleteGCPIntegrationError>,
+        datadog::Error<DeleteGCPIntegrationError>,
     > {
         match self.delete_gcp_integration_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -294,8 +293,8 @@ impl GCPIntegrationAPI {
         &self,
         body: crate::datadogV1::model::GCPAccount,
     ) -> Result<
-        ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
-        Error<DeleteGCPIntegrationError>,
+        datadog::ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
+        datadog::Error<DeleteGCPIntegrationError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.delete_gcp_integration";
@@ -321,7 +320,7 @@ impl GCPIntegrationAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -344,7 +343,7 @@ impl GCPIntegrationAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -355,7 +354,7 @@ impl GCPIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -365,7 +364,7 @@ impl GCPIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -375,7 +374,7 @@ impl GCPIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -399,36 +398,37 @@ impl GCPIntegrationAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<DeleteGCPIntegrationError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// This endpoint is deprecated – use the V2 endpoints instead. List all Datadog-GCP integrations configured in your Datadog account.
     pub async fn list_gcp_integration(
         &self,
-    ) -> Result<Vec<crate::datadogV1::model::GCPAccount>, Error<ListGCPIntegrationError>> {
+    ) -> Result<Vec<crate::datadogV1::model::GCPAccount>, datadog::Error<ListGCPIntegrationError>>
+    {
         match self.list_gcp_integration_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -441,8 +441,8 @@ impl GCPIntegrationAPI {
     pub async fn list_gcp_integration_with_http_info(
         &self,
     ) -> Result<
-        ResponseContent<Vec<crate::datadogV1::model::GCPAccount>>,
-        Error<ListGCPIntegrationError>,
+        datadog::ResponseContent<Vec<crate::datadogV1::model::GCPAccount>>,
+        datadog::Error<ListGCPIntegrationError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.list_gcp_integration";
@@ -467,7 +467,7 @@ impl GCPIntegrationAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -498,23 +498,23 @@ impl GCPIntegrationAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<Vec<crate::datadogV1::model::GCPAccount>>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListGCPIntegrationError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -527,14 +527,14 @@ impl GCPIntegrationAPI {
         body: crate::datadogV1::model::GCPAccount,
     ) -> Result<
         std::collections::BTreeMap<String, serde_json::Value>,
-        Error<UpdateGCPIntegrationError>,
+        datadog::Error<UpdateGCPIntegrationError>,
     > {
         match self.update_gcp_integration_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -551,8 +551,8 @@ impl GCPIntegrationAPI {
         &self,
         body: crate::datadogV1::model::GCPAccount,
     ) -> Result<
-        ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
-        Error<UpdateGCPIntegrationError>,
+        datadog::ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
+        datadog::Error<UpdateGCPIntegrationError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.update_gcp_integration";
@@ -578,7 +578,7 @@ impl GCPIntegrationAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -601,7 +601,7 @@ impl GCPIntegrationAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -612,7 +612,7 @@ impl GCPIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -622,7 +622,7 @@ impl GCPIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -632,7 +632,7 @@ impl GCPIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -656,23 +656,23 @@ impl GCPIntegrationAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateGCPIntegrationError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 }

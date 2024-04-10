@@ -1,7 +1,7 @@
 // Search logs returns "OK" response with pagination
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_logs::ListLogsOptionalParams;
-use datadog_api_client::datadogV2::api::api_logs::LogsAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_logs::ListLogsOptionalParams;
+use datadog_api_client::datadogV2::api_logs::LogsAPI;
 use datadog_api_client::datadogV2::model::LogsListRequest;
 use datadog_api_client::datadogV2::model::LogsListRequestPage;
 use datadog_api_client::datadogV2::model::LogsQueryFilter;
@@ -22,7 +22,7 @@ async fn main() {
         .options(LogsQueryOptions::new().timezone("GMT".to_string()))
         .page(LogsListRequestPage::new().limit(2))
         .sort(LogsSort::TIMESTAMP_ASCENDING);
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = LogsAPI::with_config(configuration);
     let response = api.list_logs_with_pagination(ListLogsOptionalParams::default().body(body));
     pin_mut!(response);

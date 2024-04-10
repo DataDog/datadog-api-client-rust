@@ -1,14 +1,13 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use crate::datadog::*;
+use crate::datadog;
 use async_stream::try_stream;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
 };
 use futures_core::stream::Stream;
-use reqwest;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
@@ -349,13 +348,13 @@ pub enum ValidateMonitorError {
 
 #[derive(Debug, Clone)]
 pub struct MonitorsAPI {
-    config: configuration::Configuration,
+    config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for MonitorsAPI {
     fn default() -> Self {
-        Self::with_config(configuration::Configuration::default())
+        Self::with_config(datadog::Configuration::default())
     }
 }
 
@@ -363,7 +362,7 @@ impl MonitorsAPI {
     pub fn new() -> Self {
         Self::default()
     }
-    pub fn with_config(config: configuration::Configuration) -> Self {
+    pub fn with_config(config: datadog::Configuration) -> Self {
         let mut reqwest_client_builder = reqwest::Client::builder();
 
         if let Some(proxy_url) = &config.proxy_url {
@@ -405,7 +404,7 @@ impl MonitorsAPI {
     }
 
     pub fn with_client_and_config(
-        config: configuration::Configuration,
+        config: datadog::Configuration,
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
@@ -417,7 +416,7 @@ impl MonitorsAPI {
         monitor_ids: Vec<i64>,
     ) -> Result<
         crate::datadogV1::model::CheckCanDeleteMonitorResponse,
-        Error<CheckCanDeleteMonitorError>,
+        datadog::Error<CheckCanDeleteMonitorError>,
     > {
         match self
             .check_can_delete_monitor_with_http_info(monitor_ids)
@@ -427,7 +426,7 @@ impl MonitorsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -441,8 +440,8 @@ impl MonitorsAPI {
         &self,
         monitor_ids: Vec<i64>,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::CheckCanDeleteMonitorResponse>,
-        Error<CheckCanDeleteMonitorError>,
+        datadog::ResponseContent<crate::datadogV1::model::CheckCanDeleteMonitorResponse>,
+        datadog::Error<CheckCanDeleteMonitorError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.check_can_delete_monitor";
@@ -477,7 +476,7 @@ impl MonitorsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -510,23 +509,23 @@ impl MonitorsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CheckCanDeleteMonitorError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -713,13 +712,13 @@ impl MonitorsAPI {
     pub async fn create_monitor(
         &self,
         body: crate::datadogV1::model::Monitor,
-    ) -> Result<crate::datadogV1::model::Monitor, Error<CreateMonitorError>> {
+    ) -> Result<crate::datadogV1::model::Monitor, datadog::Error<CreateMonitorError>> {
         match self.create_monitor_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -911,7 +910,10 @@ impl MonitorsAPI {
     pub async fn create_monitor_with_http_info(
         &self,
         body: crate::datadogV1::model::Monitor,
-    ) -> Result<ResponseContent<crate::datadogV1::model::Monitor>, Error<CreateMonitorError>> {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::Monitor>,
+        datadog::Error<CreateMonitorError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.create_monitor";
 
@@ -936,7 +938,7 @@ impl MonitorsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -959,7 +961,7 @@ impl MonitorsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -970,7 +972,7 @@ impl MonitorsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -980,7 +982,7 @@ impl MonitorsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -990,7 +992,7 @@ impl MonitorsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -1012,23 +1014,23 @@ impl MonitorsAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::Monitor>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateMonitorError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1037,13 +1039,13 @@ impl MonitorsAPI {
         &self,
         monitor_id: i64,
         params: DeleteMonitorOptionalParams,
-    ) -> Result<crate::datadogV1::model::DeletedMonitor, Error<DeleteMonitorError>> {
+    ) -> Result<crate::datadogV1::model::DeletedMonitor, datadog::Error<DeleteMonitorError>> {
         match self.delete_monitor_with_http_info(monitor_id, params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1057,8 +1059,10 @@ impl MonitorsAPI {
         &self,
         monitor_id: i64,
         params: DeleteMonitorOptionalParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::DeletedMonitor>, Error<DeleteMonitorError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::DeletedMonitor>,
+        datadog::Error<DeleteMonitorError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.delete_monitor";
 
@@ -1091,7 +1095,7 @@ impl MonitorsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1122,23 +1126,23 @@ impl MonitorsAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::DeletedMonitor>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<DeleteMonitorError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1147,13 +1151,13 @@ impl MonitorsAPI {
         &self,
         monitor_id: i64,
         params: GetMonitorOptionalParams,
-    ) -> Result<crate::datadogV1::model::Monitor, Error<GetMonitorError>> {
+    ) -> Result<crate::datadogV1::model::Monitor, datadog::Error<GetMonitorError>> {
         match self.get_monitor_with_http_info(monitor_id, params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1167,7 +1171,10 @@ impl MonitorsAPI {
         &self,
         monitor_id: i64,
         params: GetMonitorOptionalParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::Monitor>, Error<GetMonitorError>> {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::Monitor>,
+        datadog::Error<GetMonitorError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_monitor";
 
@@ -1205,7 +1212,7 @@ impl MonitorsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1236,22 +1243,22 @@ impl MonitorsAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::Monitor>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetMonitorError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1259,13 +1266,13 @@ impl MonitorsAPI {
     pub async fn list_monitors(
         &self,
         params: ListMonitorsOptionalParams,
-    ) -> Result<Vec<crate::datadogV1::model::Monitor>, Error<ListMonitorsError>> {
+    ) -> Result<Vec<crate::datadogV1::model::Monitor>, datadog::Error<ListMonitorsError>> {
         match self.list_monitors_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1277,8 +1284,9 @@ impl MonitorsAPI {
     pub fn list_monitors_with_pagination(
         &self,
         mut params: ListMonitorsOptionalParams,
-    ) -> impl Stream<Item = Result<crate::datadogV1::model::Monitor, Error<ListMonitorsError>>> + '_
-    {
+    ) -> impl Stream<
+        Item = Result<crate::datadogV1::model::Monitor, datadog::Error<ListMonitorsError>>,
+    > + '_ {
         try_stream! {
             let mut page_size: i32 = 100;
             if params.page_size.is_none() {
@@ -1310,8 +1318,10 @@ impl MonitorsAPI {
     pub async fn list_monitors_with_http_info(
         &self,
         params: ListMonitorsOptionalParams,
-    ) -> Result<ResponseContent<Vec<crate::datadogV1::model::Monitor>>, Error<ListMonitorsError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<Vec<crate::datadogV1::model::Monitor>>,
+        datadog::Error<ListMonitorsError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.list_monitors";
 
@@ -1378,7 +1388,7 @@ impl MonitorsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1409,22 +1419,22 @@ impl MonitorsAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<Vec<crate::datadogV1::model::Monitor>>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListMonitorsError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1432,14 +1442,16 @@ impl MonitorsAPI {
     pub async fn search_monitor_groups(
         &self,
         params: SearchMonitorGroupsOptionalParams,
-    ) -> Result<crate::datadogV1::model::MonitorGroupSearchResponse, Error<SearchMonitorGroupsError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::MonitorGroupSearchResponse,
+        datadog::Error<SearchMonitorGroupsError>,
+    > {
         match self.search_monitor_groups_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1453,8 +1465,8 @@ impl MonitorsAPI {
         &self,
         params: SearchMonitorGroupsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::MonitorGroupSearchResponse>,
-        Error<SearchMonitorGroupsError>,
+        datadog::ResponseContent<crate::datadogV1::model::MonitorGroupSearchResponse>,
+        datadog::Error<SearchMonitorGroupsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.search_monitor_groups";
@@ -1502,7 +1514,7 @@ impl MonitorsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1535,23 +1547,23 @@ impl MonitorsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<SearchMonitorGroupsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1559,13 +1571,14 @@ impl MonitorsAPI {
     pub async fn search_monitors(
         &self,
         params: SearchMonitorsOptionalParams,
-    ) -> Result<crate::datadogV1::model::MonitorSearchResponse, Error<SearchMonitorsError>> {
+    ) -> Result<crate::datadogV1::model::MonitorSearchResponse, datadog::Error<SearchMonitorsError>>
+    {
         match self.search_monitors_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1579,8 +1592,8 @@ impl MonitorsAPI {
         &self,
         params: SearchMonitorsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::MonitorSearchResponse>,
-        Error<SearchMonitorsError>,
+        datadog::ResponseContent<crate::datadogV1::model::MonitorSearchResponse>,
+        datadog::Error<SearchMonitorsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.search_monitors";
@@ -1628,7 +1641,7 @@ impl MonitorsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1661,23 +1674,23 @@ impl MonitorsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<SearchMonitorsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1686,13 +1699,13 @@ impl MonitorsAPI {
         &self,
         monitor_id: i64,
         body: crate::datadogV1::model::MonitorUpdateRequest,
-    ) -> Result<crate::datadogV1::model::Monitor, Error<UpdateMonitorError>> {
+    ) -> Result<crate::datadogV1::model::Monitor, datadog::Error<UpdateMonitorError>> {
         match self.update_monitor_with_http_info(monitor_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1706,7 +1719,10 @@ impl MonitorsAPI {
         &self,
         monitor_id: i64,
         body: crate::datadogV1::model::MonitorUpdateRequest,
-    ) -> Result<ResponseContent<crate::datadogV1::model::Monitor>, Error<UpdateMonitorError>> {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::Monitor>,
+        datadog::Error<UpdateMonitorError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.update_monitor";
 
@@ -1732,7 +1748,7 @@ impl MonitorsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1755,7 +1771,7 @@ impl MonitorsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -1766,7 +1782,7 @@ impl MonitorsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -1776,7 +1792,7 @@ impl MonitorsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -1786,7 +1802,7 @@ impl MonitorsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -1808,23 +1824,23 @@ impl MonitorsAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::Monitor>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateMonitorError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1835,7 +1851,7 @@ impl MonitorsAPI {
         body: crate::datadogV1::model::Monitor,
     ) -> Result<
         std::collections::BTreeMap<String, serde_json::Value>,
-        Error<ValidateExistingMonitorError>,
+        datadog::Error<ValidateExistingMonitorError>,
     > {
         match self
             .validate_existing_monitor_with_http_info(monitor_id, body)
@@ -1845,7 +1861,7 @@ impl MonitorsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1860,8 +1876,8 @@ impl MonitorsAPI {
         monitor_id: i64,
         body: crate::datadogV1::model::Monitor,
     ) -> Result<
-        ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
-        Error<ValidateExistingMonitorError>,
+        datadog::ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
+        datadog::Error<ValidateExistingMonitorError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.validate_existing_monitor";
@@ -1888,7 +1904,7 @@ impl MonitorsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1911,7 +1927,7 @@ impl MonitorsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -1922,7 +1938,7 @@ impl MonitorsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -1932,7 +1948,7 @@ impl MonitorsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -1942,7 +1958,7 @@ impl MonitorsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -1966,23 +1982,23 @@ impl MonitorsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ValidateExistingMonitorError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1992,14 +2008,16 @@ impl MonitorsAPI {
     pub async fn validate_monitor(
         &self,
         body: crate::datadogV1::model::Monitor,
-    ) -> Result<std::collections::BTreeMap<String, serde_json::Value>, Error<ValidateMonitorError>>
-    {
+    ) -> Result<
+        std::collections::BTreeMap<String, serde_json::Value>,
+        datadog::Error<ValidateMonitorError>,
+    > {
         match self.validate_monitor_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -2015,8 +2033,8 @@ impl MonitorsAPI {
         &self,
         body: crate::datadogV1::model::Monitor,
     ) -> Result<
-        ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
-        Error<ValidateMonitorError>,
+        datadog::ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
+        datadog::Error<ValidateMonitorError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.validate_monitor";
@@ -2042,7 +2060,7 @@ impl MonitorsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -2065,7 +2083,7 @@ impl MonitorsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -2076,7 +2094,7 @@ impl MonitorsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -2086,7 +2104,7 @@ impl MonitorsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -2096,7 +2114,7 @@ impl MonitorsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -2120,23 +2138,23 @@ impl MonitorsAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ValidateMonitorError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 }

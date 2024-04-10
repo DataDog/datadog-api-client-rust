@@ -1,6 +1,6 @@
 // Update an existing incident service returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_incident_services::IncidentServicesAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_incident_services::IncidentServicesAPI;
 use datadog_api_client::datadogV2::model::IncidentServiceType;
 use datadog_api_client::datadogV2::model::IncidentServiceUpdateAttributes;
 use datadog_api_client::datadogV2::model::IncidentServiceUpdateData;
@@ -15,7 +15,7 @@ async fn main() {
             IncidentServiceUpdateAttributes::new("service name-updated".to_string()),
         ),
     );
-    let mut configuration = Configuration::new();
+    let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.UpdateIncidentService", true);
     let api = IncidentServicesAPI::with_config(configuration);
     let resp = api

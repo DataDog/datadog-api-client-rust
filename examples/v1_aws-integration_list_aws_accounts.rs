@@ -1,11 +1,11 @@
 // List all AWS integrations returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_aws_integration::AWSIntegrationAPI;
-use datadog_api_client::datadogV1::api::api_aws_integration::ListAWSAccountsOptionalParams;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV1::api_aws_integration::AWSIntegrationAPI;
+use datadog_api_client::datadogV1::api_aws_integration::ListAWSAccountsOptionalParams;
 
 #[tokio::main]
 async fn main() {
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = AWSIntegrationAPI::with_config(configuration);
     let resp = api
         .list_aws_accounts(ListAWSAccountsOptionalParams::default())

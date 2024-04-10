@@ -1,6 +1,6 @@
 // Create a new service object returns "CREATED" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_opsgenie_integration::OpsgenieIntegrationAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_opsgenie_integration::OpsgenieIntegrationAPI;
 use datadog_api_client::datadogV2::model::OpsgenieServiceCreateAttributes;
 use datadog_api_client::datadogV2::model::OpsgenieServiceCreateData;
 use datadog_api_client::datadogV2::model::OpsgenieServiceCreateRequest;
@@ -17,7 +17,7 @@ async fn main() {
         ),
         OpsgenieServiceType::OPSGENIE_SERVICE,
     ));
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = OpsgenieIntegrationAPI::with_config(configuration);
     let resp = api.create_opsgenie_service(body).await;
     if let Ok(value) = resp {

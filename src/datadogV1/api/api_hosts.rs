@@ -1,12 +1,11 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use crate::datadog::*;
+use crate::datadog;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
 };
-use reqwest;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
@@ -134,13 +133,13 @@ pub enum UnmuteHostError {
 
 #[derive(Debug, Clone)]
 pub struct HostsAPI {
-    config: configuration::Configuration,
+    config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for HostsAPI {
     fn default() -> Self {
-        Self::with_config(configuration::Configuration::default())
+        Self::with_config(datadog::Configuration::default())
     }
 }
 
@@ -148,7 +147,7 @@ impl HostsAPI {
     pub fn new() -> Self {
         Self::default()
     }
-    pub fn with_config(config: configuration::Configuration) -> Self {
+    pub fn with_config(config: datadog::Configuration) -> Self {
         let mut reqwest_client_builder = reqwest::Client::builder();
 
         if let Some(proxy_url) = &config.proxy_url {
@@ -190,7 +189,7 @@ impl HostsAPI {
     }
 
     pub fn with_client_and_config(
-        config: configuration::Configuration,
+        config: datadog::Configuration,
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
@@ -201,13 +200,13 @@ impl HostsAPI {
     pub async fn get_host_totals(
         &self,
         params: GetHostTotalsOptionalParams,
-    ) -> Result<crate::datadogV1::model::HostTotals, Error<GetHostTotalsError>> {
+    ) -> Result<crate::datadogV1::model::HostTotals, datadog::Error<GetHostTotalsError>> {
         match self.get_host_totals_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -221,8 +220,10 @@ impl HostsAPI {
     pub async fn get_host_totals_with_http_info(
         &self,
         params: GetHostTotalsOptionalParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::HostTotals>, Error<GetHostTotalsError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::HostTotals>,
+        datadog::Error<GetHostTotalsError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_host_totals";
 
@@ -254,7 +255,7 @@ impl HostsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -285,23 +286,23 @@ impl HostsAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::HostTotals>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetHostTotalsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -312,13 +313,13 @@ impl HostsAPI {
     pub async fn list_hosts(
         &self,
         params: ListHostsOptionalParams,
-    ) -> Result<crate::datadogV1::model::HostListResponse, Error<ListHostsError>> {
+    ) -> Result<crate::datadogV1::model::HostListResponse, datadog::Error<ListHostsError>> {
         match self.list_hosts_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -334,8 +335,10 @@ impl HostsAPI {
     pub async fn list_hosts_with_http_info(
         &self,
         params: ListHostsOptionalParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::HostListResponse>, Error<ListHostsError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::HostListResponse>,
+        datadog::Error<ListHostsError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.list_hosts";
 
@@ -402,7 +405,7 @@ impl HostsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -434,22 +437,22 @@ impl HostsAPI {
             match serde_json::from_str::<crate::datadogV1::model::HostListResponse>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListHostsError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -458,13 +461,13 @@ impl HostsAPI {
         &self,
         host_name: String,
         body: crate::datadogV1::model::HostMuteSettings,
-    ) -> Result<crate::datadogV1::model::HostMuteResponse, Error<MuteHostError>> {
+    ) -> Result<crate::datadogV1::model::HostMuteResponse, datadog::Error<MuteHostError>> {
         match self.mute_host_with_http_info(host_name, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -478,8 +481,10 @@ impl HostsAPI {
         &self,
         host_name: String,
         body: crate::datadogV1::model::HostMuteSettings,
-    ) -> Result<ResponseContent<crate::datadogV1::model::HostMuteResponse>, Error<MuteHostError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::HostMuteResponse>,
+        datadog::Error<MuteHostError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.mute_host";
 
@@ -488,7 +493,7 @@ impl HostsAPI {
         let local_uri_str = format!(
             "{}/api/v1/host/{host_name}/mute",
             local_configuration.get_operation_host(operation_id),
-            host_name = urlencode(host_name)
+            host_name = datadog::urlencode(host_name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -505,7 +510,7 @@ impl HostsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -528,7 +533,7 @@ impl HostsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -539,7 +544,7 @@ impl HostsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -549,7 +554,7 @@ impl HostsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -559,7 +564,7 @@ impl HostsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -582,22 +587,22 @@ impl HostsAPI {
             match serde_json::from_str::<crate::datadogV1::model::HostMuteResponse>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<MuteHostError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -605,13 +610,13 @@ impl HostsAPI {
     pub async fn unmute_host(
         &self,
         host_name: String,
-    ) -> Result<crate::datadogV1::model::HostMuteResponse, Error<UnmuteHostError>> {
+    ) -> Result<crate::datadogV1::model::HostMuteResponse, datadog::Error<UnmuteHostError>> {
         match self.unmute_host_with_http_info(host_name).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -624,8 +629,10 @@ impl HostsAPI {
     pub async fn unmute_host_with_http_info(
         &self,
         host_name: String,
-    ) -> Result<ResponseContent<crate::datadogV1::model::HostMuteResponse>, Error<UnmuteHostError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::HostMuteResponse>,
+        datadog::Error<UnmuteHostError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.unmute_host";
 
@@ -634,7 +641,7 @@ impl HostsAPI {
         let local_uri_str = format!(
             "{}/api/v1/host/{host_name}/unmute",
             local_configuration.get_operation_host(operation_id),
-            host_name = urlencode(host_name)
+            host_name = datadog::urlencode(host_name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -650,7 +657,7 @@ impl HostsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -682,22 +689,22 @@ impl HostsAPI {
             match serde_json::from_str::<crate::datadogV1::model::HostMuteResponse>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UnmuteHostError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 }

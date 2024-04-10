@@ -1,12 +1,11 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use crate::datadog::*;
+use crate::datadog;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
 };
-use reqwest;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
@@ -149,13 +148,13 @@ pub enum UpdateHostTagsError {
 
 #[derive(Debug, Clone)]
 pub struct TagsAPI {
-    config: configuration::Configuration,
+    config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for TagsAPI {
     fn default() -> Self {
-        Self::with_config(configuration::Configuration::default())
+        Self::with_config(datadog::Configuration::default())
     }
 }
 
@@ -163,7 +162,7 @@ impl TagsAPI {
     pub fn new() -> Self {
         Self::default()
     }
-    pub fn with_config(config: configuration::Configuration) -> Self {
+    pub fn with_config(config: datadog::Configuration) -> Self {
         let mut reqwest_client_builder = reqwest::Client::builder();
 
         if let Some(proxy_url) = &config.proxy_url {
@@ -205,7 +204,7 @@ impl TagsAPI {
     }
 
     pub fn with_client_and_config(
-        config: configuration::Configuration,
+        config: datadog::Configuration,
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
@@ -218,7 +217,7 @@ impl TagsAPI {
         host_name: String,
         body: crate::datadogV1::model::HostTags,
         params: CreateHostTagsOptionalParams,
-    ) -> Result<crate::datadogV1::model::HostTags, Error<CreateHostTagsError>> {
+    ) -> Result<crate::datadogV1::model::HostTags, datadog::Error<CreateHostTagsError>> {
         match self
             .create_host_tags_with_http_info(host_name, body, params)
             .await
@@ -227,7 +226,7 @@ impl TagsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -243,8 +242,10 @@ impl TagsAPI {
         host_name: String,
         body: crate::datadogV1::model::HostTags,
         params: CreateHostTagsOptionalParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::HostTags>, Error<CreateHostTagsError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::HostTags>,
+        datadog::Error<CreateHostTagsError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.create_host_tags";
 
@@ -256,7 +257,7 @@ impl TagsAPI {
         let local_uri_str = format!(
             "{}/api/v1/tags/hosts/{host_name}",
             local_configuration.get_operation_host(operation_id),
-            host_name = urlencode(host_name)
+            host_name = datadog::urlencode(host_name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -278,7 +279,7 @@ impl TagsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -301,7 +302,7 @@ impl TagsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -312,7 +313,7 @@ impl TagsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -322,7 +323,7 @@ impl TagsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -332,7 +333,7 @@ impl TagsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -354,23 +355,23 @@ impl TagsAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::HostTags>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateHostTagsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -380,7 +381,7 @@ impl TagsAPI {
         &self,
         host_name: String,
         params: DeleteHostTagsOptionalParams,
-    ) -> Result<(), Error<DeleteHostTagsError>> {
+    ) -> Result<(), datadog::Error<DeleteHostTagsError>> {
         match self
             .delete_host_tags_with_http_info(host_name, params)
             .await
@@ -396,7 +397,7 @@ impl TagsAPI {
         &self,
         host_name: String,
         params: DeleteHostTagsOptionalParams,
-    ) -> Result<ResponseContent<()>, Error<DeleteHostTagsError>> {
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteHostTagsError>> {
         let local_configuration = &self.config;
         let operation_id = "v1.delete_host_tags";
 
@@ -408,7 +409,7 @@ impl TagsAPI {
         let local_uri_str = format!(
             "{}/api/v1/tags/hosts/{host_name}",
             local_configuration.get_operation_host(operation_id),
-            host_name = urlencode(host_name)
+            host_name = datadog::urlencode(host_name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -429,7 +430,7 @@ impl TagsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -458,7 +459,7 @@ impl TagsAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            Ok(ResponseContent {
+            Ok(datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: None,
@@ -466,12 +467,12 @@ impl TagsAPI {
         } else {
             let local_entity: Option<DeleteHostTagsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -480,13 +481,13 @@ impl TagsAPI {
         &self,
         host_name: String,
         params: GetHostTagsOptionalParams,
-    ) -> Result<crate::datadogV1::model::HostTags, Error<GetHostTagsError>> {
+    ) -> Result<crate::datadogV1::model::HostTags, datadog::Error<GetHostTagsError>> {
         match self.get_host_tags_with_http_info(host_name, params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -500,7 +501,10 @@ impl TagsAPI {
         &self,
         host_name: String,
         params: GetHostTagsOptionalParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::HostTags>, Error<GetHostTagsError>> {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::HostTags>,
+        datadog::Error<GetHostTagsError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_host_tags";
 
@@ -512,7 +516,7 @@ impl TagsAPI {
         let local_uri_str = format!(
             "{}/api/v1/tags/hosts/{host_name}",
             local_configuration.get_operation_host(operation_id),
-            host_name = urlencode(host_name)
+            host_name = datadog::urlencode(host_name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -533,7 +537,7 @@ impl TagsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -564,22 +568,22 @@ impl TagsAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::HostTags>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetHostTagsError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -587,13 +591,13 @@ impl TagsAPI {
     pub async fn list_host_tags(
         &self,
         params: ListHostTagsOptionalParams,
-    ) -> Result<crate::datadogV1::model::TagToHosts, Error<ListHostTagsError>> {
+    ) -> Result<crate::datadogV1::model::TagToHosts, datadog::Error<ListHostTagsError>> {
         match self.list_host_tags_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -606,8 +610,10 @@ impl TagsAPI {
     pub async fn list_host_tags_with_http_info(
         &self,
         params: ListHostTagsOptionalParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::TagToHosts>, Error<ListHostTagsError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::TagToHosts>,
+        datadog::Error<ListHostTagsError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.list_host_tags";
 
@@ -639,7 +645,7 @@ impl TagsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -670,22 +676,22 @@ impl TagsAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::TagToHosts>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListHostTagsError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -696,7 +702,7 @@ impl TagsAPI {
         host_name: String,
         body: crate::datadogV1::model::HostTags,
         params: UpdateHostTagsOptionalParams,
-    ) -> Result<crate::datadogV1::model::HostTags, Error<UpdateHostTagsError>> {
+    ) -> Result<crate::datadogV1::model::HostTags, datadog::Error<UpdateHostTagsError>> {
         match self
             .update_host_tags_with_http_info(host_name, body, params)
             .await
@@ -705,7 +711,7 @@ impl TagsAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -721,8 +727,10 @@ impl TagsAPI {
         host_name: String,
         body: crate::datadogV1::model::HostTags,
         params: UpdateHostTagsOptionalParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::HostTags>, Error<UpdateHostTagsError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::HostTags>,
+        datadog::Error<UpdateHostTagsError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.update_host_tags";
 
@@ -734,7 +742,7 @@ impl TagsAPI {
         let local_uri_str = format!(
             "{}/api/v1/tags/hosts/{host_name}",
             local_configuration.get_operation_host(operation_id),
-            host_name = urlencode(host_name)
+            host_name = datadog::urlencode(host_name)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
@@ -756,7 +764,7 @@ impl TagsAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -779,7 +787,7 @@ impl TagsAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -790,7 +798,7 @@ impl TagsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -800,7 +808,7 @@ impl TagsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -810,7 +818,7 @@ impl TagsAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -832,23 +840,23 @@ impl TagsAPI {
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::HostTags>(&local_content) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateHostTagsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 }

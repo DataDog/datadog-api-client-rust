@@ -1,6 +1,6 @@
 // Create a Custom Header HTTP custom destination returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_logs_custom_destinations::LogsCustomDestinationsAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_logs_custom_destinations::LogsCustomDestinationsAPI;
 use datadog_api_client::datadogV2::model::CustomDestinationAttributeTagsRestrictionListType;
 use datadog_api_client::datadogV2::model::CustomDestinationCreateRequest;
 use datadog_api_client::datadogV2::model::CustomDestinationCreateRequestAttributes;
@@ -47,7 +47,7 @@ async fn main() {
                 CustomDestinationType::CUSTOM_DESTINATION,
             ),
         );
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = LogsCustomDestinationsAPI::with_config(configuration);
     let resp = api.create_logs_custom_destination(body).await;
     if let Ok(value) = resp {

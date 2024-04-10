@@ -1,12 +1,11 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use crate::datadog::*;
+use crate::datadog;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
 };
-use reqwest;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
@@ -68,13 +67,13 @@ pub enum UpdateOktaAccountError {
 
 #[derive(Debug, Clone)]
 pub struct OktaIntegrationAPI {
-    config: configuration::Configuration,
+    config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for OktaIntegrationAPI {
     fn default() -> Self {
-        Self::with_config(configuration::Configuration::default())
+        Self::with_config(datadog::Configuration::default())
     }
 }
 
@@ -82,7 +81,7 @@ impl OktaIntegrationAPI {
     pub fn new() -> Self {
         Self::default()
     }
-    pub fn with_config(config: configuration::Configuration) -> Self {
+    pub fn with_config(config: datadog::Configuration) -> Self {
         let mut reqwest_client_builder = reqwest::Client::builder();
 
         if let Some(proxy_url) = &config.proxy_url {
@@ -124,7 +123,7 @@ impl OktaIntegrationAPI {
     }
 
     pub fn with_client_and_config(
-        config: configuration::Configuration,
+        config: datadog::Configuration,
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
@@ -134,13 +133,14 @@ impl OktaIntegrationAPI {
     pub async fn create_okta_account(
         &self,
         body: crate::datadogV2::model::OktaAccountRequest,
-    ) -> Result<crate::datadogV2::model::OktaAccountResponse, Error<CreateOktaAccountError>> {
+    ) -> Result<crate::datadogV2::model::OktaAccountResponse, datadog::Error<CreateOktaAccountError>>
+    {
         match self.create_okta_account_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -154,8 +154,8 @@ impl OktaIntegrationAPI {
         &self,
         body: crate::datadogV2::model::OktaAccountRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::OktaAccountResponse>,
-        Error<CreateOktaAccountError>,
+        datadog::ResponseContent<crate::datadogV2::model::OktaAccountResponse>,
+        datadog::Error<CreateOktaAccountError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_okta_account";
@@ -181,7 +181,7 @@ impl OktaIntegrationAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -204,7 +204,7 @@ impl OktaIntegrationAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -215,7 +215,7 @@ impl OktaIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -225,7 +225,7 @@ impl OktaIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -235,7 +235,7 @@ impl OktaIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -259,23 +259,23 @@ impl OktaIntegrationAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateOktaAccountError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -283,7 +283,7 @@ impl OktaIntegrationAPI {
     pub async fn delete_okta_account(
         &self,
         account_id: String,
-    ) -> Result<(), Error<DeleteOktaAccountError>> {
+    ) -> Result<(), datadog::Error<DeleteOktaAccountError>> {
         match self.delete_okta_account_with_http_info(account_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
@@ -294,7 +294,7 @@ impl OktaIntegrationAPI {
     pub async fn delete_okta_account_with_http_info(
         &self,
         account_id: String,
-    ) -> Result<ResponseContent<()>, Error<DeleteOktaAccountError>> {
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOktaAccountError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_okta_account";
 
@@ -303,7 +303,7 @@ impl OktaIntegrationAPI {
         let local_uri_str = format!(
             "{}/api/v2/integrations/okta/accounts/{account_id}",
             local_configuration.get_operation_host(operation_id),
-            account_id = urlencode(account_id)
+            account_id = datadog::urlencode(account_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -319,7 +319,7 @@ impl OktaIntegrationAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -348,7 +348,7 @@ impl OktaIntegrationAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            Ok(ResponseContent {
+            Ok(datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: None,
@@ -356,12 +356,12 @@ impl OktaIntegrationAPI {
         } else {
             let local_entity: Option<DeleteOktaAccountError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -369,13 +369,14 @@ impl OktaIntegrationAPI {
     pub async fn get_okta_account(
         &self,
         account_id: String,
-    ) -> Result<crate::datadogV2::model::OktaAccountResponse, Error<GetOktaAccountError>> {
+    ) -> Result<crate::datadogV2::model::OktaAccountResponse, datadog::Error<GetOktaAccountError>>
+    {
         match self.get_okta_account_with_http_info(account_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -389,8 +390,8 @@ impl OktaIntegrationAPI {
         &self,
         account_id: String,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::OktaAccountResponse>,
-        Error<GetOktaAccountError>,
+        datadog::ResponseContent<crate::datadogV2::model::OktaAccountResponse>,
+        datadog::Error<GetOktaAccountError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_okta_account";
@@ -400,7 +401,7 @@ impl OktaIntegrationAPI {
         let local_uri_str = format!(
             "{}/api/v2/integrations/okta/accounts/{account_id}",
             local_configuration.get_operation_host(operation_id),
-            account_id = urlencode(account_id)
+            account_id = datadog::urlencode(account_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -416,7 +417,7 @@ impl OktaIntegrationAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -449,36 +450,37 @@ impl OktaIntegrationAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetOktaAccountError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// List Okta accounts.
     pub async fn list_okta_accounts(
         &self,
-    ) -> Result<crate::datadogV2::model::OktaAccountsResponse, Error<ListOktaAccountsError>> {
+    ) -> Result<crate::datadogV2::model::OktaAccountsResponse, datadog::Error<ListOktaAccountsError>>
+    {
         match self.list_okta_accounts_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -491,8 +493,8 @@ impl OktaIntegrationAPI {
     pub async fn list_okta_accounts_with_http_info(
         &self,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::OktaAccountsResponse>,
-        Error<ListOktaAccountsError>,
+        datadog::ResponseContent<crate::datadogV2::model::OktaAccountsResponse>,
+        datadog::Error<ListOktaAccountsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_okta_accounts";
@@ -517,7 +519,7 @@ impl OktaIntegrationAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -550,23 +552,23 @@ impl OktaIntegrationAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListOktaAccountsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -575,7 +577,8 @@ impl OktaIntegrationAPI {
         &self,
         account_id: String,
         body: crate::datadogV2::model::OktaAccountUpdateRequest,
-    ) -> Result<crate::datadogV2::model::OktaAccountResponse, Error<UpdateOktaAccountError>> {
+    ) -> Result<crate::datadogV2::model::OktaAccountResponse, datadog::Error<UpdateOktaAccountError>>
+    {
         match self
             .update_okta_account_with_http_info(account_id, body)
             .await
@@ -584,7 +587,7 @@ impl OktaIntegrationAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -599,8 +602,8 @@ impl OktaIntegrationAPI {
         account_id: String,
         body: crate::datadogV2::model::OktaAccountUpdateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::OktaAccountResponse>,
-        Error<UpdateOktaAccountError>,
+        datadog::ResponseContent<crate::datadogV2::model::OktaAccountResponse>,
+        datadog::Error<UpdateOktaAccountError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_okta_account";
@@ -610,7 +613,7 @@ impl OktaIntegrationAPI {
         let local_uri_str = format!(
             "{}/api/v2/integrations/okta/accounts/{account_id}",
             local_configuration.get_operation_host(operation_id),
-            account_id = urlencode(account_id)
+            account_id = datadog::urlencode(account_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -627,7 +630,7 @@ impl OktaIntegrationAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -650,7 +653,7 @@ impl OktaIntegrationAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -661,7 +664,7 @@ impl OktaIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -671,7 +674,7 @@ impl OktaIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -681,7 +684,7 @@ impl OktaIntegrationAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -705,23 +708,23 @@ impl OktaIntegrationAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateOktaAccountError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 }

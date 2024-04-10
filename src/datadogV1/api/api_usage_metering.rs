@@ -1,8 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use crate::datadog::*;
-use reqwest;
+use crate::datadog;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 
@@ -1125,13 +1124,13 @@ pub enum GetUsageTopAvgMetricsError {
 
 #[derive(Debug, Clone)]
 pub struct UsageMeteringAPI {
-    config: configuration::Configuration,
+    config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for UsageMeteringAPI {
     fn default() -> Self {
-        Self::with_config(configuration::Configuration::default())
+        Self::with_config(datadog::Configuration::default())
     }
 }
 
@@ -1139,7 +1138,7 @@ impl UsageMeteringAPI {
     pub fn new() -> Self {
         Self::default()
     }
-    pub fn with_config(config: configuration::Configuration) -> Self {
+    pub fn with_config(config: datadog::Configuration) -> Self {
         let mut reqwest_client_builder = reqwest::Client::builder();
 
         if let Some(proxy_url) = &config.proxy_url {
@@ -1181,7 +1180,7 @@ impl UsageMeteringAPI {
     }
 
     pub fn with_client_and_config(
-        config: configuration::Configuration,
+        config: datadog::Configuration,
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
@@ -1195,14 +1194,14 @@ impl UsageMeteringAPI {
         params: GetDailyCustomReportsOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageCustomReportsResponse,
-        Error<GetDailyCustomReportsError>,
+        datadog::Error<GetDailyCustomReportsError>,
     > {
         match self.get_daily_custom_reports_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1218,8 +1217,8 @@ impl UsageMeteringAPI {
         &self,
         params: GetDailyCustomReportsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageCustomReportsResponse>,
-        Error<GetDailyCustomReportsError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageCustomReportsResponse>,
+        datadog::Error<GetDailyCustomReportsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_daily_custom_reports";
@@ -1270,7 +1269,7 @@ impl UsageMeteringAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1303,23 +1302,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetDailyCustomReportsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1345,7 +1344,7 @@ impl UsageMeteringAPI {
         params: GetHourlyUsageAttributionOptionalParams,
     ) -> Result<
         crate::datadogV1::model::HourlyUsageAttributionResponse,
-        Error<GetHourlyUsageAttributionError>,
+        datadog::Error<GetHourlyUsageAttributionError>,
     > {
         match self
             .get_hourly_usage_attribution_with_http_info(start_hr, usage_type, params)
@@ -1355,7 +1354,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1385,8 +1384,8 @@ impl UsageMeteringAPI {
         usage_type: crate::datadogV1::model::HourlyUsageAttributionUsageType,
         params: GetHourlyUsageAttributionOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::HourlyUsageAttributionResponse>,
-        Error<GetHourlyUsageAttributionError>,
+        datadog::ResponseContent<crate::datadogV1::model::HourlyUsageAttributionResponse>,
+        datadog::Error<GetHourlyUsageAttributionError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_hourly_usage_attribution";
@@ -1444,7 +1443,7 @@ impl UsageMeteringAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1477,23 +1476,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetHourlyUsageAttributionError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1505,7 +1504,7 @@ impl UsageMeteringAPI {
         params: GetIncidentManagementOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageIncidentManagementResponse,
-        Error<GetIncidentManagementError>,
+        datadog::Error<GetIncidentManagementError>,
     > {
         match self
             .get_incident_management_with_http_info(start_hr, params)
@@ -1515,7 +1514,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1531,8 +1530,8 @@ impl UsageMeteringAPI {
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetIncidentManagementOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageIncidentManagementResponse>,
-        Error<GetIncidentManagementError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageIncidentManagementResponse>,
+        datadog::Error<GetIncidentManagementError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_incident_management";
@@ -1574,7 +1573,7 @@ impl UsageMeteringAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1607,23 +1606,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetIncidentManagementError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1633,8 +1632,10 @@ impl UsageMeteringAPI {
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetIngestedSpansOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageIngestedSpansResponse, Error<GetIngestedSpansError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::UsageIngestedSpansResponse,
+        datadog::Error<GetIngestedSpansError>,
+    > {
         match self
             .get_ingested_spans_with_http_info(start_hr, params)
             .await
@@ -1643,7 +1644,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1659,8 +1660,8 @@ impl UsageMeteringAPI {
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetIngestedSpansOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageIngestedSpansResponse>,
-        Error<GetIngestedSpansError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageIngestedSpansResponse>,
+        datadog::Error<GetIngestedSpansError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_ingested_spans";
@@ -1702,7 +1703,7 @@ impl UsageMeteringAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1735,23 +1736,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetIngestedSpansError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1763,14 +1764,14 @@ impl UsageMeteringAPI {
         params: GetMonthlyCustomReportsOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageCustomReportsResponse,
-        Error<GetMonthlyCustomReportsError>,
+        datadog::Error<GetMonthlyCustomReportsError>,
     > {
         match self.get_monthly_custom_reports_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1786,8 +1787,8 @@ impl UsageMeteringAPI {
         &self,
         params: GetMonthlyCustomReportsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageCustomReportsResponse>,
-        Error<GetMonthlyCustomReportsError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageCustomReportsResponse>,
+        datadog::Error<GetMonthlyCustomReportsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_monthly_custom_reports";
@@ -1838,7 +1839,7 @@ impl UsageMeteringAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1871,23 +1872,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetMonthlyCustomReportsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1913,7 +1914,7 @@ impl UsageMeteringAPI {
         params: GetMonthlyUsageAttributionOptionalParams,
     ) -> Result<
         crate::datadogV1::model::MonthlyUsageAttributionResponse,
-        Error<GetMonthlyUsageAttributionError>,
+        datadog::Error<GetMonthlyUsageAttributionError>,
     > {
         match self
             .get_monthly_usage_attribution_with_http_info(start_month, fields, params)
@@ -1923,7 +1924,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1953,8 +1954,8 @@ impl UsageMeteringAPI {
         fields: crate::datadogV1::model::MonthlyUsageAttributionSupportedMetrics,
         params: GetMonthlyUsageAttributionOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::MonthlyUsageAttributionResponse>,
-        Error<GetMonthlyUsageAttributionError>,
+        datadog::ResponseContent<crate::datadogV1::model::MonthlyUsageAttributionResponse>,
+        datadog::Error<GetMonthlyUsageAttributionError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_monthly_usage_attribution";
@@ -2022,7 +2023,7 @@ impl UsageMeteringAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -2055,23 +2056,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetMonthlyUsageAttributionError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -2083,7 +2084,7 @@ impl UsageMeteringAPI {
         report_id: String,
     ) -> Result<
         crate::datadogV1::model::UsageSpecifiedCustomReportsResponse,
-        Error<GetSpecifiedDailyCustomReportsError>,
+        datadog::Error<GetSpecifiedDailyCustomReportsError>,
     > {
         match self
             .get_specified_daily_custom_reports_with_http_info(report_id)
@@ -2093,7 +2094,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -2109,8 +2110,8 @@ impl UsageMeteringAPI {
         &self,
         report_id: String,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageSpecifiedCustomReportsResponse>,
-        Error<GetSpecifiedDailyCustomReportsError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageSpecifiedCustomReportsResponse>,
+        datadog::Error<GetSpecifiedDailyCustomReportsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_specified_daily_custom_reports";
@@ -2120,7 +2121,7 @@ impl UsageMeteringAPI {
         let local_uri_str = format!(
             "{}/api/v1/daily_custom_reports/{report_id}",
             local_configuration.get_operation_host(operation_id),
-            report_id = urlencode(report_id)
+            report_id = datadog::urlencode(report_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2139,7 +2140,7 @@ impl UsageMeteringAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -2172,23 +2173,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetSpecifiedDailyCustomReportsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -2200,7 +2201,7 @@ impl UsageMeteringAPI {
         report_id: String,
     ) -> Result<
         crate::datadogV1::model::UsageSpecifiedCustomReportsResponse,
-        Error<GetSpecifiedMonthlyCustomReportsError>,
+        datadog::Error<GetSpecifiedMonthlyCustomReportsError>,
     > {
         match self
             .get_specified_monthly_custom_reports_with_http_info(report_id)
@@ -2210,7 +2211,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -2226,8 +2227,8 @@ impl UsageMeteringAPI {
         &self,
         report_id: String,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageSpecifiedCustomReportsResponse>,
-        Error<GetSpecifiedMonthlyCustomReportsError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageSpecifiedCustomReportsResponse>,
+        datadog::Error<GetSpecifiedMonthlyCustomReportsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_specified_monthly_custom_reports";
@@ -2237,7 +2238,7 @@ impl UsageMeteringAPI {
         let local_uri_str = format!(
             "{}/api/v1/monthly_custom_reports/{report_id}",
             local_configuration.get_operation_host(operation_id),
-            report_id = urlencode(report_id)
+            report_id = datadog::urlencode(report_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2256,7 +2257,7 @@ impl UsageMeteringAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -2289,23 +2290,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetSpecifiedMonthlyCustomReportsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -2315,8 +2316,10 @@ impl UsageMeteringAPI {
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageAnalyzedLogsOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageAnalyzedLogsResponse, Error<GetUsageAnalyzedLogsError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::UsageAnalyzedLogsResponse,
+        datadog::Error<GetUsageAnalyzedLogsError>,
+    > {
         match self
             .get_usage_analyzed_logs_with_http_info(start_hr, params)
             .await
@@ -2325,7 +2328,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -2341,8 +2344,8 @@ impl UsageMeteringAPI {
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageAnalyzedLogsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageAnalyzedLogsResponse>,
-        Error<GetUsageAnalyzedLogsError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageAnalyzedLogsResponse>,
+        datadog::Error<GetUsageAnalyzedLogsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_analyzed_logs";
@@ -2384,7 +2387,7 @@ impl UsageMeteringAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -2417,23 +2420,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageAnalyzedLogsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -2443,8 +2446,10 @@ impl UsageMeteringAPI {
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageAuditLogsOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageAuditLogsResponse, Error<GetUsageAuditLogsError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::UsageAuditLogsResponse,
+        datadog::Error<GetUsageAuditLogsError>,
+    > {
         match self
             .get_usage_audit_logs_with_http_info(start_hr, params)
             .await
@@ -2453,7 +2458,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -2469,8 +2474,8 @@ impl UsageMeteringAPI {
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageAuditLogsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageAuditLogsResponse>,
-        Error<GetUsageAuditLogsError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageAuditLogsResponse>,
+        datadog::Error<GetUsageAuditLogsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_audit_logs";
@@ -2512,7 +2517,7 @@ impl UsageMeteringAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -2545,23 +2550,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageAuditLogsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -2571,14 +2576,14 @@ impl UsageMeteringAPI {
         params: GetUsageBillableSummaryOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageBillableSummaryResponse,
-        Error<GetUsageBillableSummaryError>,
+        datadog::Error<GetUsageBillableSummaryError>,
     > {
         match self.get_usage_billable_summary_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -2592,8 +2597,8 @@ impl UsageMeteringAPI {
         &self,
         params: GetUsageBillableSummaryOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageBillableSummaryResponse>,
-        Error<GetUsageBillableSummaryError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageBillableSummaryResponse>,
+        datadog::Error<GetUsageBillableSummaryError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_billable_summary";
@@ -2631,7 +2636,7 @@ impl UsageMeteringAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -2664,23 +2669,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageBillableSummaryError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -2690,13 +2695,16 @@ impl UsageMeteringAPI {
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageCIAppOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageCIVisibilityResponse, Error<GetUsageCIAppError>> {
+    ) -> Result<
+        crate::datadogV1::model::UsageCIVisibilityResponse,
+        datadog::Error<GetUsageCIAppError>,
+    > {
         match self.get_usage_ci_app_with_http_info(start_hr, params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -2712,8 +2720,8 @@ impl UsageMeteringAPI {
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageCIAppOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageCIVisibilityResponse>,
-        Error<GetUsageCIAppError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageCIVisibilityResponse>,
+        datadog::Error<GetUsageCIAppError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_ci_app";
@@ -2755,7 +2763,7 @@ impl UsageMeteringAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -2788,23 +2796,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageCIAppError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -2814,13 +2822,13 @@ impl UsageMeteringAPI {
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageCWSOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageCWSResponse, Error<GetUsageCWSError>> {
+    ) -> Result<crate::datadogV1::model::UsageCWSResponse, datadog::Error<GetUsageCWSError>> {
         match self.get_usage_cws_with_http_info(start_hr, params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -2835,8 +2843,10 @@ impl UsageMeteringAPI {
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageCWSOptionalParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::UsageCWSResponse>, Error<GetUsageCWSError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::UsageCWSResponse>,
+        datadog::Error<GetUsageCWSError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_cws";
 
@@ -2877,7 +2887,7 @@ impl UsageMeteringAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -2909,22 +2919,22 @@ impl UsageMeteringAPI {
             match serde_json::from_str::<crate::datadogV1::model::UsageCWSResponse>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageCWSError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -2936,7 +2946,7 @@ impl UsageMeteringAPI {
         params: GetUsageCloudSecurityPostureManagementOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageCloudSecurityPostureManagementResponse,
-        Error<GetUsageCloudSecurityPostureManagementError>,
+        datadog::Error<GetUsageCloudSecurityPostureManagementError>,
     > {
         match self
             .get_usage_cloud_security_posture_management_with_http_info(start_hr, params)
@@ -2946,7 +2956,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -2962,8 +2972,10 @@ impl UsageMeteringAPI {
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageCloudSecurityPostureManagementOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageCloudSecurityPostureManagementResponse>,
-        Error<GetUsageCloudSecurityPostureManagementError>,
+        datadog::ResponseContent<
+            crate::datadogV1::model::UsageCloudSecurityPostureManagementResponse,
+        >,
+        datadog::Error<GetUsageCloudSecurityPostureManagementError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_cloud_security_posture_management";
@@ -3005,7 +3017,7 @@ impl UsageMeteringAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -3039,23 +3051,23 @@ impl UsageMeteringAPI {
             >(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageCloudSecurityPostureManagementError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -3065,13 +3077,13 @@ impl UsageMeteringAPI {
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageDBMOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageDBMResponse, Error<GetUsageDBMError>> {
+    ) -> Result<crate::datadogV1::model::UsageDBMResponse, datadog::Error<GetUsageDBMError>> {
         match self.get_usage_dbm_with_http_info(start_hr, params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -3086,8 +3098,10 @@ impl UsageMeteringAPI {
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageDBMOptionalParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::UsageDBMResponse>, Error<GetUsageDBMError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::UsageDBMResponse>,
+        datadog::Error<GetUsageDBMError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_dbm";
 
@@ -3128,7 +3142,7 @@ impl UsageMeteringAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -3160,22 +3174,22 @@ impl UsageMeteringAPI {
             match serde_json::from_str::<crate::datadogV1::model::UsageDBMResponse>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageDBMError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -3185,7 +3199,8 @@ impl UsageMeteringAPI {
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageFargateOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageFargateResponse, Error<GetUsageFargateError>> {
+    ) -> Result<crate::datadogV1::model::UsageFargateResponse, datadog::Error<GetUsageFargateError>>
+    {
         match self
             .get_usage_fargate_with_http_info(start_hr, params)
             .await
@@ -3194,7 +3209,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -3210,8 +3225,8 @@ impl UsageMeteringAPI {
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageFargateOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageFargateResponse>,
-        Error<GetUsageFargateError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageFargateResponse>,
+        datadog::Error<GetUsageFargateError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_fargate";
@@ -3253,7 +3268,7 @@ impl UsageMeteringAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -3286,23 +3301,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageFargateError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -3312,13 +3327,14 @@ impl UsageMeteringAPI {
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageHostsOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageHostsResponse, Error<GetUsageHostsError>> {
+    ) -> Result<crate::datadogV1::model::UsageHostsResponse, datadog::Error<GetUsageHostsError>>
+    {
         match self.get_usage_hosts_with_http_info(start_hr, params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -3334,8 +3350,8 @@ impl UsageMeteringAPI {
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageHostsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageHostsResponse>,
-        Error<GetUsageHostsError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageHostsResponse>,
+        datadog::Error<GetUsageHostsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_hosts";
@@ -3377,7 +3393,7 @@ impl UsageMeteringAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -3410,23 +3426,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageHostsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -3436,8 +3452,10 @@ impl UsageMeteringAPI {
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageIndexedSpansOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageIndexedSpansResponse, Error<GetUsageIndexedSpansError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::UsageIndexedSpansResponse,
+        datadog::Error<GetUsageIndexedSpansError>,
+    > {
         match self
             .get_usage_indexed_spans_with_http_info(start_hr, params)
             .await
@@ -3446,7 +3464,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -3462,8 +3480,8 @@ impl UsageMeteringAPI {
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageIndexedSpansOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageIndexedSpansResponse>,
-        Error<GetUsageIndexedSpansError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageIndexedSpansResponse>,
+        datadog::Error<GetUsageIndexedSpansError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_indexed_spans";
@@ -3505,7 +3523,7 @@ impl UsageMeteringAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -3538,23 +3556,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageIndexedSpansError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -3564,8 +3582,10 @@ impl UsageMeteringAPI {
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageInternetOfThingsOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageIoTResponse, Error<GetUsageInternetOfThingsError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::UsageIoTResponse,
+        datadog::Error<GetUsageInternetOfThingsError>,
+    > {
         match self
             .get_usage_internet_of_things_with_http_info(start_hr, params)
             .await
@@ -3574,7 +3594,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -3590,8 +3610,8 @@ impl UsageMeteringAPI {
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageInternetOfThingsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageIoTResponse>,
-        Error<GetUsageInternetOfThingsError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageIoTResponse>,
+        datadog::Error<GetUsageInternetOfThingsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_internet_of_things";
@@ -3633,7 +3653,7 @@ impl UsageMeteringAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -3665,23 +3685,23 @@ impl UsageMeteringAPI {
             match serde_json::from_str::<crate::datadogV1::model::UsageIoTResponse>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageInternetOfThingsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -3691,13 +3711,14 @@ impl UsageMeteringAPI {
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageLambdaOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageLambdaResponse, Error<GetUsageLambdaError>> {
+    ) -> Result<crate::datadogV1::model::UsageLambdaResponse, datadog::Error<GetUsageLambdaError>>
+    {
         match self.get_usage_lambda_with_http_info(start_hr, params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -3713,8 +3734,8 @@ impl UsageMeteringAPI {
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageLambdaOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageLambdaResponse>,
-        Error<GetUsageLambdaError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageLambdaResponse>,
+        datadog::Error<GetUsageLambdaError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_lambda";
@@ -3756,7 +3777,7 @@ impl UsageMeteringAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -3789,23 +3810,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageLambdaError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -3815,13 +3836,13 @@ impl UsageMeteringAPI {
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageLogsOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageLogsResponse, Error<GetUsageLogsError>> {
+    ) -> Result<crate::datadogV1::model::UsageLogsResponse, datadog::Error<GetUsageLogsError>> {
         match self.get_usage_logs_with_http_info(start_hr, params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -3836,8 +3857,10 @@ impl UsageMeteringAPI {
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageLogsOptionalParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::UsageLogsResponse>, Error<GetUsageLogsError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::UsageLogsResponse>,
+        datadog::Error<GetUsageLogsError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_logs";
 
@@ -3878,7 +3901,7 @@ impl UsageMeteringAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -3910,22 +3933,22 @@ impl UsageMeteringAPI {
             match serde_json::from_str::<crate::datadogV1::model::UsageLogsResponse>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageLogsError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -3934,8 +3957,10 @@ impl UsageMeteringAPI {
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageLogsByIndexOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageLogsByIndexResponse, Error<GetUsageLogsByIndexError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::UsageLogsByIndexResponse,
+        datadog::Error<GetUsageLogsByIndexError>,
+    > {
         match self
             .get_usage_logs_by_index_with_http_info(start_hr, params)
             .await
@@ -3944,7 +3969,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -3959,8 +3984,8 @@ impl UsageMeteringAPI {
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageLogsByIndexOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageLogsByIndexResponse>,
-        Error<GetUsageLogsByIndexError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageLogsByIndexResponse>,
+        datadog::Error<GetUsageLogsByIndexError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_logs_by_index";
@@ -4014,7 +4039,7 @@ impl UsageMeteringAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -4047,23 +4072,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageLogsByIndexError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -4075,7 +4100,7 @@ impl UsageMeteringAPI {
         params: GetUsageLogsByRetentionOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageLogsByRetentionResponse,
-        Error<GetUsageLogsByRetentionError>,
+        datadog::Error<GetUsageLogsByRetentionError>,
     > {
         match self
             .get_usage_logs_by_retention_with_http_info(start_hr, params)
@@ -4085,7 +4110,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -4101,8 +4126,8 @@ impl UsageMeteringAPI {
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageLogsByRetentionOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageLogsByRetentionResponse>,
-        Error<GetUsageLogsByRetentionError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageLogsByRetentionResponse>,
+        datadog::Error<GetUsageLogsByRetentionError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_logs_by_retention";
@@ -4144,7 +4169,7 @@ impl UsageMeteringAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -4177,23 +4202,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageLogsByRetentionError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -4203,8 +4228,10 @@ impl UsageMeteringAPI {
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageNetworkFlowsOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageNetworkFlowsResponse, Error<GetUsageNetworkFlowsError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::UsageNetworkFlowsResponse,
+        datadog::Error<GetUsageNetworkFlowsError>,
+    > {
         match self
             .get_usage_network_flows_with_http_info(start_hr, params)
             .await
@@ -4213,7 +4240,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -4229,8 +4256,8 @@ impl UsageMeteringAPI {
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageNetworkFlowsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageNetworkFlowsResponse>,
-        Error<GetUsageNetworkFlowsError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageNetworkFlowsResponse>,
+        datadog::Error<GetUsageNetworkFlowsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_network_flows";
@@ -4272,7 +4299,7 @@ impl UsageMeteringAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -4305,23 +4332,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageNetworkFlowsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -4331,8 +4358,10 @@ impl UsageMeteringAPI {
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageNetworkHostsOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageNetworkHostsResponse, Error<GetUsageNetworkHostsError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::UsageNetworkHostsResponse,
+        datadog::Error<GetUsageNetworkHostsError>,
+    > {
         match self
             .get_usage_network_hosts_with_http_info(start_hr, params)
             .await
@@ -4341,7 +4370,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -4357,8 +4386,8 @@ impl UsageMeteringAPI {
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageNetworkHostsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageNetworkHostsResponse>,
-        Error<GetUsageNetworkHostsError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageNetworkHostsResponse>,
+        datadog::Error<GetUsageNetworkHostsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_network_hosts";
@@ -4400,7 +4429,7 @@ impl UsageMeteringAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -4433,23 +4462,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageNetworkHostsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -4461,7 +4490,7 @@ impl UsageMeteringAPI {
         params: GetUsageOnlineArchiveOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageOnlineArchiveResponse,
-        Error<GetUsageOnlineArchiveError>,
+        datadog::Error<GetUsageOnlineArchiveError>,
     > {
         match self
             .get_usage_online_archive_with_http_info(start_hr, params)
@@ -4471,7 +4500,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -4487,8 +4516,8 @@ impl UsageMeteringAPI {
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageOnlineArchiveOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageOnlineArchiveResponse>,
-        Error<GetUsageOnlineArchiveError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageOnlineArchiveResponse>,
+        datadog::Error<GetUsageOnlineArchiveError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_online_archive";
@@ -4530,7 +4559,7 @@ impl UsageMeteringAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -4563,23 +4592,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageOnlineArchiveError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -4589,8 +4618,10 @@ impl UsageMeteringAPI {
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageProfilingOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageProfilingResponse, Error<GetUsageProfilingError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::UsageProfilingResponse,
+        datadog::Error<GetUsageProfilingError>,
+    > {
         match self
             .get_usage_profiling_with_http_info(start_hr, params)
             .await
@@ -4599,7 +4630,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -4615,8 +4646,8 @@ impl UsageMeteringAPI {
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageProfilingOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageProfilingResponse>,
-        Error<GetUsageProfilingError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageProfilingResponse>,
+        datadog::Error<GetUsageProfilingError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_profiling";
@@ -4658,7 +4689,7 @@ impl UsageMeteringAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -4691,23 +4722,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageProfilingError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -4717,8 +4748,10 @@ impl UsageMeteringAPI {
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageRumSessionsOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageRumSessionsResponse, Error<GetUsageRumSessionsError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::UsageRumSessionsResponse,
+        datadog::Error<GetUsageRumSessionsError>,
+    > {
         match self
             .get_usage_rum_sessions_with_http_info(start_hr, params)
             .await
@@ -4727,7 +4760,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -4743,8 +4776,8 @@ impl UsageMeteringAPI {
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageRumSessionsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageRumSessionsResponse>,
-        Error<GetUsageRumSessionsError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageRumSessionsResponse>,
+        datadog::Error<GetUsageRumSessionsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_rum_sessions";
@@ -4791,7 +4824,7 @@ impl UsageMeteringAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -4824,23 +4857,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageRumSessionsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -4850,7 +4883,8 @@ impl UsageMeteringAPI {
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageRumUnitsOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageRumUnitsResponse, Error<GetUsageRumUnitsError>> {
+    ) -> Result<crate::datadogV1::model::UsageRumUnitsResponse, datadog::Error<GetUsageRumUnitsError>>
+    {
         match self
             .get_usage_rum_units_with_http_info(start_hr, params)
             .await
@@ -4859,7 +4893,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -4875,8 +4909,8 @@ impl UsageMeteringAPI {
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageRumUnitsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageRumUnitsResponse>,
-        Error<GetUsageRumUnitsError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageRumUnitsResponse>,
+        datadog::Error<GetUsageRumUnitsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_rum_units";
@@ -4918,7 +4952,7 @@ impl UsageMeteringAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -4951,23 +4985,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageRumUnitsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -4977,13 +5011,13 @@ impl UsageMeteringAPI {
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageSDSOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageSDSResponse, Error<GetUsageSDSError>> {
+    ) -> Result<crate::datadogV1::model::UsageSDSResponse, datadog::Error<GetUsageSDSError>> {
         match self.get_usage_sds_with_http_info(start_hr, params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -4998,8 +5032,10 @@ impl UsageMeteringAPI {
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageSDSOptionalParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::UsageSDSResponse>, Error<GetUsageSDSError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::UsageSDSResponse>,
+        datadog::Error<GetUsageSDSError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_sds";
 
@@ -5040,7 +5076,7 @@ impl UsageMeteringAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -5072,22 +5108,22 @@ impl UsageMeteringAPI {
             match serde_json::from_str::<crate::datadogV1::model::UsageSDSResponse>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageSDSError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -5097,13 +5133,13 @@ impl UsageMeteringAPI {
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageSNMPOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageSNMPResponse, Error<GetUsageSNMPError>> {
+    ) -> Result<crate::datadogV1::model::UsageSNMPResponse, datadog::Error<GetUsageSNMPError>> {
         match self.get_usage_snmp_with_http_info(start_hr, params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -5118,8 +5154,10 @@ impl UsageMeteringAPI {
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageSNMPOptionalParams,
-    ) -> Result<ResponseContent<crate::datadogV1::model::UsageSNMPResponse>, Error<GetUsageSNMPError>>
-    {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::UsageSNMPResponse>,
+        datadog::Error<GetUsageSNMPError>,
+    > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_snmp";
 
@@ -5160,7 +5198,7 @@ impl UsageMeteringAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -5192,22 +5230,22 @@ impl UsageMeteringAPI {
             match serde_json::from_str::<crate::datadogV1::model::UsageSNMPResponse>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageSNMPError> = serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -5216,7 +5254,8 @@ impl UsageMeteringAPI {
         &self,
         start_month: chrono::DateTime<chrono::Utc>,
         params: GetUsageSummaryOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageSummaryResponse, Error<GetUsageSummaryError>> {
+    ) -> Result<crate::datadogV1::model::UsageSummaryResponse, datadog::Error<GetUsageSummaryError>>
+    {
         match self
             .get_usage_summary_with_http_info(start_month, params)
             .await
@@ -5225,7 +5264,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -5240,8 +5279,8 @@ impl UsageMeteringAPI {
         start_month: chrono::DateTime<chrono::Utc>,
         params: GetUsageSummaryOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageSummaryResponse>,
-        Error<GetUsageSummaryError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageSummaryResponse>,
+        datadog::Error<GetUsageSummaryError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_summary";
@@ -5288,7 +5327,7 @@ impl UsageMeteringAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -5321,23 +5360,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageSummaryError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -5347,8 +5386,10 @@ impl UsageMeteringAPI {
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageSyntheticsOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageSyntheticsResponse, Error<GetUsageSyntheticsError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::UsageSyntheticsResponse,
+        datadog::Error<GetUsageSyntheticsError>,
+    > {
         match self
             .get_usage_synthetics_with_http_info(start_hr, params)
             .await
@@ -5357,7 +5398,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -5373,8 +5414,8 @@ impl UsageMeteringAPI {
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageSyntheticsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageSyntheticsResponse>,
-        Error<GetUsageSyntheticsError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageSyntheticsResponse>,
+        datadog::Error<GetUsageSyntheticsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_synthetics";
@@ -5416,7 +5457,7 @@ impl UsageMeteringAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -5449,23 +5490,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageSyntheticsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -5477,7 +5518,7 @@ impl UsageMeteringAPI {
         params: GetUsageSyntheticsAPIOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageSyntheticsAPIResponse,
-        Error<GetUsageSyntheticsAPIError>,
+        datadog::Error<GetUsageSyntheticsAPIError>,
     > {
         match self
             .get_usage_synthetics_api_with_http_info(start_hr, params)
@@ -5487,7 +5528,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -5503,8 +5544,8 @@ impl UsageMeteringAPI {
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageSyntheticsAPIOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageSyntheticsAPIResponse>,
-        Error<GetUsageSyntheticsAPIError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageSyntheticsAPIResponse>,
+        datadog::Error<GetUsageSyntheticsAPIError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_synthetics_api";
@@ -5546,7 +5587,7 @@ impl UsageMeteringAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -5579,23 +5620,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageSyntheticsAPIError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -5607,7 +5648,7 @@ impl UsageMeteringAPI {
         params: GetUsageSyntheticsBrowserOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageSyntheticsBrowserResponse,
-        Error<GetUsageSyntheticsBrowserError>,
+        datadog::Error<GetUsageSyntheticsBrowserError>,
     > {
         match self
             .get_usage_synthetics_browser_with_http_info(start_hr, params)
@@ -5617,7 +5658,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -5633,8 +5674,8 @@ impl UsageMeteringAPI {
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageSyntheticsBrowserOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageSyntheticsBrowserResponse>,
-        Error<GetUsageSyntheticsBrowserError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageSyntheticsBrowserResponse>,
+        datadog::Error<GetUsageSyntheticsBrowserError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_synthetics_browser";
@@ -5676,7 +5717,7 @@ impl UsageMeteringAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -5709,23 +5750,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageSyntheticsBrowserError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -5735,8 +5776,10 @@ impl UsageMeteringAPI {
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageTimeseriesOptionalParams,
-    ) -> Result<crate::datadogV1::model::UsageTimeseriesResponse, Error<GetUsageTimeseriesError>>
-    {
+    ) -> Result<
+        crate::datadogV1::model::UsageTimeseriesResponse,
+        datadog::Error<GetUsageTimeseriesError>,
+    > {
         match self
             .get_usage_timeseries_with_http_info(start_hr, params)
             .await
@@ -5745,7 +5788,7 @@ impl UsageMeteringAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -5761,8 +5804,8 @@ impl UsageMeteringAPI {
         start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageTimeseriesOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageTimeseriesResponse>,
-        Error<GetUsageTimeseriesError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageTimeseriesResponse>,
+        datadog::Error<GetUsageTimeseriesError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_timeseries";
@@ -5804,7 +5847,7 @@ impl UsageMeteringAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -5837,23 +5880,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageTimeseriesError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -5863,14 +5906,14 @@ impl UsageMeteringAPI {
         params: GetUsageTopAvgMetricsOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageTopAvgMetricsResponse,
-        Error<GetUsageTopAvgMetricsError>,
+        datadog::Error<GetUsageTopAvgMetricsError>,
     > {
         match self.get_usage_top_avg_metrics_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -5884,8 +5927,8 @@ impl UsageMeteringAPI {
         &self,
         params: GetUsageTopAvgMetricsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV1::model::UsageTopAvgMetricsResponse>,
-        Error<GetUsageTopAvgMetricsError>,
+        datadog::ResponseContent<crate::datadogV1::model::UsageTopAvgMetricsResponse>,
+        datadog::Error<GetUsageTopAvgMetricsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.get_usage_top_avg_metrics";
@@ -5952,7 +5995,7 @@ impl UsageMeteringAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -5985,23 +6028,23 @@ impl UsageMeteringAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetUsageTopAvgMetricsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 }

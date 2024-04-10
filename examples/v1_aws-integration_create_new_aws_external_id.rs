@@ -1,6 +1,6 @@
 // Generate a new external ID returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_aws_integration::AWSIntegrationAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV1::api_aws_integration::AWSIntegrationAPI;
 use datadog_api_client::datadogV1::model::AWSAccount;
 use std::collections::BTreeMap;
 
@@ -19,7 +19,7 @@ async fn main() {
         .metrics_collection_enabled(false)
         .resource_collection_enabled(true)
         .role_name("DatadogAWSIntegrationRole".to_string());
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = AWSIntegrationAPI::with_config(configuration);
     let resp = api.create_new_aws_external_id(body).await;
     if let Ok(value) = resp {

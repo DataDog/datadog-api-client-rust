@@ -1,6 +1,6 @@
 // Update a shared dashboard returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_dashboards::DashboardsAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV1::api_dashboards::DashboardsAPI;
 use datadog_api_client::datadogV1::model::DashboardGlobalTimeLiveSpan;
 use datadog_api_client::datadogV1::model::DashboardShareType;
 use datadog_api_client::datadogV1::model::SharedDashboardUpdateRequest;
@@ -16,7 +16,7 @@ async fn main() {
     ))
     .share_list(Some(vec![]))
     .share_type(Some(DashboardShareType::OPEN));
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = DashboardsAPI::with_config(configuration);
     let resp = api
         .update_public_dashboard(shared_dashboard_token.clone(), body)

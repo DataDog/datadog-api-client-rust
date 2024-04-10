@@ -1,6 +1,6 @@
 // Update a team returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_teams::TeamsAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_teams::TeamsAPI;
 use datadog_api_client::datadogV2::model::TeamType;
 use datadog_api_client::datadogV2::model::TeamUpdate;
 use datadog_api_client::datadogV2::model::TeamUpdateAttributes;
@@ -22,7 +22,7 @@ async fn main() {
         .visible_modules(vec!["m1".to_string(), "m2".to_string()]),
         TeamType::TEAM,
     ));
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = TeamsAPI::with_config(configuration);
     let resp = api.update_team(dd_team_data_id.clone(), body).await;
     if let Ok(value) = resp {

@@ -1,12 +1,11 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use crate::datadog::*;
+use crate::datadog;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
 };
-use reqwest;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
@@ -109,13 +108,13 @@ pub enum UpdateCostAzureUCConfigsError {
 
 #[derive(Debug, Clone)]
 pub struct CloudCostManagementAPI {
-    config: configuration::Configuration,
+    config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for CloudCostManagementAPI {
     fn default() -> Self {
-        Self::with_config(configuration::Configuration::default())
+        Self::with_config(datadog::Configuration::default())
     }
 }
 
@@ -123,7 +122,7 @@ impl CloudCostManagementAPI {
     pub fn new() -> Self {
         Self::default()
     }
-    pub fn with_config(config: configuration::Configuration) -> Self {
+    pub fn with_config(config: datadog::Configuration) -> Self {
         let mut reqwest_client_builder = reqwest::Client::builder();
 
         if let Some(proxy_url) = &config.proxy_url {
@@ -165,7 +164,7 @@ impl CloudCostManagementAPI {
     }
 
     pub fn with_client_and_config(
-        config: configuration::Configuration,
+        config: datadog::Configuration,
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
@@ -175,14 +174,16 @@ impl CloudCostManagementAPI {
     pub async fn create_cost_awscur_config(
         &self,
         body: crate::datadogV2::model::AwsCURConfigPostRequest,
-    ) -> Result<crate::datadogV2::model::AwsCURConfigResponse, Error<CreateCostAWSCURConfigError>>
-    {
+    ) -> Result<
+        crate::datadogV2::model::AwsCURConfigResponse,
+        datadog::Error<CreateCostAWSCURConfigError>,
+    > {
         match self.create_cost_awscur_config_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -196,8 +197,8 @@ impl CloudCostManagementAPI {
         &self,
         body: crate::datadogV2::model::AwsCURConfigPostRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::AwsCURConfigResponse>,
-        Error<CreateCostAWSCURConfigError>,
+        datadog::ResponseContent<crate::datadogV2::model::AwsCURConfigResponse>,
+        datadog::Error<CreateCostAWSCURConfigError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_cost_awscur_config";
@@ -223,7 +224,7 @@ impl CloudCostManagementAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -246,7 +247,7 @@ impl CloudCostManagementAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -257,7 +258,7 @@ impl CloudCostManagementAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -267,7 +268,7 @@ impl CloudCostManagementAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -277,7 +278,7 @@ impl CloudCostManagementAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -301,23 +302,23 @@ impl CloudCostManagementAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateCostAWSCURConfigError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -327,14 +328,14 @@ impl CloudCostManagementAPI {
         body: crate::datadogV2::model::AzureUCConfigPostRequest,
     ) -> Result<
         crate::datadogV2::model::AzureUCConfigPairsResponse,
-        Error<CreateCostAzureUCConfigsError>,
+        datadog::Error<CreateCostAzureUCConfigsError>,
     > {
         match self.create_cost_azure_uc_configs_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -348,8 +349,8 @@ impl CloudCostManagementAPI {
         &self,
         body: crate::datadogV2::model::AzureUCConfigPostRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::AzureUCConfigPairsResponse>,
-        Error<CreateCostAzureUCConfigsError>,
+        datadog::ResponseContent<crate::datadogV2::model::AzureUCConfigPairsResponse>,
+        datadog::Error<CreateCostAzureUCConfigsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_cost_azure_uc_configs";
@@ -375,7 +376,7 @@ impl CloudCostManagementAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -398,7 +399,7 @@ impl CloudCostManagementAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -409,7 +410,7 @@ impl CloudCostManagementAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -419,7 +420,7 @@ impl CloudCostManagementAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -429,7 +430,7 @@ impl CloudCostManagementAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -453,23 +454,23 @@ impl CloudCostManagementAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateCostAzureUCConfigsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -477,7 +478,7 @@ impl CloudCostManagementAPI {
     pub async fn delete_cost_awscur_config(
         &self,
         cloud_account_id: String,
-    ) -> Result<(), Error<DeleteCostAWSCURConfigError>> {
+    ) -> Result<(), datadog::Error<DeleteCostAWSCURConfigError>> {
         match self
             .delete_cost_awscur_config_with_http_info(cloud_account_id)
             .await
@@ -491,7 +492,7 @@ impl CloudCostManagementAPI {
     pub async fn delete_cost_awscur_config_with_http_info(
         &self,
         cloud_account_id: String,
-    ) -> Result<ResponseContent<()>, Error<DeleteCostAWSCURConfigError>> {
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCostAWSCURConfigError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_cost_awscur_config";
 
@@ -500,7 +501,7 @@ impl CloudCostManagementAPI {
         let local_uri_str = format!(
             "{}/api/v2/cost/aws_cur_config/{cloud_account_id}",
             local_configuration.get_operation_host(operation_id),
-            cloud_account_id = urlencode(cloud_account_id)
+            cloud_account_id = datadog::urlencode(cloud_account_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -516,7 +517,7 @@ impl CloudCostManagementAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -545,7 +546,7 @@ impl CloudCostManagementAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            Ok(ResponseContent {
+            Ok(datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: None,
@@ -553,12 +554,12 @@ impl CloudCostManagementAPI {
         } else {
             let local_entity: Option<DeleteCostAWSCURConfigError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -566,7 +567,7 @@ impl CloudCostManagementAPI {
     pub async fn delete_cost_azure_uc_config(
         &self,
         cloud_account_id: String,
-    ) -> Result<(), Error<DeleteCostAzureUCConfigError>> {
+    ) -> Result<(), datadog::Error<DeleteCostAzureUCConfigError>> {
         match self
             .delete_cost_azure_uc_config_with_http_info(cloud_account_id)
             .await
@@ -580,7 +581,7 @@ impl CloudCostManagementAPI {
     pub async fn delete_cost_azure_uc_config_with_http_info(
         &self,
         cloud_account_id: String,
-    ) -> Result<ResponseContent<()>, Error<DeleteCostAzureUCConfigError>> {
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCostAzureUCConfigError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_cost_azure_uc_config";
 
@@ -589,7 +590,7 @@ impl CloudCostManagementAPI {
         let local_uri_str = format!(
             "{}/api/v2/cost/azure_uc_config/{cloud_account_id}",
             local_configuration.get_operation_host(operation_id),
-            cloud_account_id = urlencode(cloud_account_id)
+            cloud_account_id = datadog::urlencode(cloud_account_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -605,7 +606,7 @@ impl CloudCostManagementAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -634,7 +635,7 @@ impl CloudCostManagementAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            Ok(ResponseContent {
+            Ok(datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: None,
@@ -642,26 +643,28 @@ impl CloudCostManagementAPI {
         } else {
             let local_entity: Option<DeleteCostAzureUCConfigError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// Get the Cloud Cost Management activity.
     pub async fn get_cloud_cost_activity(
         &self,
-    ) -> Result<crate::datadogV2::model::CloudCostActivityResponse, Error<GetCloudCostActivityError>>
-    {
+    ) -> Result<
+        crate::datadogV2::model::CloudCostActivityResponse,
+        datadog::Error<GetCloudCostActivityError>,
+    > {
         match self.get_cloud_cost_activity_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -674,8 +677,8 @@ impl CloudCostManagementAPI {
     pub async fn get_cloud_cost_activity_with_http_info(
         &self,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::CloudCostActivityResponse>,
-        Error<GetCloudCostActivityError>,
+        datadog::ResponseContent<crate::datadogV2::model::CloudCostActivityResponse>,
+        datadog::Error<GetCloudCostActivityError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_cloud_cost_activity";
@@ -700,7 +703,7 @@ impl CloudCostManagementAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -733,23 +736,23 @@ impl CloudCostManagementAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetCloudCostActivityError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -759,7 +762,7 @@ impl CloudCostManagementAPI {
         filter_management_account_id: String,
     ) -> Result<
         crate::datadogV2::model::AWSRelatedAccountsResponse,
-        Error<ListAWSRelatedAccountsError>,
+        datadog::Error<ListAWSRelatedAccountsError>,
     > {
         match self
             .list_aws_related_accounts_with_http_info(filter_management_account_id)
@@ -769,7 +772,7 @@ impl CloudCostManagementAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -783,8 +786,8 @@ impl CloudCostManagementAPI {
         &self,
         filter_management_account_id: String,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::AWSRelatedAccountsResponse>,
-        Error<ListAWSRelatedAccountsError>,
+        datadog::ResponseContent<crate::datadogV2::model::AWSRelatedAccountsResponse>,
+        datadog::Error<ListAWSRelatedAccountsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_aws_related_accounts";
@@ -814,7 +817,7 @@ impl CloudCostManagementAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -847,37 +850,39 @@ impl CloudCostManagementAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListAWSRelatedAccountsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// List the AWS CUR configs.
     pub async fn list_cost_awscur_configs(
         &self,
-    ) -> Result<crate::datadogV2::model::AwsCURConfigsResponse, Error<ListCostAWSCURConfigsError>>
-    {
+    ) -> Result<
+        crate::datadogV2::model::AwsCURConfigsResponse,
+        datadog::Error<ListCostAWSCURConfigsError>,
+    > {
         match self.list_cost_awscur_configs_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -890,8 +895,8 @@ impl CloudCostManagementAPI {
     pub async fn list_cost_awscur_configs_with_http_info(
         &self,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::AwsCURConfigsResponse>,
-        Error<ListCostAWSCURConfigsError>,
+        datadog::ResponseContent<crate::datadogV2::model::AwsCURConfigsResponse>,
+        datadog::Error<ListCostAWSCURConfigsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_cost_awscur_configs";
@@ -916,7 +921,7 @@ impl CloudCostManagementAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -949,37 +954,39 @@ impl CloudCostManagementAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListCostAWSCURConfigsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// List the Azure configs.
     pub async fn list_cost_azure_uc_configs(
         &self,
-    ) -> Result<crate::datadogV2::model::AzureUCConfigsResponse, Error<ListCostAzureUCConfigsError>>
-    {
+    ) -> Result<
+        crate::datadogV2::model::AzureUCConfigsResponse,
+        datadog::Error<ListCostAzureUCConfigsError>,
+    > {
         match self.list_cost_azure_uc_configs_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -992,8 +999,8 @@ impl CloudCostManagementAPI {
     pub async fn list_cost_azure_uc_configs_with_http_info(
         &self,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::AzureUCConfigsResponse>,
-        Error<ListCostAzureUCConfigsError>,
+        datadog::ResponseContent<crate::datadogV2::model::AzureUCConfigsResponse>,
+        datadog::Error<ListCostAzureUCConfigsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_cost_azure_uc_configs";
@@ -1018,7 +1025,7 @@ impl CloudCostManagementAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1051,23 +1058,23 @@ impl CloudCostManagementAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListCostAzureUCConfigsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1076,8 +1083,10 @@ impl CloudCostManagementAPI {
         &self,
         cloud_account_id: String,
         body: crate::datadogV2::model::AwsCURConfigPatchRequest,
-    ) -> Result<crate::datadogV2::model::AwsCURConfigsResponse, Error<UpdateCostAWSCURConfigError>>
-    {
+    ) -> Result<
+        crate::datadogV2::model::AwsCURConfigsResponse,
+        datadog::Error<UpdateCostAWSCURConfigError>,
+    > {
         match self
             .update_cost_awscur_config_with_http_info(cloud_account_id, body)
             .await
@@ -1086,7 +1095,7 @@ impl CloudCostManagementAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1101,8 +1110,8 @@ impl CloudCostManagementAPI {
         cloud_account_id: String,
         body: crate::datadogV2::model::AwsCURConfigPatchRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::AwsCURConfigsResponse>,
-        Error<UpdateCostAWSCURConfigError>,
+        datadog::ResponseContent<crate::datadogV2::model::AwsCURConfigsResponse>,
+        datadog::Error<UpdateCostAWSCURConfigError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_cost_awscur_config";
@@ -1112,7 +1121,7 @@ impl CloudCostManagementAPI {
         let local_uri_str = format!(
             "{}/api/v2/cost/aws_cur_config/{cloud_account_id}",
             local_configuration.get_operation_host(operation_id),
-            cloud_account_id = urlencode(cloud_account_id)
+            cloud_account_id = datadog::urlencode(cloud_account_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -1129,7 +1138,7 @@ impl CloudCostManagementAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1152,7 +1161,7 @@ impl CloudCostManagementAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -1163,7 +1172,7 @@ impl CloudCostManagementAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -1173,7 +1182,7 @@ impl CloudCostManagementAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -1183,7 +1192,7 @@ impl CloudCostManagementAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -1207,23 +1216,23 @@ impl CloudCostManagementAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateCostAWSCURConfigError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1234,7 +1243,7 @@ impl CloudCostManagementAPI {
         body: crate::datadogV2::model::AzureUCConfigPatchRequest,
     ) -> Result<
         crate::datadogV2::model::AzureUCConfigPairsResponse,
-        Error<UpdateCostAzureUCConfigsError>,
+        datadog::Error<UpdateCostAzureUCConfigsError>,
     > {
         match self
             .update_cost_azure_uc_configs_with_http_info(cloud_account_id, body)
@@ -1244,7 +1253,7 @@ impl CloudCostManagementAPI {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1259,8 +1268,8 @@ impl CloudCostManagementAPI {
         cloud_account_id: String,
         body: crate::datadogV2::model::AzureUCConfigPatchRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::AzureUCConfigPairsResponse>,
-        Error<UpdateCostAzureUCConfigsError>,
+        datadog::ResponseContent<crate::datadogV2::model::AzureUCConfigPairsResponse>,
+        datadog::Error<UpdateCostAzureUCConfigsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_cost_azure_uc_configs";
@@ -1270,7 +1279,7 @@ impl CloudCostManagementAPI {
         let local_uri_str = format!(
             "{}/api/v2/cost/azure_uc_config/{cloud_account_id}",
             local_configuration.get_operation_host(operation_id),
-            cloud_account_id = urlencode(cloud_account_id)
+            cloud_account_id = datadog::urlencode(cloud_account_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -1287,7 +1296,7 @@ impl CloudCostManagementAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1310,7 +1319,7 @@ impl CloudCostManagementAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -1321,7 +1330,7 @@ impl CloudCostManagementAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -1331,7 +1340,7 @@ impl CloudCostManagementAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -1341,7 +1350,7 @@ impl CloudCostManagementAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -1365,23 +1374,23 @@ impl CloudCostManagementAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateCostAzureUCConfigsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 }

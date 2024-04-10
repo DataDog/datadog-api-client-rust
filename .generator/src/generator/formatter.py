@@ -307,7 +307,7 @@ def format_parameters(data, spec, replace_values=None, has_body=False, **kwargs)
     if has_body and body_is_required:
         parameters += "body, "
     if has_optional or body_is_required is False:
-        imports.add(f"datadog_api_client::datadog{kwargs.get('version', '')}::api::api_{kwargs.get('api')}::{spec['operationId']}OptionalParams")
+        imports.add(f"datadog_api_client::datadog{kwargs.get('version', '')}::api_{kwargs.get('api')}::{spec['operationId']}OptionalParams")
         parameters += f"{spec['operationId']}OptionalParams::default()"
         if has_body and not body_is_required:
             parameters += ".body(body)"

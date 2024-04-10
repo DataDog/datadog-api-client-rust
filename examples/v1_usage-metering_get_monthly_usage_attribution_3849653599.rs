@@ -10,7 +10,7 @@ async fn main() {
     // there is a valid "monthly_usage_attribution" response
     let monthly_usage_attribution_metadata_pagination_next_record_id =
         std::env::var("MONTHLY_USAGE_ATTRIBUTION_METADATA_PAGINATION_NEXT_RECORD_ID").unwrap();
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = UsageMeteringAPI::with_config(configuration);
     let resp = api
         .get_monthly_usage_attribution(

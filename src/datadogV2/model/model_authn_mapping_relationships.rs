@@ -18,6 +18,9 @@ pub struct AuthNMappingRelationships {
     #[serde(rename = "saml_assertion_attribute")]
     pub saml_assertion_attribute:
         Option<crate::datadogV2::model::RelationshipToSAMLAssertionAttribute>,
+    /// Relationship to team.
+    #[serde(rename = "team")]
+    pub team: Option<crate::datadogV2::model::RelationshipToTeam>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -28,6 +31,7 @@ impl AuthNMappingRelationships {
         AuthNMappingRelationships {
             role: None,
             saml_assertion_attribute: None,
+            team: None,
             _unparsed: false,
         }
     }
@@ -42,6 +46,11 @@ impl AuthNMappingRelationships {
         value: crate::datadogV2::model::RelationshipToSAMLAssertionAttribute,
     ) -> Self {
         self.saml_assertion_attribute = Some(value);
+        self
+    }
+
+    pub fn team(mut self, value: crate::datadogV2::model::RelationshipToTeam) -> Self {
+        self.team = Some(value);
         self
     }
 }
@@ -73,6 +82,7 @@ impl<'de> Deserialize<'de> for AuthNMappingRelationships {
                 let mut saml_assertion_attribute: Option<
                     crate::datadogV2::model::RelationshipToSAMLAssertionAttribute,
                 > = None;
+                let mut team: Option<crate::datadogV2::model::RelationshipToTeam> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -90,6 +100,12 @@ impl<'de> Deserialize<'de> for AuthNMappingRelationships {
                             saml_assertion_attribute =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "team" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            team = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {}
                     }
                 }
@@ -97,6 +113,7 @@ impl<'de> Deserialize<'de> for AuthNMappingRelationships {
                 let content = AuthNMappingRelationships {
                     role,
                     saml_assertion_attribute,
+                    team,
                     _unparsed,
                 };
 

@@ -1,6 +1,6 @@
 // Update a cloud configuration rule's details returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_security_monitoring::SecurityMonitoringAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_security_monitoring::SecurityMonitoringAPI;
 use datadog_api_client::datadogV2::model::CloudConfigurationComplianceRuleOptions;
 use datadog_api_client::datadogV2::model::CloudConfigurationRegoRule;
 use datadog_api_client::datadogV2::model::CloudConfigurationRuleComplianceSignalOptions;
@@ -65,7 +65,7 @@ results contains result if {
                 ),
             )
             .tags(vec![]);
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api
         .update_security_monitoring_rule(cloud_configuration_rule_id.clone(), body)

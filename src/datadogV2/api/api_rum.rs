@@ -1,14 +1,13 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use crate::datadog::*;
+use crate::datadog;
 use async_stream::try_stream;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
 };
 use futures_core::stream::Stream;
-use reqwest;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
@@ -143,13 +142,13 @@ pub enum UpdateRUMApplicationError {
 
 #[derive(Debug, Clone)]
 pub struct RUMAPI {
-    config: configuration::Configuration,
+    config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
 impl Default for RUMAPI {
     fn default() -> Self {
-        Self::with_config(configuration::Configuration::default())
+        Self::with_config(datadog::Configuration::default())
     }
 }
 
@@ -157,7 +156,7 @@ impl RUMAPI {
     pub fn new() -> Self {
         Self::default()
     }
-    pub fn with_config(config: configuration::Configuration) -> Self {
+    pub fn with_config(config: datadog::Configuration) -> Self {
         let mut reqwest_client_builder = reqwest::Client::builder();
 
         if let Some(proxy_url) = &config.proxy_url {
@@ -199,7 +198,7 @@ impl RUMAPI {
     }
 
     pub fn with_client_and_config(
-        config: configuration::Configuration,
+        config: datadog::Configuration,
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
@@ -211,14 +210,14 @@ impl RUMAPI {
         body: crate::datadogV2::model::RUMAggregateRequest,
     ) -> Result<
         crate::datadogV2::model::RUMAnalyticsAggregateResponse,
-        Error<AggregateRUMEventsError>,
+        datadog::Error<AggregateRUMEventsError>,
     > {
         match self.aggregate_rum_events_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -232,8 +231,8 @@ impl RUMAPI {
         &self,
         body: crate::datadogV2::model::RUMAggregateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::RUMAnalyticsAggregateResponse>,
-        Error<AggregateRUMEventsError>,
+        datadog::ResponseContent<crate::datadogV2::model::RUMAnalyticsAggregateResponse>,
+        datadog::Error<AggregateRUMEventsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.aggregate_rum_events";
@@ -259,7 +258,7 @@ impl RUMAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -282,7 +281,7 @@ impl RUMAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -293,7 +292,7 @@ impl RUMAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -303,7 +302,7 @@ impl RUMAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -313,7 +312,7 @@ impl RUMAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -337,23 +336,23 @@ impl RUMAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<AggregateRUMEventsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -361,14 +360,16 @@ impl RUMAPI {
     pub async fn create_rum_application(
         &self,
         body: crate::datadogV2::model::RUMApplicationCreateRequest,
-    ) -> Result<crate::datadogV2::model::RUMApplicationResponse, Error<CreateRUMApplicationError>>
-    {
+    ) -> Result<
+        crate::datadogV2::model::RUMApplicationResponse,
+        datadog::Error<CreateRUMApplicationError>,
+    > {
         match self.create_rum_application_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -382,8 +383,8 @@ impl RUMAPI {
         &self,
         body: crate::datadogV2::model::RUMApplicationCreateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::RUMApplicationResponse>,
-        Error<CreateRUMApplicationError>,
+        datadog::ResponseContent<crate::datadogV2::model::RUMApplicationResponse>,
+        datadog::Error<CreateRUMApplicationError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_rum_application";
@@ -409,7 +410,7 @@ impl RUMAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -432,7 +433,7 @@ impl RUMAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -443,7 +444,7 @@ impl RUMAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -453,7 +454,7 @@ impl RUMAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -463,7 +464,7 @@ impl RUMAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -487,23 +488,23 @@ impl RUMAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateRUMApplicationError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -511,7 +512,7 @@ impl RUMAPI {
     pub async fn delete_rum_application(
         &self,
         id: String,
-    ) -> Result<(), Error<DeleteRUMApplicationError>> {
+    ) -> Result<(), datadog::Error<DeleteRUMApplicationError>> {
         match self.delete_rum_application_with_http_info(id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
@@ -522,7 +523,7 @@ impl RUMAPI {
     pub async fn delete_rum_application_with_http_info(
         &self,
         id: String,
-    ) -> Result<ResponseContent<()>, Error<DeleteRUMApplicationError>> {
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRUMApplicationError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_rum_application";
 
@@ -531,7 +532,7 @@ impl RUMAPI {
         let local_uri_str = format!(
             "{}/api/v2/rum/applications/{id}",
             local_configuration.get_operation_host(operation_id),
-            id = urlencode(id)
+            id = datadog::urlencode(id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -547,7 +548,7 @@ impl RUMAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -576,7 +577,7 @@ impl RUMAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            Ok(ResponseContent {
+            Ok(datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: None,
@@ -584,12 +585,12 @@ impl RUMAPI {
         } else {
             let local_entity: Option<DeleteRUMApplicationError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -597,14 +598,16 @@ impl RUMAPI {
     pub async fn get_rum_application(
         &self,
         id: String,
-    ) -> Result<crate::datadogV2::model::RUMApplicationResponse, Error<GetRUMApplicationError>>
-    {
+    ) -> Result<
+        crate::datadogV2::model::RUMApplicationResponse,
+        datadog::Error<GetRUMApplicationError>,
+    > {
         match self.get_rum_application_with_http_info(id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -618,8 +621,8 @@ impl RUMAPI {
         &self,
         id: String,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::RUMApplicationResponse>,
-        Error<GetRUMApplicationError>,
+        datadog::ResponseContent<crate::datadogV2::model::RUMApplicationResponse>,
+        datadog::Error<GetRUMApplicationError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_rum_application";
@@ -629,7 +632,7 @@ impl RUMAPI {
         let local_uri_str = format!(
             "{}/api/v2/rum/applications/{id}",
             local_configuration.get_operation_host(operation_id),
-            id = urlencode(id)
+            id = datadog::urlencode(id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -645,7 +648,7 @@ impl RUMAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -678,37 +681,39 @@ impl RUMAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetRUMApplicationError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
     /// List all the RUM applications in your organization.
     pub async fn get_rum_applications(
         &self,
-    ) -> Result<crate::datadogV2::model::RUMApplicationsResponse, Error<GetRUMApplicationsError>>
-    {
+    ) -> Result<
+        crate::datadogV2::model::RUMApplicationsResponse,
+        datadog::Error<GetRUMApplicationsError>,
+    > {
         match self.get_rum_applications_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -721,8 +726,8 @@ impl RUMAPI {
     pub async fn get_rum_applications_with_http_info(
         &self,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::RUMApplicationsResponse>,
-        Error<GetRUMApplicationsError>,
+        datadog::ResponseContent<crate::datadogV2::model::RUMApplicationsResponse>,
+        datadog::Error<GetRUMApplicationsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_rum_applications";
@@ -747,7 +752,7 @@ impl RUMAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -780,23 +785,23 @@ impl RUMAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetRUMApplicationsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -809,13 +814,14 @@ impl RUMAPI {
     pub async fn list_rum_events(
         &self,
         params: ListRUMEventsOptionalParams,
-    ) -> Result<crate::datadogV2::model::RUMEventsResponse, Error<ListRUMEventsError>> {
+    ) -> Result<crate::datadogV2::model::RUMEventsResponse, datadog::Error<ListRUMEventsError>>
+    {
         match self.list_rum_events_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -827,8 +833,9 @@ impl RUMAPI {
     pub fn list_rum_events_with_pagination(
         &self,
         mut params: ListRUMEventsOptionalParams,
-    ) -> impl Stream<Item = Result<crate::datadogV2::model::RUMEvent, Error<ListRUMEventsError>>> + '_
-    {
+    ) -> impl Stream<
+        Item = Result<crate::datadogV2::model::RUMEvent, datadog::Error<ListRUMEventsError>>,
+    > + '_ {
         try_stream! {
             let mut page_size: i32 = 10;
             if params.page_limit.is_none() {
@@ -868,8 +875,8 @@ impl RUMAPI {
         &self,
         params: ListRUMEventsOptionalParams,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::RUMEventsResponse>,
-        Error<ListRUMEventsError>,
+        datadog::ResponseContent<crate::datadogV2::model::RUMEventsResponse>,
+        datadog::Error<ListRUMEventsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_rum_events";
@@ -931,7 +938,7 @@ impl RUMAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -963,23 +970,23 @@ impl RUMAPI {
             match serde_json::from_str::<crate::datadogV2::model::RUMEventsResponse>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListRUMEventsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -992,13 +999,14 @@ impl RUMAPI {
     pub async fn search_rum_events(
         &self,
         body: crate::datadogV2::model::RUMSearchEventsRequest,
-    ) -> Result<crate::datadogV2::model::RUMEventsResponse, Error<SearchRUMEventsError>> {
+    ) -> Result<crate::datadogV2::model::RUMEventsResponse, datadog::Error<SearchRUMEventsError>>
+    {
         match self.search_rum_events_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1010,8 +1018,9 @@ impl RUMAPI {
     pub fn search_rum_events_with_pagination(
         &self,
         mut body: crate::datadogV2::model::RUMSearchEventsRequest,
-    ) -> impl Stream<Item = Result<crate::datadogV2::model::RUMEvent, Error<SearchRUMEventsError>>> + '_
-    {
+    ) -> impl Stream<
+        Item = Result<crate::datadogV2::model::RUMEvent, datadog::Error<SearchRUMEventsError>>,
+    > + '_ {
         try_stream! {
             let mut page_size: i32 = 10;
             if body.page.is_none() {
@@ -1054,8 +1063,8 @@ impl RUMAPI {
         &self,
         body: crate::datadogV2::model::RUMSearchEventsRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::RUMEventsResponse>,
-        Error<SearchRUMEventsError>,
+        datadog::ResponseContent<crate::datadogV2::model::RUMEventsResponse>,
+        datadog::Error<SearchRUMEventsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.search_rum_events";
@@ -1081,7 +1090,7 @@ impl RUMAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1104,7 +1113,7 @@ impl RUMAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -1115,7 +1124,7 @@ impl RUMAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -1125,7 +1134,7 @@ impl RUMAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -1135,7 +1144,7 @@ impl RUMAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -1158,23 +1167,23 @@ impl RUMAPI {
             match serde_json::from_str::<crate::datadogV2::model::RUMEventsResponse>(&local_content)
             {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<SearchRUMEventsError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 
@@ -1183,14 +1192,16 @@ impl RUMAPI {
         &self,
         id: String,
         body: crate::datadogV2::model::RUMApplicationUpdateRequest,
-    ) -> Result<crate::datadogV2::model::RUMApplicationResponse, Error<UpdateRUMApplicationError>>
-    {
+    ) -> Result<
+        crate::datadogV2::model::RUMApplicationResponse,
+        datadog::Error<UpdateRUMApplicationError>,
+    > {
         match self.update_rum_application_with_http_info(id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(Error::Serde(serde::de::Error::custom(
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
                         "response content was None",
                     )))
                 }
@@ -1205,8 +1216,8 @@ impl RUMAPI {
         id: String,
         body: crate::datadogV2::model::RUMApplicationUpdateRequest,
     ) -> Result<
-        ResponseContent<crate::datadogV2::model::RUMApplicationResponse>,
-        Error<UpdateRUMApplicationError>,
+        datadog::ResponseContent<crate::datadogV2::model::RUMApplicationResponse>,
+        datadog::Error<UpdateRUMApplicationError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_rum_application";
@@ -1216,7 +1227,7 @@ impl RUMAPI {
         let local_uri_str = format!(
             "{}/api/v2/rum/applications/{id}",
             local_configuration.get_operation_host(operation_id),
-            id = urlencode(id)
+            id = datadog::urlencode(id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -1233,7 +1244,7 @@ impl RUMAPI {
                 log::warn!("Failed to parse user agent header: {e}, falling back to default");
                 headers.insert(
                     reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(configuration::DEFAULT_USER_AGENT.as_str()),
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
                 )
             }
         };
@@ -1256,7 +1267,7 @@ impl RUMAPI {
 
         // build body parameters
         let output = Vec::new();
-        let mut ser = serde_json::Serializer::with_formatter(output, DDFormatter);
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
@@ -1267,7 +1278,7 @@ impl RUMAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "deflate" => {
@@ -1277,7 +1288,7 @@ impl RUMAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     "zstd1" => {
@@ -1287,7 +1298,7 @@ impl RUMAPI {
                             Ok(buf) => {
                                 local_req_builder = local_req_builder.body(buf);
                             }
-                            Err(e) => return Err(Error::Io(e)),
+                            Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
                     _ => {
@@ -1311,23 +1322,23 @@ impl RUMAPI {
                 &local_content,
             ) {
                 Ok(e) => {
-                    return Ok(ResponseContent {
+                    return Ok(datadog::ResponseContent {
                         status: local_status,
                         content: local_content,
                         entity: Some(e),
                     })
                 }
-                Err(e) => return Err(crate::datadog::Error::Serde(e)),
+                Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateRUMApplicationError> =
                 serde_json::from_str(&local_content).ok();
-            let local_error = ResponseContent {
+            let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
                 entity: local_entity,
             };
-            Err(Error::ResponseError(local_error))
+            Err(datadog::Error::ResponseError(local_error))
         }
     }
 }

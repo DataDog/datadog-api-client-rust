@@ -17,7 +17,7 @@ pub struct AuthNMappingUpdateData {
     /// ID of the AuthN Mapping.
     #[serde(rename = "id")]
     pub id: String,
-    /// Relationship of AuthN Mapping update object to Role.
+    /// Relationship of AuthN Mapping update object to a Role or Team.
     #[serde(rename = "relationships")]
     pub relationships: Option<crate::datadogV2::model::AuthNMappingUpdateRelationships>,
     /// AuthN Mappings resource type.
@@ -102,6 +102,14 @@ impl<'de> Deserialize<'de> for AuthNMappingUpdateData {
                             }
                             relationships =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _relationships) = relationships {
+                                match _relationships {
+                                    crate::datadogV2::model::AuthNMappingUpdateRelationships::UnparsedObject(_relationships) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);

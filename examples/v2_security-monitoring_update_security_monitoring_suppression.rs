@@ -1,6 +1,6 @@
 // Update a suppression rule returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_security_monitoring::SecurityMonitoringAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_security_monitoring::SecurityMonitoringAPI;
 use datadog_api_client::datadogV2::model::SecurityMonitoringSuppressionType;
 use datadog_api_client::datadogV2::model::SecurityMonitoringSuppressionUpdateAttributes;
 use datadog_api_client::datadogV2::model::SecurityMonitoringSuppressionUpdateData;
@@ -17,7 +17,7 @@ async fn main() {
             SecurityMonitoringSuppressionType::SUPPRESSIONS,
         ),
     );
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api
         .update_security_monitoring_suppression(suppression_data_id.clone(), body)

@@ -5,8 +5,8 @@
 {%- if context.body %}
 {%- set body, imports = format_data_with_schema(context.body.value, context.api_request.schema.spec, replace_values=context._replace_values, required=True, variables=variables, version=version|upper, imports=imports)%}
 {%- endif %}
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadog{{ version|upper }}::api::api_{{context["api_instance"]["name"] | snake_case}}::{{context["api_instance"]["name"]}}API;
+use datadog_api_client::datadog;
+use datadog_api_client::datadog{{ version|upper }}::api_{{context["api_instance"]["name"] | snake_case}}::{{context["api_instance"]["name"]}}API;
 {%- for name in imports %}
 use {{name}};
 {%- endfor %}
@@ -37,7 +37,7 @@ async fn main() {
 	let body = {{ body }};
     {%- endif %}
 	
-    let {% if context._enable_operations %}mut{% endif %} configuration = Configuration::new();
+    let {% if context._enable_operations %}mut{% endif %} configuration = datadog::Configuration::new();
     
     {%- for operation in context._enable_operations %}
 	configuration.set_unstable_operation_enabled("{{ version }}.{{ operation }}", true);

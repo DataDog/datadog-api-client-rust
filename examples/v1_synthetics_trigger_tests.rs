@@ -1,6 +1,6 @@
 // Trigger Synthetic tests returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_synthetics::SyntheticsAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV1::api_synthetics::SyntheticsAPI;
 use datadog_api_client::datadogV1::model::SyntheticsTriggerBody;
 use datadog_api_client::datadogV1::model::SyntheticsTriggerTest;
 
@@ -11,7 +11,7 @@ async fn main() {
     let body = SyntheticsTriggerBody::new(vec![SyntheticsTriggerTest::new(
         synthetics_api_test_public_id.clone(),
     )]);
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = SyntheticsAPI::with_config(configuration);
     let resp = api.trigger_tests(body).await;
     if let Ok(value) = resp {

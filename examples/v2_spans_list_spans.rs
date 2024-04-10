@@ -1,6 +1,6 @@
 // Search spans returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_spans::SpansAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_spans::SpansAPI;
 use datadog_api_client::datadogV2::model::SpansListRequest;
 use datadog_api_client::datadogV2::model::SpansListRequestAttributes;
 use datadog_api_client::datadogV2::model::SpansListRequestData;
@@ -28,7 +28,7 @@ async fn main() {
             )
             .type_(SpansListRequestType::SEARCH_REQUEST),
     );
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = SpansAPI::with_config(configuration);
     let resp = api.list_spans(body).await;
     if let Ok(value) = resp {

@@ -1,11 +1,11 @@
 // Get an API test's latest results summaries returns "OK" response
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV1::api::api_synthetics::GetAPITestLatestResultsOptionalParams;
-use datadog_api_client::datadogV1::api::api_synthetics::SyntheticsAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV1::api_synthetics::GetAPITestLatestResultsOptionalParams;
+use datadog_api_client::datadogV1::api_synthetics::SyntheticsAPI;
 
 #[tokio::main]
 async fn main() {
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = SyntheticsAPI::with_config(configuration);
     let resp = api
         .get_api_test_latest_results(
