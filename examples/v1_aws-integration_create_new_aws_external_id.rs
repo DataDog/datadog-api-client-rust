@@ -14,6 +14,7 @@ async fn main() {
         ]))
         .cspm_resource_collection_enabled(true)
         .excluded_regions(vec!["us-east-1".to_string(), "us-west-2".to_string()])
+        .extended_resource_collection_enabled(true)
         .filter_tags(vec!["$KEY:$VALUE".to_string()])
         .host_tags(vec!["$KEY:$VALUE".to_string()])
         .metrics_collection_enabled(false)
