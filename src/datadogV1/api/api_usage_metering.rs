@@ -48,7 +48,7 @@ impl GetDailyCustomReportsOptionalParams {
 pub struct GetHourlyUsageAttributionOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
     /// List following results with a next_record_id provided in the previous query.
     pub next_record_id: Option<String>,
     /// Comma separated list of tags used to group usage. If no value is provided the usage will not be broken down by tags.
@@ -62,7 +62,7 @@ pub struct GetHourlyUsageAttributionOptionalParams {
 impl GetHourlyUsageAttributionOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -91,13 +91,13 @@ impl GetHourlyUsageAttributionOptionalParams {
 pub struct GetIncidentManagementOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetIncidentManagementOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -109,13 +109,13 @@ impl GetIncidentManagementOptionalParams {
 pub struct GetIngestedSpansOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetIngestedSpansOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -163,7 +163,7 @@ impl GetMonthlyCustomReportsOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetMonthlyUsageAttributionOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage ending this month.
-    pub end_month: Option<String>,
+    pub end_month: Option<chrono::DateTime<chrono::Utc>>,
     /// The direction to sort by: `[desc, asc]`.
     pub sort_direction: Option<crate::datadogV1::model::UsageSortDirection>,
     /// The field to sort by.
@@ -180,7 +180,7 @@ pub struct GetMonthlyUsageAttributionOptionalParams {
 
 impl GetMonthlyUsageAttributionOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage ending this month.
-    pub fn end_month(mut self, value: String) -> Self {
+    pub fn end_month(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_month = Some(value);
         self
     }
@@ -222,13 +222,13 @@ impl GetMonthlyUsageAttributionOptionalParams {
 pub struct GetUsageAnalyzedLogsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetUsageAnalyzedLogsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -240,13 +240,13 @@ impl GetUsageAnalyzedLogsOptionalParams {
 pub struct GetUsageAuditLogsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetUsageAuditLogsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -257,12 +257,12 @@ impl GetUsageAuditLogsOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageBillableSummaryOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage starting this month.
-    pub month: Option<String>,
+    pub month: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetUsageBillableSummaryOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage starting this month.
-    pub fn month(mut self, value: String) -> Self {
+    pub fn month(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.month = Some(value);
         self
     }
@@ -274,13 +274,13 @@ impl GetUsageBillableSummaryOptionalParams {
 pub struct GetUsageCIAppOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetUsageCIAppOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -292,13 +292,13 @@ impl GetUsageCIAppOptionalParams {
 pub struct GetUsageCWSOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetUsageCWSOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -310,13 +310,13 @@ impl GetUsageCWSOptionalParams {
 pub struct GetUsageCloudSecurityPostureManagementOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetUsageCloudSecurityPostureManagementOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -328,13 +328,13 @@ impl GetUsageCloudSecurityPostureManagementOptionalParams {
 pub struct GetUsageDBMOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetUsageDBMOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -345,12 +345,12 @@ impl GetUsageDBMOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageFargateOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetUsageFargateOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -361,12 +361,12 @@ impl GetUsageFargateOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageHostsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetUsageHostsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -377,12 +377,12 @@ impl GetUsageHostsOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageIndexedSpansOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetUsageIndexedSpansOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -394,13 +394,13 @@ impl GetUsageIndexedSpansOptionalParams {
 pub struct GetUsageInternetOfThingsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetUsageInternetOfThingsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -411,12 +411,12 @@ impl GetUsageInternetOfThingsOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageLambdaOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetUsageLambdaOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -427,12 +427,12 @@ impl GetUsageLambdaOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageLogsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetUsageLogsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -443,14 +443,14 @@ impl GetUsageLogsOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageLogsByIndexOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
     /// Comma-separated list of log index names.
     pub index_name: Option<Vec<String>>,
 }
 
 impl GetUsageLogsByIndexOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -467,13 +467,13 @@ impl GetUsageLogsByIndexOptionalParams {
 pub struct GetUsageLogsByRetentionOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetUsageLogsByRetentionOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -485,13 +485,13 @@ impl GetUsageLogsByRetentionOptionalParams {
 pub struct GetUsageNetworkFlowsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetUsageNetworkFlowsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -502,12 +502,12 @@ impl GetUsageNetworkFlowsOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageNetworkHostsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetUsageNetworkHostsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -519,13 +519,13 @@ impl GetUsageNetworkHostsOptionalParams {
 pub struct GetUsageOnlineArchiveOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetUsageOnlineArchiveOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -537,13 +537,13 @@ impl GetUsageOnlineArchiveOptionalParams {
 pub struct GetUsageProfilingOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetUsageProfilingOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -554,14 +554,14 @@ impl GetUsageProfilingOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageRumSessionsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
     /// RUM type: `[browser, mobile]`. Defaults to `browser`.
     pub type_: Option<String>,
 }
 
 impl GetUsageRumSessionsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -577,12 +577,12 @@ impl GetUsageRumSessionsOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageRumUnitsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetUsageRumUnitsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -594,13 +594,13 @@ impl GetUsageRumUnitsOptionalParams {
 pub struct GetUsageSDSOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetUsageSDSOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -612,13 +612,13 @@ impl GetUsageSDSOptionalParams {
 pub struct GetUsageSNMPOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetUsageSNMPOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -629,14 +629,14 @@ impl GetUsageSNMPOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageSummaryOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage ending this month.
-    pub end_month: Option<String>,
+    pub end_month: Option<chrono::DateTime<chrono::Utc>>,
     /// Include usage summaries for each sub-org.
     pub include_org_details: Option<bool>,
 }
 
 impl GetUsageSummaryOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage ending this month.
-    pub fn end_month(mut self, value: String) -> Self {
+    pub fn end_month(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_month = Some(value);
         self
     }
@@ -652,12 +652,12 @@ impl GetUsageSummaryOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageSyntheticsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetUsageSyntheticsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -668,12 +668,12 @@ impl GetUsageSyntheticsOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageSyntheticsAPIOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetUsageSyntheticsAPIOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -684,12 +684,12 @@ impl GetUsageSyntheticsAPIOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageSyntheticsBrowserOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetUsageSyntheticsBrowserOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -700,12 +700,12 @@ impl GetUsageSyntheticsBrowserOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageTimeseriesOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetUsageTimeseriesOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -716,9 +716,9 @@ impl GetUsageTimeseriesOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageTopAvgMetricsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: [YYYY-MM] for usage beginning at this hour. (Either month or day should be specified, but not both)
-    pub month: Option<String>,
+    pub month: Option<chrono::DateTime<chrono::Utc>>,
     /// Datetime in ISO-8601 format, UTC, precise to day: [YYYY-MM-DD] for usage beginning at this hour. (Either month or day should be specified, but not both)
-    pub day: Option<String>,
+    pub day: Option<chrono::DateTime<chrono::Utc>>,
     /// Comma-separated list of metric names.
     pub names: Option<Vec<String>>,
     /// Maximum number of results to return (between 1 and 5000) - defaults to 500 results if limit not specified.
@@ -729,12 +729,12 @@ pub struct GetUsageTopAvgMetricsOptionalParams {
 
 impl GetUsageTopAvgMetricsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: [YYYY-MM] for usage beginning at this hour. (Either month or day should be specified, but not both)
-    pub fn month(mut self, value: String) -> Self {
+    pub fn month(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.month = Some(value);
         self
     }
     /// Datetime in ISO-8601 format, UTC, precise to day: [YYYY-MM-DD] for usage beginning at this hour. (Either month or day should be specified, but not both)
-    pub fn day(mut self, value: String) -> Self {
+    pub fn day(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.day = Some(value);
         self
     }
@@ -1339,7 +1339,7 @@ impl UsageMeteringAPI {
     /// ```
     pub async fn get_hourly_usage_attribution(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         usage_type: crate::datadogV1::model::HourlyUsageAttributionUsageType,
         params: GetHourlyUsageAttributionOptionalParams,
     ) -> Result<
@@ -1380,7 +1380,7 @@ impl UsageMeteringAPI {
     /// ```
     pub async fn get_hourly_usage_attribution_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         usage_type: crate::datadogV1::model::HourlyUsageAttributionUsageType,
         params: GetHourlyUsageAttributionOptionalParams,
     ) -> Result<
@@ -1405,11 +1405,16 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         local_req_builder = local_req_builder.query(&[("usage_type", &usage_type.to_string())]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
         if let Some(ref local_query_param) = next_record_id {
             local_req_builder =
@@ -1495,7 +1500,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_incident_management(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetIncidentManagementOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageIncidentManagementResponse,
@@ -1522,7 +1527,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_incident_management_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetIncidentManagementOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV1::model::UsageIncidentManagementResponse>,
@@ -1543,10 +1548,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -1620,7 +1630,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_ingested_spans(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetIngestedSpansOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageIngestedSpansResponse,
@@ -1647,7 +1657,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_ingested_spans_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetIngestedSpansOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV1::model::UsageIngestedSpansResponse>,
@@ -1668,10 +1678,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -1894,7 +1909,7 @@ impl UsageMeteringAPI {
     /// ```
     pub async fn get_monthly_usage_attribution(
         &self,
-        start_month: String,
+        start_month: chrono::DateTime<chrono::Utc>,
         fields: crate::datadogV1::model::MonthlyUsageAttributionSupportedMetrics,
         params: GetMonthlyUsageAttributionOptionalParams,
     ) -> Result<
@@ -1935,7 +1950,7 @@ impl UsageMeteringAPI {
     /// ```
     pub async fn get_monthly_usage_attribution_with_http_info(
         &self,
-        start_month: String,
+        start_month: chrono::DateTime<chrono::Utc>,
         fields: crate::datadogV1::model::MonthlyUsageAttributionSupportedMetrics,
         params: GetMonthlyUsageAttributionOptionalParams,
     ) -> Result<
@@ -1962,11 +1977,16 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_month", &start_month.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_month",
+            &start_month.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         local_req_builder = local_req_builder.query(&[("fields", &fields.to_string())]);
         if let Some(ref local_query_param) = end_month {
-            local_req_builder =
-                local_req_builder.query(&[("end_month", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_month",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
         if let Some(ref local_query_param) = sort_direction {
             local_req_builder =
@@ -2294,7 +2314,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_analyzed_logs(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageAnalyzedLogsOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageAnalyzedLogsResponse,
@@ -2321,7 +2341,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_analyzed_logs_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageAnalyzedLogsOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV1::model::UsageAnalyzedLogsResponse>,
@@ -2342,10 +2362,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -2419,7 +2444,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated.
     pub async fn get_usage_audit_logs(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageAuditLogsOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageAuditLogsResponse,
@@ -2446,7 +2471,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated.
     pub async fn get_usage_audit_logs_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageAuditLogsOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV1::model::UsageAuditLogsResponse>,
@@ -2467,10 +2492,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -2586,8 +2616,10 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         if let Some(ref local_query_param) = month {
-            local_req_builder =
-                local_req_builder.query(&[("month", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "month",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -2661,7 +2693,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_ci_app(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageCIAppOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageCIVisibilityResponse,
@@ -2685,7 +2717,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_ci_app_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageCIAppOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV1::model::UsageCIVisibilityResponse>,
@@ -2706,10 +2738,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -2783,7 +2820,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_cws(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageCWSOptionalParams,
     ) -> Result<crate::datadogV1::model::UsageCWSResponse, datadog::Error<GetUsageCWSError>> {
         match self.get_usage_cws_with_http_info(start_hr, params).await {
@@ -2804,7 +2841,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_cws_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageCWSOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV1::model::UsageCWSResponse>,
@@ -2825,10 +2862,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -2900,7 +2942,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_cloud_security_posture_management(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageCloudSecurityPostureManagementOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageCloudSecurityPostureManagementResponse,
@@ -2927,7 +2969,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_cloud_security_posture_management_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageCloudSecurityPostureManagementOptionalParams,
     ) -> Result<
         datadog::ResponseContent<
@@ -2950,10 +2992,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -3028,7 +3075,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_dbm(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageDBMOptionalParams,
     ) -> Result<crate::datadogV1::model::UsageDBMResponse, datadog::Error<GetUsageDBMError>> {
         match self.get_usage_dbm_with_http_info(start_hr, params).await {
@@ -3049,7 +3096,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_dbm_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageDBMOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV1::model::UsageDBMResponse>,
@@ -3070,10 +3117,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -3145,7 +3197,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_fargate(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageFargateOptionalParams,
     ) -> Result<crate::datadogV1::model::UsageFargateResponse, datadog::Error<GetUsageFargateError>>
     {
@@ -3170,7 +3222,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_fargate_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageFargateOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV1::model::UsageFargateResponse>,
@@ -3191,10 +3243,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -3268,7 +3325,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_hosts(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageHostsOptionalParams,
     ) -> Result<crate::datadogV1::model::UsageHostsResponse, datadog::Error<GetUsageHostsError>>
     {
@@ -3290,7 +3347,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_hosts_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageHostsOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV1::model::UsageHostsResponse>,
@@ -3311,10 +3368,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -3388,7 +3450,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_indexed_spans(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageIndexedSpansOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageIndexedSpansResponse,
@@ -3415,7 +3477,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_indexed_spans_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageIndexedSpansOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV1::model::UsageIndexedSpansResponse>,
@@ -3436,10 +3498,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -3513,7 +3580,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_internet_of_things(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageInternetOfThingsOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageIoTResponse,
@@ -3540,7 +3607,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_internet_of_things_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageInternetOfThingsOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV1::model::UsageIoTResponse>,
@@ -3561,10 +3628,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -3637,7 +3709,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_lambda(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageLambdaOptionalParams,
     ) -> Result<crate::datadogV1::model::UsageLambdaResponse, datadog::Error<GetUsageLambdaError>>
     {
@@ -3659,7 +3731,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_lambda_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageLambdaOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV1::model::UsageLambdaResponse>,
@@ -3680,10 +3752,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -3757,7 +3834,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_logs(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageLogsOptionalParams,
     ) -> Result<crate::datadogV1::model::UsageLogsResponse, datadog::Error<GetUsageLogsError>> {
         match self.get_usage_logs_with_http_info(start_hr, params).await {
@@ -3778,7 +3855,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_logs_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageLogsOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV1::model::UsageLogsResponse>,
@@ -3799,10 +3876,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -3873,7 +3955,7 @@ impl UsageMeteringAPI {
     /// Get hourly usage for logs by index.
     pub async fn get_usage_logs_by_index(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageLogsByIndexOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageLogsByIndexResponse,
@@ -3899,7 +3981,7 @@ impl UsageMeteringAPI {
     /// Get hourly usage for logs by index.
     pub async fn get_usage_logs_by_index_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageLogsByIndexOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV1::model::UsageLogsByIndexResponse>,
@@ -3921,10 +4003,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
         if let Some(ref local) = index_name {
             local_req_builder = local_req_builder.query(&[(
@@ -4009,7 +4096,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_logs_by_retention(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageLogsByRetentionOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageLogsByRetentionResponse,
@@ -4036,7 +4123,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_logs_by_retention_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageLogsByRetentionOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV1::model::UsageLogsByRetentionResponse>,
@@ -4057,10 +4144,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -4134,7 +4226,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_network_flows(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageNetworkFlowsOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageNetworkFlowsResponse,
@@ -4161,7 +4253,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_network_flows_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageNetworkFlowsOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV1::model::UsageNetworkFlowsResponse>,
@@ -4182,10 +4274,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -4259,7 +4356,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_network_hosts(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageNetworkHostsOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageNetworkHostsResponse,
@@ -4286,7 +4383,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_network_hosts_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageNetworkHostsOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV1::model::UsageNetworkHostsResponse>,
@@ -4307,10 +4404,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -4384,7 +4486,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_online_archive(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageOnlineArchiveOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageOnlineArchiveResponse,
@@ -4411,7 +4513,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_online_archive_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageOnlineArchiveOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV1::model::UsageOnlineArchiveResponse>,
@@ -4432,10 +4534,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -4509,7 +4616,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_profiling(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageProfilingOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageProfilingResponse,
@@ -4536,7 +4643,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_profiling_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageProfilingOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV1::model::UsageProfilingResponse>,
@@ -4557,10 +4664,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -4634,7 +4746,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_rum_sessions(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageRumSessionsOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageRumSessionsResponse,
@@ -4661,7 +4773,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_rum_sessions_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageRumSessionsOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV1::model::UsageRumSessionsResponse>,
@@ -4683,10 +4795,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
         if let Some(ref local_query_param) = type_ {
             local_req_builder =
@@ -4764,7 +4881,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_rum_units(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageRumUnitsOptionalParams,
     ) -> Result<crate::datadogV1::model::UsageRumUnitsResponse, datadog::Error<GetUsageRumUnitsError>>
     {
@@ -4789,7 +4906,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_rum_units_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageRumUnitsOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV1::model::UsageRumUnitsResponse>,
@@ -4810,10 +4927,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -4887,7 +5009,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_sds(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageSDSOptionalParams,
     ) -> Result<crate::datadogV1::model::UsageSDSResponse, datadog::Error<GetUsageSDSError>> {
         match self.get_usage_sds_with_http_info(start_hr, params).await {
@@ -4908,7 +5030,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_sds_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageSDSOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV1::model::UsageSDSResponse>,
@@ -4929,10 +5051,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -5004,7 +5131,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_snmp(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageSNMPOptionalParams,
     ) -> Result<crate::datadogV1::model::UsageSNMPResponse, datadog::Error<GetUsageSNMPError>> {
         match self.get_usage_snmp_with_http_info(start_hr, params).await {
@@ -5025,7 +5152,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_snmp_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageSNMPOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV1::model::UsageSNMPResponse>,
@@ -5046,10 +5173,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -5120,7 +5252,7 @@ impl UsageMeteringAPI {
     /// Get all usage across your account.
     pub async fn get_usage_summary(
         &self,
-        start_month: String,
+        start_month: chrono::DateTime<chrono::Utc>,
         params: GetUsageSummaryOptionalParams,
     ) -> Result<crate::datadogV1::model::UsageSummaryResponse, datadog::Error<GetUsageSummaryError>>
     {
@@ -5144,7 +5276,7 @@ impl UsageMeteringAPI {
     /// Get all usage across your account.
     pub async fn get_usage_summary_with_http_info(
         &self,
-        start_month: String,
+        start_month: chrono::DateTime<chrono::Utc>,
         params: GetUsageSummaryOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV1::model::UsageSummaryResponse>,
@@ -5166,10 +5298,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_month", &start_month.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_month",
+            &start_month.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_month {
-            local_req_builder =
-                local_req_builder.query(&[("end_month", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_month",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
         if let Some(ref local_query_param) = include_org_details {
             local_req_builder =
@@ -5247,7 +5384,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageSyntheticsOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageSyntheticsResponse,
@@ -5274,7 +5411,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageSyntheticsOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV1::model::UsageSyntheticsResponse>,
@@ -5295,10 +5432,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -5372,7 +5514,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics_api(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageSyntheticsAPIOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageSyntheticsAPIResponse,
@@ -5399,7 +5541,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics_api_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageSyntheticsAPIOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV1::model::UsageSyntheticsAPIResponse>,
@@ -5420,10 +5562,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -5497,7 +5644,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics_browser(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageSyntheticsBrowserOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageSyntheticsBrowserResponse,
@@ -5524,7 +5671,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_synthetics_browser_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageSyntheticsBrowserOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV1::model::UsageSyntheticsBrowserResponse>,
@@ -5545,10 +5692,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -5622,7 +5774,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_timeseries(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageTimeseriesOptionalParams,
     ) -> Result<
         crate::datadogV1::model::UsageTimeseriesResponse,
@@ -5649,7 +5801,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>). Refer to [Migrating from the V1 Hourly Usage APIs to V2](<https://docs.datadoghq.com/account_management/guide/hourly-usage-migration/>) for the associated migration guide.
     pub async fn get_usage_timeseries_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageTimeseriesOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV1::model::UsageTimeseriesResponse>,
@@ -5670,10 +5822,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -5793,11 +5950,16 @@ impl UsageMeteringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         if let Some(ref local_query_param) = month {
-            local_req_builder =
-                local_req_builder.query(&[("month", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "month",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
         if let Some(ref local_query_param) = day {
-            local_req_builder = local_req_builder.query(&[("day", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "day",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
         if let Some(ref local) = names {
             local_req_builder = local_req_builder.query(&[(

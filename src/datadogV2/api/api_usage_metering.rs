@@ -11,12 +11,12 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Default, Debug)]
 pub struct GetCostByOrgOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost ending this month.
-    pub end_month: Option<String>,
+    pub end_month: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetCostByOrgOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost ending this month.
-    pub fn end_month(mut self, value: String) -> Self {
+    pub fn end_month(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_month = Some(value);
         self
     }
@@ -29,13 +29,13 @@ pub struct GetEstimatedCostByOrgOptionalParams {
     /// String to specify whether cost is broken down at a parent-org level or at the sub-org level. Available views are `summary` and `sub-org`. Defaults to `summary`.
     pub view: Option<String>,
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost beginning this month. Either start_month or start_date should be specified, but not both. (start_month cannot go beyond two months in the past). Provide an `end_month` to view month-over-month cost.
-    pub start_month: Option<String>,
+    pub start_month: Option<chrono::DateTime<chrono::Utc>>,
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost ending this month.
-    pub end_month: Option<String>,
+    pub end_month: Option<chrono::DateTime<chrono::Utc>>,
     /// Datetime in ISO-8601 format, UTC, precise to day: `[YYYY-MM-DD]` for cost beginning this day. Either start_month or start_date should be specified, but not both. (start_date cannot go beyond two months in the past). Provide an `end_date` to view day-over-day cumulative cost.
-    pub start_date: Option<String>,
+    pub start_date: Option<chrono::DateTime<chrono::Utc>>,
     /// Datetime in ISO-8601 format, UTC, precise to day: `[YYYY-MM-DD]` for cost ending this day.
-    pub end_date: Option<String>,
+    pub end_date: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetEstimatedCostByOrgOptionalParams {
@@ -45,22 +45,22 @@ impl GetEstimatedCostByOrgOptionalParams {
         self
     }
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost beginning this month. Either start_month or start_date should be specified, but not both. (start_month cannot go beyond two months in the past). Provide an `end_month` to view month-over-month cost.
-    pub fn start_month(mut self, value: String) -> Self {
+    pub fn start_month(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.start_month = Some(value);
         self
     }
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost ending this month.
-    pub fn end_month(mut self, value: String) -> Self {
+    pub fn end_month(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_month = Some(value);
         self
     }
     /// Datetime in ISO-8601 format, UTC, precise to day: `[YYYY-MM-DD]` for cost beginning this day. Either start_month or start_date should be specified, but not both. (start_date cannot go beyond two months in the past). Provide an `end_date` to view day-over-day cumulative cost.
-    pub fn start_date(mut self, value: String) -> Self {
+    pub fn start_date(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.start_date = Some(value);
         self
     }
     /// Datetime in ISO-8601 format, UTC, precise to day: `[YYYY-MM-DD]` for cost ending this day.
-    pub fn end_date(mut self, value: String) -> Self {
+    pub fn end_date(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_date = Some(value);
         self
     }
@@ -73,7 +73,7 @@ pub struct GetHistoricalCostByOrgOptionalParams {
     /// String to specify whether cost is broken down at a parent-org level or at the sub-org level. Available views are `summary` and `sub-org`.  Defaults to `summary`.
     pub view: Option<String>,
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost ending this month.
-    pub end_month: Option<String>,
+    pub end_month: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetHistoricalCostByOrgOptionalParams {
@@ -83,7 +83,7 @@ impl GetHistoricalCostByOrgOptionalParams {
         self
     }
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost ending this month.
-    pub fn end_month(mut self, value: String) -> Self {
+    pub fn end_month(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_month = Some(value);
         self
     }
@@ -94,7 +94,7 @@ impl GetHistoricalCostByOrgOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetHourlyUsageOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub filter_timestamp_end: Option<String>,
+    pub filter_timestamp_end: Option<chrono::DateTime<chrono::Utc>>,
     /// Include child org usage in the response. Defaults to false.
     pub filter_include_descendants: Option<bool>,
     /// Include breakdown of usage by subcategories where applicable (for product family logs only). Defaults to false.
@@ -111,7 +111,7 @@ pub struct GetHourlyUsageOptionalParams {
 
 impl GetHourlyUsageOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: [YYYY-MM-DDThh] for usage ending **before** this hour.
-    pub fn filter_timestamp_end(mut self, value: String) -> Self {
+    pub fn filter_timestamp_end(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.filter_timestamp_end = Some(value);
         self
     }
@@ -212,13 +212,13 @@ impl GetProjectedCostOptionalParams {
 pub struct GetUsageApplicationSecurityMonitoringOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetUsageApplicationSecurityMonitoringOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -230,13 +230,13 @@ impl GetUsageApplicationSecurityMonitoringOptionalParams {
 pub struct GetUsageLambdaTracedInvocationsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetUsageLambdaTracedInvocationsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -248,13 +248,13 @@ impl GetUsageLambdaTracedInvocationsOptionalParams {
 pub struct GetUsageObservabilityPipelinesOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub end_hr: Option<String>,
+    pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetUsageObservabilityPipelinesOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
     /// **before** this hour.
-    pub fn end_hr(mut self, value: String) -> Self {
+    pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
     }
@@ -546,7 +546,7 @@ impl UsageMeteringAPI {
     /// instead.
     pub async fn get_cost_by_org(
         &self,
-        start_month: String,
+        start_month: chrono::DateTime<chrono::Utc>,
         params: GetCostByOrgOptionalParams,
     ) -> Result<crate::datadogV2::model::CostByOrgResponse, datadog::Error<GetCostByOrgError>> {
         match self
@@ -573,7 +573,7 @@ impl UsageMeteringAPI {
     /// instead.
     pub async fn get_cost_by_org_with_http_info(
         &self,
-        start_month: String,
+        start_month: chrono::DateTime<chrono::Utc>,
         params: GetCostByOrgOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::CostByOrgResponse>,
@@ -594,10 +594,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_month", &start_month.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_month",
+            &start_month.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_month {
-            local_req_builder =
-                local_req_builder.query(&[("end_month", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_month",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -725,20 +730,28 @@ impl UsageMeteringAPI {
                 local_req_builder.query(&[("view", &local_query_param.to_string())]);
         };
         if let Some(ref local_query_param) = start_month {
-            local_req_builder =
-                local_req_builder.query(&[("start_month", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "start_month",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
         if let Some(ref local_query_param) = end_month {
-            local_req_builder =
-                local_req_builder.query(&[("end_month", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_month",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
         if let Some(ref local_query_param) = start_date {
-            local_req_builder =
-                local_req_builder.query(&[("start_date", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "start_date",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
         if let Some(ref local_query_param) = end_date {
-            local_req_builder =
-                local_req_builder.query(&[("end_date", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_date",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -811,7 +824,7 @@ impl UsageMeteringAPI {
     /// Cost data for a given month becomes available no later than the 16th of the following month.
     pub async fn get_historical_cost_by_org(
         &self,
-        start_month: String,
+        start_month: chrono::DateTime<chrono::Utc>,
         params: GetHistoricalCostByOrgOptionalParams,
     ) -> Result<
         crate::datadogV2::model::CostByOrgResponse,
@@ -838,7 +851,7 @@ impl UsageMeteringAPI {
     /// Cost data for a given month becomes available no later than the 16th of the following month.
     pub async fn get_historical_cost_by_org_with_http_info(
         &self,
-        start_month: String,
+        start_month: chrono::DateTime<chrono::Utc>,
         params: GetHistoricalCostByOrgOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::CostByOrgResponse>,
@@ -860,14 +873,19 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_month", &start_month.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_month",
+            &start_month.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = view {
             local_req_builder =
                 local_req_builder.query(&[("view", &local_query_param.to_string())]);
         };
         if let Some(ref local_query_param) = end_month {
-            local_req_builder =
-                local_req_builder.query(&[("end_month", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_month",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -939,7 +957,7 @@ impl UsageMeteringAPI {
     /// Get hourly usage by product family.
     pub async fn get_hourly_usage(
         &self,
-        filter_timestamp_start: String,
+        filter_timestamp_start: chrono::DateTime<chrono::Utc>,
         filter_product_families: String,
         params: GetHourlyUsageOptionalParams,
     ) -> Result<crate::datadogV2::model::HourlyUsageResponse, datadog::Error<GetHourlyUsageError>>
@@ -968,7 +986,7 @@ impl UsageMeteringAPI {
     /// Get hourly usage by product family.
     pub async fn get_hourly_usage_with_http_info(
         &self,
-        filter_timestamp_start: String,
+        filter_timestamp_start: chrono::DateTime<chrono::Utc>,
         filter_product_families: String,
         params: GetHourlyUsageOptionalParams,
     ) -> Result<
@@ -997,15 +1015,17 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.query(&[(
             "filter[timestamp][start]",
-            &filter_timestamp_start.to_string(),
+            &filter_timestamp_start.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
         )]);
         local_req_builder = local_req_builder.query(&[(
             "filter[product_families]",
             &filter_product_families.to_string(),
         )]);
         if let Some(ref local_query_param) = filter_timestamp_end {
-            local_req_builder = local_req_builder
-                .query(&[("filter[timestamp][end]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "filter[timestamp][end]",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
         if let Some(ref local_query_param) = filter_include_descendants {
             local_req_builder = local_req_builder.query(&[(
@@ -1113,8 +1133,8 @@ impl UsageMeteringAPI {
     /// ```
     pub async fn get_monthly_cost_attribution(
         &self,
-        start_month: String,
-        end_month: String,
+        start_month: chrono::DateTime<chrono::Utc>,
+        end_month: chrono::DateTime<chrono::Utc>,
         fields: String,
         params: GetMonthlyCostAttributionOptionalParams,
     ) -> Result<
@@ -1154,8 +1174,8 @@ impl UsageMeteringAPI {
     /// ```
     pub async fn get_monthly_cost_attribution_with_http_info(
         &self,
-        start_month: String,
-        end_month: String,
+        start_month: chrono::DateTime<chrono::Utc>,
+        end_month: chrono::DateTime<chrono::Utc>,
         fields: String,
         params: GetMonthlyCostAttributionOptionalParams,
     ) -> Result<
@@ -1189,8 +1209,14 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_month", &start_month.to_string())]);
-        local_req_builder = local_req_builder.query(&[("end_month", &end_month.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_month",
+            &start_month.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
+        local_req_builder = local_req_builder.query(&[(
+            "end_month",
+            &end_month.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         local_req_builder = local_req_builder.query(&[("fields", &fields.to_string())]);
         if let Some(ref local_query_param) = sort_direction {
             local_req_builder =
@@ -1403,7 +1429,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_application_security_monitoring(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageApplicationSecurityMonitoringOptionalParams,
     ) -> Result<
         crate::datadogV2::model::UsageApplicationSecurityMonitoringResponse,
@@ -1430,7 +1456,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_application_security_monitoring_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageApplicationSecurityMonitoringOptionalParams,
     ) -> Result<
         datadog::ResponseContent<
@@ -1453,10 +1479,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -1531,7 +1562,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated.. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_lambda_traced_invocations(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageLambdaTracedInvocationsOptionalParams,
     ) -> Result<
         crate::datadogV2::model::UsageLambdaTracedInvocationsResponse,
@@ -1558,7 +1589,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated.. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_lambda_traced_invocations_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageLambdaTracedInvocationsOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::UsageLambdaTracedInvocationsResponse>,
@@ -1579,10 +1610,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers
@@ -1657,7 +1693,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_observability_pipelines(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageObservabilityPipelinesOptionalParams,
     ) -> Result<
         crate::datadogV2::model::UsageObservabilityPipelinesResponse,
@@ -1684,7 +1720,7 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
     pub async fn get_usage_observability_pipelines_with_http_info(
         &self,
-        start_hr: String,
+        start_hr: chrono::DateTime<chrono::Utc>,
         params: GetUsageObservabilityPipelinesOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::UsageObservabilityPipelinesResponse>,
@@ -1705,10 +1741,15 @@ impl UsageMeteringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_string())]);
+        local_req_builder = local_req_builder.query(&[(
+            "start_hr",
+            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder =
-                local_req_builder.query(&[("end_hr", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "end_hr",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
 
         // build headers

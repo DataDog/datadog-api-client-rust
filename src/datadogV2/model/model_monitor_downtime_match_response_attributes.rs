@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct MonitorDowntimeMatchResponseAttributes {
     /// The end of the downtime.
     #[serde(rename = "end", default, with = "::serde_with::rust::double_option")]
-    pub end: Option<Option<String>>,
+    pub end: Option<Option<chrono::DateTime<chrono::Utc>>>,
     /// An array of groups associated with the downtime.
     #[serde(rename = "groups")]
     pub groups: Option<Vec<String>>,
@@ -22,7 +22,7 @@ pub struct MonitorDowntimeMatchResponseAttributes {
     pub scope: Option<String>,
     /// The start of the downtime.
     #[serde(rename = "start")]
-    pub start: Option<String>,
+    pub start: Option<chrono::DateTime<chrono::Utc>>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -39,7 +39,7 @@ impl MonitorDowntimeMatchResponseAttributes {
         }
     }
 
-    pub fn end(mut self, value: Option<String>) -> Self {
+    pub fn end(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.end = Some(value);
         self
     }
@@ -54,7 +54,7 @@ impl MonitorDowntimeMatchResponseAttributes {
         self
     }
 
-    pub fn start(mut self, value: String) -> Self {
+    pub fn start(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.start = Some(value);
         self
     }
@@ -83,10 +83,10 @@ impl<'de> Deserialize<'de> for MonitorDowntimeMatchResponseAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut end: Option<Option<String>> = None;
+                let mut end: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
                 let mut groups: Option<Vec<String>> = None;
                 let mut scope: Option<String> = None;
-                let mut start: Option<String> = None;
+                let mut start: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {

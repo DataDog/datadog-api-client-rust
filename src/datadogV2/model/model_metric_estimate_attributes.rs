@@ -16,7 +16,7 @@ pub struct MetricEstimateAttributes {
     pub estimate_type: Option<crate::datadogV2::model::MetricEstimateType>,
     /// Timestamp when the cardinality estimate was requested.
     #[serde(rename = "estimated_at")]
-    pub estimated_at: Option<String>,
+    pub estimated_at: Option<chrono::DateTime<chrono::Utc>>,
     /// Estimated cardinality of the metric based on the queried configuration.
     #[serde(rename = "estimated_output_series")]
     pub estimated_output_series: Option<i64>,
@@ -40,7 +40,7 @@ impl MetricEstimateAttributes {
         self
     }
 
-    pub fn estimated_at(mut self, value: String) -> Self {
+    pub fn estimated_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.estimated_at = Some(value);
         self
     }
@@ -75,7 +75,7 @@ impl<'de> Deserialize<'de> for MetricEstimateAttributes {
                 M: MapAccess<'a>,
             {
                 let mut estimate_type: Option<crate::datadogV2::model::MetricEstimateType> = None;
-                let mut estimated_at: Option<String> = None;
+                let mut estimated_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut estimated_output_series: Option<i64> = None;
                 let mut _unparsed = false;
 

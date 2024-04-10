@@ -17,7 +17,7 @@ pub struct IncidentUpdateAttributes {
         default,
         with = "::serde_with::rust::double_option"
     )]
-    pub customer_impact_end: Option<Option<String>>,
+    pub customer_impact_end: Option<Option<chrono::DateTime<chrono::Utc>>>,
     /// A summary of the impact customers experienced during the incident.
     #[serde(rename = "customer_impact_scope")]
     pub customer_impact_scope: Option<String>,
@@ -27,7 +27,7 @@ pub struct IncidentUpdateAttributes {
         default,
         with = "::serde_with::rust::double_option"
     )]
-    pub customer_impact_start: Option<Option<String>>,
+    pub customer_impact_start: Option<Option<chrono::DateTime<chrono::Utc>>>,
     /// A flag indicating whether the incident caused customer impact.
     #[serde(rename = "customer_impacted")]
     pub customer_impacted: Option<bool>,
@@ -37,7 +37,7 @@ pub struct IncidentUpdateAttributes {
         default,
         with = "::serde_with::rust::double_option"
     )]
-    pub detected: Option<Option<String>>,
+    pub detected: Option<Option<chrono::DateTime<chrono::Utc>>>,
     /// A condensed view of the user-defined fields for which to update selections.
     #[serde(rename = "fields")]
     pub fields: Option<
@@ -69,7 +69,7 @@ impl IncidentUpdateAttributes {
         }
     }
 
-    pub fn customer_impact_end(mut self, value: Option<String>) -> Self {
+    pub fn customer_impact_end(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.customer_impact_end = Some(value);
         self
     }
@@ -79,7 +79,7 @@ impl IncidentUpdateAttributes {
         self
     }
 
-    pub fn customer_impact_start(mut self, value: Option<String>) -> Self {
+    pub fn customer_impact_start(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.customer_impact_start = Some(value);
         self
     }
@@ -89,7 +89,7 @@ impl IncidentUpdateAttributes {
         self
     }
 
-    pub fn detected(mut self, value: Option<String>) -> Self {
+    pub fn detected(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.detected = Some(value);
         self
     }
@@ -139,11 +139,11 @@ impl<'de> Deserialize<'de> for IncidentUpdateAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut customer_impact_end: Option<Option<String>> = None;
+                let mut customer_impact_end: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
                 let mut customer_impact_scope: Option<String> = None;
-                let mut customer_impact_start: Option<Option<String>> = None;
+                let mut customer_impact_start: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
                 let mut customer_impacted: Option<bool> = None;
-                let mut detected: Option<Option<String>> = None;
+                let mut detected: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
                 let mut fields: Option<
                     std::collections::BTreeMap<
                         String,

@@ -152,9 +152,9 @@ pub struct ListSecurityMonitoringSignalsOptionalParams {
     /// The search query for security signals.
     pub filter_query: Option<String>,
     /// The minimum timestamp for requested security signals.
-    pub filter_from: Option<String>,
+    pub filter_from: Option<chrono::DateTime<chrono::Utc>>,
     /// The maximum timestamp for requested security signals.
-    pub filter_to: Option<String>,
+    pub filter_to: Option<chrono::DateTime<chrono::Utc>>,
     /// The order of the security signals in results.
     pub sort: Option<crate::datadogV2::model::SecurityMonitoringSignalsSort>,
     /// A list of results using the cursor provided in the previous query.
@@ -170,12 +170,12 @@ impl ListSecurityMonitoringSignalsOptionalParams {
         self
     }
     /// The minimum timestamp for requested security signals.
-    pub fn filter_from(mut self, value: String) -> Self {
+    pub fn filter_from(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.filter_from = Some(value);
         self
     }
     /// The maximum timestamp for requested security signals.
-    pub fn filter_to(mut self, value: String) -> Self {
+    pub fn filter_to(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.filter_to = Some(value);
         self
     }
@@ -2925,12 +2925,16 @@ impl SecurityMonitoringAPI {
                 local_req_builder.query(&[("filter[query]", &local_query_param.to_string())]);
         };
         if let Some(ref local_query_param) = filter_from {
-            local_req_builder =
-                local_req_builder.query(&[("filter[from]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "filter[from]",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
         if let Some(ref local_query_param) = filter_to {
-            local_req_builder =
-                local_req_builder.query(&[("filter[to]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "filter[to]",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
         if let Some(ref local_query_param) = sort {
             local_req_builder =
