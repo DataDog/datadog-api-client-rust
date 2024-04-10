@@ -1,4 +1,4 @@
-// Create a suppression rule returns "OK" response
+// Create a suppression rule with an exclusion query returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_security_monitoring::SecurityMonitoringAPI;
 use datadog_api_client::datadogV2::model::SecurityMonitoringSuppressionCreateAttributes;
@@ -15,11 +15,11 @@ async fn main() {
                 "Example-Security-Monitoring".to_string(),
                 "type:log_detection source:cloudtrail".to_string(),
             )
+            .data_exclusion_query("account_id:12345".to_string())
             .description(
                 "This rule suppresses low-severity signals in staging environments.".to_string(),
             )
-            .expiration_date(1703187336000)
-            .suppression_query("env:staging status:low".to_string()),
+            .expiration_date(1703187336000),
             SecurityMonitoringSuppressionType::SUPPRESSIONS,
         ),
     );

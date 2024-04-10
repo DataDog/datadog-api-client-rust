@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct NotebookAuthor {
     /// Creation time of the user.
     #[serde(rename = "created_at")]
-    pub created_at: Option<String>,
+    pub created_at: Option<chrono::DateTime<chrono::Utc>>,
     /// Whether the user is disabled.
     #[serde(rename = "disabled")]
     pub disabled: Option<bool>,
@@ -59,7 +59,7 @@ impl NotebookAuthor {
         }
     }
 
-    pub fn created_at(mut self, value: String) -> Self {
+    pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
@@ -128,7 +128,7 @@ impl<'de> Deserialize<'de> for NotebookAuthor {
             where
                 M: MapAccess<'a>,
             {
-                let mut created_at: Option<String> = None;
+                let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut disabled: Option<bool> = None;
                 let mut email: Option<String> = None;
                 let mut handle: Option<String> = None;

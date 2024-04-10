@@ -19,7 +19,7 @@ pub struct SpansAttributes {
     pub custom: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// End timestamp of your span.
     #[serde(rename = "end_timestamp")]
-    pub end_timestamp: Option<String>,
+    pub end_timestamp: Option<chrono::DateTime<chrono::Utc>>,
     /// Name of the environment from where the spans are being sent.
     #[serde(rename = "env")]
     pub env: Option<String>,
@@ -54,7 +54,7 @@ pub struct SpansAttributes {
     pub span_id: Option<String>,
     /// Start timestamp of your span.
     #[serde(rename = "start_timestamp")]
-    pub start_timestamp: Option<String>,
+    pub start_timestamp: Option<chrono::DateTime<chrono::Utc>>,
     /// Array of tags associated with your span.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
@@ -106,7 +106,7 @@ impl SpansAttributes {
         self
     }
 
-    pub fn end_timestamp(mut self, value: String) -> Self {
+    pub fn end_timestamp(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_timestamp = Some(value);
         self
     }
@@ -161,7 +161,7 @@ impl SpansAttributes {
         self
     }
 
-    pub fn start_timestamp(mut self, value: String) -> Self {
+    pub fn start_timestamp(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.start_timestamp = Some(value);
         self
     }
@@ -209,7 +209,7 @@ impl<'de> Deserialize<'de> for SpansAttributes {
                     None;
                 let mut custom: Option<std::collections::BTreeMap<String, serde_json::Value>> =
                     None;
-                let mut end_timestamp: Option<String> = None;
+                let mut end_timestamp: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut env: Option<String> = None;
                 let mut host: Option<String> = None;
                 let mut ingestion_reason: Option<String> = None;
@@ -220,7 +220,7 @@ impl<'de> Deserialize<'de> for SpansAttributes {
                 let mut service: Option<String> = None;
                 let mut single_span: Option<bool> = None;
                 let mut span_id: Option<String> = None;
-                let mut start_timestamp: Option<String> = None;
+                let mut start_timestamp: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut trace_id: Option<String> = None;
                 let mut type_: Option<String> = None;

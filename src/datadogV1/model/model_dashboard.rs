@@ -24,7 +24,7 @@ pub struct Dashboard {
     pub author_name: Option<Option<String>>,
     /// Creation date of the dashboard.
     #[serde(rename = "created_at")]
-    pub created_at: Option<String>,
+    pub created_at: Option<chrono::DateTime<chrono::Utc>>,
     /// Description of the dashboard.
     #[serde(
         rename = "description",
@@ -46,7 +46,7 @@ pub struct Dashboard {
     pub layout_type: crate::datadogV1::model::DashboardLayoutType,
     /// Modification date of the dashboard.
     #[serde(rename = "modified_at")]
-    pub modified_at: Option<String>,
+    pub modified_at: Option<chrono::DateTime<chrono::Utc>>,
     /// List of handles of users to notify when changes are made to this dashboard.
     #[serde(
         rename = "notify_list",
@@ -139,7 +139,7 @@ impl Dashboard {
     }
 
     #[allow(deprecated)]
-    pub fn created_at(mut self, value: String) -> Self {
+    pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
@@ -163,7 +163,7 @@ impl Dashboard {
     }
 
     #[allow(deprecated)]
-    pub fn modified_at(mut self, value: String) -> Self {
+    pub fn modified_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.modified_at = Some(value);
         self
     }
@@ -236,12 +236,12 @@ impl<'de> Deserialize<'de> for Dashboard {
             {
                 let mut author_handle: Option<String> = None;
                 let mut author_name: Option<Option<String>> = None;
-                let mut created_at: Option<String> = None;
+                let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut description: Option<Option<String>> = None;
                 let mut id: Option<String> = None;
                 let mut is_read_only: Option<bool> = None;
                 let mut layout_type: Option<crate::datadogV1::model::DashboardLayoutType> = None;
-                let mut modified_at: Option<String> = None;
+                let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut notify_list: Option<Option<Vec<String>>> = None;
                 let mut reflow_type: Option<crate::datadogV1::model::DashboardReflowType> = None;
                 let mut restricted_roles: Option<Vec<String>> = None;

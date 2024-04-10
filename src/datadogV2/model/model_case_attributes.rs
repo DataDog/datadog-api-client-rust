@@ -17,17 +17,17 @@ pub struct CaseAttributes {
         default,
         with = "::serde_with::rust::double_option"
     )]
-    pub archived_at: Option<Option<String>>,
+    pub archived_at: Option<Option<chrono::DateTime<chrono::Utc>>>,
     /// Timestamp of when the case was closed
     #[serde(
         rename = "closed_at",
         default,
         with = "::serde_with::rust::double_option"
     )]
-    pub closed_at: Option<Option<String>>,
+    pub closed_at: Option<Option<chrono::DateTime<chrono::Utc>>>,
     /// Timestamp of when the case was created
     #[serde(rename = "created_at")]
-    pub created_at: Option<String>,
+    pub created_at: Option<chrono::DateTime<chrono::Utc>>,
     /// Description
     #[serde(rename = "description")]
     pub description: Option<String>,
@@ -47,7 +47,7 @@ pub struct CaseAttributes {
         default,
         with = "::serde_with::rust::double_option"
     )]
-    pub modified_at: Option<Option<String>>,
+    pub modified_at: Option<Option<chrono::DateTime<chrono::Utc>>>,
     /// Case priority
     #[serde(rename = "priority")]
     pub priority: Option<crate::datadogV2::model::CasePriority>,
@@ -91,17 +91,17 @@ impl CaseAttributes {
         }
     }
 
-    pub fn archived_at(mut self, value: Option<String>) -> Self {
+    pub fn archived_at(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.archived_at = Some(value);
         self
     }
 
-    pub fn closed_at(mut self, value: Option<String>) -> Self {
+    pub fn closed_at(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.closed_at = Some(value);
         self
     }
 
-    pub fn created_at(mut self, value: String) -> Self {
+    pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
@@ -121,7 +121,7 @@ impl CaseAttributes {
         self
     }
 
-    pub fn modified_at(mut self, value: Option<String>) -> Self {
+    pub fn modified_at(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.modified_at = Some(value);
         self
     }
@@ -178,13 +178,13 @@ impl<'de> Deserialize<'de> for CaseAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut archived_at: Option<Option<String>> = None;
-                let mut closed_at: Option<Option<String>> = None;
-                let mut created_at: Option<String> = None;
+                let mut archived_at: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
+                let mut closed_at: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
+                let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut description: Option<String> = None;
                 let mut jira_issue: Option<Option<crate::datadogV2::model::JiraIssue>> = None;
                 let mut key: Option<String> = None;
-                let mut modified_at: Option<Option<String>> = None;
+                let mut modified_at: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
                 let mut priority: Option<crate::datadogV2::model::CasePriority> = None;
                 let mut service_now_ticket: Option<
                     Option<crate::datadogV2::model::ServiceNowTicket>,

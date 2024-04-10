@@ -13,21 +13,24 @@ use std::fmt::{self, Formatter};
 pub struct LogsListRequestTime {
     /// Minimum timestamp for requested logs.
     #[serde(rename = "from")]
-    pub from: String,
+    pub from: chrono::DateTime<chrono::Utc>,
     /// Timezone can be specified both as an offset (for example "UTC+03:00")
     /// or a regional zone (for example "Europe/Paris").
     #[serde(rename = "timezone")]
     pub timezone: Option<String>,
     /// Maximum timestamp for requested logs.
     #[serde(rename = "to")]
-    pub to: String,
+    pub to: chrono::DateTime<chrono::Utc>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
 }
 
 impl LogsListRequestTime {
-    pub fn new(from: String, to: String) -> LogsListRequestTime {
+    pub fn new(
+        from: chrono::DateTime<chrono::Utc>,
+        to: chrono::DateTime<chrono::Utc>,
+    ) -> LogsListRequestTime {
         LogsListRequestTime {
             from,
             timezone: None,
@@ -59,9 +62,9 @@ impl<'de> Deserialize<'de> for LogsListRequestTime {
             where
                 M: MapAccess<'a>,
             {
-                let mut from: Option<String> = None;
+                let mut from: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut timezone: Option<String> = None;
-                let mut to: Option<String> = None;
+                let mut to: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {

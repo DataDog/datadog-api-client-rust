@@ -323,10 +323,10 @@ impl {{ structName }} {
             local_req_builder = local_req_builder.query(&[("{{name}}", &local.iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]);
         };
         {%- elif parameter.required %}
-        local_req_builder = local_req_builder.query(&[("{{name}}", &{{name|variable_name}}.to_string())]);
+        local_req_builder = local_req_builder.query(&[("{{name}}", &{{name|variable_name}}.{%- if not schema.format == "date-time" %}to_string() {% else %}to_rfc3339_opts(chrono::SecondsFormat::Millis, true){% endif %})]);
         {%- else %}
         if let Some(ref local_query_param) = {{name|variable_name}} {
-            local_req_builder = local_req_builder.query(&[("{{name}}", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("{{name}}", &local_query_param.{%- if not schema.format == "date-time" %}to_string() {% else %}to_rfc3339_opts(chrono::SecondsFormat::Millis, true){% endif %})]);
         };
         {%- endif %}
         {%- endfor %}

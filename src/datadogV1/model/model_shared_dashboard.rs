@@ -16,7 +16,7 @@ pub struct SharedDashboard {
     pub author: Option<crate::datadogV1::model::SharedDashboardAuthor>,
     /// Date the dashboard was shared.
     #[serde(rename = "created_at")]
-    pub created_at: Option<String>,
+    pub created_at: Option<chrono::DateTime<chrono::Utc>>,
     /// ID of the dashboard to share.
     #[serde(rename = "dashboard_id")]
     pub dashboard_id: String,
@@ -92,7 +92,7 @@ impl SharedDashboard {
         self
     }
 
-    pub fn created_at(mut self, value: String) -> Self {
+    pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
@@ -157,7 +157,7 @@ impl<'de> Deserialize<'de> for SharedDashboard {
                 M: MapAccess<'a>,
             {
                 let mut author: Option<crate::datadogV1::model::SharedDashboardAuthor> = None;
-                let mut created_at: Option<String> = None;
+                let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut dashboard_id: Option<String> = None;
                 let mut dashboard_type: Option<crate::datadogV1::model::DashboardType> = None;
                 let mut global_time: Option<crate::datadogV1::model::DashboardGlobalTime> = None;
