@@ -677,12 +677,15 @@ fn req_eq(lhs: &vcr_cassette::Request, rhs: &vcr_cassette::Request) -> bool {
 }
 
 fn reformat_rfc3339_datetime(input: &str) -> String {
-    let re: Regex = Regex::new(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})").unwrap();
+    let re: Regex =
+        Regex::new(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})").unwrap();
     let result = re.replace_all(input, |captures: &regex::Captures| {
         let matched_date_time = &captures[0];
-        let parsed_date_time = DateTime::parse_from_rfc3339(matched_date_time).expect("Failed to parse datetime").with_timezone(&Utc);
-        let formatted_date_time = parsed_date_time
-            .to_rfc3339_opts(chrono::SecondsFormat::Millis, true);
+        let parsed_date_time = DateTime::parse_from_rfc3339(matched_date_time)
+            .expect("Failed to parse datetime")
+            .with_timezone(&Utc);
+        let formatted_date_time =
+            parsed_date_time.to_rfc3339_opts(chrono::SecondsFormat::Millis, true);
         formatted_date_time
     });
     result.to_string()
