@@ -1,8 +1,8 @@
 // Get a list of security signals returns "OK" response with pagination
 use chrono::{DateTime, Utc};
-use datadog_api_client::datadog::configuration::Configuration;
-use datadog_api_client::datadogV2::api::api_security_monitoring::SearchSecurityMonitoringSignalsOptionalParams;
-use datadog_api_client::datadogV2::api::api_security_monitoring::SecurityMonitoringAPI;
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_security_monitoring::SearchSecurityMonitoringSignalsOptionalParams;
+use datadog_api_client::datadogV2::api_security_monitoring::SecurityMonitoringAPI;
 use datadog_api_client::datadogV2::model::SecurityMonitoringSignalListRequest;
 use datadog_api_client::datadogV2::model::SecurityMonitoringSignalListRequestFilter;
 use datadog_api_client::datadogV2::model::SecurityMonitoringSignalListRequestPage;
@@ -27,7 +27,7 @@ async fn main() {
         )
         .page(SecurityMonitoringSignalListRequestPage::new().limit(2))
         .sort(SecurityMonitoringSignalsSort::TIMESTAMP_ASCENDING);
-    let configuration = Configuration::new();
+    let configuration = datadog::Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
     let response = api.search_security_monitoring_signals_with_pagination(
         SearchSecurityMonitoringSignalsOptionalParams::default().body(body),
