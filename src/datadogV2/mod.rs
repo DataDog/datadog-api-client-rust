@@ -45,6 +45,7 @@ pub use self::api::api_security_monitoring;
 pub use self::api::api_sensitive_data_scanner;
 pub use self::api::api_service_accounts;
 pub use self::api::api_service_definition;
+pub use self::api::api_service_level_objectives;
 pub use self::api::api_service_scorecards;
 pub use self::api::api_spans;
 pub use self::api::api_spans_metrics;
