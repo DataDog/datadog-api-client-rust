@@ -628,7 +628,7 @@ fn response_is_bool(world: &mut DatadogWorld, path: String, expected: String) {
 }
 
 fn req_eq(lhs: &vcr_cassette::Request, rhs: &vcr_cassette::Request) -> bool {
-    let lhs_query = urlencoding::decode(
+    let mut lhs_query = urlencoding::decode(
         lhs.uri
             .query()
             .unwrap_or_default()
@@ -639,7 +639,7 @@ fn req_eq(lhs: &vcr_cassette::Request, rhs: &vcr_cassette::Request) -> bool {
     .expect("UTF-8")
     .to_string();
 
-    let rhs_query = urlencoding::decode(
+    let mut rhs_query = urlencoding::decode(
         rhs.uri
             .query()
             .unwrap_or_default()
@@ -649,6 +649,9 @@ fn req_eq(lhs: &vcr_cassette::Request, rhs: &vcr_cassette::Request) -> bool {
     )
     .expect("UTF-8")
     .to_string();
+
+    lhs_query = reformat_rfc3339_datetime(&lhs_query);
+    rhs_query = reformat_rfc3339_datetime(&rhs_query);
 
     let lhs_queries: HashSet<_> = lhs_query.split("&").into_iter().collect();
     let rhs_queries: HashSet<_> = rhs_query.split("&").into_iter().collect();
@@ -671,6 +674,18 @@ fn req_eq(lhs: &vcr_cassette::Request, rhs: &vcr_cassette::Request) -> bool {
         && lhs_queries == rhs_queries
         && lhs_body == rhs_body
         && lhs.method == rhs.method
+}
+
+fn reformat_rfc3339_datetime(input: &str) -> String {
+    let re: Regex = Regex::new(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})").unwrap();
+    let result = re.replace_all(input, |captures: &regex::Captures| {
+        let matched_date_time = &captures[0];
+        let parsed_date_time = DateTime::parse_from_rfc3339(matched_date_time).expect("Failed to parse datetime").with_timezone(&Utc);
+        let formatted_date_time = parsed_date_time
+            .to_rfc3339_opts(chrono::SecondsFormat::Millis, true);
+        formatted_date_time
+    });
+    result.to_string()
 }
 
 fn lookup(path: &String, object: &Value) -> Option<Value> {
