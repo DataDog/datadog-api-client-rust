@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct UsageTimeSeriesObject {
     /// Datetime in ISO-8601 format, UTC. The hour for the usage.
     #[serde(rename = "timestamp")]
-    pub timestamp: Option<String>,
+    pub timestamp: Option<chrono::DateTime<chrono::Utc>>,
     /// Contains the number measured for the given usage_type during the hour.
     #[serde(rename = "value", default, with = "::serde_with::rust::double_option")]
     pub value: Option<Option<i64>>,
@@ -31,7 +31,7 @@ impl UsageTimeSeriesObject {
         }
     }
 
-    pub fn timestamp(mut self, value: String) -> Self {
+    pub fn timestamp(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.timestamp = Some(value);
         self
     }
@@ -65,7 +65,7 @@ impl<'de> Deserialize<'de> for UsageTimeSeriesObject {
             where
                 M: MapAccess<'a>,
             {
-                let mut timestamp: Option<String> = None;
+                let mut timestamp: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut value: Option<Option<i64>> = None;
                 let mut _unparsed = false;
 

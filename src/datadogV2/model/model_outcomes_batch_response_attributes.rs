@@ -13,10 +13,10 @@ use std::fmt::{self, Formatter};
 pub struct OutcomesBatchResponseAttributes {
     /// Creation time of the rule outcome.
     #[serde(rename = "created_at")]
-    pub created_at: Option<String>,
+    pub created_at: Option<chrono::DateTime<chrono::Utc>>,
     /// Time of last rule outcome modification.
     #[serde(rename = "modified_at")]
-    pub modified_at: Option<String>,
+    pub modified_at: Option<chrono::DateTime<chrono::Utc>>,
     /// Any remarks regarding the scorecard rule's evaluation, and supports HTML hyperlinks.
     #[serde(rename = "remarks")]
     pub remarks: Option<String>,
@@ -43,12 +43,12 @@ impl OutcomesBatchResponseAttributes {
         }
     }
 
-    pub fn created_at(mut self, value: String) -> Self {
+    pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
 
-    pub fn modified_at(mut self, value: String) -> Self {
+    pub fn modified_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.modified_at = Some(value);
         self
     }
@@ -92,8 +92,8 @@ impl<'de> Deserialize<'de> for OutcomesBatchResponseAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut created_at: Option<String> = None;
-                let mut modified_at: Option<String> = None;
+                let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
+                let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut remarks: Option<String> = None;
                 let mut service_name: Option<String> = None;
                 let mut state: Option<crate::datadogV2::model::State> = None;

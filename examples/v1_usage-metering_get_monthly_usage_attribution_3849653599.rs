@@ -1,4 +1,5 @@
 // Paginate monthly usage attribution
+use chrono::{DateTime, Utc};
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api_usage_metering::GetMonthlyUsageAttributionOptionalParams;
 use datadog_api_client::datadogV1::api_usage_metering::UsageMeteringAPI;
@@ -13,7 +14,9 @@ async fn main() {
     let api = UsageMeteringAPI::with_config(configuration);
     let resp = api
         .get_monthly_usage_attribution(
-            "2021-11-08T11:11:11+00:00".to_string(),
+            DateTime::parse_from_rfc3339("2021-11-08T11:11:11+00:00")
+                .expect("Failed to parse datetime")
+                .with_timezone(&Utc),
             MonthlyUsageAttributionSupportedMetrics::INFRA_HOST_USAGE,
             GetMonthlyUsageAttributionOptionalParams::default().next_record_id(
                 monthly_usage_attribution_metadata_pagination_next_record_id.clone(),

@@ -13,10 +13,10 @@ use std::fmt::{self, Formatter};
 pub struct UsageTopAvgMetricsMetadata {
     /// The day value from the user request that contains the returned usage data. (If day was used the request)
     #[serde(rename = "day")]
-    pub day: Option<String>,
+    pub day: Option<chrono::DateTime<chrono::Utc>>,
     /// The month value from the user request that contains the returned usage data. (If month was used the request)
     #[serde(rename = "month")]
-    pub month: Option<String>,
+    pub month: Option<chrono::DateTime<chrono::Utc>>,
     /// The metadata for the current pagination.
     #[serde(rename = "pagination")]
     pub pagination: Option<crate::datadogV1::model::UsageTopAvgMetricsPagination>,
@@ -35,12 +35,12 @@ impl UsageTopAvgMetricsMetadata {
         }
     }
 
-    pub fn day(mut self, value: String) -> Self {
+    pub fn day(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.day = Some(value);
         self
     }
 
-    pub fn month(mut self, value: String) -> Self {
+    pub fn month(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.month = Some(value);
         self
     }
@@ -77,8 +77,8 @@ impl<'de> Deserialize<'de> for UsageTopAvgMetricsMetadata {
             where
                 M: MapAccess<'a>,
             {
-                let mut day: Option<String> = None;
-                let mut month: Option<String> = None;
+                let mut day: Option<chrono::DateTime<chrono::Utc>> = None;
+                let mut month: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut pagination: Option<crate::datadogV1::model::UsageTopAvgMetricsPagination> =
                     None;
                 let mut _unparsed = false;

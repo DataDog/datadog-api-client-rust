@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct MonthlyUsageAttributionBody {
     /// Datetime in ISO-8601 format, UTC, precise to month: [YYYY-MM].
     #[serde(rename = "month")]
-    pub month: Option<String>,
+    pub month: Option<chrono::DateTime<chrono::Utc>>,
     /// The name of the organization.
     #[serde(rename = "org_name")]
     pub org_name: Option<String>,
@@ -35,7 +35,7 @@ pub struct MonthlyUsageAttributionBody {
     pub tags: Option<Option<std::collections::BTreeMap<String, Option<Vec<String>>>>>,
     /// Datetime of the most recent update to the usage values.
     #[serde(rename = "updated_at")]
-    pub updated_at: Option<String>,
+    pub updated_at: Option<chrono::DateTime<chrono::Utc>>,
     /// Fields in Usage Summary by tag(s).
     #[serde(rename = "values")]
     pub values: Option<crate::datadogV1::model::MonthlyUsageAttributionValues>,
@@ -59,7 +59,7 @@ impl MonthlyUsageAttributionBody {
         }
     }
 
-    pub fn month(mut self, value: String) -> Self {
+    pub fn month(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.month = Some(value);
         self
     }
@@ -92,7 +92,7 @@ impl MonthlyUsageAttributionBody {
         self
     }
 
-    pub fn updated_at(mut self, value: String) -> Self {
+    pub fn updated_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.updated_at = Some(value);
         self
     }
@@ -126,7 +126,7 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionBody {
             where
                 M: MapAccess<'a>,
             {
-                let mut month: Option<String> = None;
+                let mut month: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut org_name: Option<String> = None;
                 let mut public_id: Option<String> = None;
                 let mut region: Option<String> = None;
@@ -134,7 +134,7 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionBody {
                 let mut tags: Option<
                     Option<std::collections::BTreeMap<String, Option<Vec<String>>>>,
                 > = None;
-                let mut updated_at: Option<String> = None;
+                let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut values: Option<crate::datadogV1::model::MonthlyUsageAttributionValues> =
                     None;
                 let mut _unparsed = false;

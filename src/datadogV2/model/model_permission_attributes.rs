@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct PermissionAttributes {
     /// Creation time of the permission.
     #[serde(rename = "created")]
-    pub created: Option<String>,
+    pub created: Option<chrono::DateTime<chrono::Utc>>,
     /// Description of the permission.
     #[serde(rename = "description")]
     pub description: Option<String>,
@@ -51,7 +51,7 @@ impl PermissionAttributes {
         }
     }
 
-    pub fn created(mut self, value: String) -> Self {
+    pub fn created(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created = Some(value);
         self
     }
@@ -110,7 +110,7 @@ impl<'de> Deserialize<'de> for PermissionAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut created: Option<String> = None;
+                let mut created: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut description: Option<String> = None;
                 let mut display_name: Option<String> = None;
                 let mut display_type: Option<String> = None;

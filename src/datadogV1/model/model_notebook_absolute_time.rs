@@ -13,20 +13,23 @@ use std::fmt::{self, Formatter};
 pub struct NotebookAbsoluteTime {
     /// The end time.
     #[serde(rename = "end")]
-    pub end: String,
+    pub end: chrono::DateTime<chrono::Utc>,
     /// Indicates whether the timeframe should be shifted to end at the current time.
     #[serde(rename = "live")]
     pub live: Option<bool>,
     /// The start time.
     #[serde(rename = "start")]
-    pub start: String,
+    pub start: chrono::DateTime<chrono::Utc>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
 }
 
 impl NotebookAbsoluteTime {
-    pub fn new(end: String, start: String) -> NotebookAbsoluteTime {
+    pub fn new(
+        end: chrono::DateTime<chrono::Utc>,
+        start: chrono::DateTime<chrono::Utc>,
+    ) -> NotebookAbsoluteTime {
         NotebookAbsoluteTime {
             end,
             live: None,
@@ -58,9 +61,9 @@ impl<'de> Deserialize<'de> for NotebookAbsoluteTime {
             where
                 M: MapAccess<'a>,
             {
-                let mut end: Option<String> = None;
+                let mut end: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut live: Option<bool> = None;
-                let mut start: Option<String> = None;
+                let mut start: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {

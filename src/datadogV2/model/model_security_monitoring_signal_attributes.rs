@@ -23,7 +23,7 @@ pub struct SecurityMonitoringSignalAttributes {
     pub tags: Option<Vec<String>>,
     /// The timestamp of the security signal.
     #[serde(rename = "timestamp")]
-    pub timestamp: Option<String>,
+    pub timestamp: Option<chrono::DateTime<chrono::Utc>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -58,7 +58,7 @@ impl SecurityMonitoringSignalAttributes {
         self
     }
 
-    pub fn timestamp(mut self, value: String) -> Self {
+    pub fn timestamp(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.timestamp = Some(value);
         self
     }
@@ -99,7 +99,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalAttributes {
                     None;
                 let mut message: Option<String> = None;
                 let mut tags: Option<Vec<String>> = None;
-                let mut timestamp: Option<String> = None;
+                let mut timestamp: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,

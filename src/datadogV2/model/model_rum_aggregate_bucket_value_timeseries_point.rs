@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct RUMAggregateBucketValueTimeseriesPoint {
     /// The time value for this point.
     #[serde(rename = "time")]
-    pub time: Option<String>,
+    pub time: Option<chrono::DateTime<chrono::Utc>>,
     /// The value for this point.
     #[serde(rename = "value")]
     pub value: Option<f64>,
@@ -31,7 +31,7 @@ impl RUMAggregateBucketValueTimeseriesPoint {
         }
     }
 
-    pub fn time(mut self, value: String) -> Self {
+    pub fn time(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.time = Some(value);
         self
     }
@@ -65,7 +65,7 @@ impl<'de> Deserialize<'de> for RUMAggregateBucketValueTimeseriesPoint {
             where
                 M: MapAccess<'a>,
             {
-                let mut time: Option<String> = None;
+                let mut time: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut value: Option<f64> = None;
                 let mut _unparsed = false;
 
