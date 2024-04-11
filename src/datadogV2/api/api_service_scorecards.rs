@@ -211,6 +211,9 @@ pub enum ListScorecardRulesError {
     UnknownValue(serde_json::Value),
 }
 
+/// API to create, update scorecard rules and outcomes. See [Service Scorecards](<https://docs.datadoghq.com/service_catalog/scorecards>) for more information.
+///
+/// This feature is currently in BETA. If you have any feedback, contact [Datadog support](<https://docs.datadoghq.com/help/>).
 #[derive(Debug, Clone)]
 pub struct ServiceScorecardsAPI {
     config: datadog::Configuration,

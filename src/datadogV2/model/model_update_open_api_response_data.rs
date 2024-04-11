@@ -16,7 +16,7 @@ pub struct UpdateOpenAPIResponseData {
     pub attributes: Option<crate::datadogV2::model::UpdateOpenAPIResponseAttributes>,
     /// API identifier.
     #[serde(rename = "id")]
-    pub id: Option<String>,
+    pub id: Option<uuid::Uuid>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -39,7 +39,7 @@ impl UpdateOpenAPIResponseData {
         self
     }
 
-    pub fn id(mut self, value: String) -> Self {
+    pub fn id(mut self, value: uuid::Uuid) -> Self {
         self.id = Some(value);
         self
     }
@@ -71,7 +71,7 @@ impl<'de> Deserialize<'de> for UpdateOpenAPIResponseData {
                 let mut attributes: Option<
                     crate::datadogV2::model::UpdateOpenAPIResponseAttributes,
                 > = None;
-                let mut id: Option<String> = None;
+                let mut id: Option<uuid::Uuid> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {

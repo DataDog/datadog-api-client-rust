@@ -50,6 +50,12 @@ pub enum UpdateLogsCustomDestinationError {
     UnknownValue(serde_json::Value),
 }
 
+/// Custom Destinations forward all the logs ingested to an external destination.
+///
+/// **Note**: Log forwarding is not available for the Government (US1-FED) site. Contact your account representative for more information.
+///
+/// See the [Custom Destinations Page](<https://app.datadoghq.com/logs/pipelines/log-forwarding/custom-destinations>)
+/// for a list of the custom destinations currently configured in web UI.
 #[derive(Debug, Clone)]
 pub struct LogsCustomDestinationsAPI {
     config: datadog::Configuration,

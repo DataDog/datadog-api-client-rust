@@ -243,6 +243,7 @@ pub enum UpdateTeamPermissionSettingError {
     UnknownValue(serde_json::Value),
 }
 
+/// View and manage teams within Datadog. See the [Teams page](<https://docs.datadoghq.com/account_management/teams/>) for more information.
 #[derive(Debug, Clone)]
 pub struct TeamsAPI {
     config: datadog::Configuration,

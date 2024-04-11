@@ -90,6 +90,7 @@ pub enum UpdateCostAzureUCConfigsError {
     UnknownValue(serde_json::Value),
 }
 
+/// The Cloud Cost Management API allows you to set up, edit, and delete Cloud Cost Management accounts for AWS and Azure. See the [Cloud Cost Management page](<https://docs.datadoghq.com/cloud_cost_management/>) for more information.
 #[derive(Debug, Clone)]
 pub struct CloudCostManagementAPI {
     config: datadog::Configuration,

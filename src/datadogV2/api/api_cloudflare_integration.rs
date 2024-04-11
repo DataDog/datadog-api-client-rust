@@ -50,6 +50,7 @@ pub enum UpdateCloudflareAccountError {
     UnknownValue(serde_json::Value),
 }
 
+/// Manage your Datadog Cloudflare integration directly through the Datadog API. See the [Cloudflare integration page](<https://docs.datadoghq.com/integrations/cloudflare/>) for more information.
 #[derive(Debug, Clone)]
 pub struct CloudflareIntegrationAPI {
     config: datadog::Configuration,

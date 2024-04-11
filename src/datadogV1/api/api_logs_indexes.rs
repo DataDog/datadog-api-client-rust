@@ -62,6 +62,8 @@ pub enum UpdateLogsIndexOrderError {
     UnknownValue(serde_json::Value),
 }
 
+/// Manage configuration of [log indexes](<https://docs.datadoghq.com/logs/indexes/>).
+/// You need an API and application key with Admin rights to interact with this endpoint.
 #[derive(Debug, Clone)]
 pub struct LogsIndexesAPI {
     config: datadog::Configuration,

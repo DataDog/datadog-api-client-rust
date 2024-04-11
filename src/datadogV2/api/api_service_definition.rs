@@ -96,6 +96,7 @@ pub enum ListServiceDefinitionsError {
     UnknownValue(serde_json::Value),
 }
 
+/// API to create, update, retrieve and delete service definitions.
 #[derive(Debug, Clone)]
 pub struct ServiceDefinitionAPI {
     config: datadog::Configuration,

@@ -50,6 +50,9 @@ pub enum UpdateDashboardListError {
     UnknownValue(serde_json::Value),
 }
 
+/// Interact with your dashboard lists through the API to
+/// organize, find, and share all of your dashboards with your team and
+/// organization.
 #[derive(Debug, Clone)]
 pub struct DashboardListsAPI {
     config: datadog::Configuration,

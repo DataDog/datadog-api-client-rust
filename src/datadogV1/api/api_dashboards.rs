@@ -188,6 +188,7 @@ pub enum UpdatePublicDashboardError {
     UnknownValue(serde_json::Value),
 }
 
+/// Manage all your dashboards, as well as access to your shared dashboards, through the API. See the [Dashboards page](<https://docs.datadoghq.com/dashboards/>) for more information.
 #[derive(Debug, Clone)]
 pub struct DashboardsAPI {
     config: datadog::Configuration,

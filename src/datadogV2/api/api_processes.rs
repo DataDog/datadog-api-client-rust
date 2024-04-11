@@ -76,6 +76,7 @@ pub enum ListProcessesError {
     UnknownValue(serde_json::Value),
 }
 
+/// The processes API allows you to query processes data for your organization. See the [Live Processes page](<https://docs.datadoghq.com/infrastructure/process/>) for more information.
 #[derive(Debug, Clone)]
 pub struct ProcessesAPI {
     config: datadog::Configuration,

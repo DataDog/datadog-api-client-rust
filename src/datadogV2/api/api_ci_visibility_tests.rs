@@ -101,6 +101,7 @@ pub enum SearchCIAppTestEventsError {
     UnknownValue(serde_json::Value),
 }
 
+/// Search or aggregate your CI Visibility test events over HTTP. See the [Test Visibility in Datadog page](<https://docs.datadoghq.com/tests/>) for more information.
 #[derive(Debug, Clone)]
 pub struct CIVisibilityTestsAPI {
     config: datadog::Configuration,

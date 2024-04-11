@@ -90,6 +90,7 @@ pub enum UpdateFastlyServiceError {
     UnknownValue(serde_json::Value),
 }
 
+/// Manage your Datadog Fastly integration accounts and services directly through the Datadog API. See the [Fastly integration page](<https://docs.datadoghq.com/integrations/fastly/>) for more information.
 #[derive(Debug, Clone)]
 pub struct FastlyIntegrationAPI {
     config: datadog::Configuration,

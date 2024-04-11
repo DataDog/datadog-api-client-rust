@@ -360,6 +360,7 @@ def request_parameter(context, operation_id, api_version, operation_specs, name,
                     value = {
                         "string": {
                             "date-time": "2021-11-11T11:11:11.111+00:00",
+                            "uuid": "00000000-0000-0000-0000-000000000000",
                             None: name,
                         },
                         "integer": {

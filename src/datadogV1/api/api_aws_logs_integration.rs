@@ -66,6 +66,8 @@ pub enum ListAWSLogsServicesError {
     UnknownValue(serde_json::Value),
 }
 
+/// Configure your Datadog-AWS-Logs integration directly through Datadog API.
+/// For more information, see the [AWS integration page](<https://docs.datadoghq.com/integrations/amazon_web_services/#log-collection>).
 #[derive(Debug, Clone)]
 pub struct AWSLogsIntegrationAPI {
     config: datadog::Configuration,

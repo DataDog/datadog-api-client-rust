@@ -23,7 +23,12 @@ pre_commit_wrapper () {
   echo "command 'pre-commit run --all-files --hook-stage=manual ${1}' success"
 }
 
+cargo install genemichaels --quiet
 rm -rf src/*
+rm -rf examples/*
 pre_commit_wrapper generator
-pre_commit_wrapper format
+pre_commit_wrapper examples
 pre_commit_wrapper lint
+genemichaels --log silent examples/*.rs
+cargo fmt
+cargo fmt # don't think too hard about this... cargo fmt idempotency edge case

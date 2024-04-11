@@ -26,6 +26,12 @@ pub enum UpdateIPAllowlistError {
     UnknownValue(serde_json::Value),
 }
 
+/// The IP allowlist API is used to manage the IP addresses that
+/// can access the Datadog API and web UI. It does not block
+/// access to intake APIs or public dashboards.
+///
+/// This is an enterprise-only feature. Request access by
+/// contacting Datadog support, or see the [IP Allowlist page](<https://docs.datadoghq.com/account_management/org_settings/ip_allowlist/>) for more information.
 #[derive(Debug, Clone)]
 pub struct IPAllowlistAPI {
     config: datadog::Configuration,

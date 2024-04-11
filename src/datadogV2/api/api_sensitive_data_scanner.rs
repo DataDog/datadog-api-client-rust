@@ -82,6 +82,7 @@ pub enum UpdateScanningRuleError {
     UnknownValue(serde_json::Value),
 }
 
+/// Create, update, delete, and retrieve sensitive data scanner groups and rules. See the [Sensitive Data Scanner page](<https://docs.datadoghq.com/sensitive_data_scanner/>) for more information.
 #[derive(Debug, Clone)]
 pub struct SensitiveDataScannerAPI {
     config: datadog::Configuration,

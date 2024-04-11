@@ -243,6 +243,12 @@ pub enum UpdateSLOError {
     UnknownValue(serde_json::Value),
 }
 
+/// [Service Level Objectives](<https://docs.datadoghq.com/monitors/service_level_objectives/#configuration>)
+/// (or SLOs) are a key part of the site reliability engineering toolkit.
+/// SLOs provide a framework for defining clear targets around application performance,
+/// which ultimately help teams provide a consistent customer experience,
+/// balance feature development with platform stability,
+/// and improve communication with internal and external users.
 #[derive(Debug, Clone)]
 pub struct ServiceLevelObjectivesAPI {
     config: datadog::Configuration,

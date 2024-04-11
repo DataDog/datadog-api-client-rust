@@ -93,6 +93,8 @@ pub enum SearchEventsError {
     UnknownValue(serde_json::Value),
 }
 
+/// The Event Management API allows you to programmatically post events to the Events Explorer
+/// and fetch events from the Events Explorer. See the [Event Management page](<https://docs.datadoghq.com/service_management/events/>) for more information.
 #[derive(Debug, Clone)]
 pub struct EventsAPI {
     config: datadog::Configuration,

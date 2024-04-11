@@ -75,6 +75,17 @@ pub enum UpdatePowerpackError {
     UnknownValue(serde_json::Value),
 }
 
+/// The Powerpack endpoints allow you to:
+///
+/// - Get a Powerpack
+/// - Create a Powerpack
+/// - Delete a Powerpack
+/// - Get a list of all Powerpacks
+///
+/// The Patch and Delete API methods can only be performed on a Powerpack by
+/// a user who has the powerpack create permission for that specific Powerpack.
+///
+/// Read [Scale Graphing Expertise with Powerpacks](<https://docs.datadoghq.com/dashboards/guide/powerpacks-best-practices/>) for more information.
 #[derive(Debug, Clone)]
 pub struct PowerpackAPI {
     config: datadog::Configuration,

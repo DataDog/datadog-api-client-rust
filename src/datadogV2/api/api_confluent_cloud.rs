@@ -90,6 +90,7 @@ pub enum UpdateConfluentResourceError {
     UnknownValue(serde_json::Value),
 }
 
+/// Manage your Datadog Confluent Cloud integration accounts and account resources directly through the Datadog API. See the [Confluent Cloud page](<https://docs.datadoghq.com/integrations/confluent_cloud/>) for more information.
 #[derive(Debug, Clone)]
 pub struct ConfluentCloudAPI {
     config: datadog::Configuration,

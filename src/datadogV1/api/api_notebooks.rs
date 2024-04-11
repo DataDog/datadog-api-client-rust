@@ -131,6 +131,9 @@ pub enum UpdateNotebookError {
     UnknownValue(serde_json::Value),
 }
 
+/// Interact with your notebooks through the API to make it easier to organize, find, and
+/// share all of your notebooks with your team and organization. For more information, see the
+/// [Notebooks documentation](<https://docs.datadoghq.com/notebooks/>).
 #[derive(Debug, Clone)]
 pub struct NotebooksAPI {
     config: datadog::Configuration,

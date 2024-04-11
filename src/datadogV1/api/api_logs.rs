@@ -51,6 +51,7 @@ pub enum SubmitLogError {
     UnknownValue(serde_json::Value),
 }
 
+/// Search your logs and send them to your Datadog platform over HTTP. See the [Log Management page](<https://docs.datadoghq.com/logs/>) for more information.
 #[derive(Debug, Clone)]
 pub struct LogsAPI {
     config: datadog::Configuration,

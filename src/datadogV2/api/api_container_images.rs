@@ -61,6 +61,7 @@ pub enum ListContainerImagesError {
     UnknownValue(serde_json::Value),
 }
 
+/// The Container Images API allows you to query Container Image data for your organization. See the [Container Images View page](<https://docs.datadoghq.com/infrastructure/containers/container_images/>) for more information.
 #[derive(Debug, Clone)]
 pub struct ContainerImagesAPI {
     config: datadog::Configuration,

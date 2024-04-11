@@ -50,6 +50,7 @@ pub enum UpdateOktaAccountError {
     UnknownValue(serde_json::Value),
 }
 
+/// Configure your [Datadog Okta integration](<https://docs.datadoghq.com/integrations/okta/>) directly through the Datadog API.
 #[derive(Debug, Clone)]
 pub struct OktaIntegrationAPI {
     config: datadog::Configuration,

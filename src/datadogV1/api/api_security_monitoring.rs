@@ -34,6 +34,7 @@ pub enum EditSecurityMonitoringSignalStateError {
     UnknownValue(serde_json::Value),
 }
 
+/// Create and manage your security rules, signals, filters, and more. See the [Datadog Security page](<https://docs.datadoghq.com/security/>) for more information.
 #[derive(Debug, Clone)]
 pub struct SecurityMonitoringAPI {
     config: datadog::Configuration,

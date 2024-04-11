@@ -50,6 +50,11 @@ pub enum UpdateMonitorConfigPolicyError {
     UnknownValue(serde_json::Value),
 }
 
+/// [Monitors](<https://docs.datadoghq.com/monitors>) allow you to watch a metric or check that you care about and
+/// notifies your team when a defined threshold has exceeded.
+///
+/// For more information, see [Creating Monitors](<https://docs.datadoghq.com/monitors/create/types/>) and
+/// [Tag Policies](<https://docs.datadoghq.com/monitors/settings/>).
 #[derive(Debug, Clone)]
 pub struct MonitorsAPI {
     config: datadog::Configuration,

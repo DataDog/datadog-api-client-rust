@@ -74,6 +74,8 @@ pub enum UpdateWebhooksIntegrationCustomVariableError {
     UnknownValue(serde_json::Value),
 }
 
+/// Configure your Datadog-Webhooks integration directly through the Datadog API.
+/// See the [Webhooks integration page](<https://docs.datadoghq.com/integrations/webhooks>) for more information.
 #[derive(Debug, Clone)]
 pub struct WebhooksIntegrationAPI {
     config: datadog::Configuration,

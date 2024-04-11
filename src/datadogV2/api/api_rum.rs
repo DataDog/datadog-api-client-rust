@@ -127,6 +127,7 @@ pub enum UpdateRUMApplicationError {
     UnknownValue(serde_json::Value),
 }
 
+/// Manage your Real User Monitoring (RUM) applications, and search or aggregate your RUM events over HTTP. See the [RUM & Session Replay page](<https://docs.datadoghq.com/real_user_monitoring/>) for more information
 #[derive(Debug, Clone)]
 pub struct RUMAPI {
     config: datadog::Configuration,

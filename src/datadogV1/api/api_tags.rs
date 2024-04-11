@@ -136,6 +136,17 @@ pub enum UpdateHostTagsError {
     UnknownValue(serde_json::Value),
 }
 
+/// The tag endpoint allows you to assign tags to hosts,
+/// for example: `role:database`. Those tags are applied to
+/// all metrics sent by the host. Refer to hosts by name
+/// (`yourhost.example.com`) when fetching and applying
+/// tags to a particular host.
+///
+/// The component of your infrastructure responsible for a tag is identified
+/// by a source. For example, some valid sources include nagios, hudson, jenkins,
+/// users, feed, chef, puppet, git, bitbucket, fabric, capistrano, etc.
+///
+/// Read more about tags on [Getting Started with Tags](<https://docs.datadoghq.com/getting_started/tagging/>).
 #[derive(Debug, Clone)]
 pub struct TagsAPI {
     config: datadog::Configuration,
