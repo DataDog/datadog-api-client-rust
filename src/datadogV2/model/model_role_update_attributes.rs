@@ -13,10 +13,10 @@ use std::fmt::{self, Formatter};
 pub struct RoleUpdateAttributes {
     /// Creation time of the role.
     #[serde(rename = "created_at")]
-    pub created_at: Option<String>,
+    pub created_at: Option<chrono::DateTime<chrono::Utc>>,
     /// Time of last role modification.
     #[serde(rename = "modified_at")]
-    pub modified_at: Option<String>,
+    pub modified_at: Option<chrono::DateTime<chrono::Utc>>,
     /// Name of the role.
     #[serde(rename = "name")]
     pub name: Option<String>,
@@ -35,12 +35,12 @@ impl RoleUpdateAttributes {
         }
     }
 
-    pub fn created_at(mut self, value: String) -> Self {
+    pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
 
-    pub fn modified_at(mut self, value: String) -> Self {
+    pub fn modified_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.modified_at = Some(value);
         self
     }
@@ -74,8 +74,8 @@ impl<'de> Deserialize<'de> for RoleUpdateAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut created_at: Option<String> = None;
-                let mut modified_at: Option<String> = None;
+                let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
+                let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut name: Option<String> = None;
                 let mut _unparsed = false;
 

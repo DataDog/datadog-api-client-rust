@@ -16,7 +16,7 @@ pub struct DashboardList {
     pub author: Option<crate::datadogV1::model::Creator>,
     /// Date of creation of the dashboard list.
     #[serde(rename = "created")]
-    pub created: Option<String>,
+    pub created: Option<chrono::DateTime<chrono::Utc>>,
     /// The number of dashboards in the list.
     #[serde(rename = "dashboard_count")]
     pub dashboard_count: Option<i64>,
@@ -28,7 +28,7 @@ pub struct DashboardList {
     pub is_favorite: Option<bool>,
     /// Date of last edition of the dashboard list.
     #[serde(rename = "modified")]
-    pub modified: Option<String>,
+    pub modified: Option<chrono::DateTime<chrono::Utc>>,
     /// The name of the dashboard list.
     #[serde(rename = "name")]
     pub name: String,
@@ -60,7 +60,7 @@ impl DashboardList {
         self
     }
 
-    pub fn created(mut self, value: String) -> Self {
+    pub fn created(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created = Some(value);
         self
     }
@@ -80,7 +80,7 @@ impl DashboardList {
         self
     }
 
-    pub fn modified(mut self, value: String) -> Self {
+    pub fn modified(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.modified = Some(value);
         self
     }
@@ -109,11 +109,11 @@ impl<'de> Deserialize<'de> for DashboardList {
                 M: MapAccess<'a>,
             {
                 let mut author: Option<crate::datadogV1::model::Creator> = None;
-                let mut created: Option<String> = None;
+                let mut created: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut dashboard_count: Option<i64> = None;
                 let mut id: Option<i64> = None;
                 let mut is_favorite: Option<bool> = None;
-                let mut modified: Option<String> = None;
+                let mut modified: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut name: Option<String> = None;
                 let mut type_: Option<String> = None;
                 let mut _unparsed = false;

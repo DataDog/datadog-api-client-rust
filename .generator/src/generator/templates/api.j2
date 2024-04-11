@@ -308,7 +308,7 @@ impl {{ structName }} {
             local_configuration.get_operation_host(operation_id)
             {%- for name, parameter in operation|parameters if parameter.in == "path" %}, {{ name|variable_name }}=
             {%- if parameter.schema.type == "string" %}
-            datadog::urlencode({{ name|variable_name }}{% if not parameter.required %}.unwrap(){% elif parameter.schema.nullable %}.unwrap(){% endif %}{% if parameter.schema.type == "array" %}.join(",").as_ref(){% endif %})
+            datadog::urlencode({{ name|variable_name }}{% if not parameter.required %}.unwrap(){% elif parameter.schema.nullable %}.unwrap(){% endif %}{% if parameter.schema.type == "array" %}.join(",").as_ref(){% endif %}{% if parameter.schema.format == "uuid" %}.to_string(){% endif %})
             {%- else %}
             {{ name|variable_name }}{% if not parameter.required %}.unwrap(){% elif parameter.schema.nullable %}.unwrap(){% endif %}{% if parameter.schema.type == "array" %}.join(",").as_ref(){% endif %}
             {%- endif %}
@@ -324,10 +324,10 @@ impl {{ structName }} {
             local_req_builder = local_req_builder.query(&[("{{name}}", &local.iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]);
         };
         {%- elif parameter.required %}
-        local_req_builder = local_req_builder.query(&[("{{name}}", &{{name|variable_name}}.to_string())]);
+        local_req_builder = local_req_builder.query(&[("{{name}}", &{{name|variable_name}}.{%- if not schema.format == "date-time" %}to_string() {% else %}to_rfc3339_opts(chrono::SecondsFormat::Millis, true){% endif %})]);
         {%- else %}
         if let Some(ref local_query_param) = {{name|variable_name}} {
-            local_req_builder = local_req_builder.query(&[("{{name}}", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("{{name}}", &local_query_param.{%- if not schema.format == "date-time" %}to_string() {% else %}to_rfc3339_opts(chrono::SecondsFormat::Millis, true){% endif %})]);
         };
         {%- endif %}
         {%- endfor %}

@@ -19,9 +19,9 @@ pub struct ListCIAppTestEventsOptionalParams {
     /// Search query following log syntax.
     pub filter_query: Option<String>,
     /// Minimum timestamp for requested events.
-    pub filter_from: Option<String>,
+    pub filter_from: Option<chrono::DateTime<chrono::Utc>>,
     /// Maximum timestamp for requested events.
-    pub filter_to: Option<String>,
+    pub filter_to: Option<chrono::DateTime<chrono::Utc>>,
     /// Order of events in results.
     pub sort: Option<crate::datadogV2::model::CIAppSort>,
     /// List following results with a cursor provided in the previous query.
@@ -37,12 +37,12 @@ impl ListCIAppTestEventsOptionalParams {
         self
     }
     /// Minimum timestamp for requested events.
-    pub fn filter_from(mut self, value: String) -> Self {
+    pub fn filter_from(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.filter_from = Some(value);
         self
     }
     /// Maximum timestamp for requested events.
-    pub fn filter_to(mut self, value: String) -> Self {
+    pub fn filter_to(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.filter_to = Some(value);
         self
     }
@@ -424,12 +424,16 @@ impl CIVisibilityTestsAPI {
                 local_req_builder.query(&[("filter[query]", &local_query_param.to_string())]);
         };
         if let Some(ref local_query_param) = filter_from {
-            local_req_builder =
-                local_req_builder.query(&[("filter[from]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "filter[from]",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
         if let Some(ref local_query_param) = filter_to {
-            local_req_builder =
-                local_req_builder.query(&[("filter[to]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "filter[to]",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
         if let Some(ref local_query_param) = sort {
             local_req_builder =

@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct UsageOnlineArchiveHour {
     /// The hour for the usage.
     #[serde(rename = "hour")]
-    pub hour: Option<String>,
+    pub hour: Option<chrono::DateTime<chrono::Utc>>,
     /// Total count of online archived events within the hour.
     #[serde(
         rename = "online_archive_events_count",
@@ -43,7 +43,7 @@ impl UsageOnlineArchiveHour {
         }
     }
 
-    pub fn hour(mut self, value: String) -> Self {
+    pub fn hour(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.hour = Some(value);
         self
     }
@@ -87,7 +87,7 @@ impl<'de> Deserialize<'de> for UsageOnlineArchiveHour {
             where
                 M: MapAccess<'a>,
             {
-                let mut hour: Option<String> = None;
+                let mut hour: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut online_archive_events_count: Option<Option<i64>> = None;
                 let mut org_name: Option<String> = None;
                 let mut public_id: Option<String> = None;

@@ -27,7 +27,7 @@ pub struct UsageSDSHour {
     pub events_scanned_bytes: Option<Option<i64>>,
     /// The hour for the usage.
     #[serde(rename = "hour")]
-    pub hour: Option<String>,
+    pub hour: Option<chrono::DateTime<chrono::Utc>>,
     /// The total number of bytes scanned of logs usage by the Sensitive Data Scanner from the start of the given hour’s month until the given hour.
     #[serde(
         rename = "logs_scanned_bytes",
@@ -85,7 +85,7 @@ impl UsageSDSHour {
         self
     }
 
-    pub fn hour(mut self, value: String) -> Self {
+    pub fn hour(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.hour = Some(value);
         self
     }
@@ -141,7 +141,7 @@ impl<'de> Deserialize<'de> for UsageSDSHour {
             {
                 let mut apm_scanned_bytes: Option<Option<i64>> = None;
                 let mut events_scanned_bytes: Option<Option<i64>> = None;
-                let mut hour: Option<String> = None;
+                let mut hour: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut logs_scanned_bytes: Option<Option<i64>> = None;
                 let mut org_name: Option<String> = None;
                 let mut public_id: Option<String> = None;

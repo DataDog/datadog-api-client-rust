@@ -24,7 +24,7 @@ pub struct RUMEventAttributes {
     pub tags: Option<Vec<String>>,
     /// Timestamp of your event.
     #[serde(rename = "timestamp")]
-    pub timestamp: Option<String>,
+    pub timestamp: Option<chrono::DateTime<chrono::Utc>>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -59,7 +59,7 @@ impl RUMEventAttributes {
         self
     }
 
-    pub fn timestamp(mut self, value: String) -> Self {
+    pub fn timestamp(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.timestamp = Some(value);
         self
     }
@@ -92,7 +92,7 @@ impl<'de> Deserialize<'de> for RUMEventAttributes {
                     None;
                 let mut service: Option<String> = None;
                 let mut tags: Option<Vec<String>> = None;
-                let mut timestamp: Option<String> = None;
+                let mut timestamp: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {

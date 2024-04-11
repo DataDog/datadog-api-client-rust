@@ -12,10 +12,10 @@ async fn main() {
         .account_specific_namespace_rules(BTreeMap::from([("auto_scaling".to_string(), false)]))
         .cspm_resource_collection_enabled(false)
         .excluded_regions(vec!["us-east-1".to_string(), "us-west-2".to_string()])
+        .extended_resource_collection_enabled(true)
         .filter_tags(vec!["$KEY:$VALUE".to_string()])
         .host_tags(vec!["$KEY:$VALUE".to_string()])
         .metrics_collection_enabled(true)
-        .resource_collection_enabled(true)
         .role_name("DatadogAWSIntegrationRole".to_string());
     let configuration = datadog::Configuration::new();
     let api = AWSIntegrationAPI::with_config(configuration);

@@ -16,7 +16,7 @@ pub struct ProjectedCostAttributes {
     pub charges: Option<Vec<crate::datadogV2::model::ChargebackBreakdown>>,
     /// The month requested.
     #[serde(rename = "date")]
-    pub date: Option<String>,
+    pub date: Option<chrono::DateTime<chrono::Utc>>,
     /// The organization name.
     #[serde(rename = "org_name")]
     pub org_name: Option<String>,
@@ -52,7 +52,7 @@ impl ProjectedCostAttributes {
         self
     }
 
-    pub fn date(mut self, value: String) -> Self {
+    pub fn date(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.date = Some(value);
         self
     }
@@ -102,7 +102,7 @@ impl<'de> Deserialize<'de> for ProjectedCostAttributes {
                 M: MapAccess<'a>,
             {
                 let mut charges: Option<Vec<crate::datadogV2::model::ChargebackBreakdown>> = None;
-                let mut date: Option<String> = None;
+                let mut date: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut org_name: Option<String> = None;
                 let mut projected_total_cost: Option<f64> = None;
                 let mut public_id: Option<String> = None;

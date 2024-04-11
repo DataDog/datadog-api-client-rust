@@ -20,7 +20,7 @@ pub struct CIAppPipelineEventJob {
     pub dependencies: Option<Option<Vec<String>>>,
     /// Time when the job run finished. The time format must be RFC3339.
     #[serde(rename = "end")]
-    pub end: String,
+    pub end: chrono::DateTime<chrono::Utc>,
     /// Contains information of the CI error.
     #[serde(rename = "error", default, with = "::serde_with::rust::double_option")]
     pub error: Option<Option<crate::datadogV2::model::CIAppCIError>>,
@@ -83,7 +83,7 @@ pub struct CIAppPipelineEventJob {
     pub stage_name: Option<Option<String>>,
     /// Time when the job run instance started (it should not include any queue time). The time format must be RFC3339.
     #[serde(rename = "start")]
-    pub start: String,
+    pub start: chrono::DateTime<chrono::Utc>,
     /// The final status of the job.
     #[serde(rename = "status")]
     pub status: crate::datadogV2::model::CIAppPipelineEventJobStatus,
@@ -100,13 +100,13 @@ pub struct CIAppPipelineEventJob {
 
 impl CIAppPipelineEventJob {
     pub fn new(
-        end: String,
+        end: chrono::DateTime<chrono::Utc>,
         id: String,
         level: crate::datadogV2::model::CIAppPipelineEventJobLevel,
         name: String,
         pipeline_name: String,
         pipeline_unique_id: String,
-        start: String,
+        start: chrono::DateTime<chrono::Utc>,
         status: crate::datadogV2::model::CIAppPipelineEventJobStatus,
         url: String,
     ) -> CIAppPipelineEventJob {
@@ -203,7 +203,7 @@ impl<'de> Deserialize<'de> for CIAppPipelineEventJob {
                 M: MapAccess<'a>,
             {
                 let mut dependencies: Option<Option<Vec<String>>> = None;
-                let mut end: Option<String> = None;
+                let mut end: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut error: Option<Option<crate::datadogV2::model::CIAppCIError>> = None;
                 let mut git: Option<Option<crate::datadogV2::model::CIAppGitInfo>> = None;
                 let mut id: Option<String> = None;
@@ -218,7 +218,7 @@ impl<'de> Deserialize<'de> for CIAppPipelineEventJob {
                 let mut queue_time: Option<Option<i64>> = None;
                 let mut stage_id: Option<Option<String>> = None;
                 let mut stage_name: Option<Option<String>> = None;
-                let mut start: Option<String> = None;
+                let mut start: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut status: Option<crate::datadogV2::model::CIAppPipelineEventJobStatus> = None;
                 let mut tags: Option<Option<Vec<String>>> = None;
                 let mut url: Option<String> = None;

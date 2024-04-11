@@ -19,10 +19,10 @@ pub struct UsageBillableSummaryBody {
     pub elapsed_usage_hours: Option<i64>,
     /// The first billable hour for the org.
     #[serde(rename = "first_billable_usage_hour")]
-    pub first_billable_usage_hour: Option<String>,
+    pub first_billable_usage_hour: Option<chrono::DateTime<chrono::Utc>>,
     /// The last billable hour for the org.
     #[serde(rename = "last_billable_usage_hour")]
-    pub last_billable_usage_hour: Option<String>,
+    pub last_billable_usage_hour: Option<chrono::DateTime<chrono::Utc>>,
     /// The number of units used within the billable timeframe.
     #[serde(rename = "org_billable_usage")]
     pub org_billable_usage: Option<i64>,
@@ -61,12 +61,12 @@ impl UsageBillableSummaryBody {
         self
     }
 
-    pub fn first_billable_usage_hour(mut self, value: String) -> Self {
+    pub fn first_billable_usage_hour(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.first_billable_usage_hour = Some(value);
         self
     }
 
-    pub fn last_billable_usage_hour(mut self, value: String) -> Self {
+    pub fn last_billable_usage_hour(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.last_billable_usage_hour = Some(value);
         self
     }
@@ -112,8 +112,8 @@ impl<'de> Deserialize<'de> for UsageBillableSummaryBody {
             {
                 let mut account_billable_usage: Option<i64> = None;
                 let mut elapsed_usage_hours: Option<i64> = None;
-                let mut first_billable_usage_hour: Option<String> = None;
-                let mut last_billable_usage_hour: Option<String> = None;
+                let mut first_billable_usage_hour: Option<chrono::DateTime<chrono::Utc>> = None;
+                let mut last_billable_usage_hour: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut org_billable_usage: Option<i64> = None;
                 let mut percentage_in_account: Option<f64> = None;
                 let mut usage_unit: Option<String> = None;

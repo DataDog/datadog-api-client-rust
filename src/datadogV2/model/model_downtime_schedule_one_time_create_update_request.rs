@@ -14,11 +14,11 @@ pub struct DowntimeScheduleOneTimeCreateUpdateRequest {
     /// ISO-8601 Datetime to end the downtime. Must include a UTC offset of zero. If not provided, the
     /// downtime continues forever.
     #[serde(rename = "end", default, with = "::serde_with::rust::double_option")]
-    pub end: Option<Option<String>>,
+    pub end: Option<Option<chrono::DateTime<chrono::Utc>>>,
     /// ISO-8601 Datetime to start the downtime. Must include a UTC offset of zero. If not provided, the
     /// downtime starts the moment it is created.
     #[serde(rename = "start", default, with = "::serde_with::rust::double_option")]
-    pub start: Option<Option<String>>,
+    pub start: Option<Option<chrono::DateTime<chrono::Utc>>>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -33,12 +33,12 @@ impl DowntimeScheduleOneTimeCreateUpdateRequest {
         }
     }
 
-    pub fn end(mut self, value: Option<String>) -> Self {
+    pub fn end(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.end = Some(value);
         self
     }
 
-    pub fn start(mut self, value: Option<String>) -> Self {
+    pub fn start(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.start = Some(value);
         self
     }
@@ -67,8 +67,8 @@ impl<'de> Deserialize<'de> for DowntimeScheduleOneTimeCreateUpdateRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut end: Option<Option<String>> = None;
-                let mut start: Option<Option<String>> = None;
+                let mut end: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
+                let mut start: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {

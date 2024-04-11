@@ -29,6 +29,9 @@ pub struct AWSAccount {
     /// to exclude from metrics collection.
     #[serde(rename = "excluded_regions")]
     pub excluded_regions: Option<Vec<String>>,
+    /// Whether Datadog collects additional attributes and configuration information about the resources in your AWS account. Required for `cspm_resource_collection`.
+    #[serde(rename = "extended_resource_collection_enabled")]
+    pub extended_resource_collection_enabled: Option<bool>,
     /// The array of EC2 tags (in the form `key:value`) defines a filter that Datadog uses when collecting metrics from EC2.
     /// Wildcards, such as `?` (for single characters) and `*` (for multiple characters) can also be used.
     /// Only hosts that match one of the defined tags
@@ -44,7 +47,8 @@ pub struct AWSAccount {
     /// Whether Datadog collects metrics for this AWS account.
     #[serde(rename = "metrics_collection_enabled")]
     pub metrics_collection_enabled: Option<bool>,
-    /// Whether Datadog collects a standard set of resources from your AWS account.
+    /// Deprecated in favor of 'extended_resource_collection_enabled'. Whether Datadog collects a standard set of resources from your AWS account.
+    #[deprecated]
     #[serde(rename = "resource_collection_enabled")]
     pub resource_collection_enabled: Option<bool>,
     /// Your Datadog role delegation name.
@@ -60,12 +64,14 @@ pub struct AWSAccount {
 
 impl AWSAccount {
     pub fn new() -> AWSAccount {
+        #[allow(deprecated)]
         AWSAccount {
             access_key_id: None,
             account_id: None,
             account_specific_namespace_rules: None,
             cspm_resource_collection_enabled: None,
             excluded_regions: None,
+            extended_resource_collection_enabled: None,
             filter_tags: None,
             host_tags: None,
             metrics_collection_enabled: None,
@@ -76,16 +82,19 @@ impl AWSAccount {
         }
     }
 
+    #[allow(deprecated)]
     pub fn access_key_id(mut self, value: String) -> Self {
         self.access_key_id = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn account_id(mut self, value: String) -> Self {
         self.account_id = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn account_specific_namespace_rules(
         mut self,
         value: std::collections::BTreeMap<String, bool>,
@@ -94,41 +103,55 @@ impl AWSAccount {
         self
     }
 
+    #[allow(deprecated)]
     pub fn cspm_resource_collection_enabled(mut self, value: bool) -> Self {
         self.cspm_resource_collection_enabled = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn excluded_regions(mut self, value: Vec<String>) -> Self {
         self.excluded_regions = Some(value);
         self
     }
 
+    #[allow(deprecated)]
+    pub fn extended_resource_collection_enabled(mut self, value: bool) -> Self {
+        self.extended_resource_collection_enabled = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn filter_tags(mut self, value: Vec<String>) -> Self {
         self.filter_tags = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn host_tags(mut self, value: Vec<String>) -> Self {
         self.host_tags = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn metrics_collection_enabled(mut self, value: bool) -> Self {
         self.metrics_collection_enabled = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn resource_collection_enabled(mut self, value: bool) -> Self {
         self.resource_collection_enabled = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn role_name(mut self, value: String) -> Self {
         self.role_name = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn secret_access_key(mut self, value: String) -> Self {
         self.secret_access_key = Some(value);
         self
@@ -165,6 +188,7 @@ impl<'de> Deserialize<'de> for AWSAccount {
                 > = None;
                 let mut cspm_resource_collection_enabled: Option<bool> = None;
                 let mut excluded_regions: Option<Vec<String>> = None;
+                let mut extended_resource_collection_enabled: Option<bool> = None;
                 let mut filter_tags: Option<Vec<String>> = None;
                 let mut host_tags: Option<Vec<String>> = None;
                 let mut metrics_collection_enabled: Option<bool> = None;
@@ -207,6 +231,13 @@ impl<'de> Deserialize<'de> for AWSAccount {
                                 continue;
                             }
                             excluded_regions =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "extended_resource_collection_enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            extended_resource_collection_enabled =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "filter_tags" => {
@@ -253,12 +284,14 @@ impl<'de> Deserialize<'de> for AWSAccount {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = AWSAccount {
                     access_key_id,
                     account_id,
                     account_specific_namespace_rules,
                     cspm_resource_collection_enabled,
                     excluded_regions,
+                    extended_resource_collection_enabled,
                     filter_tags,
                     host_tags,
                     metrics_collection_enabled,

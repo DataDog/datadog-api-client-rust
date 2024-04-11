@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct UsageIndexedSpansHour {
     /// The hour for the usage.
     #[serde(rename = "hour")]
-    pub hour: Option<String>,
+    pub hour: Option<chrono::DateTime<chrono::Utc>>,
     /// Contains the number of spans indexed.
     #[serde(
         rename = "indexed_events_count",
@@ -43,7 +43,7 @@ impl UsageIndexedSpansHour {
         }
     }
 
-    pub fn hour(mut self, value: String) -> Self {
+    pub fn hour(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.hour = Some(value);
         self
     }
@@ -87,7 +87,7 @@ impl<'de> Deserialize<'de> for UsageIndexedSpansHour {
             where
                 M: MapAccess<'a>,
             {
-                let mut hour: Option<String> = None;
+                let mut hour: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut indexed_events_count: Option<Option<i64>> = None;
                 let mut org_name: Option<String> = None;
                 let mut public_id: Option<String> = None;

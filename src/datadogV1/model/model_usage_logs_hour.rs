@@ -20,7 +20,7 @@ pub struct UsageLogsHour {
     pub billable_ingested_bytes: Option<Option<i64>>,
     /// The hour for the usage.
     #[serde(rename = "hour")]
-    pub hour: Option<String>,
+    pub hour: Option<chrono::DateTime<chrono::Utc>>,
     /// Contains the number of log events indexed.
     #[serde(
         rename = "indexed_events_count",
@@ -104,7 +104,7 @@ impl UsageLogsHour {
         self
     }
 
-    pub fn hour(mut self, value: String) -> Self {
+    pub fn hour(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.hour = Some(value);
         self
     }
@@ -179,7 +179,7 @@ impl<'de> Deserialize<'de> for UsageLogsHour {
                 M: MapAccess<'a>,
             {
                 let mut billable_ingested_bytes: Option<Option<i64>> = None;
-                let mut hour: Option<String> = None;
+                let mut hour: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut indexed_events_count: Option<Option<i64>> = None;
                 let mut ingested_events_bytes: Option<Option<i64>> = None;
                 let mut logs_forwarding_events_bytes: Option<Option<i64>> = None;

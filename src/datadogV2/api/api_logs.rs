@@ -36,9 +36,9 @@ pub struct ListLogsGetOptionalParams {
     /// Defaults to '*' which means all indexes
     pub filter_indexes: Option<Vec<String>>,
     /// Minimum timestamp for requested logs.
-    pub filter_from: Option<String>,
+    pub filter_from: Option<chrono::DateTime<chrono::Utc>>,
     /// Maximum timestamp for requested logs.
-    pub filter_to: Option<String>,
+    pub filter_to: Option<chrono::DateTime<chrono::Utc>>,
     /// Specifies the storage type to be used
     pub filter_storage_tier: Option<crate::datadogV2::model::LogsStorageTier>,
     /// Order of logs in results.
@@ -62,12 +62,12 @@ impl ListLogsGetOptionalParams {
         self
     }
     /// Minimum timestamp for requested logs.
-    pub fn filter_from(mut self, value: String) -> Self {
+    pub fn filter_from(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.filter_from = Some(value);
         self
     }
     /// Maximum timestamp for requested logs.
-    pub fn filter_to(mut self, value: String) -> Self {
+    pub fn filter_to(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.filter_to = Some(value);
         self
     }
@@ -705,12 +705,16 @@ impl LogsAPI {
             )]);
         };
         if let Some(ref local_query_param) = filter_from {
-            local_req_builder =
-                local_req_builder.query(&[("filter[from]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "filter[from]",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
         if let Some(ref local_query_param) = filter_to {
-            local_req_builder =
-                local_req_builder.query(&[("filter[to]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[(
+                "filter[to]",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
         };
         if let Some(ref local_query_param) = filter_storage_tier {
             local_req_builder = local_req_builder

@@ -146,10 +146,11 @@ def simple_type(schema, render_nullable=False, render_option=True, render_new=Fa
     if type_name == "string":
         inner_type = {
             "date": "String",
-            "date-time": "String",
+            "date-time": "chrono::DateTime<chrono::Utc>",
             "email": "String",
             "uuid": "String",
             "binary": "Vec<u8>",
+            "uuid": "uuid::Uuid",
             None: "String",
         }[type_format]
     if type_name == "boolean":
@@ -256,6 +257,7 @@ def reference_to_value(schema, value, print_nullable=True, **kwargs):
             "date": "Time",
             "date-time": "Time",
             "email": "String",
+            "uuid": "uuid::Uuid",
             None: "String",
         }[type_format]
         if function_name == "Time":
@@ -281,7 +283,6 @@ def format_parameters(data, spec, replace_values=None, has_body=False, **kwargs)
                 "description": schema.get("description"),
                 "required": name in parent.get("required", []),
             }
-
     parameters = ""
     has_optional = False
     for p in parameters_spec.values():
@@ -419,9 +420,8 @@ def format_data_with_schema(
                 return '"".to_string()', set()
 
             def format_datetime(x):
-                # TODO: format date and datetime
                 d = dateutil.parser.isoparse(x)
-                return f'"{d.isoformat()}".to_string()', set()
+                return f'DateTime::parse_from_rfc3339("{d.isoformat()}").expect("Failed to parse datetime").with_timezone(&Utc)', set(["chrono::{DateTime, Utc}"])
                 # if d.microsecond != 0:
                 #     return f"(Utc.with_ymd_and_hms({d.year}, {d.month}, {d.day}, {d.hour}, {d.minute}, {d.second}).unwrap() + chrono::Duration::microseconds({d.microsecond})).to_string()"
                 # return f"Utc.with_ymd_and_hms({d.year}, {d.month}, {d.day}, {d.hour}, {d.minute}, {d.second}).unwrap().to_string()"
@@ -451,6 +451,9 @@ def format_data_with_schema(
                 return "false", set()
             # create a set with a single string element
 
+            def format_uuid(x):
+                return f'Uuid::parse_str(\"{x}\").expect("invalid UUID")', set(["uuid::Uuid"])
+
             def open_file(x):
                 return f"fs::read(\"{x}\").unwrap()", set(["std::fs"])
 
@@ -464,6 +467,7 @@ def format_data_with_schema(
                 "boolean": format_bool,
                 "string": format_string,
                 "email": format_string,
+                "uuid": format_uuid,
                 "binary": open_file,
                 None: format_value,
             }[schema.get("format", schema.get("type"))]
