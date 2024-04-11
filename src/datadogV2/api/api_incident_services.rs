@@ -124,6 +124,7 @@ pub enum UpdateIncidentServiceError {
     UnknownValue(serde_json::Value),
 }
 
+/// Create, update, delete, and retrieve services which can be associated with incidents. See the [Incident Management page](<https://docs.datadoghq.com/service_management/incident_management/>) for more information.
 #[derive(Debug, Clone)]
 pub struct IncidentServicesAPI {
     config: datadog::Configuration,

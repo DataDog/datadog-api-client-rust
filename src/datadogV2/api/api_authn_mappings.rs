@@ -100,6 +100,9 @@ pub enum UpdateAuthNMappingError {
     UnknownValue(serde_json::Value),
 }
 
+/// [The AuthN Mappings API](<https://docs.datadoghq.com/account_management/authn_mapping/?tab=example>)
+/// is used to automatically map groups of users to roles in Datadog using attributes
+/// sent from Identity Providers. Use these endpoints to manage your AuthN Mappings.
 #[derive(Debug, Clone)]
 pub struct AuthNMappingsAPI {
     config: datadog::Configuration,

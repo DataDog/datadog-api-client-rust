@@ -51,6 +51,8 @@ pub enum UpdatePagerDutyIntegrationServiceError {
     UnknownValue(serde_json::Value),
 }
 
+/// Configure your [Datadog-PagerDuty integration](<https://docs.datadoghq.com/integrations/pagerduty/>)
+/// directly through the Datadog API.
 #[derive(Debug, Clone)]
 pub struct PagerDutyIntegrationAPI {
     config: datadog::Configuration,

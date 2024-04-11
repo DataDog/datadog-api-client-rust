@@ -61,6 +61,7 @@ pub enum UpdateLogsMetricError {
     UnknownValue(serde_json::Value),
 }
 
+/// Manage configuration of [log-based metrics](<https://app.datadoghq.com/logs/pipelines/generate-metrics>) for your organization.
 #[derive(Debug, Clone)]
 pub struct LogsMetricsAPI {
     config: datadog::Configuration,

@@ -65,6 +65,8 @@ pub enum UpdateSlackIntegrationChannelError {
     UnknownValue(serde_json::Value),
 }
 
+/// Configure your [Datadog-Slack integration](<https://docs.datadoghq.com/integrations/slack>)
+/// directly through the Datadog API.
 #[derive(Debug, Clone)]
 pub struct SlackIntegrationAPI {
     config: datadog::Configuration,

@@ -50,6 +50,8 @@ pub enum UpdateGCPIntegrationError {
     UnknownValue(serde_json::Value),
 }
 
+/// Configure your Datadog-Google Cloud Platform (GCP) integration directly
+/// through the Datadog API. Read more about the [Datadog-Google Cloud Platform integration](<https://docs.datadoghq.com/integrations/google_cloud_platform>).
 #[derive(Debug, Clone)]
 pub struct GCPIntegrationAPI {
     config: datadog::Configuration,

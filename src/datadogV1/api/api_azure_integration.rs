@@ -60,6 +60,8 @@ pub enum UpdateAzureIntegrationError {
     UnknownValue(serde_json::Value),
 }
 
+/// Configure your Datadog-Azure integration directly through the Datadog API.
+/// For more information, see the [Datadog-Azure integration page](<https://docs.datadoghq.com/integrations/azure>).
 #[derive(Debug, Clone)]
 pub struct AzureIntegrationAPI {
     config: datadog::Configuration,

@@ -95,6 +95,7 @@ pub enum ListSpansGetError {
     UnknownValue(serde_json::Value),
 }
 
+/// Search and aggregate your spans from your Datadog platform over HTTP.
 #[derive(Debug, Clone)]
 pub struct SpansAPI {
     config: datadog::Configuration,

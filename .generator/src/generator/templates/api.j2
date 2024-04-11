@@ -81,6 +81,7 @@ pub enum {{operation.operationId}}Error {
 }
 {% endfor %}
 
+{{ description|block_comment }}
 #[derive(Debug, Clone)]
 pub struct {{ structName }} {
     config: datadog::Configuration,

@@ -113,13 +113,14 @@ def cli(specs, output):
             fp.write(mod_model_j2.render(apis=apis, models=models))
 
         all_operations = []
+        tags_by_name = {tag["name"]: tag for tag in spec["tags"]}
 
         for name, operations in apis.items():
             filename = "api_" + formatter.snake_case(name) + ".rs"
             api_path = resources_dir / "api" / filename
             api_path.parent.mkdir(parents=True, exist_ok=True)
             with api_path.open("w") as fp:
-                fp.write(api_j2.render(name=name, operations=operations))
+                fp.write(api_j2.render(name=name, operations=operations, description=tags_by_name[name]["description"]))
             all_operations.append((name, operations))
 
         mod_path = resources_dir / "api" / "mod.rs"

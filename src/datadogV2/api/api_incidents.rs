@@ -377,6 +377,7 @@ pub enum UpdateIncidentTodoError {
     UnknownValue(serde_json::Value),
 }
 
+/// Manage incident response, as well as associated attachments, metadata, and todos. See the [Incident Management page](<https://docs.datadoghq.com/service_management/incident_management/>) for more information.
 #[derive(Debug, Clone)]
 pub struct IncidentsAPI {
     config: datadog::Configuration,

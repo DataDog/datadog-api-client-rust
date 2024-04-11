@@ -14,6 +14,15 @@ pub enum ValidateError {
     UnknownValue(serde_json::Value),
 }
 
+/// All requests to Datadog’s API must be authenticated.
+/// Requests that write data require reporting access and require an `API key`.
+/// Requests that read data require full access and also require an `application key`.
+///
+/// **Note:** All Datadog API clients are configured by default to consume Datadog US site APIs.
+/// If you are on the Datadog EU site, set the environment variable `DATADOG_HOST` to
+/// `<https://api.datadoghq.eu`> or override this value directly when creating your client.
+///
+/// [Manage your account’s API and application keys](<https://app.datadoghq.com/organization-settings/>) in Datadog, and see the [API and Application Keys page](<https://docs.datadoghq.com/account_management/api-app-keys/>) in the documentation.
 #[derive(Debug, Clone)]
 pub struct AuthenticationAPI {
     config: datadog::Configuration,

@@ -165,6 +165,7 @@ pub enum UpdateUserError {
     UnknownValue(serde_json::Value),
 }
 
+/// Create, edit, and disable users.
 #[derive(Debug, Clone)]
 pub struct UsersAPI {
     config: datadog::Configuration,

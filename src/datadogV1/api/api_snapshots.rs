@@ -70,6 +70,7 @@ pub enum GetGraphSnapshotError {
     UnknownValue(serde_json::Value),
 }
 
+/// Take graph snapshots using the API.
 #[derive(Debug, Clone)]
 pub struct SnapshotsAPI {
     config: datadog::Configuration,
