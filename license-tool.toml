@@ -1,2 +1,3 @@
 [overrides]
 "openssl-macros" = { origin = "https://github.com/sfackler/rust-openssl" }
+"uuid-macro-internal" = { origin = "https://github.com/uuid-rs/uuid" }

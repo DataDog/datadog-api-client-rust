@@ -298,7 +298,7 @@ impl APIManagementAPI {
     /// Delete a specific API by ID.
     pub async fn delete_open_api(
         &self,
-        id: String,
+        id: uuid::Uuid,
     ) -> Result<(), datadog::Error<DeleteOpenAPIError>> {
         match self.delete_open_api_with_http_info(id).await {
             Ok(_) => Ok(()),
@@ -309,7 +309,7 @@ impl APIManagementAPI {
     /// Delete a specific API by ID.
     pub async fn delete_open_api_with_http_info(
         &self,
-        id: String,
+        id: uuid::Uuid,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOpenAPIError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_open_api";
@@ -327,7 +327,7 @@ impl APIManagementAPI {
         let local_uri_str = format!(
             "{}/api/v2/apicatalog/api/{id}",
             local_configuration.get_operation_host(operation_id),
-            id = datadog::urlencode(id)
+            id = datadog::urlencode(id.to_string())
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -392,7 +392,7 @@ impl APIManagementAPI {
     /// Retrieve information about a specific API in [OpenAPI](<https://spec.openapis.org/oas/latest.html>) format file.
     pub async fn get_open_api(
         &self,
-        id: String,
+        id: uuid::Uuid,
     ) -> Result<Vec<u8>, datadog::Error<GetOpenAPIError>> {
         match self.get_open_api_with_http_info(id).await {
             Ok(response_content) => {
@@ -411,7 +411,7 @@ impl APIManagementAPI {
     /// Retrieve information about a specific API in [OpenAPI](<https://spec.openapis.org/oas/latest.html>) format file.
     pub async fn get_open_api_with_http_info(
         &self,
-        id: String,
+        id: uuid::Uuid,
     ) -> Result<datadog::ResponseContent<Vec<u8>>, datadog::Error<GetOpenAPIError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.get_open_api";
@@ -429,7 +429,7 @@ impl APIManagementAPI {
         let local_uri_str = format!(
             "{}/api/v2/apicatalog/api/{id}/openapi",
             local_configuration.get_operation_host(operation_id),
-            id = datadog::urlencode(id)
+            id = datadog::urlencode(id.to_string())
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -495,7 +495,7 @@ impl APIManagementAPI {
     ///
     pub async fn update_open_api(
         &self,
-        id: String,
+        id: uuid::Uuid,
         params: UpdateOpenAPIOptionalParams,
     ) -> Result<crate::datadogV2::model::UpdateOpenAPIResponse, datadog::Error<UpdateOpenAPIError>>
     {
@@ -518,7 +518,7 @@ impl APIManagementAPI {
     ///
     pub async fn update_open_api_with_http_info(
         &self,
-        id: String,
+        id: uuid::Uuid,
         params: UpdateOpenAPIOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::UpdateOpenAPIResponse>,
@@ -543,7 +543,7 @@ impl APIManagementAPI {
         let local_uri_str = format!(
             "{}/api/v2/apicatalog/api/{id}/openapi",
             local_configuration.get_operation_host(operation_id),
-            id = datadog::urlencode(id)
+            id = datadog::urlencode(id.to_string())
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
