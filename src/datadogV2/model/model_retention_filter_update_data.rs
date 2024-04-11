@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct RetentionFilterUpdateData {
     /// The object describing the configuration of the retention filter to create/update.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::RetentionFilterCreateAttributes,
+    pub attributes: crate::datadogV2::model::RetentionFilterUpdateAttributes,
     /// The ID of the retention filter.
     #[serde(rename = "id")]
     pub id: String,
@@ -27,7 +27,7 @@ pub struct RetentionFilterUpdateData {
 
 impl RetentionFilterUpdateData {
     pub fn new(
-        attributes: crate::datadogV2::model::RetentionFilterCreateAttributes,
+        attributes: crate::datadogV2::model::RetentionFilterUpdateAttributes,
         id: String,
         type_: crate::datadogV2::model::ApmRetentionFilterType,
     ) -> RetentionFilterUpdateData {
@@ -58,7 +58,7 @@ impl<'de> Deserialize<'de> for RetentionFilterUpdateData {
                 M: MapAccess<'a>,
             {
                 let mut attributes: Option<
-                    crate::datadogV2::model::RetentionFilterCreateAttributes,
+                    crate::datadogV2::model::RetentionFilterUpdateAttributes,
                 > = None;
                 let mut id: Option<String> = None;
                 let mut type_: Option<crate::datadogV2::model::ApmRetentionFilterType> = None;
