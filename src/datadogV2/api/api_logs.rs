@@ -120,9 +120,7 @@ impl SubmitLogOptionalParams {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AggregateLogsError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -130,9 +128,7 @@ pub enum AggregateLogsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListLogsError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -140,9 +136,7 @@ pub enum ListLogsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListLogsGetError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -150,14 +144,7 @@ pub enum ListLogsGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SubmitLogError {
-    Status400(Option<crate::datadogV2::model::HTTPLogErrors>),
-    Status401(Option<crate::datadogV2::model::HTTPLogErrors>),
-    Status403(Option<crate::datadogV2::model::HTTPLogErrors>),
-    Status408(Option<crate::datadogV2::model::HTTPLogErrors>),
-    Status413(Option<crate::datadogV2::model::HTTPLogErrors>),
-    Status429(Option<crate::datadogV2::model::HTTPLogErrors>),
-    Status500(Option<crate::datadogV2::model::HTTPLogErrors>),
-    Status503(Option<crate::datadogV2::model::HTTPLogErrors>),
+    HTTPLogErrors(crate::datadogV2::model::HTTPLogErrors),
     UnknownValue(serde_json::Value),
 }
 

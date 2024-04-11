@@ -81,9 +81,7 @@ impl SearchCIAppPipelineEventsOptionalParams {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AggregateCIAppPipelineEventsError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -91,14 +89,7 @@ pub enum AggregateCIAppPipelineEventsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateCIAppPipelineEventError {
-    Status400(Option<crate::datadogV2::model::HTTPCIAppErrors>),
-    Status401(Option<crate::datadogV2::model::HTTPCIAppErrors>),
-    Status403(Option<crate::datadogV2::model::HTTPCIAppErrors>),
-    Status408(Option<crate::datadogV2::model::HTTPCIAppErrors>),
-    Status413(Option<crate::datadogV2::model::HTTPCIAppErrors>),
-    Status429(Option<crate::datadogV2::model::HTTPCIAppErrors>),
-    Status500(Option<crate::datadogV2::model::HTTPCIAppErrors>),
-    Status503(Option<crate::datadogV2::model::HTTPCIAppErrors>),
+    HTTPCIAppErrors(crate::datadogV2::model::HTTPCIAppErrors),
     UnknownValue(serde_json::Value),
 }
 
@@ -106,9 +97,7 @@ pub enum CreateCIAppPipelineEventError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListCIAppPipelineEventsError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -116,9 +105,7 @@ pub enum ListCIAppPipelineEventsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SearchCIAppPipelineEventsError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 

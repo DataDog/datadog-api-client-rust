@@ -42,9 +42,8 @@ impl UpdateOpenAPIOptionalParams {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateOpenAPIError {
-    Status400(Option<crate::datadogV2::model::JSONAPIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::JSONAPIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -52,10 +51,8 @@ pub enum CreateOpenAPIError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteOpenAPIError {
-    Status400(Option<crate::datadogV2::model::JSONAPIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::JSONAPIErrorResponse>),
-    Status404(Option<crate::datadogV2::model::JSONAPIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -63,10 +60,8 @@ pub enum DeleteOpenAPIError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetOpenAPIError {
-    Status400(Option<crate::datadogV2::model::JSONAPIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::JSONAPIErrorResponse>),
-    Status404(Option<crate::datadogV2::model::JSONAPIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -74,10 +69,8 @@ pub enum GetOpenAPIError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateOpenAPIError {
-    Status400(Option<crate::datadogV2::model::JSONAPIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::JSONAPIErrorResponse>),
-    Status404(Option<crate::datadogV2::model::JSONAPIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 

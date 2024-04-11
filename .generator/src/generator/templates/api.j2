@@ -72,10 +72,8 @@ impl {{operation.operationId}}OptionalParams {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum {{operation.operationId}}Error {
-	{%- for responseType, (response, responseCodes) in responses_by_types(operation, version) %}
-    {%- for responseCode in responseCodes %}
-    Status{{responseCode|int}}({{responseType}}),
-    {%- endfor %}
+	{%- for responseType, (response, responseCodes, responseName) in responses_by_types(operation, version) %}
+    {{responseName}}({{responseType}}),
     {%- endfor %}
     UnknownValue(serde_json::Value),
 }

@@ -37,9 +37,8 @@ impl SubmitLogOptionalParams {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListLogsError {
-    Status400(Option<crate::datadogV1::model::LogsAPIErrorResponse>),
-    Status403(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV1::model::APIErrorResponse>),
+    LogsAPIErrorResponse(crate::datadogV1::model::LogsAPIErrorResponse),
+    APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -47,8 +46,8 @@ pub enum ListLogsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SubmitLogError {
-    Status400(Option<crate::datadogV1::model::HTTPLogError>),
-    Status429(Option<crate::datadogV1::model::APIErrorResponse>),
+    HTTPLogError(crate::datadogV1::model::HTTPLogError),
+    APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
