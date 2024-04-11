@@ -138,6 +138,8 @@ impl APMRetentionFiltersAPI {
 
     /// Create a retention filter to index spans in your organization.
     /// Returns the retention filter definition when the request is successful.
+    ///
+    /// Default filters with types spans-errors-sampling-processor and spans-appsec-sampling-processor cannot be created.
     pub async fn create_apm_retention_filter(
         &self,
         body: crate::datadogV2::model::RetentionFilterCreateRequest,
@@ -161,6 +163,8 @@ impl APMRetentionFiltersAPI {
 
     /// Create a retention filter to index spans in your organization.
     /// Returns the retention filter definition when the request is successful.
+    ///
+    /// Default filters with types spans-errors-sampling-processor and spans-appsec-sampling-processor cannot be created.
     pub async fn create_apm_retention_filter_with_http_info(
         &self,
         body: crate::datadogV2::model::RetentionFilterCreateRequest,
@@ -291,6 +295,8 @@ impl APMRetentionFiltersAPI {
     }
 
     /// Delete a specific retention filter from your organization.
+    ///
+    /// Default filters with types spans-errors-sampling-processor and spans-appsec-sampling-processor cannot be deleted.
     pub async fn delete_apm_retention_filter(
         &self,
         filter_id: String,
@@ -305,6 +311,8 @@ impl APMRetentionFiltersAPI {
     }
 
     /// Delete a specific retention filter from your organization.
+    ///
+    /// Default filters with types spans-errors-sampling-processor and spans-appsec-sampling-processor cannot be deleted.
     pub async fn delete_apm_retention_filter_with_http_info(
         &self,
         filter_id: String,
@@ -728,6 +736,8 @@ impl APMRetentionFiltersAPI {
     }
 
     /// Update a retention filter from your organization.
+    ///
+    /// Default filters (filters with types spans-errors-sampling-processor and spans-appsec-sampling-processor) cannot be renamed or removed.
     pub async fn update_apm_retention_filter(
         &self,
         filter_id: String,
@@ -754,6 +764,8 @@ impl APMRetentionFiltersAPI {
     }
 
     /// Update a retention filter from your organization.
+    ///
+    /// Default filters (filters with types spans-errors-sampling-processor and spans-appsec-sampling-processor) cannot be renamed or removed.
     pub async fn update_apm_retention_filter_with_http_info(
         &self,
         filter_id: String,

@@ -2,8 +2,8 @@
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_apm_retention_filters::APMRetentionFiltersAPI;
 use datadog_api_client::datadogV2::model::ApmRetentionFilterType;
-use datadog_api_client::datadogV2::model::RetentionFilterCreateAttributes;
-use datadog_api_client::datadogV2::model::RetentionFilterType;
+use datadog_api_client::datadogV2::model::RetentionFilterAllType;
+use datadog_api_client::datadogV2::model::RetentionFilterUpdateAttributes;
 use datadog_api_client::datadogV2::model::RetentionFilterUpdateData;
 use datadog_api_client::datadogV2::model::RetentionFilterUpdateRequest;
 use datadog_api_client::datadogV2::model::SpansFilterCreate;
@@ -13,10 +13,10 @@ async fn main() {
     // there is a valid "retention_filter" in the system
     let retention_filter_data_id = std::env::var("RETENTION_FILTER_DATA_ID").unwrap();
     let body = RetentionFilterUpdateRequest::new(RetentionFilterUpdateData::new(
-        RetentionFilterCreateAttributes::new(
+        RetentionFilterUpdateAttributes::new(
             true,
             SpansFilterCreate::new("@_top_level:1 test:service-demo".to_string()),
-            RetentionFilterType::SPANS_SAMPLING_PROCESSOR,
+            RetentionFilterAllType::SPANS_SAMPLING_PROCESSOR,
             "test".to_string(),
             0.9,
         ),
