@@ -11139,8 +11139,8 @@ fn test_v2_search_cases(world: &mut DatadogWorld, _parameters: &HashMap<String, 
     let page_size = _parameters
         .get("page[size]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let page_offset = _parameters
-        .get("page[offset]")
+    let page_number = _parameters
+        .get("page[number]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let sort_field = _parameters
         .get("sort[field]")
@@ -11153,7 +11153,7 @@ fn test_v2_search_cases(world: &mut DatadogWorld, _parameters: &HashMap<String, 
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_case_management::SearchCasesOptionalParams::default();
     params.page_size = page_size;
-    params.page_offset = page_offset;
+    params.page_number = page_number;
     params.sort_field = sort_field;
     params.filter = filter;
     params.sort_asc = sort_asc;
@@ -11186,8 +11186,8 @@ fn test_v2_search_cases_with_pagination(
     let page_size = _parameters
         .get("page[size]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let page_offset = _parameters
-        .get("page[offset]")
+    let page_number = _parameters
+        .get("page[number]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let sort_field = _parameters
         .get("sort[field]")
@@ -11200,7 +11200,7 @@ fn test_v2_search_cases_with_pagination(
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_case_management::SearchCasesOptionalParams::default();
     params.page_size = page_size;
-    params.page_offset = page_offset;
+    params.page_number = page_number;
     params.sort_field = sort_field;
     params.filter = filter;
     params.sort_asc = sort_asc;
