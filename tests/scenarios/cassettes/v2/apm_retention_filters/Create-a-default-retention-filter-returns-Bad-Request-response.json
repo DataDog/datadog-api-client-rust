@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"enabled\":true,\"filter\":{\"query\":\"@http.status_code:200 service:my-service\"},\"filter_type\":\"spans-errors-sampling-processor\",\"name\":\"my retention filter\",\"rate\":1},\"type\":\"apm_retention_filter\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/apm/config/retention-filters"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[\"Field 'filter_type' is invalid, expected value is 'spans-sampling-processor'\"]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Wed, 10 Apr 2024 12:31:19 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

@@ -162,6 +162,8 @@ pub mod model_retention_filter_update_request;
 pub use self::model_retention_filter_update_request::RetentionFilterUpdateRequest;
 pub mod model_retention_filter_update_data;
 pub use self::model_retention_filter_update_data::RetentionFilterUpdateData;
+pub mod model_retention_filter_update_attributes;
+pub use self::model_retention_filter_update_attributes::RetentionFilterUpdateAttributes;
 pub mod model_application_keys_sort;
 pub use self::model_application_keys_sort::ApplicationKeysSort;
 pub mod model_list_application_keys_response;
