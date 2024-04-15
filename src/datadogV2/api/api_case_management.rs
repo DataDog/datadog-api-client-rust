@@ -18,8 +18,8 @@ use std::io::Write;
 pub struct SearchCasesOptionalParams {
     /// Size for a given page. The maximum allowed value is 100.
     pub page_size: Option<i64>,
-    /// Specific offset to use as the beginning of the returned page.
-    pub page_offset: Option<i64>,
+    /// Specific page number to return.
+    pub page_number: Option<i64>,
     /// Specify which field to sort
     pub sort_field: Option<crate::datadogV2::model::CaseSortableField>,
     /// Search query
@@ -34,9 +34,9 @@ impl SearchCasesOptionalParams {
         self.page_size = Some(value);
         self
     }
-    /// Specific offset to use as the beginning of the returned page.
-    pub fn page_offset(mut self, value: i64) -> Self {
-        self.page_offset = Some(value);
+    /// Specific page number to return.
+    pub fn page_number(mut self, value: i64) -> Self {
+        self.page_number = Some(value);
         self
     }
     /// Specify which field to sort
@@ -1234,6 +1234,9 @@ impl CaseManagementAPI {
             } else {
                 page_size = params.page_size.unwrap().clone();
             }
+            if params.page_number.is_none() {
+                params.page_number = Some(0);
+            }
             loop {
                 let resp = self.search_cases(params.clone()).await?;
                 let Some(data) = resp.data else { break };
@@ -1247,11 +1250,7 @@ impl CaseManagementAPI {
                 if count < page_size as usize {
                     break;
                 }
-                if params.page_offset.is_none() {
-                    params.page_offset = Some(page_size.clone());
-                } else {
-                    params.page_offset = Some(params.page_offset.unwrap() + page_size.clone());
-                }
+                params.page_number = Some(params.page_number.unwrap() + 1);
             }
         }
     }
@@ -1269,7 +1268,7 @@ impl CaseManagementAPI {
 
         // unbox and build optional parameters
         let page_size = params.page_size;
-        let page_offset = params.page_offset;
+        let page_number = params.page_number;
         let sort_field = params.sort_field;
         let filter = params.filter;
         let sort_asc = params.sort_asc;
@@ -1287,9 +1286,9 @@ impl CaseManagementAPI {
             local_req_builder =
                 local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_query_param) = page_offset {
+        if let Some(ref local_query_param) = page_number {
             local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
         };
         if let Some(ref local_query_param) = sort_field {
             local_req_builder =
