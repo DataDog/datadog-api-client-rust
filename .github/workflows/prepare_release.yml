@@ -57,7 +57,7 @@ jobs:
       - name: Bump version
         run: |
           git switch -c "release/${RELEASE_VERSION}"
-          cargo release version "${RELEASE_VERSION}"
+          cargo release version "${RELEASE_VERSION}" --execute --no-confirm
           git commit -a -m "Version bump ${RELEASE_VERSION}"
           git push -f --set-upstream origin "release/${RELEASE_VERSION}"
         env:
