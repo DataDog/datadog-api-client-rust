@@ -14,7 +14,7 @@ use std::io::Write;
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetOnDemandConcurrencyCapError {
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -22,7 +22,7 @@ pub enum GetOnDemandConcurrencyCapError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SetOnDemandConcurrencyCapError {
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 

@@ -14,9 +14,7 @@ use std::io::Write;
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreatePagerDutyIntegrationServiceError {
-    Status400(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV1::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -24,9 +22,7 @@ pub enum CreatePagerDutyIntegrationServiceError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeletePagerDutyIntegrationServiceError {
-    Status403(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV1::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -34,9 +30,7 @@ pub enum DeletePagerDutyIntegrationServiceError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetPagerDutyIntegrationServiceError {
-    Status403(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV1::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -44,10 +38,7 @@ pub enum GetPagerDutyIntegrationServiceError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdatePagerDutyIntegrationServiceError {
-    Status400(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV1::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 

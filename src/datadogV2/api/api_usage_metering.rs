@@ -264,9 +264,7 @@ impl GetUsageObservabilityPipelinesOptionalParams {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetActiveBillingDimensionsError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -274,9 +272,7 @@ pub enum GetActiveBillingDimensionsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetCostByOrgError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -284,9 +280,7 @@ pub enum GetCostByOrgError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetEstimatedCostByOrgError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -294,9 +288,7 @@ pub enum GetEstimatedCostByOrgError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetHistoricalCostByOrgError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -304,9 +296,7 @@ pub enum GetHistoricalCostByOrgError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetHourlyUsageError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -314,9 +304,7 @@ pub enum GetHourlyUsageError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetMonthlyCostAttributionError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -324,9 +312,7 @@ pub enum GetMonthlyCostAttributionError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetProjectedCostError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -334,9 +320,7 @@ pub enum GetProjectedCostError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUsageApplicationSecurityMonitoringError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -344,9 +328,7 @@ pub enum GetUsageApplicationSecurityMonitoringError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUsageLambdaTracedInvocationsError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -354,9 +336,7 @@ pub enum GetUsageLambdaTracedInvocationsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUsageObservabilityPipelinesError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 

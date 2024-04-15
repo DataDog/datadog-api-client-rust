@@ -51,10 +51,7 @@ impl ListAuthNMappingsOptionalParams {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateAuthNMappingError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -62,9 +59,7 @@ pub enum CreateAuthNMappingError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteAuthNMappingError {
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -72,9 +67,7 @@ pub enum DeleteAuthNMappingError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetAuthNMappingError {
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -82,8 +75,7 @@ pub enum GetAuthNMappingError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListAuthNMappingsError {
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -91,12 +83,7 @@ pub enum ListAuthNMappingsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateAuthNMappingError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status409(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status422(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 

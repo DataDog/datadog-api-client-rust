@@ -14,10 +14,7 @@ use std::io::Write;
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateOpsgenieServiceError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status409(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -25,10 +22,7 @@ pub enum CreateOpsgenieServiceError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteOpsgenieServiceError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -36,11 +30,7 @@ pub enum DeleteOpsgenieServiceError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetOpsgenieServiceError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status409(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -48,8 +38,7 @@ pub enum GetOpsgenieServiceError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListOpsgenieServicesError {
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -57,11 +46,7 @@ pub enum ListOpsgenieServicesError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateOpsgenieServiceError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status409(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 

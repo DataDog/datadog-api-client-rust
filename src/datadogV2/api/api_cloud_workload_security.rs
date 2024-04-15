@@ -14,10 +14,7 @@ use std::io::Write;
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateCSMThreatsAgentRuleError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status409(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -25,10 +22,7 @@ pub enum CreateCSMThreatsAgentRuleError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateCloudWorkloadSecurityAgentRuleError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status409(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -36,9 +30,7 @@ pub enum CreateCloudWorkloadSecurityAgentRuleError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteCSMThreatsAgentRuleError {
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -46,9 +38,7 @@ pub enum DeleteCSMThreatsAgentRuleError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteCloudWorkloadSecurityAgentRuleError {
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -56,8 +46,7 @@ pub enum DeleteCloudWorkloadSecurityAgentRuleError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DownloadCSMThreatsPolicyError {
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -65,8 +54,7 @@ pub enum DownloadCSMThreatsPolicyError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DownloadCloudWorkloadPolicyFileError {
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -74,9 +62,7 @@ pub enum DownloadCloudWorkloadPolicyFileError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetCSMThreatsAgentRuleError {
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -84,9 +70,7 @@ pub enum GetCSMThreatsAgentRuleError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetCloudWorkloadSecurityAgentRuleError {
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -94,8 +78,7 @@ pub enum GetCloudWorkloadSecurityAgentRuleError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListCSMThreatsAgentRulesError {
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -103,8 +86,7 @@ pub enum ListCSMThreatsAgentRulesError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListCloudWorkloadSecurityAgentRulesError {
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -112,11 +94,7 @@ pub enum ListCloudWorkloadSecurityAgentRulesError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateCSMThreatsAgentRuleError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status409(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -124,11 +102,7 @@ pub enum UpdateCSMThreatsAgentRuleError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateCloudWorkloadSecurityAgentRuleError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status409(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 

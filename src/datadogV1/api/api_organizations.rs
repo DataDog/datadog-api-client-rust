@@ -14,9 +14,7 @@ use std::io::Write;
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateChildOrgError {
-    Status400(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV1::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -24,9 +22,7 @@ pub enum CreateChildOrgError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DowngradeOrgError {
-    Status400(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV1::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -34,9 +30,7 @@ pub enum DowngradeOrgError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetOrgError {
-    Status400(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV1::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -44,8 +38,7 @@ pub enum GetOrgError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListOrgsError {
-    Status403(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV1::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -53,9 +46,7 @@ pub enum ListOrgsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateOrgError {
-    Status400(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV1::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -63,10 +54,7 @@ pub enum UpdateOrgError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UploadIdPForOrgError {
-    Status400(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status415(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV1::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 

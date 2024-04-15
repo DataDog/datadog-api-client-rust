@@ -14,9 +14,7 @@ use std::io::Write;
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateAPIKeyError {
-    Status400(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV1::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -24,10 +22,7 @@ pub enum CreateAPIKeyError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateApplicationKeyError {
-    Status400(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status409(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV1::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -35,10 +30,7 @@ pub enum CreateApplicationKeyError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteAPIKeyError {
-    Status400(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV1::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -46,9 +38,7 @@ pub enum DeleteAPIKeyError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteApplicationKeyError {
-    Status403(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV1::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -56,9 +46,7 @@ pub enum DeleteApplicationKeyError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetAPIKeyError {
-    Status403(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV1::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -66,9 +54,7 @@ pub enum GetAPIKeyError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetApplicationKeyError {
-    Status403(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV1::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -76,8 +62,7 @@ pub enum GetApplicationKeyError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListAPIKeysError {
-    Status403(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV1::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -85,8 +70,7 @@ pub enum ListAPIKeysError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListApplicationKeysError {
-    Status403(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV1::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -94,10 +78,7 @@ pub enum ListApplicationKeysError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateAPIKeyError {
-    Status400(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV1::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -105,11 +86,7 @@ pub enum UpdateAPIKeyError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateApplicationKeyError {
-    Status400(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status409(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV1::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 

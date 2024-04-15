@@ -14,11 +14,7 @@ use std::io::Write;
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SubmitServiceCheckError {
-    Status400(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status408(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status413(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV1::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 

@@ -60,11 +60,7 @@ impl SearchCasesOptionalParams {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ArchiveCaseError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status401(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -72,11 +68,7 @@ pub enum ArchiveCaseError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AssignCaseError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status401(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -84,11 +76,7 @@ pub enum AssignCaseError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateCaseError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status401(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -96,11 +84,7 @@ pub enum CreateCaseError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateProjectError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status401(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -108,9 +92,7 @@ pub enum CreateProjectError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteProjectError {
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -118,11 +100,7 @@ pub enum DeleteProjectError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetCaseError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status401(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -130,11 +108,7 @@ pub enum GetCaseError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetProjectError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status401(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -142,11 +116,7 @@ pub enum GetProjectError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetProjectsError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status401(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -154,11 +124,7 @@ pub enum GetProjectsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SearchCasesError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status401(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -166,11 +132,7 @@ pub enum SearchCasesError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UnarchiveCaseError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status401(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -178,11 +140,7 @@ pub enum UnarchiveCaseError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UnassignCaseError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status401(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -190,11 +148,7 @@ pub enum UnassignCaseError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdatePriorityError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status401(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -202,11 +156,7 @@ pub enum UpdatePriorityError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateStatusError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status401(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 

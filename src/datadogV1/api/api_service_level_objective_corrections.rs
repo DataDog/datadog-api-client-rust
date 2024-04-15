@@ -39,10 +39,7 @@ impl ListSLOCorrectionOptionalParams {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateSLOCorrectionError {
-    Status400(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV1::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -50,9 +47,7 @@ pub enum CreateSLOCorrectionError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteSLOCorrectionError {
-    Status403(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV1::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -60,9 +55,7 @@ pub enum DeleteSLOCorrectionError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetSLOCorrectionError {
-    Status400(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV1::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -70,8 +63,7 @@ pub enum GetSLOCorrectionError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListSLOCorrectionError {
-    Status403(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV1::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -79,10 +71,7 @@ pub enum ListSLOCorrectionError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateSLOCorrectionError {
-    Status400(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV1::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 

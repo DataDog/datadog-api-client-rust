@@ -14,9 +14,8 @@ use std::io::Write;
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateLogsIndexError {
-    Status400(Option<crate::datadogV1::model::LogsAPIErrorResponse>),
-    Status403(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV1::model::APIErrorResponse>),
+    LogsAPIErrorResponse(crate::datadogV1::model::LogsAPIErrorResponse),
+    APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -24,9 +23,8 @@ pub enum CreateLogsIndexError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetLogsIndexError {
-    Status403(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status404(Option<crate::datadogV1::model::LogsAPIErrorResponse>),
+    APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
+    LogsAPIErrorResponse(crate::datadogV1::model::LogsAPIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -34,8 +32,7 @@ pub enum GetLogsIndexError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetLogsIndexOrderError {
-    Status403(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV1::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -43,8 +40,7 @@ pub enum GetLogsIndexOrderError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListLogIndexesError {
-    Status403(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV1::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -52,9 +48,8 @@ pub enum ListLogIndexesError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateLogsIndexError {
-    Status400(Option<crate::datadogV1::model::LogsAPIErrorResponse>),
-    Status429(Option<crate::datadogV1::model::LogsAPIErrorResponse>),
-    Status403(Option<crate::datadogV1::model::APIErrorResponse>),
+    LogsAPIErrorResponse(crate::datadogV1::model::LogsAPIErrorResponse),
+    APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -62,9 +57,8 @@ pub enum UpdateLogsIndexError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateLogsIndexOrderError {
-    Status400(Option<crate::datadogV1::model::LogsAPIErrorResponse>),
-    Status403(Option<crate::datadogV1::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV1::model::APIErrorResponse>),
+    LogsAPIErrorResponse(crate::datadogV1::model::LogsAPIErrorResponse),
+    APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
