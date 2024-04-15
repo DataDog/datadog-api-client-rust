@@ -67,9 +67,7 @@ impl ListSpansGetOptionalParams {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AggregateSpansError {
-    Status400(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::APIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::APIErrorResponse>),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -77,10 +75,7 @@ pub enum AggregateSpansError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListSpansError {
-    Status400(Option<crate::datadogV2::model::JSONAPIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::JSONAPIErrorResponse>),
-    Status422(Option<crate::datadogV2::model::JSONAPIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::JSONAPIErrorResponse>),
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -88,10 +83,7 @@ pub enum ListSpansError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListSpansGetError {
-    Status400(Option<crate::datadogV2::model::JSONAPIErrorResponse>),
-    Status403(Option<crate::datadogV2::model::JSONAPIErrorResponse>),
-    Status422(Option<crate::datadogV2::model::JSONAPIErrorResponse>),
-    Status429(Option<crate::datadogV2::model::JSONAPIErrorResponse>),
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 

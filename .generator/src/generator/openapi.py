@@ -11,6 +11,7 @@ from urllib.parse import urlparse
 from yaml import CSafeLoader
 
 from . import formatter
+from .utils import schema_name
 
 
 def load(filename):
@@ -113,7 +114,8 @@ def get_type_for_response(response, version):
     if "content" in response:
         for content in response["content"].values():
             if "schema" in content:
-                return type_to_rust(content["schema"], version=version)
+                schema = content["schema"]
+                return type_to_rust(schema, version=version, render_option=False), schema_name(schema)
 
 
 def responses_by_types(operation, version):
@@ -121,11 +123,9 @@ def responses_by_types(operation, version):
     for response_code, response in operation["responses"].items():
         if int(response_code) < 300:
             continue
-        response_type = get_type_for_response(response, version)
-        if response_type in result:
-            result[response_type][1].append(response_code)
-        else:
-            result[response_type] = [response, [response_code]]
+        response_type, response_name = get_type_for_response(response, version)
+        if response_type not in result:
+            result[response_type] = (response, response_name)
     return result.items()
 
 
