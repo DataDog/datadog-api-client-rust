@@ -128,7 +128,8 @@ async fn main() {
                     )
                     .timeout(10.0 as f64)
                     .url("https://datadoghq.com".to_string()),
-            ),
+            )
+            .variables_from_script(r#"dd.variable.set("FOO", "foo")"#.to_string()),
         vec!["aws:us-east-2".to_string()],
         "BDD test payload: synthetics_api_http_test_payload.json".to_string(),
         "Example-Synthetic".to_string(),
