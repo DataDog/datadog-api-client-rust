@@ -15,7 +15,6 @@ include = [
     "/NOTICE",
     "/README.md",
     "/src/**/*",
-    "/tests/**/*",
     "/examples/*",
 ]
 keywords = [
@@ -69,6 +68,7 @@ vcr-cassette = "2.0.1"
 [[test]]
 harness = false # allows Cucumber to print output instead of libtest
 name = "main"
+path = "tests/main.rs"
 
 [[example]] # signal to Cargo that dev-dependencies are allowed for examples
 doc-scrape-examples = true
