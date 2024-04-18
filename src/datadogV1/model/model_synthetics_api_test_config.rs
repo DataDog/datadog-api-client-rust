@@ -23,6 +23,9 @@ pub struct SyntheticsAPITestConfig {
     /// When the test subtype is `multi`, the steps of the test.
     #[serde(rename = "steps")]
     pub steps: Option<Vec<crate::datadogV1::model::SyntheticsAPIStep>>,
+    /// Variables defined from JavaScript code.
+    #[serde(rename = "variablesFromScript")]
+    pub variables_from_script: Option<String>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -35,6 +38,7 @@ impl SyntheticsAPITestConfig {
             config_variables: None,
             request: None,
             steps: None,
+            variables_from_script: None,
             _unparsed: false,
         }
     }
@@ -59,6 +63,11 @@ impl SyntheticsAPITestConfig {
 
     pub fn steps(mut self, value: Vec<crate::datadogV1::model::SyntheticsAPIStep>) -> Self {
         self.steps = Some(value);
+        self
+    }
+
+    pub fn variables_from_script(mut self, value: String) -> Self {
+        self.variables_from_script = Some(value);
         self
     }
 }
@@ -93,6 +102,7 @@ impl<'de> Deserialize<'de> for SyntheticsAPITestConfig {
                 > = None;
                 let mut request: Option<crate::datadogV1::model::SyntheticsTestRequest> = None;
                 let mut steps: Option<Vec<crate::datadogV1::model::SyntheticsAPIStep>> = None;
+                let mut variables_from_script: Option<String> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -122,6 +132,13 @@ impl<'de> Deserialize<'de> for SyntheticsAPITestConfig {
                             }
                             steps = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "variablesFromScript" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            variables_from_script =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {}
                     }
                 }
@@ -131,6 +148,7 @@ impl<'de> Deserialize<'de> for SyntheticsAPITestConfig {
                     config_variables,
                     request,
                     steps,
+                    variables_from_script,
                     _unparsed,
                 };
 
