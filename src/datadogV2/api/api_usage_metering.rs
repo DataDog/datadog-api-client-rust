@@ -343,7 +343,6 @@ pub enum GetUsageObservabilityPipelinesError {
 /// The usage metering API allows you to get hourly, daily, and
 /// monthly usage across multiple facets of Datadog.
 /// This API is available to all Pro and Enterprise customers.
-/// Usage is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
 ///
 /// **Note**: Usage data is delayed by up to 72 hours from when it was incurred.
 /// It is retained for 15 months.
@@ -535,6 +534,8 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Please use the new endpoint
     /// [`/historical_cost`](<https://docs.datadoghq.com/api/latest/usage-metering/#get-historical-cost-across-your-account>)
     /// instead.
+    ///
+    /// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
     pub async fn get_cost_by_org(
         &self,
         start_month: chrono::DateTime<chrono::Utc>,
@@ -562,6 +563,8 @@ impl UsageMeteringAPI {
     /// **Note:** This endpoint has been deprecated. Please use the new endpoint
     /// [`/historical_cost`](<https://docs.datadoghq.com/api/latest/usage-metering/#get-historical-cost-across-your-account>)
     /// instead.
+    ///
+    /// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
     pub async fn get_cost_by_org_with_http_info(
         &self,
         start_month: chrono::DateTime<chrono::Utc>,
@@ -665,6 +668,8 @@ impl UsageMeteringAPI {
     /// Estimated cost data is only available for the current month and previous month
     /// and is delayed by up to 72 hours from when it was incurred.
     /// To access historical costs prior to this, use the `/historical_cost` endpoint.
+    ///
+    /// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
     pub async fn get_estimated_cost_by_org(
         &self,
         params: GetEstimatedCostByOrgOptionalParams,
@@ -690,6 +695,8 @@ impl UsageMeteringAPI {
     /// Estimated cost data is only available for the current month and previous month
     /// and is delayed by up to 72 hours from when it was incurred.
     /// To access historical costs prior to this, use the `/historical_cost` endpoint.
+    ///
+    /// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
     pub async fn get_estimated_cost_by_org_with_http_info(
         &self,
         params: GetEstimatedCostByOrgOptionalParams,
@@ -813,6 +820,8 @@ impl UsageMeteringAPI {
 
     /// Get historical cost across multi-org and single root-org accounts.
     /// Cost data for a given month becomes available no later than the 16th of the following month.
+    ///
+    /// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
     pub async fn get_historical_cost_by_org(
         &self,
         start_month: chrono::DateTime<chrono::Utc>,
@@ -840,6 +849,8 @@ impl UsageMeteringAPI {
 
     /// Get historical cost across multi-org and single root-org accounts.
     /// Cost data for a given month becomes available no later than the 16th of the following month.
+    ///
+    /// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
     pub async fn get_historical_cost_by_org_with_http_info(
         &self,
         start_month: chrono::DateTime<chrono::Utc>,
@@ -1122,6 +1133,8 @@ impl UsageMeteringAPI {
     ///   cursor := response.metadata.pagination.next_record_id
     /// END
     /// ```
+    ///
+    /// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
     pub async fn get_monthly_cost_attribution(
         &self,
         start_month: chrono::DateTime<chrono::Utc>,
@@ -1163,6 +1176,8 @@ impl UsageMeteringAPI {
     ///   cursor := response.metadata.pagination.next_record_id
     /// END
     /// ```
+    ///
+    /// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
     pub async fn get_monthly_cost_attribution_with_http_info(
         &self,
         start_month: chrono::DateTime<chrono::Utc>,
@@ -1299,7 +1314,8 @@ impl UsageMeteringAPI {
 
     /// Get projected cost across multi-org and single root-org accounts.
     /// Projected cost data is only available for the current month and becomes available around the 12th of the month.
-    /// This endpoint requires the usage_read authorization scope.
+    ///
+    /// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
     pub async fn get_projected_cost(
         &self,
         params: GetProjectedCostOptionalParams,
@@ -1321,7 +1337,8 @@ impl UsageMeteringAPI {
 
     /// Get projected cost across multi-org and single root-org accounts.
     /// Projected cost data is only available for the current month and becomes available around the 12th of the month.
-    /// This endpoint requires the usage_read authorization scope.
+    ///
+    /// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
     pub async fn get_projected_cost_with_http_info(
         &self,
         params: GetProjectedCostOptionalParams,
