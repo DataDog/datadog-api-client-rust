@@ -1054,7 +1054,6 @@ pub enum GetUsageTopAvgMetricsError {
 /// The usage metering API allows you to get hourly, daily, and
 /// monthly usage across multiple facets of Datadog.
 /// This API is available to all Pro and Enterprise customers.
-/// Usage is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
 ///
 /// **Note**: Usage data is delayed by up to 72 hours from when it was incurred.
 /// It is retained for 15 months.
@@ -2511,6 +2510,8 @@ impl UsageMeteringAPI {
     }
 
     /// Get billable usage across your account.
+    ///
+    /// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
     pub async fn get_usage_billable_summary(
         &self,
         params: GetUsageBillableSummaryOptionalParams,
@@ -2533,6 +2534,8 @@ impl UsageMeteringAPI {
     }
 
     /// Get billable usage across your account.
+    ///
+    /// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
     pub async fn get_usage_billable_summary_with_http_info(
         &self,
         params: GetUsageBillableSummaryOptionalParams,
@@ -5190,6 +5193,8 @@ impl UsageMeteringAPI {
     }
 
     /// Get all usage across your account.
+    ///
+    /// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
     pub async fn get_usage_summary(
         &self,
         start_month: chrono::DateTime<chrono::Utc>,
@@ -5214,6 +5219,8 @@ impl UsageMeteringAPI {
     }
 
     /// Get all usage across your account.
+    ///
+    /// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
     pub async fn get_usage_summary_with_http_info(
         &self,
         start_month: chrono::DateTime<chrono::Utc>,
