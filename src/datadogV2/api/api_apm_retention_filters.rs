@@ -131,7 +131,7 @@ impl APMRetentionFiltersAPI {
         &self,
         body: crate::datadogV2::model::RetentionFilterCreateRequest,
     ) -> Result<
-        crate::datadogV2::model::RetentionFilterResponse,
+        crate::datadogV2::model::RetentionFilterCreateResponse,
         datadog::Error<CreateApmRetentionFilterError>,
     > {
         match self.create_apm_retention_filter_with_http_info(body).await {
@@ -156,7 +156,7 @@ impl APMRetentionFiltersAPI {
         &self,
         body: crate::datadogV2::model::RetentionFilterCreateRequest,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RetentionFilterResponse>,
+        datadog::ResponseContent<crate::datadogV2::model::RetentionFilterCreateResponse>,
         datadog::Error<CreateApmRetentionFilterError>,
     > {
         let local_configuration = &self.config;
@@ -257,7 +257,7 @@ impl APMRetentionFiltersAPI {
         let local_content = local_resp.text().await?;
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RetentionFilterResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::RetentionFilterCreateResponse>(
                 &local_content,
             ) {
                 Ok(e) => {
