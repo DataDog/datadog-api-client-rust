@@ -251,6 +251,12 @@ pub struct MonthlyUsageAttributionValues {
     /// The total Indexed Logs (180-day Retention) usage by tag(s).
     #[serde(rename = "logs_indexed_180day_usage")]
     pub logs_indexed_180day_usage: Option<f64>,
+    /// The percentage of Indexed Logs (1-day Retention) usage by tag(s).
+    #[serde(rename = "logs_indexed_1day_percentage")]
+    pub logs_indexed_1day_percentage: Option<f64>,
+    /// The total Indexed Logs (1-day Retention) usage by tag(s).
+    #[serde(rename = "logs_indexed_1day_usage")]
+    pub logs_indexed_1day_usage: Option<f64>,
     /// The percentage of Indexed Logs (30-day Retention) usage by tag(s).
     #[serde(rename = "logs_indexed_30day_percentage")]
     pub logs_indexed_30day_percentage: Option<f64>,
@@ -495,6 +501,8 @@ impl MonthlyUsageAttributionValues {
             logs_indexed_15day_usage: None,
             logs_indexed_180day_percentage: None,
             logs_indexed_180day_usage: None,
+            logs_indexed_1day_percentage: None,
+            logs_indexed_1day_usage: None,
             logs_indexed_30day_percentage: None,
             logs_indexed_30day_usage: None,
             logs_indexed_360day_percentage: None,
@@ -951,6 +959,16 @@ impl MonthlyUsageAttributionValues {
         self
     }
 
+    pub fn logs_indexed_1day_percentage(mut self, value: f64) -> Self {
+        self.logs_indexed_1day_percentage = Some(value);
+        self
+    }
+
+    pub fn logs_indexed_1day_usage(mut self, value: f64) -> Self {
+        self.logs_indexed_1day_usage = Some(value);
+        self
+    }
+
     pub fn logs_indexed_30day_percentage(mut self, value: f64) -> Self {
         self.logs_indexed_30day_percentage = Some(value);
         self
@@ -1315,6 +1333,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                 let mut logs_indexed_15day_usage: Option<f64> = None;
                 let mut logs_indexed_180day_percentage: Option<f64> = None;
                 let mut logs_indexed_180day_usage: Option<f64> = None;
+                let mut logs_indexed_1day_percentage: Option<f64> = None;
+                let mut logs_indexed_1day_usage: Option<f64> = None;
                 let mut logs_indexed_30day_percentage: Option<f64> = None;
                 let mut logs_indexed_30day_usage: Option<f64> = None;
                 let mut logs_indexed_360day_percentage: Option<f64> = None;
@@ -1930,6 +1950,20 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                             logs_indexed_180day_usage =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "logs_indexed_1day_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_indexed_1day_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "logs_indexed_1day_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_indexed_1day_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "logs_indexed_30day_percentage" => {
                             if v.is_null() {
                                 continue;
@@ -2378,6 +2412,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                     logs_indexed_15day_usage,
                     logs_indexed_180day_percentage,
                     logs_indexed_180day_usage,
+                    logs_indexed_1day_percentage,
+                    logs_indexed_1day_usage,
                     logs_indexed_30day_percentage,
                     logs_indexed_30day_usage,
                     logs_indexed_360day_percentage,

@@ -172,6 +172,9 @@ pub struct UsageBillableSummaryKeys {
     #[serde(rename = "logs_indexed_180day_sum")]
     pub logs_indexed_180day_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
+    #[serde(rename = "logs_indexed_1day_sum")]
+    pub logs_indexed_1day_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
+    /// Response with properties for each aggregated usage type.
     #[serde(rename = "logs_indexed_30day_sum")]
     pub logs_indexed_30day_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
@@ -340,6 +343,7 @@ impl UsageBillableSummaryKeys {
             logs_forwarding_sum: None,
             logs_indexed_15day_sum: None,
             logs_indexed_180day_sum: None,
+            logs_indexed_1day_sum: None,
             logs_indexed_30day_sum: None,
             logs_indexed_360day_sum: None,
             logs_indexed_3day_sum: None,
@@ -790,6 +794,14 @@ impl UsageBillableSummaryKeys {
         self
     }
 
+    pub fn logs_indexed_1day_sum(
+        mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> Self {
+        self.logs_indexed_1day_sum = Some(value);
+        self
+    }
+
     pub fn logs_indexed_30day_sum(
         mut self,
         value: crate::datadogV1::model::UsageBillableSummaryBody,
@@ -1236,6 +1248,9 @@ impl<'de> Deserialize<'de> for UsageBillableSummaryKeys {
                     crate::datadogV1::model::UsageBillableSummaryBody,
                 > = None;
                 let mut logs_indexed_180day_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut logs_indexed_1day_sum: Option<
                     crate::datadogV1::model::UsageBillableSummaryBody,
                 > = None;
                 let mut logs_indexed_30day_sum: Option<
@@ -1700,6 +1715,13 @@ impl<'de> Deserialize<'de> for UsageBillableSummaryKeys {
                             logs_indexed_180day_sum =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "logs_indexed_1day_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_indexed_1day_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "logs_indexed_30day_sum" => {
                             if v.is_null() {
                                 continue;
@@ -2007,6 +2029,7 @@ impl<'de> Deserialize<'de> for UsageBillableSummaryKeys {
                     logs_forwarding_sum,
                     logs_indexed_15day_sum,
                     logs_indexed_180day_sum,
+                    logs_indexed_1day_sum,
                     logs_indexed_30day_sum,
                     logs_indexed_360day_sum,
                     logs_indexed_3day_sum,
