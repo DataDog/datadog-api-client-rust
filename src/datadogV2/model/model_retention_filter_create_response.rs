@@ -10,43 +10,43 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RetentionFilterResponse {
+pub struct RetentionFilterCreateResponse {
     /// The definition of the retention filter.
     #[serde(rename = "data")]
-    pub data: Option<crate::datadogV2::model::RetentionFilterAll>,
+    pub data: Option<crate::datadogV2::model::RetentionFilter>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
 }
 
-impl RetentionFilterResponse {
-    pub fn new() -> RetentionFilterResponse {
-        RetentionFilterResponse {
+impl RetentionFilterCreateResponse {
+    pub fn new() -> RetentionFilterCreateResponse {
+        RetentionFilterCreateResponse {
             data: None,
             _unparsed: false,
         }
     }
 
-    pub fn data(mut self, value: crate::datadogV2::model::RetentionFilterAll) -> Self {
+    pub fn data(mut self, value: crate::datadogV2::model::RetentionFilter) -> Self {
         self.data = Some(value);
         self
     }
 }
 
-impl Default for RetentionFilterResponse {
+impl Default for RetentionFilterCreateResponse {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for RetentionFilterResponse {
+impl<'de> Deserialize<'de> for RetentionFilterCreateResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RetentionFilterResponseVisitor;
-        impl<'a> Visitor<'a> for RetentionFilterResponseVisitor {
-            type Value = RetentionFilterResponse;
+        struct RetentionFilterCreateResponseVisitor;
+        impl<'a> Visitor<'a> for RetentionFilterCreateResponseVisitor {
+            type Value = RetentionFilterCreateResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -56,7 +56,7 @@ impl<'de> Deserialize<'de> for RetentionFilterResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::RetentionFilterAll> = None;
+                let mut data: Option<crate::datadogV2::model::RetentionFilter> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -71,12 +71,12 @@ impl<'de> Deserialize<'de> for RetentionFilterResponse {
                     }
                 }
 
-                let content = RetentionFilterResponse { data, _unparsed };
+                let content = RetentionFilterCreateResponse { data, _unparsed };
 
                 Ok(content)
             }
         }
 
-        deserializer.deserialize_any(RetentionFilterResponseVisitor)
+        deserializer.deserialize_any(RetentionFilterCreateResponseVisitor)
     }
 }
