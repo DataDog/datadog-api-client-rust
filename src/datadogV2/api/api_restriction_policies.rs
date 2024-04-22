@@ -304,18 +304,18 @@ impl RestrictionPoliciesAPI {
     ///
     /// #### Supported resources
     /// Restriction policies can be applied to the following resources:
-    /// - Connections: `connection`
     /// - Dashboards: `dashboard`
     /// - Notebooks: `notebook`
+    /// - Powerpacks: `powerpack`
     /// - Security Rules: `security-rule`
     /// - Service Level Objectives: `slo`
     ///
     /// #### Supported relations for resources
     /// Resource Type            | Supported Relations
     /// -------------------------|--------------------------
-    /// Connections              | `viewer`, `editor`, `resolver`
     /// Dashboards               | `viewer`, `editor`
     /// Notebooks                | `viewer`, `editor`
+    /// Powerpacks               | `viewer`, `editor`
     /// Security Rules           | `viewer`, `editor`
     /// Service Level Objectives | `viewer`, `editor`
     pub async fn update_restriction_policy(
@@ -347,18 +347,18 @@ impl RestrictionPoliciesAPI {
     ///
     /// #### Supported resources
     /// Restriction policies can be applied to the following resources:
-    /// - Connections: `connection`
     /// - Dashboards: `dashboard`
     /// - Notebooks: `notebook`
+    /// - Powerpacks: `powerpack`
     /// - Security Rules: `security-rule`
     /// - Service Level Objectives: `slo`
     ///
     /// #### Supported relations for resources
     /// Resource Type            | Supported Relations
     /// -------------------------|--------------------------
-    /// Connections              | `viewer`, `editor`, `resolver`
     /// Dashboards               | `viewer`, `editor`
     /// Notebooks                | `viewer`, `editor`
+    /// Powerpacks               | `viewer`, `editor`
     /// Security Rules           | `viewer`, `editor`
     /// Service Level Objectives | `viewer`, `editor`
     pub async fn update_restriction_policy_with_http_info(
