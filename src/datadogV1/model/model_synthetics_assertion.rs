@@ -13,6 +13,9 @@ pub enum SyntheticsAssertion {
     SyntheticsAssertionJSONPathTarget(
         Box<crate::datadogV1::model::SyntheticsAssertionJSONPathTarget>,
     ),
+    SyntheticsAssertionJSONSchemaTarget(
+        Box<crate::datadogV1::model::SyntheticsAssertionJSONSchemaTarget>,
+    ),
     SyntheticsAssertionXPathTarget(Box<crate::datadogV1::model::SyntheticsAssertionXPathTarget>),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
@@ -37,6 +40,14 @@ impl<'de> Deserialize<'de> for SyntheticsAssertion {
         {
             if !_v._unparsed {
                 return Ok(SyntheticsAssertion::SyntheticsAssertionJSONPathTarget(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV1::model::SyntheticsAssertionJSONSchemaTarget>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(SyntheticsAssertion::SyntheticsAssertionJSONSchemaTarget(_v));
             }
         }
         if let Ok(_v) = serde_json::from_value::<
