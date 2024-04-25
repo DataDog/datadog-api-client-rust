@@ -39,9 +39,7 @@ def type_to_rust(schema, alternative_name=None, render_nullable=False, render_op
     # special case for additionalProperties: true
     if schema is True or schema == {}:
         return "serde_json::Value"
-    if "UTC epoch timestamp in seconds when the downtime for the group expires." in schema.get("description", ""):
-        print(schema)
-        print(render_nullable, render_option)
+
     if "enum" not in schema:
         name = formatter.simple_type(schema, render_nullable=render_nullable, render_option=render_option)
         if name is not None:
