@@ -28,7 +28,7 @@ pub struct MonthlyCostAttributionAttributes {
     /// configured for usage attribution](<https://docs.datadoghq.com/account_management/billing/usage_attribution/#getting-started>).
     /// In this scenario the API returns the total cost, not broken down by tags.
     #[serde(rename = "tags", default, with = "::serde_with::rust::double_option")]
-    pub tags: Option<Option<std::collections::BTreeMap<String, Option<Vec<String>>>>>,
+    pub tags: Option<Option<std::collections::BTreeMap<String, Vec<String>>>>,
     /// Shows the most recent hour in the current months for all organizations for which all costs were calculated.
     #[serde(rename = "updated_at")]
     pub updated_at: Option<String>,
@@ -74,10 +74,7 @@ impl MonthlyCostAttributionAttributes {
         self
     }
 
-    pub fn tags(
-        mut self,
-        value: Option<std::collections::BTreeMap<String, Option<Vec<String>>>>,
-    ) -> Self {
+    pub fn tags(mut self, value: Option<std::collections::BTreeMap<String, Vec<String>>>) -> Self {
         self.tags = Some(value);
         self
     }
@@ -120,9 +117,8 @@ impl<'de> Deserialize<'de> for MonthlyCostAttributionAttributes {
                 let mut org_name: Option<String> = None;
                 let mut public_id: Option<String> = None;
                 let mut tag_config_source: Option<String> = None;
-                let mut tags: Option<
-                    Option<std::collections::BTreeMap<String, Option<Vec<String>>>>,
-                > = None;
+                let mut tags: Option<Option<std::collections::BTreeMap<String, Vec<String>>>> =
+                    None;
                 let mut updated_at: Option<String> = None;
                 let mut values: Option<std::collections::BTreeMap<String, serde_json::Value>> =
                     None;

@@ -16,7 +16,7 @@ pub struct CheckCanDeleteMonitorResponse {
     pub data: crate::datadogV1::model::CheckCanDeleteMonitorResponseData,
     /// A mapping of Monitor ID to strings denoting where it's used.
     #[serde(rename = "errors", default, with = "::serde_with::rust::double_option")]
-    pub errors: Option<Option<std::collections::BTreeMap<String, Option<Vec<String>>>>>,
+    pub errors: Option<Option<std::collections::BTreeMap<String, Vec<String>>>>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -35,7 +35,7 @@ impl CheckCanDeleteMonitorResponse {
 
     pub fn errors(
         mut self,
-        value: Option<std::collections::BTreeMap<String, Option<Vec<String>>>>,
+        value: Option<std::collections::BTreeMap<String, Vec<String>>>,
     ) -> Self {
         self.errors = Some(value);
         self
@@ -61,9 +61,8 @@ impl<'de> Deserialize<'de> for CheckCanDeleteMonitorResponse {
             {
                 let mut data: Option<crate::datadogV1::model::CheckCanDeleteMonitorResponseData> =
                     None;
-                let mut errors: Option<
-                    Option<std::collections::BTreeMap<String, Option<Vec<String>>>>,
-                > = None;
+                let mut errors: Option<Option<std::collections::BTreeMap<String, Vec<String>>>> =
+                    None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {

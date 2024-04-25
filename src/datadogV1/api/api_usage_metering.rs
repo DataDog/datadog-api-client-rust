@@ -1231,10 +1231,12 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::UsageCustomReportsResponse>(
@@ -1405,10 +1407,12 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::HourlyUsageAttributionResponse>(
@@ -1535,10 +1539,12 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::UsageIncidentManagementResponse>(
@@ -1665,10 +1671,12 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::UsageIngestedSpansResponse>(
@@ -1801,10 +1809,12 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::UsageCustomReportsResponse>(
@@ -1985,10 +1995,12 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::MonthlyUsageAttributionResponse>(
@@ -2102,10 +2114,12 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::UsageSpecifiedCustomReportsResponse>(
@@ -2219,10 +2233,12 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::UsageSpecifiedCustomReportsResponse>(
@@ -2349,10 +2365,12 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::UsageAnalyzedLogsResponse>(
@@ -2479,10 +2497,12 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::UsageAuditLogsResponse>(
@@ -2602,10 +2622,12 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::UsageBillableSummaryResponse>(
@@ -2729,10 +2751,12 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::UsageCIVisibilityResponse>(
@@ -2853,10 +2877,12 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::UsageCWSResponse>(&local_content)
@@ -2983,10 +3009,12 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<
@@ -3108,10 +3136,12 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::UsageDBMResponse>(&local_content)
@@ -3234,10 +3264,12 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::UsageFargateResponse>(
@@ -3359,10 +3391,12 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::UsageHostsResponse>(
@@ -3489,10 +3523,12 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::UsageIndexedSpansResponse>(
@@ -3619,10 +3655,12 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::UsageIoTResponse>(&local_content)
@@ -3743,10 +3781,12 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::UsageLambdaResponse>(
@@ -3867,10 +3907,12 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::UsageLogsResponse>(&local_content)
@@ -4005,10 +4047,12 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::UsageLogsByIndexResponse>(
@@ -4135,10 +4179,12 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::UsageLogsByRetentionResponse>(
@@ -4265,10 +4311,12 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::UsageNetworkFlowsResponse>(
@@ -4395,10 +4443,12 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::UsageNetworkHostsResponse>(
@@ -4525,10 +4575,12 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::UsageOnlineArchiveResponse>(
@@ -4655,10 +4707,12 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::UsageProfilingResponse>(
@@ -4790,10 +4844,12 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::UsageRumSessionsResponse>(
@@ -4918,10 +4974,12 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::UsageRumUnitsResponse>(
@@ -5042,10 +5100,12 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::UsageSDSResponse>(&local_content)
@@ -5164,10 +5224,12 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::UsageSNMPResponse>(&local_content)
@@ -5297,10 +5359,12 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::UsageSummaryResponse>(
@@ -5427,10 +5491,12 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::UsageSyntheticsResponse>(
@@ -5557,10 +5623,12 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::UsageSyntheticsAPIResponse>(
@@ -5687,10 +5755,12 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::UsageSyntheticsBrowserResponse>(
@@ -5817,10 +5887,12 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::UsageTimeseriesResponse>(
@@ -5965,10 +6037,12 @@ impl UsageMeteringAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::UsageTopAvgMetricsResponse>(
