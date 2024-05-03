@@ -32,7 +32,7 @@ pub struct MonthlyUsageAttributionBody {
     /// configured for usage attribution](<https://docs.datadoghq.com/account_management/billing/usage_attribution/#getting-started>).
     /// In this scenario the API returns the total usage, not broken down by tags.
     #[serde(rename = "tags", default, with = "::serde_with::rust::double_option")]
-    pub tags: Option<Option<std::collections::BTreeMap<String, Option<Vec<String>>>>>,
+    pub tags: Option<Option<std::collections::BTreeMap<String, Vec<String>>>>,
     /// Datetime of the most recent update to the usage values.
     #[serde(rename = "updated_at")]
     pub updated_at: Option<chrono::DateTime<chrono::Utc>>,
@@ -84,10 +84,7 @@ impl MonthlyUsageAttributionBody {
         self
     }
 
-    pub fn tags(
-        mut self,
-        value: Option<std::collections::BTreeMap<String, Option<Vec<String>>>>,
-    ) -> Self {
+    pub fn tags(mut self, value: Option<std::collections::BTreeMap<String, Vec<String>>>) -> Self {
         self.tags = Some(value);
         self
     }
@@ -131,9 +128,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionBody {
                 let mut public_id: Option<String> = None;
                 let mut region: Option<String> = None;
                 let mut tag_config_source: Option<String> = None;
-                let mut tags: Option<
-                    Option<std::collections::BTreeMap<String, Option<Vec<String>>>>,
-                > = None;
+                let mut tags: Option<Option<std::collections::BTreeMap<String, Vec<String>>>> =
+                    None;
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut values: Option<crate::datadogV1::model::MonthlyUsageAttributionValues> =
                     None;

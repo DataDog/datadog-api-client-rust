@@ -497,10 +497,12 @@ impl MetricsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::MetricBulkTagConfigResponse>(
@@ -663,10 +665,12 @@ impl MetricsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::MetricTagConfigurationResponse>(
@@ -824,10 +828,12 @@ impl MetricsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::MetricBulkTagConfigResponse>(
@@ -922,10 +928,12 @@ impl MetricsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             Ok(datadog::ResponseContent {
@@ -1055,10 +1063,12 @@ impl MetricsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::MetricEstimateResponse>(
@@ -1177,10 +1187,12 @@ impl MetricsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<
@@ -1283,10 +1295,12 @@ impl MetricsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::MetricAssetsResponse>(
@@ -1393,10 +1407,12 @@ impl MetricsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::MetricTagConfigurationResponse>(
@@ -1541,10 +1557,12 @@ impl MetricsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<
@@ -1652,10 +1670,12 @@ impl MetricsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::MetricAllTagsResponse>(
@@ -1766,10 +1786,12 @@ impl MetricsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::MetricVolumesResponse>(
@@ -1930,10 +1952,12 @@ impl MetricsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::ScalarFormulaQueryResponse>(
@@ -2092,10 +2116,12 @@ impl MetricsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::TimeseriesFormulaQueryResponse>(
@@ -2272,10 +2298,12 @@ impl MetricsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::IntakePayloadAccepted>(
@@ -2438,10 +2466,12 @@ impl MetricsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::MetricTagConfigurationResponse>(

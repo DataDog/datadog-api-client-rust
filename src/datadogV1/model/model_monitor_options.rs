@@ -168,7 +168,7 @@ pub struct MonitorOptions {
     /// Information about the downtime applied to the monitor. Only shows v1 downtimes.
     #[deprecated]
     #[serde(rename = "silenced")]
-    pub silenced: Option<std::collections::BTreeMap<String, i64>>,
+    pub silenced: Option<std::collections::BTreeMap<String, Option<i64>>>,
     /// ID of the corresponding Synthetic check.
     #[deprecated]
     #[serde(
@@ -400,7 +400,7 @@ impl MonitorOptions {
     }
 
     #[allow(deprecated)]
-    pub fn silenced(mut self, value: std::collections::BTreeMap<String, i64>) -> Self {
+    pub fn silenced(mut self, value: std::collections::BTreeMap<String, Option<i64>>) -> Self {
         self.silenced = Some(value);
         self
     }
@@ -498,7 +498,7 @@ impl<'de> Deserialize<'de> for MonitorOptions {
                 let mut scheduling_options: Option<
                     crate::datadogV1::model::MonitorOptionsSchedulingOptions,
                 > = None;
-                let mut silenced: Option<std::collections::BTreeMap<String, i64>> = None;
+                let mut silenced: Option<std::collections::BTreeMap<String, Option<i64>>> = None;
                 let mut synthetics_check_id: Option<Option<String>> = None;
                 let mut threshold_windows: Option<
                     crate::datadogV1::model::MonitorThresholdWindowOptions,
