@@ -10,7 +10,7 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
-/// CreateCSMThreatsAgentRuleError is a struct for typed errors of method [`CloudWorkloadSecurityAPI::create_csm_threats_agent_rule`]
+/// CreateCSMThreatsAgentRuleError is a struct for typed errors of method [`CSMThreatsAPI::create_csm_threats_agent_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateCSMThreatsAgentRuleError {
@@ -18,7 +18,7 @@ pub enum CreateCSMThreatsAgentRuleError {
     UnknownValue(serde_json::Value),
 }
 
-/// CreateCloudWorkloadSecurityAgentRuleError is a struct for typed errors of method [`CloudWorkloadSecurityAPI::create_cloud_workload_security_agent_rule`]
+/// CreateCloudWorkloadSecurityAgentRuleError is a struct for typed errors of method [`CSMThreatsAPI::create_cloud_workload_security_agent_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateCloudWorkloadSecurityAgentRuleError {
@@ -26,7 +26,7 @@ pub enum CreateCloudWorkloadSecurityAgentRuleError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteCSMThreatsAgentRuleError is a struct for typed errors of method [`CloudWorkloadSecurityAPI::delete_csm_threats_agent_rule`]
+/// DeleteCSMThreatsAgentRuleError is a struct for typed errors of method [`CSMThreatsAPI::delete_csm_threats_agent_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteCSMThreatsAgentRuleError {
@@ -34,7 +34,7 @@ pub enum DeleteCSMThreatsAgentRuleError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteCloudWorkloadSecurityAgentRuleError is a struct for typed errors of method [`CloudWorkloadSecurityAPI::delete_cloud_workload_security_agent_rule`]
+/// DeleteCloudWorkloadSecurityAgentRuleError is a struct for typed errors of method [`CSMThreatsAPI::delete_cloud_workload_security_agent_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteCloudWorkloadSecurityAgentRuleError {
@@ -42,7 +42,7 @@ pub enum DeleteCloudWorkloadSecurityAgentRuleError {
     UnknownValue(serde_json::Value),
 }
 
-/// DownloadCSMThreatsPolicyError is a struct for typed errors of method [`CloudWorkloadSecurityAPI::download_csm_threats_policy`]
+/// DownloadCSMThreatsPolicyError is a struct for typed errors of method [`CSMThreatsAPI::download_csm_threats_policy`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DownloadCSMThreatsPolicyError {
@@ -50,7 +50,7 @@ pub enum DownloadCSMThreatsPolicyError {
     UnknownValue(serde_json::Value),
 }
 
-/// DownloadCloudWorkloadPolicyFileError is a struct for typed errors of method [`CloudWorkloadSecurityAPI::download_cloud_workload_policy_file`]
+/// DownloadCloudWorkloadPolicyFileError is a struct for typed errors of method [`CSMThreatsAPI::download_cloud_workload_policy_file`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DownloadCloudWorkloadPolicyFileError {
@@ -58,7 +58,7 @@ pub enum DownloadCloudWorkloadPolicyFileError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetCSMThreatsAgentRuleError is a struct for typed errors of method [`CloudWorkloadSecurityAPI::get_csm_threats_agent_rule`]
+/// GetCSMThreatsAgentRuleError is a struct for typed errors of method [`CSMThreatsAPI::get_csm_threats_agent_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetCSMThreatsAgentRuleError {
@@ -66,7 +66,7 @@ pub enum GetCSMThreatsAgentRuleError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetCloudWorkloadSecurityAgentRuleError is a struct for typed errors of method [`CloudWorkloadSecurityAPI::get_cloud_workload_security_agent_rule`]
+/// GetCloudWorkloadSecurityAgentRuleError is a struct for typed errors of method [`CSMThreatsAPI::get_cloud_workload_security_agent_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetCloudWorkloadSecurityAgentRuleError {
@@ -74,7 +74,7 @@ pub enum GetCloudWorkloadSecurityAgentRuleError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListCSMThreatsAgentRulesError is a struct for typed errors of method [`CloudWorkloadSecurityAPI::list_csm_threats_agent_rules`]
+/// ListCSMThreatsAgentRulesError is a struct for typed errors of method [`CSMThreatsAPI::list_csm_threats_agent_rules`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListCSMThreatsAgentRulesError {
@@ -82,7 +82,7 @@ pub enum ListCSMThreatsAgentRulesError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListCloudWorkloadSecurityAgentRulesError is a struct for typed errors of method [`CloudWorkloadSecurityAPI::list_cloud_workload_security_agent_rules`]
+/// ListCloudWorkloadSecurityAgentRulesError is a struct for typed errors of method [`CSMThreatsAPI::list_cloud_workload_security_agent_rules`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListCloudWorkloadSecurityAgentRulesError {
@@ -90,7 +90,7 @@ pub enum ListCloudWorkloadSecurityAgentRulesError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateCSMThreatsAgentRuleError is a struct for typed errors of method [`CloudWorkloadSecurityAPI::update_csm_threats_agent_rule`]
+/// UpdateCSMThreatsAgentRuleError is a struct for typed errors of method [`CSMThreatsAPI::update_csm_threats_agent_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateCSMThreatsAgentRuleError {
@@ -98,7 +98,7 @@ pub enum UpdateCSMThreatsAgentRuleError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateCloudWorkloadSecurityAgentRuleError is a struct for typed errors of method [`CloudWorkloadSecurityAPI::update_cloud_workload_security_agent_rule`]
+/// UpdateCloudWorkloadSecurityAgentRuleError is a struct for typed errors of method [`CSMThreatsAPI::update_cloud_workload_security_agent_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateCloudWorkloadSecurityAgentRuleError {
@@ -106,20 +106,20 @@ pub enum UpdateCloudWorkloadSecurityAgentRuleError {
     UnknownValue(serde_json::Value),
 }
 
-/// Workload activity security rules for generating events using the Datadog security Agent. See the [Setting up CSM Workload Security page](<https://docs.datadoghq.com/security/cloud_security_management/setup/csm_workload_security/>) for more information.
+/// Cloud Security Management Threats (CSM Threats) monitors file, network, and process activity across your environment to detect real-time threats to your infrastructure. See [Cloud Security Management Threats](<https://docs.datadoghq.com/security/threats/>) for more information on setting up CSM Threats.
 #[derive(Debug, Clone)]
-pub struct CloudWorkloadSecurityAPI {
+pub struct CSMThreatsAPI {
     config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
-impl Default for CloudWorkloadSecurityAPI {
+impl Default for CSMThreatsAPI {
     fn default() -> Self {
         Self::with_config(datadog::Configuration::default())
     }
 }
 
-impl CloudWorkloadSecurityAPI {
+impl CSMThreatsAPI {
     pub fn new() -> Self {
         Self::default()
     }

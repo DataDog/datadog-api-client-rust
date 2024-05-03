@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 #[serde(untagged)]
 pub enum UserTeamIncluded {
     User(Box<crate::datadogV2::model::User>),
+    Team(Box<crate::datadogV2::model::Team>),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -22,6 +23,12 @@ impl<'de> Deserialize<'de> for UserTeamIncluded {
         {
             if !_v._unparsed {
                 return Ok(UserTeamIncluded::User(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::Team>>(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(UserTeamIncluded::Team(_v));
             }
         }
 

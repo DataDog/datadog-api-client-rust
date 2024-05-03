@@ -92,8 +92,7 @@ pub struct ApiInstances {
         Option<datadogV2::api_security_monitoring::SecurityMonitoringAPI>,
     pub v2_api_powerpack: Option<datadogV2::api_powerpack::PowerpackAPI>,
     pub v2_api_processes: Option<datadogV2::api_processes::ProcessesAPI>,
-    pub v2_api_cloud_workload_security:
-        Option<datadogV2::api_cloud_workload_security::CloudWorkloadSecurityAPI>,
+    pub v2_api_csm_threats: Option<datadogV2::api_csm_threats::CSMThreatsAPI>,
     pub v2_api_restriction_policies:
         Option<datadogV2::api_restriction_policies::RestrictionPoliciesAPI>,
     pub v2_api_rum: Option<datadogV2::api_rum::RUMAPI>,
@@ -617,11 +616,13 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 ),
             );
         }
-        "CloudWorkloadSecurity" => {
-            world.api_instances.v2_api_cloud_workload_security = Some(datadogV2::api_cloud_workload_security::CloudWorkloadSecurityAPI::with_client_and_config(
-                world.config.clone(),
-                world.http_client.as_ref().unwrap().clone()
-            ));
+        "CSMThreats" => {
+            world.api_instances.v2_api_csm_threats = Some(
+                datadogV2::api_csm_threats::CSMThreatsAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
         }
         "RestrictionPolicies" => {
             world.api_instances.v2_api_restriction_policies = Some(
@@ -18421,7 +18422,7 @@ fn test_v2_list_csm_threats_agent_rules(
 ) {
     let api = world
         .api_instances
-        .v2_api_cloud_workload_security
+        .v2_api_csm_threats
         .as_ref()
         .expect("api instance not found");
     let response = match block_on(api.list_csm_threats_agent_rules_with_http_info()) {
@@ -18448,7 +18449,7 @@ fn test_v2_create_csm_threats_agent_rule(
 ) {
     let api = world
         .api_instances
-        .v2_api_cloud_workload_security
+        .v2_api_csm_threats
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
@@ -18476,7 +18477,7 @@ fn test_v2_delete_csm_threats_agent_rule(
 ) {
     let api = world
         .api_instances
-        .v2_api_cloud_workload_security
+        .v2_api_csm_threats
         .as_ref()
         .expect("api instance not found");
     let agent_rule_id =
@@ -18505,7 +18506,7 @@ fn test_v2_get_csm_threats_agent_rule(
 ) {
     let api = world
         .api_instances
-        .v2_api_cloud_workload_security
+        .v2_api_csm_threats
         .as_ref()
         .expect("api instance not found");
     let agent_rule_id =
@@ -18534,7 +18535,7 @@ fn test_v2_update_csm_threats_agent_rule(
 ) {
     let api = world
         .api_instances
-        .v2_api_cloud_workload_security
+        .v2_api_csm_threats
         .as_ref()
         .expect("api instance not found");
     let agent_rule_id =
@@ -18565,7 +18566,7 @@ fn test_v2_download_csm_threats_policy(
 ) {
     let api = world
         .api_instances
-        .v2_api_cloud_workload_security
+        .v2_api_csm_threats
         .as_ref()
         .expect("api instance not found");
     let response = match block_on(api.download_csm_threats_policy_with_http_info()) {
@@ -18592,7 +18593,7 @@ fn test_v2_download_cloud_workload_policy_file(
 ) {
     let api = world
         .api_instances
-        .v2_api_cloud_workload_security
+        .v2_api_csm_threats
         .as_ref()
         .expect("api instance not found");
     let response = match block_on(api.download_cloud_workload_policy_file_with_http_info()) {
@@ -18619,7 +18620,7 @@ fn test_v2_list_cloud_workload_security_agent_rules(
 ) {
     let api = world
         .api_instances
-        .v2_api_cloud_workload_security
+        .v2_api_csm_threats
         .as_ref()
         .expect("api instance not found");
     let response = match block_on(api.list_cloud_workload_security_agent_rules_with_http_info()) {
@@ -18646,7 +18647,7 @@ fn test_v2_create_cloud_workload_security_agent_rule(
 ) {
     let api = world
         .api_instances
-        .v2_api_cloud_workload_security
+        .v2_api_csm_threats
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
@@ -18675,7 +18676,7 @@ fn test_v2_delete_cloud_workload_security_agent_rule(
 ) {
     let api = world
         .api_instances
-        .v2_api_cloud_workload_security
+        .v2_api_csm_threats
         .as_ref()
         .expect("api instance not found");
     let agent_rule_id =
@@ -18706,7 +18707,7 @@ fn test_v2_get_cloud_workload_security_agent_rule(
 ) {
     let api = world
         .api_instances
-        .v2_api_cloud_workload_security
+        .v2_api_csm_threats
         .as_ref()
         .expect("api instance not found");
     let agent_rule_id =
@@ -18736,7 +18737,7 @@ fn test_v2_update_cloud_workload_security_agent_rule(
 ) {
     let api = world
         .api_instances
-        .v2_api_cloud_workload_security
+        .v2_api_csm_threats
         .as_ref()
         .expect("api instance not found");
     let agent_rule_id =
