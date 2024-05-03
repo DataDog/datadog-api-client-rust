@@ -75,7 +75,8 @@ def type_to_rust(schema, alternative_name=None, render_nullable=False, render_op
     elif type_ == "object":
         name = "serde_json::Value"
         if "additionalProperties" in schema:
-            name = type_to_rust(schema["additionalProperties"], render_nullable=render_nullable, render_option=False, version=version)
+            subschema_nullable = schema["additionalProperties"].get("nullable", False)
+            name = type_to_rust(schema["additionalProperties"], render_nullable=subschema_nullable, render_option=False, version=version)
         return option_wrapper(f"std::collections::BTreeMap<String, {name}>", render_option, render_nullable)
 
     raise ValueError(f"Unknown type {type_}")

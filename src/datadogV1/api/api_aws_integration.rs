@@ -364,10 +364,12 @@ impl AWSIntegrationAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::AWSAccountCreateResponse>(
@@ -519,10 +521,12 @@ impl AWSIntegrationAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::AWSEventBridgeCreateResponse>(
@@ -671,10 +675,12 @@ impl AWSIntegrationAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<std::collections::BTreeMap<String, serde_json::Value>>(
@@ -823,10 +829,12 @@ impl AWSIntegrationAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::AWSAccountCreateResponse>(
@@ -975,10 +983,12 @@ impl AWSIntegrationAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<std::collections::BTreeMap<String, serde_json::Value>>(
@@ -1130,10 +1140,12 @@ impl AWSIntegrationAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::AWSEventBridgeDeleteResponse>(
@@ -1282,10 +1294,12 @@ impl AWSIntegrationAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<std::collections::BTreeMap<String, serde_json::Value>>(
@@ -1404,10 +1418,12 @@ impl AWSIntegrationAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::AWSAccountListResponse>(
@@ -1508,10 +1524,12 @@ impl AWSIntegrationAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::AWSEventBridgeListResponse>(
@@ -1616,10 +1634,12 @@ impl AWSIntegrationAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::AWSTagFilterListResponse>(
@@ -1717,10 +1737,12 @@ impl AWSIntegrationAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<Vec<String>>(&local_content) {
@@ -1887,10 +1909,12 @@ impl AWSIntegrationAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<std::collections::BTreeMap<String, serde_json::Value>>(

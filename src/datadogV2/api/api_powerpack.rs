@@ -270,10 +270,12 @@ impl PowerpackAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::PowerpackResponse>(&local_content)
@@ -362,10 +364,12 @@ impl PowerpackAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             Ok(datadog::ResponseContent {
@@ -459,10 +463,12 @@ impl PowerpackAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::PowerpackResponse>(&local_content)
@@ -609,10 +615,12 @@ impl PowerpackAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::ListPowerpacksResponse>(
@@ -765,10 +773,12 @@ impl PowerpackAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::PowerpackResponse>(&local_content)

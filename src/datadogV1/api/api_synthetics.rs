@@ -520,10 +520,12 @@ impl SyntheticsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::SyntheticsGlobalVariable>(
@@ -674,10 +676,12 @@ impl SyntheticsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<
@@ -827,10 +831,12 @@ impl SyntheticsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::SyntheticsAPITest>(&local_content)
@@ -981,10 +987,12 @@ impl SyntheticsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::SyntheticsBrowserTest>(
@@ -1077,10 +1085,12 @@ impl SyntheticsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             Ok(datadog::ResponseContent {
@@ -1166,10 +1176,12 @@ impl SyntheticsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             Ok(datadog::ResponseContent {
@@ -1311,10 +1323,12 @@ impl SyntheticsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::SyntheticsDeleteTestsResponse>(
@@ -1468,10 +1482,12 @@ impl SyntheticsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::SyntheticsGlobalVariable>(
@@ -1574,10 +1590,12 @@ impl SyntheticsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::SyntheticsAPITest>(&local_content)
@@ -1711,10 +1729,12 @@ impl SyntheticsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<
@@ -1825,10 +1845,12 @@ impl SyntheticsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::SyntheticsAPITestResultFull>(
@@ -1932,10 +1954,12 @@ impl SyntheticsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::SyntheticsBrowserTest>(
@@ -2071,10 +2095,12 @@ impl SyntheticsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<
@@ -2185,10 +2211,12 @@ impl SyntheticsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::SyntheticsBrowserTestResultFull>(
@@ -2292,10 +2320,12 @@ impl SyntheticsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::SyntheticsGlobalVariable>(
@@ -2399,10 +2429,12 @@ impl SyntheticsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::SyntheticsPrivateLocation>(
@@ -2506,10 +2538,12 @@ impl SyntheticsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::SyntheticsBatchDetails>(
@@ -2607,10 +2641,12 @@ impl SyntheticsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<Vec<String>>(&local_content) {
@@ -2709,10 +2745,12 @@ impl SyntheticsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::SyntheticsTestDetails>(
@@ -2812,10 +2850,12 @@ impl SyntheticsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<
@@ -2917,10 +2957,12 @@ impl SyntheticsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::SyntheticsLocations>(
@@ -3071,10 +3113,12 @@ impl SyntheticsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::SyntheticsListTestsResponse>(
@@ -3223,10 +3267,12 @@ impl SyntheticsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::SyntheticsTestDetails>(
@@ -3374,10 +3420,12 @@ impl SyntheticsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::SyntheticsTriggerCITestsResponse>(
@@ -3526,10 +3574,12 @@ impl SyntheticsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::SyntheticsTriggerCITestsResponse>(
@@ -3678,10 +3728,12 @@ impl SyntheticsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::SyntheticsAPITest>(&local_content)
@@ -3835,10 +3887,12 @@ impl SyntheticsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::SyntheticsBrowserTest>(
@@ -3993,10 +4047,12 @@ impl SyntheticsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::SyntheticsPrivateLocation>(
@@ -4145,10 +4201,12 @@ impl SyntheticsAPI {
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
 
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<bool>(&local_content) {

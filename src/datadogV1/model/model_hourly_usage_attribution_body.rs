@@ -32,7 +32,7 @@ pub struct HourlyUsageAttributionBody {
     /// configured for usage attribution](<https://docs.datadoghq.com/account_management/billing/usage_attribution/#getting-started>).
     /// In this scenario the API returns the total usage, not broken down by tags.
     #[serde(rename = "tags", default, with = "::serde_with::rust::double_option")]
-    pub tags: Option<Option<std::collections::BTreeMap<String, Option<Vec<String>>>>>,
+    pub tags: Option<Option<std::collections::BTreeMap<String, Vec<String>>>>,
     /// Total product usage for the given tags within the hour.
     #[serde(rename = "total_usage_sum")]
     pub total_usage_sum: Option<f64>,
@@ -88,10 +88,7 @@ impl HourlyUsageAttributionBody {
         self
     }
 
-    pub fn tags(
-        mut self,
-        value: Option<std::collections::BTreeMap<String, Option<Vec<String>>>>,
-    ) -> Self {
+    pub fn tags(mut self, value: Option<std::collections::BTreeMap<String, Vec<String>>>) -> Self {
         self.tags = Some(value);
         self
     }
@@ -143,9 +140,8 @@ impl<'de> Deserialize<'de> for HourlyUsageAttributionBody {
                 let mut public_id: Option<String> = None;
                 let mut region: Option<String> = None;
                 let mut tag_config_source: Option<String> = None;
-                let mut tags: Option<
-                    Option<std::collections::BTreeMap<String, Option<Vec<String>>>>,
-                > = None;
+                let mut tags: Option<Option<std::collections::BTreeMap<String, Vec<String>>>> =
+                    None;
                 let mut total_usage_sum: Option<f64> = None;
                 let mut updated_at: Option<String> = None;
                 let mut usage_type: Option<
