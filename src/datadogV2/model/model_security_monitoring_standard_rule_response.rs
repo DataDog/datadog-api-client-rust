@@ -24,6 +24,9 @@ pub struct SecurityMonitoringStandardRuleResponse {
     /// User ID of the user who created the rule.
     #[serde(rename = "creationAuthorId")]
     pub creation_author_id: Option<i64>,
+    /// Default Tags for default rules (included in tags)
+    #[serde(rename = "defaultTags")]
+    pub default_tags: Option<Vec<String>>,
     /// When the rule will be deprecated, timestamp in milliseconds.
     #[serde(rename = "deprecationDate")]
     pub deprecation_date: Option<i64>,
@@ -85,6 +88,7 @@ impl SecurityMonitoringStandardRuleResponse {
             compliance_signal_options: None,
             created_at: None,
             creation_author_id: None,
+            default_tags: None,
             deprecation_date: None,
             filters: None,
             has_extended_title: None,
@@ -128,6 +132,11 @@ impl SecurityMonitoringStandardRuleResponse {
 
     pub fn creation_author_id(mut self, value: i64) -> Self {
         self.creation_author_id = Some(value);
+        self
+    }
+
+    pub fn default_tags(mut self, value: Vec<String>) -> Self {
+        self.default_tags = Some(value);
         self
     }
 
@@ -254,6 +263,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleResponse {
                 > = None;
                 let mut created_at: Option<i64> = None;
                 let mut creation_author_id: Option<i64> = None;
+                let mut default_tags: Option<Vec<String>> = None;
                 let mut deprecation_date: Option<i64> = None;
                 let mut filters: Option<Vec<crate::datadogV2::model::SecurityMonitoringFilter>> =
                     None;
@@ -305,6 +315,13 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleResponse {
                                 continue;
                             }
                             creation_author_id =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "defaultTags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            default_tags =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "deprecationDate" => {
@@ -424,6 +441,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleResponse {
                     compliance_signal_options,
                     created_at,
                     creation_author_id,
+                    default_tags,
                     deprecation_date,
                     filters,
                     has_extended_title,

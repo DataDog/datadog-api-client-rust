@@ -3,7 +3,7 @@
     {
       "request": {
         "body": {
-          "string": "{\"cases\":[{\"notifications\":[\"channel\"],\"status\":\"info\"}],\"complianceSignalOptions\":{\"userActivationStatus\":true,\"userGroupByFields\":[\"@account_id\"]},\"isEnabled\":false,\"message\":\"Cloud configuration rule\",\"name\":\"Test-Update_a_cloud_configuration_rule_s_details_returns_OK_response-1693483085_cloud\",\"options\":{\"complianceRuleOptions\":{\"complexRule\":false,\"regoRule\":{\"policy\":\"package datadog\\n\\nimport data.datadog.output as dd_output\\n\\nimport future.keywords.contains\\nimport future.keywords.if\\nimport future.keywords.in\\n\\nmilliseconds_in_a_day := ((1000 * 60) * 60) * 24\\n\\neval(iam_service_account_key) = \\\"skip\\\" if {\\n\\tiam_service_account_key.disabled\\n} else = \\\"pass\\\" if {\\n\\t(iam_service_account_key.resource_seen_at / milliseconds_in_a_day) - (iam_service_account_key.valid_after_time / milliseconds_in_a_day) <= 90\\n} else = \\\"fail\\\"\\n\\n# This part remains unchanged for all rules\\nresults contains result if {\\n\\tsome resource in input.resources[input.main_resource_type]\\n\\tresult := dd_output.format(resource, eval(resource))\\n}\\n\",\"resourceTypes\":[\"gcp_compute_disk\"]},\"resourceType\":\"gcp_compute_disk\"}},\"tags\":[\"a:tag\"],\"type\":\"cloud_configuration\"}",
+          "string": "{\"cases\":[{\"notifications\":[\"channel\"],\"status\":\"info\"}],\"complianceSignalOptions\":{\"userActivationStatus\":true,\"userGroupByFields\":[\"@account_id\"]},\"isEnabled\":false,\"message\":\"Cloud configuration rule\",\"name\":\"Test-Update_a_cloud_configuration_rule_s_details_returns_OK_response-1715358888_cloud\",\"options\":{\"complianceRuleOptions\":{\"complexRule\":false,\"regoRule\":{\"policy\":\"package datadog\\n\\nimport data.datadog.output as dd_output\\n\\nimport future.keywords.contains\\nimport future.keywords.if\\nimport future.keywords.in\\n\\nmilliseconds_in_a_day := ((1000 * 60) * 60) * 24\\n\\neval(iam_service_account_key) = \\\"skip\\\" if {\\n\\tiam_service_account_key.disabled\\n} else = \\\"pass\\\" if {\\n\\t(iam_service_account_key.resource_seen_at / milliseconds_in_a_day) - (iam_service_account_key.valid_after_time / milliseconds_in_a_day) <= 90\\n} else = \\\"fail\\\"\\n\\n# This part remains unchanged for all rules\\nresults contains result if {\\n\\tsome resource in input.resources[input.main_resource_type]\\n\\tresult := dd_output.format(resource, eval(resource))\\n}\\n\",\"resourceTypes\":[\"gcp_compute_disk\"]},\"resourceType\":\"gcp_compute_disk\"}},\"tags\":[\"a:tag\"],\"type\":\"cloud_configuration\"}",
           "encoding": null
         },
         "headers": {
@@ -19,7 +19,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"id\":\"38c-eaq-w9j\",\"version\":1,\"name\":\"Test-Update_a_cloud_configuration_rule_s_details_returns_OK_response-1693483085_cloud\",\"createdAt\":1693483086124,\"creationAuthorId\":1445416,\"isDefault\":false,\"isEnabled\":false,\"isDeleted\":false,\"isDeprecated\":false,\"queries\":[{\"query\":\"resource_type:gcp_compute_disk\",\"groupByFields\":[\"resource_type\",\"resource_id\"],\"distinctFields\":[],\"aggregation\":\"count\",\"name\":\"a\"}],\"options\":{\"keepAlive\":21600,\"maxSignalDuration\":86400,\"detectionMethod\":\"threshold\",\"evaluationWindow\":7200,\"complianceRuleOptions\":{\"resourceType\":\"gcp_compute_disk\",\"regoRule\":{\"policy\":\"package datadog\\n\\nimport data.datadog.output as dd_output\\n\\nimport future.keywords.contains\\nimport future.keywords.if\\nimport future.keywords.in\\n\\nmilliseconds_in_a_day := ((1000 * 60) * 60) * 24\\n\\neval(iam_service_account_key) = \\\"skip\\\" if {\\n\\tiam_service_account_key.disabled\\n} else = \\\"pass\\\" if {\\n\\t(iam_service_account_key.resource_seen_at / milliseconds_in_a_day) - (iam_service_account_key.valid_after_time / milliseconds_in_a_day) <= 90\\n} else = \\\"fail\\\"\\n\\n# This part remains unchanged for all rules\\nresults contains result if {\\n\\tsome resource in input.resources[input.main_resource_type]\\n\\tresult := dd_output.format(resource, eval(resource))\\n}\\n\",\"resourceTypes\":[\"gcp_compute_disk\"]},\"complexRule\":false}},\"complianceSignalOptions\":{\"defaultActivationStatus\":null,\"defaultGroupByFields\":null,\"userActivationStatus\":true,\"userGroupByFields\":[\"@account_id\"]},\"cases\":[{\"name\":\"\",\"status\":\"info\",\"notifications\":[\"channel\"],\"condition\":\"a > 0\"}],\"message\":\"Cloud configuration rule\",\"tags\":[\"a:tag\"],\"hasExtendedTitle\":true,\"type\":\"cloud_configuration\",\"filters\":[]}\n",
+          "string": "{\"id\":\"efv-nza-5ev\",\"version\":1,\"name\":\"Test-Update_a_cloud_configuration_rule_s_details_returns_OK_response-1715358888_cloud\",\"createdAt\":1715358889053,\"creationAuthorId\":1445416,\"isDefault\":false,\"isPartner\":false,\"isEnabled\":false,\"isDeleted\":false,\"isDeprecated\":false,\"queries\":[{\"query\":\"resource_type:gcp_compute_disk\",\"groupByFields\":[\"resource_type\",\"resource_id\"],\"hasOptionalGroupByFields\":false,\"distinctFields\":[],\"aggregation\":\"count\",\"name\":\"a\"}],\"options\":{\"keepAlive\":21600,\"maxSignalDuration\":86400,\"detectionMethod\":\"threshold\",\"evaluationWindow\":7200,\"complianceRuleOptions\":{\"resourceType\":\"gcp_compute_disk\",\"regoRule\":{\"policy\":\"package datadog\\n\\nimport data.datadog.output as dd_output\\n\\nimport future.keywords.contains\\nimport future.keywords.if\\nimport future.keywords.in\\n\\nmilliseconds_in_a_day := ((1000 * 60) * 60) * 24\\n\\neval(iam_service_account_key) = \\\"skip\\\" if {\\n\\tiam_service_account_key.disabled\\n} else = \\\"pass\\\" if {\\n\\t(iam_service_account_key.resource_seen_at / milliseconds_in_a_day) - (iam_service_account_key.valid_after_time / milliseconds_in_a_day) <= 90\\n} else = \\\"fail\\\"\\n\\n# This part remains unchanged for all rules\\nresults contains result if {\\n\\tsome resource in input.resources[input.main_resource_type]\\n\\tresult := dd_output.format(resource, eval(resource))\\n}\\n\",\"resourceTypes\":[\"gcp_compute_disk\"]},\"complexRule\":false}},\"complianceSignalOptions\":{\"defaultActivationStatus\":null,\"defaultGroupByFields\":null,\"userActivationStatus\":true,\"userGroupByFields\":[\"@account_id\"]},\"cases\":[{\"name\":\"\",\"status\":\"info\",\"notifications\":[\"channel\"],\"condition\":\"a > 0\"}],\"message\":\"Cloud configuration rule\",\"tags\":[\"a:tag\"],\"hasExtendedTitle\":true,\"type\":\"cloud_configuration\",\"filters\":[]}\n",
           "encoding": null
         },
         "headers": {
@@ -32,12 +32,12 @@
           "message": "OK"
         }
       },
-      "recorded_at": "Thu, 31 Aug 2023 11:58:05 GMT"
+      "recorded_at": "Fri, 10 May 2024 16:34:48 GMT"
     },
     {
       "request": {
         "body": {
-          "string": "{\"cases\":[{\"notifications\":[],\"status\":\"info\"}],\"complianceSignalOptions\":{\"userActivationStatus\":false,\"userGroupByFields\":[]},\"isEnabled\":false,\"message\":\"ddd\",\"name\":\"Test-Update_a_cloud_configuration_rule_s_details_returns_OK_response-1693483085_cloud_updated\",\"options\":{\"complianceRuleOptions\":{\"regoRule\":{\"policy\":\"package datadog\\n\\nimport data.datadog.output as dd_output\\n\\nimport future.keywords.contains\\nimport future.keywords.if\\nimport future.keywords.in\\n\\nmilliseconds_in_a_day := ((1000 * 60) * 60) * 24\\n\\neval(iam_service_account_key) = \\\"skip\\\" if {\\n\\tiam_service_account_key.disabled\\n} else = \\\"pass\\\" if {\\n\\t(iam_service_account_key.resource_seen_at / milliseconds_in_a_day) - (iam_service_account_key.valid_after_time / milliseconds_in_a_day) <= 90\\n} else = \\\"fail\\\"\\n\\n# This part remains unchanged for all rules\\nresults contains result if {\\n\\tsome resource in input.resources[input.main_resource_type]\\n\\tresult := dd_output.format(resource, eval(resource))\\n}\\n\",\"resourceTypes\":[\"gcp_compute_disk\"]},\"resourceType\":\"gcp_compute_disk\"}},\"tags\":[]}",
+          "string": "{\"cases\":[{\"notifications\":[],\"status\":\"info\"}],\"complianceSignalOptions\":{\"userActivationStatus\":false,\"userGroupByFields\":[]},\"isEnabled\":false,\"message\":\"ddd\",\"name\":\"Test-Update_a_cloud_configuration_rule_s_details_returns_OK_response-1715358888_cloud_updated\",\"options\":{\"complianceRuleOptions\":{\"regoRule\":{\"policy\":\"package datadog\\n\\nimport data.datadog.output as dd_output\\n\\nimport future.keywords.contains\\nimport future.keywords.if\\nimport future.keywords.in\\n\\nmilliseconds_in_a_day := ((1000 * 60) * 60) * 24\\n\\neval(iam_service_account_key) = \\\"skip\\\" if {\\n\\tiam_service_account_key.disabled\\n} else = \\\"pass\\\" if {\\n\\t(iam_service_account_key.resource_seen_at / milliseconds_in_a_day) - (iam_service_account_key.valid_after_time / milliseconds_in_a_day) <= 90\\n} else = \\\"fail\\\"\\n\\n# This part remains unchanged for all rules\\nresults contains result if {\\n\\tsome resource in input.resources[input.main_resource_type]\\n\\tresult := dd_output.format(resource, eval(resource))\\n}\\n\",\"resourceTypes\":[\"gcp_compute_disk\"]},\"resourceType\":\"gcp_compute_disk\"}},\"tags\":[]}",
           "encoding": null
         },
         "headers": {
@@ -49,11 +49,11 @@
           ]
         },
         "method": "put",
-        "uri": "https://api.datadoghq.com/api/v2/security_monitoring/rules/38c-eaq-w9j"
+        "uri": "https://api.datadoghq.com/api/v2/security_monitoring/rules/efv-nza-5ev"
       },
       "response": {
         "body": {
-          "string": "{\"id\":\"38c-eaq-w9j\",\"version\":2,\"name\":\"Test-Update_a_cloud_configuration_rule_s_details_returns_OK_response-1693483085_cloud_updated\",\"createdAt\":1693483086124,\"creationAuthorId\":1445416,\"updateAuthorId\":1445416,\"isDefault\":false,\"isEnabled\":false,\"isDeleted\":false,\"isDeprecated\":false,\"queries\":[{\"query\":\"resource_type:gcp_compute_disk\",\"groupByFields\":[\"resource_type\",\"resource_id\"],\"distinctFields\":[],\"aggregation\":\"count\",\"name\":\"a\"}],\"options\":{\"keepAlive\":21600,\"maxSignalDuration\":86400,\"detectionMethod\":\"threshold\",\"evaluationWindow\":7200,\"complianceRuleOptions\":{\"resourceType\":\"gcp_compute_disk\",\"regoRule\":{\"policy\":\"package datadog\\n\\nimport data.datadog.output as dd_output\\n\\nimport future.keywords.contains\\nimport future.keywords.if\\nimport future.keywords.in\\n\\nmilliseconds_in_a_day := ((1000 * 60) * 60) * 24\\n\\neval(iam_service_account_key) = \\\"skip\\\" if {\\n\\tiam_service_account_key.disabled\\n} else = \\\"pass\\\" if {\\n\\t(iam_service_account_key.resource_seen_at / milliseconds_in_a_day) - (iam_service_account_key.valid_after_time / milliseconds_in_a_day) <= 90\\n} else = \\\"fail\\\"\\n\\n# This part remains unchanged for all rules\\nresults contains result if {\\n\\tsome resource in input.resources[input.main_resource_type]\\n\\tresult := dd_output.format(resource, eval(resource))\\n}\\n\",\"resourceTypes\":[\"gcp_compute_disk\"]},\"complexRule\":false}},\"complianceSignalOptions\":{\"defaultActivationStatus\":null,\"defaultGroupByFields\":null,\"userActivationStatus\":false,\"userGroupByFields\":[]},\"cases\":[{\"name\":\"\",\"status\":\"info\",\"notifications\":[],\"condition\":\"a > 0\"}],\"message\":\"ddd\",\"tags\":[],\"hasExtendedTitle\":true,\"type\":\"cloud_configuration\",\"filters\":[]}\n",
+          "string": "{\"id\":\"efv-nza-5ev\",\"version\":2,\"name\":\"Test-Update_a_cloud_configuration_rule_s_details_returns_OK_response-1715358888_cloud_updated\",\"createdAt\":1715358889053,\"creationAuthorId\":1445416,\"updateAuthorId\":1445416,\"isDefault\":false,\"isPartner\":false,\"isEnabled\":false,\"isDeleted\":false,\"isDeprecated\":false,\"queries\":[{\"query\":\"resource_type:gcp_compute_disk\",\"groupByFields\":[\"resource_type\",\"resource_id\"],\"hasOptionalGroupByFields\":false,\"distinctFields\":[],\"aggregation\":\"count\",\"name\":\"a\"}],\"options\":{\"keepAlive\":21600,\"maxSignalDuration\":86400,\"detectionMethod\":\"threshold\",\"evaluationWindow\":7200,\"complianceRuleOptions\":{\"resourceType\":\"gcp_compute_disk\",\"regoRule\":{\"policy\":\"package datadog\\n\\nimport data.datadog.output as dd_output\\n\\nimport future.keywords.contains\\nimport future.keywords.if\\nimport future.keywords.in\\n\\nmilliseconds_in_a_day := ((1000 * 60) * 60) * 24\\n\\neval(iam_service_account_key) = \\\"skip\\\" if {\\n\\tiam_service_account_key.disabled\\n} else = \\\"pass\\\" if {\\n\\t(iam_service_account_key.resource_seen_at / milliseconds_in_a_day) - (iam_service_account_key.valid_after_time / milliseconds_in_a_day) <= 90\\n} else = \\\"fail\\\"\\n\\n# This part remains unchanged for all rules\\nresults contains result if {\\n\\tsome resource in input.resources[input.main_resource_type]\\n\\tresult := dd_output.format(resource, eval(resource))\\n}\\n\",\"resourceTypes\":[\"gcp_compute_disk\"]},\"complexRule\":false}},\"complianceSignalOptions\":{\"defaultActivationStatus\":null,\"defaultGroupByFields\":null,\"userActivationStatus\":false,\"userGroupByFields\":[]},\"cases\":[{\"name\":\"\",\"status\":\"info\",\"notifications\":[],\"condition\":\"a > 0\"}],\"message\":\"ddd\",\"tags\":[],\"hasExtendedTitle\":true,\"type\":\"cloud_configuration\",\"filters\":[]}\n",
           "encoding": null
         },
         "headers": {
@@ -66,7 +66,7 @@
           "message": "OK"
         }
       },
-      "recorded_at": "Thu, 31 Aug 2023 11:58:05 GMT"
+      "recorded_at": "Fri, 10 May 2024 16:34:48 GMT"
     },
     {
       "request": {
@@ -77,7 +77,7 @@
           ]
         },
         "method": "delete",
-        "uri": "https://api.datadoghq.com/api/v2/security_monitoring/rules/38c-eaq-w9j"
+        "uri": "https://api.datadoghq.com/api/v2/security_monitoring/rules/efv-nza-5ev"
       },
       "response": {
         "body": {
@@ -90,7 +90,7 @@
           "message": "No Content"
         }
       },
-      "recorded_at": "Thu, 31 Aug 2023 11:58:05 GMT"
+      "recorded_at": "Fri, 10 May 2024 16:34:48 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"

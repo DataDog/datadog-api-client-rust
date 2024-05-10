@@ -3,7 +3,7 @@
     {
       "request": {
         "body": {
-          "string": "{\"data\":{\"attributes\":{\"exclusion_filters\":[{\"name\":\"Exclude logs from staging\",\"query\":\"source:staging\"}],\"filtered_data_type\":\"logs\",\"is_enabled\":true,\"name\":\"Test-Get_a_security_filter_returns_OK_response-1666186604\",\"query\":\"service:TestGetasecurityfilterreturnsOKresponse1666186604\"},\"type\":\"security_filters\"}}",
+          "string": "{\"data\":{\"attributes\":{\"exclusion_filters\":[{\"name\":\"Exclude logs from staging\",\"query\":\"source:staging\"}],\"filtered_data_type\":\"logs\",\"is_enabled\":true,\"name\":\"Test-Get_a_security_filter_returns_OK_response-1715358884\",\"query\":\"service:TestGetasecurityfilterreturnsOKresponse1715358884\"},\"type\":\"security_filters\"}}",
           "encoding": null
         },
         "headers": {
@@ -19,7 +19,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"attributes\":{\"is_enabled\":true,\"name\":\"Test-Get_a_security_filter_returns_OK_response-1666186604\",\"filtered_data_type\":\"logs\",\"exclusion_filters\":[{\"query\":\"source:staging\",\"name\":\"Exclude logs from staging\"}],\"version\":1,\"query\":\"service:TestGetasecurityfilterreturnsOKresponse1666186604\",\"is_builtin\":false},\"type\":\"security_filters\",\"id\":\"z3t-ier-scu\"}}\n",
+          "string": "{\"data\":{\"id\":\"v1r-9ud-eh4\",\"attributes\":{\"version\":1,\"name\":\"Test-Get_a_security_filter_returns_OK_response-1715358884\",\"query\":\"service:TestGetasecurityfilterreturnsOKresponse1715358884\",\"is_enabled\":true,\"exclusion_filters\":[{\"name\":\"Exclude logs from staging\",\"query\":\"source:staging\"}],\"filtered_data_type\":\"logs\",\"is_builtin\":false},\"type\":\"security_filters\"}}\n",
           "encoding": null
         },
         "headers": {
@@ -32,7 +32,7 @@
           "message": "OK"
         }
       },
-      "recorded_at": "Wed, 19 Oct 2022 13:36:44 GMT"
+      "recorded_at": "Fri, 10 May 2024 16:34:44 GMT"
     },
     {
       "request": {
@@ -43,11 +43,11 @@
           ]
         },
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/security_filters/z3t-ier-scu"
+        "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/security_filters/v1r-9ud-eh4"
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"attributes\":{\"is_enabled\":true,\"name\":\"Test-Get_a_security_filter_returns_OK_response-1666186604\",\"filtered_data_type\":\"logs\",\"exclusion_filters\":[{\"query\":\"source:staging\",\"name\":\"Exclude logs from staging\"}],\"version\":1,\"query\":\"service:TestGetasecurityfilterreturnsOKresponse1666186604\",\"is_builtin\":false},\"type\":\"security_filters\",\"id\":\"z3t-ier-scu\"}}\n",
+          "string": "{\"data\":{\"id\":\"v1r-9ud-eh4\",\"attributes\":{\"version\":1,\"name\":\"Test-Get_a_security_filter_returns_OK_response-1715358884\",\"query\":\"service:TestGetasecurityfilterreturnsOKresponse1715358884\",\"is_enabled\":true,\"exclusion_filters\":[{\"name\":\"Exclude logs from staging\",\"query\":\"source:staging\"}],\"filtered_data_type\":\"logs\",\"is_builtin\":false},\"type\":\"security_filters\"}}\n",
           "encoding": null
         },
         "headers": {
@@ -60,7 +60,7 @@
           "message": "OK"
         }
       },
-      "recorded_at": "Wed, 19 Oct 2022 13:36:44 GMT"
+      "recorded_at": "Fri, 10 May 2024 16:34:44 GMT"
     },
     {
       "request": {
@@ -71,7 +71,7 @@
           ]
         },
         "method": "delete",
-        "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/security_filters/z3t-ier-scu"
+        "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/security_filters/v1r-9ud-eh4"
       },
       "response": {
         "body": {
@@ -88,7 +88,7 @@
           "message": "No Content"
         }
       },
-      "recorded_at": "Wed, 19 Oct 2022 13:36:44 GMT"
+      "recorded_at": "Fri, 10 May 2024 16:34:44 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"
