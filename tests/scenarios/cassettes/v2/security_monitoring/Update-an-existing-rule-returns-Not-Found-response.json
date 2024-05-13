@@ -3,7 +3,7 @@
     {
       "request": {
         "body": {
-          "string": "{\"cases\":[{\"condition\":\"a > 0\",\"name\":\"\",\"notifications\":[],\"status\":\"info\"}],\"filters\":[],\"isEnabled\":true,\"message\":\"Test rule\",\"name\":\"Test-Update_an_existing_rule_returns_Not_Found_response-1680891120-NotFound\",\"options\":{\"evaluationWindow\":900,\"keepAlive\":3600,\"maxSignalDuration\":86400},\"queries\":[{\"aggregation\":\"count\",\"distinctFields\":[],\"groupByFields\":[],\"metrics\":[],\"query\":\"@test:true\"}],\"tags\":[]}",
+          "string": "{\"cases\":[{\"condition\":\"a > 0\",\"name\":\"\",\"notifications\":[],\"status\":\"info\"}],\"filters\":[],\"isEnabled\":true,\"message\":\"Test rule\",\"name\":\"Test-Update_an_existing_rule_returns_Not_Found_response-1715358894-NotFound\",\"options\":{\"evaluationWindow\":900,\"keepAlive\":3600,\"maxSignalDuration\":86400},\"queries\":[{\"aggregation\":\"count\",\"distinctFields\":[],\"groupByFields\":[],\"metrics\":[],\"query\":\"@test:true\"}],\"tags\":[]}",
           "encoding": null
         },
         "headers": {
@@ -32,7 +32,7 @@
           "message": "Not Found"
         }
       },
-      "recorded_at": "Fri, 07 Apr 2023 18:12:00 GMT"
+      "recorded_at": "Fri, 10 May 2024 16:34:54 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"

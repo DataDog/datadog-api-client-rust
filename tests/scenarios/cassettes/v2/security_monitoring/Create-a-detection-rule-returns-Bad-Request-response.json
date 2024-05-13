@@ -3,7 +3,7 @@
     {
       "request": {
         "body": {
-          "string": "{\"cases\":[{\"status\":\"info\"}],\"isEnabled\":true,\"message\":\"Test rule\",\"name\":\"Test-Create_a_detection_rule_returns_Bad_Request_response-1666186593\",\"options\":{},\"queries\":[{\"query\":\"\"}],\"tags\":[]}",
+          "string": "{\"cases\":[{\"status\":\"info\"}],\"isEnabled\":true,\"message\":\"Test rule\",\"name\":\"Test-Create_a_detection_rule_returns_Bad_Request_response-1715358868\",\"options\":{},\"queries\":[{\"query\":\"\"}],\"tags\":[]}",
           "encoding": null
         },
         "headers": {
@@ -19,7 +19,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"errors\":[\"Internal error\"]}\n",
+          "string": "{\"errors\":[\"Invalid rule configuration\",\"Query filter cannot be empty\"]}\n",
           "encoding": null
         },
         "headers": {
@@ -32,7 +32,7 @@
           "message": "Bad Request"
         }
       },
-      "recorded_at": "Wed, 19 Oct 2022 13:36:33 GMT"
+      "recorded_at": "Fri, 10 May 2024 16:34:28 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"
