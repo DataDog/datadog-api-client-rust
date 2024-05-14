@@ -22,7 +22,8 @@ pub struct SLOThreshold {
     /// create/update requests.
     #[serde(rename = "target_display")]
     pub target_display: Option<String>,
-    /// The SLO time window options.
+    /// The SLO time window options. Note that "custom" is not a valid option for creating
+    /// or updating SLOs. It is only used when querying SLO history over custom timeframes.
     #[serde(rename = "timeframe")]
     pub timeframe: crate::datadogV1::model::SLOTimeframe,
     /// The warning value for the service level objective.
