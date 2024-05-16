@@ -20,7 +20,7 @@ pub struct LogsQueryFilter {
     /// The search query - following the log search syntax.
     #[serde(rename = "query")]
     pub query: Option<String>,
-    /// Specifies storage type as indexes or online-archives
+    /// Specifies storage type as indexes, online-archives or flex
     #[serde(rename = "storage_tier")]
     pub storage_tier: Option<crate::datadogV2::model::LogsStorageTier>,
     /// The maximum time for the requested logs, supports date math and regular timestamps (milliseconds).
