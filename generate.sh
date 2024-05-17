@@ -24,10 +24,12 @@ pre_commit_wrapper () {
 }
 
 cargo install genemichaels --quiet
+cargo install --quiet dd-rust-license-tool
 rm -rf src/*
 rm -rf examples/*
 pre_commit_wrapper generator
 pre_commit_wrapper examples
+dd-rust-license-tool write
 pre_commit_wrapper lint
 genemichaels --log silent examples/*.rs
 cargo fmt
