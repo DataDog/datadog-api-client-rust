@@ -23,11 +23,12 @@ pre_commit_wrapper () {
   echo "command 'pre-commit run --all-files --hook-stage=manual ${1}' success"
 }
 
-cargo install genemichaels --quiet
+cargo install genemichaels dd-rust-license-tool --quiet
 rm -rf src/*
 rm -rf examples/*
 pre_commit_wrapper generator
 pre_commit_wrapper examples
+dd-rust-license-tool write
 pre_commit_wrapper lint
 genemichaels --log silent examples/*.rs
 cargo fmt
