@@ -1,5 +1,23 @@
 # CHANGELOG
 
+## 0.0.3 / 2024-05-22
+
+### Fixed
+* Fix incorrect propagation of nullable rendering within additionalProperties by @nkzou in https://github.com/DataDog/datadog-api-client-rust/pull/96
+### Added
+* Add support variablesFromScript in Synthetics API test by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/83
+* Add JSONSchema assertion support to API and multistep tests by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/52
+* add 1 day logs to usage api docs by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/90
+* Update UserTeamIncluded to include teams by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/95
+* Security Monitoring - Make Default Tags available in the response by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/105
+* Add flex logs storage tier by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/107
+### Changed
+* Rename the Cloud Workload Security tag to CSM Threats by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/94
+* Update license after code generation by @HantingZhang2 in https://github.com/DataDog/datadog-api-client-rust/pull/110
+
+
+**Full Changelog**: https://github.com/DataDog/datadog-api-client-rust/compare/0.0.2...v0.0.3
+
 ## 0.0.2 / 2024-04-16
 
 ### Fixed
