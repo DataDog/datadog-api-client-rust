@@ -38,6 +38,9 @@ pub struct GeomapWidgetRequest {
     /// The log query.
     #[serde(rename = "security_query")]
     pub security_query: Option<crate::datadogV1::model::LogQueryDefinition>,
+    /// The controls for sorting the widget.
+    #[serde(rename = "sort")]
+    pub sort: Option<crate::datadogV1::model::WidgetSortBy>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -55,6 +58,7 @@ impl GeomapWidgetRequest {
             response_format: None,
             rum_query: None,
             security_query: None,
+            sort: None,
             _unparsed: false,
         }
     }
@@ -109,6 +113,11 @@ impl GeomapWidgetRequest {
         self.security_query = Some(value);
         self
     }
+
+    pub fn sort(mut self, value: crate::datadogV1::model::WidgetSortBy) -> Self {
+        self.sort = Some(value);
+        self
+    }
 }
 
 impl Default for GeomapWidgetRequest {
@@ -147,6 +156,7 @@ impl<'de> Deserialize<'de> for GeomapWidgetRequest {
                 > = None;
                 let mut rum_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
                 let mut security_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
+                let mut sort: Option<crate::datadogV1::model::WidgetSortBy> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -215,6 +225,12 @@ impl<'de> Deserialize<'de> for GeomapWidgetRequest {
                             security_query =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "sort" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            sort = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {}
                     }
                 }
@@ -229,6 +245,7 @@ impl<'de> Deserialize<'de> for GeomapWidgetRequest {
                     response_format,
                     rum_query,
                     security_query,
+                    sort,
                     _unparsed,
                 };
 

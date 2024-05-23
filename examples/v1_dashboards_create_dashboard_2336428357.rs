@@ -8,7 +8,7 @@ use datadog_api_client::datadogV1::model::FormulaAndFunctionMetricDataSource;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionMetricQueryDefinition;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionQueryDefinition;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionResponseFormat;
-use datadog_api_client::datadogV1::model::QuerySortOrder;
+use datadog_api_client::datadogV1::model::FormulaType;
 use datadog_api_client::datadogV1::model::TableWidgetCellDisplayMode;
 use datadog_api_client::datadogV1::model::TableWidgetDefinition;
 use datadog_api_client::datadogV1::model::TableWidgetDefinitionType;
@@ -17,8 +17,11 @@ use datadog_api_client::datadogV1::model::TableWidgetRequest;
 use datadog_api_client::datadogV1::model::Widget;
 use datadog_api_client::datadogV1::model::WidgetDefinition;
 use datadog_api_client::datadogV1::model::WidgetFormula;
-use datadog_api_client::datadogV1::model::WidgetFormulaLimit;
+use datadog_api_client::datadogV1::model::WidgetFormulaSort;
 use datadog_api_client::datadogV1::model::WidgetLayout;
+use datadog_api_client::datadogV1::model::WidgetSort;
+use datadog_api_client::datadogV1::model::WidgetSortBy;
+use datadog_api_client::datadogV1::model::WidgetSortOrderBy;
 use datadog_api_client::datadogV1::model::WidgetTextAlign;
 use datadog_api_client::datadogV1::model::WidgetTime;
 
@@ -40,11 +43,6 @@ async fn main() {
                                                 WidgetFormula::new("query1".to_string())
                                                     .cell_display_mode(TableWidgetCellDisplayMode::BAR)
                                                     .conditional_formats(vec![])
-                                                    .limit(
-                                                        WidgetFormulaLimit::new()
-                                                            .count(500)
-                                                            .order(QuerySortOrder::DESC),
-                                                    )
                                             ],
                                         )
                                         .queries(
@@ -62,6 +60,23 @@ async fn main() {
                                             ],
                                         )
                                         .response_format(FormulaAndFunctionResponseFormat::SCALAR)
+                                        .sort(
+                                            WidgetSortBy::new()
+                                                .count(500)
+                                                .order_by(
+                                                    vec![
+                                                        WidgetSortOrderBy::WidgetFormulaSort(
+                                                            Box::new(
+                                                                WidgetFormulaSort::new(
+                                                                    0,
+                                                                    WidgetSort::DESCENDING,
+                                                                    FormulaType::FORMULA,
+                                                                ),
+                                                            ),
+                                                        )
+                                                    ],
+                                                ),
+                                        )
                                 ],
                                 TableWidgetDefinitionType::QUERY_TABLE,
                             )
