@@ -20,6 +20,9 @@ pub struct CloudWorkloadSecurityAgentRuleCreateAttributes {
     /// The SECL expression of the Agent rule.
     #[serde(rename = "expression")]
     pub expression: String,
+    /// The platforms the Agent rule is supported on.
+    #[serde(rename = "filters")]
+    pub filters: Option<Vec<String>>,
     /// The name of the Agent rule.
     #[serde(rename = "name")]
     pub name: String,
@@ -34,6 +37,7 @@ impl CloudWorkloadSecurityAgentRuleCreateAttributes {
             description: None,
             enabled: None,
             expression,
+            filters: None,
             name,
             _unparsed: false,
         }
@@ -46,6 +50,11 @@ impl CloudWorkloadSecurityAgentRuleCreateAttributes {
 
     pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
+        self
+    }
+
+    pub fn filters(mut self, value: Vec<String>) -> Self {
+        self.filters = Some(value);
         self
     }
 }
@@ -70,6 +79,7 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleCreateAttributes {
                 let mut description: Option<String> = None;
                 let mut enabled: Option<bool> = None;
                 let mut expression: Option<String> = None;
+                let mut filters: Option<Vec<String>> = None;
                 let mut name: Option<String> = None;
                 let mut _unparsed = false;
 
@@ -91,6 +101,12 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleCreateAttributes {
                         "expression" => {
                             expression = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "filters" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            filters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -104,6 +120,7 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleCreateAttributes {
                     description,
                     enabled,
                     expression,
+                    filters,
                     name,
                     _unparsed,
                 };

@@ -15,7 +15,8 @@ async fn main() {
                 "examplecsmthreat".to_string(),
             )
             .description("My Agent rule".to_string())
-            .enabled(true),
+            .enabled(true)
+            .filters(vec![r#"os == "linux""#.to_string()]),
             CloudWorkloadSecurityAgentRuleType::AGENT_RULE,
         ),
     );
