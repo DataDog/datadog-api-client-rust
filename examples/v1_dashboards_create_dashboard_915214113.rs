@@ -12,6 +12,7 @@ use datadog_api_client::datadogV1::model::FormulaAndFunctionEventQueryGroupBySor
 use datadog_api_client::datadogV1::model::FormulaAndFunctionEventsDataSource;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionQueryDefinition;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionResponseFormat;
+use datadog_api_client::datadogV1::model::FormulaType;
 use datadog_api_client::datadogV1::model::GeomapWidgetDefinition;
 use datadog_api_client::datadogV1::model::GeomapWidgetDefinitionStyle;
 use datadog_api_client::datadogV1::model::GeomapWidgetDefinitionType;
@@ -21,8 +22,11 @@ use datadog_api_client::datadogV1::model::QuerySortOrder;
 use datadog_api_client::datadogV1::model::Widget;
 use datadog_api_client::datadogV1::model::WidgetDefinition;
 use datadog_api_client::datadogV1::model::WidgetFormula;
-use datadog_api_client::datadogV1::model::WidgetFormulaLimit;
+use datadog_api_client::datadogV1::model::WidgetFormulaSort;
 use datadog_api_client::datadogV1::model::WidgetLayout;
+use datadog_api_client::datadogV1::model::WidgetSort;
+use datadog_api_client::datadogV1::model::WidgetSortBy;
+use datadog_api_client::datadogV1::model::WidgetSortOrderBy;
 use datadog_api_client::datadogV1::model::WidgetTextAlign;
 use datadog_api_client::datadogV1::model::WidgetTime;
 
@@ -39,15 +43,7 @@ async fn main() {
                             GeomapWidgetDefinition::new(
                                 vec![
                                     GeomapWidgetRequest::new()
-                                        .formulas(
-                                            vec![
-                                                WidgetFormula::new(
-                                                    "query1".to_string(),
-                                                ).limit(
-                                                    WidgetFormulaLimit::new().count(250).order(QuerySortOrder::DESC),
-                                                )
-                                            ],
-                                        )
+                                        .formulas(vec![WidgetFormula::new("query1".to_string())])
                                         .queries(
                                             vec![
                                                 FormulaAndFunctionQueryDefinition
@@ -86,6 +82,23 @@ async fn main() {
                                             ],
                                         )
                                         .response_format(FormulaAndFunctionResponseFormat::SCALAR)
+                                        .sort(
+                                            WidgetSortBy::new()
+                                                .count(250)
+                                                .order_by(
+                                                    vec![
+                                                        WidgetSortOrderBy::WidgetFormulaSort(
+                                                            Box::new(
+                                                                WidgetFormulaSort::new(
+                                                                    0,
+                                                                    WidgetSort::DESCENDING,
+                                                                    FormulaType::FORMULA,
+                                                                ),
+                                                            ),
+                                                        )
+                                                    ],
+                                                ),
+                                        )
                                 ],
                                 GeomapWidgetDefinitionStyle::new("hostmap_blues".to_string(), false),
                                 GeomapWidgetDefinitionType::GEOMAP,

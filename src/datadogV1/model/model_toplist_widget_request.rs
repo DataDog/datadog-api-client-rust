@@ -53,6 +53,9 @@ pub struct ToplistWidgetRequest {
     /// The log query.
     #[serde(rename = "security_query")]
     pub security_query: Option<crate::datadogV1::model::LogQueryDefinition>,
+    /// The controls for sorting the widget.
+    #[serde(rename = "sort")]
+    pub sort: Option<crate::datadogV1::model::WidgetSortBy>,
     /// Define request widget style.
     #[serde(rename = "style")]
     pub style: Option<crate::datadogV1::model::WidgetRequestStyle>,
@@ -78,6 +81,7 @@ impl ToplistWidgetRequest {
             response_format: None,
             rum_query: None,
             security_query: None,
+            sort: None,
             style: None,
             _unparsed: false,
         }
@@ -165,6 +169,11 @@ impl ToplistWidgetRequest {
         self
     }
 
+    pub fn sort(mut self, value: crate::datadogV1::model::WidgetSortBy) -> Self {
+        self.sort = Some(value);
+        self
+    }
+
     pub fn style(mut self, value: crate::datadogV1::model::WidgetRequestStyle) -> Self {
         self.style = Some(value);
         self
@@ -216,6 +225,7 @@ impl<'de> Deserialize<'de> for ToplistWidgetRequest {
                 > = None;
                 let mut rum_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
                 let mut security_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
+                let mut sort: Option<crate::datadogV1::model::WidgetSortBy> = None;
                 let mut style: Option<crate::datadogV1::model::WidgetRequestStyle> = None;
                 let mut _unparsed = false;
 
@@ -321,6 +331,12 @@ impl<'de> Deserialize<'de> for ToplistWidgetRequest {
                             security_query =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "sort" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            sort = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "style" => {
                             if v.is_null() {
                                 continue;
@@ -346,6 +362,7 @@ impl<'de> Deserialize<'de> for ToplistWidgetRequest {
                     response_format,
                     rum_query,
                     security_query,
+                    sort,
                     style,
                     _unparsed,
                 };

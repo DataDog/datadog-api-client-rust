@@ -1,4 +1,4 @@
-// Create a new dashboard with toplist widget
+// Create a new dashboard with a toplist widget sorted by group
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api_dashboards::DashboardsAPI;
 use datadog_api_client::datadogV1::model::Dashboard;
@@ -8,7 +8,7 @@ use datadog_api_client::datadogV1::model::FormulaAndFunctionMetricDataSource;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionMetricQueryDefinition;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionQueryDefinition;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionResponseFormat;
-use datadog_api_client::datadogV1::model::FormulaType;
+use datadog_api_client::datadogV1::model::GroupType;
 use datadog_api_client::datadogV1::model::ToplistWidgetDefinition;
 use datadog_api_client::datadogV1::model::ToplistWidgetDefinitionType;
 use datadog_api_client::datadogV1::model::ToplistWidgetDisplay;
@@ -21,7 +21,7 @@ use datadog_api_client::datadogV1::model::ToplistWidgetStyle;
 use datadog_api_client::datadogV1::model::Widget;
 use datadog_api_client::datadogV1::model::WidgetDefinition;
 use datadog_api_client::datadogV1::model::WidgetFormula;
-use datadog_api_client::datadogV1::model::WidgetFormulaSort;
+use datadog_api_client::datadogV1::model::WidgetGroupSort;
 use datadog_api_client::datadogV1::model::WidgetLayout;
 use datadog_api_client::datadogV1::model::WidgetSort;
 use datadog_api_client::datadogV1::model::WidgetSortBy;
@@ -63,12 +63,12 @@ async fn main() {
                                                 .count(10)
                                                 .order_by(
                                                     vec![
-                                                        WidgetSortOrderBy::WidgetFormulaSort(
+                                                        WidgetSortOrderBy::WidgetGroupSort(
                                                             Box::new(
-                                                                WidgetFormulaSort::new(
-                                                                    0,
-                                                                    WidgetSort::DESCENDING,
-                                                                    FormulaType::FORMULA,
+                                                                WidgetGroupSort::new(
+                                                                    "service".to_string(),
+                                                                    WidgetSort::ASCENDING,
+                                                                    GroupType::GROUP,
                                                                 ),
                                                             ),
                                                         )

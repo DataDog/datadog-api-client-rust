@@ -10,7 +10,7 @@ use datadog_api_client::datadogV1::model::FormulaAndFunctionEventQueryDefinition
 use datadog_api_client::datadogV1::model::FormulaAndFunctionEventsDataSource;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionQueryDefinition;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionResponseFormat;
-use datadog_api_client::datadogV1::model::QuerySortOrder;
+use datadog_api_client::datadogV1::model::FormulaType;
 use datadog_api_client::datadogV1::model::TableWidgetCellDisplayMode;
 use datadog_api_client::datadogV1::model::TableWidgetDefinition;
 use datadog_api_client::datadogV1::model::TableWidgetDefinitionType;
@@ -18,7 +18,10 @@ use datadog_api_client::datadogV1::model::TableWidgetRequest;
 use datadog_api_client::datadogV1::model::Widget;
 use datadog_api_client::datadogV1::model::WidgetDefinition;
 use datadog_api_client::datadogV1::model::WidgetFormula;
-use datadog_api_client::datadogV1::model::WidgetFormulaLimit;
+use datadog_api_client::datadogV1::model::WidgetFormulaSort;
+use datadog_api_client::datadogV1::model::WidgetSort;
+use datadog_api_client::datadogV1::model::WidgetSortBy;
+use datadog_api_client::datadogV1::model::WidgetSortOrderBy;
 
 #[tokio::main]
 async fn main() {
@@ -30,12 +33,7 @@ async fn main() {
                 vec![TableWidgetRequest::new()
                     .formulas(vec![WidgetFormula::new("query1".to_string())
                         .cell_display_mode(TableWidgetCellDisplayMode::BAR)
-                        .conditional_formats(vec![])
-                        .limit(
-                            WidgetFormulaLimit::new()
-                                .count(50)
-                                .order(QuerySortOrder::DESC),
-                        )])
+                        .conditional_formats(vec![])])
                     .queries(vec![
                         FormulaAndFunctionQueryDefinition::FormulaAndFunctionEventQueryDefinition(
                             Box::new(
@@ -55,7 +53,14 @@ async fn main() {
                             ),
                         ),
                     ])
-                    .response_format(FormulaAndFunctionResponseFormat::SCALAR)],
+                    .response_format(FormulaAndFunctionResponseFormat::SCALAR)
+                    .sort(WidgetSortBy::new().count(50).order_by(vec![
+                        WidgetSortOrderBy::WidgetFormulaSort(Box::new(WidgetFormulaSort::new(
+                            0,
+                            WidgetSort::DESCENDING,
+                            FormulaType::FORMULA,
+                        ))),
+                    ]))],
                 TableWidgetDefinitionType::QUERY_TABLE,
             )),
         ))],
