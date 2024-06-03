@@ -4294,7 +4294,7 @@ impl SecurityMonitoringAPI {
     /// Validate a detection rule.
     pub async fn validate_security_monitoring_rule(
         &self,
-        body: crate::datadogV2::model::SecurityMonitoringRuleCreatePayload,
+        body: crate::datadogV2::model::SecurityMonitoringRuleValidatePayload,
     ) -> Result<(), datadog::Error<ValidateSecurityMonitoringRuleError>> {
         match self
             .validate_security_monitoring_rule_with_http_info(body)
@@ -4308,7 +4308,7 @@ impl SecurityMonitoringAPI {
     /// Validate a detection rule.
     pub async fn validate_security_monitoring_rule_with_http_info(
         &self,
-        body: crate::datadogV2::model::SecurityMonitoringRuleCreatePayload,
+        body: crate::datadogV2::model::SecurityMonitoringRuleValidatePayload,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<ValidateSecurityMonitoringRuleError>>
     {
         let local_configuration = &self.config;

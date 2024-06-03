@@ -6,18 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Update an existing rule.
+/// The payload of a rule.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct SecurityMonitoringRuleUpdatePayload {
+pub struct SecurityMonitoringStandardRulePayload {
     /// Cases for generating signals.
     #[serde(rename = "cases")]
-    pub cases: Option<Vec<crate::datadogV2::model::SecurityMonitoringRuleCase>>,
-    /// How to generate compliance signals. Useful for cloud_configuration rules only.
-    #[serde(rename = "complianceSignalOptions")]
-    pub compliance_signal_options:
-        Option<crate::datadogV2::model::CloudConfigurationRuleComplianceSignalOptions>,
+    pub cases: Vec<crate::datadogV2::model::SecurityMonitoringRuleCaseCreate>,
     /// Additional queries to filter matched events before they are processed. This field is deprecated for log detection, signal correlation, and workload security rules.
     #[serde(rename = "filters")]
     pub filters: Option<Vec<crate::datadogV2::model::SecurityMonitoringFilter>>,
@@ -26,67 +22,57 @@ pub struct SecurityMonitoringRuleUpdatePayload {
     pub has_extended_title: Option<bool>,
     /// Whether the rule is enabled.
     #[serde(rename = "isEnabled")]
-    pub is_enabled: Option<bool>,
+    pub is_enabled: bool,
     /// Message for generated signals.
     #[serde(rename = "message")]
-    pub message: Option<String>,
-    /// Name of the rule.
+    pub message: String,
+    /// The name of the rule.
     #[serde(rename = "name")]
-    pub name: Option<String>,
+    pub name: String,
     /// Options on rules.
     #[serde(rename = "options")]
-    pub options: Option<crate::datadogV2::model::SecurityMonitoringRuleOptions>,
+    pub options: crate::datadogV2::model::SecurityMonitoringRuleOptions,
     /// Queries for selecting logs which are part of the rule.
     #[serde(rename = "queries")]
-    pub queries: Option<Vec<crate::datadogV2::model::SecurityMonitoringRuleQuery>>,
+    pub queries: Vec<crate::datadogV2::model::SecurityMonitoringStandardRuleQuery>,
     /// Tags for generated signals.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
     /// Cases for generating signals from third-party rules. Only available for third-party rules.
     #[serde(rename = "thirdPartyCases")]
     pub third_party_cases:
-        Option<Vec<crate::datadogV2::model::SecurityMonitoringThirdPartyRuleCase>>,
-    /// The version of the rule being updated.
-    #[serde(rename = "version")]
-    pub version: Option<i32>,
+        Option<Vec<crate::datadogV2::model::SecurityMonitoringThirdPartyRuleCaseCreate>>,
+    /// The rule type.
+    #[serde(rename = "type")]
+    pub type_: Option<crate::datadogV2::model::SecurityMonitoringRuleTypeCreate>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
 }
 
-impl SecurityMonitoringRuleUpdatePayload {
-    pub fn new() -> SecurityMonitoringRuleUpdatePayload {
-        SecurityMonitoringRuleUpdatePayload {
-            cases: None,
-            compliance_signal_options: None,
+impl SecurityMonitoringStandardRulePayload {
+    pub fn new(
+        cases: Vec<crate::datadogV2::model::SecurityMonitoringRuleCaseCreate>,
+        is_enabled: bool,
+        message: String,
+        name: String,
+        options: crate::datadogV2::model::SecurityMonitoringRuleOptions,
+        queries: Vec<crate::datadogV2::model::SecurityMonitoringStandardRuleQuery>,
+    ) -> SecurityMonitoringStandardRulePayload {
+        SecurityMonitoringStandardRulePayload {
+            cases,
             filters: None,
             has_extended_title: None,
-            is_enabled: None,
-            message: None,
-            name: None,
-            options: None,
-            queries: None,
+            is_enabled,
+            message,
+            name,
+            options,
+            queries,
             tags: None,
             third_party_cases: None,
-            version: None,
+            type_: None,
             _unparsed: false,
         }
-    }
-
-    pub fn cases(
-        mut self,
-        value: Vec<crate::datadogV2::model::SecurityMonitoringRuleCase>,
-    ) -> Self {
-        self.cases = Some(value);
-        self
-    }
-
-    pub fn compliance_signal_options(
-        mut self,
-        value: crate::datadogV2::model::CloudConfigurationRuleComplianceSignalOptions,
-    ) -> Self {
-        self.compliance_signal_options = Some(value);
-        self
     }
 
     pub fn filters(
@@ -102,37 +88,6 @@ impl SecurityMonitoringRuleUpdatePayload {
         self
     }
 
-    pub fn is_enabled(mut self, value: bool) -> Self {
-        self.is_enabled = Some(value);
-        self
-    }
-
-    pub fn message(mut self, value: String) -> Self {
-        self.message = Some(value);
-        self
-    }
-
-    pub fn name(mut self, value: String) -> Self {
-        self.name = Some(value);
-        self
-    }
-
-    pub fn options(
-        mut self,
-        value: crate::datadogV2::model::SecurityMonitoringRuleOptions,
-    ) -> Self {
-        self.options = Some(value);
-        self
-    }
-
-    pub fn queries(
-        mut self,
-        value: Vec<crate::datadogV2::model::SecurityMonitoringRuleQuery>,
-    ) -> Self {
-        self.queries = Some(value);
-        self
-    }
-
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
@@ -140,32 +95,29 @@ impl SecurityMonitoringRuleUpdatePayload {
 
     pub fn third_party_cases(
         mut self,
-        value: Vec<crate::datadogV2::model::SecurityMonitoringThirdPartyRuleCase>,
+        value: Vec<crate::datadogV2::model::SecurityMonitoringThirdPartyRuleCaseCreate>,
     ) -> Self {
         self.third_party_cases = Some(value);
         self
     }
 
-    pub fn version(mut self, value: i32) -> Self {
-        self.version = Some(value);
+    pub fn type_(
+        mut self,
+        value: crate::datadogV2::model::SecurityMonitoringRuleTypeCreate,
+    ) -> Self {
+        self.type_ = Some(value);
         self
     }
 }
 
-impl Default for SecurityMonitoringRuleUpdatePayload {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<'de> Deserialize<'de> for SecurityMonitoringRuleUpdatePayload {
+impl<'de> Deserialize<'de> for SecurityMonitoringStandardRulePayload {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct SecurityMonitoringRuleUpdatePayloadVisitor;
-        impl<'a> Visitor<'a> for SecurityMonitoringRuleUpdatePayloadVisitor {
-            type Value = SecurityMonitoringRuleUpdatePayload;
+        struct SecurityMonitoringStandardRulePayloadVisitor;
+        impl<'a> Visitor<'a> for SecurityMonitoringStandardRulePayloadVisitor {
+            type Value = SecurityMonitoringStandardRulePayload;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -175,10 +127,8 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleUpdatePayload {
             where
                 M: MapAccess<'a>,
             {
-                let mut cases: Option<Vec<crate::datadogV2::model::SecurityMonitoringRuleCase>> =
-                    None;
-                let mut compliance_signal_options: Option<
-                    crate::datadogV2::model::CloudConfigurationRuleComplianceSignalOptions,
+                let mut cases: Option<
+                    Vec<crate::datadogV2::model::SecurityMonitoringRuleCaseCreate>,
                 > = None;
                 let mut filters: Option<Vec<crate::datadogV2::model::SecurityMonitoringFilter>> =
                     None;
@@ -188,29 +138,21 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleUpdatePayload {
                 let mut name: Option<String> = None;
                 let mut options: Option<crate::datadogV2::model::SecurityMonitoringRuleOptions> =
                     None;
-                let mut queries: Option<Vec<crate::datadogV2::model::SecurityMonitoringRuleQuery>> =
-                    None;
+                let mut queries: Option<
+                    Vec<crate::datadogV2::model::SecurityMonitoringStandardRuleQuery>,
+                > = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut third_party_cases: Option<
-                    Vec<crate::datadogV2::model::SecurityMonitoringThirdPartyRuleCase>,
+                    Vec<crate::datadogV2::model::SecurityMonitoringThirdPartyRuleCaseCreate>,
                 > = None;
-                let mut version: Option<i32> = None;
+                let mut type_: Option<crate::datadogV2::model::SecurityMonitoringRuleTypeCreate> =
+                    None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "cases" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             cases = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "complianceSignalOptions" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            compliance_signal_options =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "filters" => {
                             if v.is_null() {
@@ -226,33 +168,18 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleUpdatePayload {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "isEnabled" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             is_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "message" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "name" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "options" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             options = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "queries" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             queries = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "tags" => {
@@ -268,19 +195,32 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleUpdatePayload {
                             third_party_cases =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "version" => {
+                        "type" => {
                             if v.is_null() {
                                 continue;
                             }
-                            version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _type_) = type_ {
+                                match _type_ {
+                                    crate::datadogV2::model::SecurityMonitoringRuleTypeCreate::UnparsedObject(_type_) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         &_ => {}
                     }
                 }
+                let cases = cases.ok_or_else(|| M::Error::missing_field("cases"))?;
+                let is_enabled = is_enabled.ok_or_else(|| M::Error::missing_field("is_enabled"))?;
+                let message = message.ok_or_else(|| M::Error::missing_field("message"))?;
+                let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
+                let options = options.ok_or_else(|| M::Error::missing_field("options"))?;
+                let queries = queries.ok_or_else(|| M::Error::missing_field("queries"))?;
 
-                let content = SecurityMonitoringRuleUpdatePayload {
+                let content = SecurityMonitoringStandardRulePayload {
                     cases,
-                    compliance_signal_options,
                     filters,
                     has_extended_title,
                     is_enabled,
@@ -290,7 +230,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleUpdatePayload {
                     queries,
                     tags,
                     third_party_cases,
-                    version,
+                    type_,
                     _unparsed,
                 };
 
@@ -298,6 +238,6 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleUpdatePayload {
             }
         }
 
-        deserializer.deserialize_any(SecurityMonitoringRuleUpdatePayloadVisitor)
+        deserializer.deserialize_any(SecurityMonitoringStandardRulePayloadVisitor)
     }
 }

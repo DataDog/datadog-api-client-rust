@@ -63,7 +63,7 @@ pub struct SecurityMonitoringStandardRuleResponse {
     /// Tags for generated signals.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
-    /// Cases for generating signals from third party rules. Only available for third party rules.
+    /// Cases for generating signals from third-party rules. Only available for third-party rules.
     #[serde(rename = "thirdPartyCases")]
     pub third_party_cases:
         Option<Vec<crate::datadogV2::model::SecurityMonitoringThirdPartyRuleCase>>,
