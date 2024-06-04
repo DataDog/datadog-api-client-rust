@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Test the rule queries of a rule.
+/// Test the rule queries of a rule (rule property is ignored when applied to an existing rule)
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SecurityMonitoringRuleTestRequest {
-    /// Create a new rule.
+    /// Test a rule.
     #[serde(rename = "rule")]
-    pub rule: Option<crate::datadogV2::model::SecurityMonitoringRuleCreatePayload>,
+    pub rule: Option<crate::datadogV2::model::SecurityMonitoringRuleTestPayload>,
     /// Data payloads used to test rules query with the expected result.
     #[serde(rename = "ruleQueryPayloads")]
     pub rule_query_payloads:
@@ -34,7 +34,7 @@ impl SecurityMonitoringRuleTestRequest {
 
     pub fn rule(
         mut self,
-        value: crate::datadogV2::model::SecurityMonitoringRuleCreatePayload,
+        value: crate::datadogV2::model::SecurityMonitoringRuleTestPayload,
     ) -> Self {
         self.rule = Some(value);
         self
@@ -72,7 +72,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleTestRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut rule: Option<crate::datadogV2::model::SecurityMonitoringRuleCreatePayload> =
+                let mut rule: Option<crate::datadogV2::model::SecurityMonitoringRuleTestPayload> =
                     None;
                 let mut rule_query_payloads: Option<
                     Vec<crate::datadogV2::model::SecurityMonitoringRuleQueryPayload>,
@@ -88,7 +88,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleTestRequest {
                             rule = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _rule) = rule {
                                 match _rule {
-                                    crate::datadogV2::model::SecurityMonitoringRuleCreatePayload::UnparsedObject(_rule) => {
+                                    crate::datadogV2::model::SecurityMonitoringRuleTestPayload::UnparsedObject(_rule) => {
                                         _unparsed = true;
                                     },
                                     _ => {}

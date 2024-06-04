@@ -2,7 +2,6 @@
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_security_monitoring::SecurityMonitoringAPI;
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleCaseCreate;
-use datadog_api_client::datadogV2::model::SecurityMonitoringRuleCreatePayload;
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleDetectionMethod;
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleEvaluationWindow;
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleKeepAlive;
@@ -11,14 +10,15 @@ use datadog_api_client::datadogV2::model::SecurityMonitoringRuleOptions;
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleQueryAggregation;
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleSeverity;
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleTypeCreate;
-use datadog_api_client::datadogV2::model::SecurityMonitoringStandardRuleCreatePayload;
+use datadog_api_client::datadogV2::model::SecurityMonitoringRuleValidatePayload;
+use datadog_api_client::datadogV2::model::SecurityMonitoringStandardRulePayload;
 use datadog_api_client::datadogV2::model::SecurityMonitoringStandardRuleQuery;
 
 #[tokio::main]
 async fn main() {
     let body =
-        SecurityMonitoringRuleCreatePayload::SecurityMonitoringStandardRuleCreatePayload(Box::new(
-            SecurityMonitoringStandardRuleCreatePayload::new(
+        SecurityMonitoringRuleValidatePayload::SecurityMonitoringStandardRulePayload(Box::new(
+            SecurityMonitoringStandardRulePayload::new(
                 vec![
                     SecurityMonitoringRuleCaseCreate::new(SecurityMonitoringRuleSeverity::INFO)
                         .condition("a > 0".to_string())
