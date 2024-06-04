@@ -20,6 +20,9 @@ pub struct SyntheticsTestRequestBodyFile {
     /// Name of the file.
     #[serde(rename = "name")]
     pub name: Option<String>,
+    /// Original name of the file.
+    #[serde(rename = "originalFileName")]
+    pub original_file_name: Option<String>,
     /// Size of the file.
     #[serde(rename = "size")]
     pub size: Option<i64>,
@@ -37,6 +40,7 @@ impl SyntheticsTestRequestBodyFile {
             bucket_key: None,
             content: None,
             name: None,
+            original_file_name: None,
             size: None,
             type_: None,
             _unparsed: false,
@@ -55,6 +59,11 @@ impl SyntheticsTestRequestBodyFile {
 
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
+        self
+    }
+
+    pub fn original_file_name(mut self, value: String) -> Self {
+        self.original_file_name = Some(value);
         self
     }
 
@@ -95,6 +104,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequestBodyFile {
                 let mut bucket_key: Option<String> = None;
                 let mut content: Option<String> = None;
                 let mut name: Option<String> = None;
+                let mut original_file_name: Option<String> = None;
                 let mut size: Option<i64> = None;
                 let mut type_: Option<String> = None;
                 let mut _unparsed = false;
@@ -119,6 +129,13 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequestBodyFile {
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "originalFileName" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            original_file_name =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "size" => {
                             if v.is_null() {
                                 continue;
@@ -139,6 +156,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequestBodyFile {
                     bucket_key,
                     content,
                     name,
+                    original_file_name,
                     size,
                     type_,
                     _unparsed,

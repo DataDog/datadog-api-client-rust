@@ -122,6 +122,7 @@ async fn main() {
                     .files(vec![SyntheticsTestRequestBodyFile::new()
                         .content("file content".to_string())
                         .name("file name".to_string())
+                        .original_file_name("image.png".to_string())
                         .type_("file type".to_string())])
                     .headers(BTreeMap::from([(
                         "unique".to_string(),
