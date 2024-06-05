@@ -17,7 +17,8 @@ async fn main() {
                 .enabled(true)
                 .expression(r#"exec.file.name == "sh""#.to_string()),
             CloudWorkloadSecurityAgentRuleType::AGENT_RULE,
-        ),
+        )
+        .id(agent_rule_data_id.clone()),
     );
     let configuration = datadog::Configuration::new();
     let api = CSMThreatsAPI::with_config(configuration);
