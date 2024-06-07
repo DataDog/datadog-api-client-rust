@@ -1127,7 +1127,7 @@ impl KeyManagementAPI {
         app_key_id: String,
         params: GetApplicationKeyOptionalParams,
     ) -> Result<
-        crate::datadogV2::model::ApplicationKeyResponse,
+        crate::datadogV2::model::PartialApplicationKeyResponse,
         datadog::Error<GetApplicationKeyError>,
     > {
         match self
@@ -1153,7 +1153,7 @@ impl KeyManagementAPI {
         app_key_id: String,
         params: GetApplicationKeyOptionalParams,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ApplicationKeyResponse>,
+        datadog::ResponseContent<crate::datadogV2::model::PartialApplicationKeyResponse>,
         datadog::Error<GetApplicationKeyError>,
     > {
         let local_configuration = &self.config;
@@ -1219,7 +1219,7 @@ impl KeyManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ApplicationKeyResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::PartialApplicationKeyResponse>(
                 &local_content,
             ) {
                 Ok(e) => {
