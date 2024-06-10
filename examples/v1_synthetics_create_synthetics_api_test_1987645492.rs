@@ -1,5 +1,4 @@
-// Create an API HTTP test returns "OK - Returns the created test details."
-// response
+// Create an API HTTP test has bodyHash filled out
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api_synthetics::SyntheticsAPI;
 use datadog_api_client::datadogV1::model::SyntheticsAPITest;
