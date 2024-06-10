@@ -10,6 +10,9 @@ use serde::{Deserialize, Deserializer, Serialize};
 #[serde(untagged)]
 pub enum SyntheticsAssertion {
     SyntheticsAssertionTarget(Box<crate::datadogV1::model::SyntheticsAssertionTarget>),
+    SyntheticsAssertionBodyHashTarget(
+        Box<crate::datadogV1::model::SyntheticsAssertionBodyHashTarget>,
+    ),
     SyntheticsAssertionJSONPathTarget(
         Box<crate::datadogV1::model::SyntheticsAssertionJSONPathTarget>,
     ),
@@ -32,6 +35,14 @@ impl<'de> Deserialize<'de> for SyntheticsAssertion {
         {
             if !_v._unparsed {
                 return Ok(SyntheticsAssertion::SyntheticsAssertionTarget(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV1::model::SyntheticsAssertionBodyHashTarget>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(SyntheticsAssertion::SyntheticsAssertionBodyHashTarget(_v));
             }
         }
         if let Ok(_v) = serde_json::from_value::<
