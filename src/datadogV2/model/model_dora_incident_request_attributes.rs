@@ -14,7 +14,7 @@ pub struct DORAIncidentRequestAttributes {
     /// Environment name that was impacted by the incident.
     #[serde(rename = "env")]
     pub env: Option<String>,
-    /// Unix timestamp in nanoseconds when the incident finished. It should not be older than 3 hours.
+    /// Unix timestamp in nanoseconds when the incident finished. It should not be older than 1 hour.
     #[serde(rename = "finished_at")]
     pub finished_at: Option<i64>,
     /// Git info for DORA Metrics events.
