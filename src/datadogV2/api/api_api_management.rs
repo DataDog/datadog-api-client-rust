@@ -22,6 +22,36 @@ impl CreateOpenAPIOptionalParams {
     }
 }
 
+/// ListAPIsOptionalParams is a struct for passing parameters to the method [`APIManagementAPI::list_ap_is`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListAPIsOptionalParams {
+    /// Filter APIs by name
+    pub query: Option<String>,
+    /// Number of items per page.
+    pub page_limit: Option<i64>,
+    /// Offset for pagination.
+    pub page_offset: Option<i64>,
+}
+
+impl ListAPIsOptionalParams {
+    /// Filter APIs by name
+    pub fn query(mut self, value: String) -> Self {
+        self.query = Some(value);
+        self
+    }
+    /// Number of items per page.
+    pub fn page_limit(mut self, value: i64) -> Self {
+        self.page_limit = Some(value);
+        self
+    }
+    /// Offset for pagination.
+    pub fn page_offset(mut self, value: i64) -> Self {
+        self.page_offset = Some(value);
+        self
+    }
+}
+
 /// UpdateOpenAPIOptionalParams is a struct for passing parameters to the method [`APIManagementAPI::update_open_api`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -60,6 +90,15 @@ pub enum DeleteOpenAPIError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetOpenAPIError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListAPIsError is a struct for typed errors of method [`APIManagementAPI::list_ap_is`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListAPIsError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
@@ -481,6 +520,135 @@ impl APIManagementAPI {
             })
         } else {
             let local_entity: Option<GetOpenAPIError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// List APIs and their IDs.
+    pub async fn list_ap_is(
+        &self,
+        params: ListAPIsOptionalParams,
+    ) -> Result<crate::datadogV2::model::ListAPIsResponse, datadog::Error<ListAPIsError>> {
+        match self.list_ap_is_with_http_info(params).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// List APIs and their IDs.
+    pub async fn list_ap_is_with_http_info(
+        &self,
+        params: ListAPIsOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::ListAPIsResponse>,
+        datadog::Error<ListAPIsError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_ap_is";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_ap_is' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let query = params.query;
+        let page_limit = params.page_limit;
+        let page_offset = params.page_offset;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/apicatalog/api",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = query {
+            local_req_builder =
+                local_req_builder.query(&[("query", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_limit {
+            local_req_builder =
+                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_offset {
+            local_req_builder =
+                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::ListAPIsResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListAPIsError> = serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,

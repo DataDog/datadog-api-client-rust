@@ -1571,6 +1571,9 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     );
     world
         .function_mappings
+        .insert("v2.ListAPIs".into(), test_v2_list_ap_is);
+    world
+        .function_mappings
         .insert("v2.DeleteOpenAPI".into(), test_v2_delete_open_api);
     world
         .function_mappings
@@ -10398,6 +10401,43 @@ fn test_v2_update_current_user_application_key(
                 };
             }
         };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_ap_is(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_api_management
+        .as_ref()
+        .expect("api instance not found");
+    let query = _parameters
+        .get("query")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_offset = _parameters
+        .get("page[offset]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_api_management::ListAPIsOptionalParams::default();
+    params.query = query;
+    params.page_limit = page_limit;
+    params.page_offset = page_offset;
+    let response = match block_on(api.list_ap_is_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
