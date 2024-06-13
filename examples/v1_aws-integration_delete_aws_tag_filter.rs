@@ -8,7 +8,7 @@ use datadog_api_client::datadogV1::model::AWSTagFilterDeleteRequest;
 async fn main() {
     let body = AWSTagFilterDeleteRequest::new()
         .account_id("FAKEAC0FAKEAC2FAKEAC".to_string())
-        .namespace(AWSNamespace::ELB);
+        .namespace(AWSNamespace::API_GATEWAY);
     let configuration = datadog::Configuration::new();
     let api = AWSIntegrationAPI::with_config(configuration);
     let resp = api.delete_aws_tag_filter(body).await;

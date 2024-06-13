@@ -553,7 +553,7 @@ impl AWSIntegrationAPI {
         }
     }
 
-    /// Set an AWS tag filter.
+    /// Set an AWS tag filter for a specific AWS account and namespace. Before setting a tag filter, ensure that you have queried the available AWS namespaces by using `api_instance.list_available_aws_namespaces()`.
     pub async fn create_aws_tag_filter(
         &self,
         body: crate::datadogV1::model::AWSTagFilterCreateRequest,
@@ -575,7 +575,7 @@ impl AWSIntegrationAPI {
         }
     }
 
-    /// Set an AWS tag filter.
+    /// Set an AWS tag filter for a specific AWS account and namespace. Before setting a tag filter, ensure that you have queried the available AWS namespaces by using `api_instance.list_available_aws_namespaces()`.
     pub async fn create_aws_tag_filter_with_http_info(
         &self,
         body: crate::datadogV1::model::AWSTagFilterCreateRequest,

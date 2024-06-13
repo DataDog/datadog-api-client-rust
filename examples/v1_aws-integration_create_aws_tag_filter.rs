@@ -8,7 +8,7 @@ use datadog_api_client::datadogV1::model::AWSTagFilterCreateRequest;
 async fn main() {
     let body = AWSTagFilterCreateRequest::new()
         .account_id("123456789012".to_string())
-        .namespace(AWSNamespace::ELB)
+        .namespace(AWSNamespace::API_GATEWAY)
         .tag_filter_str("prod*".to_string());
     let configuration = datadog::Configuration::new();
     let api = AWSIntegrationAPI::with_config(configuration);
