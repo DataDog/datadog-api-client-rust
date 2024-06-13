@@ -36,7 +36,7 @@ pub struct ListHostsOptionalParams {
     pub sort_field: Option<String>,
     /// Direction of sort. Options include `asc` and `desc`.
     pub sort_dir: Option<String>,
-    /// Host result to start search from.
+    /// Specify the starting point for the host search results. For example, if you set `count` to 100 and the first 100 results have already been returned, you can set `start` to `101` to get the next 100 results.
     pub start: Option<i64>,
     /// Number of hosts to return. Max 1000.
     pub count: Option<i64>,
@@ -64,7 +64,7 @@ impl ListHostsOptionalParams {
         self.sort_dir = Some(value);
         self
     }
-    /// Host result to start search from.
+    /// Specify the starting point for the host search results. For example, if you set `count` to 100 and the first 100 results have already been returned, you can set `start` to `101` to get the next 100 results.
     pub fn start(mut self, value: i64) -> Self {
         self.start = Some(value);
         self
