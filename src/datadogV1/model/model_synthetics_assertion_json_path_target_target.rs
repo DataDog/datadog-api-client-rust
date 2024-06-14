@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SyntheticsAssertionJSONPathTargetTarget {
+    /// The element from the list of results to assert on.  To choose from the first element in the list `firstElementMatches`, every element in the list `everyElementMatches`, at least one element in the list `atLeastOneElementMatches` or the serialized value of the list `serializationMatches`.
+    #[serde(rename = "elementsOperator")]
+    pub elements_operator: Option<String>,
     /// The JSON path to assert.
     #[serde(rename = "jsonPath")]
     pub json_path: Option<String>,
@@ -28,11 +31,17 @@ pub struct SyntheticsAssertionJSONPathTargetTarget {
 impl SyntheticsAssertionJSONPathTargetTarget {
     pub fn new() -> SyntheticsAssertionJSONPathTargetTarget {
         SyntheticsAssertionJSONPathTargetTarget {
+            elements_operator: None,
             json_path: None,
             operator: None,
             target_value: None,
             _unparsed: false,
         }
+    }
+
+    pub fn elements_operator(mut self, value: String) -> Self {
+        self.elements_operator = Some(value);
+        self
     }
 
     pub fn json_path(mut self, value: String) -> Self {
@@ -74,6 +83,7 @@ impl<'de> Deserialize<'de> for SyntheticsAssertionJSONPathTargetTarget {
             where
                 M: MapAccess<'a>,
             {
+                let mut elements_operator: Option<String> = None;
                 let mut json_path: Option<String> = None;
                 let mut operator: Option<String> = None;
                 let mut target_value: Option<serde_json::Value> = None;
@@ -81,6 +91,13 @@ impl<'de> Deserialize<'de> for SyntheticsAssertionJSONPathTargetTarget {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "elementsOperator" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            elements_operator =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "jsonPath" => {
                             if v.is_null() {
                                 continue;
@@ -105,6 +122,7 @@ impl<'de> Deserialize<'de> for SyntheticsAssertionJSONPathTargetTarget {
                 }
 
                 let content = SyntheticsAssertionJSONPathTargetTarget {
+                    elements_operator,
                     json_path,
                     operator,
                     target_value,
