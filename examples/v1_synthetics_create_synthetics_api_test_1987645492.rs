@@ -77,6 +77,20 @@ async fn main() {
                                 ),
                             ),
                         ),
+                        SyntheticsAssertion::SyntheticsAssertionJSONPathTarget(
+                            Box::new(
+                                SyntheticsAssertionJSONPathTarget::new(
+                                    SyntheticsAssertionJSONPathOperator::VALIDATES_JSON_PATH,
+                                    SyntheticsAssertionType::BODY,
+                                ).target(
+                                    SyntheticsAssertionJSONPathTargetTarget::new()
+                                        .elements_operator("atLeastOneElementMatches".to_string())
+                                        .json_path("topKey".to_string())
+                                        .operator("isNot".to_string())
+                                        .target_value(Value::from("0")),
+                                ),
+                            ),
+                        ),
                         SyntheticsAssertion::SyntheticsAssertionJSONSchemaTarget(
                             Box::new(
                                 SyntheticsAssertionJSONSchemaTarget::new(
