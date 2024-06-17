@@ -35,8 +35,15 @@ pub struct LogsIndex {
     /// The name of the index.
     #[serde(rename = "name")]
     pub name: String,
-    /// The number of days before logs are deleted from this index. Available values depend on
-    /// retention plans specified in your organization's contract/subscriptions.
+    /// The number of days logs are kept in Flex Logs (inclusive of Indexing) before they are deleted.
+    /// The values available are 30, 60, 90, 180, 360, and 450 days.
+    ///
+    /// **Note:**: If using Flex Starter, then only 180, 360, and 450 days options are available.
+    /// Flex Logs must be enabled on the account to specify this value.
+    #[serde(rename = "num_flex_logs_retention_days")]
+    pub num_flex_logs_retention_days: Option<i64>,
+    /// The number of days logs are kept in Standard Indexing before they are either deleted or retained in Flex Logs.
+    /// Available values depend on retention plans specified in your organization's contract / subscriptions.
     #[serde(rename = "num_retention_days")]
     pub num_retention_days: Option<i64>,
     #[serde(skip)]
@@ -54,6 +61,7 @@ impl LogsIndex {
             filter,
             is_rate_limited: None,
             name,
+            num_flex_logs_retention_days: None,
             num_retention_days: None,
             _unparsed: false,
         }
@@ -84,6 +92,11 @@ impl LogsIndex {
 
     pub fn is_rate_limited(mut self, value: bool) -> Self {
         self.is_rate_limited = Some(value);
+        self
+    }
+
+    pub fn num_flex_logs_retention_days(mut self, value: i64) -> Self {
+        self.num_flex_logs_retention_days = Some(value);
         self
     }
 
@@ -119,6 +132,7 @@ impl<'de> Deserialize<'de> for LogsIndex {
                 let mut filter: Option<crate::datadogV1::model::LogsFilter> = None;
                 let mut is_rate_limited: Option<bool> = None;
                 let mut name: Option<String> = None;
+                let mut num_flex_logs_retention_days: Option<i64> = None;
                 let mut num_retention_days: Option<i64> = None;
                 let mut _unparsed = false;
 
@@ -165,6 +179,13 @@ impl<'de> Deserialize<'de> for LogsIndex {
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "num_flex_logs_retention_days" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            num_flex_logs_retention_days =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "num_retention_days" => {
                             if v.is_null() {
                                 continue;
@@ -186,6 +207,7 @@ impl<'de> Deserialize<'de> for LogsIndex {
                     filter,
                     is_rate_limited,
                     name,
+                    num_flex_logs_retention_days,
                     num_retention_days,
                     _unparsed,
                 };
