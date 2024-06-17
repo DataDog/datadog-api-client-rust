@@ -22,6 +22,7 @@ async fn main() {
     .daily_limit_warning_threshold_percentage(70.0 as f64)
     .exclusion_filters(vec![LogsExclusion::new("payment".to_string())
         .filter(LogsExclusionFilter::new(1.0).query("*".to_string()))])
+    .num_flex_logs_retention_days(180)
     .num_retention_days(15);
     let configuration = datadog::Configuration::new();
     let api = LogsIndexesAPI::with_config(configuration);

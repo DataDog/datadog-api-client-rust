@@ -33,8 +33,16 @@ pub struct LogsIndexUpdateRequest {
     /// Filter for logs.
     #[serde(rename = "filter")]
     pub filter: crate::datadogV1::model::LogsFilter,
-    /// The number of days before logs are deleted from this index. Available values depend on
-    /// retention plans specified in your organization's contract/subscriptions.
+    /// The number of days logs are kept in Flex Logs (inclusive of Indexing) before they are deleted.
+    /// The values available are 30, 60, 90, 180, 360, and 450 days.
+    ///
+    /// **Note:** Changing the retention for an index adjusts the length of retention for all Flex logs
+    /// already in this index. It may also affect billing.
+    /// If using Flex Starter, then only 180, 360, and 450 days options are available.
+    #[serde(rename = "num_flex_logs_retention_days")]
+    pub num_flex_logs_retention_days: Option<i64>,
+    /// The number of days before logs are kept in Standard Indexing before they are either deleted or retained in Flex Logs.
+    /// Available values depend on retention plans specified in your organization's contract / subscriptions.
     ///
     /// **Note:** Changing the retention for an index adjusts the length of retention for all logs
     /// already in this index. It may also affect billing.
@@ -54,6 +62,7 @@ impl LogsIndexUpdateRequest {
             disable_daily_limit: None,
             exclusion_filters: None,
             filter,
+            num_flex_logs_retention_days: None,
             num_retention_days: None,
             _unparsed: false,
         }
@@ -84,6 +93,11 @@ impl LogsIndexUpdateRequest {
 
     pub fn exclusion_filters(mut self, value: Vec<crate::datadogV1::model::LogsExclusion>) -> Self {
         self.exclusion_filters = Some(value);
+        self
+    }
+
+    pub fn num_flex_logs_retention_days(mut self, value: i64) -> Self {
+        self.num_flex_logs_retention_days = Some(value);
         self
     }
 
@@ -118,6 +132,7 @@ impl<'de> Deserialize<'de> for LogsIndexUpdateRequest {
                 let mut exclusion_filters: Option<Vec<crate::datadogV1::model::LogsExclusion>> =
                     None;
                 let mut filter: Option<crate::datadogV1::model::LogsFilter> = None;
+                let mut num_flex_logs_retention_days: Option<i64> = None;
                 let mut num_retention_days: Option<i64> = None;
                 let mut _unparsed = false;
 
@@ -161,6 +176,13 @@ impl<'de> Deserialize<'de> for LogsIndexUpdateRequest {
                         "filter" => {
                             filter = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "num_flex_logs_retention_days" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            num_flex_logs_retention_days =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "num_retention_days" => {
                             if v.is_null() {
                                 continue;
@@ -180,6 +202,7 @@ impl<'de> Deserialize<'de> for LogsIndexUpdateRequest {
                     disable_daily_limit,
                     exclusion_filters,
                     filter,
+                    num_flex_logs_retention_days,
                     num_retention_days,
                     _unparsed,
                 };
