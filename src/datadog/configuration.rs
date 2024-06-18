@@ -132,7 +132,7 @@ impl Default for Configuration {
             ("v2.create_open_api".to_owned(), false),
             ("v2.delete_open_api".to_owned(), false),
             ("v2.get_open_api".to_owned(), false),
-            ("v2.list_ap_is".to_owned(), false),
+            ("v2.list_apis".to_owned(), false),
             ("v2.update_open_api".to_owned(), false),
             ("v2.get_active_billing_dimensions".to_owned(), false),
             ("v2.get_monthly_cost_attribution".to_owned(), false),

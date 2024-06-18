@@ -22,7 +22,7 @@ impl CreateOpenAPIOptionalParams {
     }
 }
 
-/// ListAPIsOptionalParams is a struct for passing parameters to the method [`APIManagementAPI::list_ap_is`]
+/// ListAPIsOptionalParams is a struct for passing parameters to the method [`APIManagementAPI::list_apis`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListAPIsOptionalParams {
@@ -95,7 +95,7 @@ pub enum GetOpenAPIError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListAPIsError is a struct for typed errors of method [`APIManagementAPI::list_ap_is`]
+/// ListAPIsError is a struct for typed errors of method [`APIManagementAPI::list_apis`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListAPIsError {
@@ -530,11 +530,11 @@ impl APIManagementAPI {
     }
 
     /// List APIs and their IDs.
-    pub async fn list_ap_is(
+    pub async fn list_apis(
         &self,
         params: ListAPIsOptionalParams,
     ) -> Result<crate::datadogV2::model::ListAPIsResponse, datadog::Error<ListAPIsError>> {
-        match self.list_ap_is_with_http_info(params).await {
+        match self.list_apis_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
@@ -549,7 +549,7 @@ impl APIManagementAPI {
     }
 
     /// List APIs and their IDs.
-    pub async fn list_ap_is_with_http_info(
+    pub async fn list_apis_with_http_info(
         &self,
         params: ListAPIsOptionalParams,
     ) -> Result<
@@ -557,12 +557,12 @@ impl APIManagementAPI {
         datadog::Error<ListAPIsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_ap_is";
+        let operation_id = "v2.list_apis";
         if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_ap_is' is not enabled".to_string(),
+                msg: "Operation 'v2.list_apis' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
