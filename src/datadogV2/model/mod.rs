@@ -72,6 +72,8 @@ pub mod model_list_ap_is_response;
 pub use self::model_list_ap_is_response::ListAPIsResponse;
 pub mod model_list_ap_is_response_data;
 pub use self::model_list_ap_is_response_data::ListAPIsResponseData;
+pub mod model_list_ap_is_response_data_attributes;
+pub use self::model_list_ap_is_response_data_attributes::ListAPIsResponseDataAttributes;
 pub mod model_list_ap_is_response_meta;
 pub use self::model_list_ap_is_response_meta::ListAPIsResponseMeta;
 pub mod model_list_ap_is_response_meta_pagination;

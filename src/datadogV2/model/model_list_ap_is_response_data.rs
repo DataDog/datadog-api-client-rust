@@ -11,12 +11,12 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ListAPIsResponseData {
+    /// Attributes for `ListAPIsResponseData`.
+    #[serde(rename = "attributes")]
+    pub attributes: Option<crate::datadogV2::model::ListAPIsResponseDataAttributes>,
     /// API identifier.
     #[serde(rename = "id")]
     pub id: Option<uuid::Uuid>,
-    /// API name.
-    #[serde(rename = "name")]
-    pub name: Option<String>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -25,19 +25,22 @@ pub struct ListAPIsResponseData {
 impl ListAPIsResponseData {
     pub fn new() -> ListAPIsResponseData {
         ListAPIsResponseData {
+            attributes: None,
             id: None,
-            name: None,
             _unparsed: false,
         }
     }
 
-    pub fn id(mut self, value: uuid::Uuid) -> Self {
-        self.id = Some(value);
+    pub fn attributes(
+        mut self,
+        value: crate::datadogV2::model::ListAPIsResponseDataAttributes,
+    ) -> Self {
+        self.attributes = Some(value);
         self
     }
 
-    pub fn name(mut self, value: String) -> Self {
-        self.name = Some(value);
+    pub fn id(mut self, value: uuid::Uuid) -> Self {
+        self.id = Some(value);
         self
     }
 }
@@ -65,31 +68,33 @@ impl<'de> Deserialize<'de> for ListAPIsResponseData {
             where
                 M: MapAccess<'a>,
             {
+                let mut attributes: Option<
+                    crate::datadogV2::model::ListAPIsResponseDataAttributes,
+                > = None;
                 let mut id: Option<uuid::Uuid> = None;
-                let mut name: Option<String> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "attributes" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "id" => {
                             if v.is_null() {
                                 continue;
                             }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "name" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         &_ => {}
                     }
                 }
 
                 let content = ListAPIsResponseData {
+                    attributes,
                     id,
-                    name,
                     _unparsed,
                 };
 
