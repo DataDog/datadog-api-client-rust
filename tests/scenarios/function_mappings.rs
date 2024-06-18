@@ -1571,7 +1571,7 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     );
     world
         .function_mappings
-        .insert("v2.ListAPIs".into(), test_v2_list_ap_is);
+        .insert("v2.ListAPIs".into(), test_v2_list_apis);
     world
         .function_mappings
         .insert("v2.DeleteOpenAPI".into(), test_v2_delete_open_api);
@@ -10405,7 +10405,7 @@ fn test_v2_update_current_user_application_key(
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_list_ap_is(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+fn test_v2_list_apis(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
         .v2_api_api_management
@@ -10424,7 +10424,7 @@ fn test_v2_list_ap_is(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
     params.query = query;
     params.page_limit = page_limit;
     params.page_offset = page_offset;
-    let response = match block_on(api.list_ap_is_with_http_info(params)) {
+    let response = match block_on(api.list_apis_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
