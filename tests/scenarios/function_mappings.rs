@@ -87,6 +87,7 @@ pub struct ApiInstances {
     pub v2_api_logs_metrics: Option<datadogV2::api_logs_metrics::LogsMetricsAPI>,
     pub v2_api_metrics: Option<datadogV2::api_metrics::MetricsAPI>,
     pub v2_api_monitors: Option<datadogV2::api_monitors::MonitorsAPI>,
+    pub v2_api_organizations: Option<datadogV2::api_organizations::OrganizationsAPI>,
     pub v2_api_roles: Option<datadogV2::api_roles::RolesAPI>,
     pub v2_api_security_monitoring:
         Option<datadogV2::api_security_monitoring::SecurityMonitoringAPI>,
@@ -96,7 +97,6 @@ pub struct ApiInstances {
     pub v2_api_restriction_policies:
         Option<datadogV2::api_restriction_policies::RestrictionPoliciesAPI>,
     pub v2_api_rum: Option<datadogV2::api_rum::RUMAPI>,
-    pub v2_api_organizations: Option<datadogV2::api_organizations::OrganizationsAPI>,
     pub v2_api_service_scorecards: Option<datadogV2::api_service_scorecards::ServiceScorecardsAPI>,
     pub v2_api_sensitive_data_scanner:
         Option<datadogV2::api_sensitive_data_scanner::SensitiveDataScannerAPI>,
@@ -2290,6 +2290,18 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     );
     world
         .function_mappings
+        .insert("v2.ListOrgConfigs".into(), test_v2_list_org_configs);
+    world
+        .function_mappings
+        .insert("v2.GetOrgConfig".into(), test_v2_get_org_config);
+    world
+        .function_mappings
+        .insert("v2.UpdateOrgConfig".into(), test_v2_update_org_config);
+    world
+        .function_mappings
+        .insert("v2.UploadIdPMetadata".into(), test_v2_upload_idp_metadata);
+    world
+        .function_mappings
         .insert("v2.ListPermissions".into(), test_v2_list_permissions);
     world
         .function_mappings
@@ -2568,9 +2580,6 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.SearchRUMEventsWithPagination".into(),
         test_v2_search_rum_events_with_pagination,
     );
-    world
-        .function_mappings
-        .insert("v2.UploadIdPMetadata".into(), test_v2_upload_idp_metadata);
     world.function_mappings.insert(
         "v2.ListScorecardOutcomes".into(),
         test_v2_list_scorecard_outcomes,
@@ -16821,6 +16830,117 @@ fn test_v2_update_monitor_config_policy(
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_list_org_configs(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_organizations
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_org_configs_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_org_config(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_organizations
+        .as_ref()
+        .expect("api instance not found");
+    let org_config_name =
+        serde_json::from_value(_parameters.get("org_config_name").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_org_config_with_http_info(org_config_name)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_org_config(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_organizations
+        .as_ref()
+        .expect("api instance not found");
+    let org_config_name =
+        serde_json::from_value(_parameters.get("org_config_name").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_org_config_with_http_info(org_config_name, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_upload_idp_metadata(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_organizations
+        .as_ref()
+        .expect("api instance not found");
+    let idp_file = _parameters.get("idp_file").and_then(|param| {
+        std::fs::read(format!(
+            "tests/scenarios/features/v{}/{}",
+            world.api_version,
+            param.as_str().unwrap()
+        ))
+        .ok()
+    });
+    let mut params = datadogV2::api_organizations::UploadIdPMetadataOptionalParams::default();
+    params.idp_file = idp_file;
+    let response = match block_on(api.upload_idp_metadata_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_list_permissions(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
@@ -19274,40 +19394,6 @@ fn test_v2_search_rum_events_with_pagination(
     });
     world.response.object = serde_json::to_value(result).unwrap();
     world.response.code = 200;
-}
-
-fn test_v2_upload_idp_metadata(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_organizations
-        .as_ref()
-        .expect("api instance not found");
-    let idp_file = _parameters.get("idp_file").and_then(|param| {
-        std::fs::read(format!(
-            "tests/scenarios/features/v{}/{}",
-            world.api_version,
-            param.as_str().unwrap()
-        ))
-        .ok()
-    });
-    let mut params = datadogV2::api_organizations::UploadIdPMetadataOptionalParams::default();
-    params.idp_file = idp_file;
-    let response = match block_on(api.upload_idp_metadata_with_http_info(params)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
 }
 
 fn test_v2_list_scorecard_outcomes(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
