@@ -8,7 +8,7 @@ async fn main() {
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.ListAPIs", true);
     let api = APIManagementAPI::with_config(configuration);
-    let resp = api.list_ap_is(ListAPIsOptionalParams::default()).await;
+    let resp = api.list_apis(ListAPIsOptionalParams::default()).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {
