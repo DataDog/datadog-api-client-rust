@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"value\":[]},\"type\":\"org_configs\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "patch",
+        "uri": "https://api.datadoghq.com/api/v2/org_configs/i_dont_exist"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[\"OrgConfig: i_dont_exist not found\"]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 404,
+          "message": "Not Found"
+        }
+      },
+      "recorded_at": "Wed, 12 Jun 2024 14:43:54 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

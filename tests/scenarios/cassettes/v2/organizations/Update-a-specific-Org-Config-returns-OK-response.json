@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"value\":\"UTC\"},\"type\":\"org_configs\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "patch",
+        "uri": "https://api.datadoghq.com/api/v2/org_configs/monitor_timezone"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":{\"type\":\"org_configs\",\"id\":\"54efd4ec-bb21-5e8a-9cb8-712e18f8b6b7\",\"attributes\":{\"name\":\"monitor_timezone\",\"description\":\"Sets the time zone used for monitoring alerts\",\"value_type\":\"enum\",\"value\":\"UTC\",\"modified_at\":\"2024-06-12T14:43:55.693935+00:00\"}}}\n",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Wed, 12 Jun 2024 14:43:55 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
