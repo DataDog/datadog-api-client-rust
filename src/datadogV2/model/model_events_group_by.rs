@@ -14,7 +14,8 @@ pub struct EventsGroupBy {
     /// The facet by which to split groups.
     #[serde(rename = "facet")]
     pub facet: String,
-    /// The maximum number of groups to return.
+    /// The maximum buckets to return for this group by. Note: at most 10000 buckets are allowed.
+    /// If grouping by multiple facets, the product of limits must not exceed 10000.
     #[serde(rename = "limit")]
     pub limit: Option<i32>,
     /// The dimension by which to sort a query's results.
