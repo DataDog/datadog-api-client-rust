@@ -36,6 +36,8 @@ pub struct GetEstimatedCostByOrgOptionalParams {
     pub start_date: Option<chrono::DateTime<chrono::Utc>>,
     /// Datetime in ISO-8601 format, UTC, precise to day: `[YYYY-MM-DD]` for cost ending this day.
     pub end_date: Option<chrono::DateTime<chrono::Utc>>,
+    /// Boolean to specify whether to include accounts connected to the current account as partner customers in the Datadog partner network program. Defaults to `false`.
+    pub include_connected_accounts: Option<bool>,
 }
 
 impl GetEstimatedCostByOrgOptionalParams {
@@ -62,6 +64,11 @@ impl GetEstimatedCostByOrgOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to day: `[YYYY-MM-DD]` for cost ending this day.
     pub fn end_date(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_date = Some(value);
+        self
+    }
+    /// Boolean to specify whether to include accounts connected to the current account as partner customers in the Datadog partner network program. Defaults to `false`.
+    pub fn include_connected_accounts(mut self, value: bool) -> Self {
+        self.include_connected_accounts = Some(value);
         self
     }
 }
@@ -717,6 +724,7 @@ impl UsageMeteringAPI {
         let end_month = params.end_month;
         let start_date = params.start_date;
         let end_date = params.end_date;
+        let include_connected_accounts = params.include_connected_accounts;
 
         let local_client = &self.client;
 
@@ -754,6 +762,10 @@ impl UsageMeteringAPI {
                 "end_date",
                 &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
             )]);
+        };
+        if let Some(ref local_query_param) = include_connected_accounts {
+            local_req_builder = local_req_builder
+                .query(&[("include_connected_accounts", &local_query_param.to_string())]);
         };
 
         // build headers

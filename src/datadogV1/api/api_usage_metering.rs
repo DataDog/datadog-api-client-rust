@@ -258,12 +258,19 @@ impl GetUsageAuditLogsOptionalParams {
 pub struct GetUsageBillableSummaryOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage starting this month.
     pub month: Option<chrono::DateTime<chrono::Utc>>,
+    /// Boolean to specify whether to include accounts connected to the current account as partner customers in the Datadog partner network program. Defaults to `false`.
+    pub include_connected_accounts: Option<bool>,
 }
 
 impl GetUsageBillableSummaryOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for usage starting this month.
     pub fn month(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.month = Some(value);
+        self
+    }
+    /// Boolean to specify whether to include accounts connected to the current account as partner customers in the Datadog partner network program. Defaults to `false`.
+    pub fn include_connected_accounts(mut self, value: bool) -> Self {
+        self.include_connected_accounts = Some(value);
         self
     }
 }
@@ -2568,6 +2575,7 @@ impl UsageMeteringAPI {
 
         // unbox and build optional parameters
         let month = params.month;
+        let include_connected_accounts = params.include_connected_accounts;
 
         let local_client = &self.client;
 
@@ -2583,6 +2591,10 @@ impl UsageMeteringAPI {
                 "month",
                 &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
             )]);
+        };
+        if let Some(ref local_query_param) = include_connected_accounts {
+            local_req_builder = local_req_builder
+                .query(&[("include_connected_accounts", &local_query_param.to_string())]);
         };
 
         // build headers
