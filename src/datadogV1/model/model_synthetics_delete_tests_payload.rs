@@ -12,6 +12,10 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SyntheticsDeleteTestsPayload {
+    /// Delete the Synthetic test even if it's referenced by other resources
+    /// (for example, SLOs and composite monitors).
+    #[serde(rename = "force_delete_dependencies")]
+    pub force_delete_dependencies: Option<bool>,
     /// An array of Synthetic test IDs you want to delete.
     #[serde(rename = "public_ids")]
     pub public_ids: Option<Vec<String>>,
@@ -23,9 +27,15 @@ pub struct SyntheticsDeleteTestsPayload {
 impl SyntheticsDeleteTestsPayload {
     pub fn new() -> SyntheticsDeleteTestsPayload {
         SyntheticsDeleteTestsPayload {
+            force_delete_dependencies: None,
             public_ids: None,
             _unparsed: false,
         }
+    }
+
+    pub fn force_delete_dependencies(mut self, value: bool) -> Self {
+        self.force_delete_dependencies = Some(value);
+        self
     }
 
     pub fn public_ids(mut self, value: Vec<String>) -> Self {
@@ -57,11 +67,19 @@ impl<'de> Deserialize<'de> for SyntheticsDeleteTestsPayload {
             where
                 M: MapAccess<'a>,
             {
+                let mut force_delete_dependencies: Option<bool> = None;
                 let mut public_ids: Option<Vec<String>> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "force_delete_dependencies" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            force_delete_dependencies =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "public_ids" => {
                             if v.is_null() {
                                 continue;
@@ -73,6 +91,7 @@ impl<'de> Deserialize<'de> for SyntheticsDeleteTestsPayload {
                 }
 
                 let content = SyntheticsDeleteTestsPayload {
+                    force_delete_dependencies,
                     public_ids,
                     _unparsed,
                 };
