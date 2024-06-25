@@ -7642,6 +7642,7 @@ components:
       - ci-tests alert
       - error-tracking alert
       - database-monitoring alert
+      - network-performance alert
       example: query alert
       type: string
       x-enum-varnames:
@@ -7662,6 +7663,7 @@ components:
       - CI_TESTS_ALERT
       - ERROR_TRACKING_ALERT
       - DATABASE_MONITORING_ALERT
+      - NETWORK_PERFORMANCE_ALERT
     MonitorUpdateRequest:
       description: Object describing a monitor update request.
       properties:
