@@ -37,7 +37,7 @@ form-data-builder = "1.0.1"
 futures-core = "0.3.30"
 lazy_static = "1.4.0"
 log = "0.4.20"
-reqwest = { version = "0.11.24", features = ["multipart"] }
+reqwest = { version = "0.11.24", features = ["multipart"], default-features = false }
 reqwest-middleware = "0.2.5"
 reqwest-retry = "0.3.0"
 serde = { version = "1.0.197", features = ["derive"] }
@@ -76,3 +76,8 @@ name="v1_authentication_validate"
 
 [package.metadata.docs.rs]
 cargo-args = ["-Zunstable-options", "-Zrustdoc-scrape-examples"]
+
+[features]
+default = ["native-tls"]
+native-tls = ["reqwest/native-tls"]
+rustls-tls = ["reqwest/rustls-tls-webpki-roots"]
