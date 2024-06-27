@@ -46,8 +46,12 @@ pub struct MonitorUpdateRequest {
     #[serde(rename = "overall_state")]
     pub overall_state: Option<crate::datadogV1::model::MonitorOverallStates>,
     /// Integer from 1 (high) to 5 (low) indicating alert severity.
-    #[serde(rename = "priority")]
-    pub priority: Option<i64>,
+    #[serde(
+        rename = "priority",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub priority: Option<Option<i64>>,
     /// The monitor query.
     #[serde(rename = "query")]
     pub query: Option<String>,
@@ -145,7 +149,7 @@ impl MonitorUpdateRequest {
         self
     }
 
-    pub fn priority(mut self, value: i64) -> Self {
+    pub fn priority(mut self, value: Option<i64>) -> Self {
         self.priority = Some(value);
         self
     }
@@ -209,7 +213,7 @@ impl<'de> Deserialize<'de> for MonitorUpdateRequest {
                 let mut name: Option<String> = None;
                 let mut options: Option<crate::datadogV1::model::MonitorOptions> = None;
                 let mut overall_state: Option<crate::datadogV1::model::MonitorOverallStates> = None;
-                let mut priority: Option<i64> = None;
+                let mut priority: Option<Option<i64>> = None;
                 let mut query: Option<String> = None;
                 let mut restricted_roles: Option<Option<Vec<String>>> = None;
                 let mut state: Option<crate::datadogV1::model::MonitorState> = None;
@@ -286,9 +290,6 @@ impl<'de> Deserialize<'de> for MonitorUpdateRequest {
                             }
                         }
                         "priority" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             priority = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "query" => {
