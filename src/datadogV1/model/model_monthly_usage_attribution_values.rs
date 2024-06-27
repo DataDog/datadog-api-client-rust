@@ -365,10 +365,10 @@ pub struct MonthlyUsageAttributionValues {
     /// The total RUM Browser and Mobile usage by tag(s).
     #[serde(rename = "rum_browser_mobile_sessions_usage")]
     pub rum_browser_mobile_sessions_usage: Option<f64>,
-    /// The percentage of RUM Replay Sessions usage by tag(s).
+    /// The percentage of RUM Session Replay usage by tag(s).
     #[serde(rename = "rum_replay_sessions_percentage")]
     pub rum_replay_sessions_percentage: Option<f64>,
-    /// The total RUM Replay Sessions usage by tag(s).
+    /// The total RUM Session Replay usage by tag(s).
     #[serde(rename = "rum_replay_sessions_usage")]
     pub rum_replay_sessions_usage: Option<f64>,
     /// The percentage of Sensitive Data Scanner usage by tag(s).

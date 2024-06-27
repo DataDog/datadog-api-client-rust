@@ -32,7 +32,7 @@ pub struct UsageSummaryResponse {
     /// Shows the sum of all Application Security Monitoring Serverless invocations over all hours in the current months for all organizations.
     #[serde(rename = "asm_serverless_agg_sum")]
     pub asm_serverless_agg_sum: Option<i64>,
-    /// Shows the sum of all audit logs lines indexed over all hours in the current month for all organizations.
+    /// Shows the sum of all audit logs lines indexed over all hours in the current month for all organizations (To be deprecated on October 1st, 2024).
     #[deprecated]
     #[serde(rename = "audit_logs_lines_indexed_agg_sum")]
     pub audit_logs_lines_indexed_agg_sum: Option<i64>,
@@ -60,13 +60,15 @@ pub struct UsageSummaryResponse {
     /// Shows the sum of all log bytes ingested over all hours in the current month for all organizations.
     #[serde(rename = "billable_ingested_bytes_agg_sum")]
     pub billable_ingested_bytes_agg_sum: Option<i64>,
-    /// Shows the sum of all browser lite sessions over all hours in the current month for all organizations.
+    /// Shows the sum of all browser lite sessions over all hours in the current month for all organizations (To be deprecated on October 1st, 2024).
+    #[deprecated]
     #[serde(rename = "browser_rum_lite_session_count_agg_sum")]
     pub browser_rum_lite_session_count_agg_sum: Option<i64>,
-    /// Shows the sum of all browser replay sessions over all hours in the current month for all organizations.
+    /// Shows the sum of all browser replay sessions over all hours in the current month for all organizations (To be deprecated on October 1st, 2024).
     #[serde(rename = "browser_rum_replay_session_count_agg_sum")]
     pub browser_rum_replay_session_count_agg_sum: Option<i64>,
-    /// Shows the sum of all browser RUM units over all hours in the current month for all organizations.
+    /// Shows the sum of all browser RUM units over all hours in the current month for all organizations (To be deprecated on October 1st, 2024).
+    #[deprecated]
     #[serde(rename = "browser_rum_units_agg_sum")]
     pub browser_rum_units_agg_sum: Option<i64>,
     /// Shows the sum of all CI pipeline indexed spans over all hours in the current month for all organizations.
@@ -219,7 +221,8 @@ pub struct UsageSummaryResponse {
     /// Shows sum of the the high-water marks of incident management monthly active users in the current month for all organizations.
     #[serde(rename = "incident_management_monthly_active_users_hwm_sum")]
     pub incident_management_monthly_active_users_hwm_sum: Option<i64>,
-    /// Shows the sum of all log events indexed over all hours in the current month for all organizations.
+    /// Shows the sum of all log events indexed over all hours in the current month for all organizations (To be deprecated on October 1st, 2024).
+    #[deprecated]
     #[serde(rename = "indexed_events_count_agg_sum")]
     pub indexed_events_count_agg_sum: Option<i64>,
     /// Shows the 99th percentile of all distinct infrastructure hosts over all hours in the current month for all organizations.
@@ -237,7 +240,8 @@ pub struct UsageSummaryResponse {
     /// Shows the the most recent hour in the current month for all organizations for which all usages were calculated.
     #[serde(rename = "last_updated")]
     pub last_updated: Option<chrono::DateTime<chrono::Utc>>,
-    /// Shows the sum of all live logs indexed over all hours in the current month for all organizations (data available as of December 1, 2020).
+    /// Shows the sum of all live logs indexed over all hours in the current month for all organization (To be deprecated on October 1st, 2024).
+    #[deprecated]
     #[serde(rename = "live_indexed_events_agg_sum")]
     pub live_indexed_events_agg_sum: Option<i64>,
     /// Shows the sum of all live logs bytes ingested over all hours in the current month for all organizations (data available as of December 1, 2020).
@@ -246,34 +250,43 @@ pub struct UsageSummaryResponse {
     /// Object containing logs usage data broken down by retention period.
     #[serde(rename = "logs_by_retention")]
     pub logs_by_retention: Option<crate::datadogV1::model::LogsByRetention>,
-    /// Shows the sum of all mobile lite sessions over all hours in the current month for all organizations.
+    /// Shows the sum of all mobile lite sessions over all hours in the current month for all organizations (To be deprecated on October 1st, 2024).
+    #[deprecated]
     #[serde(rename = "mobile_rum_lite_session_count_agg_sum")]
     pub mobile_rum_lite_session_count_agg_sum: Option<i64>,
-    /// Shows the sum of all mobile RUM Sessions over all hours in the current month for all organizations.
+    /// Shows the sum of all mobile RUM sessions over all hours in the current month for all organizations (To be deprecated on October 1st, 2024).
+    #[deprecated]
     #[serde(rename = "mobile_rum_session_count_agg_sum")]
     pub mobile_rum_session_count_agg_sum: Option<i64>,
-    /// Shows the sum of all mobile RUM Sessions on Android over all hours in the current month for all organizations.
+    /// Shows the sum of all mobile RUM sessions on Android over all hours in the current month for all organizations (To be deprecated on October 1st, 2024).
+    #[deprecated]
     #[serde(rename = "mobile_rum_session_count_android_agg_sum")]
     pub mobile_rum_session_count_android_agg_sum: Option<i64>,
-    /// Shows the sum of all mobile RUM Sessions on Flutter over all hours in the current month for all organizations.
+    /// Shows the sum of all mobile RUM sessions on Flutter over all hours in the current month for all organizations (To be deprecated on October 1st, 2024).
+    #[deprecated]
     #[serde(rename = "mobile_rum_session_count_flutter_agg_sum")]
     pub mobile_rum_session_count_flutter_agg_sum: Option<i64>,
-    /// Shows the sum of all mobile RUM Sessions on iOS over all hours in the current month for all organizations.
+    /// Shows the sum of all mobile RUM sessions on iOS over all hours in the current month for all organizations (To be deprecated on October 1st, 2024).
+    #[deprecated]
     #[serde(rename = "mobile_rum_session_count_ios_agg_sum")]
     pub mobile_rum_session_count_ios_agg_sum: Option<i64>,
-    /// Shows the sum of all mobile RUM Sessions on React Native over all hours in the current month for all organizations.
+    /// Shows the sum of all mobile RUM sessions on React Native over all hours in the current month for all organizations (To be deprecated on October 1st, 2024).
+    #[deprecated]
     #[serde(rename = "mobile_rum_session_count_reactnative_agg_sum")]
     pub mobile_rum_session_count_reactnative_agg_sum: Option<i64>,
-    /// Shows the sum of all mobile RUM Sessions on Roku over all hours in the current month for all organizations.
+    /// Shows the sum of all mobile RUM sessions on Roku over all hours in the current month for all organizations (To be deprecated on October 1st, 2024).
+    #[deprecated]
     #[serde(rename = "mobile_rum_session_count_roku_agg_sum")]
     pub mobile_rum_session_count_roku_agg_sum: Option<i64>,
-    /// Shows the sum of all mobile RUM units over all hours in the current month for all organizations.
+    /// Shows the sum of all mobile RUM units over all hours in the current month for all organizations (To be deprecated on October 1st, 2024).
+    #[deprecated]
     #[serde(rename = "mobile_rum_units_agg_sum")]
     pub mobile_rum_units_agg_sum: Option<i64>,
     /// Shows the sum of all Network Device Monitoring NetFlow events over all hours in the current month for all organizations.
     #[serde(rename = "ndm_netflow_events_agg_sum")]
     pub ndm_netflow_events_agg_sum: Option<i64>,
-    /// Shows the sum of all Network flows indexed over all hours in the current month for all organizations.
+    /// Shows the sum of all Network flows indexed over all hours in the current month for all organizations (To be deprecated on October 1st, 2024).
+    #[deprecated]
     #[serde(rename = "netflow_indexed_events_count_agg_sum")]
     pub netflow_indexed_events_count_agg_sum: Option<i64>,
     /// Shows the 99th percentile of all distinct Networks hosts over all hours in the current month for all organizations.
@@ -300,22 +313,70 @@ pub struct UsageSummaryResponse {
     /// Shows the 99th percentile of all profiled hosts over all hours in the current month for all organizations.
     #[serde(rename = "profiling_host_count_top99p_sum")]
     pub profiling_host_count_top99p_sum: Option<i64>,
-    /// Shows the sum of all rehydrated logs indexed over all hours in the current month for all organizations (data available as of December 1, 2020).
+    /// Shows the sum of all rehydrated logs indexed over all hours in the current month for all organizations (To be deprecated on October 1st, 2024).
+    #[deprecated]
     #[serde(rename = "rehydrated_indexed_events_agg_sum")]
     pub rehydrated_indexed_events_agg_sum: Option<i64>,
     /// Shows the sum of all rehydrated logs bytes ingested over all hours in the current month for all organizations (data available as of December 1, 2020).
     #[serde(rename = "rehydrated_ingested_bytes_agg_sum")]
     pub rehydrated_ingested_bytes_agg_sum: Option<i64>,
-    /// Shows the sum of all mobile sessions and all browser lite and legacy sessions over all hours in the current month for all organizations.
+    /// Shows the sum of all mobile sessions and all browser lite and legacy sessions over all hours in the current month for all organizations (To be deprecated on October 1st, 2024).
     #[serde(rename = "rum_browser_and_mobile_session_count")]
     pub rum_browser_and_mobile_session_count: Option<i64>,
-    /// Shows the sum of all browser RUM Lite Sessions over all hours in the current month for all organizations.
+    /// Shows the sum of all browser RUM legacy sessions over all hours in the current month for all organizations (To be introduced on October 1st, 2024).
+    #[serde(rename = "rum_browser_legacy_session_count_agg_sum")]
+    pub rum_browser_legacy_session_count_agg_sum: Option<i64>,
+    /// Shows the sum of all browser RUM lite sessions over all hours in the current month for all organizations (To be introduced on October 1st, 2024).
+    #[serde(rename = "rum_browser_lite_session_count_agg_sum")]
+    pub rum_browser_lite_session_count_agg_sum: Option<i64>,
+    /// Shows the sum of all browser RUM Session Replay counts over all hours in the current month for all organizations (To be introduced on October 1st, 2024).
+    #[serde(rename = "rum_browser_replay_session_count_agg_sum")]
+    pub rum_browser_replay_session_count_agg_sum: Option<i64>,
+    /// Shows the sum of all RUM lite sessions (browser and mobile) over all hours in the current month for all organizations (To be introduced on October 1st, 2024).
+    #[serde(rename = "rum_lite_session_count_agg_sum")]
+    pub rum_lite_session_count_agg_sum: Option<i64>,
+    /// Shows the sum of all mobile RUM legacy sessions on Android over all hours in the current month for all organizations (To be introduced on October 1st, 2024).
+    #[serde(rename = "rum_mobile_legacy_session_count_android_agg_sum")]
+    pub rum_mobile_legacy_session_count_android_agg_sum: Option<i64>,
+    /// Shows the sum of all mobile RUM legacy sessions on Flutter over all hours in the current month for all organizations (To be introduced on October 1st, 2024).
+    #[serde(rename = "rum_mobile_legacy_session_count_flutter_agg_sum")]
+    pub rum_mobile_legacy_session_count_flutter_agg_sum: Option<i64>,
+    /// Shows the sum of all mobile RUM legacy sessions on iOS over all hours in the current month for all organizations (To be introduced on October 1st, 2024).
+    #[serde(rename = "rum_mobile_legacy_session_count_ios_agg_sum")]
+    pub rum_mobile_legacy_session_count_ios_agg_sum: Option<i64>,
+    /// Shows the sum of all mobile RUM legacy sessions on React Native over all hours in the current month for all organizations (To be introduced on October 1st, 2024).
+    #[serde(rename = "rum_mobile_legacy_session_count_reactnative_agg_sum")]
+    pub rum_mobile_legacy_session_count_reactnative_agg_sum: Option<i64>,
+    /// Shows the sum of all mobile RUM legacy sessions on Roku over all hours in the current month for all organizations (To be introduced on October 1st, 2024).
+    #[serde(rename = "rum_mobile_legacy_session_count_roku_agg_sum")]
+    pub rum_mobile_legacy_session_count_roku_agg_sum: Option<i64>,
+    /// Shows the sum of all mobile RUM lite sessions on Android over all hours in the current month for all organizations (To be introduced on October 1st, 2024).
+    #[serde(rename = "rum_mobile_lite_session_count_android_agg_sum")]
+    pub rum_mobile_lite_session_count_android_agg_sum: Option<i64>,
+    /// Shows the sum of all mobile RUM lite sessions on Flutter over all hours in the current month for all organizations (To be introduced on October 1st, 2024).
+    #[serde(rename = "rum_mobile_lite_session_count_flutter_agg_sum")]
+    pub rum_mobile_lite_session_count_flutter_agg_sum: Option<i64>,
+    /// Shows the sum of all mobile RUM lite sessions on iOS over all hours in the current month for all organizations (To be introduced on October 1st, 2024).
+    #[serde(rename = "rum_mobile_lite_session_count_ios_agg_sum")]
+    pub rum_mobile_lite_session_count_ios_agg_sum: Option<i64>,
+    /// Shows the sum of all mobile RUM lite sessions on React Native over all hours in the current month for all organizations (To be introduced on October 1st, 2024).
+    #[serde(rename = "rum_mobile_lite_session_count_reactnative_agg_sum")]
+    pub rum_mobile_lite_session_count_reactnative_agg_sum: Option<i64>,
+    /// Shows the sum of all mobile RUM lite sessions on Roku over all hours in the current month for all organizations (To be introduced on October 1st, 2024).
+    #[serde(rename = "rum_mobile_lite_session_count_roku_agg_sum")]
+    pub rum_mobile_lite_session_count_roku_agg_sum: Option<i64>,
+    /// Shows the sum of all RUM Session Replay counts over all hours in the current month for all organizations (To be introduced on October 1st, 2024).
+    #[serde(rename = "rum_replay_session_count_agg_sum")]
+    pub rum_replay_session_count_agg_sum: Option<i64>,
+    /// Shows the sum of all browser RUM lite sessions over all hours in the current month for all organizations (To be deprecated on October 1st, 2024).
+    #[deprecated]
     #[serde(rename = "rum_session_count_agg_sum")]
     pub rum_session_count_agg_sum: Option<i64>,
-    /// Shows the sum of RUM Sessions (browser and mobile) over all hours in the current month for all organizations.
+    /// Shows the sum of RUM sessions (browser and mobile) over all hours in the current month for all organizations.
     #[serde(rename = "rum_total_session_count_agg_sum")]
     pub rum_total_session_count_agg_sum: Option<i64>,
-    /// Shows the sum of all browser and mobile RUM units over all hours in the current month for all organizations.
+    /// Shows the sum of all browser and mobile RUM units over all hours in the current month for all organizations (To be deprecated on October 1st, 2024).
+    #[deprecated]
     #[serde(rename = "rum_units_agg_sum")]
     pub rum_units_agg_sum: Option<i64>,
     /// Sum of all APM bytes scanned with sensitive data scanner in the current month for all organizations.
@@ -486,6 +547,21 @@ impl UsageSummaryResponse {
             rehydrated_indexed_events_agg_sum: None,
             rehydrated_ingested_bytes_agg_sum: None,
             rum_browser_and_mobile_session_count: None,
+            rum_browser_legacy_session_count_agg_sum: None,
+            rum_browser_lite_session_count_agg_sum: None,
+            rum_browser_replay_session_count_agg_sum: None,
+            rum_lite_session_count_agg_sum: None,
+            rum_mobile_legacy_session_count_android_agg_sum: None,
+            rum_mobile_legacy_session_count_flutter_agg_sum: None,
+            rum_mobile_legacy_session_count_ios_agg_sum: None,
+            rum_mobile_legacy_session_count_reactnative_agg_sum: None,
+            rum_mobile_legacy_session_count_roku_agg_sum: None,
+            rum_mobile_lite_session_count_android_agg_sum: None,
+            rum_mobile_lite_session_count_flutter_agg_sum: None,
+            rum_mobile_lite_session_count_ios_agg_sum: None,
+            rum_mobile_lite_session_count_reactnative_agg_sum: None,
+            rum_mobile_lite_session_count_roku_agg_sum: None,
+            rum_replay_session_count_agg_sum: None,
             rum_session_count_agg_sum: None,
             rum_total_session_count_agg_sum: None,
             rum_units_agg_sum: None,
@@ -1108,6 +1184,96 @@ impl UsageSummaryResponse {
     }
 
     #[allow(deprecated)]
+    pub fn rum_browser_legacy_session_count_agg_sum(mut self, value: i64) -> Self {
+        self.rum_browser_legacy_session_count_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn rum_browser_lite_session_count_agg_sum(mut self, value: i64) -> Self {
+        self.rum_browser_lite_session_count_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn rum_browser_replay_session_count_agg_sum(mut self, value: i64) -> Self {
+        self.rum_browser_replay_session_count_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn rum_lite_session_count_agg_sum(mut self, value: i64) -> Self {
+        self.rum_lite_session_count_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn rum_mobile_legacy_session_count_android_agg_sum(mut self, value: i64) -> Self {
+        self.rum_mobile_legacy_session_count_android_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn rum_mobile_legacy_session_count_flutter_agg_sum(mut self, value: i64) -> Self {
+        self.rum_mobile_legacy_session_count_flutter_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn rum_mobile_legacy_session_count_ios_agg_sum(mut self, value: i64) -> Self {
+        self.rum_mobile_legacy_session_count_ios_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn rum_mobile_legacy_session_count_reactnative_agg_sum(mut self, value: i64) -> Self {
+        self.rum_mobile_legacy_session_count_reactnative_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn rum_mobile_legacy_session_count_roku_agg_sum(mut self, value: i64) -> Self {
+        self.rum_mobile_legacy_session_count_roku_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn rum_mobile_lite_session_count_android_agg_sum(mut self, value: i64) -> Self {
+        self.rum_mobile_lite_session_count_android_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn rum_mobile_lite_session_count_flutter_agg_sum(mut self, value: i64) -> Self {
+        self.rum_mobile_lite_session_count_flutter_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn rum_mobile_lite_session_count_ios_agg_sum(mut self, value: i64) -> Self {
+        self.rum_mobile_lite_session_count_ios_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn rum_mobile_lite_session_count_reactnative_agg_sum(mut self, value: i64) -> Self {
+        self.rum_mobile_lite_session_count_reactnative_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn rum_mobile_lite_session_count_roku_agg_sum(mut self, value: i64) -> Self {
+        self.rum_mobile_lite_session_count_roku_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn rum_replay_session_count_agg_sum(mut self, value: i64) -> Self {
+        self.rum_replay_session_count_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn rum_session_count_agg_sum(mut self, value: i64) -> Self {
         self.rum_session_count_agg_sum = Some(value);
         self
@@ -1368,6 +1534,21 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                 let mut rehydrated_indexed_events_agg_sum: Option<i64> = None;
                 let mut rehydrated_ingested_bytes_agg_sum: Option<i64> = None;
                 let mut rum_browser_and_mobile_session_count: Option<i64> = None;
+                let mut rum_browser_legacy_session_count_agg_sum: Option<i64> = None;
+                let mut rum_browser_lite_session_count_agg_sum: Option<i64> = None;
+                let mut rum_browser_replay_session_count_agg_sum: Option<i64> = None;
+                let mut rum_lite_session_count_agg_sum: Option<i64> = None;
+                let mut rum_mobile_legacy_session_count_android_agg_sum: Option<i64> = None;
+                let mut rum_mobile_legacy_session_count_flutter_agg_sum: Option<i64> = None;
+                let mut rum_mobile_legacy_session_count_ios_agg_sum: Option<i64> = None;
+                let mut rum_mobile_legacy_session_count_reactnative_agg_sum: Option<i64> = None;
+                let mut rum_mobile_legacy_session_count_roku_agg_sum: Option<i64> = None;
+                let mut rum_mobile_lite_session_count_android_agg_sum: Option<i64> = None;
+                let mut rum_mobile_lite_session_count_flutter_agg_sum: Option<i64> = None;
+                let mut rum_mobile_lite_session_count_ios_agg_sum: Option<i64> = None;
+                let mut rum_mobile_lite_session_count_reactnative_agg_sum: Option<i64> = None;
+                let mut rum_mobile_lite_session_count_roku_agg_sum: Option<i64> = None;
+                let mut rum_replay_session_count_agg_sum: Option<i64> = None;
                 let mut rum_session_count_agg_sum: Option<i64> = None;
                 let mut rum_total_session_count_agg_sum: Option<i64> = None;
                 let mut rum_units_agg_sum: Option<i64> = None;
@@ -2087,6 +2268,111 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                             rum_browser_and_mobile_session_count =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "rum_browser_legacy_session_count_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_browser_legacy_session_count_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_browser_lite_session_count_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_browser_lite_session_count_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_browser_replay_session_count_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_browser_replay_session_count_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_lite_session_count_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_lite_session_count_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_mobile_legacy_session_count_android_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_mobile_legacy_session_count_android_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_mobile_legacy_session_count_flutter_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_mobile_legacy_session_count_flutter_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_mobile_legacy_session_count_ios_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_mobile_legacy_session_count_ios_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_mobile_legacy_session_count_reactnative_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_mobile_legacy_session_count_reactnative_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_mobile_legacy_session_count_roku_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_mobile_legacy_session_count_roku_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_mobile_lite_session_count_android_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_mobile_lite_session_count_android_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_mobile_lite_session_count_flutter_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_mobile_lite_session_count_flutter_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_mobile_lite_session_count_ios_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_mobile_lite_session_count_ios_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_mobile_lite_session_count_reactnative_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_mobile_lite_session_count_reactnative_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_mobile_lite_session_count_roku_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_mobile_lite_session_count_roku_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_replay_session_count_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_replay_session_count_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "rum_session_count_agg_sum" => {
                             if v.is_null() {
                                 continue;
@@ -2351,6 +2637,21 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                     rehydrated_indexed_events_agg_sum,
                     rehydrated_ingested_bytes_agg_sum,
                     rum_browser_and_mobile_session_count,
+                    rum_browser_legacy_session_count_agg_sum,
+                    rum_browser_lite_session_count_agg_sum,
+                    rum_browser_replay_session_count_agg_sum,
+                    rum_lite_session_count_agg_sum,
+                    rum_mobile_legacy_session_count_android_agg_sum,
+                    rum_mobile_legacy_session_count_flutter_agg_sum,
+                    rum_mobile_legacy_session_count_ios_agg_sum,
+                    rum_mobile_legacy_session_count_reactnative_agg_sum,
+                    rum_mobile_legacy_session_count_roku_agg_sum,
+                    rum_mobile_lite_session_count_android_agg_sum,
+                    rum_mobile_lite_session_count_flutter_agg_sum,
+                    rum_mobile_lite_session_count_ios_agg_sum,
+                    rum_mobile_lite_session_count_reactnative_agg_sum,
+                    rum_mobile_lite_session_count_roku_agg_sum,
+                    rum_replay_session_count_agg_sum,
                     rum_session_count_agg_sum,
                     rum_total_session_count_agg_sum,
                     rum_units_agg_sum,

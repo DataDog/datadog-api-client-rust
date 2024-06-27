@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response containing the number of RUM Sessions for each hour for a given organization.
+/// Response containing the number of RUM sessions for each hour for a given organization.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct UsageRumSessionsResponse {
-    /// Get hourly usage for RUM Sessions.
+    /// Get hourly usage for RUM sessions.
     #[serde(rename = "usage")]
     pub usage: Option<Vec<crate::datadogV1::model::UsageRumSessionsHour>>,
     #[serde(skip)]
