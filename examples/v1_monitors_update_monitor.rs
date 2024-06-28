@@ -19,7 +19,8 @@ async fn main() {
                 .renotify_interval(None)
                 .thresholds(MonitorThresholds::new().critical(2.0 as f64).warning(None))
                 .timeout_h(None),
-        );
+        )
+        .priority(None);
     let configuration = datadog::Configuration::new();
     let api = MonitorsAPI::with_config(configuration);
     let resp = api.update_monitor(monitor_id.clone(), body).await;
