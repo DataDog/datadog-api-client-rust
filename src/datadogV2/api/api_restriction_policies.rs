@@ -313,6 +313,7 @@ impl RestrictionPoliciesAPI {
     /// - Powerpacks: `powerpack`
     /// - Security Rules: `security-rule`
     /// - Service Level Objectives: `slo`
+    /// - Suppression Rules: `suppression-rule`
     ///
     /// #### Supported relations for resources
     /// Resource Type            | Supported Relations
@@ -322,6 +323,7 @@ impl RestrictionPoliciesAPI {
     /// Powerpacks               | `viewer`, `editor`
     /// Security Rules           | `viewer`, `editor`
     /// Service Level Objectives | `viewer`, `editor`
+    /// Suppression Rules        | `viewer`, `editor`
     pub async fn update_restriction_policy(
         &self,
         resource_id: String,
@@ -356,6 +358,7 @@ impl RestrictionPoliciesAPI {
     /// - Powerpacks: `powerpack`
     /// - Security Rules: `security-rule`
     /// - Service Level Objectives: `slo`
+    /// - Suppression Rules: `suppression-rule`
     ///
     /// #### Supported relations for resources
     /// Resource Type            | Supported Relations
@@ -365,6 +368,7 @@ impl RestrictionPoliciesAPI {
     /// Powerpacks               | `viewer`, `editor`
     /// Security Rules           | `viewer`, `editor`
     /// Service Level Objectives | `viewer`, `editor`
+    /// Suppression Rules        | `viewer`, `editor`
     pub async fn update_restriction_policy_with_http_info(
         &self,
         resource_id: String,
