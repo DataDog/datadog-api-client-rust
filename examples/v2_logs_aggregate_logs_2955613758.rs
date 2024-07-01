@@ -40,6 +40,7 @@ async fn main() {
             .total(LogsGroupByTotal::LogsGroupByTotalString(
                 "recall".to_string(),
             ))]);
+
     let configuration = datadog::Configuration::new();
     let api = LogsAPI::with_config(configuration);
     let resp = api.aggregate_logs(body).await;

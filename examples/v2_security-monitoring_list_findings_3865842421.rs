@@ -12,6 +12,7 @@ async fn main() {
     let api = SecurityMonitoringAPI::with_config(configuration);
     let response = api.list_findings_with_pagination(ListFindingsOptionalParams::default());
     pin_mut!(response);
+
     while let Some(resp) = response.next().await {
         if let Ok(value) = resp {
             println!("{:#?}", value);

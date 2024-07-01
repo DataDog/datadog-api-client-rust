@@ -35,6 +35,7 @@ async fn main() {
         ),
     )
     .parse_test_public_id("abc-def-123".to_string());
+
     let configuration = datadog::Configuration::new();
     let api = SyntheticsAPI::with_config(configuration);
     let resp = api.create_global_variable(body).await;

@@ -10,6 +10,7 @@ async fn main() {
         .create_event_bus(true)
         .event_generator_name("app-alerts".to_string())
         .region("us-east-1".to_string());
+
     let configuration = datadog::Configuration::new();
     let api = AWSIntegrationAPI::with_config(configuration);
     let resp = api.create_aws_event_bridge_source(body).await;

@@ -39,6 +39,7 @@ async fn main() {
             .layout(WidgetLayout::new(4, 4, 0, 0)),
         ],
     );
+
     let configuration = datadog::Configuration::new();
     let api = DashboardsAPI::with_config(configuration);
     let resp = api.create_dashboard(body).await;

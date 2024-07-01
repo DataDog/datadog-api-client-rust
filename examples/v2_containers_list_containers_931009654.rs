@@ -12,6 +12,7 @@ async fn main() {
     let response =
         api.list_containers_with_pagination(ListContainersOptionalParams::default().page_size(2));
     pin_mut!(response);
+
     while let Some(resp) = response.next().await {
         if let Ok(value) = resp {
             println!("{:#?}", value);

@@ -1,5 +1,4 @@
-// Create an API test with WEBSOCKET subtype returns "OK - Returns the created
-// test details." response
+// Create an API test with WEBSOCKET subtype returns "OK - Returns the created test details." response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api_synthetics::SyntheticsAPI;
 use datadog_api_client::datadogV1::model::SyntheticsAPITest;
@@ -62,6 +61,7 @@ async fn main() {
     )
     .subtype(SyntheticsTestDetailsSubType::WEBSOCKET)
     .tags(vec!["testing:api".to_string()]);
+
     let configuration = datadog::Configuration::new();
     let api = SyntheticsAPI::with_config(configuration);
     let resp = api.create_synthetics_api_test(body).await;

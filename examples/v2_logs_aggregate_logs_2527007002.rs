@@ -20,6 +20,7 @@ async fn main() {
                 .query("*".to_string())
                 .to("now".to_string()),
         );
+
     let configuration = datadog::Configuration::new();
     let api = LogsAPI::with_config(configuration);
     let resp = api.aggregate_logs(body).await;

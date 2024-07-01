@@ -12,6 +12,7 @@ async fn main() {
         AwsCURConfigPatchRequestAttributes::new(true),
         AwsCURConfigPatchRequestType::AWS_CUR_CONFIG_PATCH_REQUEST,
     ));
+
     let configuration = datadog::Configuration::new();
     let api = CloudCostManagementAPI::with_config(configuration);
     let resp = api.update_cost_awscur_config("100".to_string(), body).await;

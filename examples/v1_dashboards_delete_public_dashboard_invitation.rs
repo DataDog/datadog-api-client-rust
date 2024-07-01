@@ -17,6 +17,7 @@ async fn main() {
                 DashboardInviteType::PUBLIC_DASHBOARD_INVITATION,
             )],
         ));
+
     let configuration = datadog::Configuration::new();
     let api = DashboardsAPI::with_config(configuration);
     let resp = api

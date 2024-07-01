@@ -16,6 +16,7 @@ async fn main() {
             DashboardGlobalTime::new().live_span(DashboardGlobalTimeLiveSpan::PAST_ONE_HOUR),
         )
         .share_type(Some(DashboardShareType::OPEN));
+
     let configuration = datadog::Configuration::new();
     let api = DashboardsAPI::with_config(configuration);
     let resp = api.create_public_dashboard(body).await;

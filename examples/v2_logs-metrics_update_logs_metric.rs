@@ -18,6 +18,7 @@ async fn main() {
         ),
         LogsMetricType::LOGS_METRICS,
     ));
+
     let configuration = datadog::Configuration::new();
     let api = LogsMetricsAPI::with_config(configuration);
     let resp = api

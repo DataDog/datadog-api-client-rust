@@ -1,5 +1,4 @@
-// Update a user's membership attributes on a team returns "Represents a user's
-// association to a team" response
+// Update a user's membership attributes on a team returns "Represents a user's association to a team" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_teams::TeamsAPI;
 use datadog_api_client::datadogV2::model::UserTeamAttributes;
@@ -14,6 +13,7 @@ async fn main() {
         UserTeamUpdate::new(UserTeamType::TEAM_MEMBERSHIPS)
             .attributes(UserTeamAttributes::new().role(Some(UserTeamRole::ADMIN))),
     );
+
     let configuration = datadog::Configuration::new();
     let api = TeamsAPI::with_config(configuration);
     let resp = api

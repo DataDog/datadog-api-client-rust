@@ -9,6 +9,7 @@ async fn main() {
     let webhook_name = std::env::var("WEBHOOK_NAME").unwrap();
     let body = WebhooksIntegrationUpdateRequest::new()
         .url("https://example.com/webhook-updated".to_string());
+
     let configuration = datadog::Configuration::new();
     let api = WebhooksIntegrationAPI::with_config(configuration);
     let resp = api

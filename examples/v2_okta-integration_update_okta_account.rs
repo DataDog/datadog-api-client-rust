@@ -22,6 +22,7 @@ async fn main() {
             )
             .type_(OktaAccountType::OKTA_ACCOUNTS),
     );
+
     let configuration = datadog::Configuration::new();
     let api = OktaIntegrationAPI::with_config(configuration);
     let resp = api

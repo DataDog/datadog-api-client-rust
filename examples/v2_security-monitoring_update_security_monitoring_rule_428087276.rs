@@ -13,30 +13,7 @@ use datadog_api_client::datadogV2::model::SecurityMonitoringRuleUpdatePayload;
 async fn main() {
     // there is a valid "cloud_configuration_rule" in the system
     let cloud_configuration_rule_id = std::env::var("CLOUD_CONFIGURATION_RULE_ID").unwrap();
-    let body =
-        SecurityMonitoringRuleUpdatePayload::new()
-            .cases(
-                vec![
-                    SecurityMonitoringRuleCase::new()
-                        .notifications(vec![])
-                        .status(SecurityMonitoringRuleSeverity::INFO)
-                ],
-            )
-            .compliance_signal_options(
-                CloudConfigurationRuleComplianceSignalOptions::new()
-                    .user_activation_status(Some(false))
-                    .user_group_by_fields(Some(vec![])),
-            )
-            .is_enabled(false)
-            .message("ddd".to_string())
-            .name("Example-Security-Monitoring_cloud_updated".to_string())
-            .options(
-                SecurityMonitoringRuleOptions
-                ::new().compliance_rule_options(
-                    CloudConfigurationComplianceRuleOptions::new()
-                        .rego_rule(
-                            CloudConfigurationRegoRule::new(
-                                r#"package datadog
+    let body = SecurityMonitoringRuleUpdatePayload::new().cases(vec![SecurityMonitoringRuleCase::new().notifications(vec![]).status(SecurityMonitoringRuleSeverity::INFO),]).compliance_signal_options(CloudConfigurationRuleComplianceSignalOptions::new().user_activation_status(Some(false)).user_group_by_fields(Some(vec![]))).is_enabled(false).message("ddd".to_string()).name("Example-Security-Monitoring_cloud_updated".to_string()).options(SecurityMonitoringRuleOptions::new().compliance_rule_options(CloudConfigurationComplianceRuleOptions::new().rego_rule(CloudConfigurationRegoRule::new(r#"package datadog
 
 import data.datadog.output as dd_output
 
@@ -57,14 +34,8 @@ results contains result if {
 	some resource in input.resources[input.main_resource_type]
 	result := dd_output.format(resource, eval(resource))
 }
-"#.to_string(),
-                                vec!["gcp_compute_disk".to_string()],
-                            ),
-                        )
-                        .resource_type("gcp_compute_disk".to_string()),
-                ),
-            )
-            .tags(vec![]);
+"#.to_string(), vec!["gcp_compute_disk".to_string(),], )).resource_type("gcp_compute_disk".to_string()))).tags(vec![]);
+
     let configuration = datadog::Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api

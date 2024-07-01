@@ -17,7 +17,6 @@ use datadog_api_client::datadogV2::model::SecurityMonitoringSignalRuleType;
 async fn main() {
     // there is a valid "security_rule" in the system
     let security_rule_id = std::env::var("SECURITY_RULE_ID").unwrap();
-
     // there is a valid "security_rule_bis" in the system
     let security_rule_bis_id = std::env::var("SECURITY_RULE_BIS_ID").unwrap();
     let body =
@@ -50,6 +49,7 @@ async fn main() {
             .tags(vec![])
             .type_(SecurityMonitoringSignalRuleType::SIGNAL_CORRELATION),
         ));
+
     let configuration = datadog::Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api.create_security_monitoring_rule(body).await;

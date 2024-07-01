@@ -17,6 +17,7 @@ async fn main() {
             .filter_rule_custom(true),
     );
     pin_mut!(response);
+
     while let Some(resp) = response.next().await {
         if let Ok(value) = resp {
             println!("{:#?}", value);

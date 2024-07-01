@@ -28,6 +28,7 @@ async fn main() {
             )
             .type_(SpansListRequestType::SEARCH_REQUEST),
     );
+
     let configuration = datadog::Configuration::new();
     let api = SpansAPI::with_config(configuration);
     let resp = api.list_spans(body).await;

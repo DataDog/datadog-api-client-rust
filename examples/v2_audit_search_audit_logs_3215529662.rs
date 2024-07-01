@@ -21,11 +21,13 @@ async fn main() {
         .options(AuditLogsQueryOptions::new().timezone("GMT".to_string()))
         .page(AuditLogsQueryPageOptions::new().limit(2))
         .sort(AuditLogsSort::TIMESTAMP_ASCENDING);
+
     let configuration = datadog::Configuration::new();
     let api = AuditAPI::with_config(configuration);
     let response =
         api.search_audit_logs_with_pagination(SearchAuditLogsOptionalParams::default().body(body));
     pin_mut!(response);
+
     while let Some(resp) = response.next().await {
         if let Ok(value) = resp {
             println!("{:#?}", value);

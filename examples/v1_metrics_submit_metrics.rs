@@ -13,6 +13,7 @@ async fn main() {
     )
     .tags(vec!["test:ExampleMetric".to_string()])
     .type_("gauge".to_string())]);
+
     let configuration = datadog::Configuration::new();
     let api = MetricsAPI::with_config(configuration);
     let resp = api

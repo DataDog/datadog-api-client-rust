@@ -9,7 +9,6 @@ use datadog_api_client::datadogV2::model::DashboardType;
 async fn main() {
     // there is a valid "dashboard_list" in the system
     let dashboard_list_id: i64 = std::env::var("DASHBOARD_LIST_ID").unwrap().parse().unwrap();
-
     // there is a valid "screenboard_dashboard" in the system
     let screenboard_dashboard_id = std::env::var("SCREENBOARD_DASHBOARD_ID").unwrap();
     let body =
@@ -17,6 +16,7 @@ async fn main() {
             screenboard_dashboard_id.clone(),
             DashboardType::CUSTOM_SCREENBOARD,
         )]);
+
     let configuration = datadog::Configuration::new();
     let api = DashboardListsAPI::with_config(configuration);
     let resp = api

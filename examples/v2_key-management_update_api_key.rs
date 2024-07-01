@@ -15,6 +15,7 @@ async fn main() {
         api_key_data_id.clone(),
         APIKeysType::API_KEYS,
     ));
+
     let configuration = datadog::Configuration::new();
     let api = KeyManagementAPI::with_config(configuration);
     let resp = api.update_api_key(api_key_data_id.clone(), body).await;

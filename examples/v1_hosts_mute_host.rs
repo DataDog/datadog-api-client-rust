@@ -9,6 +9,7 @@ async fn main() {
         .end(1579098130)
         .message("Muting this host for a test!".to_string())
         .override_(false);
+
     let configuration = datadog::Configuration::new();
     let api = HostsAPI::with_config(configuration);
     let resp = api.mute_host("host_name".to_string(), body).await;
