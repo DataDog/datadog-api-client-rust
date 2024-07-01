@@ -2,6 +2,7 @@
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api_azure_integration::AzureIntegrationAPI;
 use datadog_api_client::datadogV1::model::AzureAccount;
+use datadog_api_client::datadogV1::model::AzureAccountMetricsConfig;
 
 #[tokio::main]
 async fn main() {
@@ -15,6 +16,12 @@ async fn main() {
         .custom_metrics_enabled(true)
         .errors(vec!["*".to_string()])
         .host_filters("key:value,filter:example".to_string())
+        .metrics_config(
+            AzureAccountMetricsConfig::new().excluded_resource_providers(vec![
+                "Microsoft.Sql".to_string(),
+                "Microsoft.Cdn".to_string(),
+            ]),
+        )
         .new_client_id("".to_string())
         .new_tenant_name("".to_string())
         .resource_collection_enabled(true)
