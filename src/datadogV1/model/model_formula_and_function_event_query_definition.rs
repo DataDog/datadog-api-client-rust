@@ -14,6 +14,9 @@ pub struct FormulaAndFunctionEventQueryDefinition {
     /// Compute options.
     #[serde(rename = "compute")]
     pub compute: crate::datadogV1::model::FormulaAndFunctionEventQueryDefinitionCompute,
+    /// The source organization UUID for cross organization queries. Feature in Private Beta.
+    #[serde(rename = "cross_org_uuids")]
+    pub cross_org_uuids: Option<Vec<String>>,
     /// Data source for event platform-based queries.
     #[serde(rename = "data_source")]
     pub data_source: crate::datadogV1::model::FormulaAndFunctionEventsDataSource,
@@ -45,6 +48,7 @@ impl FormulaAndFunctionEventQueryDefinition {
     ) -> FormulaAndFunctionEventQueryDefinition {
         FormulaAndFunctionEventQueryDefinition {
             compute,
+            cross_org_uuids: None,
             data_source,
             group_by: None,
             indexes: None,
@@ -53,6 +57,11 @@ impl FormulaAndFunctionEventQueryDefinition {
             storage: None,
             _unparsed: false,
         }
+    }
+
+    pub fn cross_org_uuids(mut self, value: Vec<String>) -> Self {
+        self.cross_org_uuids = Some(value);
+        self
     }
 
     pub fn group_by(
@@ -102,6 +111,7 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionEventQueryDefinition {
                 let mut compute: Option<
                     crate::datadogV1::model::FormulaAndFunctionEventQueryDefinitionCompute,
                 > = None;
+                let mut cross_org_uuids: Option<Vec<String>> = None;
                 let mut data_source: Option<
                     crate::datadogV1::model::FormulaAndFunctionEventsDataSource,
                 > = None;
@@ -120,6 +130,13 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionEventQueryDefinition {
                     match k.as_str() {
                         "compute" => {
                             compute = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cross_org_uuids" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cross_org_uuids =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "data_source" => {
                             data_source =
@@ -170,6 +187,7 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionEventQueryDefinition {
 
                 let content = FormulaAndFunctionEventQueryDefinition {
                     compute,
+                    cross_org_uuids,
                     data_source,
                     group_by,
                     indexes,

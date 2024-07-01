@@ -14,6 +14,9 @@ pub struct FormulaAndFunctionCloudCostQueryDefinition {
     /// Aggregator used for the request.
     #[serde(rename = "aggregator")]
     pub aggregator: Option<crate::datadogV1::model::WidgetAggregator>,
+    /// The source organization UUID for cross organization queries. Feature in Private Beta.
+    #[serde(rename = "cross_org_uuids")]
+    pub cross_org_uuids: Option<Vec<String>>,
     /// Data source for Cloud Cost queries.
     #[serde(rename = "data_source")]
     pub data_source: crate::datadogV1::model::FormulaAndFunctionCloudCostDataSource,
@@ -36,6 +39,7 @@ impl FormulaAndFunctionCloudCostQueryDefinition {
     ) -> FormulaAndFunctionCloudCostQueryDefinition {
         FormulaAndFunctionCloudCostQueryDefinition {
             aggregator: None,
+            cross_org_uuids: None,
             data_source,
             name,
             query,
@@ -45,6 +49,11 @@ impl FormulaAndFunctionCloudCostQueryDefinition {
 
     pub fn aggregator(mut self, value: crate::datadogV1::model::WidgetAggregator) -> Self {
         self.aggregator = Some(value);
+        self
+    }
+
+    pub fn cross_org_uuids(mut self, value: Vec<String>) -> Self {
+        self.cross_org_uuids = Some(value);
         self
     }
 }
@@ -67,6 +76,7 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionCloudCostQueryDefinition {
                 M: MapAccess<'a>,
             {
                 let mut aggregator: Option<crate::datadogV1::model::WidgetAggregator> = None;
+                let mut cross_org_uuids: Option<Vec<String>> = None;
                 let mut data_source: Option<
                     crate::datadogV1::model::FormulaAndFunctionCloudCostDataSource,
                 > = None;
@@ -91,6 +101,13 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionCloudCostQueryDefinition {
                                     _ => {}
                                 }
                             }
+                        }
+                        "cross_org_uuids" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cross_org_uuids =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "data_source" => {
                             data_source =
@@ -120,6 +137,7 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionCloudCostQueryDefinition {
 
                 let content = FormulaAndFunctionCloudCostQueryDefinition {
                     aggregator,
+                    cross_org_uuids,
                     data_source,
                     name,
                     query,
