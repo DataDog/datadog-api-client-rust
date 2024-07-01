@@ -14,6 +14,9 @@ pub struct FormulaAndFunctionMetricQueryDefinition {
     /// The aggregation methods available for metrics queries.
     #[serde(rename = "aggregator")]
     pub aggregator: Option<crate::datadogV1::model::FormulaAndFunctionMetricAggregation>,
+    /// The source organization UUID for cross organization queries. Feature in Private Beta.
+    #[serde(rename = "cross_org_uuids")]
+    pub cross_org_uuids: Option<Vec<String>>,
     /// Data source for metrics queries.
     #[serde(rename = "data_source")]
     pub data_source: crate::datadogV1::model::FormulaAndFunctionMetricDataSource,
@@ -36,6 +39,7 @@ impl FormulaAndFunctionMetricQueryDefinition {
     ) -> FormulaAndFunctionMetricQueryDefinition {
         FormulaAndFunctionMetricQueryDefinition {
             aggregator: None,
+            cross_org_uuids: None,
             data_source,
             name,
             query,
@@ -48,6 +52,11 @@ impl FormulaAndFunctionMetricQueryDefinition {
         value: crate::datadogV1::model::FormulaAndFunctionMetricAggregation,
     ) -> Self {
         self.aggregator = Some(value);
+        self
+    }
+
+    pub fn cross_org_uuids(mut self, value: Vec<String>) -> Self {
+        self.cross_org_uuids = Some(value);
         self
     }
 }
@@ -72,6 +81,7 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionMetricQueryDefinition {
                 let mut aggregator: Option<
                     crate::datadogV1::model::FormulaAndFunctionMetricAggregation,
                 > = None;
+                let mut cross_org_uuids: Option<Vec<String>> = None;
                 let mut data_source: Option<
                     crate::datadogV1::model::FormulaAndFunctionMetricDataSource,
                 > = None;
@@ -94,6 +104,13 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionMetricQueryDefinition {
                                     _ => {}
                                 }
                             }
+                        }
+                        "cross_org_uuids" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cross_org_uuids =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "data_source" => {
                             data_source =
@@ -123,6 +140,7 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionMetricQueryDefinition {
 
                 let content = FormulaAndFunctionMetricQueryDefinition {
                     aggregator,
+                    cross_org_uuids,
                     data_source,
                     name,
                     query,

@@ -14,6 +14,9 @@ pub struct FormulaAndFunctionSLOQueryDefinition {
     /// Additional filters applied to the SLO query.
     #[serde(rename = "additional_query_filters")]
     pub additional_query_filters: Option<String>,
+    /// The source organization UUID for cross organization queries. Feature in Private Beta.
+    #[serde(rename = "cross_org_uuids")]
+    pub cross_org_uuids: Option<Vec<String>>,
     /// Data source for SLO measures queries.
     #[serde(rename = "data_source")]
     pub data_source: crate::datadogV1::model::FormulaAndFunctionSLODataSource,
@@ -45,6 +48,7 @@ impl FormulaAndFunctionSLOQueryDefinition {
     ) -> FormulaAndFunctionSLOQueryDefinition {
         FormulaAndFunctionSLOQueryDefinition {
             additional_query_filters: None,
+            cross_org_uuids: None,
             data_source,
             group_mode: None,
             measure,
@@ -57,6 +61,11 @@ impl FormulaAndFunctionSLOQueryDefinition {
 
     pub fn additional_query_filters(mut self, value: String) -> Self {
         self.additional_query_filters = Some(value);
+        self
+    }
+
+    pub fn cross_org_uuids(mut self, value: Vec<String>) -> Self {
+        self.cross_org_uuids = Some(value);
         self
     }
 
@@ -100,6 +109,7 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionSLOQueryDefinition {
                 M: MapAccess<'a>,
             {
                 let mut additional_query_filters: Option<String> = None;
+                let mut cross_org_uuids: Option<Vec<String>> = None;
                 let mut data_source: Option<
                     crate::datadogV1::model::FormulaAndFunctionSLODataSource,
                 > = None;
@@ -122,6 +132,13 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionSLOQueryDefinition {
                                 continue;
                             }
                             additional_query_filters =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cross_org_uuids" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cross_org_uuids =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "data_source" => {
@@ -195,6 +212,7 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionSLOQueryDefinition {
 
                 let content = FormulaAndFunctionSLOQueryDefinition {
                     additional_query_filters,
+                    cross_org_uuids,
                     data_source,
                     group_mode,
                     measure,
