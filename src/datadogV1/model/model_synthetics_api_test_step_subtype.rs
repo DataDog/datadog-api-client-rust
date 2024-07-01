@@ -6,13 +6,13 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum SyntheticsAPIStepSubtype {
+pub enum SyntheticsAPITestStepSubtype {
     HTTP,
     GRPC,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for SyntheticsAPIStepSubtype {
+impl ToString for SyntheticsAPITestStepSubtype {
     fn to_string(&self) -> String {
         match self {
             Self::HTTP => String::from("http"),
@@ -22,7 +22,7 @@ impl ToString for SyntheticsAPIStepSubtype {
     }
 }
 
-impl Serialize for SyntheticsAPIStepSubtype {
+impl Serialize for SyntheticsAPITestStepSubtype {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -34,7 +34,7 @@ impl Serialize for SyntheticsAPIStepSubtype {
     }
 }
 
-impl<'de> Deserialize<'de> for SyntheticsAPIStepSubtype {
+impl<'de> Deserialize<'de> for SyntheticsAPITestStepSubtype {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
