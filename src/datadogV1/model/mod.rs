@@ -722,6 +722,8 @@ pub mod model_aws_logs_services_request;
 pub use self::model_aws_logs_services_request::AWSLogsServicesRequest;
 pub mod model_azure_account;
 pub use self::model_azure_account::AzureAccount;
+pub mod model_azure_account_metrics_config;
+pub use self::model_azure_account_metrics_config::AzureAccountMetricsConfig;
 pub mod model_gcp_account;
 pub use self::model_gcp_account::GCPAccount;
 pub mod model_pager_duty_service;
