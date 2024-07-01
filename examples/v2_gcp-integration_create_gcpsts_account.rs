@@ -19,6 +19,7 @@ async fn main() {
             )
             .type_(GCPServiceAccountType::GCP_SERVICE_ACCOUNT),
     );
+
     let configuration = datadog::Configuration::new();
     let api = GCPIntegrationAPI::with_config(configuration);
     let resp = api.create_gcpsts_account(body).await;

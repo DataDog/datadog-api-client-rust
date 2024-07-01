@@ -13,6 +13,7 @@ async fn main() {
             .type_("ios".to_string()),
         RUMApplicationCreateType::RUM_APPLICATION_CREATE,
     ));
+
     let configuration = datadog::Configuration::new();
     let api = RUMAPI::with_config(configuration);
     let resp = api.create_rum_application(body).await;

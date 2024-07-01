@@ -10,6 +10,7 @@ async fn main() {
         .unwrap()
         .parse()
         .unwrap();
+
     let configuration = datadog::Configuration::new();
     let api = MonitorsAPI::with_config(configuration);
     let resp = api

@@ -35,6 +35,7 @@ async fn main() {
         .local_variable_name("EXTRACTED_VALUE".to_string()),
     )
     .parse_test_public_id(synthetics_api_test_multi_step_public_id.clone());
+
     let configuration = datadog::Configuration::new();
     let api = SyntheticsAPI::with_config(configuration);
     let resp = api.create_global_variable(body).await;

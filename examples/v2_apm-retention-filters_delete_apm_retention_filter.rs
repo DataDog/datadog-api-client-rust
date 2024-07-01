@@ -6,6 +6,7 @@ use datadog_api_client::datadogV2::api_apm_retention_filters::APMRetentionFilter
 async fn main() {
     // there is a valid "retention_filter" in the system
     let retention_filter_data_id = std::env::var("RETENTION_FILTER_DATA_ID").unwrap();
+
     let configuration = datadog::Configuration::new();
     let api = APMRetentionFiltersAPI::with_config(configuration);
     let resp = api

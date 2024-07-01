@@ -17,14 +17,13 @@ async fn main() {
     let body = RoleCreateRequest::new(
         RoleCreateData::new(RoleCreateAttributes::new("Example-Role".to_string()))
             .relationships(RoleRelationships::new().permissions(
-                RelationshipToPermissions::new().data(vec![
-                                RelationshipToPermissionData::new()
-                                    .id(permission_id.clone())
-                                    .type_(PermissionsType::PERMISSIONS)
-                            ]),
+                RelationshipToPermissions::new().data(vec![RelationshipToPermissionData::new()
+                            .id(permission_id.clone())
+                            .type_(PermissionsType::PERMISSIONS)]),
             ))
             .type_(RolesType::ROLES),
     );
+
     let configuration = datadog::Configuration::new();
     let api = RolesAPI::with_config(configuration);
     let resp = api.create_role(body).await;

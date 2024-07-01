@@ -13,6 +13,7 @@ async fn main() {
         dashboard_id.clone(),
         DashboardResourceType::DASHBOARD,
     )]);
+
     let configuration = datadog::Configuration::new();
     let api = DashboardsAPI::with_config(configuration);
     let resp = api.restore_dashboards(body).await;

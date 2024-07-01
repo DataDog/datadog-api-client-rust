@@ -14,7 +14,6 @@ use datadog_api_client::datadogV2::model::UsersType;
 async fn main() {
     // there is a valid "incident" in the system
     let incident_data_id = std::env::var("INCIDENT_DATA_ID").unwrap();
-
     // there is a valid "user" in the system
     let user_data_id = std::env::var("USER_DATA_ID").unwrap();
     let body = IncidentUpdateRequest::new(
@@ -27,6 +26,7 @@ async fn main() {
             )),
         ),
     );
+
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.UpdateIncident", true);
     let api = IncidentsAPI::with_config(configuration);

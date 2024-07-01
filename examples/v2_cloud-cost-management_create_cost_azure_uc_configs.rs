@@ -30,6 +30,7 @@ async fn main() {
         .is_enabled(true),
         AzureUCConfigPostRequestType::AZURE_UC_CONFIG_POST_REQUEST,
     ));
+
     let configuration = datadog::Configuration::new();
     let api = CloudCostManagementAPI::with_config(configuration);
     let resp = api.create_cost_azure_uc_configs(body).await;

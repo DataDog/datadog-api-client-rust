@@ -12,6 +12,7 @@ async fn main() {
             .id("3653d3c6-0c75-11ea-ad28-fb5701eabc7d".to_string())
             .type_(RolesType::ROLES),
     );
+
     let configuration = datadog::Configuration::new();
     let api = LogsArchivesAPI::with_config(configuration);
     let resp = api
