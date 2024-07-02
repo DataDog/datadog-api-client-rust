@@ -15,6 +15,7 @@ pub enum MonitorFormulaAndFunctionEventsDataSource {
     LOGS,
     SPANS,
     DATABASE_QUERIES,
+    NETWORK_PERFORMANCE_QUERIES,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -29,6 +30,7 @@ impl ToString for MonitorFormulaAndFunctionEventsDataSource {
             Self::LOGS => String::from("logs"),
             Self::SPANS => String::from("spans"),
             Self::DATABASE_QUERIES => String::from("database_queries"),
+            Self::NETWORK_PERFORMANCE_QUERIES => String::from("network_performance_queries"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -61,6 +63,7 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionEventsDataSource {
             "logs" => Self::LOGS,
             "spans" => Self::SPANS,
             "database_queries" => Self::DATABASE_QUERIES,
+            "network_performance_queries" => Self::NETWORK_PERFORMANCE_QUERIES,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
