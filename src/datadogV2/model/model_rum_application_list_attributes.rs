@@ -32,7 +32,7 @@ pub struct RUMApplicationListAttributes {
     /// Org ID of the RUM application.
     #[serde(rename = "org_id")]
     pub org_id: i32,
-    /// Type of the RUM application. Supported values are `browser`, `ios`, `android`, `react-native`, `flutter`.
+    /// Type of the RUM application. Supported values are `browser`, `ios`, `android`, `react-native`, `flutter`, `roku`, `electron`, `unity`, `kotlin-multiplatform`.
     #[serde(rename = "type")]
     pub type_: String,
     /// Timestamp in ms of the last update date.
