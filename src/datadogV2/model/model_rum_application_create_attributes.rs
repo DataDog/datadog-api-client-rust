@@ -14,7 +14,7 @@ pub struct RUMApplicationCreateAttributes {
     /// Name of the RUM application.
     #[serde(rename = "name")]
     pub name: String,
-    /// Type of the RUM application. Supported values are `browser`, `ios`, `android`, `react-native`, `flutter`.
+    /// Type of the RUM application. Supported values are `browser`, `ios`, `android`, `react-native`, `flutter`, `roku`, `electron`, `unity`, `kotlin-multiplatform`.
     #[serde(rename = "type")]
     pub type_: Option<String>,
     #[serde(skip)]
