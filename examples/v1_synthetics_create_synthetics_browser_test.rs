@@ -48,6 +48,8 @@ async fn main() {
             .allow_insecure(true)
             .device_ids(vec![SyntheticsDeviceID::CHROME_LAPTOP_LARGE])
             .disable_cors(true)
+            .enable_profiling(true)
+            .enable_security_testing(true)
             .follow_redirects(true)
             .min_failure_duration(10)
             .min_location_failed(1)
