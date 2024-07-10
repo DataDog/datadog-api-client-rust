@@ -16,7 +16,7 @@ pub struct SyntheticsBasicAuthDigest {
     pub password: String,
     /// The type of basic authentication to use when performing the test.
     #[serde(rename = "type")]
-    pub type_: Option<crate::datadogV1::model::SyntheticsBasicAuthDigestType>,
+    pub type_: crate::datadogV1::model::SyntheticsBasicAuthDigestType,
     /// Username to use for the digest authentication.
     #[serde(rename = "username")]
     pub username: String,
@@ -26,18 +26,17 @@ pub struct SyntheticsBasicAuthDigest {
 }
 
 impl SyntheticsBasicAuthDigest {
-    pub fn new(password: String, username: String) -> SyntheticsBasicAuthDigest {
+    pub fn new(
+        password: String,
+        type_: crate::datadogV1::model::SyntheticsBasicAuthDigestType,
+        username: String,
+    ) -> SyntheticsBasicAuthDigest {
         SyntheticsBasicAuthDigest {
             password,
-            type_: None,
+            type_,
             username,
             _unparsed: false,
         }
-    }
-
-    pub fn type_(mut self, value: crate::datadogV1::model::SyntheticsBasicAuthDigestType) -> Self {
-        self.type_ = Some(value);
-        self
     }
 }
 
@@ -70,9 +69,6 @@ impl<'de> Deserialize<'de> for SyntheticsBasicAuthDigest {
                             password = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
@@ -90,6 +86,7 @@ impl<'de> Deserialize<'de> for SyntheticsBasicAuthDigest {
                     }
                 }
                 let password = password.ok_or_else(|| M::Error::missing_field("password"))?;
+                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
                 let username = username.ok_or_else(|| M::Error::missing_field("username"))?;
 
                 let content = SyntheticsBasicAuthDigest {

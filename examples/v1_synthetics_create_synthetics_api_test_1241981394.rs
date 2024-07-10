@@ -96,11 +96,11 @@ async fn main() {
                                 "client-id".to_string(),
                                 "client-secret".to_string(),
                                 SyntheticsBasicAuthOauthTokenApiAuthentication::HEADER,
+                                SyntheticsBasicAuthOauthClientType::OAUTH_CLIENT,
                             )
                             .audience("audience".to_string())
                             .resource("resource".to_string())
-                            .scope("yoyo".to_string())
-                            .type_(SyntheticsBasicAuthOauthClientType::OAUTH_CLIENT),
+                            .scope("yoyo".to_string()),
                         ),
                     ))
                     .body_type(SyntheticsTestRequestBodyType::APPLICATION_OCTET_STREAM)
