@@ -35,7 +35,7 @@ pub struct SyntheticsBasicAuthOauthClient {
         crate::datadogV1::model::SyntheticsBasicAuthOauthTokenApiAuthentication,
     /// The type of basic authentication to use when performing the test.
     #[serde(rename = "type")]
-    pub type_: Option<crate::datadogV1::model::SyntheticsBasicAuthOauthClientType>,
+    pub type_: crate::datadogV1::model::SyntheticsBasicAuthOauthClientType,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -47,6 +47,7 @@ impl SyntheticsBasicAuthOauthClient {
         client_id: String,
         client_secret: String,
         token_api_authentication: crate::datadogV1::model::SyntheticsBasicAuthOauthTokenApiAuthentication,
+        type_: crate::datadogV1::model::SyntheticsBasicAuthOauthClientType,
     ) -> SyntheticsBasicAuthOauthClient {
         SyntheticsBasicAuthOauthClient {
             access_token_url,
@@ -56,7 +57,7 @@ impl SyntheticsBasicAuthOauthClient {
             resource: None,
             scope: None,
             token_api_authentication,
-            type_: None,
+            type_,
             _unparsed: false,
         }
     }
@@ -73,14 +74,6 @@ impl SyntheticsBasicAuthOauthClient {
 
     pub fn scope(mut self, value: String) -> Self {
         self.scope = Some(value);
-        self
-    }
-
-    pub fn type_(
-        mut self,
-        value: crate::datadogV1::model::SyntheticsBasicAuthOauthClientType,
-    ) -> Self {
-        self.type_ = Some(value);
         self
     }
 }
@@ -159,9 +152,6 @@ impl<'de> Deserialize<'de> for SyntheticsBasicAuthOauthClient {
                             }
                         }
                         "type" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
@@ -182,6 +172,7 @@ impl<'de> Deserialize<'de> for SyntheticsBasicAuthOauthClient {
                     client_secret.ok_or_else(|| M::Error::missing_field("client_secret"))?;
                 let token_api_authentication = token_api_authentication
                     .ok_or_else(|| M::Error::missing_field("token_api_authentication"))?;
+                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = SyntheticsBasicAuthOauthClient {
                     access_token_url,
