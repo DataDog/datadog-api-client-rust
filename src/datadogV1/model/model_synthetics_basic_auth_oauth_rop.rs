@@ -38,7 +38,7 @@ pub struct SyntheticsBasicAuthOauthROP {
         crate::datadogV1::model::SyntheticsBasicAuthOauthTokenApiAuthentication,
     /// The type of basic authentication to use when performing the test.
     #[serde(rename = "type")]
-    pub type_: Option<crate::datadogV1::model::SyntheticsBasicAuthOauthROPType>,
+    pub type_: crate::datadogV1::model::SyntheticsBasicAuthOauthROPType,
     /// Username to use when performing the authentication.
     #[serde(rename = "username")]
     pub username: String,
@@ -52,6 +52,7 @@ impl SyntheticsBasicAuthOauthROP {
         access_token_url: String,
         password: String,
         token_api_authentication: crate::datadogV1::model::SyntheticsBasicAuthOauthTokenApiAuthentication,
+        type_: crate::datadogV1::model::SyntheticsBasicAuthOauthROPType,
         username: String,
     ) -> SyntheticsBasicAuthOauthROP {
         SyntheticsBasicAuthOauthROP {
@@ -63,7 +64,7 @@ impl SyntheticsBasicAuthOauthROP {
             resource: None,
             scope: None,
             token_api_authentication,
-            type_: None,
+            type_,
             username,
             _unparsed: false,
         }
@@ -91,14 +92,6 @@ impl SyntheticsBasicAuthOauthROP {
 
     pub fn scope(mut self, value: String) -> Self {
         self.scope = Some(value);
-        self
-    }
-
-    pub fn type_(
-        mut self,
-        value: crate::datadogV1::model::SyntheticsBasicAuthOauthROPType,
-    ) -> Self {
-        self.type_ = Some(value);
         self
     }
 }
@@ -188,9 +181,6 @@ impl<'de> Deserialize<'de> for SyntheticsBasicAuthOauthROP {
                             }
                         }
                         "type" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
@@ -212,6 +202,7 @@ impl<'de> Deserialize<'de> for SyntheticsBasicAuthOauthROP {
                 let password = password.ok_or_else(|| M::Error::missing_field("password"))?;
                 let token_api_authentication = token_api_authentication
                     .ok_or_else(|| M::Error::missing_field("token_api_authentication"))?;
+                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
                 let username = username.ok_or_else(|| M::Error::missing_field("username"))?;
 
                 let content = SyntheticsBasicAuthOauthROP {

@@ -118,14 +118,14 @@ async fn main() {
                                         "https://datadog-token.com".to_string(),
                                         "oauth-password".to_string(),
                                         SyntheticsBasicAuthOauthTokenApiAuthentication::BODY,
+                                        SyntheticsBasicAuthOauthROPType::OAUTH_ROP,
                                         "oauth-usermame".to_string(),
                                     )
                                         .audience("audience".to_string())
                                         .client_id("client-id".to_string())
                                         .client_secret("client-secret".to_string())
                                         .resource("resource".to_string())
-                                        .scope("yoyo".to_string())
-                                        .type_(SyntheticsBasicAuthOauthROPType::OAUTH_ROP),
+                                        .scope("yoyo".to_string()),
                                 ),
                             ),
                         )
