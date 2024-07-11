@@ -22,8 +22,6 @@ pub struct ListRoleUsersOptionalParams {
     /// Sort order is **descending** if the field is prefixed by a negative sign,
     /// for example `sort=-name`. Options: `name`, `email`, `status`.
     pub sort: Option<String>,
-    /// Filter all users by the given string. Defaults to no filtering.
-    pub filter: Option<String>,
 }
 
 impl ListRoleUsersOptionalParams {
@@ -42,11 +40,6 @@ impl ListRoleUsersOptionalParams {
     /// for example `sort=-name`. Options: `name`, `email`, `status`.
     pub fn sort(mut self, value: String) -> Self {
         self.sort = Some(value);
-        self
-    }
-    /// Filter all users by the given string. Defaults to no filtering.
-    pub fn filter(mut self, value: String) -> Self {
-        self.filter = Some(value);
         self
     }
 }
@@ -1327,7 +1320,6 @@ impl RolesAPI {
         let page_size = params.page_size;
         let page_number = params.page_number;
         let sort = params.sort;
-        let filter = params.filter;
 
         let local_client = &self.client;
 
@@ -1350,10 +1342,6 @@ impl RolesAPI {
         if let Some(ref local_query_param) = sort {
             local_req_builder =
                 local_req_builder.query(&[("sort", &local_query_param.to_string())]);
-        };
-        if let Some(ref local_query_param) = filter {
-            local_req_builder =
-                local_req_builder.query(&[("filter", &local_query_param.to_string())]);
         };
 
         // build headers

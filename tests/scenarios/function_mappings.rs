@@ -17267,14 +17267,10 @@ fn test_v2_list_role_users(world: &mut DatadogWorld, _parameters: &HashMap<Strin
     let sort = _parameters
         .get("sort")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let filter = _parameters
-        .get("filter")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_roles::ListRoleUsersOptionalParams::default();
     params.page_size = page_size;
     params.page_number = page_number;
     params.sort = sort;
-    params.filter = filter;
     let response = match block_on(api.list_role_users_with_http_info(role_id, params)) {
         Ok(response) => response,
         Err(error) => {
