@@ -9,10 +9,10 @@ async fn main() {
     let api = SnapshotsAPI::with_config(configuration);
     let resp = api
         .get_graph_snapshot(
+            "avg:system.load.1{*}".to_string(),
             1636542671,
             1636629071,
             GetGraphSnapshotOptionalParams::default()
-                .metric_query("avg:system.load.1{*}".to_string())
                 .title("System load".to_string())
                 .height(400)
                 .width(600),

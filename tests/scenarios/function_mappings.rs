@@ -5483,11 +5483,10 @@ fn test_v1_get_graph_snapshot(world: &mut DatadogWorld, _parameters: &HashMap<St
         .v1_api_snapshots
         .as_ref()
         .expect("api instance not found");
+    let metric_query =
+        serde_json::from_value(_parameters.get("metric_query").unwrap().clone()).unwrap();
     let start = serde_json::from_value(_parameters.get("start").unwrap().clone()).unwrap();
     let end = serde_json::from_value(_parameters.get("end").unwrap().clone()).unwrap();
-    let metric_query = _parameters
-        .get("metric_query")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let event_query = _parameters
         .get("event_query")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
@@ -5504,26 +5503,26 @@ fn test_v1_get_graph_snapshot(world: &mut DatadogWorld, _parameters: &HashMap<St
         .get("width")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV1::api_snapshots::GetGraphSnapshotOptionalParams::default();
-    params.metric_query = metric_query;
     params.event_query = event_query;
     params.graph_def = graph_def;
     params.title = title;
     params.height = height;
     params.width = width;
-    let response = match block_on(api.get_graph_snapshot_with_http_info(start, end, params)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
+    let response =
+        match block_on(api.get_graph_snapshot_with_http_info(metric_query, start, end, params)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
                     }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }

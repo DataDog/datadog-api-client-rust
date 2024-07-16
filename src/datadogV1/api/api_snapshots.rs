@@ -9,8 +9,6 @@ use serde::{Deserialize, Serialize};
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetGraphSnapshotOptionalParams {
-    /// The metric query.
-    pub metric_query: Option<String>,
     /// A query that adds event bands to the graph.
     pub event_query: Option<String>,
     /// A JSON document defining the graph. `graph_def` can be used instead of `metric_query`.
@@ -26,11 +24,6 @@ pub struct GetGraphSnapshotOptionalParams {
 }
 
 impl GetGraphSnapshotOptionalParams {
-    /// The metric query.
-    pub fn metric_query(mut self, value: String) -> Self {
-        self.metric_query = Some(value);
-        self
-    }
     /// A query that adds event bands to the graph.
     pub fn event_query(mut self, value: String) -> Self {
         self.event_query = Some(value);
@@ -137,12 +130,13 @@ impl SnapshotsAPI {
     /// **Note**: When a snapshot is created, there is some delay before it is available.
     pub async fn get_graph_snapshot(
         &self,
+        metric_query: String,
         start: i64,
         end: i64,
         params: GetGraphSnapshotOptionalParams,
     ) -> Result<crate::datadogV1::model::GraphSnapshot, datadog::Error<GetGraphSnapshotError>> {
         match self
-            .get_graph_snapshot_with_http_info(start, end, params)
+            .get_graph_snapshot_with_http_info(metric_query, start, end, params)
             .await
         {
             Ok(response_content) => {
@@ -162,6 +156,7 @@ impl SnapshotsAPI {
     /// **Note**: When a snapshot is created, there is some delay before it is available.
     pub async fn get_graph_snapshot_with_http_info(
         &self,
+        metric_query: String,
         start: i64,
         end: i64,
         params: GetGraphSnapshotOptionalParams,
@@ -173,7 +168,6 @@ impl SnapshotsAPI {
         let operation_id = "v1.get_graph_snapshot";
 
         // unbox and build optional parameters
-        let metric_query = params.metric_query;
         let event_query = params.event_query;
         let graph_def = params.graph_def;
         let title = params.title;
@@ -189,12 +183,9 @@ impl SnapshotsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        local_req_builder = local_req_builder.query(&[("metric_query", &metric_query.to_string())]);
         local_req_builder = local_req_builder.query(&[("start", &start.to_string())]);
         local_req_builder = local_req_builder.query(&[("end", &end.to_string())]);
-        if let Some(ref local_query_param) = metric_query {
-            local_req_builder =
-                local_req_builder.query(&[("metric_query", &local_query_param.to_string())]);
-        };
         if let Some(ref local_query_param) = event_query {
             local_req_builder =
                 local_req_builder.query(&[("event_query", &local_query_param.to_string())]);
