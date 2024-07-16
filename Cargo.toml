@@ -72,7 +72,7 @@ path = "tests/main.rs"
 
 [[example]] # signal to Cargo that dev-dependencies are allowed for examples
 doc-scrape-examples = true
-name="v1_authentication_validate"
+name="v1_authentication_Validate"
 
 [package.metadata.docs.rs]
 cargo-args = ["-Zunstable-options", "-Zrustdoc-scrape-examples"]

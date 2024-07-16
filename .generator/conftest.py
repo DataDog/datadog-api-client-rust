@@ -107,7 +107,7 @@ def pytest_bdd_after_scenario(request, feature, scenario):
         operation_spec=operation_spec.spec,
     )
 
-    output = ROOT_PATH / "examples" / f"{version}_{group_name}_{snake_case(operation_id).lower()}{unique_suffix}.rs"
+    output = ROOT_PATH / "examples" / f"{version}_{group_name}_{operation_id}{unique_suffix}.rs"
     output.parent.mkdir(parents=True, exist_ok=True)
 
     with output.open("w") as f:
