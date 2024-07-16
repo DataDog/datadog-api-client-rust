@@ -33,6 +33,13 @@ pub struct SyntheticsTestOptions {
     /// Disable Content Security Policy for browser tests.
     #[serde(rename = "disableCsp")]
     pub disable_csp: Option<bool>,
+    /// Enable profiling for browser tests.
+    #[serde(rename = "enableProfiling")]
+    pub enable_profiling: Option<bool>,
+    /// Enable security testing for browser tests. Security testing is not available anymore. This field is deprecated and won't be used.
+    #[deprecated]
+    #[serde(rename = "enableSecurityTesting")]
+    pub enable_security_testing: Option<bool>,
     /// For API HTTP test, whether or not the test should follow redirects.
     #[serde(rename = "follow_redirects")]
     pub follow_redirects: Option<bool>,
@@ -97,6 +104,7 @@ pub struct SyntheticsTestOptions {
 
 impl SyntheticsTestOptions {
     pub fn new() -> SyntheticsTestOptions {
+        #[allow(deprecated)]
         SyntheticsTestOptions {
             accept_self_signed: None,
             allow_insecure: None,
@@ -105,6 +113,8 @@ impl SyntheticsTestOptions {
             device_ids: None,
             disable_cors: None,
             disable_csp: None,
+            enable_profiling: None,
+            enable_security_testing: None,
             follow_redirects: None,
             http_version: None,
             ignore_server_certificate_error: None,
@@ -124,46 +134,67 @@ impl SyntheticsTestOptions {
         }
     }
 
+    #[allow(deprecated)]
     pub fn accept_self_signed(mut self, value: bool) -> Self {
         self.accept_self_signed = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn allow_insecure(mut self, value: bool) -> Self {
         self.allow_insecure = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn check_certificate_revocation(mut self, value: bool) -> Self {
         self.check_certificate_revocation = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn ci(mut self, value: crate::datadogV1::model::SyntheticsTestCiOptions) -> Self {
         self.ci = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn device_ids(mut self, value: Vec<crate::datadogV1::model::SyntheticsDeviceID>) -> Self {
         self.device_ids = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn disable_cors(mut self, value: bool) -> Self {
         self.disable_cors = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn disable_csp(mut self, value: bool) -> Self {
         self.disable_csp = Some(value);
         self
     }
 
+    #[allow(deprecated)]
+    pub fn enable_profiling(mut self, value: bool) -> Self {
+        self.enable_profiling = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn enable_security_testing(mut self, value: bool) -> Self {
+        self.enable_security_testing = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn follow_redirects(mut self, value: bool) -> Self {
         self.follow_redirects = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn http_version(
         mut self,
         value: crate::datadogV1::model::SyntheticsTestOptionsHTTPVersion,
@@ -172,31 +203,37 @@ impl SyntheticsTestOptions {
         self
     }
 
+    #[allow(deprecated)]
     pub fn ignore_server_certificate_error(mut self, value: bool) -> Self {
         self.ignore_server_certificate_error = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn initial_navigation_timeout(mut self, value: i64) -> Self {
         self.initial_navigation_timeout = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn min_failure_duration(mut self, value: i64) -> Self {
         self.min_failure_duration = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn min_location_failed(mut self, value: i64) -> Self {
         self.min_location_failed = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn monitor_name(mut self, value: String) -> Self {
         self.monitor_name = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn monitor_options(
         mut self,
         value: crate::datadogV1::model::SyntheticsTestOptionsMonitorOptions,
@@ -205,26 +242,31 @@ impl SyntheticsTestOptions {
         self
     }
 
+    #[allow(deprecated)]
     pub fn monitor_priority(mut self, value: i32) -> Self {
         self.monitor_priority = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn no_screenshot(mut self, value: bool) -> Self {
         self.no_screenshot = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn restricted_roles(mut self, value: Vec<String>) -> Self {
         self.restricted_roles = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn retry(mut self, value: crate::datadogV1::model::SyntheticsTestOptionsRetry) -> Self {
         self.retry = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn rum_settings(
         mut self,
         value: crate::datadogV1::model::SyntheticsBrowserTestRumSettings,
@@ -233,6 +275,7 @@ impl SyntheticsTestOptions {
         self
     }
 
+    #[allow(deprecated)]
     pub fn scheduling(
         mut self,
         value: crate::datadogV1::model::SyntheticsTestOptionsScheduling,
@@ -241,6 +284,7 @@ impl SyntheticsTestOptions {
         self
     }
 
+    #[allow(deprecated)]
     pub fn tick_every(mut self, value: i64) -> Self {
         self.tick_every = Some(value);
         self
@@ -277,6 +321,8 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptions {
                 let mut device_ids: Option<Vec<crate::datadogV1::model::SyntheticsDeviceID>> = None;
                 let mut disable_cors: Option<bool> = None;
                 let mut disable_csp: Option<bool> = None;
+                let mut enable_profiling: Option<bool> = None;
+                let mut enable_security_testing: Option<bool> = None;
                 let mut follow_redirects: Option<bool> = None;
                 let mut http_version: Option<
                     crate::datadogV1::model::SyntheticsTestOptionsHTTPVersion,
@@ -349,6 +395,20 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptions {
                                 continue;
                             }
                             disable_csp =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "enableProfiling" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            enable_profiling =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "enableSecurityTesting" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            enable_security_testing =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "follow_redirects" => {
@@ -465,6 +525,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptions {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = SyntheticsTestOptions {
                     accept_self_signed,
                     allow_insecure,
@@ -473,6 +534,8 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptions {
                     device_ids,
                     disable_cors,
                     disable_csp,
+                    enable_profiling,
+                    enable_security_testing,
                     follow_redirects,
                     http_version,
                     ignore_server_certificate_error,
