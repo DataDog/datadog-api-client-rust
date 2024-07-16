@@ -3408,9 +3408,13 @@ fn test_v1_get_usage_billable_summary(
     let month = _parameters
         .get("month")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include_connected_accounts = _parameters
+        .get("include_connected_accounts")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params =
         datadogV1::api_usage_metering::GetUsageBillableSummaryOptionalParams::default();
     params.month = month;
+    params.include_connected_accounts = include_connected_accounts;
     let response = match block_on(api.get_usage_billable_summary_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -12738,12 +12742,16 @@ fn test_v2_get_estimated_cost_by_org(
     let end_date = _parameters
         .get("end_date")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include_connected_accounts = _parameters
+        .get("include_connected_accounts")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_usage_metering::GetEstimatedCostByOrgOptionalParams::default();
     params.view = view;
     params.start_month = start_month;
     params.end_month = end_month;
     params.start_date = start_date;
     params.end_date = end_date;
+    params.include_connected_accounts = include_connected_accounts;
     let response = match block_on(api.get_estimated_cost_by_org_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
