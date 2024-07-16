@@ -11,6 +11,12 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct UsageBillableSummaryHour {
+    /// The account name.
+    #[serde(rename = "account_name")]
+    pub account_name: Option<String>,
+    /// The account public ID.
+    #[serde(rename = "account_public_id")]
+    pub account_public_id: Option<String>,
     /// The billing plan.
     #[serde(rename = "billing_plan")]
     pub billing_plan: Option<String>,
@@ -46,6 +52,8 @@ pub struct UsageBillableSummaryHour {
 impl UsageBillableSummaryHour {
     pub fn new() -> UsageBillableSummaryHour {
         UsageBillableSummaryHour {
+            account_name: None,
+            account_public_id: None,
             billing_plan: None,
             end_date: None,
             num_orgs: None,
@@ -57,6 +65,16 @@ impl UsageBillableSummaryHour {
             usage: None,
             _unparsed: false,
         }
+    }
+
+    pub fn account_name(mut self, value: String) -> Self {
+        self.account_name = Some(value);
+        self
+    }
+
+    pub fn account_public_id(mut self, value: String) -> Self {
+        self.account_public_id = Some(value);
+        self
     }
 
     pub fn billing_plan(mut self, value: String) -> Self {
@@ -128,6 +146,8 @@ impl<'de> Deserialize<'de> for UsageBillableSummaryHour {
             where
                 M: MapAccess<'a>,
             {
+                let mut account_name: Option<String> = None;
+                let mut account_public_id: Option<String> = None;
                 let mut billing_plan: Option<String> = None;
                 let mut end_date: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut num_orgs: Option<i64> = None;
@@ -141,6 +161,20 @@ impl<'de> Deserialize<'de> for UsageBillableSummaryHour {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "account_name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            account_name =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "account_public_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            account_public_id =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "billing_plan" => {
                             if v.is_null() {
                                 continue;
@@ -202,6 +236,8 @@ impl<'de> Deserialize<'de> for UsageBillableSummaryHour {
                 }
 
                 let content = UsageBillableSummaryHour {
+                    account_name,
+                    account_public_id,
                     billing_plan,
                     end_date,
                     num_orgs,
