@@ -32,6 +32,7 @@ pub mod api_logs_custom_destinations;
 pub mod api_logs_metrics;
 pub mod api_metrics;
 pub mod api_monitors;
+pub mod api_network_device_monitoring;
 pub mod api_okta_integration;
 pub mod api_opsgenie_integration;
 pub mod api_organizations;
