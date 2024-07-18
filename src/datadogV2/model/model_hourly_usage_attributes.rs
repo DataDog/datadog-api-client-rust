@@ -11,6 +11,12 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct HourlyUsageAttributes {
+    /// The account name.
+    #[serde(rename = "account_name")]
+    pub account_name: Option<String>,
+    /// The account public ID.
+    #[serde(rename = "account_public_id")]
+    pub account_public_id: Option<String>,
     /// List of the measured usage values for the product family for the org for the time period.
     #[serde(rename = "measurements")]
     pub measurements: Option<Vec<crate::datadogV2::model::HourlyUsageMeasurement>>,
@@ -37,6 +43,8 @@ pub struct HourlyUsageAttributes {
 impl HourlyUsageAttributes {
     pub fn new() -> HourlyUsageAttributes {
         HourlyUsageAttributes {
+            account_name: None,
+            account_public_id: None,
             measurements: None,
             org_name: None,
             product_family: None,
@@ -45,6 +53,16 @@ impl HourlyUsageAttributes {
             timestamp: None,
             _unparsed: false,
         }
+    }
+
+    pub fn account_name(mut self, value: String) -> Self {
+        self.account_name = Some(value);
+        self
+    }
+
+    pub fn account_public_id(mut self, value: String) -> Self {
+        self.account_public_id = Some(value);
+        self
     }
 
     pub fn measurements(
@@ -104,6 +122,8 @@ impl<'de> Deserialize<'de> for HourlyUsageAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut account_name: Option<String> = None;
+                let mut account_public_id: Option<String> = None;
                 let mut measurements: Option<Vec<crate::datadogV2::model::HourlyUsageMeasurement>> =
                     None;
                 let mut org_name: Option<String> = None;
@@ -115,6 +135,20 @@ impl<'de> Deserialize<'de> for HourlyUsageAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "account_name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            account_name =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "account_public_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            account_public_id =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "measurements" => {
                             if v.is_null() {
                                 continue;
@@ -158,6 +192,8 @@ impl<'de> Deserialize<'de> for HourlyUsageAttributes {
                 }
 
                 let content = HourlyUsageAttributes {
+                    account_name,
+                    account_public_id,
                     measurements,
                     org_name,
                     product_family,
