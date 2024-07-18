@@ -12844,6 +12844,9 @@ fn test_v2_get_hourly_usage(world: &mut DatadogWorld, _parameters: &HashMap<Stri
     let filter_include_descendants = _parameters
         .get("filter[include_descendants]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_include_connected_accounts = _parameters
+        .get("filter[include_connected_accounts]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let filter_include_breakdown = _parameters
         .get("filter[include_breakdown]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
@@ -12859,6 +12862,7 @@ fn test_v2_get_hourly_usage(world: &mut DatadogWorld, _parameters: &HashMap<Stri
     let mut params = datadogV2::api_usage_metering::GetHourlyUsageOptionalParams::default();
     params.filter_timestamp_end = filter_timestamp_end;
     params.filter_include_descendants = filter_include_descendants;
+    params.filter_include_connected_accounts = filter_include_connected_accounts;
     params.filter_include_breakdown = filter_include_breakdown;
     params.filter_versions = filter_versions;
     params.page_limit = page_limit;

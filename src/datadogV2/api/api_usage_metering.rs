@@ -104,6 +104,8 @@ pub struct GetHourlyUsageOptionalParams {
     pub filter_timestamp_end: Option<chrono::DateTime<chrono::Utc>>,
     /// Include child org usage in the response. Defaults to false.
     pub filter_include_descendants: Option<bool>,
+    /// Boolean to specify whether to include accounts connected to the current account as partner customers in the Datadog partner network program. Defaults to false.
+    pub filter_include_connected_accounts: Option<bool>,
     /// Include breakdown of usage by subcategories where applicable (for product family logs only). Defaults to false.
     pub filter_include_breakdown: Option<bool>,
     /// Comma separated list of product family versions to use in the format `product_family:version`. For example,
@@ -125,6 +127,11 @@ impl GetHourlyUsageOptionalParams {
     /// Include child org usage in the response. Defaults to false.
     pub fn filter_include_descendants(mut self, value: bool) -> Self {
         self.filter_include_descendants = Some(value);
+        self
+    }
+    /// Boolean to specify whether to include accounts connected to the current account as partner customers in the Datadog partner network program. Defaults to false.
+    pub fn filter_include_connected_accounts(mut self, value: bool) -> Self {
+        self.filter_include_connected_accounts = Some(value);
         self
     }
     /// Include breakdown of usage by subcategories where applicable (for product family logs only). Defaults to false.
@@ -1021,6 +1028,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let filter_timestamp_end = params.filter_timestamp_end;
         let filter_include_descendants = params.filter_include_descendants;
+        let filter_include_connected_accounts = params.filter_include_connected_accounts;
         let filter_include_breakdown = params.filter_include_breakdown;
         let filter_versions = params.filter_versions;
         let page_limit = params.page_limit;
@@ -1052,6 +1060,12 @@ impl UsageMeteringAPI {
         if let Some(ref local_query_param) = filter_include_descendants {
             local_req_builder = local_req_builder.query(&[(
                 "filter[include_descendants]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_include_connected_accounts {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[include_connected_accounts]",
                 &local_query_param.to_string(),
             )]);
         };
