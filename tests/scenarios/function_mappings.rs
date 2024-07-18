@@ -11090,11 +11090,15 @@ fn test_v2_list_authn_mappings(world: &mut DatadogWorld, _parameters: &HashMap<S
     let filter = _parameters
         .get("filter")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let resource_type = _parameters
+        .get("resource_type")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_authn_mappings::ListAuthNMappingsOptionalParams::default();
     params.page_size = page_size;
     params.page_number = page_number;
     params.sort = sort;
     params.filter = filter;
+    params.resource_type = resource_type;
     let response = match block_on(api.list_authn_mappings_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
