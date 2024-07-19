@@ -158,14 +158,6 @@ impl Default for Configuration {
             ("v2.update_incident_todo".to_owned(), false),
             ("v2.query_scalar_data".to_owned(), false),
             ("v2.query_timeseries_data".to_owned(), false),
-            (
-                "v2.convert_existing_security_monitoring_rule".to_owned(),
-                false,
-            ),
-            (
-                "v2.convert_security_monitoring_rule_from_json_to_terraform".to_owned(),
-                false,
-            ),
             ("v2.get_finding".to_owned(), false),
             ("v2.list_findings".to_owned(), false),
             ("v2.mute_findings".to_owned(), false),

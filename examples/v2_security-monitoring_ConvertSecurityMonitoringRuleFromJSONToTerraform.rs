@@ -42,11 +42,7 @@ async fn main() {
             .tags(vec![])
             .type_(SecurityMonitoringRuleTypeCreate::LOG_DETECTION),
         ));
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled(
-        "v2.ConvertSecurityMonitoringRuleFromJSONToTerraform",
-        true,
-    );
+    let configuration = datadog::Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api
         .convert_security_monitoring_rule_from_json_to_terraform(body)
