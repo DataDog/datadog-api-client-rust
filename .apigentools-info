@@ -4,13 +4,13 @@
     "spec_versions": {
         "v1": {
             "apigentools_version": "1.6.6",
-            "regenerated": "2024-07-18 21:03:07.857405",
-            "spec_repo_commit": "4e7a6907"
+            "regenerated": "2024-07-19 15:50:52.007086",
+            "spec_repo_commit": "6a0ef793"
         },
         "v2": {
             "apigentools_version": "1.6.6",
-            "regenerated": "2024-07-18 21:03:07.882636",
-            "spec_repo_commit": "4e7a6907"
+            "regenerated": "2024-07-19 15:50:52.025099",
+            "spec_repo_commit": "6a0ef793"
         }
     }
 }
