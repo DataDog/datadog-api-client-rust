@@ -248,6 +248,8 @@ pub mod model_audit_logs_query_page_options;
 pub use self::model_audit_logs_query_page_options::AuditLogsQueryPageOptions;
 pub mod model_authn_mappings_sort;
 pub use self::model_authn_mappings_sort::AuthNMappingsSort;
+pub mod model_authn_mapping_resource_type;
+pub use self::model_authn_mapping_resource_type::AuthNMappingResourceType;
 pub mod model_authn_mappings_response;
 pub use self::model_authn_mappings_response::AuthNMappingsResponse;
 pub mod model_authn_mapping;

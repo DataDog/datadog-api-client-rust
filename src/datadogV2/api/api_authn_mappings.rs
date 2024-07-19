@@ -22,6 +22,8 @@ pub struct ListAuthNMappingsOptionalParams {
     pub sort: Option<crate::datadogV2::model::AuthNMappingsSort>,
     /// Filter all mappings by the given string.
     pub filter: Option<String>,
+    /// Filter by mapping resource type. Defaults to "role" if not specified.
+    pub resource_type: Option<crate::datadogV2::model::AuthNMappingResourceType>,
 }
 
 impl ListAuthNMappingsOptionalParams {
@@ -43,6 +45,14 @@ impl ListAuthNMappingsOptionalParams {
     /// Filter all mappings by the given string.
     pub fn filter(mut self, value: String) -> Self {
         self.filter = Some(value);
+        self
+    }
+    /// Filter by mapping resource type. Defaults to "role" if not specified.
+    pub fn resource_type(
+        mut self,
+        value: crate::datadogV2::model::AuthNMappingResourceType,
+    ) -> Self {
+        self.resource_type = Some(value);
         self
     }
 }
@@ -547,6 +557,7 @@ impl AuthNMappingsAPI {
         let page_number = params.page_number;
         let sort = params.sort;
         let filter = params.filter;
+        let resource_type = params.resource_type;
 
         let local_client = &self.client;
 
@@ -572,6 +583,10 @@ impl AuthNMappingsAPI {
         if let Some(ref local_query_param) = filter {
             local_req_builder =
                 local_req_builder.query(&[("filter", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = resource_type {
+            local_req_builder =
+                local_req_builder.query(&[("resource_type", &local_query_param.to_string())]);
         };
 
         // build headers
