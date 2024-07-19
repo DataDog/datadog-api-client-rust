@@ -547,15 +547,6 @@ impl SecurityMonitoringAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.convert_existing_security_monitoring_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.convert_existing_security_monitoring_rule' is not enabled"
-                    .to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -671,14 +662,6 @@ impl SecurityMonitoringAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.convert_security_monitoring_rule_from_json_to_terraform";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.convert_security_monitoring_rule_from_json_to_terraform' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
