@@ -15,8 +15,12 @@ pub struct APIKeyRelationships {
     #[serde(rename = "created_by")]
     pub created_by: Option<crate::datadogV2::model::RelationshipToUser>,
     /// Relationship to user.
-    #[serde(rename = "modified_by")]
-    pub modified_by: Option<crate::datadogV2::model::RelationshipToUser>,
+    #[serde(
+        rename = "modified_by",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub modified_by: Option<Option<crate::datadogV2::model::NullableRelationshipToUser>>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -36,7 +40,10 @@ impl APIKeyRelationships {
         self
     }
 
-    pub fn modified_by(mut self, value: crate::datadogV2::model::RelationshipToUser) -> Self {
+    pub fn modified_by(
+        mut self,
+        value: Option<crate::datadogV2::model::NullableRelationshipToUser>,
+    ) -> Self {
         self.modified_by = Some(value);
         self
     }
@@ -66,7 +73,9 @@ impl<'de> Deserialize<'de> for APIKeyRelationships {
                 M: MapAccess<'a>,
             {
                 let mut created_by: Option<crate::datadogV2::model::RelationshipToUser> = None;
-                let mut modified_by: Option<crate::datadogV2::model::RelationshipToUser> = None;
+                let mut modified_by: Option<
+                    Option<crate::datadogV2::model::NullableRelationshipToUser>,
+                > = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -78,9 +87,6 @@ impl<'de> Deserialize<'de> for APIKeyRelationships {
                             created_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "modified_by" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             modified_by =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
