@@ -145,14 +145,10 @@ def simple_type(schema, render_nullable=False, render_option=True, render_new=Fa
 
     if type_name == "string":
         inner_type = {
-            "date": "String",
             "date-time": "chrono::DateTime<chrono::Utc>",
-            "email": "String",
-            "uuid": "String",
             "binary": "Vec<u8>",
             "uuid": "uuid::Uuid",
-            None: "String",
-        }[type_format]
+        }.get(type_format, "String")
     if type_name == "boolean":
         inner_type = "bool"
     
