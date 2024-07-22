@@ -453,7 +453,7 @@ def format_data_with_schema(
             def open_file(x):
                 return f"fs::read(\"{x}\").unwrap()", set(["std::fs"])
 
-            formatter = {
+            formatters = {
                 "int32": format_number,
                 "int64": format_number,
                 "double": format_double,
@@ -466,7 +466,9 @@ def format_data_with_schema(
                 "uuid": format_uuid,
                 "binary": open_file,
                 None: format_value,
-            }[schema.get("format", schema.get("type"))]
+            }
+            schema_type = schema.get("type")
+            formatter = formatters.get(schema.get("format", schema_type), formatters.get(schema_type))
 
             # TODO format date and datetime
             parameters, extra_imports = formatter(data)
