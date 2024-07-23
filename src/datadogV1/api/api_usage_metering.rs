@@ -639,6 +639,8 @@ pub struct GetUsageSummaryOptionalParams {
     pub end_month: Option<chrono::DateTime<chrono::Utc>>,
     /// Include usage summaries for each sub-org.
     pub include_org_details: Option<bool>,
+    /// Boolean to specify whether to include accounts connected to the current account as partner customers in the Datadog partner network program. Defaults to `false`.
+    pub include_connected_accounts: Option<bool>,
 }
 
 impl GetUsageSummaryOptionalParams {
@@ -650,6 +652,11 @@ impl GetUsageSummaryOptionalParams {
     /// Include usage summaries for each sub-org.
     pub fn include_org_details(mut self, value: bool) -> Self {
         self.include_org_details = Some(value);
+        self
+    }
+    /// Boolean to specify whether to include accounts connected to the current account as partner customers in the Datadog partner network program. Defaults to `false`.
+    pub fn include_connected_accounts(mut self, value: bool) -> Self {
+        self.include_connected_accounts = Some(value);
         self
     }
 }
@@ -5309,6 +5316,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let end_month = params.end_month;
         let include_org_details = params.include_org_details;
+        let include_connected_accounts = params.include_connected_accounts;
 
         let local_client = &self.client;
 
@@ -5332,6 +5340,10 @@ impl UsageMeteringAPI {
         if let Some(ref local_query_param) = include_org_details {
             local_req_builder =
                 local_req_builder.query(&[("include_org_details", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = include_connected_accounts {
+            local_req_builder = local_req_builder
+                .query(&[("include_connected_accounts", &local_query_param.to_string())]);
         };
 
         // build headers
