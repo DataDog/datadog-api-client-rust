@@ -12812,9 +12812,13 @@ fn test_v2_get_historical_cost_by_org(
     let end_month = _parameters
         .get("end_month")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include_connected_accounts = _parameters
+        .get("include_connected_accounts")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_usage_metering::GetHistoricalCostByOrgOptionalParams::default();
     params.view = view;
     params.end_month = end_month;
+    params.include_connected_accounts = include_connected_accounts;
     let response =
         match block_on(api.get_historical_cost_by_org_with_http_info(start_month, params)) {
             Ok(response) => response,
@@ -12976,8 +12980,12 @@ fn test_v2_get_projected_cost(world: &mut DatadogWorld, _parameters: &HashMap<St
     let view = _parameters
         .get("view")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include_connected_accounts = _parameters
+        .get("include_connected_accounts")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_usage_metering::GetProjectedCostOptionalParams::default();
     params.view = view;
+    params.include_connected_accounts = include_connected_accounts;
     let response = match block_on(api.get_projected_cost_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
