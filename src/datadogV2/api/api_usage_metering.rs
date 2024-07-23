@@ -81,6 +81,8 @@ pub struct GetHistoricalCostByOrgOptionalParams {
     pub view: Option<String>,
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost ending this month.
     pub end_month: Option<chrono::DateTime<chrono::Utc>>,
+    /// Boolean to specify whether to include accounts connected to the current account as partner customers in the Datadog partner network program. Defaults to `false`.
+    pub include_connected_accounts: Option<bool>,
 }
 
 impl GetHistoricalCostByOrgOptionalParams {
@@ -92,6 +94,11 @@ impl GetHistoricalCostByOrgOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost ending this month.
     pub fn end_month(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_month = Some(value);
+        self
+    }
+    /// Boolean to specify whether to include accounts connected to the current account as partner customers in the Datadog partner network program. Defaults to `false`.
+    pub fn include_connected_accounts(mut self, value: bool) -> Self {
+        self.include_connected_accounts = Some(value);
         self
     }
 }
@@ -210,12 +217,19 @@ impl GetMonthlyCostAttributionOptionalParams {
 pub struct GetProjectedCostOptionalParams {
     /// String to specify whether cost is broken down at a parent-org level or at the sub-org level. Available views are `summary` and `sub-org`. Defaults to `summary`.
     pub view: Option<String>,
+    /// Boolean to specify whether to include accounts connected to the current account as partner customers in the Datadog partner network program. Defaults to `false`.
+    pub include_connected_accounts: Option<bool>,
 }
 
 impl GetProjectedCostOptionalParams {
     /// String to specify whether cost is broken down at a parent-org level or at the sub-org level. Available views are `summary` and `sub-org`. Defaults to `summary`.
     pub fn view(mut self, value: String) -> Self {
         self.view = Some(value);
+        self
+    }
+    /// Boolean to specify whether to include accounts connected to the current account as partner customers in the Datadog partner network program. Defaults to `false`.
+    pub fn include_connected_accounts(mut self, value: bool) -> Self {
+        self.include_connected_accounts = Some(value);
         self
     }
 }
@@ -890,6 +904,7 @@ impl UsageMeteringAPI {
         // unbox and build optional parameters
         let view = params.view;
         let end_month = params.end_month;
+        let include_connected_accounts = params.include_connected_accounts;
 
         let local_client = &self.client;
 
@@ -913,6 +928,10 @@ impl UsageMeteringAPI {
                 "end_month",
                 &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
             )]);
+        };
+        if let Some(ref local_query_param) = include_connected_accounts {
+            local_req_builder = local_req_builder
+                .query(&[("include_connected_accounts", &local_query_param.to_string())]);
         };
 
         // build headers
@@ -1389,6 +1408,7 @@ impl UsageMeteringAPI {
 
         // unbox and build optional parameters
         let view = params.view;
+        let include_connected_accounts = params.include_connected_accounts;
 
         let local_client = &self.client;
 
@@ -1402,6 +1422,10 @@ impl UsageMeteringAPI {
         if let Some(ref local_query_param) = view {
             local_req_builder =
                 local_req_builder.query(&[("view", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = include_connected_accounts {
+            local_req_builder = local_req_builder
+                .query(&[("include_connected_accounts", &local_query_param.to_string())]);
         };
 
         // build headers
