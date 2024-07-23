@@ -11,6 +11,12 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct UsageSummaryDateOrg {
+    /// The account name.
+    #[serde(rename = "account_name")]
+    pub account_name: Option<String>,
+    /// The account public id.
+    #[serde(rename = "account_public_id")]
+    pub account_public_id: Option<String>,
     /// Shows the 99th percentile of all agent hosts over all hours in the current date for the given org.
     #[serde(rename = "agent_host_top99p")]
     pub agent_host_top99p: Option<i64>,
@@ -425,6 +431,8 @@ impl UsageSummaryDateOrg {
     pub fn new() -> UsageSummaryDateOrg {
         #[allow(deprecated)]
         UsageSummaryDateOrg {
+            account_name: None,
+            account_public_id: None,
             agent_host_top99p: None,
             apm_azure_app_service_host_top99p: None,
             apm_devsecops_host_top99p: None,
@@ -557,6 +565,18 @@ impl UsageSummaryDateOrg {
             workflow_executions_usage_sum: None,
             _unparsed: false,
         }
+    }
+
+    #[allow(deprecated)]
+    pub fn account_name(mut self, value: String) -> Self {
+        self.account_name = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn account_public_id(mut self, value: String) -> Self {
+        self.account_public_id = Some(value);
+        self
     }
 
     #[allow(deprecated)]
@@ -1363,6 +1383,8 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
             where
                 M: MapAccess<'a>,
             {
+                let mut account_name: Option<String> = None;
+                let mut account_public_id: Option<String> = None;
                 let mut agent_host_top99p: Option<i64> = None;
                 let mut apm_azure_app_service_host_top99p: Option<i64> = None;
                 let mut apm_devsecops_host_top99p: Option<i64> = None;
@@ -1497,6 +1519,20 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "account_name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            account_name =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "account_public_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            account_public_id =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "agent_host_top99p" => {
                             if v.is_null() {
                                 continue;
@@ -2409,6 +2445,8 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
 
                 #[allow(deprecated)]
                 let content = UsageSummaryDateOrg {
+                    account_name,
+                    account_public_id,
                     agent_host_top99p,
                     apm_azure_app_service_host_top99p,
                     apm_devsecops_host_top99p,

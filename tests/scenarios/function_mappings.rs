@@ -4230,9 +4230,13 @@ fn test_v1_get_usage_summary(world: &mut DatadogWorld, _parameters: &HashMap<Str
     let include_org_details = _parameters
         .get("include_org_details")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include_connected_accounts = _parameters
+        .get("include_connected_accounts")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV1::api_usage_metering::GetUsageSummaryOptionalParams::default();
     params.end_month = end_month;
     params.include_org_details = include_org_details;
+    params.include_connected_accounts = include_connected_accounts;
     let response = match block_on(api.get_usage_summary_with_http_info(start_month, params)) {
         Ok(response) => response,
         Err(error) => {
