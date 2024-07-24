@@ -16,25 +16,28 @@ pub struct FullApplicationKey {
     pub attributes: Option<crate::datadogV2::model::FullApplicationKeyAttributes>,
     /// ID of the application key.
     #[serde(rename = "id")]
-    pub id: Option<String>,
+    pub id: String,
     /// Resources related to the application key.
     #[serde(rename = "relationships")]
     pub relationships: Option<crate::datadogV2::model::ApplicationKeyRelationships>,
     /// Application Keys resource type.
     #[serde(rename = "type")]
-    pub type_: Option<crate::datadogV2::model::ApplicationKeysType>,
+    pub type_: crate::datadogV2::model::ApplicationKeysType,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
 }
 
 impl FullApplicationKey {
-    pub fn new() -> FullApplicationKey {
+    pub fn new(
+        id: String,
+        type_: crate::datadogV2::model::ApplicationKeysType,
+    ) -> FullApplicationKey {
         FullApplicationKey {
             attributes: None,
-            id: None,
+            id,
             relationships: None,
-            type_: None,
+            type_,
             _unparsed: false,
         }
     }
@@ -47,28 +50,12 @@ impl FullApplicationKey {
         self
     }
 
-    pub fn id(mut self, value: String) -> Self {
-        self.id = Some(value);
-        self
-    }
-
     pub fn relationships(
         mut self,
         value: crate::datadogV2::model::ApplicationKeyRelationships,
     ) -> Self {
         self.relationships = Some(value);
         self
-    }
-
-    pub fn type_(mut self, value: crate::datadogV2::model::ApplicationKeysType) -> Self {
-        self.type_ = Some(value);
-        self
-    }
-}
-
-impl Default for FullApplicationKey {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
@@ -107,9 +94,6 @@ impl<'de> Deserialize<'de> for FullApplicationKey {
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "id" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "relationships" => {
@@ -120,9 +104,6 @@ impl<'de> Deserialize<'de> for FullApplicationKey {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
@@ -136,6 +117,8 @@ impl<'de> Deserialize<'de> for FullApplicationKey {
                         &_ => {}
                     }
                 }
+                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
+                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = FullApplicationKey {
                     attributes,

@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct ApplicationKeyUpdateData {
     /// Attributes used to update an application Key.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::ApplicationKeyUpdateAttributes,
+    pub attributes: Option<crate::datadogV2::model::ApplicationKeyUpdateAttributes>,
     /// ID of the application key.
     #[serde(rename = "id")]
     pub id: String,
@@ -27,16 +27,23 @@ pub struct ApplicationKeyUpdateData {
 
 impl ApplicationKeyUpdateData {
     pub fn new(
-        attributes: crate::datadogV2::model::ApplicationKeyUpdateAttributes,
         id: String,
         type_: crate::datadogV2::model::ApplicationKeysType,
     ) -> ApplicationKeyUpdateData {
         ApplicationKeyUpdateData {
-            attributes,
+            attributes: None,
             id,
             type_,
             _unparsed: false,
         }
+    }
+
+    pub fn attributes(
+        mut self,
+        value: crate::datadogV2::model::ApplicationKeyUpdateAttributes,
+    ) -> Self {
+        self.attributes = Some(value);
+        self
     }
 }
 
@@ -67,6 +74,9 @@ impl<'de> Deserialize<'de> for ApplicationKeyUpdateData {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "attributes" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "id" => {
@@ -86,7 +96,6 @@ impl<'de> Deserialize<'de> for ApplicationKeyUpdateData {
                         &_ => {}
                     }
                 }
-                let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 

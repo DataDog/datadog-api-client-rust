@@ -10,12 +10,16 @@ use datadog_api_client::datadogV2::model::ApplicationKeysType;
 async fn main() {
     // there is a valid "application_key" in the system
     let application_key_data_id = std::env::var("APPLICATION_KEY_DATA_ID").unwrap();
-    let body = ApplicationKeyUpdateRequest::new(ApplicationKeyUpdateData::new(
-        ApplicationKeyUpdateAttributes::new()
-            .name("Application Key for managing dashboards-updated".to_string()),
-        application_key_data_id.clone(),
-        ApplicationKeysType::APPLICATION_KEYS,
-    ));
+    let body = ApplicationKeyUpdateRequest::new(
+        ApplicationKeyUpdateData::new(
+            application_key_data_id.clone(),
+            ApplicationKeysType::APPLICATION_KEYS,
+        )
+        .attributes(
+            ApplicationKeyUpdateAttributes::new()
+                .name("Application Key for managing dashboards-updated".to_string()),
+        ),
+    );
     let configuration = datadog::Configuration::new();
     let api = KeyManagementAPI::with_config(configuration);
     let resp = api

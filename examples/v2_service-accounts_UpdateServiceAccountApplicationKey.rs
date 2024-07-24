@@ -14,12 +14,16 @@ async fn main() {
     // there is a valid "service_account_application_key" for "service_account_user"
     let service_account_application_key_data_id =
         std::env::var("SERVICE_ACCOUNT_APPLICATION_KEY_DATA_ID").unwrap();
-    let body = ApplicationKeyUpdateRequest::new(ApplicationKeyUpdateData::new(
-        ApplicationKeyUpdateAttributes::new()
-            .name("Application Key for managing dashboards-updated".to_string()),
-        service_account_application_key_data_id.clone(),
-        ApplicationKeysType::APPLICATION_KEYS,
-    ));
+    let body = ApplicationKeyUpdateRequest::new(
+        ApplicationKeyUpdateData::new(
+            service_account_application_key_data_id.clone(),
+            ApplicationKeysType::APPLICATION_KEYS,
+        )
+        .attributes(
+            ApplicationKeyUpdateAttributes::new()
+                .name("Application Key for managing dashboards-updated".to_string()),
+        ),
+    );
     let configuration = datadog::Configuration::new();
     let api = ServiceAccountsAPI::with_config(configuration);
     let resp = api

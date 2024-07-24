@@ -14,9 +14,6 @@ pub struct ApplicationKeyResponse {
     /// Datadog application key.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::FullApplicationKey>,
-    /// Array of objects related to the application key.
-    #[serde(rename = "included")]
-    pub included: Option<Vec<crate::datadogV2::model::ApplicationKeyResponseIncludedItem>>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -26,21 +23,12 @@ impl ApplicationKeyResponse {
     pub fn new() -> ApplicationKeyResponse {
         ApplicationKeyResponse {
             data: None,
-            included: None,
             _unparsed: false,
         }
     }
 
     pub fn data(mut self, value: crate::datadogV2::model::FullApplicationKey) -> Self {
         self.data = Some(value);
-        self
-    }
-
-    pub fn included(
-        mut self,
-        value: Vec<crate::datadogV2::model::ApplicationKeyResponseIncludedItem>,
-    ) -> Self {
-        self.included = Some(value);
         self
     }
 }
@@ -69,9 +57,6 @@ impl<'de> Deserialize<'de> for ApplicationKeyResponse {
                 M: MapAccess<'a>,
             {
                 let mut data: Option<crate::datadogV2::model::FullApplicationKey> = None;
-                let mut included: Option<
-                    Vec<crate::datadogV2::model::ApplicationKeyResponseIncludedItem>,
-                > = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -82,21 +67,11 @@ impl<'de> Deserialize<'de> for ApplicationKeyResponse {
                             }
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "included" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            included = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         &_ => {}
                     }
                 }
 
-                let content = ApplicationKeyResponse {
-                    data,
-                    included,
-                    _unparsed,
-                };
+                let content = ApplicationKeyResponse { data, _unparsed };
 
                 Ok(content)
             }
