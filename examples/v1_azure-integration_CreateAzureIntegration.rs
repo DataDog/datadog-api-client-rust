@@ -9,7 +9,7 @@ async fn main() {
         .app_service_plan_filters("key:value,filter:example".to_string())
         .automute(true)
         .client_id("".to_string())
-        .client_secret("testingx./Sw*g/Y33t..R1cH+hScMDt".to_string())
+        .client_secret("TestingRh2nx664kUy5dIApvM54T4AtO".to_string())
         .container_app_filters("key:value,filter:example".to_string())
         .cspm_enabled(true)
         .custom_metrics_enabled(true)
