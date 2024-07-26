@@ -69,6 +69,7 @@ pub enum HourlyUsageAttributionUsageType {
     PROFILED_HOST_USAGE,
     RUM_BROWSER_MOBILE_SESSIONS_USAGE,
     RUM_REPLAY_SESSIONS_USAGE,
+    SCA_FARGATE_USAGE,
     SDS_SCANNED_BYTES_USAGE,
     SERVERLESS_APPS_USAGE,
     SIEM_ANALYZED_LOGS_ADD_ON_USAGE,
@@ -161,6 +162,7 @@ impl ToString for HourlyUsageAttributionUsageType {
                 String::from("rum_browser_mobile_sessions_usage")
             }
             Self::RUM_REPLAY_SESSIONS_USAGE => String::from("rum_replay_sessions_usage"),
+            Self::SCA_FARGATE_USAGE => String::from("sca_fargate_usage"),
             Self::SDS_SCANNED_BYTES_USAGE => String::from("sds_scanned_bytes_usage"),
             Self::SERVERLESS_APPS_USAGE => String::from("serverless_apps_usage"),
             Self::SIEM_ANALYZED_LOGS_ADD_ON_USAGE => {
@@ -265,6 +267,7 @@ impl<'de> Deserialize<'de> for HourlyUsageAttributionUsageType {
             "profiled_host_usage" => Self::PROFILED_HOST_USAGE,
             "rum_browser_mobile_sessions_usage" => Self::RUM_BROWSER_MOBILE_SESSIONS_USAGE,
             "rum_replay_sessions_usage" => Self::RUM_REPLAY_SESSIONS_USAGE,
+            "sca_fargate_usage" => Self::SCA_FARGATE_USAGE,
             "sds_scanned_bytes_usage" => Self::SDS_SCANNED_BYTES_USAGE,
             "serverless_apps_usage" => Self::SERVERLESS_APPS_USAGE,
             "siem_analyzed_logs_add_on_usage" => Self::SIEM_ANALYZED_LOGS_ADD_ON_USAGE,

@@ -379,6 +379,12 @@ pub struct UsageSummaryResponse {
     #[deprecated]
     #[serde(rename = "rum_units_agg_sum")]
     pub rum_units_agg_sum: Option<i64>,
+    /// Shows the average of all Software Composition Analysis Fargate tasks over all hours in the current months for all organizations.
+    #[serde(rename = "sca_fargate_count_avg_sum")]
+    pub sca_fargate_count_avg_sum: Option<i64>,
+    /// Shows the sum of the high-water marks of all Software Composition Analysis Fargate tasks over all hours in the current months for all organizations.
+    #[serde(rename = "sca_fargate_count_hwm_sum")]
+    pub sca_fargate_count_hwm_sum: Option<i64>,
     /// Sum of all APM bytes scanned with sensitive data scanner in the current month for all organizations.
     #[serde(rename = "sds_apm_scanned_bytes_sum")]
     pub sds_apm_scanned_bytes_sum: Option<i64>,
@@ -568,6 +574,8 @@ impl UsageSummaryResponse {
             rum_session_count_agg_sum: None,
             rum_total_session_count_agg_sum: None,
             rum_units_agg_sum: None,
+            sca_fargate_count_avg_sum: None,
+            sca_fargate_count_hwm_sum: None,
             sds_apm_scanned_bytes_sum: None,
             sds_events_scanned_bytes_sum: None,
             sds_logs_scanned_bytes_sum: None,
@@ -1296,6 +1304,18 @@ impl UsageSummaryResponse {
     }
 
     #[allow(deprecated)]
+    pub fn sca_fargate_count_avg_sum(mut self, value: i64) -> Self {
+        self.sca_fargate_count_avg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn sca_fargate_count_hwm_sum(mut self, value: i64) -> Self {
+        self.sca_fargate_count_hwm_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn sds_apm_scanned_bytes_sum(mut self, value: i64) -> Self {
         self.sds_apm_scanned_bytes_sum = Some(value);
         self
@@ -1562,6 +1582,8 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                 let mut rum_session_count_agg_sum: Option<i64> = None;
                 let mut rum_total_session_count_agg_sum: Option<i64> = None;
                 let mut rum_units_agg_sum: Option<i64> = None;
+                let mut sca_fargate_count_avg_sum: Option<i64> = None;
+                let mut sca_fargate_count_hwm_sum: Option<i64> = None;
                 let mut sds_apm_scanned_bytes_sum: Option<i64> = None;
                 let mut sds_events_scanned_bytes_sum: Option<i64> = None;
                 let mut sds_logs_scanned_bytes_sum: Option<i64> = None;
@@ -2405,6 +2427,20 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                             rum_units_agg_sum =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "sca_fargate_count_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            sca_fargate_count_avg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "sca_fargate_count_hwm_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            sca_fargate_count_hwm_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "sds_apm_scanned_bytes_sum" => {
                             if v.is_null() {
                                 continue;
@@ -2673,6 +2709,8 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                     rum_session_count_agg_sum,
                     rum_total_session_count_agg_sum,
                     rum_units_agg_sum,
+                    sca_fargate_count_avg_sum,
+                    sca_fargate_count_hwm_sum,
                     sds_apm_scanned_bytes_sum,
                     sds_events_scanned_bytes_sum,
                     sds_logs_scanned_bytes_sum,
