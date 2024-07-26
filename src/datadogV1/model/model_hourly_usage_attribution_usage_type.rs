@@ -71,6 +71,7 @@ pub enum HourlyUsageAttributionUsageType {
     RUM_REPLAY_SESSIONS_USAGE,
     SDS_SCANNED_BYTES_USAGE,
     SERVERLESS_APPS_USAGE,
+    SIEM_ANALYZED_LOGS_ADD_ON_USAGE,
     SIEM_INGESTED_BYTES_USAGE,
     SNMP_USAGE,
     UNIVERSAL_SERVICE_MONITORING_USAGE,
@@ -162,6 +163,9 @@ impl ToString for HourlyUsageAttributionUsageType {
             Self::RUM_REPLAY_SESSIONS_USAGE => String::from("rum_replay_sessions_usage"),
             Self::SDS_SCANNED_BYTES_USAGE => String::from("sds_scanned_bytes_usage"),
             Self::SERVERLESS_APPS_USAGE => String::from("serverless_apps_usage"),
+            Self::SIEM_ANALYZED_LOGS_ADD_ON_USAGE => {
+                String::from("siem_analyzed_logs_add_on_usage")
+            }
             Self::SIEM_INGESTED_BYTES_USAGE => String::from("siem_ingested_bytes_usage"),
             Self::SNMP_USAGE => String::from("snmp_usage"),
             Self::UNIVERSAL_SERVICE_MONITORING_USAGE => {
@@ -263,6 +267,7 @@ impl<'de> Deserialize<'de> for HourlyUsageAttributionUsageType {
             "rum_replay_sessions_usage" => Self::RUM_REPLAY_SESSIONS_USAGE,
             "sds_scanned_bytes_usage" => Self::SDS_SCANNED_BYTES_USAGE,
             "serverless_apps_usage" => Self::SERVERLESS_APPS_USAGE,
+            "siem_analyzed_logs_add_on_usage" => Self::SIEM_ANALYZED_LOGS_ADD_ON_USAGE,
             "siem_ingested_bytes_usage" => Self::SIEM_INGESTED_BYTES_USAGE,
             "snmp_usage" => Self::SNMP_USAGE,
             "universal_service_monitoring_usage" => Self::UNIVERSAL_SERVICE_MONITORING_USAGE,
