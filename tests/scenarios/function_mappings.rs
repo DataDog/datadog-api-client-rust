@@ -1799,6 +1799,22 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_update_cost_azure_uc_configs,
     );
     world.function_mappings.insert(
+        "v2.ListCustomCostsFiles".into(),
+        test_v2_list_custom_costs_files,
+    );
+    world.function_mappings.insert(
+        "v2.UploadCustomCostsFile".into(),
+        test_v2_upload_custom_costs_file,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteCustomCostsFile".into(),
+        test_v2_delete_custom_costs_file,
+    );
+    world.function_mappings.insert(
+        "v2.GetCustomCostsFile".into(),
+        test_v2_get_custom_costs_file,
+    );
+    world.function_mappings.insert(
         "v2.GetCloudCostActivity".into(),
         test_v2_get_cloud_cost_activity,
     );
@@ -12562,6 +12578,111 @@ fn test_v2_update_cost_azure_uc_configs(
                 };
             }
         };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_custom_costs_files(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_cost_management
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_custom_costs_files_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_upload_custom_costs_file(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_cost_management
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.upload_custom_costs_file_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_custom_costs_file(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_cost_management
+        .as_ref()
+        .expect("api instance not found");
+    let file_id = serde_json::from_value(_parameters.get("file_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_custom_costs_file_with_http_info(file_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_custom_costs_file(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_cost_management
+        .as_ref()
+        .expect("api instance not found");
+    let file_id = serde_json::from_value(_parameters.get("file_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_custom_costs_file_with_http_info(file_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }

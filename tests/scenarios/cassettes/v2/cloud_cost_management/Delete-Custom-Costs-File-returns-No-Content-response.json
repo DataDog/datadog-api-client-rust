@@ -1,0 +1,33 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "*/*"
+          ]
+        },
+        "method": "delete",
+        "uri": "https://api.datadoghq.com/api/v2/cost/custom_costs/9d055d22-a838-4e9f-bc34-a4f9ab66280c"
+      },
+      "response": {
+        "body": {
+          "string": "",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 204,
+          "message": "No Content"
+        }
+      },
+      "recorded_at": "Mon, 22 Jul 2024 12:40:43 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
