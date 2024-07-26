@@ -371,6 +371,12 @@ pub struct MonthlyUsageAttributionValues {
     /// The total RUM Session Replay usage by tag(s).
     #[serde(rename = "rum_replay_sessions_usage")]
     pub rum_replay_sessions_usage: Option<f64>,
+    /// The percentage of Software Composition Analysis Fargate task usage by tag(s).
+    #[serde(rename = "sca_fargate_percentage")]
+    pub sca_fargate_percentage: Option<f64>,
+    /// The total Software Composition Analysis Fargate task usage by tag(s).
+    #[serde(rename = "sca_fargate_usage")]
+    pub sca_fargate_usage: Option<f64>,
     /// The percentage of Sensitive Data Scanner usage by tag(s).
     #[serde(rename = "sds_scanned_bytes_percentage")]
     pub sds_scanned_bytes_percentage: Option<f64>,
@@ -547,6 +553,8 @@ impl MonthlyUsageAttributionValues {
             rum_browser_mobile_sessions_usage: None,
             rum_replay_sessions_percentage: None,
             rum_replay_sessions_usage: None,
+            sca_fargate_percentage: None,
+            sca_fargate_usage: None,
             sds_scanned_bytes_percentage: None,
             sds_scanned_bytes_usage: None,
             serverless_apps_percentage: None,
@@ -1167,6 +1175,16 @@ impl MonthlyUsageAttributionValues {
         self
     }
 
+    pub fn sca_fargate_percentage(mut self, value: f64) -> Self {
+        self.sca_fargate_percentage = Some(value);
+        self
+    }
+
+    pub fn sca_fargate_usage(mut self, value: f64) -> Self {
+        self.sca_fargate_usage = Some(value);
+        self
+    }
+
     pub fn sds_scanned_bytes_percentage(mut self, value: f64) -> Self {
         self.sds_scanned_bytes_percentage = Some(value);
         self
@@ -1391,6 +1409,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                 let mut rum_browser_mobile_sessions_usage: Option<f64> = None;
                 let mut rum_replay_sessions_percentage: Option<f64> = None;
                 let mut rum_replay_sessions_usage: Option<f64> = None;
+                let mut sca_fargate_percentage: Option<f64> = None;
+                let mut sca_fargate_usage: Option<f64> = None;
                 let mut sds_scanned_bytes_percentage: Option<f64> = None;
                 let mut sds_scanned_bytes_usage: Option<f64> = None;
                 let mut serverless_apps_percentage: Option<f64> = None;
@@ -2250,6 +2270,20 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                             rum_replay_sessions_usage =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "sca_fargate_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            sca_fargate_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "sca_fargate_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            sca_fargate_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "sds_scanned_bytes_percentage" => {
                             if v.is_null() {
                                 continue;
@@ -2486,6 +2520,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                     rum_browser_mobile_sessions_usage,
                     rum_replay_sessions_percentage,
                     rum_replay_sessions_usage,
+                    sca_fargate_percentage,
+                    sca_fargate_usage,
                     sds_scanned_bytes_percentage,
                     sds_scanned_bytes_usage,
                     serverless_apps_percentage,

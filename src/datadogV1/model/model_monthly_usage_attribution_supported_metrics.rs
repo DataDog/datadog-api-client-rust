@@ -143,6 +143,8 @@ pub enum MonthlyUsageAttributionSupportedMetrics {
     SIEM_INGESTED_BYTES_PERCENTAGE,
     WORKFLOW_EXECUTIONS_USAGE,
     WORKFLOW_EXECUTIONS_PERCENTAGE,
+    SCA_FARGATE_USAGE,
+    SCA_FARGATE_PERCENTAGE,
     ALL,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
@@ -340,6 +342,8 @@ impl ToString for MonthlyUsageAttributionSupportedMetrics {
             Self::SIEM_INGESTED_BYTES_PERCENTAGE => String::from("siem_ingested_bytes_percentage"),
             Self::WORKFLOW_EXECUTIONS_USAGE => String::from("workflow_executions_usage"),
             Self::WORKFLOW_EXECUTIONS_PERCENTAGE => String::from("workflow_executions_percentage"),
+            Self::SCA_FARGATE_USAGE => String::from("sca_fargate_usage"),
+            Self::SCA_FARGATE_PERCENTAGE => String::from("sca_fargate_percentage"),
             Self::ALL => String::from("*"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
@@ -515,6 +519,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionSupportedMetrics {
             "siem_ingested_bytes_percentage" => Self::SIEM_INGESTED_BYTES_PERCENTAGE,
             "workflow_executions_usage" => Self::WORKFLOW_EXECUTIONS_USAGE,
             "workflow_executions_percentage" => Self::WORKFLOW_EXECUTIONS_PERCENTAGE,
+            "sca_fargate_usage" => Self::SCA_FARGATE_USAGE,
+            "sca_fargate_percentage" => Self::SCA_FARGATE_PERCENTAGE,
             "*" => Self::ALL,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
