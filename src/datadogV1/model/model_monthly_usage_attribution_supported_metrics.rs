@@ -137,6 +137,8 @@ pub enum MonthlyUsageAttributionSupportedMetrics {
     RUM_BROWSER_MOBILE_SESSIONS_PERCENTAGE,
     INGESTED_SPANS_BYTES_USAGE,
     INGESTED_SPANS_BYTES_PERCENTAGE,
+    SIEM_ANALYZED_LOGS_ADD_ON_USAGE,
+    SIEM_ANALYZED_LOGS_ADD_ON_PERCENTAGE,
     SIEM_INGESTED_BYTES_USAGE,
     SIEM_INGESTED_BYTES_PERCENTAGE,
     WORKFLOW_EXECUTIONS_USAGE,
@@ -328,6 +330,12 @@ impl ToString for MonthlyUsageAttributionSupportedMetrics {
             Self::INGESTED_SPANS_BYTES_PERCENTAGE => {
                 String::from("ingested_spans_bytes_percentage")
             }
+            Self::SIEM_ANALYZED_LOGS_ADD_ON_USAGE => {
+                String::from("siem_analyzed_logs_add_on_usage")
+            }
+            Self::SIEM_ANALYZED_LOGS_ADD_ON_PERCENTAGE => {
+                String::from("siem_analyzed_logs_add_on_percentage")
+            }
             Self::SIEM_INGESTED_BYTES_USAGE => String::from("siem_ingested_bytes_usage"),
             Self::SIEM_INGESTED_BYTES_PERCENTAGE => String::from("siem_ingested_bytes_percentage"),
             Self::WORKFLOW_EXECUTIONS_USAGE => String::from("workflow_executions_usage"),
@@ -501,6 +509,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionSupportedMetrics {
             }
             "ingested_spans_bytes_usage" => Self::INGESTED_SPANS_BYTES_USAGE,
             "ingested_spans_bytes_percentage" => Self::INGESTED_SPANS_BYTES_PERCENTAGE,
+            "siem_analyzed_logs_add_on_usage" => Self::SIEM_ANALYZED_LOGS_ADD_ON_USAGE,
+            "siem_analyzed_logs_add_on_percentage" => Self::SIEM_ANALYZED_LOGS_ADD_ON_PERCENTAGE,
             "siem_ingested_bytes_usage" => Self::SIEM_INGESTED_BYTES_USAGE,
             "siem_ingested_bytes_percentage" => Self::SIEM_INGESTED_BYTES_PERCENTAGE,
             "workflow_executions_usage" => Self::WORKFLOW_EXECUTIONS_USAGE,

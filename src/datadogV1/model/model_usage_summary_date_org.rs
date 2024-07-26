@@ -392,6 +392,9 @@ pub struct UsageSummaryDateOrg {
     /// Shows the average of the number of Serverless Apps for Azure and Google Cloud for the given date and given org.
     #[serde(rename = "serverless_apps_total_count_avg")]
     pub serverless_apps_total_count_avg: Option<i64>,
+    /// Shows the sum of all log events analyzed by Cloud SIEM over all hours in the current date for the given org.
+    #[serde(rename = "siem_analyzed_logs_add_on_count_sum")]
+    pub siem_analyzed_logs_add_on_count_sum: Option<i64>,
     /// Shows the sum of all Synthetic browser tests over all hours in the current date for the given org.
     #[serde(rename = "synthetics_browser_check_calls_count_sum")]
     pub synthetics_browser_check_calls_count_sum: Option<i64>,
@@ -553,6 +556,7 @@ impl UsageSummaryDateOrg {
             serverless_apps_azure_count_avg: None,
             serverless_apps_google_count_avg: None,
             serverless_apps_total_count_avg: None,
+            siem_analyzed_logs_add_on_count_sum: None,
             synthetics_browser_check_calls_count_sum: None,
             synthetics_check_calls_count_sum: None,
             synthetics_mobile_test_runs_sum: None,
@@ -1300,6 +1304,12 @@ impl UsageSummaryDateOrg {
     }
 
     #[allow(deprecated)]
+    pub fn siem_analyzed_logs_add_on_count_sum(mut self, value: i64) -> Self {
+        self.siem_analyzed_logs_add_on_count_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn synthetics_browser_check_calls_count_sum(mut self, value: i64) -> Self {
         self.synthetics_browser_check_calls_count_sum = Some(value);
         self
@@ -1505,6 +1515,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                 let mut serverless_apps_azure_count_avg: Option<i64> = None;
                 let mut serverless_apps_google_count_avg: Option<i64> = None;
                 let mut serverless_apps_total_count_avg: Option<i64> = None;
+                let mut siem_analyzed_logs_add_on_count_sum: Option<i64> = None;
                 let mut synthetics_browser_check_calls_count_sum: Option<i64> = None;
                 let mut synthetics_check_calls_count_sum: Option<i64> = None;
                 let mut synthetics_mobile_test_runs_sum: Option<i64> = None;
@@ -2369,6 +2380,13 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                             serverless_apps_total_count_avg =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "siem_analyzed_logs_add_on_count_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            siem_analyzed_logs_add_on_count_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "synthetics_browser_check_calls_count_sum" => {
                             if v.is_null() {
                                 continue;
@@ -2567,6 +2585,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                     serverless_apps_azure_count_avg,
                     serverless_apps_google_count_avg,
                     serverless_apps_total_count_avg,
+                    siem_analyzed_logs_add_on_count_sum,
                     synthetics_browser_check_calls_count_sum,
                     synthetics_check_calls_count_sum,
                     synthetics_mobile_test_runs_sum,

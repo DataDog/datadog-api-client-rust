@@ -403,6 +403,9 @@ pub struct UsageSummaryResponse {
     /// Sum of the average number of Serverless Apps for Azure and Google Cloud in the current month for all organizations.
     #[serde(rename = "serverless_apps_total_count_avg_sum")]
     pub serverless_apps_total_count_avg_sum: Option<i64>,
+    /// Shows the sum of all log events analyzed by Cloud SIEM over all hours in the current month for all organizations.
+    #[serde(rename = "siem_analyzed_logs_add_on_count_agg_sum")]
+    pub siem_analyzed_logs_add_on_count_agg_sum: Option<i64>,
     /// Shows the first date of usage in the current month for all organizations.
     #[serde(rename = "start_date")]
     pub start_date: Option<chrono::DateTime<chrono::Utc>>,
@@ -573,6 +576,7 @@ impl UsageSummaryResponse {
             serverless_apps_azure_count_avg_sum: None,
             serverless_apps_google_count_avg_sum: None,
             serverless_apps_total_count_avg_sum: None,
+            siem_analyzed_logs_add_on_count_agg_sum: None,
             start_date: None,
             synthetics_browser_check_calls_count_agg_sum: None,
             synthetics_check_calls_count_agg_sum: None,
@@ -1340,6 +1344,12 @@ impl UsageSummaryResponse {
     }
 
     #[allow(deprecated)]
+    pub fn siem_analyzed_logs_add_on_count_agg_sum(mut self, value: i64) -> Self {
+        self.siem_analyzed_logs_add_on_count_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn start_date(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.start_date = Some(value);
         self
@@ -1560,6 +1570,7 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                 let mut serverless_apps_azure_count_avg_sum: Option<i64> = None;
                 let mut serverless_apps_google_count_avg_sum: Option<i64> = None;
                 let mut serverless_apps_total_count_avg_sum: Option<i64> = None;
+                let mut siem_analyzed_logs_add_on_count_agg_sum: Option<i64> = None;
                 let mut start_date: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut synthetics_browser_check_calls_count_agg_sum: Option<i64> = None;
                 let mut synthetics_check_calls_count_agg_sum: Option<i64> = None;
@@ -2450,6 +2461,13 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                             serverless_apps_total_count_avg_sum =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "siem_analyzed_logs_add_on_count_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            siem_analyzed_logs_add_on_count_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "start_date" => {
                             if v.is_null() {
                                 continue;
@@ -2663,6 +2681,7 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                     serverless_apps_azure_count_avg_sum,
                     serverless_apps_google_count_avg_sum,
                     serverless_apps_total_count_avg_sum,
+                    siem_analyzed_logs_add_on_count_agg_sum,
                     start_date,
                     synthetics_browser_check_calls_count_agg_sum,
                     synthetics_check_calls_count_agg_sum,
