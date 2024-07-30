@@ -16,7 +16,7 @@ pub struct TeamLink {
     pub attributes: crate::datadogV2::model::TeamLinkAttributes,
     /// The team link's identifier
     #[serde(rename = "id")]
-    pub id: String,
+    pub id: Option<String>,
     /// Team link type
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::TeamLinkType,
@@ -28,15 +28,19 @@ pub struct TeamLink {
 impl TeamLink {
     pub fn new(
         attributes: crate::datadogV2::model::TeamLinkAttributes,
-        id: String,
         type_: crate::datadogV2::model::TeamLinkType,
     ) -> TeamLink {
         TeamLink {
             attributes,
-            id,
+            id: None,
             type_,
             _unparsed: false,
         }
+    }
+
+    pub fn id(mut self, value: String) -> Self {
+        self.id = Some(value);
+        self
     }
 }
 
@@ -68,6 +72,9 @@ impl<'de> Deserialize<'de> for TeamLink {
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "id" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
@@ -87,7 +94,6 @@ impl<'de> Deserialize<'de> for TeamLink {
                     }
                 }
                 let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
-                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = TeamLink {
