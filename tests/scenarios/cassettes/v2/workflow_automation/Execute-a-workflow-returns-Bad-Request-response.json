@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"meta\":{\"payload\":{\"input\":\"value\"}}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/workflows/malformed/instances"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"code\":\"INVALID_FIELD_VALUE\",\"detail\":\"value <no value> is invalid for field workflow_id\"}]}\n",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Wed, 24 Jul 2024 18:39:57 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
