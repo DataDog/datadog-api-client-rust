@@ -6,11 +6,11 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Synthetic global variable.
+/// Details of the global variable to create.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct SyntheticsGlobalVariable {
+pub struct SyntheticsGlobalVariableRequest {
     /// Attributes of the global variable.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV1::model::SyntheticsGlobalVariableAttributes>,
@@ -41,20 +41,19 @@ pub struct SyntheticsGlobalVariable {
     pub tags: Vec<String>,
     /// Value of the global variable.
     #[serde(rename = "value")]
-    pub value: crate::datadogV1::model::SyntheticsGlobalVariableValue,
+    pub value: Option<crate::datadogV1::model::SyntheticsGlobalVariableValue>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
 }
 
-impl SyntheticsGlobalVariable {
+impl SyntheticsGlobalVariableRequest {
     pub fn new(
         description: String,
         name: String,
         tags: Vec<String>,
-        value: crate::datadogV1::model::SyntheticsGlobalVariableValue,
-    ) -> SyntheticsGlobalVariable {
-        SyntheticsGlobalVariable {
+    ) -> SyntheticsGlobalVariableRequest {
+        SyntheticsGlobalVariableRequest {
             attributes: None,
             description,
             id: None,
@@ -64,7 +63,7 @@ impl SyntheticsGlobalVariable {
             parse_test_options: None,
             parse_test_public_id: None,
             tags,
-            value,
+            value: None,
             _unparsed: false,
         }
     }
@@ -104,16 +103,21 @@ impl SyntheticsGlobalVariable {
         self.parse_test_public_id = Some(value);
         self
     }
+
+    pub fn value(mut self, value: crate::datadogV1::model::SyntheticsGlobalVariableValue) -> Self {
+        self.value = Some(value);
+        self
+    }
 }
 
-impl<'de> Deserialize<'de> for SyntheticsGlobalVariable {
+impl<'de> Deserialize<'de> for SyntheticsGlobalVariableRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct SyntheticsGlobalVariableVisitor;
-        impl<'a> Visitor<'a> for SyntheticsGlobalVariableVisitor {
-            type Value = SyntheticsGlobalVariable;
+        struct SyntheticsGlobalVariableRequestVisitor;
+        impl<'a> Visitor<'a> for SyntheticsGlobalVariableRequestVisitor {
+            type Value = SyntheticsGlobalVariableRequest;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -191,6 +195,9 @@ impl<'de> Deserialize<'de> for SyntheticsGlobalVariable {
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "value" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {}
@@ -200,9 +207,8 @@ impl<'de> Deserialize<'de> for SyntheticsGlobalVariable {
                     description.ok_or_else(|| M::Error::missing_field("description"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let tags = tags.ok_or_else(|| M::Error::missing_field("tags"))?;
-                let value = value.ok_or_else(|| M::Error::missing_field("value"))?;
 
-                let content = SyntheticsGlobalVariable {
+                let content = SyntheticsGlobalVariableRequest {
                     attributes,
                     description,
                     id,
@@ -220,6 +226,6 @@ impl<'de> Deserialize<'de> for SyntheticsGlobalVariable {
             }
         }
 
-        deserializer.deserialize_any(SyntheticsGlobalVariableVisitor)
+        deserializer.deserialize_any(SyntheticsGlobalVariableRequestVisitor)
     }
 }
