@@ -401,7 +401,7 @@ impl SyntheticsAPI {
     /// Create a Synthetic global variable.
     pub async fn create_global_variable(
         &self,
-        body: crate::datadogV1::model::SyntheticsGlobalVariable,
+        body: crate::datadogV1::model::SyntheticsGlobalVariableRequest,
     ) -> Result<
         crate::datadogV1::model::SyntheticsGlobalVariable,
         datadog::Error<CreateGlobalVariableError>,
@@ -423,7 +423,7 @@ impl SyntheticsAPI {
     /// Create a Synthetic global variable.
     pub async fn create_global_variable_with_http_info(
         &self,
-        body: crate::datadogV1::model::SyntheticsGlobalVariable,
+        body: crate::datadogV1::model::SyntheticsGlobalVariableRequest,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV1::model::SyntheticsGlobalVariable>,
         datadog::Error<CreateGlobalVariableError>,
