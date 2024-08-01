@@ -16,8 +16,8 @@ use datadog_api_client::datadogV1::model::SyntheticsAssertionTarget;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionType;
 use datadog_api_client::datadogV1::model::SyntheticsConfigVariable;
 use datadog_api_client::datadogV1::model::SyntheticsConfigVariableType;
-use datadog_api_client::datadogV1::model::SyntheticsGlobalVariableParseTestOptionsType;
 use datadog_api_client::datadogV1::model::SyntheticsGlobalVariableParserType;
+use datadog_api_client::datadogV1::model::SyntheticsLocalVariableParsingOptionsType;
 use datadog_api_client::datadogV1::model::SyntheticsParsingOptions;
 use datadog_api_client::datadogV1::model::SyntheticsTestCallType;
 use datadog_api_client::datadogV1::model::SyntheticsTestDetailsSubType;
@@ -77,7 +77,7 @@ async fn main() {
                                                     ),
                                                 )
                                                 .secure(true)
-                                                .type_(SyntheticsGlobalVariableParseTestOptionsType::HTTP_HEADER)
+                                                .type_(SyntheticsLocalVariableParsingOptionsType::HTTP_HEADER)
                                         ],
                                     )
                                     .is_critical(true)
