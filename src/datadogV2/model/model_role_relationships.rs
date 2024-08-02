@@ -14,9 +14,6 @@ pub struct RoleRelationships {
     /// Relationship to multiple permissions objects.
     #[serde(rename = "permissions")]
     pub permissions: Option<crate::datadogV2::model::RelationshipToPermissions>,
-    /// Relationship to users.
-    #[serde(rename = "users")]
-    pub users: Option<crate::datadogV2::model::RelationshipToUsers>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -26,7 +23,6 @@ impl RoleRelationships {
     pub fn new() -> RoleRelationships {
         RoleRelationships {
             permissions: None,
-            users: None,
             _unparsed: false,
         }
     }
@@ -36,11 +32,6 @@ impl RoleRelationships {
         value: crate::datadogV2::model::RelationshipToPermissions,
     ) -> Self {
         self.permissions = Some(value);
-        self
-    }
-
-    pub fn users(mut self, value: crate::datadogV2::model::RelationshipToUsers) -> Self {
-        self.users = Some(value);
         self
     }
 }
@@ -70,7 +61,6 @@ impl<'de> Deserialize<'de> for RoleRelationships {
             {
                 let mut permissions: Option<crate::datadogV2::model::RelationshipToPermissions> =
                     None;
-                let mut users: Option<crate::datadogV2::model::RelationshipToUsers> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -82,19 +72,12 @@ impl<'de> Deserialize<'de> for RoleRelationships {
                             permissions =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "users" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            users = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         &_ => {}
                     }
                 }
 
                 let content = RoleRelationships {
                     permissions,
-                    users,
                     _unparsed,
                 };
 

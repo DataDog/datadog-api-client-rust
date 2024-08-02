@@ -20,6 +20,9 @@ pub struct RoleUpdateAttributes {
     /// Name of the role.
     #[serde(rename = "name")]
     pub name: Option<String>,
+    /// The user count.
+    #[serde(rename = "user_count")]
+    pub user_count: Option<i32>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -31,6 +34,7 @@ impl RoleUpdateAttributes {
             created_at: None,
             modified_at: None,
             name: None,
+            user_count: None,
             _unparsed: false,
         }
     }
@@ -47,6 +51,11 @@ impl RoleUpdateAttributes {
 
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
+        self
+    }
+
+    pub fn user_count(mut self, value: i32) -> Self {
+        self.user_count = Some(value);
         self
     }
 }
@@ -77,6 +86,7 @@ impl<'de> Deserialize<'de> for RoleUpdateAttributes {
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut name: Option<String> = None;
+                let mut user_count: Option<i32> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -100,6 +110,12 @@ impl<'de> Deserialize<'de> for RoleUpdateAttributes {
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "user_count" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            user_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {}
                     }
                 }
@@ -108,6 +124,7 @@ impl<'de> Deserialize<'de> for RoleUpdateAttributes {
                     created_at,
                     modified_at,
                     name,
+                    user_count,
                     _unparsed,
                 };
 
