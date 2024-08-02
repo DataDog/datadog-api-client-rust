@@ -16,7 +16,7 @@ pub struct Role {
     pub attributes: Option<crate::datadogV2::model::RoleAttributes>,
     /// The unique identifier of the role.
     #[serde(rename = "id")]
-    pub id: Option<String>,
+    pub id: String,
     /// Relationships of the role object returned by the API.
     #[serde(rename = "relationships")]
     pub relationships: Option<crate::datadogV2::model::RoleResponseRelationships>,
@@ -29,10 +29,10 @@ pub struct Role {
 }
 
 impl Role {
-    pub fn new(type_: crate::datadogV2::model::RolesType) -> Role {
+    pub fn new(id: String, type_: crate::datadogV2::model::RolesType) -> Role {
         Role {
             attributes: None,
-            id: None,
+            id,
             relationships: None,
             type_,
             _unparsed: false,
@@ -41,11 +41,6 @@ impl Role {
 
     pub fn attributes(mut self, value: crate::datadogV2::model::RoleAttributes) -> Self {
         self.attributes = Some(value);
-        self
-    }
-
-    pub fn id(mut self, value: String) -> Self {
-        self.id = Some(value);
         self
     }
 
@@ -91,9 +86,6 @@ impl<'de> Deserialize<'de> for Role {
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "id" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "relationships" => {
@@ -117,6 +109,7 @@ impl<'de> Deserialize<'de> for Role {
                         &_ => {}
                     }
                 }
+                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = Role {

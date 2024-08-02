@@ -16,8 +16,10 @@ async fn main() {
         RoleCreateData::new(RoleCreateAttributes::new("developers".to_string()))
             .relationships(RoleRelationships::new().permissions(
                 RelationshipToPermissions::new().data(vec![
-                    RelationshipToPermissionData::new().type_(PermissionsType::PERMISSIONS),
-                ]),
+                                RelationshipToPermissionData::new()
+                                    .id("219".to_string())
+                                    .type_(PermissionsType::PERMISSIONS)
+                            ]),
             ))
             .type_(RolesType::ROLES),
     );
