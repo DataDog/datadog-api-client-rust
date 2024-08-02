@@ -130,7 +130,7 @@ impl WorkflowAutomationAPI {
         Self { config, client }
     }
 
-    /// Cancels a specific execution of a given workflow. This API requires an application key scoped with the workflows_run permission.
+    /// Cancels a specific execution of a given workflow.
     pub async fn cancel_workflow_instance(
         &self,
         workflow_id: String,
@@ -156,7 +156,7 @@ impl WorkflowAutomationAPI {
         }
     }
 
-    /// Cancels a specific execution of a given workflow. This API requires an application key scoped with the workflows_run permission.
+    /// Cancels a specific execution of a given workflow.
     pub async fn cancel_workflow_instance_with_http_info(
         &self,
         workflow_id: String,
@@ -245,7 +245,7 @@ impl WorkflowAutomationAPI {
         }
     }
 
-    /// Execute the given workflow. This API requires an application key scoped with the workflows_run permission.
+    /// Execute the given workflow
     pub async fn create_workflow_instance(
         &self,
         workflow_id: String,
@@ -271,7 +271,7 @@ impl WorkflowAutomationAPI {
         }
     }
 
-    /// Execute the given workflow. This API requires an application key scoped with the workflows_run permission.
+    /// Execute the given workflow
     pub async fn create_workflow_instance_with_http_info(
         &self,
         workflow_id: String,
@@ -405,7 +405,7 @@ impl WorkflowAutomationAPI {
         }
     }
 
-    /// Get a specific execution of a given workflow. This API requires an application key scoped with the workflows_read permission.
+    /// Get a specific execution of a given workflow.
     pub async fn get_workflow_instance(
         &self,
         workflow_id: String,
@@ -431,7 +431,7 @@ impl WorkflowAutomationAPI {
         }
     }
 
-    /// Get a specific execution of a given workflow. This API requires an application key scoped with the workflows_read permission.
+    /// Get a specific execution of a given workflow.
     pub async fn get_workflow_instance_with_http_info(
         &self,
         workflow_id: String,
@@ -520,7 +520,7 @@ impl WorkflowAutomationAPI {
         }
     }
 
-    /// List all instances of a given workflow. This API requires an application key scoped with the workflows_read permission.
+    /// List all instances of a given workflow.
     pub async fn list_workflow_instances(
         &self,
         workflow_id: String,
@@ -546,7 +546,7 @@ impl WorkflowAutomationAPI {
         }
     }
 
-    /// List all instances of a given workflow. This API requires an application key scoped with the workflows_read permission.
+    /// List all instances of a given workflow.
     pub async fn list_workflow_instances_with_http_info(
         &self,
         workflow_id: String,
