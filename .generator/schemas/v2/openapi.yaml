@@ -32507,22 +32507,34 @@ paths:
 
         - Service Level Objectives: `slo`
 
+        - Synthetic Global Variable: `synthetic-global-variable`
+
+        - Synthetic Test: `synthetic-test`
+
+        - Synthetic Private Location: `synthetic-private-location`
+
 
         #### Supported relations for resources
 
-        Resource Type            | Supported Relations
+        Resource Type              | Supported Relations
 
-        -------------------------|--------------------------
+        ---------------------------|--------------------------
 
-        Dashboards               | `viewer`, `editor`
+        Dashboards                 | `viewer`, `editor`
 
-        Notebooks                | `viewer`, `editor`
+        Notebooks                  | `viewer`, `editor`
 
-        Powerpacks               | `viewer`, `editor`
+        Powerpacks                 | `viewer`, `editor`
 
-        Security Rules           | `viewer`, `editor`
+        Security Rules             | `viewer`, `editor`
 
-        Service Level Objectives | `viewer`, `editor`'
+        Service Level Objectives   | `viewer`, `editor`
+
+        Synthetic Global Variable  | `viewer`, `editor`
+
+        Synthetic Test             | `viewer`, `editor`
+
+        Synthetic Private Location | `viewer`, `editor`'
       operationId: UpdateRestrictionPolicy
       parameters:
       - $ref: '#/components/parameters/ResourceID'
@@ -38036,7 +38048,8 @@ paths:
       - Teams
   /api/v2/workflows/{workflow_id}/instances:
     get:
-      description: List all instances of a given workflow.
+      description: List all instances of a given workflow. This API requires an application
+        key scoped with the workflows_read permission.
       operationId: ListWorkflowInstances
       parameters:
       - $ref: '#/components/parameters/WorkflowId'
@@ -38059,7 +38072,8 @@ paths:
       tags:
       - Workflow Automation
     post:
-      description: Execute the given workflow
+      description: Execute the given workflow. This API requires an application key
+        scoped with the workflows_run permission.
       operationId: CreateWorkflowInstance
       parameters:
       - $ref: '#/components/parameters/WorkflowId'
@@ -38088,7 +38102,8 @@ paths:
       x-codegen-request-body-name: body
   /api/v2/workflows/{workflow_id}/instances/{instance_id}:
     get:
-      description: Get a specific execution of a given workflow.
+      description: Get a specific execution of a given workflow. This API requires
+        an application key scoped with the workflows_read permission.
       operationId: GetWorkflowInstance
       parameters:
       - $ref: '#/components/parameters/WorkflowId'
@@ -38113,7 +38128,8 @@ paths:
       - Workflow Automation
   /api/v2/workflows/{workflow_id}/instances/{instance_id}/cancel:
     put:
-      description: Cancels a specific execution of a given workflow.
+      description: Cancels a specific execution of a given workflow. This API requires
+        an application key scoped with the workflows_run permission.
       operationId: CancelWorkflowInstance
       parameters:
       - $ref: '#/components/parameters/WorkflowId'
