@@ -2331,6 +2331,14 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.GetInterfaces".into(), test_v2_get_interfaces);
+    world.function_mappings.insert(
+        "v2.ListDeviceUserTags".into(),
+        test_v2_list_device_user_tags,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateDeviceUserTags".into(),
+        test_v2_update_device_user_tags,
+    );
     world
         .function_mappings
         .insert("v2.ListOrgConfigs".into(), test_v2_list_org_configs);
@@ -17108,6 +17116,57 @@ fn test_v2_get_interfaces(world: &mut DatadogWorld, _parameters: &HashMap<String
         .expect("api instance not found");
     let device_id = serde_json::from_value(_parameters.get("device_id").unwrap().clone()).unwrap();
     let response = match block_on(api.get_interfaces_with_http_info(device_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_device_user_tags(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_network_device_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let device_id = serde_json::from_value(_parameters.get("device_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.list_device_user_tags_with_http_info(device_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_device_user_tags(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_network_device_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let device_id = serde_json::from_value(_parameters.get("device_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_device_user_tags_with_http_info(device_id, body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
