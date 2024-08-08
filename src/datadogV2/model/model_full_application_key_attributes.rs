@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct FullApplicationKeyAttributes {
     /// Creation date of the application key.
     #[serde(rename = "created_at")]
-    pub created_at: Option<String>,
+    pub created_at: Option<chrono::DateTime<chrono::Utc>>,
     /// The application key.
     #[serde(rename = "key")]
     pub key: Option<String>,
@@ -43,7 +43,7 @@ impl FullApplicationKeyAttributes {
         }
     }
 
-    pub fn created_at(mut self, value: String) -> Self {
+    pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
@@ -92,7 +92,7 @@ impl<'de> Deserialize<'de> for FullApplicationKeyAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut created_at: Option<String> = None;
+                let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut key: Option<String> = None;
                 let mut last4: Option<String> = None;
                 let mut name: Option<String> = None;

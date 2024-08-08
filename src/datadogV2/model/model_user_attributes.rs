@@ -26,6 +26,9 @@ pub struct UserAttributes {
     /// URL of the user's icon.
     #[serde(rename = "icon")]
     pub icon: Option<String>,
+    /// If user has MFA enabled.
+    #[serde(rename = "mfa_enabled")]
+    pub mfa_enabled: Option<bool>,
     /// Time that the user was last modified.
     #[serde(rename = "modified_at")]
     pub modified_at: Option<chrono::DateTime<chrono::Utc>>,
@@ -57,6 +60,7 @@ impl UserAttributes {
             email: None,
             handle: None,
             icon: None,
+            mfa_enabled: None,
             modified_at: None,
             name: None,
             service_account: None,
@@ -89,6 +93,11 @@ impl UserAttributes {
 
     pub fn icon(mut self, value: String) -> Self {
         self.icon = Some(value);
+        self
+    }
+
+    pub fn mfa_enabled(mut self, value: bool) -> Self {
+        self.mfa_enabled = Some(value);
         self
     }
 
@@ -151,6 +160,7 @@ impl<'de> Deserialize<'de> for UserAttributes {
                 let mut email: Option<String> = None;
                 let mut handle: Option<String> = None;
                 let mut icon: Option<String> = None;
+                let mut mfa_enabled: Option<bool> = None;
                 let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut name: Option<Option<String>> = None;
                 let mut service_account: Option<bool> = None;
@@ -190,6 +200,13 @@ impl<'de> Deserialize<'de> for UserAttributes {
                                 continue;
                             }
                             icon = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "mfa_enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            mfa_enabled =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "modified_at" => {
                             if v.is_null() {
@@ -233,6 +250,7 @@ impl<'de> Deserialize<'de> for UserAttributes {
                     email,
                     handle,
                     icon,
+                    mfa_enabled,
                     modified_at,
                     name,
                     service_account,
