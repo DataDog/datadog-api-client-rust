@@ -50,7 +50,7 @@ async fn main() {
                     .message("".to_string())
                     .metadata(BTreeMap::from([]))
                     .method("GET".to_string())
-                    .port(50051)
+                    .port("50051".to_string())
                     .service("Hello".to_string()),
             ),
         vec!["aws:us-east-2".to_string()],
