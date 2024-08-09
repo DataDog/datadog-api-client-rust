@@ -14,7 +14,7 @@ pub struct DORADeploymentRequestAttributes {
     /// Environment name to where the service was deployed.
     #[serde(rename = "env")]
     pub env: Option<String>,
-    /// Unix timestamp in nanoseconds when the deployment finished. It should not be older than 1 hour.
+    /// Unix timestamp when the deployment finished. It must be in nanoseconds, milliseconds, or seconds, and it should not be older than 1 hour.
     #[serde(rename = "finished_at")]
     pub finished_at: i64,
     /// Git info for DORA Metrics events.
@@ -26,7 +26,7 @@ pub struct DORADeploymentRequestAttributes {
     /// Service name from a service available in the Service Catalog.
     #[serde(rename = "service")]
     pub service: String,
-    /// Unix timestamp in nanoseconds when the deployment started.
+    /// Unix timestamp when the deployment started. It must be in nanoseconds, milliseconds, or seconds.
     #[serde(rename = "started_at")]
     pub started_at: i64,
     /// Version to correlate with [APM Deployment Tracking](<https://docs.datadoghq.com/tracing/services/deployment_tracking/>).
