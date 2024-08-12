@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## 0.3.0 / 2024-08-12
+
+### Added
+* Documentation for new device tags endpoints by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/213
+* Update documentation for Flex Logs Starter by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/227
+### Changed
+* add mfa_enabled field and change created_at type to datetime by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/228
+
+
+**Full Changelog**: https://github.com/DataDog/datadog-api-client-rust/compare/0.2.0...v0.3.0
+
 ## 0.2.0 / 2024-08-01
 
 ### Fixed
