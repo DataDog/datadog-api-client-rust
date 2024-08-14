@@ -10,6 +10,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 pub enum ApplicationKeyResponseIncludedItem {
     User(Box<crate::datadogV2::model::User>),
     Role(Box<crate::datadogV2::model::Role>),
+    LeakedKey(Box<crate::datadogV2::model::LeakedKey>),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -29,6 +30,13 @@ impl<'de> Deserialize<'de> for ApplicationKeyResponseIncludedItem {
         {
             if !_v._unparsed {
                 return Ok(ApplicationKeyResponseIncludedItem::Role(_v));
+            }
+        }
+        if let Ok(_v) =
+            serde_json::from_value::<Box<crate::datadogV2::model::LeakedKey>>(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ApplicationKeyResponseIncludedItem::LeakedKey(_v));
             }
         }
 

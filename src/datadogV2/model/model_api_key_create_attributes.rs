@@ -11,9 +11,15 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct APIKeyCreateAttributes {
+    /// The APIKeyCreateAttributes category.
+    #[serde(rename = "category")]
+    pub category: Option<String>,
     /// Name of the API key.
     #[serde(rename = "name")]
     pub name: String,
+    /// The APIKeyCreateAttributes remote_config_read_enabled.
+    #[serde(rename = "remote_config_read_enabled")]
+    pub remote_config_read_enabled: Option<bool>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -22,9 +28,21 @@ pub struct APIKeyCreateAttributes {
 impl APIKeyCreateAttributes {
     pub fn new(name: String) -> APIKeyCreateAttributes {
         APIKeyCreateAttributes {
+            category: None,
             name,
+            remote_config_read_enabled: None,
             _unparsed: false,
         }
+    }
+
+    pub fn category(mut self, value: String) -> Self {
+        self.category = Some(value);
+        self
+    }
+
+    pub fn remote_config_read_enabled(mut self, value: bool) -> Self {
+        self.remote_config_read_enabled = Some(value);
+        self
     }
 }
 
@@ -45,20 +63,40 @@ impl<'de> Deserialize<'de> for APIKeyCreateAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut category: Option<String> = None;
                 let mut name: Option<String> = None;
+                let mut remote_config_read_enabled: Option<bool> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "category" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            category = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "remote_config_read_enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            remote_config_read_enabled =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {}
                     }
                 }
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
 
-                let content = APIKeyCreateAttributes { name, _unparsed };
+                let content = APIKeyCreateAttributes {
+                    category,
+                    name,
+                    remote_config_read_enabled,
+                    _unparsed,
+                };
 
                 Ok(content)
             }
