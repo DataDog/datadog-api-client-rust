@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CloudflareAccountResponseAttributes {
+    /// The CloudflareAccountResponseAttributes api_key.
+    #[serde(rename = "api_key")]
+    pub api_key: Option<String>,
     /// The email associated with the Cloudflare account.
     #[serde(rename = "email")]
     pub email: Option<String>,
@@ -31,12 +34,18 @@ pub struct CloudflareAccountResponseAttributes {
 impl CloudflareAccountResponseAttributes {
     pub fn new(name: String) -> CloudflareAccountResponseAttributes {
         CloudflareAccountResponseAttributes {
+            api_key: None,
             email: None,
             name,
             resources: None,
             zones: None,
             _unparsed: false,
         }
+    }
+
+    pub fn api_key(mut self, value: String) -> Self {
+        self.api_key = Some(value);
+        self
     }
 
     pub fn email(mut self, value: String) -> Self {
@@ -72,6 +81,7 @@ impl<'de> Deserialize<'de> for CloudflareAccountResponseAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut api_key: Option<String> = None;
                 let mut email: Option<String> = None;
                 let mut name: Option<String> = None;
                 let mut resources: Option<Vec<String>> = None;
@@ -80,6 +90,12 @@ impl<'de> Deserialize<'de> for CloudflareAccountResponseAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "api_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            api_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "email" => {
                             if v.is_null() {
                                 continue;
@@ -107,6 +123,7 @@ impl<'de> Deserialize<'de> for CloudflareAccountResponseAttributes {
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
 
                 let content = CloudflareAccountResponseAttributes {
+                    api_key,
                     email,
                     name,
                     resources,
