@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 #[serde(untagged)]
 pub enum APIKeyResponseIncludedItem {
     User(Box<crate::datadogV2::model::User>),
+    LeakedKey(Box<crate::datadogV2::model::LeakedKey>),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -22,6 +23,13 @@ impl<'de> Deserialize<'de> for APIKeyResponseIncludedItem {
         {
             if !_v._unparsed {
                 return Ok(APIKeyResponseIncludedItem::User(_v));
+            }
+        }
+        if let Ok(_v) =
+            serde_json::from_value::<Box<crate::datadogV2::model::LeakedKey>>(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(APIKeyResponseIncludedItem::LeakedKey(_v));
             }
         }
 

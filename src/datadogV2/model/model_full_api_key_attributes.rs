@@ -16,7 +16,7 @@ pub struct FullAPIKeyAttributes {
     pub category: Option<String>,
     /// Creation date of the API key.
     #[serde(rename = "created_at")]
-    pub created_at: Option<String>,
+    pub created_at: Option<chrono::DateTime<chrono::Utc>>,
     /// The API key.
     #[serde(rename = "key")]
     pub key: Option<String>,
@@ -25,7 +25,7 @@ pub struct FullAPIKeyAttributes {
     pub last4: Option<String>,
     /// Date the API key was last modified.
     #[serde(rename = "modified_at")]
-    pub modified_at: Option<String>,
+    pub modified_at: Option<chrono::DateTime<chrono::Utc>>,
     /// Name of the API key.
     #[serde(rename = "name")]
     pub name: Option<String>,
@@ -56,7 +56,7 @@ impl FullAPIKeyAttributes {
         self
     }
 
-    pub fn created_at(mut self, value: String) -> Self {
+    pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
@@ -71,7 +71,7 @@ impl FullAPIKeyAttributes {
         self
     }
 
-    pub fn modified_at(mut self, value: String) -> Self {
+    pub fn modified_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.modified_at = Some(value);
         self
     }
@@ -111,10 +111,10 @@ impl<'de> Deserialize<'de> for FullAPIKeyAttributes {
                 M: MapAccess<'a>,
             {
                 let mut category: Option<String> = None;
-                let mut created_at: Option<String> = None;
+                let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut key: Option<String> = None;
                 let mut last4: Option<String> = None;
-                let mut modified_at: Option<String> = None;
+                let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut name: Option<String> = None;
                 let mut remote_config_read_enabled: Option<bool> = None;
                 let mut _unparsed = false;
