@@ -17,6 +17,9 @@ pub struct CloudflareAccountUpdateRequestAttributes {
     /// The email associated with the Cloudflare account. If an API key is provided (and not a token), this field is also required.
     #[serde(rename = "email")]
     pub email: Option<String>,
+    /// The CloudflareAccountUpdateRequestAttributes name.
+    #[serde(rename = "name")]
+    pub name: Option<String>,
     /// An allowlist of resources to restrict pulling metrics for.
     #[serde(rename = "resources")]
     pub resources: Option<Vec<String>>,
@@ -33,6 +36,7 @@ impl CloudflareAccountUpdateRequestAttributes {
         CloudflareAccountUpdateRequestAttributes {
             api_key,
             email: None,
+            name: None,
             resources: None,
             zones: None,
             _unparsed: false,
@@ -41,6 +45,11 @@ impl CloudflareAccountUpdateRequestAttributes {
 
     pub fn email(mut self, value: String) -> Self {
         self.email = Some(value);
+        self
+    }
+
+    pub fn name(mut self, value: String) -> Self {
+        self.name = Some(value);
         self
     }
 
@@ -74,6 +83,7 @@ impl<'de> Deserialize<'de> for CloudflareAccountUpdateRequestAttributes {
             {
                 let mut api_key: Option<String> = None;
                 let mut email: Option<String> = None;
+                let mut name: Option<String> = None;
                 let mut resources: Option<Vec<String>> = None;
                 let mut zones: Option<Vec<String>> = None;
                 let mut _unparsed = false;
@@ -88,6 +98,12 @@ impl<'de> Deserialize<'de> for CloudflareAccountUpdateRequestAttributes {
                                 continue;
                             }
                             email = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "resources" => {
                             if v.is_null() {
@@ -109,6 +125,7 @@ impl<'de> Deserialize<'de> for CloudflareAccountUpdateRequestAttributes {
                 let content = CloudflareAccountUpdateRequestAttributes {
                     api_key,
                     email,
+                    name,
                     resources,
                     zones,
                     _unparsed,
