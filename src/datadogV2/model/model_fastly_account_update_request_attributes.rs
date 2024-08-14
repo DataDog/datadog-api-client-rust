@@ -14,6 +14,9 @@ pub struct FastlyAccountUpdateRequestAttributes {
     /// The API key of the Fastly account.
     #[serde(rename = "api_key")]
     pub api_key: Option<String>,
+    /// The FastlyAccountUpdateRequestAttributes name.
+    #[serde(rename = "name")]
+    pub name: Option<String>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -23,12 +26,18 @@ impl FastlyAccountUpdateRequestAttributes {
     pub fn new() -> FastlyAccountUpdateRequestAttributes {
         FastlyAccountUpdateRequestAttributes {
             api_key: None,
+            name: None,
             _unparsed: false,
         }
     }
 
     pub fn api_key(mut self, value: String) -> Self {
         self.api_key = Some(value);
+        self
+    }
+
+    pub fn name(mut self, value: String) -> Self {
+        self.name = Some(value);
         self
     }
 }
@@ -57,6 +66,7 @@ impl<'de> Deserialize<'de> for FastlyAccountUpdateRequestAttributes {
                 M: MapAccess<'a>,
             {
                 let mut api_key: Option<String> = None;
+                let mut name: Option<String> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -67,11 +77,21 @@ impl<'de> Deserialize<'de> for FastlyAccountUpdateRequestAttributes {
                             }
                             api_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {}
                     }
                 }
 
-                let content = FastlyAccountUpdateRequestAttributes { api_key, _unparsed };
+                let content = FastlyAccountUpdateRequestAttributes {
+                    api_key,
+                    name,
+                    _unparsed,
+                };
 
                 Ok(content)
             }
