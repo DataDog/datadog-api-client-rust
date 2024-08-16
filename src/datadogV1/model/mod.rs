@@ -1516,6 +1516,8 @@ pub mod model_synthetics_global_variable_options;
 pub use self::model_synthetics_global_variable_options::SyntheticsGlobalVariableOptions;
 pub mod model_synthetics_global_variable_totp_parameters;
 pub use self::model_synthetics_global_variable_totp_parameters::SyntheticsGlobalVariableTOTPParameters;
+pub mod model_synthetics_global_variable_request;
+pub use self::model_synthetics_global_variable_request::SyntheticsGlobalVariableRequest;
 pub mod model_tag_to_hosts;
 pub use self::model_tag_to_hosts::TagToHosts;
 pub mod model_host_tags;
