@@ -39,6 +39,8 @@ pub struct CloudConfigurationRuleComplianceSignalOptions {
         with = "::serde_with::rust::double_option"
     )]
     pub user_group_by_fields: Option<Option<Vec<String>>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -51,6 +53,7 @@ impl CloudConfigurationRuleComplianceSignalOptions {
             default_group_by_fields: None,
             user_activation_status: None,
             user_group_by_fields: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -72,6 +75,14 @@ impl CloudConfigurationRuleComplianceSignalOptions {
 
     pub fn user_group_by_fields(mut self, value: Option<Vec<String>>) -> Self {
         self.user_group_by_fields = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -103,6 +114,10 @@ impl<'de> Deserialize<'de> for CloudConfigurationRuleComplianceSignalOptions {
                 let mut default_group_by_fields: Option<Option<Vec<String>>> = None;
                 let mut user_activation_status: Option<Option<bool>> = None;
                 let mut user_group_by_fields: Option<Option<Vec<String>>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -123,7 +138,11 @@ impl<'de> Deserialize<'de> for CloudConfigurationRuleComplianceSignalOptions {
                             user_group_by_fields =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -132,6 +151,7 @@ impl<'de> Deserialize<'de> for CloudConfigurationRuleComplianceSignalOptions {
                     default_group_by_fields,
                     user_activation_status,
                     user_group_by_fields,
+                    additional_properties,
                     _unparsed,
                 };
 

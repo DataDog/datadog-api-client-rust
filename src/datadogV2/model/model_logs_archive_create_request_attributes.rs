@@ -34,6 +34,8 @@ pub struct LogsArchiveCreateRequestAttributes {
     /// An array of tags to add to rehydrated logs from an archive.
     #[serde(rename = "rehydration_tags")]
     pub rehydration_tags: Option<Vec<String>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -52,6 +54,7 @@ impl LogsArchiveCreateRequestAttributes {
             query,
             rehydration_max_scan_size_in_gb: None,
             rehydration_tags: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -68,6 +71,14 @@ impl LogsArchiveCreateRequestAttributes {
 
     pub fn rehydration_tags(mut self, value: Vec<String>) -> Self {
         self.rehydration_tags = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -97,6 +108,10 @@ impl<'de> Deserialize<'de> for LogsArchiveCreateRequestAttributes {
                 let mut query: Option<String> = None;
                 let mut rehydration_max_scan_size_in_gb: Option<Option<i64>> = None;
                 let mut rehydration_tags: Option<Vec<String>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -137,7 +152,11 @@ impl<'de> Deserialize<'de> for LogsArchiveCreateRequestAttributes {
                             rehydration_tags =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let destination =
@@ -152,6 +171,7 @@ impl<'de> Deserialize<'de> for LogsArchiveCreateRequestAttributes {
                     query,
                     rehydration_max_scan_size_in_gb,
                     rehydration_tags,
+                    additional_properties,
                     _unparsed,
                 };
 

@@ -20,6 +20,8 @@ pub struct DowntimeResponse {
     /// Array of objects related to the downtime that the user requested.
     #[serde(rename = "included")]
     pub included: Option<Vec<crate::datadogV2::model::DowntimeResponseIncludedItem>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -30,6 +32,7 @@ impl DowntimeResponse {
         DowntimeResponse {
             data: None,
             included: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -44,6 +47,14 @@ impl DowntimeResponse {
         value: Vec<crate::datadogV2::model::DowntimeResponseIncludedItem>,
     ) -> Self {
         self.included = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -75,6 +86,10 @@ impl<'de> Deserialize<'de> for DowntimeResponse {
                 let mut included: Option<
                     Vec<crate::datadogV2::model::DowntimeResponseIncludedItem>,
                 > = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -91,13 +106,18 @@ impl<'de> Deserialize<'de> for DowntimeResponse {
                             }
                             included = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = DowntimeResponse {
                     data,
                     included,
+                    additional_properties,
                     _unparsed,
                 };
 

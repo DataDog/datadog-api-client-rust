@@ -23,6 +23,8 @@ pub struct WidgetCustomLink {
     /// The label ID that refers to a context menu link. Can be `logs`, `hosts`, `traces`, `profiles`, `processes`, `containers`, or `rum`.
     #[serde(rename = "override_label")]
     pub override_label: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -35,6 +37,7 @@ impl WidgetCustomLink {
             label: None,
             link: None,
             override_label: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -56,6 +59,14 @@ impl WidgetCustomLink {
 
     pub fn override_label(mut self, value: String) -> Self {
         self.override_label = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -87,6 +98,10 @@ impl<'de> Deserialize<'de> for WidgetCustomLink {
                 let mut label: Option<String> = None;
                 let mut link: Option<String> = None;
                 let mut override_label: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -116,7 +131,11 @@ impl<'de> Deserialize<'de> for WidgetCustomLink {
                             override_label =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -125,6 +144,7 @@ impl<'de> Deserialize<'de> for WidgetCustomLink {
                     label,
                     link,
                     override_label,
+                    additional_properties,
                     _unparsed,
                 };
 

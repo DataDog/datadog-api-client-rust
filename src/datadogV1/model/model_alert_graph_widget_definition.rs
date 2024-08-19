@@ -32,6 +32,8 @@ pub struct AlertGraphWidgetDefinition {
     /// Whether to display the Alert Graph as a timeseries or a top list.
     #[serde(rename = "viz_type")]
     pub viz_type: crate::datadogV1::model::WidgetVizType,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -51,6 +53,7 @@ impl AlertGraphWidgetDefinition {
             title_size: None,
             type_,
             viz_type,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -72,6 +75,14 @@ impl AlertGraphWidgetDefinition {
 
     pub fn title_size(mut self, value: String) -> Self {
         self.title_size = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -101,6 +112,10 @@ impl<'de> Deserialize<'de> for AlertGraphWidgetDefinition {
                 let mut type_: Option<crate::datadogV1::model::AlertGraphWidgetDefinitionType> =
                     None;
                 let mut viz_type: Option<crate::datadogV1::model::WidgetVizType> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -167,7 +182,11 @@ impl<'de> Deserialize<'de> for AlertGraphWidgetDefinition {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let alert_id = alert_id.ok_or_else(|| M::Error::missing_field("alert_id"))?;
@@ -182,6 +201,7 @@ impl<'de> Deserialize<'de> for AlertGraphWidgetDefinition {
                     title_size,
                     type_,
                     viz_type,
+                    additional_properties,
                     _unparsed,
                 };
 

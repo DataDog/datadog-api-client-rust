@@ -61,6 +61,8 @@ pub struct SLOHistoryMonitor {
     #[deprecated]
     #[serde(rename = "uptime")]
     pub uptime: Option<f64>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -82,6 +84,7 @@ impl SLOHistoryMonitor {
             sli_value: None,
             span_precision: None,
             uptime: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -163,6 +166,14 @@ impl SLOHistoryMonitor {
         self.uptime = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl Default for SLOHistoryMonitor {
@@ -203,6 +214,10 @@ impl<'de> Deserialize<'de> for SLOHistoryMonitor {
                 let mut sli_value: Option<Option<f64>> = None;
                 let mut span_precision: Option<f64> = None;
                 let mut uptime: Option<f64> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -280,7 +295,11 @@ impl<'de> Deserialize<'de> for SLOHistoryMonitor {
                             }
                             uptime = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -298,6 +317,7 @@ impl<'de> Deserialize<'de> for SLOHistoryMonitor {
                     sli_value,
                     span_precision,
                     uptime,
+                    additional_properties,
                     _unparsed,
                 };
 

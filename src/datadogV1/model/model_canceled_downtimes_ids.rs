@@ -14,6 +14,8 @@ pub struct CanceledDowntimesIds {
     /// ID of downtimes that were canceled.
     #[serde(rename = "cancelled_ids")]
     pub cancelled_ids: Option<Vec<i64>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -23,12 +25,21 @@ impl CanceledDowntimesIds {
     pub fn new() -> CanceledDowntimesIds {
         CanceledDowntimesIds {
             cancelled_ids: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn cancelled_ids(mut self, value: Vec<i64>) -> Self {
         self.cancelled_ids = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -57,6 +68,10 @@ impl<'de> Deserialize<'de> for CanceledDowntimesIds {
                 M: MapAccess<'a>,
             {
                 let mut cancelled_ids: Option<Vec<i64>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -68,12 +83,17 @@ impl<'de> Deserialize<'de> for CanceledDowntimesIds {
                             cancelled_ids =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = CanceledDowntimesIds {
                     cancelled_ids,
+                    additional_properties,
                     _unparsed,
                 };
 

@@ -20,6 +20,8 @@ pub struct MonitorSearchResponse {
     /// The list of found monitors.
     #[serde(rename = "monitors")]
     pub monitors: Option<Vec<crate::datadogV1::model::MonitorSearchResult>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -31,6 +33,7 @@ impl MonitorSearchResponse {
             counts: None,
             metadata: None,
             monitors: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -50,6 +53,14 @@ impl MonitorSearchResponse {
 
     pub fn monitors(mut self, value: Vec<crate::datadogV1::model::MonitorSearchResult>) -> Self {
         self.monitors = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -81,6 +92,10 @@ impl<'de> Deserialize<'de> for MonitorSearchResponse {
                 let mut metadata: Option<crate::datadogV1::model::MonitorSearchResponseMetadata> =
                     None;
                 let mut monitors: Option<Vec<crate::datadogV1::model::MonitorSearchResult>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -103,7 +118,11 @@ impl<'de> Deserialize<'de> for MonitorSearchResponse {
                             }
                             monitors = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -111,6 +130,7 @@ impl<'de> Deserialize<'de> for MonitorSearchResponse {
                     counts,
                     metadata,
                     monitors,
+                    additional_properties,
                     _unparsed,
                 };
 

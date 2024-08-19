@@ -21,6 +21,8 @@ pub struct AWSEventBridgeAccountConfiguration {
     /// and metrics reporting through the main AWS integration.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -32,6 +34,7 @@ impl AWSEventBridgeAccountConfiguration {
             account_id: None,
             event_hubs: None,
             tags: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -48,6 +51,14 @@ impl AWSEventBridgeAccountConfiguration {
 
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -79,6 +90,10 @@ impl<'de> Deserialize<'de> for AWSEventBridgeAccountConfiguration {
                 let mut event_hubs: Option<Vec<crate::datadogV1::model::AWSEventBridgeSource>> =
                     None;
                 let mut tags: Option<Vec<String>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -101,7 +116,11 @@ impl<'de> Deserialize<'de> for AWSEventBridgeAccountConfiguration {
                             }
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -109,6 +128,7 @@ impl<'de> Deserialize<'de> for AWSEventBridgeAccountConfiguration {
                     account_id,
                     event_hubs,
                     tags,
+                    additional_properties,
                     _unparsed,
                 };
 

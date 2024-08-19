@@ -41,6 +41,8 @@ pub struct FormulaAndFunctionProcessQueryDefinition {
     /// Text to use as filter.
     #[serde(rename = "text_filter")]
     pub text_filter: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -63,6 +65,7 @@ impl FormulaAndFunctionProcessQueryDefinition {
             sort: None,
             tag_filters: None,
             text_filter: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -104,6 +107,14 @@ impl FormulaAndFunctionProcessQueryDefinition {
         self.text_filter = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl<'de> Deserialize<'de> for FormulaAndFunctionProcessQueryDefinition {
@@ -137,6 +148,10 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionProcessQueryDefinition {
                 let mut sort: Option<crate::datadogV1::model::QuerySortOrder> = None;
                 let mut tag_filters: Option<Vec<String>> = None;
                 let mut text_filter: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -223,7 +238,11 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionProcessQueryDefinition {
                             text_filter =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let data_source =
@@ -242,6 +261,7 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionProcessQueryDefinition {
                     sort,
                     tag_filters,
                     text_filter,
+                    additional_properties,
                     _unparsed,
                 };
 

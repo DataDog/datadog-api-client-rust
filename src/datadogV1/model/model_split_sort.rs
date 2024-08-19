@@ -17,6 +17,8 @@ pub struct SplitSort {
     /// Widget sorting methods.
     #[serde(rename = "order")]
     pub order: crate::datadogV1::model::WidgetSort,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,12 +29,21 @@ impl SplitSort {
         SplitSort {
             compute: None,
             order,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn compute(mut self, value: crate::datadogV1::model::SplitConfigSortCompute) -> Self {
         self.compute = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -56,6 +67,10 @@ impl<'de> Deserialize<'de> for SplitSort {
             {
                 let mut compute: Option<crate::datadogV1::model::SplitConfigSortCompute> = None;
                 let mut order: Option<crate::datadogV1::model::WidgetSort> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -77,7 +92,11 @@ impl<'de> Deserialize<'de> for SplitSort {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let order = order.ok_or_else(|| M::Error::missing_field("order"))?;
@@ -85,6 +104,7 @@ impl<'de> Deserialize<'de> for SplitSort {
                 let content = SplitSort {
                     compute,
                     order,
+                    additional_properties,
                     _unparsed,
                 };
 

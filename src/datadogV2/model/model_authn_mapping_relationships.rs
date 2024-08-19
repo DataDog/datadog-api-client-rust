@@ -21,6 +21,8 @@ pub struct AuthNMappingRelationships {
     /// Relationship to team.
     #[serde(rename = "team")]
     pub team: Option<crate::datadogV2::model::RelationshipToTeam>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -32,6 +34,7 @@ impl AuthNMappingRelationships {
             role: None,
             saml_assertion_attribute: None,
             team: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -51,6 +54,14 @@ impl AuthNMappingRelationships {
 
     pub fn team(mut self, value: crate::datadogV2::model::RelationshipToTeam) -> Self {
         self.team = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -83,6 +94,10 @@ impl<'de> Deserialize<'de> for AuthNMappingRelationships {
                     crate::datadogV2::model::RelationshipToSAMLAssertionAttribute,
                 > = None;
                 let mut team: Option<crate::datadogV2::model::RelationshipToTeam> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -106,7 +121,11 @@ impl<'de> Deserialize<'de> for AuthNMappingRelationships {
                             }
                             team = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -114,6 +133,7 @@ impl<'de> Deserialize<'de> for AuthNMappingRelationships {
                     role,
                     saml_assertion_attribute,
                     team,
+                    additional_properties,
                     _unparsed,
                 };
 

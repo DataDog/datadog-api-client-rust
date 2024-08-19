@@ -23,6 +23,8 @@ pub struct IPPrefixesSynthetics {
     /// List of IPv6 prefixes by location.
     #[serde(rename = "prefixes_ipv6_by_location")]
     pub prefixes_ipv6_by_location: Option<std::collections::BTreeMap<String, Vec<String>>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -35,6 +37,7 @@ impl IPPrefixesSynthetics {
             prefixes_ipv4_by_location: None,
             prefixes_ipv6: None,
             prefixes_ipv6_by_location: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -62,6 +65,14 @@ impl IPPrefixesSynthetics {
         value: std::collections::BTreeMap<String, Vec<String>>,
     ) -> Self {
         self.prefixes_ipv6_by_location = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -97,6 +108,10 @@ impl<'de> Deserialize<'de> for IPPrefixesSynthetics {
                 let mut prefixes_ipv6_by_location: Option<
                     std::collections::BTreeMap<String, Vec<String>>,
                 > = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -129,7 +144,11 @@ impl<'de> Deserialize<'de> for IPPrefixesSynthetics {
                             prefixes_ipv6_by_location =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -138,6 +157,7 @@ impl<'de> Deserialize<'de> for IPPrefixesSynthetics {
                     prefixes_ipv4_by_location,
                     prefixes_ipv6,
                     prefixes_ipv6_by_location,
+                    additional_properties,
                     _unparsed,
                 };
 

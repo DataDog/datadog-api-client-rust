@@ -23,6 +23,8 @@ pub struct JiraIssueResult {
     /// Jira project key
     #[serde(rename = "project_key")]
     pub project_key: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -35,6 +37,7 @@ impl JiraIssueResult {
             issue_key: None,
             issue_url: None,
             project_key: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -56,6 +59,14 @@ impl JiraIssueResult {
 
     pub fn project_key(mut self, value: String) -> Self {
         self.project_key = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -87,6 +98,10 @@ impl<'de> Deserialize<'de> for JiraIssueResult {
                 let mut issue_key: Option<String> = None;
                 let mut issue_url: Option<String> = None;
                 let mut project_key: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -116,7 +131,11 @@ impl<'de> Deserialize<'de> for JiraIssueResult {
                             project_key =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -125,6 +144,7 @@ impl<'de> Deserialize<'de> for JiraIssueResult {
                     issue_key,
                     issue_url,
                     project_key,
+                    additional_properties,
                     _unparsed,
                 };
 

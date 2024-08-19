@@ -23,6 +23,8 @@ pub struct ApmStatsQueryColumnType {
     /// Widget sorting methods.
     #[serde(rename = "order")]
     pub order: Option<crate::datadogV1::model::WidgetSort>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -35,6 +37,7 @@ impl ApmStatsQueryColumnType {
             cell_display_mode: None,
             name,
             order: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -54,6 +57,14 @@ impl ApmStatsQueryColumnType {
 
     pub fn order(mut self, value: crate::datadogV1::model::WidgetSort) -> Self {
         self.order = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -81,6 +92,10 @@ impl<'de> Deserialize<'de> for ApmStatsQueryColumnType {
                 > = None;
                 let mut name: Option<String> = None;
                 let mut order: Option<crate::datadogV1::model::WidgetSort> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -123,7 +138,11 @@ impl<'de> Deserialize<'de> for ApmStatsQueryColumnType {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
@@ -133,6 +152,7 @@ impl<'de> Deserialize<'de> for ApmStatsQueryColumnType {
                     cell_display_mode,
                     name,
                     order,
+                    additional_properties,
                     _unparsed,
                 };
 

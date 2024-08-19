@@ -32,6 +32,8 @@ pub struct SyntheticsStep {
     /// Step type used in your Synthetic test.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV1::model::SyntheticsStepType>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -47,6 +49,7 @@ impl SyntheticsStep {
             params: None,
             timeout: None,
             type_: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -85,6 +88,14 @@ impl SyntheticsStep {
         self.type_ = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl Default for SyntheticsStep {
@@ -118,6 +129,10 @@ impl<'de> Deserialize<'de> for SyntheticsStep {
                     None;
                 let mut timeout: Option<i64> = None;
                 let mut type_: Option<crate::datadogV1::model::SyntheticsStepType> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -177,7 +192,11 @@ impl<'de> Deserialize<'de> for SyntheticsStep {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -189,6 +208,7 @@ impl<'de> Deserialize<'de> for SyntheticsStep {
                     params,
                     timeout,
                     type_,
+                    additional_properties,
                     _unparsed,
                 };
 

@@ -14,6 +14,8 @@ pub struct UsageSyntheticsBrowserResponse {
     /// Get hourly usage for Synthetics Browser tests.
     #[serde(rename = "usage")]
     pub usage: Option<Vec<crate::datadogV1::model::UsageSyntheticsBrowserHour>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -23,6 +25,7 @@ impl UsageSyntheticsBrowserResponse {
     pub fn new() -> UsageSyntheticsBrowserResponse {
         UsageSyntheticsBrowserResponse {
             usage: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -32,6 +35,14 @@ impl UsageSyntheticsBrowserResponse {
         value: Vec<crate::datadogV1::model::UsageSyntheticsBrowserHour>,
     ) -> Self {
         self.usage = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -61,6 +72,10 @@ impl<'de> Deserialize<'de> for UsageSyntheticsBrowserResponse {
             {
                 let mut usage: Option<Vec<crate::datadogV1::model::UsageSyntheticsBrowserHour>> =
                     None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -71,11 +86,19 @@ impl<'de> Deserialize<'de> for UsageSyntheticsBrowserResponse {
                             }
                             usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
-                let content = UsageSyntheticsBrowserResponse { usage, _unparsed };
+                let content = UsageSyntheticsBrowserResponse {
+                    usage,
+                    additional_properties,
+                    _unparsed,
+                };
 
                 Ok(content)
             }

@@ -53,6 +53,8 @@ pub struct SecurityMonitoringRuleOptions {
     #[serde(rename = "thirdPartyRuleOptions")]
     pub third_party_rule_options:
         Option<crate::datadogV2::model::SecurityMonitoringRuleThirdPartyOptions>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -71,6 +73,7 @@ impl SecurityMonitoringRuleOptions {
             max_signal_duration: None,
             new_value_options: None,
             third_party_rule_options: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -151,6 +154,14 @@ impl SecurityMonitoringRuleOptions {
         self.third_party_rule_options = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl Default for SecurityMonitoringRuleOptions {
@@ -204,6 +215,10 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleOptions {
                 let mut third_party_rule_options: Option<
                     crate::datadogV2::model::SecurityMonitoringRuleThirdPartyOptions,
                 > = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -317,7 +332,11 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleOptions {
                             third_party_rule_options =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -332,6 +351,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleOptions {
                     max_signal_duration,
                     new_value_options,
                     third_party_rule_options,
+                    additional_properties,
                     _unparsed,
                 };
 

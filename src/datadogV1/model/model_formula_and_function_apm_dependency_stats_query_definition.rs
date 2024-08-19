@@ -44,6 +44,8 @@ pub struct FormulaAndFunctionApmDependencyStatsQueryDefinition {
     /// APM statistic.
     #[serde(rename = "stat")]
     pub stat: crate::datadogV1::model::FormulaAndFunctionApmDependencyStatName,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -71,6 +73,7 @@ impl FormulaAndFunctionApmDependencyStatsQueryDefinition {
             resource_name,
             service,
             stat,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -92,6 +95,14 @@ impl FormulaAndFunctionApmDependencyStatsQueryDefinition {
 
     pub fn primary_tag_value(mut self, value: String) -> Self {
         self.primary_tag_value = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -128,6 +139,10 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionApmDependencyStatsQueryDefiniti
                 let mut stat: Option<
                     crate::datadogV1::model::FormulaAndFunctionApmDependencyStatName,
                 > = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -200,7 +215,11 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionApmDependencyStatsQueryDefiniti
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let data_source =
@@ -226,6 +245,7 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionApmDependencyStatsQueryDefiniti
                     resource_name,
                     service,
                     stat,
+                    additional_properties,
                     _unparsed,
                 };
 

@@ -17,6 +17,8 @@ pub struct MonitorConfigPolicyAttributeResponse {
     /// The monitor configuration policy type.
     #[serde(rename = "policy_type")]
     pub policy_type: Option<crate::datadogV2::model::MonitorConfigPolicyType>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,6 +29,7 @@ impl MonitorConfigPolicyAttributeResponse {
         MonitorConfigPolicyAttributeResponse {
             policy: None,
             policy_type: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -38,6 +41,14 @@ impl MonitorConfigPolicyAttributeResponse {
 
     pub fn policy_type(mut self, value: crate::datadogV2::model::MonitorConfigPolicyType) -> Self {
         self.policy_type = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -68,6 +79,10 @@ impl<'de> Deserialize<'de> for MonitorConfigPolicyAttributeResponse {
                 let mut policy: Option<crate::datadogV2::model::MonitorConfigPolicyPolicy> = None;
                 let mut policy_type: Option<crate::datadogV2::model::MonitorConfigPolicyType> =
                     None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -101,13 +116,18 @@ impl<'de> Deserialize<'de> for MonitorConfigPolicyAttributeResponse {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = MonitorConfigPolicyAttributeResponse {
                     policy,
                     policy_type,
+                    additional_properties,
                     _unparsed,
                 };
 

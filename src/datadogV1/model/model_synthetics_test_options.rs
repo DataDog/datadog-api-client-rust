@@ -97,6 +97,8 @@ pub struct SyntheticsTestOptions {
     /// The frequency at which to run the Synthetic test (in seconds).
     #[serde(rename = "tick_every")]
     pub tick_every: Option<i64>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -130,6 +132,7 @@ impl SyntheticsTestOptions {
             rum_settings: None,
             scheduling: None,
             tick_every: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -289,6 +292,14 @@ impl SyntheticsTestOptions {
         self.tick_every = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl Default for SyntheticsTestOptions {
@@ -346,6 +357,10 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptions {
                     crate::datadogV1::model::SyntheticsTestOptionsScheduling,
                 > = None;
                 let mut tick_every: Option<i64> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -521,7 +536,11 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptions {
                             }
                             tick_every = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -551,6 +570,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptions {
                     rum_settings,
                     scheduling,
                     tick_every,
+                    additional_properties,
                     _unparsed,
                 };
 

@@ -19,6 +19,8 @@ pub struct SyntheticsTestOptionsRetry {
     /// 300ms.
     #[serde(rename = "interval")]
     pub interval: Option<f64>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -29,6 +31,7 @@ impl SyntheticsTestOptionsRetry {
         SyntheticsTestOptionsRetry {
             count: None,
             interval: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -40,6 +43,14 @@ impl SyntheticsTestOptionsRetry {
 
     pub fn interval(mut self, value: f64) -> Self {
         self.interval = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -69,6 +80,10 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptionsRetry {
             {
                 let mut count: Option<i64> = None;
                 let mut interval: Option<f64> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -85,13 +100,18 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptionsRetry {
                             }
                             interval = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = SyntheticsTestOptionsRetry {
                     count,
                     interval,
+                    additional_properties,
                     _unparsed,
                 };
 

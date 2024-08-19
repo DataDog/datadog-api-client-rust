@@ -45,6 +45,8 @@ pub struct MonitorThresholds {
         with = "::serde_with::rust::double_option"
     )]
     pub warning_recovery: Option<Option<f64>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -59,6 +61,7 @@ impl MonitorThresholds {
             unknown: None,
             warning: None,
             warning_recovery: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -92,6 +95,14 @@ impl MonitorThresholds {
         self.warning_recovery = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl Default for MonitorThresholds {
@@ -123,6 +134,10 @@ impl<'de> Deserialize<'de> for MonitorThresholds {
                 let mut unknown: Option<Option<f64>> = None;
                 let mut warning: Option<Option<f64>> = None;
                 let mut warning_recovery: Option<Option<f64>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -150,7 +165,11 @@ impl<'de> Deserialize<'de> for MonitorThresholds {
                             warning_recovery =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -161,6 +180,7 @@ impl<'de> Deserialize<'de> for MonitorThresholds {
                     unknown,
                     warning,
                     warning_recovery,
+                    additional_properties,
                     _unparsed,
                 };
 

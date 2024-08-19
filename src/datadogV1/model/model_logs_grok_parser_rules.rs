@@ -17,6 +17,8 @@ pub struct LogsGrokParserRules {
     /// List of support rules for the grok parser, separated by a new line.
     #[serde(rename = "support_rules")]
     pub support_rules: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,12 +29,21 @@ impl LogsGrokParserRules {
         LogsGrokParserRules {
             match_rules,
             support_rules: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn support_rules(mut self, value: String) -> Self {
         self.support_rules = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -56,6 +67,10 @@ impl<'de> Deserialize<'de> for LogsGrokParserRules {
             {
                 let mut match_rules: Option<String> = None;
                 let mut support_rules: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -71,7 +86,11 @@ impl<'de> Deserialize<'de> for LogsGrokParserRules {
                             support_rules =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let match_rules =
@@ -80,6 +99,7 @@ impl<'de> Deserialize<'de> for LogsGrokParserRules {
                 let content = LogsGrokParserRules {
                     match_rules,
                     support_rules,
+                    additional_properties,
                     _unparsed,
                 };
 

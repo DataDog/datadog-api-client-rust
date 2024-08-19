@@ -32,6 +32,8 @@ pub struct CustomCostsFileLineItem {
     /// Additional tags for the line item.
     #[serde(rename = "Tags")]
     pub tags: Option<std::collections::BTreeMap<String, String>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -47,6 +49,7 @@ impl CustomCostsFileLineItem {
             charge_period_start: None,
             provider_name: None,
             tags: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -85,6 +88,14 @@ impl CustomCostsFileLineItem {
         self.tags = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl Default for CustomCostsFileLineItem {
@@ -117,6 +128,10 @@ impl<'de> Deserialize<'de> for CustomCostsFileLineItem {
                 let mut charge_period_start: Option<String> = None;
                 let mut provider_name: Option<String> = None;
                 let mut tags: Option<std::collections::BTreeMap<String, String>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -169,7 +184,11 @@ impl<'de> Deserialize<'de> for CustomCostsFileLineItem {
                             }
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -181,6 +200,7 @@ impl<'de> Deserialize<'de> for CustomCostsFileLineItem {
                     charge_period_start,
                     provider_name,
                     tags,
+                    additional_properties,
                     _unparsed,
                 };
 

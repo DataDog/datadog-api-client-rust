@@ -14,6 +14,8 @@ pub struct IncidentIntegrationMetadataPatchRequest {
     /// Incident integration metadata data for a patch request.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::IncidentIntegrationMetadataPatchData,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -25,8 +27,17 @@ impl IncidentIntegrationMetadataPatchRequest {
     ) -> IncidentIntegrationMetadataPatchRequest {
         IncidentIntegrationMetadataPatchRequest {
             data,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
     }
 }
 
@@ -50,6 +61,10 @@ impl<'de> Deserialize<'de> for IncidentIntegrationMetadataPatchRequest {
                 let mut data: Option<
                     crate::datadogV2::model::IncidentIntegrationMetadataPatchData,
                 > = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -57,12 +72,20 @@ impl<'de> Deserialize<'de> for IncidentIntegrationMetadataPatchRequest {
                         "data" => {
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = IncidentIntegrationMetadataPatchRequest { data, _unparsed };
+                let content = IncidentIntegrationMetadataPatchRequest {
+                    data,
+                    additional_properties,
+                    _unparsed,
+                };
 
                 Ok(content)
             }

@@ -23,6 +23,8 @@ pub struct ProcessQueryDefinition {
     /// Your chosen search term.
     #[serde(rename = "search_by")]
     pub search_by: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -35,6 +37,7 @@ impl ProcessQueryDefinition {
             limit: None,
             metric,
             search_by: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -51,6 +54,14 @@ impl ProcessQueryDefinition {
 
     pub fn search_by(mut self, value: String) -> Self {
         self.search_by = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -76,6 +87,10 @@ impl<'de> Deserialize<'de> for ProcessQueryDefinition {
                 let mut limit: Option<i64> = None;
                 let mut metric: Option<String> = None;
                 let mut search_by: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -101,7 +116,11 @@ impl<'de> Deserialize<'de> for ProcessQueryDefinition {
                             }
                             search_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let metric = metric.ok_or_else(|| M::Error::missing_field("metric"))?;
@@ -111,6 +130,7 @@ impl<'de> Deserialize<'de> for ProcessQueryDefinition {
                     limit,
                     metric,
                     search_by,
+                    additional_properties,
                     _unparsed,
                 };
 

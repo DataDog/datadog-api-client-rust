@@ -23,6 +23,8 @@ pub struct SlackIntegrationChannelDisplay {
     /// Show the scopes on which the monitor alerted.
     #[serde(rename = "tags")]
     pub tags: Option<bool>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -35,6 +37,7 @@ impl SlackIntegrationChannelDisplay {
             notified: None,
             snapshot: None,
             tags: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -56,6 +59,14 @@ impl SlackIntegrationChannelDisplay {
 
     pub fn tags(mut self, value: bool) -> Self {
         self.tags = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -87,6 +98,10 @@ impl<'de> Deserialize<'de> for SlackIntegrationChannelDisplay {
                 let mut notified: Option<bool> = None;
                 let mut snapshot: Option<bool> = None;
                 let mut tags: Option<bool> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -115,7 +130,11 @@ impl<'de> Deserialize<'de> for SlackIntegrationChannelDisplay {
                             }
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -124,6 +143,7 @@ impl<'de> Deserialize<'de> for SlackIntegrationChannelDisplay {
                     notified,
                     snapshot,
                     tags,
+                    additional_properties,
                     _unparsed,
                 };
 

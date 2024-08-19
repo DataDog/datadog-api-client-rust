@@ -14,6 +14,8 @@ pub struct MetricSearchResponse {
     /// Search result.
     #[serde(rename = "results")]
     pub results: Option<crate::datadogV1::model::MetricSearchResponseResults>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -23,12 +25,21 @@ impl MetricSearchResponse {
     pub fn new() -> MetricSearchResponse {
         MetricSearchResponse {
             results: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn results(mut self, value: crate::datadogV1::model::MetricSearchResponseResults) -> Self {
         self.results = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -58,6 +69,10 @@ impl<'de> Deserialize<'de> for MetricSearchResponse {
             {
                 let mut results: Option<crate::datadogV1::model::MetricSearchResponseResults> =
                     None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -68,11 +83,19 @@ impl<'de> Deserialize<'de> for MetricSearchResponse {
                             }
                             results = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
-                let content = MetricSearchResponse { results, _unparsed };
+                let content = MetricSearchResponse {
+                    results,
+                    additional_properties,
+                    _unparsed,
+                };
 
                 Ok(content)
             }

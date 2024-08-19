@@ -44,6 +44,8 @@ pub struct SLOWidgetDefinition {
     /// Type of view displayed by the widget.
     #[serde(rename = "view_type")]
     pub view_type: String,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -66,6 +68,7 @@ impl SLOWidgetDefinition {
             type_,
             view_mode: None,
             view_type,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -114,6 +117,14 @@ impl SLOWidgetDefinition {
         self.view_mode = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl<'de> Deserialize<'de> for SLOWidgetDefinition {
@@ -145,6 +156,10 @@ impl<'de> Deserialize<'de> for SLOWidgetDefinition {
                 let mut type_: Option<crate::datadogV1::model::SLOWidgetDefinitionType> = None;
                 let mut view_mode: Option<crate::datadogV1::model::WidgetViewMode> = None;
                 let mut view_type: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -242,7 +257,11 @@ impl<'de> Deserialize<'de> for SLOWidgetDefinition {
                         "view_type" => {
                             view_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
@@ -260,6 +279,7 @@ impl<'de> Deserialize<'de> for SLOWidgetDefinition {
                     type_,
                     view_mode,
                     view_type,
+                    additional_properties,
                     _unparsed,
                 };
 

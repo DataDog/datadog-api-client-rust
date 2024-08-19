@@ -17,6 +17,8 @@ pub struct OrganizationSettingsSamlAutocreateUsersDomains {
     /// Whether or not the automated user creation based on SAML domain is enabled.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,6 +29,7 @@ impl OrganizationSettingsSamlAutocreateUsersDomains {
         OrganizationSettingsSamlAutocreateUsersDomains {
             domains: None,
             enabled: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -38,6 +41,14 @@ impl OrganizationSettingsSamlAutocreateUsersDomains {
 
     pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -67,6 +78,10 @@ impl<'de> Deserialize<'de> for OrganizationSettingsSamlAutocreateUsersDomains {
             {
                 let mut domains: Option<Vec<String>> = None;
                 let mut enabled: Option<bool> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -83,13 +98,18 @@ impl<'de> Deserialize<'de> for OrganizationSettingsSamlAutocreateUsersDomains {
                             }
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = OrganizationSettingsSamlAutocreateUsersDomains {
                     domains,
                     enabled,
+                    additional_properties,
                     _unparsed,
                 };
 

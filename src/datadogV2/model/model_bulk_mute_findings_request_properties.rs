@@ -110,7 +110,9 @@ impl<'de> Deserialize<'de> for BulkMuteFindingsRequestProperties {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            _unparsed = true;
+                        }
                     }
                 }
                 let muted = muted.ok_or_else(|| M::Error::missing_field("muted"))?;

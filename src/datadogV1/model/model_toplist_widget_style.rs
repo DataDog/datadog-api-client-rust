@@ -17,6 +17,8 @@ pub struct ToplistWidgetStyle {
     /// Top list widget scaling definition.
     #[serde(rename = "scaling")]
     pub scaling: Option<crate::datadogV1::model::ToplistWidgetScaling>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,6 +29,7 @@ impl ToplistWidgetStyle {
         ToplistWidgetStyle {
             display: None,
             scaling: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -38,6 +41,14 @@ impl ToplistWidgetStyle {
 
     pub fn scaling(mut self, value: crate::datadogV1::model::ToplistWidgetScaling) -> Self {
         self.scaling = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -67,6 +78,10 @@ impl<'de> Deserialize<'de> for ToplistWidgetStyle {
             {
                 let mut display: Option<crate::datadogV1::model::ToplistWidgetDisplay> = None;
                 let mut scaling: Option<crate::datadogV1::model::ToplistWidgetScaling> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -99,13 +114,18 @@ impl<'de> Deserialize<'de> for ToplistWidgetStyle {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = ToplistWidgetStyle {
                     display,
                     scaling,
+                    additional_properties,
                     _unparsed,
                 };
 

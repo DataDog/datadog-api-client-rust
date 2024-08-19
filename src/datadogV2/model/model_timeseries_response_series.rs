@@ -23,6 +23,8 @@ pub struct TimeseriesResponseSeries {
     /// If the second element is not present, the API returns null.
     #[serde(rename = "unit", default, with = "::serde_with::rust::double_option")]
     pub unit: Option<Option<Vec<Option<crate::datadogV2::model::Unit>>>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -34,6 +36,7 @@ impl TimeseriesResponseSeries {
             group_tags: None,
             query_index: None,
             unit: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -50,6 +53,14 @@ impl TimeseriesResponseSeries {
 
     pub fn unit(mut self, value: Option<Vec<Option<crate::datadogV2::model::Unit>>>) -> Self {
         self.unit = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -80,6 +91,10 @@ impl<'de> Deserialize<'de> for TimeseriesResponseSeries {
                 let mut group_tags: Option<Vec<String>> = None;
                 let mut query_index: Option<i32> = None;
                 let mut unit: Option<Option<Vec<Option<crate::datadogV2::model::Unit>>>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -100,7 +115,11 @@ impl<'de> Deserialize<'de> for TimeseriesResponseSeries {
                         "unit" => {
                             unit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -108,6 +127,7 @@ impl<'de> Deserialize<'de> for TimeseriesResponseSeries {
                     group_tags,
                     query_index,
                     unit,
+                    additional_properties,
                     _unparsed,
                 };
 

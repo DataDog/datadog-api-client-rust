@@ -71,6 +71,8 @@ pub struct TableWidgetRequest {
     /// The controls for sorting the widget.
     #[serde(rename = "sort")]
     pub sort: Option<crate::datadogV1::model::WidgetSortBy>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -99,6 +101,7 @@ impl TableWidgetRequest {
             rum_query: None,
             security_query: None,
             sort: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -220,6 +223,14 @@ impl TableWidgetRequest {
         self.sort = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl Default for TableWidgetRequest {
@@ -276,6 +287,10 @@ impl<'de> Deserialize<'de> for TableWidgetRequest {
                 let mut rum_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
                 let mut security_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
                 let mut sort: Option<crate::datadogV1::model::WidgetSortBy> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -435,7 +450,11 @@ impl<'de> Deserialize<'de> for TableWidgetRequest {
                             }
                             sort = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -460,6 +479,7 @@ impl<'de> Deserialize<'de> for TableWidgetRequest {
                     rum_query,
                     security_query,
                     sort,
+                    additional_properties,
                     _unparsed,
                 };
 

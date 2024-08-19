@@ -20,6 +20,8 @@ pub struct APIKeyUpdateAttributes {
     /// The APIKeyUpdateAttributes remote_config_read_enabled.
     #[serde(rename = "remote_config_read_enabled")]
     pub remote_config_read_enabled: Option<bool>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -31,6 +33,7 @@ impl APIKeyUpdateAttributes {
             category: None,
             name,
             remote_config_read_enabled: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -42,6 +45,14 @@ impl APIKeyUpdateAttributes {
 
     pub fn remote_config_read_enabled(mut self, value: bool) -> Self {
         self.remote_config_read_enabled = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -66,6 +77,10 @@ impl<'de> Deserialize<'de> for APIKeyUpdateAttributes {
                 let mut category: Option<String> = None;
                 let mut name: Option<String> = None;
                 let mut remote_config_read_enabled: Option<bool> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -86,7 +101,11 @@ impl<'de> Deserialize<'de> for APIKeyUpdateAttributes {
                             remote_config_read_enabled =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
@@ -95,6 +114,7 @@ impl<'de> Deserialize<'de> for APIKeyUpdateAttributes {
                     category,
                     name,
                     remote_config_read_enabled,
+                    additional_properties,
                     _unparsed,
                 };
 

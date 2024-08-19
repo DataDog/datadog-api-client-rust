@@ -14,6 +14,8 @@ pub struct NotebookRelativeTime {
     /// The available timeframes depend on the widget you are using.
     #[serde(rename = "live_span")]
     pub live_span: crate::datadogV1::model::WidgetLiveSpan,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -23,8 +25,17 @@ impl NotebookRelativeTime {
     pub fn new(live_span: crate::datadogV1::model::WidgetLiveSpan) -> NotebookRelativeTime {
         NotebookRelativeTime {
             live_span,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
     }
 }
 
@@ -46,6 +57,10 @@ impl<'de> Deserialize<'de> for NotebookRelativeTime {
                 M: MapAccess<'a>,
             {
                 let mut live_span: Option<crate::datadogV1::model::WidgetLiveSpan> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -63,13 +78,18 @@ impl<'de> Deserialize<'de> for NotebookRelativeTime {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let live_span = live_span.ok_or_else(|| M::Error::missing_field("live_span"))?;
 
                 let content = NotebookRelativeTime {
                     live_span,
+                    additional_properties,
                     _unparsed,
                 };
 

@@ -41,6 +41,8 @@ pub struct GeomapWidgetDefinition {
     /// The view of the world that the map should render.
     #[serde(rename = "view")]
     pub view: crate::datadogV1::model::GeomapWidgetDefinitionView,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -63,6 +65,7 @@ impl GeomapWidgetDefinition {
             title_size: None,
             type_,
             view,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -89,6 +92,14 @@ impl GeomapWidgetDefinition {
 
     pub fn title_size(mut self, value: String) -> Self {
         self.title_size = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -119,6 +130,10 @@ impl<'de> Deserialize<'de> for GeomapWidgetDefinition {
                 let mut title_size: Option<String> = None;
                 let mut type_: Option<crate::datadogV1::model::GeomapWidgetDefinitionType> = None;
                 let mut view: Option<crate::datadogV1::model::GeomapWidgetDefinitionView> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -185,7 +200,11 @@ impl<'de> Deserialize<'de> for GeomapWidgetDefinition {
                         "view" => {
                             view = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let requests = requests.ok_or_else(|| M::Error::missing_field("requests"))?;
@@ -203,6 +222,7 @@ impl<'de> Deserialize<'de> for GeomapWidgetDefinition {
                     title_size,
                     type_,
                     view,
+                    additional_properties,
                     _unparsed,
                 };
 

@@ -33,6 +33,8 @@ pub struct SplitGraphWidgetDefinition {
     /// Type of the split graph widget
     #[serde(rename = "type")]
     pub type_: crate::datadogV1::model::SplitGraphWidgetDefinitionType,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -53,6 +55,7 @@ impl SplitGraphWidgetDefinition {
             time: None,
             title: None,
             type_,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -69,6 +72,14 @@ impl SplitGraphWidgetDefinition {
 
     pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -100,6 +111,10 @@ impl<'de> Deserialize<'de> for SplitGraphWidgetDefinition {
                 let mut title: Option<String> = None;
                 let mut type_: Option<crate::datadogV1::model::SplitGraphWidgetDefinitionType> =
                     None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -163,7 +178,11 @@ impl<'de> Deserialize<'de> for SplitGraphWidgetDefinition {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let size = size.ok_or_else(|| M::Error::missing_field("size"))?;
@@ -181,6 +200,7 @@ impl<'de> Deserialize<'de> for SplitGraphWidgetDefinition {
                     time,
                     title,
                     type_,
+                    additional_properties,
                     _unparsed,
                 };
 

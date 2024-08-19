@@ -32,6 +32,8 @@ pub struct ApmStatsQueryDefinition {
     /// Service name.
     #[serde(rename = "service")]
     pub service: String,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -53,6 +55,7 @@ impl ApmStatsQueryDefinition {
             resource: None,
             row_type,
             service,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -64,6 +67,14 @@ impl ApmStatsQueryDefinition {
 
     pub fn resource(mut self, value: String) -> Self {
         self.resource = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -93,6 +104,10 @@ impl<'de> Deserialize<'de> for ApmStatsQueryDefinition {
                 let mut resource: Option<String> = None;
                 let mut row_type: Option<crate::datadogV1::model::ApmStatsQueryRowType> = None;
                 let mut service: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -133,7 +148,11 @@ impl<'de> Deserialize<'de> for ApmStatsQueryDefinition {
                         "service" => {
                             service = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let env = env.ok_or_else(|| M::Error::missing_field("env"))?;
@@ -151,6 +170,7 @@ impl<'de> Deserialize<'de> for ApmStatsQueryDefinition {
                     resource,
                     row_type,
                     service,
+                    additional_properties,
                     _unparsed,
                 };
 

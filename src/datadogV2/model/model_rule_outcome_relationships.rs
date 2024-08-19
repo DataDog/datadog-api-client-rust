@@ -14,6 +14,8 @@ pub struct RuleOutcomeRelationships {
     /// The JSON:API relationship to a scorecard outcome.
     #[serde(rename = "rule")]
     pub rule: Option<crate::datadogV2::model::RelationshipToOutcome>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -23,12 +25,21 @@ impl RuleOutcomeRelationships {
     pub fn new() -> RuleOutcomeRelationships {
         RuleOutcomeRelationships {
             rule: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn rule(mut self, value: crate::datadogV2::model::RelationshipToOutcome) -> Self {
         self.rule = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -57,6 +68,10 @@ impl<'de> Deserialize<'de> for RuleOutcomeRelationships {
                 M: MapAccess<'a>,
             {
                 let mut rule: Option<crate::datadogV2::model::RelationshipToOutcome> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -67,11 +82,19 @@ impl<'de> Deserialize<'de> for RuleOutcomeRelationships {
                             }
                             rule = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
-                let content = RuleOutcomeRelationships { rule, _unparsed };
+                let content = RuleOutcomeRelationships {
+                    rule,
+                    additional_properties,
+                    _unparsed,
+                };
 
                 Ok(content)
             }

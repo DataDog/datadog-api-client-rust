@@ -42,6 +42,8 @@ pub struct SyntheticsGlobalVariable {
     /// Value of the global variable.
     #[serde(rename = "value")]
     pub value: crate::datadogV1::model::SyntheticsGlobalVariableValue,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -65,6 +67,7 @@ impl SyntheticsGlobalVariable {
             parse_test_public_id: None,
             tags,
             value,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -104,6 +107,14 @@ impl SyntheticsGlobalVariable {
         self.parse_test_public_id = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl<'de> Deserialize<'de> for SyntheticsGlobalVariable {
@@ -138,6 +149,10 @@ impl<'de> Deserialize<'de> for SyntheticsGlobalVariable {
                 let mut tags: Option<Vec<String>> = None;
                 let mut value: Option<crate::datadogV1::model::SyntheticsGlobalVariableValue> =
                     None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -193,7 +208,11 @@ impl<'de> Deserialize<'de> for SyntheticsGlobalVariable {
                         "value" => {
                             value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let description =
@@ -213,6 +232,7 @@ impl<'de> Deserialize<'de> for SyntheticsGlobalVariable {
                     parse_test_public_id,
                     tags,
                     value,
+                    additional_properties,
                     _unparsed,
                 };
 

@@ -41,6 +41,8 @@ pub struct CustomDestinationResponseAttributes {
     /// The custom destination query filter. Logs matching this query are forwarded to the destination.
     #[serde(rename = "query")]
     pub query: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -56,6 +58,7 @@ impl CustomDestinationResponseAttributes {
             forwarder_destination: None,
             name: None,
             query: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -100,6 +103,14 @@ impl CustomDestinationResponseAttributes {
         self.query = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl Default for CustomDestinationResponseAttributes {
@@ -136,6 +147,10 @@ impl<'de> Deserialize<'de> for CustomDestinationResponseAttributes {
                 > = None;
                 let mut name: Option<String> = None;
                 let mut query: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -204,7 +219,11 @@ impl<'de> Deserialize<'de> for CustomDestinationResponseAttributes {
                             }
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -216,6 +235,7 @@ impl<'de> Deserialize<'de> for CustomDestinationResponseAttributes {
                     forwarder_destination,
                     name,
                     query,
+                    additional_properties,
                     _unparsed,
                 };
 

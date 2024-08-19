@@ -14,6 +14,8 @@ pub struct OutcomesResponseLinks {
     /// Link for the next set of results.
     #[serde(rename = "next")]
     pub next: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -23,12 +25,21 @@ impl OutcomesResponseLinks {
     pub fn new() -> OutcomesResponseLinks {
         OutcomesResponseLinks {
             next: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn next(mut self, value: String) -> Self {
         self.next = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -57,6 +68,10 @@ impl<'de> Deserialize<'de> for OutcomesResponseLinks {
                 M: MapAccess<'a>,
             {
                 let mut next: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -67,11 +82,19 @@ impl<'de> Deserialize<'de> for OutcomesResponseLinks {
                             }
                             next = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
-                let content = OutcomesResponseLinks { next, _unparsed };
+                let content = OutcomesResponseLinks {
+                    next,
+                    additional_properties,
+                    _unparsed,
+                };
 
                 Ok(content)
             }

@@ -53,6 +53,8 @@ pub struct SLOOverallStatuses {
     /// or updating SLOs. It is only used when querying SLO history over custom timeframes.
     #[serde(rename = "timeframe")]
     pub timeframe: Option<crate::datadogV1::model::SLOTimeframe>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -70,6 +72,7 @@ impl SLOOverallStatuses {
             status: None,
             target: None,
             timeframe: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -121,6 +124,14 @@ impl SLOOverallStatuses {
         self.timeframe = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl Default for SLOOverallStatuses {
@@ -157,6 +168,10 @@ impl<'de> Deserialize<'de> for SLOOverallStatuses {
                 let mut status: Option<Option<f64>> = None;
                 let mut target: Option<f64> = None;
                 let mut timeframe: Option<crate::datadogV1::model::SLOTimeframe> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -221,7 +236,11 @@ impl<'de> Deserialize<'de> for SLOOverallStatuses {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -235,6 +254,7 @@ impl<'de> Deserialize<'de> for SLOOverallStatuses {
                     status,
                     target,
                     timeframe,
+                    additional_properties,
                     _unparsed,
                 };
 

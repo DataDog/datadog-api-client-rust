@@ -14,6 +14,8 @@ pub struct SensitiveDataScannerGroupDeleteRequest {
     /// Meta payload containing information about the API.
     #[serde(rename = "meta")]
     pub meta: crate::datadogV2::model::SensitiveDataScannerMetaVersionOnly,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -25,8 +27,17 @@ impl SensitiveDataScannerGroupDeleteRequest {
     ) -> SensitiveDataScannerGroupDeleteRequest {
         SensitiveDataScannerGroupDeleteRequest {
             meta,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
     }
 }
 
@@ -49,6 +60,10 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerGroupDeleteRequest {
             {
                 let mut meta: Option<crate::datadogV2::model::SensitiveDataScannerMetaVersionOnly> =
                     None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -56,12 +71,20 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerGroupDeleteRequest {
                         "meta" => {
                             meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let meta = meta.ok_or_else(|| M::Error::missing_field("meta"))?;
 
-                let content = SensitiveDataScannerGroupDeleteRequest { meta, _unparsed };
+                let content = SensitiveDataScannerGroupDeleteRequest {
+                    meta,
+                    additional_properties,
+                    _unparsed,
+                };
 
                 Ok(content)
             }

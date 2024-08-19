@@ -70,6 +70,8 @@ pub struct ServiceLevelObjectiveRequest {
     /// threshold.
     #[serde(rename = "warning_threshold")]
     pub warning_threshold: Option<f64>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -94,6 +96,7 @@ impl ServiceLevelObjectiveRequest {
             timeframe: None,
             type_,
             warning_threshold: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -142,6 +145,14 @@ impl ServiceLevelObjectiveRequest {
         self.warning_threshold = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl<'de> Deserialize<'de> for ServiceLevelObjectiveRequest {
@@ -173,6 +184,10 @@ impl<'de> Deserialize<'de> for ServiceLevelObjectiveRequest {
                 let mut timeframe: Option<crate::datadogV1::model::SLOTimeframe> = None;
                 let mut type_: Option<crate::datadogV1::model::SLOType> = None;
                 let mut warning_threshold: Option<f64> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -270,7 +285,11 @@ impl<'de> Deserialize<'de> for ServiceLevelObjectiveRequest {
                             warning_threshold =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
@@ -290,6 +309,7 @@ impl<'de> Deserialize<'de> for ServiceLevelObjectiveRequest {
                     timeframe,
                     type_,
                     warning_threshold,
+                    additional_properties,
                     _unparsed,
                 };
 

@@ -17,6 +17,8 @@ pub struct PagerDutyService {
     /// Your service name associated with a service key in PagerDuty.
     #[serde(rename = "service_name")]
     pub service_name: String,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,8 +29,17 @@ impl PagerDutyService {
         PagerDutyService {
             service_key,
             service_name,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
     }
 }
 
@@ -51,6 +62,10 @@ impl<'de> Deserialize<'de> for PagerDutyService {
             {
                 let mut service_key: Option<String> = None;
                 let mut service_name: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -63,7 +78,11 @@ impl<'de> Deserialize<'de> for PagerDutyService {
                             service_name =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let service_key =
@@ -74,6 +93,7 @@ impl<'de> Deserialize<'de> for PagerDutyService {
                 let content = PagerDutyService {
                     service_key,
                     service_name,
+                    additional_properties,
                     _unparsed,
                 };
 

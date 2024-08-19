@@ -20,6 +20,8 @@ pub struct SecurityMonitoringSignalListRequestFilter {
     /// The maximum timestamp for requested security signals.
     #[serde(rename = "to")]
     pub to: Option<chrono::DateTime<chrono::Utc>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -31,6 +33,7 @@ impl SecurityMonitoringSignalListRequestFilter {
             from: None,
             query: None,
             to: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -47,6 +50,14 @@ impl SecurityMonitoringSignalListRequestFilter {
 
     pub fn to(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.to = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -77,6 +88,10 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalListRequestFilter {
                 let mut from: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut query: Option<String> = None;
                 let mut to: Option<chrono::DateTime<chrono::Utc>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -99,7 +114,11 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalListRequestFilter {
                             }
                             to = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -107,6 +126,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalListRequestFilter {
                     from,
                     query,
                     to,
+                    additional_properties,
                     _unparsed,
                 };
 

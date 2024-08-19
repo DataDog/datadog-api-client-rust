@@ -39,6 +39,8 @@ pub struct LogsIndex {
     /// retention plans specified in your organization's contract/subscriptions.
     #[serde(rename = "num_retention_days")]
     pub num_retention_days: Option<i64>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -55,6 +57,7 @@ impl LogsIndex {
             is_rate_limited: None,
             name,
             num_retention_days: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -91,6 +94,14 @@ impl LogsIndex {
         self.num_retention_days = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl<'de> Deserialize<'de> for LogsIndex {
@@ -120,6 +131,10 @@ impl<'de> Deserialize<'de> for LogsIndex {
                 let mut is_rate_limited: Option<bool> = None;
                 let mut name: Option<String> = None;
                 let mut num_retention_days: Option<i64> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -172,7 +187,11 @@ impl<'de> Deserialize<'de> for LogsIndex {
                             num_retention_days =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let filter = filter.ok_or_else(|| M::Error::missing_field("filter"))?;
@@ -187,6 +206,7 @@ impl<'de> Deserialize<'de> for LogsIndex {
                     is_rate_limited,
                     name,
                     num_retention_days,
+                    additional_properties,
                     _unparsed,
                 };
 

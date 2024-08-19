@@ -17,6 +17,8 @@ pub struct MonitorConfigPolicyAttributeCreateRequest {
     /// The monitor configuration policy type.
     #[serde(rename = "policy_type")]
     pub policy_type: crate::datadogV2::model::MonitorConfigPolicyType,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -30,8 +32,17 @@ impl MonitorConfigPolicyAttributeCreateRequest {
         MonitorConfigPolicyAttributeCreateRequest {
             policy,
             policy_type,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
     }
 }
 
@@ -57,6 +68,10 @@ impl<'de> Deserialize<'de> for MonitorConfigPolicyAttributeCreateRequest {
                 > = None;
                 let mut policy_type: Option<crate::datadogV2::model::MonitorConfigPolicyType> =
                     None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -84,7 +99,11 @@ impl<'de> Deserialize<'de> for MonitorConfigPolicyAttributeCreateRequest {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let policy = policy.ok_or_else(|| M::Error::missing_field("policy"))?;
@@ -94,6 +113,7 @@ impl<'de> Deserialize<'de> for MonitorConfigPolicyAttributeCreateRequest {
                 let content = MonitorConfigPolicyAttributeCreateRequest {
                     policy,
                     policy_type,
+                    additional_properties,
                     _unparsed,
                 };
 

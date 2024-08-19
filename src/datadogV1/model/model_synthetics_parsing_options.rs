@@ -26,6 +26,8 @@ pub struct SyntheticsParsingOptions {
     /// Property of the Synthetic Test Response to use for a Synthetic global variable.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV1::model::SyntheticsGlobalVariableParseTestOptionsType>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -39,6 +41,7 @@ impl SyntheticsParsingOptions {
             parser: None,
             secure: None,
             type_: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -68,6 +71,14 @@ impl SyntheticsParsingOptions {
         value: crate::datadogV1::model::SyntheticsGlobalVariableParseTestOptionsType,
     ) -> Self {
         self.type_ = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -102,6 +113,10 @@ impl<'de> Deserialize<'de> for SyntheticsParsingOptions {
                 let mut type_: Option<
                     crate::datadogV1::model::SyntheticsGlobalVariableParseTestOptionsType,
                 > = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -144,7 +159,11 @@ impl<'de> Deserialize<'de> for SyntheticsParsingOptions {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -154,6 +173,7 @@ impl<'de> Deserialize<'de> for SyntheticsParsingOptions {
                     parser,
                     secure,
                     type_,
+                    additional_properties,
                     _unparsed,
                 };
 

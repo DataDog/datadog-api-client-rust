@@ -44,6 +44,8 @@ pub struct UsageBillableSummaryHour {
     /// Response with aggregated usage types.
     #[serde(rename = "usage")]
     pub usage: Option<crate::datadogV1::model::UsageBillableSummaryKeys>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -63,6 +65,7 @@ impl UsageBillableSummaryHour {
             region: None,
             start_date: None,
             usage: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -121,6 +124,14 @@ impl UsageBillableSummaryHour {
         self.usage = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl Default for UsageBillableSummaryHour {
@@ -157,6 +168,10 @@ impl<'de> Deserialize<'de> for UsageBillableSummaryHour {
                 let mut region: Option<String> = None;
                 let mut start_date: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut usage: Option<crate::datadogV1::model::UsageBillableSummaryKeys> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -231,7 +246,11 @@ impl<'de> Deserialize<'de> for UsageBillableSummaryHour {
                             }
                             usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -247,6 +266,7 @@ impl<'de> Deserialize<'de> for UsageBillableSummaryHour {
                     region,
                     start_date,
                     usage,
+                    additional_properties,
                     _unparsed,
                 };
 

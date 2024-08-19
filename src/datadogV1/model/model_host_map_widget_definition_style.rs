@@ -23,6 +23,8 @@ pub struct HostMapWidgetDefinitionStyle {
     /// Whether to flip the palette tones.
     #[serde(rename = "palette_flip")]
     pub palette_flip: Option<bool>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -35,6 +37,7 @@ impl HostMapWidgetDefinitionStyle {
             fill_min: None,
             palette: None,
             palette_flip: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -56,6 +59,14 @@ impl HostMapWidgetDefinitionStyle {
 
     pub fn palette_flip(mut self, value: bool) -> Self {
         self.palette_flip = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -87,6 +98,10 @@ impl<'de> Deserialize<'de> for HostMapWidgetDefinitionStyle {
                 let mut fill_min: Option<String> = None;
                 let mut palette: Option<String> = None;
                 let mut palette_flip: Option<bool> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -116,7 +131,11 @@ impl<'de> Deserialize<'de> for HostMapWidgetDefinitionStyle {
                             palette_flip =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -125,6 +144,7 @@ impl<'de> Deserialize<'de> for HostMapWidgetDefinitionStyle {
                     fill_min,
                     palette,
                     palette_flip,
+                    additional_properties,
                     _unparsed,
                 };
 

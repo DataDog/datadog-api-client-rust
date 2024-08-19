@@ -54,7 +54,9 @@ impl<'de> Deserialize<'de> for SLOTimeSliceSpec {
                         "time_slice" => {
                             time_slice = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            _unparsed = true;
+                        }
                     }
                 }
                 let time_slice = time_slice.ok_or_else(|| M::Error::missing_field("time_slice"))?;

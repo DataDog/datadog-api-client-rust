@@ -14,6 +14,8 @@ pub struct TeamsResponseMeta {
     /// Teams response metadata.
     #[serde(rename = "pagination")]
     pub pagination: Option<crate::datadogV2::model::TeamsResponseMetaPagination>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -23,6 +25,7 @@ impl TeamsResponseMeta {
     pub fn new() -> TeamsResponseMeta {
         TeamsResponseMeta {
             pagination: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -32,6 +35,14 @@ impl TeamsResponseMeta {
         value: crate::datadogV2::model::TeamsResponseMetaPagination,
     ) -> Self {
         self.pagination = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -61,6 +72,10 @@ impl<'de> Deserialize<'de> for TeamsResponseMeta {
             {
                 let mut pagination: Option<crate::datadogV2::model::TeamsResponseMetaPagination> =
                     None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -71,12 +86,17 @@ impl<'de> Deserialize<'de> for TeamsResponseMeta {
                             }
                             pagination = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = TeamsResponseMeta {
                     pagination,
+                    additional_properties,
                     _unparsed,
                 };
 

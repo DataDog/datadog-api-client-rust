@@ -14,6 +14,8 @@ pub struct UsageCloudSecurityPostureManagementResponse {
     /// Get hourly usage for Cloud Security Management Pro.
     #[serde(rename = "usage")]
     pub usage: Option<Vec<crate::datadogV1::model::UsageCloudSecurityPostureManagementHour>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -23,6 +25,7 @@ impl UsageCloudSecurityPostureManagementResponse {
     pub fn new() -> UsageCloudSecurityPostureManagementResponse {
         UsageCloudSecurityPostureManagementResponse {
             usage: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -32,6 +35,14 @@ impl UsageCloudSecurityPostureManagementResponse {
         value: Vec<crate::datadogV1::model::UsageCloudSecurityPostureManagementHour>,
     ) -> Self {
         self.usage = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -62,6 +73,10 @@ impl<'de> Deserialize<'de> for UsageCloudSecurityPostureManagementResponse {
                 let mut usage: Option<
                     Vec<crate::datadogV1::model::UsageCloudSecurityPostureManagementHour>,
                 > = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -72,11 +87,19 @@ impl<'de> Deserialize<'de> for UsageCloudSecurityPostureManagementResponse {
                             }
                             usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
-                let content = UsageCloudSecurityPostureManagementResponse { usage, _unparsed };
+                let content = UsageCloudSecurityPostureManagementResponse {
+                    usage,
+                    additional_properties,
+                    _unparsed,
+                };
 
                 Ok(content)
             }

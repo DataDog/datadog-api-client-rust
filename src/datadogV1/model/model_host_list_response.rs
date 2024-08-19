@@ -20,6 +20,8 @@ pub struct HostListResponse {
     /// Number of host returned.
     #[serde(rename = "total_returned")]
     pub total_returned: Option<i64>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -31,6 +33,7 @@ impl HostListResponse {
             host_list: None,
             total_matching: None,
             total_returned: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -47,6 +50,14 @@ impl HostListResponse {
 
     pub fn total_returned(mut self, value: i64) -> Self {
         self.total_returned = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -77,6 +88,10 @@ impl<'de> Deserialize<'de> for HostListResponse {
                 let mut host_list: Option<Vec<crate::datadogV1::model::Host>> = None;
                 let mut total_matching: Option<i64> = None;
                 let mut total_returned: Option<i64> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -101,7 +116,11 @@ impl<'de> Deserialize<'de> for HostListResponse {
                             total_returned =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -109,6 +128,7 @@ impl<'de> Deserialize<'de> for HostListResponse {
                     host_list,
                     total_matching,
                     total_returned,
+                    additional_properties,
                     _unparsed,
                 };
 

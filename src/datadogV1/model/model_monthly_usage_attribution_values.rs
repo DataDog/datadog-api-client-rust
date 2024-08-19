@@ -425,6 +425,8 @@ pub struct MonthlyUsageAttributionValues {
     /// The total workflow executions usage by tag(s).
     #[serde(rename = "workflow_executions_usage")]
     pub workflow_executions_usage: Option<f64>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -571,6 +573,7 @@ impl MonthlyUsageAttributionValues {
             vuln_management_hosts_usage: None,
             workflow_executions_percentage: None,
             workflow_executions_usage: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -1264,6 +1267,14 @@ impl MonthlyUsageAttributionValues {
         self.workflow_executions_usage = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl Default for MonthlyUsageAttributionValues {
@@ -1427,6 +1438,10 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                 let mut vuln_management_hosts_usage: Option<f64> = None;
                 let mut workflow_executions_percentage: Option<f64> = None;
                 let mut workflow_executions_usage: Option<f64> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -2395,7 +2410,11 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                             workflow_executions_usage =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -2538,6 +2557,7 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                     vuln_management_hosts_usage,
                     workflow_executions_percentage,
                     workflow_executions_usage,
+                    additional_properties,
                     _unparsed,
                 };
 

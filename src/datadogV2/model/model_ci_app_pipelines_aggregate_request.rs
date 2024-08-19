@@ -24,6 +24,8 @@ pub struct CIAppPipelinesAggregateRequest {
     /// Only supply timezone or time offset, not both. Otherwise, the query fails.
     #[serde(rename = "options")]
     pub options: Option<crate::datadogV2::model::CIAppQueryOptions>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -36,6 +38,7 @@ impl CIAppPipelinesAggregateRequest {
             filter: None,
             group_by: None,
             options: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -57,6 +60,14 @@ impl CIAppPipelinesAggregateRequest {
 
     pub fn options(mut self, value: crate::datadogV2::model::CIAppQueryOptions) -> Self {
         self.options = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -89,6 +100,10 @@ impl<'de> Deserialize<'de> for CIAppPipelinesAggregateRequest {
                 let mut group_by: Option<Vec<crate::datadogV2::model::CIAppPipelinesGroupBy>> =
                     None;
                 let mut options: Option<crate::datadogV2::model::CIAppQueryOptions> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -117,7 +132,11 @@ impl<'de> Deserialize<'de> for CIAppPipelinesAggregateRequest {
                             }
                             options = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -126,6 +145,7 @@ impl<'de> Deserialize<'de> for CIAppPipelinesAggregateRequest {
                     filter,
                     group_by,
                     options,
+                    additional_properties,
                     _unparsed,
                 };
 

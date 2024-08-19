@@ -20,6 +20,8 @@ pub struct AzureUCConfigPair {
     /// Type of Azure config pair.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::AzureUCConfigPairType,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -34,12 +36,21 @@ impl AzureUCConfigPair {
             attributes,
             id: None,
             type_,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn id(mut self, value: i64) -> Self {
         self.id = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -65,6 +76,10 @@ impl<'de> Deserialize<'de> for AzureUCConfigPair {
                     None;
                 let mut id: Option<i64> = None;
                 let mut type_: Option<crate::datadogV2::model::AzureUCConfigPairType> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -89,7 +104,11 @@ impl<'de> Deserialize<'de> for AzureUCConfigPair {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
@@ -99,6 +118,7 @@ impl<'de> Deserialize<'de> for AzureUCConfigPair {
                     attributes,
                     id,
                     type_,
+                    additional_properties,
                     _unparsed,
                 };
 

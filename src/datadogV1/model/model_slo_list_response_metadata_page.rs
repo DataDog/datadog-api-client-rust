@@ -17,6 +17,8 @@ pub struct SLOListResponseMetadataPage {
     /// The total number of resources that match the parameters and filters in the request. This attribute can be used by a client to determine the total number of pages.
     #[serde(rename = "total_filtered_count")]
     pub total_filtered_count: Option<i64>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,6 +29,7 @@ impl SLOListResponseMetadataPage {
         SLOListResponseMetadataPage {
             total_count: None,
             total_filtered_count: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -38,6 +41,14 @@ impl SLOListResponseMetadataPage {
 
     pub fn total_filtered_count(mut self, value: i64) -> Self {
         self.total_filtered_count = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -67,6 +78,10 @@ impl<'de> Deserialize<'de> for SLOListResponseMetadataPage {
             {
                 let mut total_count: Option<i64> = None;
                 let mut total_filtered_count: Option<i64> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -85,13 +100,18 @@ impl<'de> Deserialize<'de> for SLOListResponseMetadataPage {
                             total_filtered_count =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = SLOListResponseMetadataPage {
                     total_count,
                     total_filtered_count,
+                    additional_properties,
                     _unparsed,
                 };
 

@@ -26,6 +26,8 @@ pub struct CloudflareAccountResponseAttributes {
     /// An allowlist of zones to restrict pulling metrics for.
     #[serde(rename = "zones")]
     pub zones: Option<Vec<String>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -39,6 +41,7 @@ impl CloudflareAccountResponseAttributes {
             name,
             resources: None,
             zones: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -60,6 +63,14 @@ impl CloudflareAccountResponseAttributes {
 
     pub fn zones(mut self, value: Vec<String>) -> Self {
         self.zones = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -86,6 +97,10 @@ impl<'de> Deserialize<'de> for CloudflareAccountResponseAttributes {
                 let mut name: Option<String> = None;
                 let mut resources: Option<Vec<String>> = None;
                 let mut zones: Option<Vec<String>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -117,7 +132,11 @@ impl<'de> Deserialize<'de> for CloudflareAccountResponseAttributes {
                             }
                             zones = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
@@ -128,6 +147,7 @@ impl<'de> Deserialize<'de> for CloudflareAccountResponseAttributes {
                     name,
                     resources,
                     zones,
+                    additional_properties,
                     _unparsed,
                 };
 

@@ -35,6 +35,8 @@ pub struct CaseRelationships {
     /// Relationship to project
     #[serde(rename = "project")]
     pub project: Option<crate::datadogV2::model::ProjectRelationship>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -47,6 +49,7 @@ impl CaseRelationships {
             created_by: None,
             modified_by: None,
             project: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -77,6 +80,14 @@ impl CaseRelationships {
 
     pub fn project(mut self, value: crate::datadogV2::model::ProjectRelationship) -> Self {
         self.project = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -114,6 +125,10 @@ impl<'de> Deserialize<'de> for CaseRelationships {
                     Option<crate::datadogV2::model::NullableUserRelationship>,
                 > = None;
                 let mut project: Option<crate::datadogV2::model::ProjectRelationship> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -134,7 +149,11 @@ impl<'de> Deserialize<'de> for CaseRelationships {
                             }
                             project = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -143,6 +162,7 @@ impl<'de> Deserialize<'de> for CaseRelationships {
                     created_by,
                     modified_by,
                     project,
+                    additional_properties,
                     _unparsed,
                 };
 

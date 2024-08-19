@@ -17,6 +17,8 @@ pub struct ServiceDefinitionDataAttributes {
     /// Service definition schema.
     #[serde(rename = "schema")]
     pub schema: Option<crate::datadogV2::model::ServiceDefinitionSchema>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,6 +29,7 @@ impl ServiceDefinitionDataAttributes {
         ServiceDefinitionDataAttributes {
             meta: None,
             schema: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -38,6 +41,14 @@ impl ServiceDefinitionDataAttributes {
 
     pub fn schema(mut self, value: crate::datadogV2::model::ServiceDefinitionSchema) -> Self {
         self.schema = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -67,6 +78,10 @@ impl<'de> Deserialize<'de> for ServiceDefinitionDataAttributes {
             {
                 let mut meta: Option<crate::datadogV2::model::ServiceDefinitionMeta> = None;
                 let mut schema: Option<crate::datadogV2::model::ServiceDefinitionSchema> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -91,13 +106,18 @@ impl<'de> Deserialize<'de> for ServiceDefinitionDataAttributes {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = ServiceDefinitionDataAttributes {
                     meta,
                     schema,
+                    additional_properties,
                     _unparsed,
                 };
 

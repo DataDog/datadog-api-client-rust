@@ -20,6 +20,8 @@ pub struct WidgetRequestStyle {
     /// Color palette to apply to the widget.
     #[serde(rename = "palette")]
     pub palette: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -31,6 +33,7 @@ impl WidgetRequestStyle {
             line_type: None,
             line_width: None,
             palette: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -47,6 +50,14 @@ impl WidgetRequestStyle {
 
     pub fn palette(mut self, value: String) -> Self {
         self.palette = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -77,6 +88,10 @@ impl<'de> Deserialize<'de> for WidgetRequestStyle {
                 let mut line_type: Option<crate::datadogV1::model::WidgetLineType> = None;
                 let mut line_width: Option<crate::datadogV1::model::WidgetLineWidth> = None;
                 let mut palette: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -119,7 +134,11 @@ impl<'de> Deserialize<'de> for WidgetRequestStyle {
                             }
                             palette = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -127,6 +146,7 @@ impl<'de> Deserialize<'de> for WidgetRequestStyle {
                     line_type,
                     line_width,
                     palette,
+                    additional_properties,
                     _unparsed,
                 };
 

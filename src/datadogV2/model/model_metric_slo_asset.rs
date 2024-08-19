@@ -20,6 +20,8 @@ pub struct MetricSLOAsset {
     /// SLO resource type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::MetricSLOType,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -31,12 +33,21 @@ impl MetricSLOAsset {
             attributes: None,
             id,
             type_,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn attributes(mut self, value: crate::datadogV2::model::MetricAssetAttributes) -> Self {
         self.attributes = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -61,6 +72,10 @@ impl<'de> Deserialize<'de> for MetricSLOAsset {
                 let mut attributes: Option<crate::datadogV2::model::MetricAssetAttributes> = None;
                 let mut id: Option<String> = None;
                 let mut type_: Option<crate::datadogV2::model::MetricSLOType> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -87,7 +102,11 @@ impl<'de> Deserialize<'de> for MetricSLOAsset {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
@@ -97,6 +116,7 @@ impl<'de> Deserialize<'de> for MetricSLOAsset {
                     attributes,
                     id,
                     type_,
+                    additional_properties,
                     _unparsed,
                 };
 

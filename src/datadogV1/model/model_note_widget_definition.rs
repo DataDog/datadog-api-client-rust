@@ -41,6 +41,8 @@ pub struct NoteWidgetDefinition {
     /// Vertical alignment.
     #[serde(rename = "vertical_align")]
     pub vertical_align: Option<crate::datadogV1::model::WidgetVerticalAlign>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -62,6 +64,7 @@ impl NoteWidgetDefinition {
             tick_pos: None,
             type_,
             vertical_align: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -105,6 +108,14 @@ impl NoteWidgetDefinition {
         self.vertical_align = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl<'de> Deserialize<'de> for NoteWidgetDefinition {
@@ -134,6 +145,10 @@ impl<'de> Deserialize<'de> for NoteWidgetDefinition {
                 let mut tick_pos: Option<String> = None;
                 let mut type_: Option<crate::datadogV1::model::NoteWidgetDefinitionType> = None;
                 let mut vertical_align: Option<crate::datadogV1::model::WidgetVerticalAlign> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -231,7 +246,11 @@ impl<'de> Deserialize<'de> for NoteWidgetDefinition {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let content = content.ok_or_else(|| M::Error::missing_field("content"))?;
@@ -248,6 +267,7 @@ impl<'de> Deserialize<'de> for NoteWidgetDefinition {
                     tick_pos,
                     type_,
                     vertical_align,
+                    additional_properties,
                     _unparsed,
                 };
 

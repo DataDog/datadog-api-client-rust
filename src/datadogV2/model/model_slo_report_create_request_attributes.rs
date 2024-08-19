@@ -26,6 +26,8 @@ pub struct SloReportCreateRequestAttributes {
     /// The `to` timestamp for the report in epoch seconds.
     #[serde(rename = "to_ts")]
     pub to_ts: i64,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -39,6 +41,7 @@ impl SloReportCreateRequestAttributes {
             query,
             timezone: None,
             to_ts,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -50,6 +53,14 @@ impl SloReportCreateRequestAttributes {
 
     pub fn timezone(mut self, value: String) -> Self {
         self.timezone = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -76,6 +87,10 @@ impl<'de> Deserialize<'de> for SloReportCreateRequestAttributes {
                 let mut query: Option<String> = None;
                 let mut timezone: Option<String> = None;
                 let mut to_ts: Option<i64> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -111,7 +126,11 @@ impl<'de> Deserialize<'de> for SloReportCreateRequestAttributes {
                         "to_ts" => {
                             to_ts = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let from_ts = from_ts.ok_or_else(|| M::Error::missing_field("from_ts"))?;
@@ -124,6 +143,7 @@ impl<'de> Deserialize<'de> for SloReportCreateRequestAttributes {
                     query,
                     timezone,
                     to_ts,
+                    additional_properties,
                     _unparsed,
                 };
 

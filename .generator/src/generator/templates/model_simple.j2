@@ -25,8 +25,9 @@ pub struct {{ name }} {
     #[serde(rename = "{{ attr }}"{% if not required and nullable%}, default, with = "::serde_with::rust::double_option"{% endif %})]
     pub {{propertyName}}: {{dataType}},
 {%- endfor %}
-{%- if model.additionalProperties is defined and model.additionalProperties != false %}
-{%- set dataType = get_type(model.additionalProperties, alternative_name=None, render_nullable=false, render_option=false, render_box=false, version=version) %}
+{%- set additionalProperties = model.get("additionalProperties", {}) %}
+{%- if additionalProperties != false %}
+{%- set dataType = get_type(additionalProperties, alternative_name=None, render_nullable=false, render_option=false, render_box=false, version=version) %}
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, {{ dataType }}>,
 {%- endif %}
@@ -51,7 +52,7 @@ impl {{ name }} {
             {{ attr|variable_name }}: None,
             {%- endif %}
             {%- endfor %}
-            {%- if model.additionalProperties is defined and model.additionalProperties != false %}
+            {%- if additionalProperties != false %}
             additional_properties: std::collections::BTreeMap::new(),
             {%- endif %}
             _unparsed: false,
@@ -68,8 +69,8 @@ impl {{ name }} {
         self
     }
     {% endfor %}
-    {%- if model.additionalProperties is defined and model.additionalProperties != false %}
-    {%- set dataType = get_type(model.additionalProperties, alternative_name=None, render_nullable=false, render_option=false, render_box=false, version=version) %}
+    {%- if additionalProperties != false %}
+    {%- set dataType = get_type(additionalProperties, alternative_name=None, render_nullable=false, render_option=false, render_box=false, version=version) %}
     pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, {{ dataType }}>) -> Self {
         self.additional_properties = value;
         self
@@ -110,8 +111,8 @@ impl<'de> Deserialize<'de> for {{ name }} {
                 let mut {{ propertyName }}: {% if required %}Option<{% endif %}{{ dataType }}{% if required %}>{% endif %} = None;
                 {%- endfor %}
 
-                {%- if model.additionalProperties is defined and model.additionalProperties != false %}
-                {%- set dataType = get_type(model.additionalProperties, alternative_name=None, render_nullable=false, render_option=false, render_box=false, version=version) %}
+                {%- if additionalProperties != false %}
+                {%- set dataType = get_type(additionalProperties, alternative_name=None, render_nullable=false, render_option=false, render_box=false, version=version) %}
                     let mut additional_properties: std::collections::BTreeMap<String, {{ dataType }}> = std::collections::BTreeMap::new();
                 {%- endif %}
                 let mut _unparsed = false;
@@ -143,10 +144,12 @@ impl<'de> Deserialize<'de> for {{ name }} {
                         },
                         {%- endfor %}
                         &_ => {
-                            {%- if model.additionalProperties is defined and model.additionalProperties != false %}
+                            {%- if additionalProperties != false %}
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
+                            {% else %}
+                            _unparsed = true;
                             {%- endif %}
                         },
                     }
@@ -173,7 +176,7 @@ impl<'de> Deserialize<'de> for {{ name }} {
                     {%- set propertyName = attr|variable_name %}
                     {{ propertyName }},
                     {%- endfor %}
-                    {%- if model.additionalProperties is defined and model.additionalProperties != false %}
+                    {%- if additionalProperties != false %}
                     additional_properties,
                     {%- endif %}
                     _unparsed,

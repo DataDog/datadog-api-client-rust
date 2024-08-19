@@ -17,6 +17,8 @@ pub struct RelationshipToUserTeamPermission {
     /// Links attributes.
     #[serde(rename = "links")]
     pub links: Option<crate::datadogV2::model::TeamRelationshipsLinks>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,6 +29,7 @@ impl RelationshipToUserTeamPermission {
         RelationshipToUserTeamPermission {
             data: None,
             links: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -41,6 +44,14 @@ impl RelationshipToUserTeamPermission {
 
     pub fn links(mut self, value: crate::datadogV2::model::TeamRelationshipsLinks) -> Self {
         self.links = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -72,6 +83,10 @@ impl<'de> Deserialize<'de> for RelationshipToUserTeamPermission {
                     crate::datadogV2::model::RelationshipToUserTeamPermissionData,
                 > = None;
                 let mut links: Option<crate::datadogV2::model::TeamRelationshipsLinks> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -88,13 +103,18 @@ impl<'de> Deserialize<'de> for RelationshipToUserTeamPermission {
                             }
                             links = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = RelationshipToUserTeamPermission {
                     data,
                     links,
+                    additional_properties,
                     _unparsed,
                 };
 

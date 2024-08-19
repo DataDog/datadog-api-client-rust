@@ -38,6 +38,8 @@ pub struct WidgetConditionalFormat {
     /// Value for the comparator.
     #[serde(rename = "value")]
     pub value: f64,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -59,6 +61,7 @@ impl WidgetConditionalFormat {
             palette,
             timeframe: None,
             value,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -92,6 +95,14 @@ impl WidgetConditionalFormat {
         self.timeframe = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl<'de> Deserialize<'de> for WidgetConditionalFormat {
@@ -120,6 +131,10 @@ impl<'de> Deserialize<'de> for WidgetConditionalFormat {
                 let mut palette: Option<crate::datadogV1::model::WidgetPalette> = None;
                 let mut timeframe: Option<String> = None;
                 let mut value: Option<f64> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -191,7 +206,11 @@ impl<'de> Deserialize<'de> for WidgetConditionalFormat {
                         "value" => {
                             value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let comparator = comparator.ok_or_else(|| M::Error::missing_field("comparator"))?;
@@ -208,6 +227,7 @@ impl<'de> Deserialize<'de> for WidgetConditionalFormat {
                     palette,
                     timeframe,
                     value,
+                    additional_properties,
                     _unparsed,
                 };
 

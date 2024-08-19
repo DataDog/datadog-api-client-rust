@@ -20,6 +20,8 @@ pub struct SensitiveDataScannerGetConfigResponse {
     /// Meta response containing information about the API.
     #[serde(rename = "meta")]
     pub meta: Option<crate::datadogV2::model::SensitiveDataScannerMeta>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -31,6 +33,7 @@ impl SensitiveDataScannerGetConfigResponse {
             data: None,
             included: None,
             meta: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -53,6 +56,14 @@ impl SensitiveDataScannerGetConfigResponse {
 
     pub fn meta(mut self, value: crate::datadogV2::model::SensitiveDataScannerMeta) -> Self {
         self.meta = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -87,6 +98,10 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerGetConfigResponse {
                     Vec<crate::datadogV2::model::SensitiveDataScannerGetConfigIncludedItem>,
                 > = None;
                 let mut meta: Option<crate::datadogV2::model::SensitiveDataScannerMeta> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -109,7 +124,11 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerGetConfigResponse {
                             }
                             meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -117,6 +136,7 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerGetConfigResponse {
                     data,
                     included,
                     meta,
+                    additional_properties,
                     _unparsed,
                 };
 

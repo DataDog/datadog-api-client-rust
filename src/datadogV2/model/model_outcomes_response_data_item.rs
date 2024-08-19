@@ -23,6 +23,8 @@ pub struct OutcomesResponseDataItem {
     /// The JSON:API type for an outcome.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::OutcomeType>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -35,6 +37,7 @@ impl OutcomesResponseDataItem {
             id: None,
             relationships: None,
             type_: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -62,6 +65,14 @@ impl OutcomesResponseDataItem {
 
     pub fn type_(mut self, value: crate::datadogV2::model::OutcomeType) -> Self {
         self.type_ = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -96,6 +107,10 @@ impl<'de> Deserialize<'de> for OutcomesResponseDataItem {
                 let mut relationships: Option<crate::datadogV2::model::RuleOutcomeRelationships> =
                     None;
                 let mut type_: Option<crate::datadogV2::model::OutcomeType> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -135,7 +150,11 @@ impl<'de> Deserialize<'de> for OutcomesResponseDataItem {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -144,6 +163,7 @@ impl<'de> Deserialize<'de> for OutcomesResponseDataItem {
                     id,
                     relationships,
                     type_,
+                    additional_properties,
                     _unparsed,
                 };
 

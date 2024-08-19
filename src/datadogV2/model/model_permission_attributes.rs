@@ -32,6 +32,8 @@ pub struct PermissionAttributes {
     /// Whether or not the permission is restricted.
     #[serde(rename = "restricted")]
     pub restricted: Option<bool>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -47,6 +49,7 @@ impl PermissionAttributes {
             group_name: None,
             name: None,
             restricted: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -85,6 +88,14 @@ impl PermissionAttributes {
         self.restricted = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl Default for PermissionAttributes {
@@ -117,6 +128,10 @@ impl<'de> Deserialize<'de> for PermissionAttributes {
                 let mut group_name: Option<String> = None;
                 let mut name: Option<String> = None;
                 let mut restricted: Option<bool> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -166,7 +181,11 @@ impl<'de> Deserialize<'de> for PermissionAttributes {
                             }
                             restricted = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -178,6 +197,7 @@ impl<'de> Deserialize<'de> for PermissionAttributes {
                     group_name,
                     name,
                     restricted,
+                    additional_properties,
                     _unparsed,
                 };
 

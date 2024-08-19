@@ -20,6 +20,8 @@ pub struct MonitorOptionsSchedulingOptionsEvaluationWindow {
     /// The day of the month at which a one month cumulative evaluation window starts.
     #[serde(rename = "month_starts")]
     pub month_starts: Option<i32>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -31,6 +33,7 @@ impl MonitorOptionsSchedulingOptionsEvaluationWindow {
             day_starts: None,
             hour_starts: None,
             month_starts: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -47,6 +50,14 @@ impl MonitorOptionsSchedulingOptionsEvaluationWindow {
 
     pub fn month_starts(mut self, value: i32) -> Self {
         self.month_starts = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -77,6 +88,10 @@ impl<'de> Deserialize<'de> for MonitorOptionsSchedulingOptionsEvaluationWindow {
                 let mut day_starts: Option<String> = None;
                 let mut hour_starts: Option<i32> = None;
                 let mut month_starts: Option<i32> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -101,7 +116,11 @@ impl<'de> Deserialize<'de> for MonitorOptionsSchedulingOptionsEvaluationWindow {
                             month_starts =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -109,6 +128,7 @@ impl<'de> Deserialize<'de> for MonitorOptionsSchedulingOptionsEvaluationWindow {
                     day_starts,
                     hour_starts,
                     month_starts,
+                    additional_properties,
                     _unparsed,
                 };
 

@@ -17,6 +17,8 @@ pub struct AzureAccountMetricsConfig {
     /// List of Microsoft Azure Resource Providers to exclude from metric collection.
     #[serde(rename = "excluded_resource_providers")]
     pub excluded_resource_providers: Option<Vec<String>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -26,12 +28,21 @@ impl AzureAccountMetricsConfig {
     pub fn new() -> AzureAccountMetricsConfig {
         AzureAccountMetricsConfig {
             excluded_resource_providers: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn excluded_resource_providers(mut self, value: Vec<String>) -> Self {
         self.excluded_resource_providers = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -60,6 +71,10 @@ impl<'de> Deserialize<'de> for AzureAccountMetricsConfig {
                 M: MapAccess<'a>,
             {
                 let mut excluded_resource_providers: Option<Vec<String>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -71,12 +86,17 @@ impl<'de> Deserialize<'de> for AzureAccountMetricsConfig {
                             excluded_resource_providers =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = AzureAccountMetricsConfig {
                     excluded_resource_providers,
+                    additional_properties,
                     _unparsed,
                 };
 

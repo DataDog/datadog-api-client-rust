@@ -20,6 +20,8 @@ pub struct MonitorGroupSearchResponse {
     /// Metadata about the response.
     #[serde(rename = "metadata")]
     pub metadata: Option<crate::datadogV1::model::MonitorSearchResponseMetadata>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -31,6 +33,7 @@ impl MonitorGroupSearchResponse {
             counts: None,
             groups: None,
             metadata: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -53,6 +56,14 @@ impl MonitorGroupSearchResponse {
         value: crate::datadogV1::model::MonitorSearchResponseMetadata,
     ) -> Self {
         self.metadata = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -86,6 +97,10 @@ impl<'de> Deserialize<'de> for MonitorGroupSearchResponse {
                     None;
                 let mut metadata: Option<crate::datadogV1::model::MonitorSearchResponseMetadata> =
                     None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -108,7 +123,11 @@ impl<'de> Deserialize<'de> for MonitorGroupSearchResponse {
                             }
                             metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -116,6 +135,7 @@ impl<'de> Deserialize<'de> for MonitorGroupSearchResponse {
                     counts,
                     groups,
                     metadata,
+                    additional_properties,
                     _unparsed,
                 };
 

@@ -57,6 +57,8 @@ pub struct DashboardListItem {
     /// URL path to the dashboard.
     #[serde(rename = "url")]
     pub url: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -79,6 +81,7 @@ impl DashboardListItem {
             title: None,
             type_,
             url: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -142,6 +145,14 @@ impl DashboardListItem {
         self.url = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl<'de> Deserialize<'de> for DashboardListItem {
@@ -175,6 +186,10 @@ impl<'de> Deserialize<'de> for DashboardListItem {
                 let mut title: Option<String> = None;
                 let mut type_: Option<crate::datadogV2::model::DashboardType> = None;
                 let mut url: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -261,7 +276,11 @@ impl<'de> Deserialize<'de> for DashboardListItem {
                             }
                             url = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
@@ -282,6 +301,7 @@ impl<'de> Deserialize<'de> for DashboardListItem {
                     title,
                     type_,
                     url,
+                    additional_properties,
                     _unparsed,
                 };
 

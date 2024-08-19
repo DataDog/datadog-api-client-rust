@@ -34,6 +34,8 @@ pub struct LogsListRequest {
     /// Timeframe to retrieve the log from.
     #[serde(rename = "time")]
     pub time: crate::datadogV1::model::LogsListRequestTime,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -48,6 +50,7 @@ impl LogsListRequest {
             sort: None,
             start_at: None,
             time,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -76,6 +79,14 @@ impl LogsListRequest {
         self.start_at = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl<'de> Deserialize<'de> for LogsListRequest {
@@ -101,6 +112,10 @@ impl<'de> Deserialize<'de> for LogsListRequest {
                 let mut sort: Option<crate::datadogV1::model::LogsSort> = None;
                 let mut start_at: Option<String> = None;
                 let mut time: Option<crate::datadogV1::model::LogsListRequestTime> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -146,7 +161,11 @@ impl<'de> Deserialize<'de> for LogsListRequest {
                         "time" => {
                             time = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let time = time.ok_or_else(|| M::Error::missing_field("time"))?;
@@ -158,6 +177,7 @@ impl<'de> Deserialize<'de> for LogsListRequest {
                     sort,
                     start_at,
                     time,
+                    additional_properties,
                     _unparsed,
                 };
 

@@ -14,6 +14,8 @@ pub struct IPAllowlistEntry {
     /// Data of the IP allowlist entry object.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::IPAllowlistEntryData,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -23,8 +25,17 @@ impl IPAllowlistEntry {
     pub fn new(data: crate::datadogV2::model::IPAllowlistEntryData) -> IPAllowlistEntry {
         IPAllowlistEntry {
             data,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
     }
 }
 
@@ -46,6 +57,10 @@ impl<'de> Deserialize<'de> for IPAllowlistEntry {
                 M: MapAccess<'a>,
             {
                 let mut data: Option<crate::datadogV2::model::IPAllowlistEntryData> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -53,12 +68,20 @@ impl<'de> Deserialize<'de> for IPAllowlistEntry {
                         "data" => {
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = IPAllowlistEntry { data, _unparsed };
+                let content = IPAllowlistEntry {
+                    data,
+                    additional_properties,
+                    _unparsed,
+                };
 
                 Ok(content)
             }

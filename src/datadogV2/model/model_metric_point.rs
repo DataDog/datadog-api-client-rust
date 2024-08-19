@@ -18,6 +18,8 @@ pub struct MetricPoint {
     /// The numeric value format should be a 64bit float gauge-type value.
     #[serde(rename = "value")]
     pub value: Option<f64>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -28,6 +30,7 @@ impl MetricPoint {
         MetricPoint {
             timestamp: None,
             value: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -39,6 +42,14 @@ impl MetricPoint {
 
     pub fn value(mut self, value: f64) -> Self {
         self.value = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -68,6 +79,10 @@ impl<'de> Deserialize<'de> for MetricPoint {
             {
                 let mut timestamp: Option<i64> = None;
                 let mut value: Option<f64> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -84,13 +99,18 @@ impl<'de> Deserialize<'de> for MetricPoint {
                             }
                             value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = MetricPoint {
                     timestamp,
                     value,
+                    additional_properties,
                     _unparsed,
                 };
 

@@ -17,6 +17,8 @@ pub struct ServiceDefinitionV1Org {
     /// Team that owns the service.
     #[serde(rename = "team")]
     pub team: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,6 +29,7 @@ impl ServiceDefinitionV1Org {
         ServiceDefinitionV1Org {
             application: None,
             team: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -38,6 +41,14 @@ impl ServiceDefinitionV1Org {
 
     pub fn team(mut self, value: String) -> Self {
         self.team = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -67,6 +78,10 @@ impl<'de> Deserialize<'de> for ServiceDefinitionV1Org {
             {
                 let mut application: Option<String> = None;
                 let mut team: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -84,13 +99,18 @@ impl<'de> Deserialize<'de> for ServiceDefinitionV1Org {
                             }
                             team = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = ServiceDefinitionV1Org {
                     application,
                     team,
+                    additional_properties,
                     _unparsed,
                 };
 

@@ -23,6 +23,8 @@ pub struct OrganizationCreateResponse {
     /// Create, edit, and disable users.
     #[serde(rename = "user")]
     pub user: Option<crate::datadogV1::model::User>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -35,6 +37,7 @@ impl OrganizationCreateResponse {
             application_key: None,
             org: None,
             user: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -56,6 +59,14 @@ impl OrganizationCreateResponse {
 
     pub fn user(mut self, value: crate::datadogV1::model::User) -> Self {
         self.user = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -87,6 +98,10 @@ impl<'de> Deserialize<'de> for OrganizationCreateResponse {
                 let mut application_key: Option<crate::datadogV1::model::ApplicationKey> = None;
                 let mut org: Option<crate::datadogV1::model::Organization> = None;
                 let mut user: Option<crate::datadogV1::model::User> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -116,7 +131,11 @@ impl<'de> Deserialize<'de> for OrganizationCreateResponse {
                             }
                             user = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -125,6 +144,7 @@ impl<'de> Deserialize<'de> for OrganizationCreateResponse {
                     application_key,
                     org,
                     user,
+                    additional_properties,
                     _unparsed,
                 };
 

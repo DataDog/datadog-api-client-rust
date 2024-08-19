@@ -14,6 +14,8 @@ pub struct ServiceNowTicketResult {
     /// Link to the Incident created on ServiceNow
     #[serde(rename = "sys_target_link")]
     pub sys_target_link: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -23,12 +25,21 @@ impl ServiceNowTicketResult {
     pub fn new() -> ServiceNowTicketResult {
         ServiceNowTicketResult {
             sys_target_link: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn sys_target_link(mut self, value: String) -> Self {
         self.sys_target_link = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -57,6 +68,10 @@ impl<'de> Deserialize<'de> for ServiceNowTicketResult {
                 M: MapAccess<'a>,
             {
                 let mut sys_target_link: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -68,12 +83,17 @@ impl<'de> Deserialize<'de> for ServiceNowTicketResult {
                             sys_target_link =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = ServiceNowTicketResult {
                     sys_target_link,
+                    additional_properties,
                     _unparsed,
                 };
 

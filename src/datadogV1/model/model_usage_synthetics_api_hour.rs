@@ -27,6 +27,8 @@ pub struct UsageSyntheticsAPIHour {
     /// The organization public ID.
     #[serde(rename = "public_id")]
     pub public_id: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -39,6 +41,7 @@ impl UsageSyntheticsAPIHour {
             hour: None,
             org_name: None,
             public_id: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -60,6 +63,14 @@ impl UsageSyntheticsAPIHour {
 
     pub fn public_id(mut self, value: String) -> Self {
         self.public_id = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -91,6 +102,10 @@ impl<'de> Deserialize<'de> for UsageSyntheticsAPIHour {
                 let mut hour: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut org_name: Option<String> = None;
                 let mut public_id: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -117,7 +132,11 @@ impl<'de> Deserialize<'de> for UsageSyntheticsAPIHour {
                             }
                             public_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -126,6 +145,7 @@ impl<'de> Deserialize<'de> for UsageSyntheticsAPIHour {
                     hour,
                     org_name,
                     public_id,
+                    additional_properties,
                     _unparsed,
                 };
 

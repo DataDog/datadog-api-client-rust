@@ -32,6 +32,8 @@ pub struct MetricMetadata {
     /// Primary unit of the metric such as `byte` or `operation`.
     #[serde(rename = "unit")]
     pub unit: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -47,6 +49,7 @@ impl MetricMetadata {
             statsd_interval: None,
             type_: None,
             unit: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -85,6 +88,14 @@ impl MetricMetadata {
         self.unit = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl Default for MetricMetadata {
@@ -117,6 +128,10 @@ impl<'de> Deserialize<'de> for MetricMetadata {
                 let mut statsd_interval: Option<i64> = None;
                 let mut type_: Option<String> = None;
                 let mut unit: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -166,7 +181,11 @@ impl<'de> Deserialize<'de> for MetricMetadata {
                             }
                             unit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -178,6 +197,7 @@ impl<'de> Deserialize<'de> for MetricMetadata {
                     statsd_interval,
                     type_,
                     unit,
+                    additional_properties,
                     _unparsed,
                 };
 

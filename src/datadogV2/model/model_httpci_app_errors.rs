@@ -14,6 +14,8 @@ pub struct HTTPCIAppErrors {
     /// Structured errors.
     #[serde(rename = "errors")]
     pub errors: Option<Vec<crate::datadogV2::model::HTTPCIAppError>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -23,12 +25,21 @@ impl HTTPCIAppErrors {
     pub fn new() -> HTTPCIAppErrors {
         HTTPCIAppErrors {
             errors: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn errors(mut self, value: Vec<crate::datadogV2::model::HTTPCIAppError>) -> Self {
         self.errors = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -57,6 +68,10 @@ impl<'de> Deserialize<'de> for HTTPCIAppErrors {
                 M: MapAccess<'a>,
             {
                 let mut errors: Option<Vec<crate::datadogV2::model::HTTPCIAppError>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -67,11 +82,19 @@ impl<'de> Deserialize<'de> for HTTPCIAppErrors {
                             }
                             errors = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
-                let content = HTTPCIAppErrors { errors, _unparsed };
+                let content = HTTPCIAppErrors {
+                    errors,
+                    additional_properties,
+                    _unparsed,
+                };
 
                 Ok(content)
             }

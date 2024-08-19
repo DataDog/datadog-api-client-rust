@@ -14,6 +14,8 @@ pub struct ConfluentAccountsResponse {
     /// The Confluent account.
     #[serde(rename = "data")]
     pub data: Option<Vec<crate::datadogV2::model::ConfluentAccountResponseData>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -23,6 +25,7 @@ impl ConfluentAccountsResponse {
     pub fn new() -> ConfluentAccountsResponse {
         ConfluentAccountsResponse {
             data: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -32,6 +35,14 @@ impl ConfluentAccountsResponse {
         value: Vec<crate::datadogV2::model::ConfluentAccountResponseData>,
     ) -> Self {
         self.data = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -61,6 +72,10 @@ impl<'de> Deserialize<'de> for ConfluentAccountsResponse {
             {
                 let mut data: Option<Vec<crate::datadogV2::model::ConfluentAccountResponseData>> =
                     None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -71,11 +86,19 @@ impl<'de> Deserialize<'de> for ConfluentAccountsResponse {
                             }
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
-                let content = ConfluentAccountsResponse { data, _unparsed };
+                let content = ConfluentAccountsResponse {
+                    data,
+                    additional_properties,
+                    _unparsed,
+                };
 
                 Ok(content)
             }

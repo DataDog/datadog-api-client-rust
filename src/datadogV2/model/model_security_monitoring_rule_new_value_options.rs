@@ -28,6 +28,8 @@ pub struct SecurityMonitoringRuleNewValueOptions {
     #[serde(rename = "learningThreshold")]
     pub learning_threshold:
         Option<crate::datadogV2::model::SecurityMonitoringRuleNewValueOptionsLearningThreshold>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -40,6 +42,7 @@ impl SecurityMonitoringRuleNewValueOptions {
             learning_duration: None,
             learning_method: None,
             learning_threshold: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -73,6 +76,14 @@ impl SecurityMonitoringRuleNewValueOptions {
         value: crate::datadogV2::model::SecurityMonitoringRuleNewValueOptionsLearningThreshold,
     ) -> Self {
         self.learning_threshold = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -112,6 +123,10 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleNewValueOptions {
                 let mut learning_threshold: Option<
                     crate::datadogV2::model::SecurityMonitoringRuleNewValueOptionsLearningThreshold,
                 > = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -176,7 +191,11 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleNewValueOptions {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -185,6 +204,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleNewValueOptions {
                     learning_duration,
                     learning_method,
                     learning_threshold,
+                    additional_properties,
                     _unparsed,
                 };
 

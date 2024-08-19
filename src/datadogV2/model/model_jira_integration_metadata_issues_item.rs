@@ -26,6 +26,8 @@ pub struct JiraIntegrationMetadataIssuesItem {
     /// URL redirecting to the Jira issue.
     #[serde(rename = "redirect_url")]
     pub redirect_url: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -39,6 +41,7 @@ impl JiraIntegrationMetadataIssuesItem {
             issuetype_id: None,
             project_key,
             redirect_url: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -55,6 +58,14 @@ impl JiraIntegrationMetadataIssuesItem {
 
     pub fn redirect_url(mut self, value: String) -> Self {
         self.redirect_url = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -81,6 +92,10 @@ impl<'de> Deserialize<'de> for JiraIntegrationMetadataIssuesItem {
                 let mut issuetype_id: Option<String> = None;
                 let mut project_key: Option<String> = None;
                 let mut redirect_url: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -112,7 +127,11 @@ impl<'de> Deserialize<'de> for JiraIntegrationMetadataIssuesItem {
                             redirect_url =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let account = account.ok_or_else(|| M::Error::missing_field("account"))?;
@@ -125,6 +144,7 @@ impl<'de> Deserialize<'de> for JiraIntegrationMetadataIssuesItem {
                     issuetype_id,
                     project_key,
                     redirect_url,
+                    additional_properties,
                     _unparsed,
                 };
 

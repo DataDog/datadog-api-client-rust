@@ -54,6 +54,8 @@ pub struct DistributionWidgetDefinition {
     /// Y Axis controls for the distribution widget.
     #[serde(rename = "yaxis")]
     pub yaxis: Option<crate::datadogV1::model::DistributionWidgetYAxis>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -78,6 +80,7 @@ impl DistributionWidgetDefinition {
             type_,
             xaxis: None,
             yaxis: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -141,6 +144,14 @@ impl DistributionWidgetDefinition {
         self.yaxis = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl<'de> Deserialize<'de> for DistributionWidgetDefinition {
@@ -174,6 +185,10 @@ impl<'de> Deserialize<'de> for DistributionWidgetDefinition {
                     None;
                 let mut xaxis: Option<crate::datadogV1::model::DistributionWidgetXAxis> = None;
                 let mut yaxis: Option<crate::datadogV1::model::DistributionWidgetYAxis> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -266,7 +281,11 @@ impl<'de> Deserialize<'de> for DistributionWidgetDefinition {
                             }
                             yaxis = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let requests = requests.ok_or_else(|| M::Error::missing_field("requests"))?;
@@ -286,6 +305,7 @@ impl<'de> Deserialize<'de> for DistributionWidgetDefinition {
                     type_,
                     xaxis,
                     yaxis,
+                    additional_properties,
                     _unparsed,
                 };
 

@@ -29,6 +29,8 @@ pub struct PartialAPIKeyAttributes {
     /// The remote config read enabled status.
     #[serde(rename = "remote_config_read_enabled")]
     pub remote_config_read_enabled: Option<bool>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -43,6 +45,7 @@ impl PartialAPIKeyAttributes {
             modified_at: None,
             name: None,
             remote_config_read_enabled: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -76,6 +79,14 @@ impl PartialAPIKeyAttributes {
         self.remote_config_read_enabled = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl Default for PartialAPIKeyAttributes {
@@ -107,6 +118,10 @@ impl<'de> Deserialize<'de> for PartialAPIKeyAttributes {
                 let mut modified_at: Option<String> = None;
                 let mut name: Option<String> = None;
                 let mut remote_config_read_enabled: Option<bool> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -149,7 +164,11 @@ impl<'de> Deserialize<'de> for PartialAPIKeyAttributes {
                             remote_config_read_enabled =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -160,6 +179,7 @@ impl<'de> Deserialize<'de> for PartialAPIKeyAttributes {
                     modified_at,
                     name,
                     remote_config_read_enabled,
+                    additional_properties,
                     _unparsed,
                 };
 

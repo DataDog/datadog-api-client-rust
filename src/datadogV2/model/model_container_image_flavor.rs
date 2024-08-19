@@ -26,6 +26,8 @@ pub struct ContainerImageFlavor {
     /// Size of the platform-specific Container Image.
     #[serde(rename = "size")]
     pub size: Option<i64>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -39,6 +41,7 @@ impl ContainerImageFlavor {
             os_name: None,
             os_version: None,
             size: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -65,6 +68,14 @@ impl ContainerImageFlavor {
 
     pub fn size(mut self, value: i64) -> Self {
         self.size = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -97,6 +108,10 @@ impl<'de> Deserialize<'de> for ContainerImageFlavor {
                 let mut os_name: Option<String> = None;
                 let mut os_version: Option<String> = None;
                 let mut size: Option<i64> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -132,7 +147,11 @@ impl<'de> Deserialize<'de> for ContainerImageFlavor {
                             }
                             size = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -142,6 +161,7 @@ impl<'de> Deserialize<'de> for ContainerImageFlavor {
                     os_name,
                     os_version,
                     size,
+                    additional_properties,
                     _unparsed,
                 };
 

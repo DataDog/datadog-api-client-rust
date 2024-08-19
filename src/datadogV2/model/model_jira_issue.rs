@@ -17,6 +17,8 @@ pub struct JiraIssue {
     /// Case status
     #[serde(rename = "status")]
     pub status: Option<crate::datadogV2::model::Case3rdPartyTicketStatus>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,6 +29,7 @@ impl JiraIssue {
         JiraIssue {
             result: None,
             status: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -38,6 +41,14 @@ impl JiraIssue {
 
     pub fn status(mut self, value: crate::datadogV2::model::Case3rdPartyTicketStatus) -> Self {
         self.status = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -67,6 +78,10 @@ impl<'de> Deserialize<'de> for JiraIssue {
             {
                 let mut result: Option<crate::datadogV2::model::JiraIssueResult> = None;
                 let mut status: Option<crate::datadogV2::model::Case3rdPartyTicketStatus> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -91,13 +106,18 @@ impl<'de> Deserialize<'de> for JiraIssue {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = JiraIssue {
                     result,
                     status,
+                    additional_properties,
                     _unparsed,
                 };
 

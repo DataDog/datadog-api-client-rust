@@ -24,6 +24,8 @@ pub struct SecurityMonitoringRuleCase {
     /// Severity of the Security Signal.
     #[serde(rename = "status")]
     pub status: Option<crate::datadogV2::model::SecurityMonitoringRuleSeverity>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -36,6 +38,7 @@ impl SecurityMonitoringRuleCase {
             name: None,
             notifications: None,
             status: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -60,6 +63,14 @@ impl SecurityMonitoringRuleCase {
         value: crate::datadogV2::model::SecurityMonitoringRuleSeverity,
     ) -> Self {
         self.status = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -92,6 +103,10 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleCase {
                 let mut notifications: Option<Vec<String>> = None;
                 let mut status: Option<crate::datadogV2::model::SecurityMonitoringRuleSeverity> =
                     None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -129,7 +144,11 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleCase {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -138,6 +157,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleCase {
                     name,
                     notifications,
                     status,
+                    additional_properties,
                     _unparsed,
                 };
 

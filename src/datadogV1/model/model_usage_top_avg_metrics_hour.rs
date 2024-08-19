@@ -23,6 +23,8 @@ pub struct UsageTopAvgMetricsHour {
     /// Contains the custom metric name.
     #[serde(rename = "metric_name")]
     pub metric_name: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -35,6 +37,7 @@ impl UsageTopAvgMetricsHour {
             max_metric_hour: None,
             metric_category: None,
             metric_name: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -56,6 +59,14 @@ impl UsageTopAvgMetricsHour {
 
     pub fn metric_name(mut self, value: String) -> Self {
         self.metric_name = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -88,6 +99,10 @@ impl<'de> Deserialize<'de> for UsageTopAvgMetricsHour {
                 let mut metric_category: Option<crate::datadogV1::model::UsageMetricCategory> =
                     None;
                 let mut metric_name: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -128,7 +143,11 @@ impl<'de> Deserialize<'de> for UsageTopAvgMetricsHour {
                             metric_name =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -137,6 +156,7 @@ impl<'de> Deserialize<'de> for UsageTopAvgMetricsHour {
                     max_metric_hour,
                     metric_category,
                     metric_name,
+                    additional_properties,
                     _unparsed,
                 };
 

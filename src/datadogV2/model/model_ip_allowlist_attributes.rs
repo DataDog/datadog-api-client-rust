@@ -17,6 +17,8 @@ pub struct IPAllowlistAttributes {
     /// Array of entries in the IP allowlist.
     #[serde(rename = "entries")]
     pub entries: Option<Vec<crate::datadogV2::model::IPAllowlistEntry>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,6 +29,7 @@ impl IPAllowlistAttributes {
         IPAllowlistAttributes {
             enabled: None,
             entries: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -38,6 +41,14 @@ impl IPAllowlistAttributes {
 
     pub fn entries(mut self, value: Vec<crate::datadogV2::model::IPAllowlistEntry>) -> Self {
         self.entries = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -67,6 +78,10 @@ impl<'de> Deserialize<'de> for IPAllowlistAttributes {
             {
                 let mut enabled: Option<bool> = None;
                 let mut entries: Option<Vec<crate::datadogV2::model::IPAllowlistEntry>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -83,13 +98,18 @@ impl<'de> Deserialize<'de> for IPAllowlistAttributes {
                             }
                             entries = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = IPAllowlistAttributes {
                     enabled,
                     entries,
+                    additional_properties,
                     _unparsed,
                 };
 

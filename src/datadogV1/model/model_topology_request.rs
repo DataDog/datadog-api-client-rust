@@ -17,6 +17,8 @@ pub struct TopologyRequest {
     /// Widget request type.
     #[serde(rename = "request_type")]
     pub request_type: Option<crate::datadogV1::model::TopologyRequestType>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,6 +29,7 @@ impl TopologyRequest {
         TopologyRequest {
             query: None,
             request_type: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -38,6 +41,14 @@ impl TopologyRequest {
 
     pub fn request_type(mut self, value: crate::datadogV1::model::TopologyRequestType) -> Self {
         self.request_type = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -67,6 +78,10 @@ impl<'de> Deserialize<'de> for TopologyRequest {
             {
                 let mut query: Option<crate::datadogV1::model::TopologyQuery> = None;
                 let mut request_type: Option<crate::datadogV1::model::TopologyRequestType> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -92,13 +107,18 @@ impl<'de> Deserialize<'de> for TopologyRequest {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = TopologyRequest {
                     query,
                     request_type,
+                    additional_properties,
                     _unparsed,
                 };
 

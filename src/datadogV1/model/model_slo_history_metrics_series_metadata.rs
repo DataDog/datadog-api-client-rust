@@ -32,6 +32,8 @@ pub struct SLOHistoryMetricsSeriesMetadata {
     #[serde(rename = "unit", default, with = "::serde_with::rust::double_option")]
     pub unit:
         Option<Option<Vec<Option<crate::datadogV1::model::SLOHistoryMetricsSeriesMetadataUnit>>>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -46,6 +48,7 @@ impl SLOHistoryMetricsSeriesMetadata {
             query_index: None,
             scope: None,
             unit: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -80,6 +83,14 @@ impl SLOHistoryMetricsSeriesMetadata {
         value: Option<Vec<Option<crate::datadogV1::model::SLOHistoryMetricsSeriesMetadataUnit>>>,
     ) -> Self {
         self.unit = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -117,6 +128,10 @@ impl<'de> Deserialize<'de> for SLOHistoryMetricsSeriesMetadata {
                         Vec<Option<crate::datadogV1::model::SLOHistoryMetricsSeriesMetadataUnit>>,
                     >,
                 > = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -155,7 +170,11 @@ impl<'de> Deserialize<'de> for SLOHistoryMetricsSeriesMetadata {
                         "unit" => {
                             unit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -166,6 +185,7 @@ impl<'de> Deserialize<'de> for SLOHistoryMetricsSeriesMetadata {
                     query_index,
                     scope,
                     unit,
+                    additional_properties,
                     _unparsed,
                 };
 

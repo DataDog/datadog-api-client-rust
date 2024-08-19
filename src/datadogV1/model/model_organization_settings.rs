@@ -48,6 +48,8 @@ pub struct OrganizationSettings {
     /// Has one property enabled (boolean).
     #[serde(rename = "saml_strict_mode")]
     pub saml_strict_mode: Option<crate::datadogV1::model::OrganizationSettingsSamlStrictMode>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -66,6 +68,7 @@ impl OrganizationSettings {
             saml_idp_metadata_uploaded: None,
             saml_login_url: None,
             saml_strict_mode: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -131,6 +134,14 @@ impl OrganizationSettings {
         self.saml_strict_mode = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl Default for OrganizationSettings {
@@ -174,6 +185,10 @@ impl<'de> Deserialize<'de> for OrganizationSettings {
                 let mut saml_strict_mode: Option<
                     crate::datadogV1::model::OrganizationSettingsSamlStrictMode,
                 > = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -256,7 +271,11 @@ impl<'de> Deserialize<'de> for OrganizationSettings {
                             saml_strict_mode =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -271,6 +290,7 @@ impl<'de> Deserialize<'de> for OrganizationSettings {
                     saml_idp_metadata_uploaded,
                     saml_login_url,
                     saml_strict_mode,
+                    additional_properties,
                     _unparsed,
                 };
 

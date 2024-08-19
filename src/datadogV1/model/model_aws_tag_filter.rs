@@ -17,6 +17,8 @@ pub struct AWSTagFilter {
     /// The tag filter string.
     #[serde(rename = "tag_filter_str")]
     pub tag_filter_str: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,6 +29,7 @@ impl AWSTagFilter {
         AWSTagFilter {
             namespace: None,
             tag_filter_str: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -38,6 +41,14 @@ impl AWSTagFilter {
 
     pub fn tag_filter_str(mut self, value: String) -> Self {
         self.tag_filter_str = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -67,6 +78,10 @@ impl<'de> Deserialize<'de> for AWSTagFilter {
             {
                 let mut namespace: Option<crate::datadogV1::model::AWSNamespace> = None;
                 let mut tag_filter_str: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -94,13 +109,18 @@ impl<'de> Deserialize<'de> for AWSTagFilter {
                             tag_filter_str =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = AWSTagFilter {
                     namespace,
                     tag_filter_str,
+                    additional_properties,
                     _unparsed,
                 };
 

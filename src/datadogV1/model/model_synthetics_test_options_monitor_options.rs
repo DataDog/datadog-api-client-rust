@@ -16,6 +16,8 @@ pub struct SyntheticsTestOptionsMonitorOptions {
     /// (in minutes).
     #[serde(rename = "renotify_interval")]
     pub renotify_interval: Option<i64>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -25,12 +27,21 @@ impl SyntheticsTestOptionsMonitorOptions {
     pub fn new() -> SyntheticsTestOptionsMonitorOptions {
         SyntheticsTestOptionsMonitorOptions {
             renotify_interval: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn renotify_interval(mut self, value: i64) -> Self {
         self.renotify_interval = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -59,6 +70,10 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptionsMonitorOptions {
                 M: MapAccess<'a>,
             {
                 let mut renotify_interval: Option<i64> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -70,12 +85,17 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptionsMonitorOptions {
                             renotify_interval =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = SyntheticsTestOptionsMonitorOptions {
                     renotify_interval,
+                    additional_properties,
                     _unparsed,
                 };
 

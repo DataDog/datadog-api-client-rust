@@ -26,6 +26,8 @@ pub struct PowerpackAttributes {
     /// List of template variables for this powerpack.
     #[serde(rename = "template_variables")]
     pub template_variables: Option<Vec<crate::datadogV2::model::PowerpackTemplateVariable>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -42,6 +44,7 @@ impl PowerpackAttributes {
             name,
             tags: None,
             template_variables: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -61,6 +64,14 @@ impl PowerpackAttributes {
         value: Vec<crate::datadogV2::model::PowerpackTemplateVariable>,
     ) -> Self {
         self.template_variables = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -89,6 +100,10 @@ impl<'de> Deserialize<'de> for PowerpackAttributes {
                 let mut template_variables: Option<
                     Vec<crate::datadogV2::model::PowerpackTemplateVariable>,
                 > = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -120,7 +135,11 @@ impl<'de> Deserialize<'de> for PowerpackAttributes {
                             template_variables =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let group_widget =
@@ -133,6 +152,7 @@ impl<'de> Deserialize<'de> for PowerpackAttributes {
                     name,
                     tags,
                     template_variables,
+                    additional_properties,
                     _unparsed,
                 };
 

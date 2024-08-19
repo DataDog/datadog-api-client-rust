@@ -17,6 +17,8 @@ pub struct MonthlyCostAttributionResponse {
     /// The object containing document metadata.
     #[serde(rename = "meta")]
     pub meta: Option<crate::datadogV2::model::MonthlyCostAttributionMeta>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,6 +29,7 @@ impl MonthlyCostAttributionResponse {
         MonthlyCostAttributionResponse {
             data: None,
             meta: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -38,6 +41,14 @@ impl MonthlyCostAttributionResponse {
 
     pub fn meta(mut self, value: crate::datadogV2::model::MonthlyCostAttributionMeta) -> Self {
         self.meta = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -68,6 +79,10 @@ impl<'de> Deserialize<'de> for MonthlyCostAttributionResponse {
                 let mut data: Option<Vec<crate::datadogV2::model::MonthlyCostAttributionBody>> =
                     None;
                 let mut meta: Option<crate::datadogV2::model::MonthlyCostAttributionMeta> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -84,13 +99,18 @@ impl<'de> Deserialize<'de> for MonthlyCostAttributionResponse {
                             }
                             meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = MonthlyCostAttributionResponse {
                     data,
                     meta,
+                    additional_properties,
                     _unparsed,
                 };
 

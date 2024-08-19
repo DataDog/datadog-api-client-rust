@@ -29,6 +29,8 @@ pub struct SyntheticsBrowserTestResultShort {
     /// * `2` for no data
     #[serde(rename = "status")]
     pub status: Option<crate::datadogV1::model::SyntheticsTestMonitorStatus>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -42,6 +44,7 @@ impl SyntheticsBrowserTestResultShort {
             result: None,
             result_id: None,
             status: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -71,6 +74,14 @@ impl SyntheticsBrowserTestResultShort {
 
     pub fn status(mut self, value: crate::datadogV1::model::SyntheticsTestMonitorStatus) -> Self {
         self.status = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -105,6 +116,10 @@ impl<'de> Deserialize<'de> for SyntheticsBrowserTestResultShort {
                 > = None;
                 let mut result_id: Option<String> = None;
                 let mut status: Option<crate::datadogV1::model::SyntheticsTestMonitorStatus> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -147,7 +162,11 @@ impl<'de> Deserialize<'de> for SyntheticsBrowserTestResultShort {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -157,6 +176,7 @@ impl<'de> Deserialize<'de> for SyntheticsBrowserTestResultShort {
                     result,
                     result_id,
                     status,
+                    additional_properties,
                     _unparsed,
                 };
 

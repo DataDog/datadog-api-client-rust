@@ -20,6 +20,8 @@ pub struct LogsMetricResponseData {
     /// The type of the resource. The value should always be logs_metrics.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::LogsMetricType>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -31,6 +33,7 @@ impl LogsMetricResponseData {
             attributes: None,
             id: None,
             type_: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -50,6 +53,14 @@ impl LogsMetricResponseData {
 
     pub fn type_(mut self, value: crate::datadogV2::model::LogsMetricType) -> Self {
         self.type_ = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -81,6 +92,10 @@ impl<'de> Deserialize<'de> for LogsMetricResponseData {
                     None;
                 let mut id: Option<String> = None;
                 let mut type_: Option<crate::datadogV2::model::LogsMetricType> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -113,7 +128,11 @@ impl<'de> Deserialize<'de> for LogsMetricResponseData {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -121,6 +140,7 @@ impl<'de> Deserialize<'de> for LogsMetricResponseData {
                     attributes,
                     id,
                     type_,
+                    additional_properties,
                     _unparsed,
                 };
 

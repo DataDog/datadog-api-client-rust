@@ -27,6 +27,8 @@ pub struct LogsAggregateRequest {
     /// Paging settings
     #[serde(rename = "page")]
     pub page: Option<crate::datadogV2::model::LogsAggregateRequestPage>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -40,6 +42,7 @@ impl LogsAggregateRequest {
             group_by: None,
             options: None,
             page: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -66,6 +69,14 @@ impl LogsAggregateRequest {
 
     pub fn page(mut self, value: crate::datadogV2::model::LogsAggregateRequestPage) -> Self {
         self.page = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -98,6 +109,10 @@ impl<'de> Deserialize<'de> for LogsAggregateRequest {
                 let mut group_by: Option<Vec<crate::datadogV2::model::LogsGroupBy>> = None;
                 let mut options: Option<crate::datadogV2::model::LogsQueryOptions> = None;
                 let mut page: Option<crate::datadogV2::model::LogsAggregateRequestPage> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -132,7 +147,11 @@ impl<'de> Deserialize<'de> for LogsAggregateRequest {
                             }
                             page = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -142,6 +161,7 @@ impl<'de> Deserialize<'de> for LogsAggregateRequest {
                     group_by,
                     options,
                     page,
+                    additional_properties,
                     _unparsed,
                 };
 

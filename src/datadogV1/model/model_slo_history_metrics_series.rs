@@ -24,6 +24,8 @@ pub struct SLOHistoryMetricsSeries {
     /// The query values for each metric.
     #[serde(rename = "values")]
     pub values: Vec<f64>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -36,6 +38,7 @@ impl SLOHistoryMetricsSeries {
             metadata: None,
             sum,
             values,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -45,6 +48,14 @@ impl SLOHistoryMetricsSeries {
         value: crate::datadogV1::model::SLOHistoryMetricsSeriesMetadata,
     ) -> Self {
         self.metadata = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -71,6 +82,10 @@ impl<'de> Deserialize<'de> for SLOHistoryMetricsSeries {
                     None;
                 let mut sum: Option<f64> = None;
                 let mut values: Option<Vec<f64>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -90,7 +105,11 @@ impl<'de> Deserialize<'de> for SLOHistoryMetricsSeries {
                         "values" => {
                             values = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let count = count.ok_or_else(|| M::Error::missing_field("count"))?;
@@ -102,6 +121,7 @@ impl<'de> Deserialize<'de> for SLOHistoryMetricsSeries {
                     metadata,
                     sum,
                     values,
+                    additional_properties,
                     _unparsed,
                 };
 

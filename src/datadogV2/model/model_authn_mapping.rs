@@ -23,6 +23,8 @@ pub struct AuthNMapping {
     /// AuthN Mappings resource type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::AuthNMappingsType,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -35,6 +37,7 @@ impl AuthNMapping {
             id,
             relationships: None,
             type_,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -49,6 +52,14 @@ impl AuthNMapping {
         value: crate::datadogV2::model::AuthNMappingRelationships,
     ) -> Self {
         self.relationships = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -75,6 +86,10 @@ impl<'de> Deserialize<'de> for AuthNMapping {
                 let mut relationships: Option<crate::datadogV2::model::AuthNMappingRelationships> =
                     None;
                 let mut type_: Option<crate::datadogV2::model::AuthNMappingsType> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -108,7 +123,11 @@ impl<'de> Deserialize<'de> for AuthNMapping {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
@@ -119,6 +138,7 @@ impl<'de> Deserialize<'de> for AuthNMapping {
                     id,
                     relationships,
                     type_,
+                    additional_properties,
                     _unparsed,
                 };
 

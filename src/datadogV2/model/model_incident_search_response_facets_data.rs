@@ -46,6 +46,8 @@ pub struct IncidentSearchResponseFacetsData {
     #[serde(rename = "time_to_resolve")]
     pub time_to_resolve:
         Option<Vec<crate::datadogV2::model::IncidentSearchResponseNumericFacetData>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -65,6 +67,7 @@ impl IncidentSearchResponseFacetsData {
             state: None,
             time_to_repair: None,
             time_to_resolve: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -156,6 +159,14 @@ impl IncidentSearchResponseFacetsData {
         self.time_to_resolve = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl Default for IncidentSearchResponseFacetsData {
@@ -214,6 +225,10 @@ impl<'de> Deserialize<'de> for IncidentSearchResponseFacetsData {
                 let mut time_to_resolve: Option<
                     Vec<crate::datadogV2::model::IncidentSearchResponseNumericFacetData>,
                 > = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -287,7 +302,11 @@ impl<'de> Deserialize<'de> for IncidentSearchResponseFacetsData {
                             time_to_resolve =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -303,6 +322,7 @@ impl<'de> Deserialize<'de> for IncidentSearchResponseFacetsData {
                     state,
                     time_to_repair,
                     time_to_resolve,
+                    additional_properties,
                     _unparsed,
                 };
 

@@ -17,6 +17,8 @@ pub struct AWSAccountAndLambdaRequest {
     /// ARN of the Datadog Lambda created during the Datadog-Amazon Web services Log collection setup.
     #[serde(rename = "lambda_arn")]
     pub lambda_arn: String,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,8 +29,17 @@ impl AWSAccountAndLambdaRequest {
         AWSAccountAndLambdaRequest {
             account_id,
             lambda_arn,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
     }
 }
 
@@ -51,6 +62,10 @@ impl<'de> Deserialize<'de> for AWSAccountAndLambdaRequest {
             {
                 let mut account_id: Option<String> = None;
                 let mut lambda_arn: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -61,7 +76,11 @@ impl<'de> Deserialize<'de> for AWSAccountAndLambdaRequest {
                         "lambda_arn" => {
                             lambda_arn = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let account_id = account_id.ok_or_else(|| M::Error::missing_field("account_id"))?;
@@ -70,6 +89,7 @@ impl<'de> Deserialize<'de> for AWSAccountAndLambdaRequest {
                 let content = AWSAccountAndLambdaRequest {
                     account_id,
                     lambda_arn,
+                    additional_properties,
                     _unparsed,
                 };
 

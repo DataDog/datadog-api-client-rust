@@ -38,6 +38,8 @@ pub struct SecurityMonitoringSignalTriageAttributes {
     /// Object representing a given user entity.
     #[serde(rename = "state_update_user")]
     pub state_update_user: Option<crate::datadogV2::model::SecurityMonitoringTriageUser>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -59,6 +61,7 @@ impl SecurityMonitoringSignalTriageAttributes {
             state,
             state_update_timestamp: None,
             state_update_user: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -101,6 +104,14 @@ impl SecurityMonitoringSignalTriageAttributes {
         self.state_update_user = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl<'de> Deserialize<'de> for SecurityMonitoringSignalTriageAttributes {
@@ -137,6 +148,10 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalTriageAttributes {
                 let mut state_update_user: Option<
                     crate::datadogV2::model::SecurityMonitoringTriageUser,
                 > = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -209,7 +224,11 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalTriageAttributes {
                             state_update_user =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let assignee = assignee.ok_or_else(|| M::Error::missing_field("assignee"))?;
@@ -227,6 +246,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalTriageAttributes {
                     state,
                     state_update_timestamp,
                     state_update_user,
+                    additional_properties,
                     _unparsed,
                 };
 

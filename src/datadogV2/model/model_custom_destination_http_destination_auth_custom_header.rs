@@ -20,6 +20,8 @@ pub struct CustomDestinationHttpDestinationAuthCustomHeader {
     /// Type of the custom header access authentication.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CustomDestinationHttpDestinationAuthCustomHeaderType,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -35,8 +37,17 @@ impl CustomDestinationHttpDestinationAuthCustomHeader {
             header_name,
             header_value,
             type_,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
     }
 }
 
@@ -62,6 +73,10 @@ impl<'de> Deserialize<'de> for CustomDestinationHttpDestinationAuthCustomHeader 
                 let mut type_: Option<
                     crate::datadogV2::model::CustomDestinationHttpDestinationAuthCustomHeaderType,
                 > = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -85,7 +100,11 @@ impl<'de> Deserialize<'de> for CustomDestinationHttpDestinationAuthCustomHeader 
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let header_name =
@@ -98,6 +117,7 @@ impl<'de> Deserialize<'de> for CustomDestinationHttpDestinationAuthCustomHeader 
                     header_name,
                     header_value,
                     type_,
+                    additional_properties,
                     _unparsed,
                 };
 

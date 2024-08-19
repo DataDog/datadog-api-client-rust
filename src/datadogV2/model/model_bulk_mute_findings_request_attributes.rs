@@ -56,7 +56,9 @@ impl<'de> Deserialize<'de> for BulkMuteFindingsRequestAttributes {
                         "mute" => {
                             mute = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            _unparsed = true;
+                        }
                     }
                 }
                 let mute = mute.ok_or_else(|| M::Error::missing_field("mute"))?;

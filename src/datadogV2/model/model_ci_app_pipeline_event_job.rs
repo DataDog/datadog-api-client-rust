@@ -93,6 +93,8 @@ pub struct CIAppPipelineEventJob {
     /// The URL to look at the job in the CI provider UI.
     #[serde(rename = "url")]
     pub url: String,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -130,6 +132,7 @@ impl CIAppPipelineEventJob {
             status,
             tags: None,
             url,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -183,6 +186,14 @@ impl CIAppPipelineEventJob {
         self.tags = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl<'de> Deserialize<'de> for CIAppPipelineEventJob {
@@ -222,6 +233,10 @@ impl<'de> Deserialize<'de> for CIAppPipelineEventJob {
                 let mut status: Option<crate::datadogV2::model::CIAppPipelineEventJobStatus> = None;
                 let mut tags: Option<Option<Vec<String>>> = None;
                 let mut url: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -302,7 +317,11 @@ impl<'de> Deserialize<'de> for CIAppPipelineEventJob {
                         "url" => {
                             url = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let end = end.ok_or_else(|| M::Error::missing_field("end"))?;
@@ -337,6 +356,7 @@ impl<'de> Deserialize<'de> for CIAppPipelineEventJob {
                     status,
                     tags,
                     url,
+                    additional_properties,
                     _unparsed,
                 };
 

@@ -29,6 +29,8 @@ pub struct UsageAttributesObject {
     /// Usage type that is being measured.
     #[serde(rename = "usage_type")]
     pub usage_type: Option<crate::datadogV2::model::HourlyUsageType>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -43,6 +45,7 @@ impl UsageAttributesObject {
             region: None,
             timeseries: None,
             usage_type: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -79,6 +82,14 @@ impl UsageAttributesObject {
         self.usage_type = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl Default for UsageAttributesObject {
@@ -111,6 +122,10 @@ impl<'de> Deserialize<'de> for UsageAttributesObject {
                 let mut timeseries: Option<Vec<crate::datadogV2::model::UsageTimeSeriesObject>> =
                     None;
                 let mut usage_type: Option<crate::datadogV2::model::HourlyUsageType> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -162,7 +177,11 @@ impl<'de> Deserialize<'de> for UsageAttributesObject {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -173,6 +192,7 @@ impl<'de> Deserialize<'de> for UsageAttributesObject {
                     region,
                     timeseries,
                     usage_type,
+                    additional_properties,
                     _unparsed,
                 };
 

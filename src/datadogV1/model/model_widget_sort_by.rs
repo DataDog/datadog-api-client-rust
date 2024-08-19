@@ -17,6 +17,8 @@ pub struct WidgetSortBy {
     /// The array of items to sort the widget by in order.
     #[serde(rename = "order_by")]
     pub order_by: Option<Vec<crate::datadogV1::model::WidgetSortOrderBy>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,6 +29,7 @@ impl WidgetSortBy {
         WidgetSortBy {
             count: None,
             order_by: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -38,6 +41,14 @@ impl WidgetSortBy {
 
     pub fn order_by(mut self, value: Vec<crate::datadogV1::model::WidgetSortOrderBy>) -> Self {
         self.order_by = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -67,6 +78,10 @@ impl<'de> Deserialize<'de> for WidgetSortBy {
             {
                 let mut count: Option<i64> = None;
                 let mut order_by: Option<Vec<crate::datadogV1::model::WidgetSortOrderBy>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -83,13 +98,18 @@ impl<'de> Deserialize<'de> for WidgetSortBy {
                             }
                             order_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = WidgetSortBy {
                     count,
                     order_by,
+                    additional_properties,
                     _unparsed,
                 };
 

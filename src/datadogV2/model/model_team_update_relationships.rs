@@ -14,6 +14,8 @@ pub struct TeamUpdateRelationships {
     /// Relationship between a team and a team link
     #[serde(rename = "team_links")]
     pub team_links: Option<crate::datadogV2::model::RelationshipToTeamLinks>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -23,12 +25,21 @@ impl TeamUpdateRelationships {
     pub fn new() -> TeamUpdateRelationships {
         TeamUpdateRelationships {
             team_links: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn team_links(mut self, value: crate::datadogV2::model::RelationshipToTeamLinks) -> Self {
         self.team_links = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -57,6 +68,10 @@ impl<'de> Deserialize<'de> for TeamUpdateRelationships {
                 M: MapAccess<'a>,
             {
                 let mut team_links: Option<crate::datadogV2::model::RelationshipToTeamLinks> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -67,12 +82,17 @@ impl<'de> Deserialize<'de> for TeamUpdateRelationships {
                             }
                             team_links = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = TeamUpdateRelationships {
                     team_links,
+                    additional_properties,
                     _unparsed,
                 };
 

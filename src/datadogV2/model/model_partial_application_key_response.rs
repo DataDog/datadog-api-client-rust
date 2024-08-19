@@ -17,6 +17,8 @@ pub struct PartialApplicationKeyResponse {
     /// Array of objects related to the application key.
     #[serde(rename = "included")]
     pub included: Option<Vec<crate::datadogV2::model::ApplicationKeyResponseIncludedItem>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,6 +29,7 @@ impl PartialApplicationKeyResponse {
         PartialApplicationKeyResponse {
             data: None,
             included: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -41,6 +44,14 @@ impl PartialApplicationKeyResponse {
         value: Vec<crate::datadogV2::model::ApplicationKeyResponseIncludedItem>,
     ) -> Self {
         self.included = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -72,6 +83,10 @@ impl<'de> Deserialize<'de> for PartialApplicationKeyResponse {
                 let mut included: Option<
                     Vec<crate::datadogV2::model::ApplicationKeyResponseIncludedItem>,
                 > = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -88,13 +103,18 @@ impl<'de> Deserialize<'de> for PartialApplicationKeyResponse {
                             }
                             included = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = PartialApplicationKeyResponse {
                     data,
                     included,
+                    additional_properties,
                     _unparsed,
                 };
 

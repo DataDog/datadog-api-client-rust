@@ -17,6 +17,8 @@ pub struct OktaAccountUpdateRequestData {
     /// Account type for an Okta account.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::OktaAccountType>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,6 +29,7 @@ impl OktaAccountUpdateRequestData {
         OktaAccountUpdateRequestData {
             attributes: None,
             type_: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -41,6 +44,14 @@ impl OktaAccountUpdateRequestData {
 
     pub fn type_(mut self, value: crate::datadogV2::model::OktaAccountType) -> Self {
         self.type_ = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -72,6 +83,10 @@ impl<'de> Deserialize<'de> for OktaAccountUpdateRequestData {
                     crate::datadogV2::model::OktaAccountUpdateRequestAttributes,
                 > = None;
                 let mut type_: Option<crate::datadogV2::model::OktaAccountType> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -98,13 +113,18 @@ impl<'de> Deserialize<'de> for OktaAccountUpdateRequestData {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = OktaAccountUpdateRequestData {
                     attributes,
                     type_,
+                    additional_properties,
                     _unparsed,
                 };
 

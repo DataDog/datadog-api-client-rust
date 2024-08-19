@@ -36,6 +36,8 @@ pub struct SyntheticsAPITestStep {
     /// The subtype of the Synthetic multi-step API test step.
     #[serde(rename = "subtype")]
     pub subtype: crate::datadogV1::model::SyntheticsAPITestStepSubtype,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -57,6 +59,7 @@ impl SyntheticsAPITestStep {
             request,
             retry: None,
             subtype,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -81,6 +84,14 @@ impl SyntheticsAPITestStep {
 
     pub fn retry(mut self, value: crate::datadogV1::model::SyntheticsTestOptionsRetry) -> Self {
         self.retry = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -114,6 +125,10 @@ impl<'de> Deserialize<'de> for SyntheticsAPITestStep {
                 let mut retry: Option<crate::datadogV1::model::SyntheticsTestOptionsRetry> = None;
                 let mut subtype: Option<crate::datadogV1::model::SyntheticsAPITestStepSubtype> =
                     None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -165,7 +180,11 @@ impl<'de> Deserialize<'de> for SyntheticsAPITestStep {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let assertions = assertions.ok_or_else(|| M::Error::missing_field("assertions"))?;
@@ -182,6 +201,7 @@ impl<'de> Deserialize<'de> for SyntheticsAPITestStep {
                     request,
                     retry,
                     subtype,
+                    additional_properties,
                     _unparsed,
                 };
 

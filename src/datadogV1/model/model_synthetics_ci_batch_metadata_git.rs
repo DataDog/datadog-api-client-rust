@@ -17,6 +17,8 @@ pub struct SyntheticsCIBatchMetadataGit {
     /// The commit SHA.
     #[serde(rename = "commitSha")]
     pub commit_sha: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,6 +29,7 @@ impl SyntheticsCIBatchMetadataGit {
         SyntheticsCIBatchMetadataGit {
             branch: None,
             commit_sha: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -38,6 +41,14 @@ impl SyntheticsCIBatchMetadataGit {
 
     pub fn commit_sha(mut self, value: String) -> Self {
         self.commit_sha = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -67,6 +78,10 @@ impl<'de> Deserialize<'de> for SyntheticsCIBatchMetadataGit {
             {
                 let mut branch: Option<String> = None;
                 let mut commit_sha: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -83,13 +98,18 @@ impl<'de> Deserialize<'de> for SyntheticsCIBatchMetadataGit {
                             }
                             commit_sha = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = SyntheticsCIBatchMetadataGit {
                     branch,
                     commit_sha,
+                    additional_properties,
                     _unparsed,
                 };
 

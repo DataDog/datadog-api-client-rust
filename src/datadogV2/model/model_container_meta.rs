@@ -14,6 +14,8 @@ pub struct ContainerMeta {
     /// Paging attributes.
     #[serde(rename = "pagination")]
     pub pagination: Option<crate::datadogV2::model::ContainerMetaPage>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -23,12 +25,21 @@ impl ContainerMeta {
     pub fn new() -> ContainerMeta {
         ContainerMeta {
             pagination: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn pagination(mut self, value: crate::datadogV2::model::ContainerMetaPage) -> Self {
         self.pagination = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -57,6 +68,10 @@ impl<'de> Deserialize<'de> for ContainerMeta {
                 M: MapAccess<'a>,
             {
                 let mut pagination: Option<crate::datadogV2::model::ContainerMetaPage> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -67,12 +82,17 @@ impl<'de> Deserialize<'de> for ContainerMeta {
                             }
                             pagination = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = ContainerMeta {
                     pagination,
+                    additional_properties,
                     _unparsed,
                 };
 

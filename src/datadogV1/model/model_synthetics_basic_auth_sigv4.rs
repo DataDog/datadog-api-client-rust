@@ -29,6 +29,8 @@ pub struct SyntheticsBasicAuthSigv4 {
     /// The type of authentication to use when performing the test.
     #[serde(rename = "type")]
     pub type_: crate::datadogV1::model::SyntheticsBasicAuthSigv4Type,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -47,6 +49,7 @@ impl SyntheticsBasicAuthSigv4 {
             service_name: None,
             session_token: None,
             type_,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -63,6 +66,14 @@ impl SyntheticsBasicAuthSigv4 {
 
     pub fn session_token(mut self, value: String) -> Self {
         self.session_token = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -90,6 +101,10 @@ impl<'de> Deserialize<'de> for SyntheticsBasicAuthSigv4 {
                 let mut service_name: Option<String> = None;
                 let mut session_token: Option<String> = None;
                 let mut type_: Option<crate::datadogV1::model::SyntheticsBasicAuthSigv4Type> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -131,7 +146,11 @@ impl<'de> Deserialize<'de> for SyntheticsBasicAuthSigv4 {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let access_key = access_key.ok_or_else(|| M::Error::missing_field("access_key"))?;
@@ -145,6 +164,7 @@ impl<'de> Deserialize<'de> for SyntheticsBasicAuthSigv4 {
                     service_name,
                     session_token,
                     type_,
+                    additional_properties,
                     _unparsed,
                 };
 

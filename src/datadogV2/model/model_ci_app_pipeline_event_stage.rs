@@ -76,6 +76,8 @@ pub struct CIAppPipelineEventStage {
     /// A list of user-defined tags. The tags must follow the `key:value` pattern.
     #[serde(rename = "tags", default, with = "::serde_with::rust::double_option")]
     pub tags: Option<Option<Vec<String>>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -109,6 +111,7 @@ impl CIAppPipelineEventStage {
             start,
             status,
             tags: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -152,6 +155,14 @@ impl CIAppPipelineEventStage {
         self.tags = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl<'de> Deserialize<'de> for CIAppPipelineEventStage {
@@ -189,6 +200,10 @@ impl<'de> Deserialize<'de> for CIAppPipelineEventStage {
                 let mut status: Option<crate::datadogV2::model::CIAppPipelineEventStageStatus> =
                     None;
                 let mut tags: Option<Option<Vec<String>>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -260,7 +275,11 @@ impl<'de> Deserialize<'de> for CIAppPipelineEventStage {
                         "tags" => {
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let end = end.ok_or_else(|| M::Error::missing_field("end"))?;
@@ -291,6 +310,7 @@ impl<'de> Deserialize<'de> for CIAppPipelineEventStage {
                     start,
                     status,
                     tags,
+                    additional_properties,
                     _unparsed,
                 };
 

@@ -18,6 +18,8 @@ pub struct MonitorOptionsSchedulingOptions {
     #[serde(rename = "evaluation_window")]
     pub evaluation_window:
         Option<crate::datadogV1::model::MonitorOptionsSchedulingOptionsEvaluationWindow>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -28,6 +30,7 @@ impl MonitorOptionsSchedulingOptions {
         MonitorOptionsSchedulingOptions {
             custom_schedule: None,
             evaluation_window: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -45,6 +48,14 @@ impl MonitorOptionsSchedulingOptions {
         value: crate::datadogV1::model::MonitorOptionsSchedulingOptionsEvaluationWindow,
     ) -> Self {
         self.evaluation_window = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -78,6 +89,10 @@ impl<'de> Deserialize<'de> for MonitorOptionsSchedulingOptions {
                 let mut evaluation_window: Option<
                     crate::datadogV1::model::MonitorOptionsSchedulingOptionsEvaluationWindow,
                 > = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -96,13 +111,18 @@ impl<'de> Deserialize<'de> for MonitorOptionsSchedulingOptions {
                             evaluation_window =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = MonitorOptionsSchedulingOptions {
                     custom_schedule,
                     evaluation_window,
+                    additional_properties,
                     _unparsed,
                 };
 

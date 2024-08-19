@@ -83,7 +83,9 @@ impl<'de> Deserialize<'de> for NotebookCellCreateRequest {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            _unparsed = true;
+                        }
                     }
                 }
                 let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;

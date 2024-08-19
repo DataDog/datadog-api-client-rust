@@ -21,6 +21,8 @@ pub struct SyntheticsPrivateLocationCreationResponse {
     #[serde(rename = "result_encryption")]
     pub result_encryption:
         Option<crate::datadogV1::model::SyntheticsPrivateLocationCreationResponseResultEncryption>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -32,6 +34,7 @@ impl SyntheticsPrivateLocationCreationResponse {
             config: None,
             private_location: None,
             result_encryption: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -54,6 +57,14 @@ impl SyntheticsPrivateLocationCreationResponse {
         value: crate::datadogV1::model::SyntheticsPrivateLocationCreationResponseResultEncryption,
     ) -> Self {
         self.result_encryption = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -87,6 +98,10 @@ impl<'de> Deserialize<'de> for SyntheticsPrivateLocationCreationResponse {
                     crate::datadogV1::model::SyntheticsPrivateLocation,
                 > = None;
                 let mut result_encryption: Option<crate::datadogV1::model::SyntheticsPrivateLocationCreationResponseResultEncryption> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -111,7 +126,11 @@ impl<'de> Deserialize<'de> for SyntheticsPrivateLocationCreationResponse {
                             result_encryption =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -119,6 +138,7 @@ impl<'de> Deserialize<'de> for SyntheticsPrivateLocationCreationResponse {
                     config,
                     private_location,
                     result_encryption,
+                    additional_properties,
                     _unparsed,
                 };
 

@@ -31,6 +31,8 @@ pub struct LogsGroupBy {
     /// A resulting object to put the given computes in over all the matching records.
     #[serde(rename = "total")]
     pub total: Option<crate::datadogV2::model::LogsGroupByTotal>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -45,6 +47,7 @@ impl LogsGroupBy {
             missing: None,
             sort: None,
             total: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -73,6 +76,14 @@ impl LogsGroupBy {
         self.total = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl<'de> Deserialize<'de> for LogsGroupBy {
@@ -98,6 +109,10 @@ impl<'de> Deserialize<'de> for LogsGroupBy {
                 let mut missing: Option<crate::datadogV2::model::LogsGroupByMissing> = None;
                 let mut sort: Option<crate::datadogV2::model::LogsAggregateSort> = None;
                 let mut total: Option<crate::datadogV2::model::LogsGroupByTotal> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -155,7 +170,11 @@ impl<'de> Deserialize<'de> for LogsGroupBy {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let facet = facet.ok_or_else(|| M::Error::missing_field("facet"))?;
@@ -167,6 +186,7 @@ impl<'de> Deserialize<'de> for LogsGroupBy {
                     missing,
                     sort,
                     total,
+                    additional_properties,
                     _unparsed,
                 };
 
