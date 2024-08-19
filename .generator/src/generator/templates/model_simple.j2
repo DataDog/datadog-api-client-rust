@@ -149,7 +149,7 @@ impl<'de> Deserialize<'de> for {{ name }} {
                                 additional_properties.insert(k, value);
                             }
                             {% else %}
-                            _unparsed = true;
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
                             {%- endif %}
                         },
                     }

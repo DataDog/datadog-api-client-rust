@@ -84,7 +84,9 @@ impl<'de> Deserialize<'de> for NotebookCellCreateRequest {
                             }
                         }
                         &_ => {
-                            _unparsed = true;
+                            return Err(serde::de::Error::custom(
+                                "Additional properties not allowed",
+                            ));
                         }
                     }
                 }

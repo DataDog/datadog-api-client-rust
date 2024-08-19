@@ -55,7 +55,9 @@ impl<'de> Deserialize<'de> for SLOTimeSliceSpec {
                             time_slice = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
-                            _unparsed = true;
+                            return Err(serde::de::Error::custom(
+                                "Additional properties not allowed",
+                            ));
                         }
                     }
                 }

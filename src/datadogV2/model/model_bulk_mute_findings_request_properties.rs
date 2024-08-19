@@ -111,7 +111,9 @@ impl<'de> Deserialize<'de> for BulkMuteFindingsRequestProperties {
                             }
                         }
                         &_ => {
-                            _unparsed = true;
+                            return Err(serde::de::Error::custom(
+                                "Additional properties not allowed",
+                            ));
                         }
                     }
                 }
