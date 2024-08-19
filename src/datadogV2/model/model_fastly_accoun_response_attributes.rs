@@ -11,9 +11,6 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct FastlyAccounResponseAttributes {
-    /// The FastlyAccounResponseAttributes api_key.
-    #[serde(rename = "api_key")]
-    pub api_key: Option<String>,
     /// The name of the Fastly account.
     #[serde(rename = "name")]
     pub name: String,
@@ -28,16 +25,10 @@ pub struct FastlyAccounResponseAttributes {
 impl FastlyAccounResponseAttributes {
     pub fn new(name: String) -> FastlyAccounResponseAttributes {
         FastlyAccounResponseAttributes {
-            api_key: None,
             name,
             services: None,
             _unparsed: false,
         }
-    }
-
-    pub fn api_key(mut self, value: String) -> Self {
-        self.api_key = Some(value);
-        self
     }
 
     pub fn services(mut self, value: Vec<crate::datadogV2::model::FastlyService>) -> Self {
@@ -63,19 +54,12 @@ impl<'de> Deserialize<'de> for FastlyAccounResponseAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut api_key: Option<String> = None;
                 let mut name: Option<String> = None;
                 let mut services: Option<Vec<crate::datadogV2::model::FastlyService>> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "api_key" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            api_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -91,7 +75,6 @@ impl<'de> Deserialize<'de> for FastlyAccounResponseAttributes {
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
 
                 let content = FastlyAccounResponseAttributes {
-                    api_key,
                     name,
                     services,
                     _unparsed,
