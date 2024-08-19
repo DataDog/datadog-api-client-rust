@@ -14,9 +14,6 @@ pub struct FastlyAccountUpdateRequestAttributes {
     /// The API key of the Fastly account.
     #[serde(rename = "api_key")]
     pub api_key: Option<String>,
-    /// The FastlyAccountUpdateRequestAttributes name.
-    #[serde(rename = "name")]
-    pub name: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -28,7 +25,6 @@ impl FastlyAccountUpdateRequestAttributes {
     pub fn new() -> FastlyAccountUpdateRequestAttributes {
         FastlyAccountUpdateRequestAttributes {
             api_key: None,
-            name: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -36,11 +32,6 @@ impl FastlyAccountUpdateRequestAttributes {
 
     pub fn api_key(mut self, value: String) -> Self {
         self.api_key = Some(value);
-        self
-    }
-
-    pub fn name(mut self, value: String) -> Self {
-        self.name = Some(value);
         self
     }
 
@@ -77,7 +68,6 @@ impl<'de> Deserialize<'de> for FastlyAccountUpdateRequestAttributes {
                 M: MapAccess<'a>,
             {
                 let mut api_key: Option<String> = None;
-                let mut name: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -92,12 +82,6 @@ impl<'de> Deserialize<'de> for FastlyAccountUpdateRequestAttributes {
                             }
                             api_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "name" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -108,7 +92,6 @@ impl<'de> Deserialize<'de> for FastlyAccountUpdateRequestAttributes {
 
                 let content = FastlyAccountUpdateRequestAttributes {
                     api_key,
-                    name,
                     additional_properties,
                     _unparsed,
                 };
