@@ -21,9 +21,6 @@ pub struct OpsgenieServiceResponseAttributes {
     /// The name for the Opsgenie service.
     #[serde(rename = "name")]
     pub name: Option<String>,
-    /// The OpsgenieServiceResponseAttributes opsgenie_api_key.
-    #[serde(rename = "opsgenie_api_key")]
-    pub opsgenie_api_key: Option<String>,
     /// The region for the Opsgenie service.
     #[serde(rename = "region")]
     pub region: Option<crate::datadogV2::model::OpsgenieServiceRegionType>,
@@ -37,7 +34,6 @@ impl OpsgenieServiceResponseAttributes {
         OpsgenieServiceResponseAttributes {
             custom_url: None,
             name: None,
-            opsgenie_api_key: None,
             region: None,
             _unparsed: false,
         }
@@ -50,11 +46,6 @@ impl OpsgenieServiceResponseAttributes {
 
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
-        self
-    }
-
-    pub fn opsgenie_api_key(mut self, value: String) -> Self {
-        self.opsgenie_api_key = Some(value);
         self
     }
 
@@ -89,7 +80,6 @@ impl<'de> Deserialize<'de> for OpsgenieServiceResponseAttributes {
             {
                 let mut custom_url: Option<Option<String>> = None;
                 let mut name: Option<String> = None;
-                let mut opsgenie_api_key: Option<String> = None;
                 let mut region: Option<crate::datadogV2::model::OpsgenieServiceRegionType> = None;
                 let mut _unparsed = false;
 
@@ -103,13 +93,6 @@ impl<'de> Deserialize<'de> for OpsgenieServiceResponseAttributes {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "opsgenie_api_key" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            opsgenie_api_key =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "region" => {
                             if v.is_null() {
@@ -132,7 +115,6 @@ impl<'de> Deserialize<'de> for OpsgenieServiceResponseAttributes {
                 let content = OpsgenieServiceResponseAttributes {
                     custom_url,
                     name,
-                    opsgenie_api_key,
                     region,
                     _unparsed,
                 };
