@@ -14,6 +14,8 @@ pub struct CIAppTestsAggregationBucketsResponse {
     /// The list of matching buckets, one item per bucket.
     #[serde(rename = "buckets")]
     pub buckets: Option<Vec<crate::datadogV2::model::CIAppTestsBucketResponse>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -23,6 +25,7 @@ impl CIAppTestsAggregationBucketsResponse {
     pub fn new() -> CIAppTestsAggregationBucketsResponse {
         CIAppTestsAggregationBucketsResponse {
             buckets: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -32,6 +35,14 @@ impl CIAppTestsAggregationBucketsResponse {
         value: Vec<crate::datadogV2::model::CIAppTestsBucketResponse>,
     ) -> Self {
         self.buckets = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -61,6 +72,10 @@ impl<'de> Deserialize<'de> for CIAppTestsAggregationBucketsResponse {
             {
                 let mut buckets: Option<Vec<crate::datadogV2::model::CIAppTestsBucketResponse>> =
                     None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -71,11 +86,19 @@ impl<'de> Deserialize<'de> for CIAppTestsAggregationBucketsResponse {
                             }
                             buckets = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
-                let content = CIAppTestsAggregationBucketsResponse { buckets, _unparsed };
+                let content = CIAppTestsAggregationBucketsResponse {
+                    buckets,
+                    additional_properties,
+                    _unparsed,
+                };
 
                 Ok(content)
             }

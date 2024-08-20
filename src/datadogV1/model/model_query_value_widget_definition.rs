@@ -47,6 +47,8 @@ pub struct QueryValueWidgetDefinition {
     /// Type of the query value widget.
     #[serde(rename = "type")]
     pub type_: crate::datadogV1::model::QueryValueWidgetDefinitionType,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -70,6 +72,7 @@ impl QueryValueWidgetDefinition {
             title_align: None,
             title_size: None,
             type_,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -126,6 +129,14 @@ impl QueryValueWidgetDefinition {
         self.title_size = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl<'de> Deserialize<'de> for QueryValueWidgetDefinition {
@@ -161,6 +172,10 @@ impl<'de> Deserialize<'de> for QueryValueWidgetDefinition {
                 let mut title_size: Option<String> = None;
                 let mut type_: Option<crate::datadogV1::model::QueryValueWidgetDefinitionType> =
                     None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -263,7 +278,11 @@ impl<'de> Deserialize<'de> for QueryValueWidgetDefinition {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let requests = requests.ok_or_else(|| M::Error::missing_field("requests"))?;
@@ -282,6 +301,7 @@ impl<'de> Deserialize<'de> for QueryValueWidgetDefinition {
                     title_align,
                     title_size,
                     type_,
+                    additional_properties,
                     _unparsed,
                 };
 

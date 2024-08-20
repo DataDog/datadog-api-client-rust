@@ -65,6 +65,8 @@ pub struct ContainerImageAttributes {
     /// Vulnerability counts associated with the Container Image.
     #[serde(rename = "vulnerability_count")]
     pub vulnerability_count: Option<crate::datadogV2::model::ContainerImageVulnerabilities>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -90,6 +92,7 @@ impl ContainerImageAttributes {
             sources: None,
             tags: None,
             vulnerability_count: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -184,6 +187,14 @@ impl ContainerImageAttributes {
         self.vulnerability_count = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl Default for ContainerImageAttributes {
@@ -229,6 +240,10 @@ impl<'de> Deserialize<'de> for ContainerImageAttributes {
                 let mut vulnerability_count: Option<
                     crate::datadogV2::model::ContainerImageVulnerabilities,
                 > = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -344,7 +359,11 @@ impl<'de> Deserialize<'de> for ContainerImageAttributes {
                             vulnerability_count =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -366,6 +385,7 @@ impl<'de> Deserialize<'de> for ContainerImageAttributes {
                     sources,
                     tags,
                     vulnerability_count,
+                    additional_properties,
                     _unparsed,
                 };
 

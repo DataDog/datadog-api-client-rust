@@ -14,6 +14,8 @@ pub struct ContainerGroupRelationshipsLinks {
     /// Link to related containers.
     #[serde(rename = "related")]
     pub related: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -23,12 +25,21 @@ impl ContainerGroupRelationshipsLinks {
     pub fn new() -> ContainerGroupRelationshipsLinks {
         ContainerGroupRelationshipsLinks {
             related: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn related(mut self, value: String) -> Self {
         self.related = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -57,6 +68,10 @@ impl<'de> Deserialize<'de> for ContainerGroupRelationshipsLinks {
                 M: MapAccess<'a>,
             {
                 let mut related: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -67,11 +82,19 @@ impl<'de> Deserialize<'de> for ContainerGroupRelationshipsLinks {
                             }
                             related = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
-                let content = ContainerGroupRelationshipsLinks { related, _unparsed };
+                let content = ContainerGroupRelationshipsLinks {
+                    related,
+                    additional_properties,
+                    _unparsed,
+                };
 
                 Ok(content)
             }

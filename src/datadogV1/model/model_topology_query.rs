@@ -20,6 +20,8 @@ pub struct TopologyQuery {
     /// Name of the service
     #[serde(rename = "service")]
     pub service: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -31,6 +33,7 @@ impl TopologyQuery {
             data_source: None,
             filters: None,
             service: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -47,6 +50,14 @@ impl TopologyQuery {
 
     pub fn service(mut self, value: String) -> Self {
         self.service = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -78,6 +89,10 @@ impl<'de> Deserialize<'de> for TopologyQuery {
                     None;
                 let mut filters: Option<Vec<String>> = None;
                 let mut service: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -109,7 +124,11 @@ impl<'de> Deserialize<'de> for TopologyQuery {
                             }
                             service = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -117,6 +136,7 @@ impl<'de> Deserialize<'de> for TopologyQuery {
                     data_source,
                     filters,
                     service,
+                    additional_properties,
                     _unparsed,
                 };
 

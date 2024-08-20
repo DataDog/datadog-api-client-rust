@@ -20,6 +20,8 @@ pub struct PowerpackGroupWidget {
     /// The available timeframes depend on the widget you are using.
     #[serde(rename = "live_span")]
     pub live_span: Option<crate::datadogV2::model::WidgetLiveSpan>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -33,6 +35,7 @@ impl PowerpackGroupWidget {
             definition,
             layout: None,
             live_span: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -44,6 +47,14 @@ impl PowerpackGroupWidget {
 
     pub fn live_span(mut self, value: crate::datadogV2::model::WidgetLiveSpan) -> Self {
         self.live_span = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -70,6 +81,10 @@ impl<'de> Deserialize<'de> for PowerpackGroupWidget {
                 > = None;
                 let mut layout: Option<crate::datadogV2::model::PowerpackGroupWidgetLayout> = None;
                 let mut live_span: Option<crate::datadogV2::model::WidgetLiveSpan> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -99,7 +114,11 @@ impl<'de> Deserialize<'de> for PowerpackGroupWidget {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let definition = definition.ok_or_else(|| M::Error::missing_field("definition"))?;
@@ -108,6 +127,7 @@ impl<'de> Deserialize<'de> for PowerpackGroupWidget {
                     definition,
                     layout,
                     live_span,
+                    additional_properties,
                     _unparsed,
                 };
 

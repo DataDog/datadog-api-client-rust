@@ -39,6 +39,8 @@ pub struct SLOHistoryMetrics {
     /// An array of query timestamps in EPOCH milliseconds.
     #[serde(rename = "times")]
     pub times: Vec<f64>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -63,12 +65,21 @@ impl SLOHistoryMetrics {
             res_type,
             resp_version,
             times,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn message(mut self, value: String) -> Self {
         self.message = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -99,6 +110,10 @@ impl<'de> Deserialize<'de> for SLOHistoryMetrics {
                 let mut res_type: Option<String> = None;
                 let mut resp_version: Option<i64> = None;
                 let mut times: Option<Vec<f64>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -132,7 +147,11 @@ impl<'de> Deserialize<'de> for SLOHistoryMetrics {
                         "times" => {
                             times = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let denominator =
@@ -154,6 +173,7 @@ impl<'de> Deserialize<'de> for SLOHistoryMetrics {
                     res_type,
                     resp_version,
                     times,
+                    additional_properties,
                     _unparsed,
                 };
 

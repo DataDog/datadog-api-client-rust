@@ -40,6 +40,8 @@ pub struct IncidentTodoAttributes {
     /// Timestamp when the incident todo was last modified.
     #[serde(rename = "modified")]
     pub modified: Option<chrono::DateTime<chrono::Utc>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -58,6 +60,7 @@ impl IncidentTodoAttributes {
             due_date: None,
             incident_id: None,
             modified: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -84,6 +87,14 @@ impl IncidentTodoAttributes {
 
     pub fn modified(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.modified = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -113,6 +124,10 @@ impl<'de> Deserialize<'de> for IncidentTodoAttributes {
                 let mut due_date: Option<Option<String>> = None;
                 let mut incident_id: Option<String> = None;
                 let mut modified: Option<chrono::DateTime<chrono::Utc>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -148,7 +163,11 @@ impl<'de> Deserialize<'de> for IncidentTodoAttributes {
                             }
                             modified = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let assignees = assignees.ok_or_else(|| M::Error::missing_field("assignees"))?;
@@ -162,6 +181,7 @@ impl<'de> Deserialize<'de> for IncidentTodoAttributes {
                     due_date,
                     incident_id,
                     modified,
+                    additional_properties,
                     _unparsed,
                 };
 

@@ -14,6 +14,8 @@ pub struct CloudWorkloadSecurityAgentRuleKill {
     /// Supported signals for the kill system call.
     #[serde(rename = "signal")]
     pub signal: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -23,12 +25,21 @@ impl CloudWorkloadSecurityAgentRuleKill {
     pub fn new() -> CloudWorkloadSecurityAgentRuleKill {
         CloudWorkloadSecurityAgentRuleKill {
             signal: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn signal(mut self, value: String) -> Self {
         self.signal = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -57,6 +68,10 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleKill {
                 M: MapAccess<'a>,
             {
                 let mut signal: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -67,11 +82,19 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleKill {
                             }
                             signal = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
-                let content = CloudWorkloadSecurityAgentRuleKill { signal, _unparsed };
+                let content = CloudWorkloadSecurityAgentRuleKill {
+                    signal,
+                    additional_properties,
+                    _unparsed,
+                };
 
                 Ok(content)
             }

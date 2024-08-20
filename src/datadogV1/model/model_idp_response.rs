@@ -14,6 +14,8 @@ pub struct IdpResponse {
     /// Identity provider response.
     #[serde(rename = "message")]
     pub message: String,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -23,8 +25,17 @@ impl IdpResponse {
     pub fn new(message: String) -> IdpResponse {
         IdpResponse {
             message,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
     }
 }
 
@@ -46,6 +57,10 @@ impl<'de> Deserialize<'de> for IdpResponse {
                 M: MapAccess<'a>,
             {
                 let mut message: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -53,12 +68,20 @@ impl<'de> Deserialize<'de> for IdpResponse {
                         "message" => {
                             message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let message = message.ok_or_else(|| M::Error::missing_field("message"))?;
 
-                let content = IdpResponse { message, _unparsed };
+                let content = IdpResponse {
+                    message,
+                    additional_properties,
+                    _unparsed,
+                };
 
                 Ok(content)
             }

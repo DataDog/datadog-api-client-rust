@@ -45,6 +45,8 @@ pub struct LogsAttributeRemapper {
     /// Type of logs attribute remapper.
     #[serde(rename = "type")]
     pub type_: crate::datadogV1::model::LogsAttributeRemapperType,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -67,6 +69,7 @@ impl LogsAttributeRemapper {
             target_format: None,
             target_type: None,
             type_,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -105,6 +108,14 @@ impl LogsAttributeRemapper {
         self.target_type = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl<'de> Deserialize<'de> for LogsAttributeRemapper {
@@ -134,6 +145,10 @@ impl<'de> Deserialize<'de> for LogsAttributeRemapper {
                 let mut target_format: Option<crate::datadogV1::model::TargetFormatType> = None;
                 let mut target_type: Option<String> = None;
                 let mut type_: Option<crate::datadogV1::model::LogsAttributeRemapperType> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -212,7 +227,11 @@ impl<'de> Deserialize<'de> for LogsAttributeRemapper {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let sources = sources.ok_or_else(|| M::Error::missing_field("sources"))?;
@@ -230,6 +249,7 @@ impl<'de> Deserialize<'de> for LogsAttributeRemapper {
                     target_format,
                     target_type,
                     type_,
+                    additional_properties,
                     _unparsed,
                 };
 

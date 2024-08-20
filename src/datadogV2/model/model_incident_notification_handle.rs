@@ -17,6 +17,8 @@ pub struct IncidentNotificationHandle {
     /// The email address used for the notification.
     #[serde(rename = "handle")]
     pub handle: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,6 +29,7 @@ impl IncidentNotificationHandle {
         IncidentNotificationHandle {
             display_name: None,
             handle: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -38,6 +41,14 @@ impl IncidentNotificationHandle {
 
     pub fn handle(mut self, value: String) -> Self {
         self.handle = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -67,6 +78,10 @@ impl<'de> Deserialize<'de> for IncidentNotificationHandle {
             {
                 let mut display_name: Option<String> = None;
                 let mut handle: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -84,13 +99,18 @@ impl<'de> Deserialize<'de> for IncidentNotificationHandle {
                             }
                             handle = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = IncidentNotificationHandle {
                     display_name,
                     handle,
+                    additional_properties,
                     _unparsed,
                 };
 

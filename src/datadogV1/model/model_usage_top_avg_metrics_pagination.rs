@@ -28,6 +28,8 @@ pub struct UsageTopAvgMetricsPagination {
         with = "::serde_with::rust::double_option"
     )]
     pub total_number_of_records: Option<Option<i64>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -39,6 +41,7 @@ impl UsageTopAvgMetricsPagination {
             limit: None,
             next_record_id: None,
             total_number_of_records: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -55,6 +58,14 @@ impl UsageTopAvgMetricsPagination {
 
     pub fn total_number_of_records(mut self, value: Option<i64>) -> Self {
         self.total_number_of_records = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -85,6 +96,10 @@ impl<'de> Deserialize<'de> for UsageTopAvgMetricsPagination {
                 let mut limit: Option<i64> = None;
                 let mut next_record_id: Option<Option<String>> = None;
                 let mut total_number_of_records: Option<Option<i64>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -103,7 +118,11 @@ impl<'de> Deserialize<'de> for UsageTopAvgMetricsPagination {
                             total_number_of_records =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -111,6 +130,7 @@ impl<'de> Deserialize<'de> for UsageTopAvgMetricsPagination {
                     limit,
                     next_record_id,
                     total_number_of_records,
+                    additional_properties,
                     _unparsed,
                 };
 

@@ -17,6 +17,8 @@ pub struct APIKeysResponseMeta {
     /// Additional information related to the API keys response.
     #[serde(rename = "page")]
     pub page: Option<crate::datadogV2::model::APIKeysResponseMetaPage>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,6 +29,7 @@ impl APIKeysResponseMeta {
         APIKeysResponseMeta {
             max_allowed: None,
             page: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -38,6 +41,14 @@ impl APIKeysResponseMeta {
 
     pub fn page(mut self, value: crate::datadogV2::model::APIKeysResponseMetaPage) -> Self {
         self.page = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -67,6 +78,10 @@ impl<'de> Deserialize<'de> for APIKeysResponseMeta {
             {
                 let mut max_allowed: Option<i64> = None;
                 let mut page: Option<crate::datadogV2::model::APIKeysResponseMetaPage> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -84,13 +99,18 @@ impl<'de> Deserialize<'de> for APIKeysResponseMeta {
                             }
                             page = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = APIKeysResponseMeta {
                     max_allowed,
                     page,
+                    additional_properties,
                     _unparsed,
                 };
 

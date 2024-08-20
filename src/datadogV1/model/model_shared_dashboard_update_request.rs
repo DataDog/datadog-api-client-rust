@@ -44,6 +44,8 @@ pub struct SharedDashboardUpdateRequest {
         with = "::serde_with::rust::double_option"
     )]
     pub share_type: Option<Option<crate::datadogV1::model::DashboardShareType>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -59,6 +61,7 @@ impl SharedDashboardUpdateRequest {
             selectable_template_vars: None,
             share_list: None,
             share_type: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -86,6 +89,14 @@ impl SharedDashboardUpdateRequest {
         value: Option<crate::datadogV1::model::DashboardShareType>,
     ) -> Self {
         self.share_type = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -117,6 +128,10 @@ impl<'de> Deserialize<'de> for SharedDashboardUpdateRequest {
                 let mut share_list: Option<Option<Vec<String>>> = None;
                 let mut share_type: Option<Option<crate::datadogV1::model::DashboardShareType>> =
                     None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -151,7 +166,11 @@ impl<'de> Deserialize<'de> for SharedDashboardUpdateRequest {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let global_time =
@@ -163,6 +182,7 @@ impl<'de> Deserialize<'de> for SharedDashboardUpdateRequest {
                     selectable_template_vars,
                     share_list,
                     share_type,
+                    additional_properties,
                     _unparsed,
                 };
 

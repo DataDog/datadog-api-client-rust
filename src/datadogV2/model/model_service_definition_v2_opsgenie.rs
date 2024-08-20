@@ -17,6 +17,8 @@ pub struct ServiceDefinitionV2Opsgenie {
     /// Opsgenie service url.
     #[serde(rename = "service-url")]
     pub service_url: String,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,6 +29,7 @@ impl ServiceDefinitionV2Opsgenie {
         ServiceDefinitionV2Opsgenie {
             region: None,
             service_url,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -36,6 +39,14 @@ impl ServiceDefinitionV2Opsgenie {
         value: crate::datadogV2::model::ServiceDefinitionV2OpsgenieRegion,
     ) -> Self {
         self.region = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -60,6 +71,10 @@ impl<'de> Deserialize<'de> for ServiceDefinitionV2Opsgenie {
                 let mut region: Option<crate::datadogV2::model::ServiceDefinitionV2OpsgenieRegion> =
                     None;
                 let mut service_url: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -82,7 +97,11 @@ impl<'de> Deserialize<'de> for ServiceDefinitionV2Opsgenie {
                             service_url =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let service_url =
@@ -91,6 +110,7 @@ impl<'de> Deserialize<'de> for ServiceDefinitionV2Opsgenie {
                 let content = ServiceDefinitionV2Opsgenie {
                     region,
                     service_url,
+                    additional_properties,
                     _unparsed,
                 };
 

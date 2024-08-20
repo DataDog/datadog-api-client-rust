@@ -26,6 +26,8 @@ pub struct SyntheticsDevice {
     /// Screen width of the device.
     #[serde(rename = "width")]
     pub width: i64,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -44,12 +46,21 @@ impl SyntheticsDevice {
             is_mobile: None,
             name,
             width,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn is_mobile(mut self, value: bool) -> Self {
         self.is_mobile = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -76,6 +87,10 @@ impl<'de> Deserialize<'de> for SyntheticsDevice {
                 let mut is_mobile: Option<bool> = None;
                 let mut name: Option<String> = None;
                 let mut width: Option<i64> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -108,7 +123,11 @@ impl<'de> Deserialize<'de> for SyntheticsDevice {
                         "width" => {
                             width = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let height = height.ok_or_else(|| M::Error::missing_field("height"))?;
@@ -122,6 +141,7 @@ impl<'de> Deserialize<'de> for SyntheticsDevice {
                     is_mobile,
                     name,
                     width,
+                    additional_properties,
                     _unparsed,
                 };
 

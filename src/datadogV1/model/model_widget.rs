@@ -25,6 +25,8 @@ pub struct Widget {
     /// The layout for a widget on a `free` or **new dashboard layout** dashboard.
     #[serde(rename = "layout")]
     pub layout: Option<crate::datadogV1::model::WidgetLayout>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -36,6 +38,7 @@ impl Widget {
             definition,
             id: None,
             layout: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -47,6 +50,14 @@ impl Widget {
 
     pub fn layout(mut self, value: crate::datadogV1::model::WidgetLayout) -> Self {
         self.layout = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -71,6 +82,10 @@ impl<'de> Deserialize<'de> for Widget {
                 let mut definition: Option<crate::datadogV1::model::WidgetDefinition> = None;
                 let mut id: Option<i64> = None;
                 let mut layout: Option<crate::datadogV1::model::WidgetLayout> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -100,7 +115,11 @@ impl<'de> Deserialize<'de> for Widget {
                             }
                             layout = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let definition = definition.ok_or_else(|| M::Error::missing_field("definition"))?;
@@ -109,6 +128,7 @@ impl<'de> Deserialize<'de> for Widget {
                     definition,
                     id,
                     layout,
+                    additional_properties,
                     _unparsed,
                 };
 

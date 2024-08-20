@@ -29,6 +29,8 @@ pub struct UserTeamAttributes {
     /// The user's role within the team
     #[serde(rename = "role", default, with = "::serde_with::rust::double_option")]
     pub role: Option<Option<crate::datadogV2::model::UserTeamRole>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -40,6 +42,7 @@ impl UserTeamAttributes {
             provisioned_by: None,
             provisioned_by_id: None,
             role: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -56,6 +59,14 @@ impl UserTeamAttributes {
 
     pub fn role(mut self, value: Option<crate::datadogV2::model::UserTeamRole>) -> Self {
         self.role = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -86,6 +97,10 @@ impl<'de> Deserialize<'de> for UserTeamAttributes {
                 let mut provisioned_by: Option<Option<String>> = None;
                 let mut provisioned_by_id: Option<Option<String>> = None;
                 let mut role: Option<Option<crate::datadogV2::model::UserTeamRole>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -113,7 +128,11 @@ impl<'de> Deserialize<'de> for UserTeamAttributes {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -121,6 +140,7 @@ impl<'de> Deserialize<'de> for UserTeamAttributes {
                     provisioned_by,
                     provisioned_by_id,
                     role,
+                    additional_properties,
                     _unparsed,
                 };
 

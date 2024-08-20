@@ -14,6 +14,8 @@ pub struct WorkflowInstanceCreateRequest {
     /// Additional information for creating a workflow instance.
     #[serde(rename = "meta")]
     pub meta: Option<crate::datadogV2::model::WorkflowInstanceCreateMeta>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -23,12 +25,21 @@ impl WorkflowInstanceCreateRequest {
     pub fn new() -> WorkflowInstanceCreateRequest {
         WorkflowInstanceCreateRequest {
             meta: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn meta(mut self, value: crate::datadogV2::model::WorkflowInstanceCreateMeta) -> Self {
         self.meta = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -57,6 +68,10 @@ impl<'de> Deserialize<'de> for WorkflowInstanceCreateRequest {
                 M: MapAccess<'a>,
             {
                 let mut meta: Option<crate::datadogV2::model::WorkflowInstanceCreateMeta> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -67,11 +82,19 @@ impl<'de> Deserialize<'de> for WorkflowInstanceCreateRequest {
                             }
                             meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
-                let content = WorkflowInstanceCreateRequest { meta, _unparsed };
+                let content = WorkflowInstanceCreateRequest {
+                    meta,
+                    additional_properties,
+                    _unparsed,
+                };
 
                 Ok(content)
             }

@@ -26,6 +26,8 @@ pub struct FormulaAndFunctionMetricQueryDefinition {
     /// Metrics query definition.
     #[serde(rename = "query")]
     pub query: String,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -43,6 +45,7 @@ impl FormulaAndFunctionMetricQueryDefinition {
             data_source,
             name,
             query,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -57,6 +60,14 @@ impl FormulaAndFunctionMetricQueryDefinition {
 
     pub fn cross_org_uuids(mut self, value: Vec<String>) -> Self {
         self.cross_org_uuids = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -87,6 +98,10 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionMetricQueryDefinition {
                 > = None;
                 let mut name: Option<String> = None;
                 let mut query: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -130,7 +145,11 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionMetricQueryDefinition {
                         "query" => {
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let data_source =
@@ -144,6 +163,7 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionMetricQueryDefinition {
                     data_source,
                     name,
                     query,
+                    additional_properties,
                     _unparsed,
                 };
 

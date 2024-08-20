@@ -20,6 +20,8 @@ pub struct IncidentSearchResponseAttributes {
     /// Number of incidents returned by the search.
     #[serde(rename = "total")]
     pub total: i32,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -35,8 +37,17 @@ impl IncidentSearchResponseAttributes {
             facets,
             incidents,
             total,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
     }
 }
 
@@ -63,6 +74,10 @@ impl<'de> Deserialize<'de> for IncidentSearchResponseAttributes {
                     Vec<crate::datadogV2::model::IncidentSearchResponseIncidentsData>,
                 > = None;
                 let mut total: Option<i32> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -76,7 +91,11 @@ impl<'de> Deserialize<'de> for IncidentSearchResponseAttributes {
                         "total" => {
                             total = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let facets = facets.ok_or_else(|| M::Error::missing_field("facets"))?;
@@ -87,6 +106,7 @@ impl<'de> Deserialize<'de> for IncidentSearchResponseAttributes {
                     facets,
                     incidents,
                     total,
+                    additional_properties,
                     _unparsed,
                 };
 

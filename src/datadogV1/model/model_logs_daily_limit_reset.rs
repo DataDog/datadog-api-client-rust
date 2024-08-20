@@ -17,6 +17,8 @@ pub struct LogsDailyLimitReset {
     /// String in `(-|+)HH:00` format representing the UTC offset to apply to the given reset time. The hours must be between -12 and +14 (inclusive).
     #[serde(rename = "reset_utc_offset")]
     pub reset_utc_offset: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,6 +29,7 @@ impl LogsDailyLimitReset {
         LogsDailyLimitReset {
             reset_time: None,
             reset_utc_offset: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -38,6 +41,14 @@ impl LogsDailyLimitReset {
 
     pub fn reset_utc_offset(mut self, value: String) -> Self {
         self.reset_utc_offset = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -67,6 +78,10 @@ impl<'de> Deserialize<'de> for LogsDailyLimitReset {
             {
                 let mut reset_time: Option<String> = None;
                 let mut reset_utc_offset: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -84,13 +99,18 @@ impl<'de> Deserialize<'de> for LogsDailyLimitReset {
                             reset_utc_offset =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = LogsDailyLimitReset {
                     reset_time,
                     reset_utc_offset,
+                    additional_properties,
                     _unparsed,
                 };
 

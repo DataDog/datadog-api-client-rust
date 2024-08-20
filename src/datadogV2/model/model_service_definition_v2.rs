@@ -44,6 +44,8 @@ pub struct ServiceDefinitionV2 {
     /// Team that owns the service.
     #[serde(rename = "team")]
     pub team: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -66,6 +68,7 @@ impl ServiceDefinitionV2 {
             schema_version,
             tags: None,
             team: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -123,6 +126,14 @@ impl ServiceDefinitionV2 {
         self.team = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl<'de> Deserialize<'de> for ServiceDefinitionV2 {
@@ -159,6 +170,10 @@ impl<'de> Deserialize<'de> for ServiceDefinitionV2 {
                 > = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut team: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -233,7 +248,11 @@ impl<'de> Deserialize<'de> for ServiceDefinitionV2 {
                             }
                             team = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let dd_service = dd_service.ok_or_else(|| M::Error::missing_field("dd_service"))?;
@@ -252,6 +271,7 @@ impl<'de> Deserialize<'de> for ServiceDefinitionV2 {
                     schema_version,
                     tags,
                     team,
+                    additional_properties,
                     _unparsed,
                 };
 

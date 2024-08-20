@@ -24,6 +24,8 @@ pub struct SecurityMonitoringRuleCaseCreate {
     /// Severity of the Security Signal.
     #[serde(rename = "status")]
     pub status: crate::datadogV2::model::SecurityMonitoringRuleSeverity,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -38,6 +40,7 @@ impl SecurityMonitoringRuleCaseCreate {
             name: None,
             notifications: None,
             status,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -54,6 +57,14 @@ impl SecurityMonitoringRuleCaseCreate {
 
     pub fn notifications(mut self, value: Vec<String>) -> Self {
         self.notifications = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -80,6 +91,10 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleCaseCreate {
                 let mut notifications: Option<Vec<String>> = None;
                 let mut status: Option<crate::datadogV2::model::SecurityMonitoringRuleSeverity> =
                     None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -114,7 +129,11 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleCaseCreate {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let status = status.ok_or_else(|| M::Error::missing_field("status"))?;
@@ -124,6 +143,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleCaseCreate {
                     name,
                     notifications,
                     status,
+                    additional_properties,
                     _unparsed,
                 };
 

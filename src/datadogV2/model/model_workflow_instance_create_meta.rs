@@ -14,6 +14,8 @@ pub struct WorkflowInstanceCreateMeta {
     /// The input parameters to the workflow.
     #[serde(rename = "payload")]
     pub payload: Option<std::collections::BTreeMap<String, serde_json::Value>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -23,12 +25,21 @@ impl WorkflowInstanceCreateMeta {
     pub fn new() -> WorkflowInstanceCreateMeta {
         WorkflowInstanceCreateMeta {
             payload: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn payload(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.payload = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -58,6 +69,10 @@ impl<'de> Deserialize<'de> for WorkflowInstanceCreateMeta {
             {
                 let mut payload: Option<std::collections::BTreeMap<String, serde_json::Value>> =
                     None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -68,11 +83,19 @@ impl<'de> Deserialize<'de> for WorkflowInstanceCreateMeta {
                             }
                             payload = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
-                let content = WorkflowInstanceCreateMeta { payload, _unparsed };
+                let content = WorkflowInstanceCreateMeta {
+                    payload,
+                    additional_properties,
+                    _unparsed,
+                };
 
                 Ok(content)
             }

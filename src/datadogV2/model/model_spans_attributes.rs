@@ -64,6 +64,8 @@ pub struct SpansAttributes {
     /// The type of the span.
     #[serde(rename = "type")]
     pub type_: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -89,6 +91,7 @@ impl SpansAttributes {
             tags: None,
             trace_id: None,
             type_: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -180,6 +183,14 @@ impl SpansAttributes {
         self.type_ = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl Default for SpansAttributes {
@@ -224,6 +235,10 @@ impl<'de> Deserialize<'de> for SpansAttributes {
                 let mut tags: Option<Vec<String>> = None;
                 let mut trace_id: Option<String> = None;
                 let mut type_: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -337,7 +352,11 @@ impl<'de> Deserialize<'de> for SpansAttributes {
                             }
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -359,6 +378,7 @@ impl<'de> Deserialize<'de> for SpansAttributes {
                     tags,
                     trace_id,
                     type_,
+                    additional_properties,
                     _unparsed,
                 };
 

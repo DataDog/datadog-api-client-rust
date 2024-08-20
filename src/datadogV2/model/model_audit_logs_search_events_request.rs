@@ -24,6 +24,8 @@ pub struct AuditLogsSearchEventsRequest {
     /// Sort parameters when querying events.
     #[serde(rename = "sort")]
     pub sort: Option<crate::datadogV2::model::AuditLogsSort>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -36,6 +38,7 @@ impl AuditLogsSearchEventsRequest {
             options: None,
             page: None,
             sort: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -57,6 +60,14 @@ impl AuditLogsSearchEventsRequest {
 
     pub fn sort(mut self, value: crate::datadogV2::model::AuditLogsSort) -> Self {
         self.sort = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -88,6 +99,10 @@ impl<'de> Deserialize<'de> for AuditLogsSearchEventsRequest {
                 let mut options: Option<crate::datadogV2::model::AuditLogsQueryOptions> = None;
                 let mut page: Option<crate::datadogV2::model::AuditLogsQueryPageOptions> = None;
                 let mut sort: Option<crate::datadogV2::model::AuditLogsSort> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -126,7 +141,11 @@ impl<'de> Deserialize<'de> for AuditLogsSearchEventsRequest {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -135,6 +154,7 @@ impl<'de> Deserialize<'de> for AuditLogsSearchEventsRequest {
                     options,
                     page,
                     sort,
+                    additional_properties,
                     _unparsed,
                 };
 

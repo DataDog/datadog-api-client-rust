@@ -35,6 +35,8 @@ pub struct TableWidgetDefinition {
     /// Type of the table widget.
     #[serde(rename = "type")]
     pub type_: crate::datadogV1::model::TableWidgetDefinitionType,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -54,6 +56,7 @@ impl TableWidgetDefinition {
             title_align: None,
             title_size: None,
             type_,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -90,6 +93,14 @@ impl TableWidgetDefinition {
         self.title_size = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl<'de> Deserialize<'de> for TableWidgetDefinition {
@@ -118,6 +129,10 @@ impl<'de> Deserialize<'de> for TableWidgetDefinition {
                 let mut title_align: Option<crate::datadogV1::model::WidgetTextAlign> = None;
                 let mut title_size: Option<String> = None;
                 let mut type_: Option<crate::datadogV1::model::TableWidgetDefinitionType> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -193,7 +208,11 @@ impl<'de> Deserialize<'de> for TableWidgetDefinition {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let requests = requests.ok_or_else(|| M::Error::missing_field("requests"))?;
@@ -208,6 +227,7 @@ impl<'de> Deserialize<'de> for TableWidgetDefinition {
                     title_align,
                     title_size,
                     type_,
+                    additional_properties,
                     _unparsed,
                 };
 

@@ -21,6 +21,8 @@ pub struct EventsGroupBy {
     /// The dimension by which to sort a query's results.
     #[serde(rename = "sort")]
     pub sort: Option<crate::datadogV2::model::EventsGroupBySort>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -32,6 +34,7 @@ impl EventsGroupBy {
             facet,
             limit: None,
             sort: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -43,6 +46,14 @@ impl EventsGroupBy {
 
     pub fn sort(mut self, value: crate::datadogV2::model::EventsGroupBySort) -> Self {
         self.sort = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -67,6 +78,10 @@ impl<'de> Deserialize<'de> for EventsGroupBy {
                 let mut facet: Option<String> = None;
                 let mut limit: Option<i32> = None;
                 let mut sort: Option<crate::datadogV2::model::EventsGroupBySort> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -86,7 +101,11 @@ impl<'de> Deserialize<'de> for EventsGroupBy {
                             }
                             sort = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let facet = facet.ok_or_else(|| M::Error::missing_field("facet"))?;
@@ -95,6 +114,7 @@ impl<'de> Deserialize<'de> for EventsGroupBy {
                     facet,
                     limit,
                     sort,
+                    additional_properties,
                     _unparsed,
                 };
 

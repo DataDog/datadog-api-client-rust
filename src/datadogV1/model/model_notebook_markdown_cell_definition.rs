@@ -17,6 +17,8 @@ pub struct NotebookMarkdownCellDefinition {
     /// Type of the markdown cell.
     #[serde(rename = "type")]
     pub type_: crate::datadogV1::model::NotebookMarkdownCellDefinitionType,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -30,8 +32,17 @@ impl NotebookMarkdownCellDefinition {
         NotebookMarkdownCellDefinition {
             text,
             type_,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
     }
 }
 
@@ -55,6 +66,10 @@ impl<'de> Deserialize<'de> for NotebookMarkdownCellDefinition {
                 let mut text: Option<String> = None;
                 let mut type_: Option<crate::datadogV1::model::NotebookMarkdownCellDefinitionType> =
                     None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -73,7 +88,11 @@ impl<'de> Deserialize<'de> for NotebookMarkdownCellDefinition {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let text = text.ok_or_else(|| M::Error::missing_field("text"))?;
@@ -82,6 +101,7 @@ impl<'de> Deserialize<'de> for NotebookMarkdownCellDefinition {
                 let content = NotebookMarkdownCellDefinition {
                     text,
                     type_,
+                    additional_properties,
                     _unparsed,
                 };
 

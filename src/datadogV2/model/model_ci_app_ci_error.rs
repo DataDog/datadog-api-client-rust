@@ -27,6 +27,8 @@ pub struct CIAppCIError {
     /// Short description of the error type.
     #[serde(rename = "type", default, with = "::serde_with::rust::double_option")]
     pub type_: Option<Option<String>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -39,6 +41,7 @@ impl CIAppCIError {
             message: None,
             stack: None,
             type_: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -60,6 +63,14 @@ impl CIAppCIError {
 
     pub fn type_(mut self, value: Option<String>) -> Self {
         self.type_ = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -91,6 +102,10 @@ impl<'de> Deserialize<'de> for CIAppCIError {
                 let mut message: Option<Option<String>> = None;
                 let mut stack: Option<Option<String>> = None;
                 let mut type_: Option<Option<String>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -120,7 +135,11 @@ impl<'de> Deserialize<'de> for CIAppCIError {
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -129,6 +148,7 @@ impl<'de> Deserialize<'de> for CIAppCIError {
                     message,
                     stack,
                     type_,
+                    additional_properties,
                     _unparsed,
                 };
 

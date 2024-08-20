@@ -42,6 +42,8 @@ pub struct SyntheticsBasicAuthOauthROP {
     /// Username to use when performing the authentication.
     #[serde(rename = "username")]
     pub username: String,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -66,6 +68,7 @@ impl SyntheticsBasicAuthOauthROP {
             token_api_authentication,
             type_,
             username,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -92,6 +95,14 @@ impl SyntheticsBasicAuthOauthROP {
 
     pub fn scope(mut self, value: String) -> Self {
         self.scope = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -126,6 +137,10 @@ impl<'de> Deserialize<'de> for SyntheticsBasicAuthOauthROP {
                 let mut type_: Option<crate::datadogV1::model::SyntheticsBasicAuthOauthROPType> =
                     None;
                 let mut username: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -194,7 +209,11 @@ impl<'de> Deserialize<'de> for SyntheticsBasicAuthOauthROP {
                         "username" => {
                             username = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let access_token_url =
@@ -216,6 +235,7 @@ impl<'de> Deserialize<'de> for SyntheticsBasicAuthOauthROP {
                     token_api_authentication,
                     type_,
                     username,
+                    additional_properties,
                     _unparsed,
                 };
 

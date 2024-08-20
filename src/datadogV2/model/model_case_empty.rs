@@ -14,6 +14,8 @@ pub struct CaseEmpty {
     /// Case resource type
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CaseResourceType,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -23,8 +25,17 @@ impl CaseEmpty {
     pub fn new(type_: crate::datadogV2::model::CaseResourceType) -> CaseEmpty {
         CaseEmpty {
             type_,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
     }
 }
 
@@ -46,6 +57,10 @@ impl<'de> Deserialize<'de> for CaseEmpty {
                 M: MapAccess<'a>,
             {
                 let mut type_: Option<crate::datadogV2::model::CaseResourceType> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -63,12 +78,20 @@ impl<'de> Deserialize<'de> for CaseEmpty {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = CaseEmpty { type_, _unparsed };
+                let content = CaseEmpty {
+                    type_,
+                    additional_properties,
+                    _unparsed,
+                };
 
                 Ok(content)
             }

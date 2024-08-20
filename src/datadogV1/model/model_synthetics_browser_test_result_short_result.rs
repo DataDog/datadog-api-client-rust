@@ -26,6 +26,8 @@ pub struct SyntheticsBrowserTestResultShortResult {
     /// Total amount of browser test steps.
     #[serde(rename = "stepCountTotal")]
     pub step_count_total: Option<i64>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -39,6 +41,7 @@ impl SyntheticsBrowserTestResultShortResult {
             error_count: None,
             step_count_completed: None,
             step_count_total: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -65,6 +68,14 @@ impl SyntheticsBrowserTestResultShortResult {
 
     pub fn step_count_total(mut self, value: i64) -> Self {
         self.step_count_total = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -97,6 +108,10 @@ impl<'de> Deserialize<'de> for SyntheticsBrowserTestResultShortResult {
                 let mut error_count: Option<i64> = None;
                 let mut step_count_completed: Option<i64> = None;
                 let mut step_count_total: Option<i64> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -134,7 +149,11 @@ impl<'de> Deserialize<'de> for SyntheticsBrowserTestResultShortResult {
                             step_count_total =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -144,6 +163,7 @@ impl<'de> Deserialize<'de> for SyntheticsBrowserTestResultShortResult {
                     error_count,
                     step_count_completed,
                     step_count_total,
+                    additional_properties,
                     _unparsed,
                 };
 

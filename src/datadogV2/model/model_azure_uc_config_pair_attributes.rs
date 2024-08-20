@@ -17,6 +17,8 @@ pub struct AzureUCConfigPairAttributes {
     /// The ID of the Azure config pair.
     #[serde(rename = "id")]
     pub id: Option<i64>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -29,12 +31,21 @@ impl AzureUCConfigPairAttributes {
         AzureUCConfigPairAttributes {
             configs,
             id: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn id(mut self, value: i64) -> Self {
         self.id = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -58,6 +69,10 @@ impl<'de> Deserialize<'de> for AzureUCConfigPairAttributes {
             {
                 let mut configs: Option<Vec<crate::datadogV2::model::AzureUCConfig>> = None;
                 let mut id: Option<i64> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -71,7 +86,11 @@ impl<'de> Deserialize<'de> for AzureUCConfigPairAttributes {
                             }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let configs = configs.ok_or_else(|| M::Error::missing_field("configs"))?;
@@ -79,6 +98,7 @@ impl<'de> Deserialize<'de> for AzureUCConfigPairAttributes {
                 let content = AzureUCConfigPairAttributes {
                     configs,
                     id,
+                    additional_properties,
                     _unparsed,
                 };
 

@@ -14,6 +14,8 @@ pub struct OrganizationResponse {
     /// Create, edit, and manage organizations.
     #[serde(rename = "org")]
     pub org: Option<crate::datadogV1::model::Organization>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -23,12 +25,21 @@ impl OrganizationResponse {
     pub fn new() -> OrganizationResponse {
         OrganizationResponse {
             org: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn org(mut self, value: crate::datadogV1::model::Organization) -> Self {
         self.org = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -57,6 +68,10 @@ impl<'de> Deserialize<'de> for OrganizationResponse {
                 M: MapAccess<'a>,
             {
                 let mut org: Option<crate::datadogV1::model::Organization> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -67,11 +82,19 @@ impl<'de> Deserialize<'de> for OrganizationResponse {
                             }
                             org = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
-                let content = OrganizationResponse { org, _unparsed };
+                let content = OrganizationResponse {
+                    org,
+                    additional_properties,
+                    _unparsed,
+                };
 
                 Ok(content)
             }

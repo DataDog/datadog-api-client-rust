@@ -39,6 +39,8 @@ pub struct MonthlyUsageAttributionBody {
     /// Fields in Usage Summary by tag(s).
     #[serde(rename = "values")]
     pub values: Option<crate::datadogV1::model::MonthlyUsageAttributionValues>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -55,6 +57,7 @@ impl MonthlyUsageAttributionBody {
             tags: None,
             updated_at: None,
             values: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -98,6 +101,14 @@ impl MonthlyUsageAttributionBody {
         self.values = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl Default for MonthlyUsageAttributionBody {
@@ -133,6 +144,10 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionBody {
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut values: Option<crate::datadogV1::model::MonthlyUsageAttributionValues> =
                     None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -183,7 +198,11 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionBody {
                             }
                             values = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -196,6 +215,7 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionBody {
                     tags,
                     updated_at,
                     values,
+                    additional_properties,
                     _unparsed,
                 };
 

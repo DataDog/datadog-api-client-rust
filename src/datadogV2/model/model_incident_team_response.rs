@@ -17,6 +17,8 @@ pub struct IncidentTeamResponse {
     /// Included objects from relationships.
     #[serde(rename = "included")]
     pub included: Option<Vec<crate::datadogV2::model::IncidentTeamIncludedItems>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,6 +29,7 @@ impl IncidentTeamResponse {
         IncidentTeamResponse {
             data,
             included: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -36,6 +39,14 @@ impl IncidentTeamResponse {
         value: Vec<crate::datadogV2::model::IncidentTeamIncludedItems>,
     ) -> Self {
         self.included = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -60,6 +71,10 @@ impl<'de> Deserialize<'de> for IncidentTeamResponse {
                 let mut data: Option<crate::datadogV2::model::IncidentTeamResponseData> = None;
                 let mut included: Option<Vec<crate::datadogV2::model::IncidentTeamIncludedItems>> =
                     None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -73,7 +88,11 @@ impl<'de> Deserialize<'de> for IncidentTeamResponse {
                             }
                             included = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
@@ -81,6 +100,7 @@ impl<'de> Deserialize<'de> for IncidentTeamResponse {
                 let content = IncidentTeamResponse {
                     data,
                     included,
+                    additional_properties,
                     _unparsed,
                 };
 

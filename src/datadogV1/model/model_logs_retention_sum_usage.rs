@@ -23,6 +23,8 @@ pub struct LogsRetentionSumUsage {
     /// The retention period in days or "custom" for all custom retention periods.
     #[serde(rename = "retention")]
     pub retention: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -35,6 +37,7 @@ impl LogsRetentionSumUsage {
             logs_live_indexed_logs_usage_sum: None,
             logs_rehydrated_indexed_logs_usage_sum: None,
             retention: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -56,6 +59,14 @@ impl LogsRetentionSumUsage {
 
     pub fn retention(mut self, value: String) -> Self {
         self.retention = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -87,6 +98,10 @@ impl<'de> Deserialize<'de> for LogsRetentionSumUsage {
                 let mut logs_live_indexed_logs_usage_sum: Option<i64> = None;
                 let mut logs_rehydrated_indexed_logs_usage_sum: Option<i64> = None;
                 let mut retention: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -118,7 +133,11 @@ impl<'de> Deserialize<'de> for LogsRetentionSumUsage {
                             }
                             retention = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -127,6 +146,7 @@ impl<'de> Deserialize<'de> for LogsRetentionSumUsage {
                     logs_live_indexed_logs_usage_sum,
                     logs_rehydrated_indexed_logs_usage_sum,
                     retention,
+                    additional_properties,
                     _unparsed,
                 };
 

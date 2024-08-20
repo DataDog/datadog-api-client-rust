@@ -17,6 +17,8 @@ pub struct CheckCanDeleteSLOResponse {
     /// A mapping of SLO id to it's current usages.
     #[serde(rename = "errors")]
     pub errors: Option<std::collections::BTreeMap<String, String>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,6 +29,7 @@ impl CheckCanDeleteSLOResponse {
         CheckCanDeleteSLOResponse {
             data: None,
             errors: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -38,6 +41,14 @@ impl CheckCanDeleteSLOResponse {
 
     pub fn errors(mut self, value: std::collections::BTreeMap<String, String>) -> Self {
         self.errors = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -67,6 +78,10 @@ impl<'de> Deserialize<'de> for CheckCanDeleteSLOResponse {
             {
                 let mut data: Option<crate::datadogV1::model::CheckCanDeleteSLOResponseData> = None;
                 let mut errors: Option<std::collections::BTreeMap<String, String>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -83,13 +98,18 @@ impl<'de> Deserialize<'de> for CheckCanDeleteSLOResponse {
                             }
                             errors = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = CheckCanDeleteSLOResponse {
                     data,
                     errors,
+                    additional_properties,
                     _unparsed,
                 };
 

@@ -20,6 +20,8 @@ pub struct Creator {
     /// Name of the creator.
     #[serde(rename = "name", default, with = "::serde_with::rust::double_option")]
     pub name: Option<Option<String>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -31,6 +33,7 @@ impl Creator {
             email: None,
             handle: None,
             name: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -47,6 +50,14 @@ impl Creator {
 
     pub fn name(mut self, value: Option<String>) -> Self {
         self.name = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -77,6 +88,10 @@ impl<'de> Deserialize<'de> for Creator {
                 let mut email: Option<String> = None;
                 let mut handle: Option<String> = None;
                 let mut name: Option<Option<String>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -96,7 +111,11 @@ impl<'de> Deserialize<'de> for Creator {
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -104,6 +123,7 @@ impl<'de> Deserialize<'de> for Creator {
                     email,
                     handle,
                     name,
+                    additional_properties,
                     _unparsed,
                 };
 

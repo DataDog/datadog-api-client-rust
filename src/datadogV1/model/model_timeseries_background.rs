@@ -17,6 +17,8 @@ pub struct TimeseriesBackground {
     /// Axis controls for the widget.
     #[serde(rename = "yaxis")]
     pub yaxis: Option<crate::datadogV1::model::WidgetAxis>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,12 +29,21 @@ impl TimeseriesBackground {
         TimeseriesBackground {
             type_,
             yaxis: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn yaxis(mut self, value: crate::datadogV1::model::WidgetAxis) -> Self {
         self.yaxis = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -56,6 +67,10 @@ impl<'de> Deserialize<'de> for TimeseriesBackground {
             {
                 let mut type_: Option<crate::datadogV1::model::TimeseriesBackgroundType> = None;
                 let mut yaxis: Option<crate::datadogV1::model::WidgetAxis> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -77,7 +92,11 @@ impl<'de> Deserialize<'de> for TimeseriesBackground {
                             }
                             yaxis = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
@@ -85,6 +104,7 @@ impl<'de> Deserialize<'de> for TimeseriesBackground {
                 let content = TimeseriesBackground {
                     type_,
                     yaxis,
+                    additional_properties,
                     _unparsed,
                 };
 

@@ -24,6 +24,8 @@ pub struct SpansAggregateRequestAttributes {
     /// Note: You should only supply timezone or time offset but not both otherwise the query will fail.
     #[serde(rename = "options")]
     pub options: Option<crate::datadogV2::model::SpansQueryOptions>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -36,6 +38,7 @@ impl SpansAggregateRequestAttributes {
             filter: None,
             group_by: None,
             options: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -57,6 +60,14 @@ impl SpansAggregateRequestAttributes {
 
     pub fn options(mut self, value: crate::datadogV2::model::SpansQueryOptions) -> Self {
         self.options = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -88,6 +99,10 @@ impl<'de> Deserialize<'de> for SpansAggregateRequestAttributes {
                 let mut filter: Option<crate::datadogV2::model::SpansQueryFilter> = None;
                 let mut group_by: Option<Vec<crate::datadogV2::model::SpansGroupBy>> = None;
                 let mut options: Option<crate::datadogV2::model::SpansQueryOptions> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -116,7 +131,11 @@ impl<'de> Deserialize<'de> for SpansAggregateRequestAttributes {
                             }
                             options = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -125,6 +144,7 @@ impl<'de> Deserialize<'de> for SpansAggregateRequestAttributes {
                     filter,
                     group_by,
                     options,
+                    additional_properties,
                     _unparsed,
                 };
 

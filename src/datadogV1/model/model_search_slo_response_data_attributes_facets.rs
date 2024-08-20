@@ -43,6 +43,8 @@ pub struct SearchSLOResponseDataAttributesFacets {
     #[serde(rename = "timeframe")]
     pub timeframe:
         Option<Vec<crate::datadogV1::model::SearchSLOResponseDataAttributesFacetsObjectString>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -59,6 +61,7 @@ impl SearchSLOResponseDataAttributesFacets {
             target: None,
             team_tags: None,
             timeframe: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -126,6 +129,14 @@ impl SearchSLOResponseDataAttributesFacets {
         self.timeframe = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl Default for SearchSLOResponseDataAttributesFacets {
@@ -175,6 +186,10 @@ impl<'de> Deserialize<'de> for SearchSLOResponseDataAttributesFacets {
                 let mut timeframe: Option<
                     Vec<crate::datadogV1::model::SearchSLOResponseDataAttributesFacetsObjectString>,
                 > = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -229,7 +244,11 @@ impl<'de> Deserialize<'de> for SearchSLOResponseDataAttributesFacets {
                             }
                             timeframe = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -242,6 +261,7 @@ impl<'de> Deserialize<'de> for SearchSLOResponseDataAttributesFacets {
                     target,
                     team_tags,
                     timeframe,
+                    additional_properties,
                     _unparsed,
                 };
 

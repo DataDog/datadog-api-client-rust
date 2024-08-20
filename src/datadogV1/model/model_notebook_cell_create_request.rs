@@ -83,7 +83,11 @@ impl<'de> Deserialize<'de> for NotebookCellCreateRequest {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            return Err(serde::de::Error::custom(
+                                "Additional properties not allowed",
+                            ));
+                        }
                     }
                 }
                 let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;

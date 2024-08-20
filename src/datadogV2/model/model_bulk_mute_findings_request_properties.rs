@@ -110,7 +110,11 @@ impl<'de> Deserialize<'de> for BulkMuteFindingsRequestProperties {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            return Err(serde::de::Error::custom(
+                                "Additional properties not allowed",
+                            ));
+                        }
                     }
                 }
                 let muted = muted.ok_or_else(|| M::Error::missing_field("muted"))?;

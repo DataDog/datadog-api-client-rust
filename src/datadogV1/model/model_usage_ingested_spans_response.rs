@@ -14,6 +14,8 @@ pub struct UsageIngestedSpansResponse {
     /// Get hourly usage for ingested spans.
     #[serde(rename = "usage")]
     pub usage: Option<Vec<crate::datadogV1::model::UsageIngestedSpansHour>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -23,12 +25,21 @@ impl UsageIngestedSpansResponse {
     pub fn new() -> UsageIngestedSpansResponse {
         UsageIngestedSpansResponse {
             usage: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn usage(mut self, value: Vec<crate::datadogV1::model::UsageIngestedSpansHour>) -> Self {
         self.usage = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -57,6 +68,10 @@ impl<'de> Deserialize<'de> for UsageIngestedSpansResponse {
                 M: MapAccess<'a>,
             {
                 let mut usage: Option<Vec<crate::datadogV1::model::UsageIngestedSpansHour>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -67,11 +82,19 @@ impl<'de> Deserialize<'de> for UsageIngestedSpansResponse {
                             }
                             usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
-                let content = UsageIngestedSpansResponse { usage, _unparsed };
+                let content = UsageIngestedSpansResponse {
+                    usage,
+                    additional_properties,
+                    _unparsed,
+                };
 
                 Ok(content)
             }

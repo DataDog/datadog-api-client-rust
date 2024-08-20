@@ -17,6 +17,8 @@ pub struct IPPrefixesOrchestrator {
     /// List of IPv6 prefixes.
     #[serde(rename = "prefixes_ipv6")]
     pub prefixes_ipv6: Option<Vec<String>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,6 +29,7 @@ impl IPPrefixesOrchestrator {
         IPPrefixesOrchestrator {
             prefixes_ipv4: None,
             prefixes_ipv6: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -38,6 +41,14 @@ impl IPPrefixesOrchestrator {
 
     pub fn prefixes_ipv6(mut self, value: Vec<String>) -> Self {
         self.prefixes_ipv6 = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -67,6 +78,10 @@ impl<'de> Deserialize<'de> for IPPrefixesOrchestrator {
             {
                 let mut prefixes_ipv4: Option<Vec<String>> = None;
                 let mut prefixes_ipv6: Option<Vec<String>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -85,13 +100,18 @@ impl<'de> Deserialize<'de> for IPPrefixesOrchestrator {
                             prefixes_ipv6 =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = IPPrefixesOrchestrator {
                     prefixes_ipv4,
                     prefixes_ipv6,
+                    additional_properties,
                     _unparsed,
                 };
 

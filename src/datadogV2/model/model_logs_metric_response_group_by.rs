@@ -17,6 +17,8 @@ pub struct LogsMetricResponseGroupBy {
     /// Eventual name of the tag that gets created. By default, the path attribute is used as the tag name.
     #[serde(rename = "tag_name")]
     pub tag_name: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,6 +29,7 @@ impl LogsMetricResponseGroupBy {
         LogsMetricResponseGroupBy {
             path: None,
             tag_name: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -38,6 +41,14 @@ impl LogsMetricResponseGroupBy {
 
     pub fn tag_name(mut self, value: String) -> Self {
         self.tag_name = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -67,6 +78,10 @@ impl<'de> Deserialize<'de> for LogsMetricResponseGroupBy {
             {
                 let mut path: Option<String> = None;
                 let mut tag_name: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -83,13 +98,18 @@ impl<'de> Deserialize<'de> for LogsMetricResponseGroupBy {
                             }
                             tag_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = LogsMetricResponseGroupBy {
                     path,
                     tag_name,
+                    additional_properties,
                     _unparsed,
                 };
 

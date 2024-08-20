@@ -26,6 +26,8 @@ pub struct NotebookUpdateDataAttributes {
     /// Notebook global timeframe.
     #[serde(rename = "time")]
     pub time: crate::datadogV1::model::NotebookGlobalTime,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -43,6 +45,7 @@ impl NotebookUpdateDataAttributes {
             name,
             status: None,
             time,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -54,6 +57,14 @@ impl NotebookUpdateDataAttributes {
 
     pub fn status(mut self, value: crate::datadogV1::model::NotebookStatus) -> Self {
         self.status = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -80,6 +91,10 @@ impl<'de> Deserialize<'de> for NotebookUpdateDataAttributes {
                 let mut name: Option<String> = None;
                 let mut status: Option<crate::datadogV1::model::NotebookStatus> = None;
                 let mut time: Option<crate::datadogV1::model::NotebookGlobalTime> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -125,7 +140,11 @@ impl<'de> Deserialize<'de> for NotebookUpdateDataAttributes {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let cells = cells.ok_or_else(|| M::Error::missing_field("cells"))?;
@@ -138,6 +157,7 @@ impl<'de> Deserialize<'de> for NotebookUpdateDataAttributes {
                     name,
                     status,
                     time,
+                    additional_properties,
                     _unparsed,
                 };
 

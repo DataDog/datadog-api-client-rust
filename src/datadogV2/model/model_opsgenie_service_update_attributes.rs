@@ -27,6 +27,8 @@ pub struct OpsgenieServiceUpdateAttributes {
     /// The region for the Opsgenie service.
     #[serde(rename = "region")]
     pub region: Option<crate::datadogV2::model::OpsgenieServiceRegionType>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -39,6 +41,7 @@ impl OpsgenieServiceUpdateAttributes {
             name: None,
             opsgenie_api_key: None,
             region: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -60,6 +63,14 @@ impl OpsgenieServiceUpdateAttributes {
 
     pub fn region(mut self, value: crate::datadogV2::model::OpsgenieServiceRegionType) -> Self {
         self.region = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -91,6 +102,10 @@ impl<'de> Deserialize<'de> for OpsgenieServiceUpdateAttributes {
                 let mut name: Option<String> = None;
                 let mut opsgenie_api_key: Option<String> = None;
                 let mut region: Option<crate::datadogV2::model::OpsgenieServiceRegionType> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -125,7 +140,11 @@ impl<'de> Deserialize<'de> for OpsgenieServiceUpdateAttributes {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -134,6 +153,7 @@ impl<'de> Deserialize<'de> for OpsgenieServiceUpdateAttributes {
                     name,
                     opsgenie_api_key,
                     region,
+                    additional_properties,
                     _unparsed,
                 };
 

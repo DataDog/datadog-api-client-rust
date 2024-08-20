@@ -20,6 +20,8 @@ pub struct CustomDestinationUpdateRequestDefinition {
     /// The type of the resource. The value should always be `custom_destination`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CustomDestinationType,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -34,6 +36,7 @@ impl CustomDestinationUpdateRequestDefinition {
             attributes: None,
             id,
             type_,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -43,6 +46,14 @@ impl CustomDestinationUpdateRequestDefinition {
         value: crate::datadogV2::model::CustomDestinationUpdateRequestAttributes,
     ) -> Self {
         self.attributes = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -69,6 +80,10 @@ impl<'de> Deserialize<'de> for CustomDestinationUpdateRequestDefinition {
                 > = None;
                 let mut id: Option<String> = None;
                 let mut type_: Option<crate::datadogV2::model::CustomDestinationType> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -93,7 +108,11 @@ impl<'de> Deserialize<'de> for CustomDestinationUpdateRequestDefinition {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
@@ -103,6 +122,7 @@ impl<'de> Deserialize<'de> for CustomDestinationUpdateRequestDefinition {
                     attributes,
                     id,
                     type_,
+                    additional_properties,
                     _unparsed,
                 };
 

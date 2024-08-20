@@ -14,6 +14,8 @@ pub struct SyntheticsPrivateLocationMetadata {
     /// A list of role identifiers that can be pulled from the Roles API, for restricting read and write access.
     #[serde(rename = "restricted_roles")]
     pub restricted_roles: Option<Vec<String>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -23,12 +25,21 @@ impl SyntheticsPrivateLocationMetadata {
     pub fn new() -> SyntheticsPrivateLocationMetadata {
         SyntheticsPrivateLocationMetadata {
             restricted_roles: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn restricted_roles(mut self, value: Vec<String>) -> Self {
         self.restricted_roles = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -57,6 +68,10 @@ impl<'de> Deserialize<'de> for SyntheticsPrivateLocationMetadata {
                 M: MapAccess<'a>,
             {
                 let mut restricted_roles: Option<Vec<String>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -68,12 +83,17 @@ impl<'de> Deserialize<'de> for SyntheticsPrivateLocationMetadata {
                             restricted_roles =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = SyntheticsPrivateLocationMetadata {
                     restricted_roles,
+                    additional_properties,
                     _unparsed,
                 };
 

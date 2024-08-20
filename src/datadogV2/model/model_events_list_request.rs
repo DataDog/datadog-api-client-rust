@@ -24,6 +24,8 @@ pub struct EventsListRequest {
     /// The sort parameters when querying events.
     #[serde(rename = "sort")]
     pub sort: Option<crate::datadogV2::model::EventsSort>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -36,6 +38,7 @@ impl EventsListRequest {
             options: None,
             page: None,
             sort: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -57,6 +60,14 @@ impl EventsListRequest {
 
     pub fn sort(mut self, value: crate::datadogV2::model::EventsSort) -> Self {
         self.sort = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -88,6 +99,10 @@ impl<'de> Deserialize<'de> for EventsListRequest {
                 let mut options: Option<crate::datadogV2::model::EventsQueryOptions> = None;
                 let mut page: Option<crate::datadogV2::model::EventsRequestPage> = None;
                 let mut sort: Option<crate::datadogV2::model::EventsSort> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -124,7 +139,11 @@ impl<'de> Deserialize<'de> for EventsListRequest {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -133,6 +152,7 @@ impl<'de> Deserialize<'de> for EventsListRequest {
                     options,
                     page,
                     sort,
+                    additional_properties,
                     _unparsed,
                 };
 

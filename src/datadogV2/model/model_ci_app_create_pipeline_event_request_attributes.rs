@@ -20,6 +20,8 @@ pub struct CIAppCreatePipelineEventRequestAttributes {
     /// If the CI provider is SaaS, use this to differentiate between instances.
     #[serde(rename = "service")]
     pub service: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -33,6 +35,7 @@ impl CIAppCreatePipelineEventRequestAttributes {
             env: None,
             resource,
             service: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -44,6 +47,14 @@ impl CIAppCreatePipelineEventRequestAttributes {
 
     pub fn service(mut self, value: String) -> Self {
         self.service = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -70,6 +81,10 @@ impl<'de> Deserialize<'de> for CIAppCreatePipelineEventRequestAttributes {
                     crate::datadogV2::model::CIAppCreatePipelineEventRequestAttributesResource,
                 > = None;
                 let mut service: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -97,7 +112,11 @@ impl<'de> Deserialize<'de> for CIAppCreatePipelineEventRequestAttributes {
                             }
                             service = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let resource = resource.ok_or_else(|| M::Error::missing_field("resource"))?;
@@ -106,6 +125,7 @@ impl<'de> Deserialize<'de> for CIAppCreatePipelineEventRequestAttributes {
                     env,
                     resource,
                     service,
+                    additional_properties,
                     _unparsed,
                 };
 

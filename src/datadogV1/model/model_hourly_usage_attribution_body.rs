@@ -42,6 +42,8 @@ pub struct HourlyUsageAttributionBody {
     /// Supported products for hourly usage attribution requests.
     #[serde(rename = "usage_type")]
     pub usage_type: Option<crate::datadogV1::model::HourlyUsageAttributionUsageType>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -59,6 +61,7 @@ impl HourlyUsageAttributionBody {
             total_usage_sum: None,
             updated_at: None,
             usage_type: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -110,6 +113,14 @@ impl HourlyUsageAttributionBody {
         self.usage_type = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl Default for HourlyUsageAttributionBody {
@@ -147,6 +158,10 @@ impl<'de> Deserialize<'de> for HourlyUsageAttributionBody {
                 let mut usage_type: Option<
                     crate::datadogV1::model::HourlyUsageAttributionUsageType,
                 > = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -212,7 +227,11 @@ impl<'de> Deserialize<'de> for HourlyUsageAttributionBody {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -226,6 +245,7 @@ impl<'de> Deserialize<'de> for HourlyUsageAttributionBody {
                     total_usage_sum,
                     updated_at,
                     usage_type,
+                    additional_properties,
                     _unparsed,
                 };
 

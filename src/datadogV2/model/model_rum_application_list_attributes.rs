@@ -41,6 +41,8 @@ pub struct RUMApplicationListAttributes {
     /// Handle of the updater user.
     #[serde(rename = "updated_by_handle")]
     pub updated_by_handle: String,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -68,6 +70,7 @@ impl RUMApplicationListAttributes {
             type_,
             updated_at,
             updated_by_handle,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -79,6 +82,14 @@ impl RUMApplicationListAttributes {
 
     pub fn is_active(mut self, value: bool) -> Self {
         self.is_active = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -110,6 +121,10 @@ impl<'de> Deserialize<'de> for RUMApplicationListAttributes {
                 let mut type_: Option<String> = None;
                 let mut updated_at: Option<i64> = None;
                 let mut updated_by_handle: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -153,7 +168,11 @@ impl<'de> Deserialize<'de> for RUMApplicationListAttributes {
                             updated_by_handle =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let application_id =
@@ -179,6 +198,7 @@ impl<'de> Deserialize<'de> for RUMApplicationListAttributes {
                     type_,
                     updated_at,
                     updated_by_handle,
+                    additional_properties,
                     _unparsed,
                 };
 

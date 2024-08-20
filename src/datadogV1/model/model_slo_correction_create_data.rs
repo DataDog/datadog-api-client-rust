@@ -17,6 +17,8 @@ pub struct SLOCorrectionCreateData {
     /// SLO correction resource type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV1::model::SLOCorrectionType,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,6 +29,7 @@ impl SLOCorrectionCreateData {
         SLOCorrectionCreateData {
             attributes: None,
             type_,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -36,6 +39,14 @@ impl SLOCorrectionCreateData {
         value: crate::datadogV1::model::SLOCorrectionCreateRequestAttributes,
     ) -> Self {
         self.attributes = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -61,6 +72,10 @@ impl<'de> Deserialize<'de> for SLOCorrectionCreateData {
                     crate::datadogV1::model::SLOCorrectionCreateRequestAttributes,
                 > = None;
                 let mut type_: Option<crate::datadogV1::model::SLOCorrectionType> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -84,7 +99,11 @@ impl<'de> Deserialize<'de> for SLOCorrectionCreateData {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
@@ -92,6 +111,7 @@ impl<'de> Deserialize<'de> for SLOCorrectionCreateData {
                 let content = SLOCorrectionCreateData {
                     attributes,
                     type_,
+                    additional_properties,
                     _unparsed,
                 };
 

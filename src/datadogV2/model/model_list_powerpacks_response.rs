@@ -23,6 +23,8 @@ pub struct ListPowerpacksResponse {
     /// Powerpack response metadata.
     #[serde(rename = "meta")]
     pub meta: Option<crate::datadogV2::model::PowerpacksResponseMeta>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -35,6 +37,7 @@ impl ListPowerpacksResponse {
             included: None,
             links: None,
             meta: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -56,6 +59,14 @@ impl ListPowerpacksResponse {
 
     pub fn meta(mut self, value: crate::datadogV2::model::PowerpacksResponseMeta) -> Self {
         self.meta = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -87,6 +98,10 @@ impl<'de> Deserialize<'de> for ListPowerpacksResponse {
                 let mut included: Option<Vec<crate::datadogV2::model::User>> = None;
                 let mut links: Option<crate::datadogV2::model::PowerpackResponseLinks> = None;
                 let mut meta: Option<crate::datadogV2::model::PowerpacksResponseMeta> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -115,7 +130,11 @@ impl<'de> Deserialize<'de> for ListPowerpacksResponse {
                             }
                             meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -124,6 +143,7 @@ impl<'de> Deserialize<'de> for ListPowerpacksResponse {
                     included,
                     links,
                     meta,
+                    additional_properties,
                     _unparsed,
                 };
 

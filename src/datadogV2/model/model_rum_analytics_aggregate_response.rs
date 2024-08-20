@@ -20,6 +20,8 @@ pub struct RUMAnalyticsAggregateResponse {
     /// The metadata associated with a request.
     #[serde(rename = "meta")]
     pub meta: Option<crate::datadogV2::model::RUMResponseMetadata>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -31,6 +33,7 @@ impl RUMAnalyticsAggregateResponse {
             data: None,
             links: None,
             meta: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -47,6 +50,14 @@ impl RUMAnalyticsAggregateResponse {
 
     pub fn meta(mut self, value: crate::datadogV2::model::RUMResponseMetadata) -> Self {
         self.meta = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -77,6 +88,10 @@ impl<'de> Deserialize<'de> for RUMAnalyticsAggregateResponse {
                 let mut data: Option<crate::datadogV2::model::RUMAggregationBucketsResponse> = None;
                 let mut links: Option<crate::datadogV2::model::RUMResponseLinks> = None;
                 let mut meta: Option<crate::datadogV2::model::RUMResponseMetadata> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -99,7 +114,11 @@ impl<'de> Deserialize<'de> for RUMAnalyticsAggregateResponse {
                             }
                             meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -107,6 +126,7 @@ impl<'de> Deserialize<'de> for RUMAnalyticsAggregateResponse {
                     data,
                     links,
                     meta,
+                    additional_properties,
                     _unparsed,
                 };
 

@@ -17,6 +17,8 @@ pub struct SyntheticsTriggerCITestLocation {
     /// Name of the location.
     #[serde(rename = "name")]
     pub name: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,6 +29,7 @@ impl SyntheticsTriggerCITestLocation {
         SyntheticsTriggerCITestLocation {
             id: None,
             name: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -38,6 +41,14 @@ impl SyntheticsTriggerCITestLocation {
 
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -67,6 +78,10 @@ impl<'de> Deserialize<'de> for SyntheticsTriggerCITestLocation {
             {
                 let mut id: Option<i64> = None;
                 let mut name: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -83,13 +98,18 @@ impl<'de> Deserialize<'de> for SyntheticsTriggerCITestLocation {
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = SyntheticsTriggerCITestLocation {
                     id,
                     name,
+                    additional_properties,
                     _unparsed,
                 };
 

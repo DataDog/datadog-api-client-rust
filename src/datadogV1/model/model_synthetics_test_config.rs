@@ -23,6 +23,8 @@ pub struct SyntheticsTestConfig {
     /// Browser tests only - array of variables used for the test steps.
     #[serde(rename = "variables")]
     pub variables: Option<Vec<crate::datadogV1::model::SyntheticsBrowserVariable>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -35,6 +37,7 @@ impl SyntheticsTestConfig {
             config_variables: None,
             request: None,
             variables: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -62,6 +65,14 @@ impl SyntheticsTestConfig {
         value: Vec<crate::datadogV1::model::SyntheticsBrowserVariable>,
     ) -> Self {
         self.variables = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -97,6 +108,10 @@ impl<'de> Deserialize<'de> for SyntheticsTestConfig {
                 let mut request: Option<crate::datadogV1::model::SyntheticsTestRequest> = None;
                 let mut variables: Option<Vec<crate::datadogV1::model::SyntheticsBrowserVariable>> =
                     None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -126,7 +141,11 @@ impl<'de> Deserialize<'de> for SyntheticsTestConfig {
                             }
                             variables = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -135,6 +154,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestConfig {
                     config_variables,
                     request,
                     variables,
+                    additional_properties,
                     _unparsed,
                 };
 

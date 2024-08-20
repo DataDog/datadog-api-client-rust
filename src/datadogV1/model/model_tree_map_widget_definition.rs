@@ -38,6 +38,8 @@ pub struct TreeMapWidgetDefinition {
     /// Type of the treemap widget.
     #[serde(rename = "type")]
     pub type_: crate::datadogV1::model::TreeMapWidgetDefinitionType,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -58,6 +60,7 @@ impl TreeMapWidgetDefinition {
             time: None,
             title: None,
             type_,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -97,6 +100,14 @@ impl TreeMapWidgetDefinition {
         self.title = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl<'de> Deserialize<'de> for TreeMapWidgetDefinition {
@@ -124,6 +135,10 @@ impl<'de> Deserialize<'de> for TreeMapWidgetDefinition {
                 let mut time: Option<crate::datadogV1::model::WidgetTime> = None;
                 let mut title: Option<String> = None;
                 let mut type_: Option<crate::datadogV1::model::TreeMapWidgetDefinitionType> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -209,7 +224,11 @@ impl<'de> Deserialize<'de> for TreeMapWidgetDefinition {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let requests = requests.ok_or_else(|| M::Error::missing_field("requests"))?;
@@ -225,6 +244,7 @@ impl<'de> Deserialize<'de> for TreeMapWidgetDefinition {
                     time,
                     title,
                     type_,
+                    additional_properties,
                     _unparsed,
                 };
 

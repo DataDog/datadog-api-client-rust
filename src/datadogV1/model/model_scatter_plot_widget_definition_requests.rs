@@ -20,6 +20,8 @@ pub struct ScatterPlotWidgetDefinitionRequests {
     /// Updated scatter plot.
     #[serde(rename = "y")]
     pub y: Option<crate::datadogV1::model::ScatterPlotRequest>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -31,6 +33,7 @@ impl ScatterPlotWidgetDefinitionRequests {
             table: None,
             x: None,
             y: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -47,6 +50,14 @@ impl ScatterPlotWidgetDefinitionRequests {
 
     pub fn y(mut self, value: crate::datadogV1::model::ScatterPlotRequest) -> Self {
         self.y = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -77,6 +88,10 @@ impl<'de> Deserialize<'de> for ScatterPlotWidgetDefinitionRequests {
                 let mut table: Option<crate::datadogV1::model::ScatterplotTableRequest> = None;
                 let mut x: Option<crate::datadogV1::model::ScatterPlotRequest> = None;
                 let mut y: Option<crate::datadogV1::model::ScatterPlotRequest> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -99,7 +114,11 @@ impl<'de> Deserialize<'de> for ScatterPlotWidgetDefinitionRequests {
                             }
                             y = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -107,6 +126,7 @@ impl<'de> Deserialize<'de> for ScatterPlotWidgetDefinitionRequests {
                     table,
                     x,
                     y,
+                    additional_properties,
                     _unparsed,
                 };
 

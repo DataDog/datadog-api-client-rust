@@ -20,6 +20,8 @@ pub struct SecurityMonitoringRuleQueryPayload {
     /// Payload used to test the rule query.
     #[serde(rename = "payload")]
     pub payload: Option<crate::datadogV2::model::SecurityMonitoringRuleQueryPayloadData>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -31,6 +33,7 @@ impl SecurityMonitoringRuleQueryPayload {
             expected_result: None,
             index: None,
             payload: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -50,6 +53,14 @@ impl SecurityMonitoringRuleQueryPayload {
         value: crate::datadogV2::model::SecurityMonitoringRuleQueryPayloadData,
     ) -> Self {
         self.payload = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -82,6 +93,10 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleQueryPayload {
                 let mut payload: Option<
                     crate::datadogV2::model::SecurityMonitoringRuleQueryPayloadData,
                 > = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -105,7 +120,11 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleQueryPayload {
                             }
                             payload = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -113,6 +132,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleQueryPayload {
                     expected_result,
                     index,
                     payload,
+                    additional_properties,
                     _unparsed,
                 };
 

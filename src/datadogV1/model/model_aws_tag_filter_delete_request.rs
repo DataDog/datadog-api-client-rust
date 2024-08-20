@@ -17,6 +17,8 @@ pub struct AWSTagFilterDeleteRequest {
     /// The namespace associated with the tag filter entry.
     #[serde(rename = "namespace")]
     pub namespace: Option<crate::datadogV1::model::AWSNamespace>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,6 +29,7 @@ impl AWSTagFilterDeleteRequest {
         AWSTagFilterDeleteRequest {
             account_id: None,
             namespace: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -38,6 +41,14 @@ impl AWSTagFilterDeleteRequest {
 
     pub fn namespace(mut self, value: crate::datadogV1::model::AWSNamespace) -> Self {
         self.namespace = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -67,6 +78,10 @@ impl<'de> Deserialize<'de> for AWSTagFilterDeleteRequest {
             {
                 let mut account_id: Option<String> = None;
                 let mut namespace: Option<crate::datadogV1::model::AWSNamespace> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -93,13 +108,18 @@ impl<'de> Deserialize<'de> for AWSTagFilterDeleteRequest {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = AWSTagFilterDeleteRequest {
                     account_id,
                     namespace,
+                    additional_properties,
                     _unparsed,
                 };
 

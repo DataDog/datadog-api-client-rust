@@ -26,6 +26,8 @@ pub struct SecurityFilterCreateAttributes {
     /// The query of the security filter.
     #[serde(rename = "query")]
     pub query: String,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -45,8 +47,17 @@ impl SecurityFilterCreateAttributes {
             is_enabled,
             name,
             query,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
     }
 }
 
@@ -76,6 +87,10 @@ impl<'de> Deserialize<'de> for SecurityFilterCreateAttributes {
                 let mut is_enabled: Option<bool> = None;
                 let mut name: Option<String> = None;
                 let mut query: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -105,7 +120,11 @@ impl<'de> Deserialize<'de> for SecurityFilterCreateAttributes {
                         "query" => {
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let exclusion_filters = exclusion_filters
@@ -122,6 +141,7 @@ impl<'de> Deserialize<'de> for SecurityFilterCreateAttributes {
                     is_enabled,
                     name,
                     query,
+                    additional_properties,
                     _unparsed,
                 };
 

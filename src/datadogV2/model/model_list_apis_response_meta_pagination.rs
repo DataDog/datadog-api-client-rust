@@ -20,6 +20,8 @@ pub struct ListAPIsResponseMetaPagination {
     /// Total number of items.
     #[serde(rename = "total_count")]
     pub total_count: Option<i64>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -31,6 +33,7 @@ impl ListAPIsResponseMetaPagination {
             limit: None,
             offset: None,
             total_count: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -47,6 +50,14 @@ impl ListAPIsResponseMetaPagination {
 
     pub fn total_count(mut self, value: i64) -> Self {
         self.total_count = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -77,6 +88,10 @@ impl<'de> Deserialize<'de> for ListAPIsResponseMetaPagination {
                 let mut limit: Option<i64> = None;
                 let mut offset: Option<i64> = None;
                 let mut total_count: Option<i64> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -100,7 +115,11 @@ impl<'de> Deserialize<'de> for ListAPIsResponseMetaPagination {
                             total_count =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -108,6 +127,7 @@ impl<'de> Deserialize<'de> for ListAPIsResponseMetaPagination {
                     limit,
                     offset,
                     total_count,
+                    additional_properties,
                     _unparsed,
                 };
 

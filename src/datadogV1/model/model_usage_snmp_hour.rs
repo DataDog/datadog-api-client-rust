@@ -27,6 +27,8 @@ pub struct UsageSNMPHour {
         with = "::serde_with::rust::double_option"
     )]
     pub snmp_devices: Option<Option<i64>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -39,6 +41,7 @@ impl UsageSNMPHour {
             org_name: None,
             public_id: None,
             snmp_devices: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -60,6 +63,14 @@ impl UsageSNMPHour {
 
     pub fn snmp_devices(mut self, value: Option<i64>) -> Self {
         self.snmp_devices = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -91,6 +102,10 @@ impl<'de> Deserialize<'de> for UsageSNMPHour {
                 let mut org_name: Option<String> = None;
                 let mut public_id: Option<String> = None;
                 let mut snmp_devices: Option<Option<i64>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -117,7 +132,11 @@ impl<'de> Deserialize<'de> for UsageSNMPHour {
                             snmp_devices =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -126,6 +145,7 @@ impl<'de> Deserialize<'de> for UsageSNMPHour {
                     org_name,
                     public_id,
                     snmp_devices,
+                    additional_properties,
                     _unparsed,
                 };
 

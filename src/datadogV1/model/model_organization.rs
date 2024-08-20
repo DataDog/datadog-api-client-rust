@@ -37,6 +37,8 @@ pub struct Organization {
     /// Only available for MSP customers. Allows child organizations to be created on a trial plan.
     #[serde(rename = "trial")]
     pub trial: Option<bool>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -54,6 +56,7 @@ impl Organization {
             settings: None,
             subscription: None,
             trial: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -108,6 +111,14 @@ impl Organization {
         self.trial = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl Default for Organization {
@@ -142,6 +153,10 @@ impl<'de> Deserialize<'de> for Organization {
                 let mut subscription: Option<crate::datadogV1::model::OrganizationSubscription> =
                     None;
                 let mut trial: Option<bool> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -196,7 +211,11 @@ impl<'de> Deserialize<'de> for Organization {
                             }
                             trial = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -210,6 +229,7 @@ impl<'de> Deserialize<'de> for Organization {
                     settings,
                     subscription,
                     trial,
+                    additional_properties,
                     _unparsed,
                 };
 

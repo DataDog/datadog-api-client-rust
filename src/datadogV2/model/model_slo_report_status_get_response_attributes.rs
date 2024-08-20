@@ -14,6 +14,8 @@ pub struct SLOReportStatusGetResponseAttributes {
     /// The status of the SLO report job.
     #[serde(rename = "status")]
     pub status: Option<crate::datadogV2::model::SLOReportStatus>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -23,12 +25,21 @@ impl SLOReportStatusGetResponseAttributes {
     pub fn new() -> SLOReportStatusGetResponseAttributes {
         SLOReportStatusGetResponseAttributes {
             status: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn status(mut self, value: crate::datadogV2::model::SLOReportStatus) -> Self {
         self.status = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -57,6 +68,10 @@ impl<'de> Deserialize<'de> for SLOReportStatusGetResponseAttributes {
                 M: MapAccess<'a>,
             {
                 let mut status: Option<crate::datadogV2::model::SLOReportStatus> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -77,11 +92,19 @@ impl<'de> Deserialize<'de> for SLOReportStatusGetResponseAttributes {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
-                let content = SLOReportStatusGetResponseAttributes { status, _unparsed };
+                let content = SLOReportStatusGetResponseAttributes {
+                    status,
+                    additional_properties,
+                    _unparsed,
+                };
 
                 Ok(content)
             }

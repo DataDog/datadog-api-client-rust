@@ -26,6 +26,8 @@ pub struct OutcomesBatchResponseAttributes {
     /// The state of the rule evaluation.
     #[serde(rename = "state")]
     pub state: Option<crate::datadogV2::model::State>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -39,6 +41,7 @@ impl OutcomesBatchResponseAttributes {
             remarks: None,
             service_name: None,
             state: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -65,6 +68,14 @@ impl OutcomesBatchResponseAttributes {
 
     pub fn state(mut self, value: crate::datadogV2::model::State) -> Self {
         self.state = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -97,6 +108,10 @@ impl<'de> Deserialize<'de> for OutcomesBatchResponseAttributes {
                 let mut remarks: Option<String> = None;
                 let mut service_name: Option<String> = None;
                 let mut state: Option<crate::datadogV2::model::State> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -141,7 +156,11 @@ impl<'de> Deserialize<'de> for OutcomesBatchResponseAttributes {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -151,6 +170,7 @@ impl<'de> Deserialize<'de> for OutcomesBatchResponseAttributes {
                     remarks,
                     service_name,
                     state,
+                    additional_properties,
                     _unparsed,
                 };
 

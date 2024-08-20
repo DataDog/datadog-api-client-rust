@@ -32,6 +32,8 @@ pub struct AwsCURConfigPostRequestAttributes {
     /// The report prefix used for the Cost and Usage Report.
     #[serde(rename = "report_prefix")]
     pub report_prefix: String,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -52,6 +54,7 @@ impl AwsCURConfigPostRequestAttributes {
             months: None,
             report_name,
             report_prefix,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -68,6 +71,14 @@ impl AwsCURConfigPostRequestAttributes {
 
     pub fn months(mut self, value: i32) -> Self {
         self.months = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -96,6 +107,10 @@ impl<'de> Deserialize<'de> for AwsCURConfigPostRequestAttributes {
                 let mut months: Option<i32> = None;
                 let mut report_name: Option<String> = None;
                 let mut report_prefix: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -134,7 +149,11 @@ impl<'de> Deserialize<'de> for AwsCURConfigPostRequestAttributes {
                             report_prefix =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let account_id = account_id.ok_or_else(|| M::Error::missing_field("account_id"))?;
@@ -153,6 +172,7 @@ impl<'de> Deserialize<'de> for AwsCURConfigPostRequestAttributes {
                     months,
                     report_name,
                     report_prefix,
+                    additional_properties,
                     _unparsed,
                 };
 

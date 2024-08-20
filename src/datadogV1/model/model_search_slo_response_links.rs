@@ -26,6 +26,8 @@ pub struct SearchSLOResponseLinks {
     /// Link to current page.
     #[serde(rename = "self")]
     pub self_: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -39,6 +41,7 @@ impl SearchSLOResponseLinks {
             next: None,
             prev: None,
             self_: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -65,6 +68,14 @@ impl SearchSLOResponseLinks {
 
     pub fn self_(mut self, value: String) -> Self {
         self.self_ = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -97,6 +108,10 @@ impl<'de> Deserialize<'de> for SearchSLOResponseLinks {
                 let mut next: Option<String> = None;
                 let mut prev: Option<Option<String>> = None;
                 let mut self_: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -125,7 +140,11 @@ impl<'de> Deserialize<'de> for SearchSLOResponseLinks {
                             }
                             self_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -135,6 +154,7 @@ impl<'de> Deserialize<'de> for SearchSLOResponseLinks {
                     next,
                     prev,
                     self_,
+                    additional_properties,
                     _unparsed,
                 };
 

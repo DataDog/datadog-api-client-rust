@@ -56,7 +56,11 @@ impl<'de> Deserialize<'de> for BulkMuteFindingsRequestAttributes {
                         "mute" => {
                             mute = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            return Err(serde::de::Error::custom(
+                                "Additional properties not allowed",
+                            ));
+                        }
                     }
                 }
                 let mute = mute.ok_or_else(|| M::Error::missing_field("mute"))?;

@@ -29,6 +29,8 @@ pub struct SensitiveDataScannerMeta {
     /// Version of the API.
     #[serde(rename = "version")]
     pub version: Option<i64>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -43,6 +45,7 @@ impl SensitiveDataScannerMeta {
             has_multi_pass_enabled: None,
             is_pci_compliant: None,
             version: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -76,6 +79,14 @@ impl SensitiveDataScannerMeta {
         self.version = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl Default for SensitiveDataScannerMeta {
@@ -107,6 +118,10 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerMeta {
                 let mut has_multi_pass_enabled: Option<bool> = None;
                 let mut is_pci_compliant: Option<bool> = None;
                 let mut version: Option<i64> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -152,7 +167,11 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerMeta {
                             }
                             version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -163,6 +182,7 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerMeta {
                     has_multi_pass_enabled,
                     is_pci_compliant,
                     version,
+                    additional_properties,
                     _unparsed,
                 };
 

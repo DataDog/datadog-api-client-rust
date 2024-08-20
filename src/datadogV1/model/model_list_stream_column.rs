@@ -17,6 +17,8 @@ pub struct ListStreamColumn {
     /// Widget column width.
     #[serde(rename = "width")]
     pub width: crate::datadogV1::model::ListStreamColumnWidth,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -30,8 +32,17 @@ impl ListStreamColumn {
         ListStreamColumn {
             field,
             width,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
     }
 }
 
@@ -54,6 +65,10 @@ impl<'de> Deserialize<'de> for ListStreamColumn {
             {
                 let mut field: Option<String> = None;
                 let mut width: Option<crate::datadogV1::model::ListStreamColumnWidth> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -72,7 +87,11 @@ impl<'de> Deserialize<'de> for ListStreamColumn {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let field = field.ok_or_else(|| M::Error::missing_field("field"))?;
@@ -81,6 +100,7 @@ impl<'de> Deserialize<'de> for ListStreamColumn {
                 let content = ListStreamColumn {
                     field,
                     width,
+                    additional_properties,
                     _unparsed,
                 };
 

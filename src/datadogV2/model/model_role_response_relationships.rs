@@ -14,6 +14,8 @@ pub struct RoleResponseRelationships {
     /// Relationship to multiple permissions objects.
     #[serde(rename = "permissions")]
     pub permissions: Option<crate::datadogV2::model::RelationshipToPermissions>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -23,6 +25,7 @@ impl RoleResponseRelationships {
     pub fn new() -> RoleResponseRelationships {
         RoleResponseRelationships {
             permissions: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -32,6 +35,14 @@ impl RoleResponseRelationships {
         value: crate::datadogV2::model::RelationshipToPermissions,
     ) -> Self {
         self.permissions = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -61,6 +72,10 @@ impl<'de> Deserialize<'de> for RoleResponseRelationships {
             {
                 let mut permissions: Option<crate::datadogV2::model::RelationshipToPermissions> =
                     None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -72,12 +87,17 @@ impl<'de> Deserialize<'de> for RoleResponseRelationships {
                             permissions =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = RoleResponseRelationships {
                     permissions,
+                    additional_properties,
                     _unparsed,
                 };
 

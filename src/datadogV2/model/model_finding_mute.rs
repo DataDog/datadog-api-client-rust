@@ -159,7 +159,11 @@ impl<'de> Deserialize<'de> for FindingMute {
                             }
                             uuid = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            return Err(serde::de::Error::custom(
+                                "Additional properties not allowed",
+                            ));
+                        }
                     }
                 }
 

@@ -90,6 +90,8 @@ pub struct EventAttributes {
     /// The event title.
     #[serde(rename = "title")]
     pub title: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -117,6 +119,7 @@ impl EventAttributes {
             tags: None,
             timestamp: None,
             title: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -215,6 +218,14 @@ impl EventAttributes {
         self.title = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl Default for EventAttributes {
@@ -259,6 +270,10 @@ impl<'de> Deserialize<'de> for EventAttributes {
                 let mut tags: Option<Vec<String>> = None;
                 let mut timestamp: Option<i64> = None;
                 let mut title: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -395,7 +410,11 @@ impl<'de> Deserialize<'de> for EventAttributes {
                             }
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -419,6 +438,7 @@ impl<'de> Deserialize<'de> for EventAttributes {
                     tags,
                     timestamp,
                     title,
+                    additional_properties,
                     _unparsed,
                 };
 

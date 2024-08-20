@@ -20,6 +20,8 @@ pub struct FunnelQuery {
     /// List of funnel steps.
     #[serde(rename = "steps")]
     pub steps: Vec<crate::datadogV1::model::FunnelStep>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -35,8 +37,17 @@ impl FunnelQuery {
             data_source,
             query_string,
             steps,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
     }
 }
 
@@ -60,6 +71,10 @@ impl<'de> Deserialize<'de> for FunnelQuery {
                 let mut data_source: Option<crate::datadogV1::model::FunnelSource> = None;
                 let mut query_string: Option<String> = None;
                 let mut steps: Option<Vec<crate::datadogV1::model::FunnelStep>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -85,7 +100,11 @@ impl<'de> Deserialize<'de> for FunnelQuery {
                         "steps" => {
                             steps = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let data_source =
@@ -98,6 +117,7 @@ impl<'de> Deserialize<'de> for FunnelQuery {
                     data_source,
                     query_string,
                     steps,
+                    additional_properties,
                     _unparsed,
                 };
 

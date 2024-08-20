@@ -44,6 +44,8 @@ pub struct DetailedFindingAttributes {
     /// The tags associated with this finding.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -63,6 +65,7 @@ impl DetailedFindingAttributes {
             rule: None,
             status: None,
             tags: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -124,6 +127,14 @@ impl DetailedFindingAttributes {
         self.tags = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl Default for DetailedFindingAttributes {
@@ -162,6 +173,10 @@ impl<'de> Deserialize<'de> for DetailedFindingAttributes {
                 let mut rule: Option<crate::datadogV2::model::FindingRule> = None;
                 let mut status: Option<crate::datadogV2::model::FindingStatus> = None;
                 let mut tags: Option<Vec<String>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -256,7 +271,11 @@ impl<'de> Deserialize<'de> for DetailedFindingAttributes {
                             }
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -272,6 +291,7 @@ impl<'de> Deserialize<'de> for DetailedFindingAttributes {
                     rule,
                     status,
                     tags,
+                    additional_properties,
                     _unparsed,
                 };
 

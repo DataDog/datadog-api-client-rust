@@ -22,6 +22,8 @@ pub struct SpansAggregateBucketAttributes {
     pub computes: Option<
         std::collections::BTreeMap<String, crate::datadogV2::model::SpansAggregateBucketValue>,
     >,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -33,6 +35,7 @@ impl SpansAggregateBucketAttributes {
             by: None,
             compute: None,
             computes: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -55,6 +58,14 @@ impl SpansAggregateBucketAttributes {
         >,
     ) -> Self {
         self.computes = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -91,6 +102,10 @@ impl<'de> Deserialize<'de> for SpansAggregateBucketAttributes {
                         crate::datadogV2::model::SpansAggregateBucketValue,
                     >,
                 > = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -113,7 +128,11 @@ impl<'de> Deserialize<'de> for SpansAggregateBucketAttributes {
                             }
                             computes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -121,6 +140,7 @@ impl<'de> Deserialize<'de> for SpansAggregateBucketAttributes {
                     by,
                     compute,
                     computes,
+                    additional_properties,
                     _unparsed,
                 };
 

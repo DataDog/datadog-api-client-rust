@@ -29,6 +29,8 @@ pub struct SyntheticsPrivateLocation {
     /// Array of tags attached to the private location.
     #[serde(rename = "tags")]
     pub tags: Vec<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -43,6 +45,7 @@ impl SyntheticsPrivateLocation {
             name,
             secrets: None,
             tags,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -65,6 +68,14 @@ impl SyntheticsPrivateLocation {
         value: crate::datadogV1::model::SyntheticsPrivateLocationSecrets,
     ) -> Self {
         self.secrets = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -95,6 +106,10 @@ impl<'de> Deserialize<'de> for SyntheticsPrivateLocation {
                 let mut secrets: Option<crate::datadogV1::model::SyntheticsPrivateLocationSecrets> =
                     None;
                 let mut tags: Option<Vec<String>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -127,7 +142,11 @@ impl<'de> Deserialize<'de> for SyntheticsPrivateLocation {
                         "tags" => {
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let description =
@@ -142,6 +161,7 @@ impl<'de> Deserialize<'de> for SyntheticsPrivateLocation {
                     name,
                     secrets,
                     tags,
+                    additional_properties,
                     _unparsed,
                 };
 

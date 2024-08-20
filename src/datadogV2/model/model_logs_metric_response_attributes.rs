@@ -20,6 +20,8 @@ pub struct LogsMetricResponseAttributes {
     /// The rules for the group by.
     #[serde(rename = "group_by")]
     pub group_by: Option<Vec<crate::datadogV2::model::LogsMetricResponseGroupBy>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -31,6 +33,7 @@ impl LogsMetricResponseAttributes {
             compute: None,
             filter: None,
             group_by: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -50,6 +53,14 @@ impl LogsMetricResponseAttributes {
         value: Vec<crate::datadogV2::model::LogsMetricResponseGroupBy>,
     ) -> Self {
         self.group_by = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -81,6 +92,10 @@ impl<'de> Deserialize<'de> for LogsMetricResponseAttributes {
                 let mut filter: Option<crate::datadogV2::model::LogsMetricResponseFilter> = None;
                 let mut group_by: Option<Vec<crate::datadogV2::model::LogsMetricResponseGroupBy>> =
                     None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -103,7 +118,11 @@ impl<'de> Deserialize<'de> for LogsMetricResponseAttributes {
                             }
                             group_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -111,6 +130,7 @@ impl<'de> Deserialize<'de> for LogsMetricResponseAttributes {
                     compute,
                     filter,
                     group_by,
+                    additional_properties,
                     _unparsed,
                 };
 

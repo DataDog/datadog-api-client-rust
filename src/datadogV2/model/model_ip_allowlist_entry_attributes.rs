@@ -23,6 +23,8 @@ pub struct IPAllowlistEntryAttributes {
     /// A note describing the IP allowlist entry.
     #[serde(rename = "note")]
     pub note: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -35,6 +37,7 @@ impl IPAllowlistEntryAttributes {
             created_at: None,
             modified_at: None,
             note: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -56,6 +59,14 @@ impl IPAllowlistEntryAttributes {
 
     pub fn note(mut self, value: String) -> Self {
         self.note = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -87,6 +98,10 @@ impl<'de> Deserialize<'de> for IPAllowlistEntryAttributes {
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut note: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -116,7 +131,11 @@ impl<'de> Deserialize<'de> for IPAllowlistEntryAttributes {
                             }
                             note = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -125,6 +144,7 @@ impl<'de> Deserialize<'de> for IPAllowlistEntryAttributes {
                     created_at,
                     modified_at,
                     note,
+                    additional_properties,
                     _unparsed,
                 };
 

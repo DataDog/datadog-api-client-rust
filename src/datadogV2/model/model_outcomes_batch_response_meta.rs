@@ -17,6 +17,8 @@ pub struct OutcomesBatchResponseMeta {
     /// Total number of scorecard results modified during the bulk operation.
     #[serde(rename = "total_updated")]
     pub total_updated: Option<i64>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,6 +29,7 @@ impl OutcomesBatchResponseMeta {
         OutcomesBatchResponseMeta {
             total_received: None,
             total_updated: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -38,6 +41,14 @@ impl OutcomesBatchResponseMeta {
 
     pub fn total_updated(mut self, value: i64) -> Self {
         self.total_updated = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -67,6 +78,10 @@ impl<'de> Deserialize<'de> for OutcomesBatchResponseMeta {
             {
                 let mut total_received: Option<i64> = None;
                 let mut total_updated: Option<i64> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -85,13 +100,18 @@ impl<'de> Deserialize<'de> for OutcomesBatchResponseMeta {
                             total_updated =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = OutcomesBatchResponseMeta {
                     total_received,
                     total_updated,
+                    additional_properties,
                     _unparsed,
                 };
 

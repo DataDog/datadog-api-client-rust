@@ -23,6 +23,8 @@ pub struct BillConfig {
     /// The name of the storage container where the Azure Export is saved.
     #[serde(rename = "storage_container")]
     pub storage_container: String,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -40,8 +42,17 @@ impl BillConfig {
             export_path,
             storage_account,
             storage_container,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
     }
 }
 
@@ -66,6 +77,10 @@ impl<'de> Deserialize<'de> for BillConfig {
                 let mut export_path: Option<String> = None;
                 let mut storage_account: Option<String> = None;
                 let mut storage_container: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -86,7 +101,11 @@ impl<'de> Deserialize<'de> for BillConfig {
                             storage_container =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let export_name =
@@ -103,6 +122,7 @@ impl<'de> Deserialize<'de> for BillConfig {
                     export_path,
                     storage_account,
                     storage_container,
+                    additional_properties,
                     _unparsed,
                 };
 

@@ -35,6 +35,8 @@ pub struct GroupWidgetDefinition {
     /// List of widget groups.
     #[serde(rename = "widgets")]
     pub widgets: Vec<crate::datadogV1::model::Widget>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -55,6 +57,7 @@ impl GroupWidgetDefinition {
             title_align: None,
             type_,
             widgets,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -81,6 +84,14 @@ impl GroupWidgetDefinition {
 
     pub fn title_align(mut self, value: crate::datadogV1::model::WidgetTextAlign) -> Self {
         self.title_align = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -110,6 +121,10 @@ impl<'de> Deserialize<'de> for GroupWidgetDefinition {
                 let mut title_align: Option<crate::datadogV1::model::WidgetTextAlign> = None;
                 let mut type_: Option<crate::datadogV1::model::GroupWidgetDefinitionType> = None;
                 let mut widgets: Option<Vec<crate::datadogV1::model::Widget>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -184,7 +199,11 @@ impl<'de> Deserialize<'de> for GroupWidgetDefinition {
                         "widgets" => {
                             widgets = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let layout_type =
@@ -201,6 +220,7 @@ impl<'de> Deserialize<'de> for GroupWidgetDefinition {
                     title_align,
                     type_,
                     widgets,
+                    additional_properties,
                     _unparsed,
                 };
 

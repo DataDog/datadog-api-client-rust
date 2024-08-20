@@ -23,6 +23,8 @@ pub struct Case {
     /// Case resource type
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CaseResourceType,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -39,12 +41,21 @@ impl Case {
             id,
             relationships: None,
             type_,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn relationships(mut self, value: crate::datadogV2::model::CaseRelationships) -> Self {
         self.relationships = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -70,6 +81,10 @@ impl<'de> Deserialize<'de> for Case {
                 let mut id: Option<String> = None;
                 let mut relationships: Option<crate::datadogV2::model::CaseRelationships> = None;
                 let mut type_: Option<crate::datadogV2::model::CaseResourceType> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -100,7 +115,11 @@ impl<'de> Deserialize<'de> for Case {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
@@ -112,6 +131,7 @@ impl<'de> Deserialize<'de> for Case {
                     id,
                     relationships,
                     type_,
+                    additional_properties,
                     _unparsed,
                 };
 

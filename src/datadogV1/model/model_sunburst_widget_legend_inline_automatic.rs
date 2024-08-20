@@ -20,6 +20,8 @@ pub struct SunburstWidgetLegendInlineAutomatic {
     /// Whether to show the legend inline or let it be automatically generated.
     #[serde(rename = "type")]
     pub type_: crate::datadogV1::model::SunburstWidgetLegendInlineAutomaticType,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -33,6 +35,7 @@ impl SunburstWidgetLegendInlineAutomatic {
             hide_percent: None,
             hide_value: None,
             type_,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -44,6 +47,14 @@ impl SunburstWidgetLegendInlineAutomatic {
 
     pub fn hide_value(mut self, value: bool) -> Self {
         self.hide_value = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -70,6 +81,10 @@ impl<'de> Deserialize<'de> for SunburstWidgetLegendInlineAutomatic {
                 let mut type_: Option<
                     crate::datadogV1::model::SunburstWidgetLegendInlineAutomaticType,
                 > = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -98,7 +113,11 @@ impl<'de> Deserialize<'de> for SunburstWidgetLegendInlineAutomatic {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
@@ -107,6 +126,7 @@ impl<'de> Deserialize<'de> for SunburstWidgetLegendInlineAutomatic {
                     hide_percent,
                     hide_value,
                     type_,
+                    additional_properties,
                     _unparsed,
                 };
 

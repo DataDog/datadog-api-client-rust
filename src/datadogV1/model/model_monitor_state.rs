@@ -16,6 +16,8 @@ pub struct MonitorState {
     #[serde(rename = "groups")]
     pub groups:
         Option<std::collections::BTreeMap<String, crate::datadogV1::model::MonitorStateGroup>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -25,6 +27,7 @@ impl MonitorState {
     pub fn new() -> MonitorState {
         MonitorState {
             groups: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -34,6 +37,14 @@ impl MonitorState {
         value: std::collections::BTreeMap<String, crate::datadogV1::model::MonitorStateGroup>,
     ) -> Self {
         self.groups = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -64,6 +75,10 @@ impl<'de> Deserialize<'de> for MonitorState {
                 let mut groups: Option<
                     std::collections::BTreeMap<String, crate::datadogV1::model::MonitorStateGroup>,
                 > = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -74,11 +89,19 @@ impl<'de> Deserialize<'de> for MonitorState {
                             }
                             groups = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
-                let content = MonitorState { groups, _unparsed };
+                let content = MonitorState {
+                    groups,
+                    additional_properties,
+                    _unparsed,
+                };
 
                 Ok(content)
             }

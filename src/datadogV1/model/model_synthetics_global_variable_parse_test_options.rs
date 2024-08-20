@@ -23,6 +23,8 @@ pub struct SyntheticsGlobalVariableParseTestOptions {
     /// Property of the Synthetic Test Response to use for a Synthetic global variable.
     #[serde(rename = "type")]
     pub type_: crate::datadogV1::model::SyntheticsGlobalVariableParseTestOptionsType,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -37,6 +39,7 @@ impl SyntheticsGlobalVariableParseTestOptions {
             local_variable_name: None,
             parser: None,
             type_,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -53,6 +56,14 @@ impl SyntheticsGlobalVariableParseTestOptions {
 
     pub fn parser(mut self, value: crate::datadogV1::model::SyntheticsVariableParser) -> Self {
         self.parser = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -80,6 +91,10 @@ impl<'de> Deserialize<'de> for SyntheticsGlobalVariableParseTestOptions {
                 let mut type_: Option<
                     crate::datadogV1::model::SyntheticsGlobalVariableParseTestOptionsType,
                 > = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -114,7 +129,11 @@ impl<'de> Deserialize<'de> for SyntheticsGlobalVariableParseTestOptions {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
@@ -124,6 +143,7 @@ impl<'de> Deserialize<'de> for SyntheticsGlobalVariableParseTestOptions {
                     local_variable_name,
                     parser,
                     type_,
+                    additional_properties,
                     _unparsed,
                 };
 

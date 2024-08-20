@@ -17,6 +17,8 @@ pub struct SyntheticsGetBrowserTestLatestResultsResponse {
     /// Result of the latest browser test run.
     #[serde(rename = "results")]
     pub results: Option<Vec<crate::datadogV1::model::SyntheticsBrowserTestResultShort>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,6 +29,7 @@ impl SyntheticsGetBrowserTestLatestResultsResponse {
         SyntheticsGetBrowserTestLatestResultsResponse {
             last_timestamp_fetched: None,
             results: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -41,6 +44,14 @@ impl SyntheticsGetBrowserTestLatestResultsResponse {
         value: Vec<crate::datadogV1::model::SyntheticsBrowserTestResultShort>,
     ) -> Self {
         self.results = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -72,6 +83,10 @@ impl<'de> Deserialize<'de> for SyntheticsGetBrowserTestLatestResultsResponse {
                 let mut results: Option<
                     Vec<crate::datadogV1::model::SyntheticsBrowserTestResultShort>,
                 > = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -89,13 +104,18 @@ impl<'de> Deserialize<'de> for SyntheticsGetBrowserTestLatestResultsResponse {
                             }
                             results = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = SyntheticsGetBrowserTestLatestResultsResponse {
                     last_timestamp_fetched,
                     results,
+                    additional_properties,
                     _unparsed,
                 };
 

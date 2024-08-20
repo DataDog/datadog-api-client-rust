@@ -14,6 +14,8 @@ pub struct UserResponse {
     /// Create, edit, and disable users.
     #[serde(rename = "user")]
     pub user: Option<crate::datadogV1::model::User>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -23,12 +25,21 @@ impl UserResponse {
     pub fn new() -> UserResponse {
         UserResponse {
             user: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn user(mut self, value: crate::datadogV1::model::User) -> Self {
         self.user = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -57,6 +68,10 @@ impl<'de> Deserialize<'de> for UserResponse {
                 M: MapAccess<'a>,
             {
                 let mut user: Option<crate::datadogV1::model::User> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -67,11 +82,19 @@ impl<'de> Deserialize<'de> for UserResponse {
                             }
                             user = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
-                let content = UserResponse { user, _unparsed };
+                let content = UserResponse {
+                    user,
+                    additional_properties,
+                    _unparsed,
+                };
 
                 Ok(content)
             }

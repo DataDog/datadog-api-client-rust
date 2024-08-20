@@ -17,6 +17,8 @@ pub struct SyntheticsGlobalVariableTOTPParameters {
     /// Interval for which to refresh the token (in seconds).
     #[serde(rename = "refresh_interval")]
     pub refresh_interval: Option<i32>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,6 +29,7 @@ impl SyntheticsGlobalVariableTOTPParameters {
         SyntheticsGlobalVariableTOTPParameters {
             digits: None,
             refresh_interval: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -38,6 +41,14 @@ impl SyntheticsGlobalVariableTOTPParameters {
 
     pub fn refresh_interval(mut self, value: i32) -> Self {
         self.refresh_interval = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -67,6 +78,10 @@ impl<'de> Deserialize<'de> for SyntheticsGlobalVariableTOTPParameters {
             {
                 let mut digits: Option<i32> = None;
                 let mut refresh_interval: Option<i32> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -84,13 +99,18 @@ impl<'de> Deserialize<'de> for SyntheticsGlobalVariableTOTPParameters {
                             refresh_interval =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = SyntheticsGlobalVariableTOTPParameters {
                     digits,
                     refresh_interval,
+                    additional_properties,
                     _unparsed,
                 };
 

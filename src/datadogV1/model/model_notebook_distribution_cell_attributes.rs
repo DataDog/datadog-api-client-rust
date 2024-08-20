@@ -25,6 +25,8 @@ pub struct NotebookDistributionCellAttributes {
     /// Timeframe for the notebook cell. When 'null', the notebook global time is used.
     #[serde(rename = "time", default, with = "::serde_with::rust::double_option")]
     pub time: Option<Option<crate::datadogV1::model::NotebookCellTime>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -39,6 +41,7 @@ impl NotebookDistributionCellAttributes {
             graph_size: None,
             split_by: None,
             time: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -55,6 +58,14 @@ impl NotebookDistributionCellAttributes {
 
     pub fn time(mut self, value: Option<crate::datadogV1::model::NotebookCellTime>) -> Self {
         self.time = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -81,6 +92,10 @@ impl<'de> Deserialize<'de> for NotebookDistributionCellAttributes {
                 let mut graph_size: Option<crate::datadogV1::model::NotebookGraphSize> = None;
                 let mut split_by: Option<crate::datadogV1::model::NotebookSplitBy> = None;
                 let mut time: Option<Option<crate::datadogV1::model::NotebookCellTime>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -125,7 +140,11 @@ impl<'de> Deserialize<'de> for NotebookDistributionCellAttributes {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let definition = definition.ok_or_else(|| M::Error::missing_field("definition"))?;
@@ -135,6 +154,7 @@ impl<'de> Deserialize<'de> for NotebookDistributionCellAttributes {
                     graph_size,
                     split_by,
                     time,
+                    additional_properties,
                     _unparsed,
                 };
 

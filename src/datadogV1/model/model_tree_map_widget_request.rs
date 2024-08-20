@@ -23,6 +23,8 @@ pub struct TreeMapWidgetRequest {
     /// Timeseries, scalar, or event list response. Event list response formats are supported by Geomap widgets.
     #[serde(rename = "response_format")]
     pub response_format: Option<crate::datadogV1::model::FormulaAndFunctionResponseFormat>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -35,6 +37,7 @@ impl TreeMapWidgetRequest {
             q: None,
             queries: None,
             response_format: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -62,6 +65,14 @@ impl TreeMapWidgetRequest {
         value: crate::datadogV1::model::FormulaAndFunctionResponseFormat,
     ) -> Self {
         self.response_format = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -97,6 +108,10 @@ impl<'de> Deserialize<'de> for TreeMapWidgetRequest {
                 let mut response_format: Option<
                     crate::datadogV1::model::FormulaAndFunctionResponseFormat,
                 > = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -134,7 +149,11 @@ impl<'de> Deserialize<'de> for TreeMapWidgetRequest {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -143,6 +162,7 @@ impl<'de> Deserialize<'de> for TreeMapWidgetRequest {
                     q,
                     queries,
                     response_format,
+                    additional_properties,
                     _unparsed,
                 };
 

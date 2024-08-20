@@ -14,6 +14,8 @@ pub struct AwsCURConfigPatchRequestAttributes {
     /// Whether or not the Cloud Cost Management account is enabled.
     #[serde(rename = "is_enabled")]
     pub is_enabled: bool,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -23,8 +25,17 @@ impl AwsCURConfigPatchRequestAttributes {
     pub fn new(is_enabled: bool) -> AwsCURConfigPatchRequestAttributes {
         AwsCURConfigPatchRequestAttributes {
             is_enabled,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
     }
 }
 
@@ -46,6 +57,10 @@ impl<'de> Deserialize<'de> for AwsCURConfigPatchRequestAttributes {
                 M: MapAccess<'a>,
             {
                 let mut is_enabled: Option<bool> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -53,13 +68,18 @@ impl<'de> Deserialize<'de> for AwsCURConfigPatchRequestAttributes {
                         "is_enabled" => {
                             is_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let is_enabled = is_enabled.ok_or_else(|| M::Error::missing_field("is_enabled"))?;
 
                 let content = AwsCURConfigPatchRequestAttributes {
                     is_enabled,
+                    additional_properties,
                     _unparsed,
                 };
 

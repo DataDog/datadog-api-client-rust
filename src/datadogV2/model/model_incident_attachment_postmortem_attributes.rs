@@ -18,6 +18,8 @@ pub struct IncidentAttachmentPostmortemAttributes {
     /// The type of postmortem attachment attributes.
     #[serde(rename = "attachment_type")]
     pub attachment_type: crate::datadogV2::model::IncidentAttachmentPostmortemAttachmentType,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -31,8 +33,17 @@ impl IncidentAttachmentPostmortemAttributes {
         IncidentAttachmentPostmortemAttributes {
             attachment,
             attachment_type,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
     }
 }
 
@@ -57,6 +68,10 @@ impl<'de> Deserialize<'de> for IncidentAttachmentPostmortemAttributes {
                 let mut attachment_type: Option<
                     crate::datadogV2::model::IncidentAttachmentPostmortemAttachmentType,
                 > = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -76,7 +91,11 @@ impl<'de> Deserialize<'de> for IncidentAttachmentPostmortemAttributes {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let attachment = attachment.ok_or_else(|| M::Error::missing_field("attachment"))?;
@@ -86,6 +105,7 @@ impl<'de> Deserialize<'de> for IncidentAttachmentPostmortemAttributes {
                 let content = IncidentAttachmentPostmortemAttributes {
                     attachment,
                     attachment_type,
+                    additional_properties,
                     _unparsed,
                 };
 

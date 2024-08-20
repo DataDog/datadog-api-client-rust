@@ -17,6 +17,8 @@ pub struct MonitorSearchCountItem {
     /// The facet value.
     #[serde(rename = "name")]
     pub name: Option<serde_json::Value>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,6 +29,7 @@ impl MonitorSearchCountItem {
         MonitorSearchCountItem {
             count: None,
             name: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -38,6 +41,14 @@ impl MonitorSearchCountItem {
 
     pub fn name(mut self, value: serde_json::Value) -> Self {
         self.name = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -67,6 +78,10 @@ impl<'de> Deserialize<'de> for MonitorSearchCountItem {
             {
                 let mut count: Option<i64> = None;
                 let mut name: Option<serde_json::Value> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -83,13 +98,18 @@ impl<'de> Deserialize<'de> for MonitorSearchCountItem {
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = MonitorSearchCountItem {
                     count,
                     name,
+                    additional_properties,
                     _unparsed,
                 };
 

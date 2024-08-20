@@ -14,6 +14,8 @@ pub struct UpdateOpenAPIResponseAttributes {
     /// List of endpoints which couldn't be parsed.
     #[serde(rename = "failed_endpoints")]
     pub failed_endpoints: Option<Vec<crate::datadogV2::model::OpenAPIEndpoint>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -23,6 +25,7 @@ impl UpdateOpenAPIResponseAttributes {
     pub fn new() -> UpdateOpenAPIResponseAttributes {
         UpdateOpenAPIResponseAttributes {
             failed_endpoints: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -32,6 +35,14 @@ impl UpdateOpenAPIResponseAttributes {
         value: Vec<crate::datadogV2::model::OpenAPIEndpoint>,
     ) -> Self {
         self.failed_endpoints = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -61,6 +72,10 @@ impl<'de> Deserialize<'de> for UpdateOpenAPIResponseAttributes {
             {
                 let mut failed_endpoints: Option<Vec<crate::datadogV2::model::OpenAPIEndpoint>> =
                     None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -72,12 +87,17 @@ impl<'de> Deserialize<'de> for UpdateOpenAPIResponseAttributes {
                             failed_endpoints =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = UpdateOpenAPIResponseAttributes {
                     failed_endpoints,
+                    additional_properties,
                     _unparsed,
                 };
 

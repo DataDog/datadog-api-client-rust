@@ -35,6 +35,8 @@ pub struct ProcessSummaryAttributes {
     /// Process owner.
     #[serde(rename = "user")]
     pub user: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -51,6 +53,7 @@ impl ProcessSummaryAttributes {
             tags: None,
             timestamp: None,
             user: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -94,6 +97,14 @@ impl ProcessSummaryAttributes {
         self.user = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl Default for ProcessSummaryAttributes {
@@ -127,6 +138,10 @@ impl<'de> Deserialize<'de> for ProcessSummaryAttributes {
                 let mut tags: Option<Vec<String>> = None;
                 let mut timestamp: Option<String> = None;
                 let mut user: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -179,7 +194,11 @@ impl<'de> Deserialize<'de> for ProcessSummaryAttributes {
                             }
                             user = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -192,6 +211,7 @@ impl<'de> Deserialize<'de> for ProcessSummaryAttributes {
                     tags,
                     timestamp,
                     user,
+                    additional_properties,
                     _unparsed,
                 };
 

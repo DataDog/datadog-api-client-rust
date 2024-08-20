@@ -29,6 +29,8 @@ pub struct EventsScalarQuery {
     /// Configuration of the search/filter for an events query.
     #[serde(rename = "search")]
     pub search: Option<crate::datadogV2::model::EventsSearch>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -46,6 +48,7 @@ impl EventsScalarQuery {
             indexes: None,
             name: None,
             search: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -67,6 +70,14 @@ impl EventsScalarQuery {
 
     pub fn search(mut self, value: crate::datadogV2::model::EventsSearch) -> Self {
         self.search = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -94,6 +105,10 @@ impl<'de> Deserialize<'de> for EventsScalarQuery {
                 let mut indexes: Option<Vec<String>> = None;
                 let mut name: Option<String> = None;
                 let mut search: Option<crate::datadogV2::model::EventsSearch> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -139,7 +154,11 @@ impl<'de> Deserialize<'de> for EventsScalarQuery {
                             }
                             search = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let compute = compute.ok_or_else(|| M::Error::missing_field("compute"))?;
@@ -153,6 +172,7 @@ impl<'de> Deserialize<'de> for EventsScalarQuery {
                     indexes,
                     name,
                     search,
+                    additional_properties,
                     _unparsed,
                 };
 

@@ -20,6 +20,8 @@ pub struct Log {
     /// Type of the event.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::LogType>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -31,6 +33,7 @@ impl Log {
             attributes: None,
             id: None,
             type_: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -47,6 +50,14 @@ impl Log {
 
     pub fn type_(mut self, value: crate::datadogV2::model::LogType) -> Self {
         self.type_ = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -77,6 +88,10 @@ impl<'de> Deserialize<'de> for Log {
                 let mut attributes: Option<crate::datadogV2::model::LogAttributes> = None;
                 let mut id: Option<String> = None;
                 let mut type_: Option<crate::datadogV2::model::LogType> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -107,7 +122,11 @@ impl<'de> Deserialize<'de> for Log {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -115,6 +134,7 @@ impl<'de> Deserialize<'de> for Log {
                     attributes,
                     id,
                     type_,
+                    additional_properties,
                     _unparsed,
                 };
 

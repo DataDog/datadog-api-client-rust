@@ -20,6 +20,8 @@ pub struct IncidentSearchResponse {
     /// The metadata object containing pagination metadata.
     #[serde(rename = "meta")]
     pub meta: Option<crate::datadogV2::model::IncidentSearchResponseMeta>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -33,6 +35,7 @@ impl IncidentSearchResponse {
             data,
             included: None,
             meta: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -47,6 +50,14 @@ impl IncidentSearchResponse {
 
     pub fn meta(mut self, value: crate::datadogV2::model::IncidentSearchResponseMeta) -> Self {
         self.meta = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -73,6 +84,10 @@ impl<'de> Deserialize<'de> for IncidentSearchResponse {
                     Vec<crate::datadogV2::model::IncidentResponseIncludedItem>,
                 > = None;
                 let mut meta: Option<crate::datadogV2::model::IncidentSearchResponseMeta> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -92,7 +107,11 @@ impl<'de> Deserialize<'de> for IncidentSearchResponse {
                             }
                             meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
@@ -101,6 +120,7 @@ impl<'de> Deserialize<'de> for IncidentSearchResponse {
                     data,
                     included,
                     meta,
+                    additional_properties,
                     _unparsed,
                 };
 

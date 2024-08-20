@@ -23,6 +23,8 @@ pub struct ConfluentAccountCreateRequestAttributes {
     /// A list of strings representing tags. Can be a single key, or key-value pairs separated by a colon.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -35,6 +37,7 @@ impl ConfluentAccountCreateRequestAttributes {
             api_secret,
             resources: None,
             tags: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -49,6 +52,14 @@ impl ConfluentAccountCreateRequestAttributes {
 
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -76,6 +87,10 @@ impl<'de> Deserialize<'de> for ConfluentAccountCreateRequestAttributes {
                     Vec<crate::datadogV2::model::ConfluentAccountResourceAttributes>,
                 > = None;
                 let mut tags: Option<Vec<String>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -98,7 +113,11 @@ impl<'de> Deserialize<'de> for ConfluentAccountCreateRequestAttributes {
                             }
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let api_key = api_key.ok_or_else(|| M::Error::missing_field("api_key"))?;
@@ -109,6 +128,7 @@ impl<'de> Deserialize<'de> for ConfluentAccountCreateRequestAttributes {
                     api_secret,
                     resources,
                     tags,
+                    additional_properties,
                     _unparsed,
                 };
 

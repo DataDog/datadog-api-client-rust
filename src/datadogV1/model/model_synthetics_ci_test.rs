@@ -53,6 +53,8 @@ pub struct SyntheticsCITest {
     /// Variables to replace in the test.
     #[serde(rename = "variables")]
     pub variables: Option<std::collections::BTreeMap<String, String>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -75,6 +77,7 @@ impl SyntheticsCITest {
             retry: None,
             start_url: None,
             variables: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -143,6 +146,14 @@ impl SyntheticsCITest {
         self.variables = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl<'de> Deserialize<'de> for SyntheticsCITest {
@@ -176,6 +187,10 @@ impl<'de> Deserialize<'de> for SyntheticsCITest {
                 let mut retry: Option<crate::datadogV1::model::SyntheticsTestOptionsRetry> = None;
                 let mut start_url: Option<String> = None;
                 let mut variables: Option<std::collections::BTreeMap<String, String>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -271,7 +286,11 @@ impl<'de> Deserialize<'de> for SyntheticsCITest {
                             }
                             variables = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let public_id = public_id.ok_or_else(|| M::Error::missing_field("public_id"))?;
@@ -291,6 +310,7 @@ impl<'de> Deserialize<'de> for SyntheticsCITest {
                     retry,
                     start_url,
                     variables,
+                    additional_properties,
                     _unparsed,
                 };
 

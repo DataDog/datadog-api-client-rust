@@ -26,6 +26,8 @@ pub struct FreeTextWidgetDefinition {
     /// Type of the free text widget.
     #[serde(rename = "type")]
     pub type_: crate::datadogV1::model::FreeTextWidgetDefinitionType,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -42,6 +44,7 @@ impl FreeTextWidgetDefinition {
             text,
             text_align: None,
             type_,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -58,6 +61,14 @@ impl FreeTextWidgetDefinition {
 
     pub fn text_align(mut self, value: crate::datadogV1::model::WidgetTextAlign) -> Self {
         self.text_align = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -84,6 +95,10 @@ impl<'de> Deserialize<'de> for FreeTextWidgetDefinition {
                 let mut text: Option<String> = None;
                 let mut text_align: Option<crate::datadogV1::model::WidgetTextAlign> = None;
                 let mut type_: Option<crate::datadogV1::model::FreeTextWidgetDefinitionType> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -130,7 +145,11 @@ impl<'de> Deserialize<'de> for FreeTextWidgetDefinition {
                                 }
                             }
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let text = text.ok_or_else(|| M::Error::missing_field("text"))?;
@@ -142,6 +161,7 @@ impl<'de> Deserialize<'de> for FreeTextWidgetDefinition {
                     text,
                     text_align,
                     type_,
+                    additional_properties,
                     _unparsed,
                 };
 

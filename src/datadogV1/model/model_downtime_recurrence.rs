@@ -50,6 +50,8 @@ pub struct DowntimeRecurrence {
         with = "::serde_with::rust::double_option"
     )]
     pub week_days: Option<Option<Vec<String>>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -64,6 +66,7 @@ impl DowntimeRecurrence {
             until_date: None,
             until_occurrences: None,
             week_days: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -97,6 +100,14 @@ impl DowntimeRecurrence {
         self.week_days = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl Default for DowntimeRecurrence {
@@ -128,6 +139,10 @@ impl<'de> Deserialize<'de> for DowntimeRecurrence {
                 let mut until_date: Option<Option<i64>> = None;
                 let mut until_occurrences: Option<Option<i32>> = None;
                 let mut week_days: Option<Option<Vec<String>>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -160,7 +175,11 @@ impl<'de> Deserialize<'de> for DowntimeRecurrence {
                         "week_days" => {
                             week_days = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -171,6 +190,7 @@ impl<'de> Deserialize<'de> for DowntimeRecurrence {
                     until_date,
                     until_occurrences,
                     week_days,
+                    additional_properties,
                     _unparsed,
                 };
 

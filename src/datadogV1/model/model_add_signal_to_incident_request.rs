@@ -20,6 +20,8 @@ pub struct AddSignalToIncidentRequest {
     /// Version of the updated signal. If server side version is higher, update will be rejected.
     #[serde(rename = "version")]
     pub version: Option<i64>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -31,6 +33,7 @@ impl AddSignalToIncidentRequest {
             add_to_signal_timeline: None,
             incident_id,
             version: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -42,6 +45,14 @@ impl AddSignalToIncidentRequest {
 
     pub fn version(mut self, value: i64) -> Self {
         self.version = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -66,6 +77,10 @@ impl<'de> Deserialize<'de> for AddSignalToIncidentRequest {
                 let mut add_to_signal_timeline: Option<bool> = None;
                 let mut incident_id: Option<i64> = None;
                 let mut version: Option<i64> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -87,7 +102,11 @@ impl<'de> Deserialize<'de> for AddSignalToIncidentRequest {
                             }
                             version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let incident_id =
@@ -97,6 +116,7 @@ impl<'de> Deserialize<'de> for AddSignalToIncidentRequest {
                     add_to_signal_timeline,
                     incident_id,
                     version,
+                    additional_properties,
                     _unparsed,
                 };
 

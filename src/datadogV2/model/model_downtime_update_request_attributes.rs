@@ -45,6 +45,8 @@ pub struct DowntimeUpdateRequestAttributes {
     /// The scope to which the downtime applies. Must follow the [common search syntax](<https://docs.datadoghq.com/logs/explorer/search_syntax/>).
     #[serde(rename = "scope")]
     pub scope: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -61,6 +63,7 @@ impl DowntimeUpdateRequestAttributes {
             notify_end_types: None,
             schedule: None,
             scope: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -116,6 +119,14 @@ impl DowntimeUpdateRequestAttributes {
         self.scope = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl Default for DowntimeUpdateRequestAttributes {
@@ -156,6 +167,10 @@ impl<'de> Deserialize<'de> for DowntimeUpdateRequestAttributes {
                 let mut schedule: Option<crate::datadogV2::model::DowntimeScheduleUpdateRequest> =
                     None;
                 let mut scope: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -223,7 +238,11 @@ impl<'de> Deserialize<'de> for DowntimeUpdateRequestAttributes {
                             }
                             scope = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
@@ -236,6 +255,7 @@ impl<'de> Deserialize<'de> for DowntimeUpdateRequestAttributes {
                     notify_end_types,
                     schedule,
                     scope,
+                    additional_properties,
                     _unparsed,
                 };
 

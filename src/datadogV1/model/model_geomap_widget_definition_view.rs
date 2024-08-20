@@ -14,6 +14,8 @@ pub struct GeomapWidgetDefinitionView {
     /// The 2-letter ISO code of a country to focus the map on. Or `WORLD`.
     #[serde(rename = "focus")]
     pub focus: String,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -23,8 +25,17 @@ impl GeomapWidgetDefinitionView {
     pub fn new(focus: String) -> GeomapWidgetDefinitionView {
         GeomapWidgetDefinitionView {
             focus,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
     }
 }
 
@@ -46,6 +57,10 @@ impl<'de> Deserialize<'de> for GeomapWidgetDefinitionView {
                 M: MapAccess<'a>,
             {
                 let mut focus: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -53,12 +68,20 @@ impl<'de> Deserialize<'de> for GeomapWidgetDefinitionView {
                         "focus" => {
                             focus = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let focus = focus.ok_or_else(|| M::Error::missing_field("focus"))?;
 
-                let content = GeomapWidgetDefinitionView { focus, _unparsed };
+                let content = GeomapWidgetDefinitionView {
+                    focus,
+                    additional_properties,
+                    _unparsed,
+                };
 
                 Ok(content)
             }

@@ -17,6 +17,8 @@ pub struct SAMLAssertionAttributeAttributes {
     /// Value portion of a key/value pair of the attribute sent from the Identity Provider.
     #[serde(rename = "attribute_value")]
     pub attribute_value: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,6 +29,7 @@ impl SAMLAssertionAttributeAttributes {
         SAMLAssertionAttributeAttributes {
             attribute_key: None,
             attribute_value: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -38,6 +41,14 @@ impl SAMLAssertionAttributeAttributes {
 
     pub fn attribute_value(mut self, value: String) -> Self {
         self.attribute_value = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -67,6 +78,10 @@ impl<'de> Deserialize<'de> for SAMLAssertionAttributeAttributes {
             {
                 let mut attribute_key: Option<String> = None;
                 let mut attribute_value: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -85,13 +100,18 @@ impl<'de> Deserialize<'de> for SAMLAssertionAttributeAttributes {
                             attribute_value =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = SAMLAssertionAttributeAttributes {
                     attribute_key,
                     attribute_value,
+                    additional_properties,
                     _unparsed,
                 };
 

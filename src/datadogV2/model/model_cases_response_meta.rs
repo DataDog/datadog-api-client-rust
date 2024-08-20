@@ -14,6 +14,8 @@ pub struct CasesResponseMeta {
     /// Pagination metadata
     #[serde(rename = "page")]
     pub page: Option<crate::datadogV2::model::CasesResponseMetaPagination>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -23,12 +25,21 @@ impl CasesResponseMeta {
     pub fn new() -> CasesResponseMeta {
         CasesResponseMeta {
             page: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn page(mut self, value: crate::datadogV2::model::CasesResponseMetaPagination) -> Self {
         self.page = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -57,6 +68,10 @@ impl<'de> Deserialize<'de> for CasesResponseMeta {
                 M: MapAccess<'a>,
             {
                 let mut page: Option<crate::datadogV2::model::CasesResponseMetaPagination> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -67,11 +82,19 @@ impl<'de> Deserialize<'de> for CasesResponseMeta {
                             }
                             page = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
-                let content = CasesResponseMeta { page, _unparsed };
+                let content = CasesResponseMeta {
+                    page,
+                    additional_properties,
+                    _unparsed,
+                };
 
                 Ok(content)
             }

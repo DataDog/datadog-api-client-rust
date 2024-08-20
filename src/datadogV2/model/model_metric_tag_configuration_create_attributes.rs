@@ -44,6 +44,8 @@ pub struct MetricTagConfigurationCreateAttributes {
     /// A list of tag keys that will be queryable for your metric.
     #[serde(rename = "tags")]
     pub tags: Vec<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -60,6 +62,7 @@ impl MetricTagConfigurationCreateAttributes {
             include_percentiles: None,
             metric_type,
             tags,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -79,6 +82,14 @@ impl MetricTagConfigurationCreateAttributes {
 
     pub fn include_percentiles(mut self, value: bool) -> Self {
         self.include_percentiles = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -109,6 +120,10 @@ impl<'de> Deserialize<'de> for MetricTagConfigurationCreateAttributes {
                     crate::datadogV2::model::MetricTagConfigurationMetricTypes,
                 > = None;
                 let mut tags: Option<Vec<String>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -149,7 +164,11 @@ impl<'de> Deserialize<'de> for MetricTagConfigurationCreateAttributes {
                         "tags" => {
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let metric_type =
@@ -162,6 +181,7 @@ impl<'de> Deserialize<'de> for MetricTagConfigurationCreateAttributes {
                     include_percentiles,
                     metric_type,
                     tags,
+                    additional_properties,
                     _unparsed,
                 };
 

@@ -19,6 +19,8 @@ pub struct SyntheticsDeleteTestsPayload {
     /// An array of Synthetic test IDs you want to delete.
     #[serde(rename = "public_ids")]
     pub public_ids: Option<Vec<String>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -29,6 +31,7 @@ impl SyntheticsDeleteTestsPayload {
         SyntheticsDeleteTestsPayload {
             force_delete_dependencies: None,
             public_ids: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -40,6 +43,14 @@ impl SyntheticsDeleteTestsPayload {
 
     pub fn public_ids(mut self, value: Vec<String>) -> Self {
         self.public_ids = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -69,6 +80,10 @@ impl<'de> Deserialize<'de> for SyntheticsDeleteTestsPayload {
             {
                 let mut force_delete_dependencies: Option<bool> = None;
                 let mut public_ids: Option<Vec<String>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -86,13 +101,18 @@ impl<'de> Deserialize<'de> for SyntheticsDeleteTestsPayload {
                             }
                             public_ids = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = SyntheticsDeleteTestsPayload {
                     force_delete_dependencies,
                     public_ids,
+                    additional_properties,
                     _unparsed,
                 };
 

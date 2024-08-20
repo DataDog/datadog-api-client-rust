@@ -17,6 +17,8 @@ pub struct MetricIngestedIndexedVolumeAttributes {
     /// Ingested volume for the given metric.
     #[serde(rename = "ingested_volume")]
     pub ingested_volume: Option<i64>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -27,6 +29,7 @@ impl MetricIngestedIndexedVolumeAttributes {
         MetricIngestedIndexedVolumeAttributes {
             indexed_volume: None,
             ingested_volume: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -38,6 +41,14 @@ impl MetricIngestedIndexedVolumeAttributes {
 
     pub fn ingested_volume(mut self, value: i64) -> Self {
         self.ingested_volume = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -67,6 +78,10 @@ impl<'de> Deserialize<'de> for MetricIngestedIndexedVolumeAttributes {
             {
                 let mut indexed_volume: Option<i64> = None;
                 let mut ingested_volume: Option<i64> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -85,13 +100,18 @@ impl<'de> Deserialize<'de> for MetricIngestedIndexedVolumeAttributes {
                             ingested_volume =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
                 let content = MetricIngestedIndexedVolumeAttributes {
                     indexed_volume,
                     ingested_volume,
+                    additional_properties,
                     _unparsed,
                 };
 

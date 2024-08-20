@@ -14,6 +14,8 @@ pub struct TeamResponse {
     /// A team
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::Team>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -23,12 +25,21 @@ impl TeamResponse {
     pub fn new() -> TeamResponse {
         TeamResponse {
             data: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn data(mut self, value: crate::datadogV2::model::Team) -> Self {
         self.data = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -57,6 +68,10 @@ impl<'de> Deserialize<'de> for TeamResponse {
                 M: MapAccess<'a>,
             {
                 let mut data: Option<crate::datadogV2::model::Team> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -67,11 +82,19 @@ impl<'de> Deserialize<'de> for TeamResponse {
                             }
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
 
-                let content = TeamResponse { data, _unparsed };
+                let content = TeamResponse {
+                    data,
+                    additional_properties,
+                    _unparsed,
+                };
 
                 Ok(content)
             }

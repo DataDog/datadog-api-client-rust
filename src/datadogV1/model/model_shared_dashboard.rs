@@ -61,6 +61,8 @@ pub struct SharedDashboard {
     /// A unique token assigned to the shared dashboard.
     #[serde(rename = "token")]
     pub token: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -83,6 +85,7 @@ impl SharedDashboard {
             share_list: None,
             share_type: None,
             token: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -137,6 +140,14 @@ impl SharedDashboard {
         self.token = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl<'de> Deserialize<'de> for SharedDashboard {
@@ -170,6 +181,10 @@ impl<'de> Deserialize<'de> for SharedDashboard {
                 let mut share_type: Option<Option<crate::datadogV1::model::DashboardShareType>> =
                     None;
                 let mut token: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -249,7 +264,11 @@ impl<'de> Deserialize<'de> for SharedDashboard {
                             }
                             token = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        &_ => {}
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
                     }
                 }
                 let dashboard_id =
@@ -269,6 +288,7 @@ impl<'de> Deserialize<'de> for SharedDashboard {
                     share_list,
                     share_type,
                     token,
+                    additional_properties,
                     _unparsed,
                 };
 
