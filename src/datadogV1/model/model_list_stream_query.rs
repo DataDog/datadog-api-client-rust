@@ -20,7 +20,7 @@ pub struct ListStreamQuery {
     /// Size to use to display an event.
     #[serde(rename = "event_size")]
     pub event_size: Option<crate::datadogV1::model::WidgetEventSize>,
-    /// Group by configuration for the List Stream Widget. Group by can be used only with logs_pattern_stream (up to 3 items) or logs_transaction_stream (one group by item is required) list stream source.
+    /// Group by configuration for the List Stream Widget. Group by can be used only with logs_pattern_stream (up to 4 items) or logs_transaction_stream (one group by item is required) list stream source.
     #[serde(rename = "group_by")]
     pub group_by: Option<Vec<crate::datadogV1::model::ListStreamGroupByItems>>,
     /// List of indexes.
