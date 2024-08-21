@@ -23,6 +23,9 @@ pub struct SecurityMonitoringSuppressionAttributes {
     /// A description for the suppression rule.
     #[serde(rename = "description")]
     pub description: Option<String>,
+    /// Whether the suppression rule is editable.
+    #[serde(rename = "editable")]
+    pub editable: Option<bool>,
     /// Whether the suppression rule is enabled.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
@@ -61,6 +64,7 @@ impl SecurityMonitoringSuppressionAttributes {
             creator: None,
             data_exclusion_query: None,
             description: None,
+            editable: None,
             enabled: None,
             expiration_date: None,
             name: None,
@@ -91,6 +95,11 @@ impl SecurityMonitoringSuppressionAttributes {
 
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
+        self
+    }
+
+    pub fn editable(mut self, value: bool) -> Self {
+        self.editable = Some(value);
         self
     }
 
@@ -170,6 +179,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSuppressionAttributes {
                 let mut creator: Option<crate::datadogV2::model::SecurityMonitoringUser> = None;
                 let mut data_exclusion_query: Option<String> = None;
                 let mut description: Option<String> = None;
+                let mut editable: Option<bool> = None;
                 let mut enabled: Option<bool> = None;
                 let mut expiration_date: Option<i64> = None;
                 let mut name: Option<String> = None;
@@ -212,6 +222,12 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSuppressionAttributes {
                             }
                             description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "editable" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            editable = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "enabled" => {
                             if v.is_null() {
@@ -277,6 +293,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSuppressionAttributes {
                     creator,
                     data_exclusion_query,
                     description,
+                    editable,
                     enabled,
                     expiration_date,
                     name,
