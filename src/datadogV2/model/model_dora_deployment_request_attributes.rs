@@ -23,7 +23,7 @@ pub struct DORADeploymentRequestAttributes {
     /// Deployment ID.
     #[serde(rename = "id")]
     pub id: Option<String>,
-    /// Service name from a service available in the Service Catalog.
+    /// Service name.
     #[serde(rename = "service")]
     pub service: String,
     /// Unix timestamp when the deployment started. It must be in nanoseconds, milliseconds, or seconds.
