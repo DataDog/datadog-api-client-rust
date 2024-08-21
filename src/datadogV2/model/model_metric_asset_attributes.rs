@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Assets where only included attribute is its title
+/// Assets related to the object, including title and url.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -14,6 +14,9 @@ pub struct MetricAssetAttributes {
     /// Title of the asset.
     #[serde(rename = "title")]
     pub title: Option<String>,
+    /// URL path of the asset.
+    #[serde(rename = "url")]
+    pub url: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -25,6 +28,7 @@ impl MetricAssetAttributes {
     pub fn new() -> MetricAssetAttributes {
         MetricAssetAttributes {
             title: None,
+            url: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -32,6 +36,11 @@ impl MetricAssetAttributes {
 
     pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
+        self
+    }
+
+    pub fn url(mut self, value: String) -> Self {
+        self.url = Some(value);
         self
     }
 
@@ -68,6 +77,7 @@ impl<'de> Deserialize<'de> for MetricAssetAttributes {
                 M: MapAccess<'a>,
             {
                 let mut title: Option<String> = None;
+                let mut url: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -82,6 +92,12 @@ impl<'de> Deserialize<'de> for MetricAssetAttributes {
                             }
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "url" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            url = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -92,6 +108,7 @@ impl<'de> Deserialize<'de> for MetricAssetAttributes {
 
                 let content = MetricAssetAttributes {
                     title,
+                    url,
                     additional_properties,
                     _unparsed,
                 };

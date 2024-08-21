@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MetricMonitorAsset {
-    /// Assets where only included attribute is its title
+    /// Assets related to the object, including title and url.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::MetricAssetAttributes>,
     /// The related monitor's ID.

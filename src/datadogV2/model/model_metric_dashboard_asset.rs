@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MetricDashboardAsset {
-    /// Attributes related to the dashboard, including title and popularity.
+    /// Attributes related to the dashboard, including title, popularity, and url.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::MetricDashboardAttributes>,
     /// The related dashboard's ID.
