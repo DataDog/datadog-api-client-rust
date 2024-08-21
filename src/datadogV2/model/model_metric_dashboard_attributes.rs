@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes related to the dashboard, including title and popularity.
+/// Attributes related to the dashboard, including title, popularity, and url.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -17,6 +17,9 @@ pub struct MetricDashboardAttributes {
     /// Title of the asset.
     #[serde(rename = "title")]
     pub title: Option<String>,
+    /// URL path of the asset.
+    #[serde(rename = "url")]
+    pub url: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -29,6 +32,7 @@ impl MetricDashboardAttributes {
         MetricDashboardAttributes {
             popularity: None,
             title: None,
+            url: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -41,6 +45,11 @@ impl MetricDashboardAttributes {
 
     pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
+        self
+    }
+
+    pub fn url(mut self, value: String) -> Self {
+        self.url = Some(value);
         self
     }
 
@@ -78,6 +87,7 @@ impl<'de> Deserialize<'de> for MetricDashboardAttributes {
             {
                 let mut popularity: Option<f64> = None;
                 let mut title: Option<String> = None;
+                let mut url: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -98,6 +108,12 @@ impl<'de> Deserialize<'de> for MetricDashboardAttributes {
                             }
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "url" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            url = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -109,6 +125,7 @@ impl<'de> Deserialize<'de> for MetricDashboardAttributes {
                 let content = MetricDashboardAttributes {
                     popularity,
                     title,
+                    url,
                     additional_properties,
                     _unparsed,
                 };
