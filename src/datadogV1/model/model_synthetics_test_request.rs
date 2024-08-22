@@ -43,7 +43,7 @@ pub struct SyntheticsTestRequest {
     pub dns_server: Option<String>,
     /// DNS server port to use for DNS tests.
     #[serde(rename = "dnsServerPort")]
-    pub dns_server_port: Option<i32>,
+    pub dns_server_port: Option<String>,
     /// Files to be used as part of the request in the test.
     #[serde(rename = "files")]
     pub files: Option<Vec<crate::datadogV1::model::SyntheticsTestRequestBodyFile>>,
@@ -79,7 +79,7 @@ pub struct SyntheticsTestRequest {
     pub persist_cookies: Option<bool>,
     /// Port to use when performing the test.
     #[serde(rename = "port")]
-    pub port: Option<i64>,
+    pub port: Option<String>,
     /// The proxy to perform the test.
     #[serde(rename = "proxy")]
     pub proxy: Option<crate::datadogV1::model::SyntheticsTestRequestProxy>,
@@ -204,7 +204,7 @@ impl SyntheticsTestRequest {
         self
     }
 
-    pub fn dns_server_port(mut self, value: i32) -> Self {
+    pub fn dns_server_port(mut self, value: String) -> Self {
         self.dns_server_port = Some(value);
         self
     }
@@ -270,7 +270,7 @@ impl SyntheticsTestRequest {
         self
     }
 
-    pub fn port(mut self, value: i64) -> Self {
+    pub fn port(mut self, value: String) -> Self {
         self.port = Some(value);
         self
     }
@@ -355,7 +355,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                 let mut compressed_json_descriptor: Option<String> = None;
                 let mut compressed_proto_file: Option<String> = None;
                 let mut dns_server: Option<String> = None;
-                let mut dns_server_port: Option<i32> = None;
+                let mut dns_server_port: Option<String> = None;
                 let mut files: Option<Vec<crate::datadogV1::model::SyntheticsTestRequestBodyFile>> =
                     None;
                 let mut follow_redirects: Option<bool> = None;
@@ -370,7 +370,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                 let mut no_saving_response_body: Option<bool> = None;
                 let mut number_of_packets: Option<i32> = None;
                 let mut persist_cookies: Option<bool> = None;
-                let mut port: Option<i64> = None;
+                let mut port: Option<String> = None;
                 let mut proxy: Option<crate::datadogV1::model::SyntheticsTestRequestProxy> = None;
                 let mut query: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
                 let mut servername: Option<String> = None;
