@@ -113,7 +113,7 @@ async fn main() {
                                         .message("{}".to_string())
                                         .metadata(BTreeMap::from([]))
                                         .method("Index".to_string())
-                                        .port(9000)
+                                        .port("9000".to_string())
                                         .service("grpcbin.GRPCBin".to_string()),
                                     SyntheticsAPITestStepSubtype::GRPC,
                                 )

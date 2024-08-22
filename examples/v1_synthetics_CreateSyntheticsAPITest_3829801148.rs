@@ -40,7 +40,7 @@ async fn main() {
                 SyntheticsTestRequest::new()
                     .host("https://datadoghq.com".to_string())
                     .message("message".to_string())
-                    .port(443),
+                    .port("443".to_string()),
             ),
         vec!["aws:us-east-2".to_string()],
         "BDD test payload: synthetics_api_test_udp_payload.json".to_string(),
