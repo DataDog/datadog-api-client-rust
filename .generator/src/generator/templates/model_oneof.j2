@@ -30,8 +30,8 @@ impl<'de> Deserialize<'de> for {{ name }} {
 
 		{%- if oneOf | is_primitive or oneOf.type == "array" %}
 		if let Ok(_v) = serde_json::from_value::<{{ dataType }}>(value.clone()) {
-            return Ok({{ name }}::{{ attributeName }}(_v))
-        }
+			return Ok({{ name }}::{{ attributeName }}(_v))
+		}
 
 		{%- elif oneOf.enum or oneOf.oneOf %}
 		if let Ok(_v) = serde_json::from_value::<Box<{{ dataType }}>>(value.clone()) {
