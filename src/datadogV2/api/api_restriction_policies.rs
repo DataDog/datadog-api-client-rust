@@ -317,6 +317,7 @@ impl RestrictionPoliciesAPI {
     /// - Synthetic Tests: `synthetics-test`
     /// - Synthetic Private Locations: `synthetics-private-location`
     /// - Monitors: `monitor`
+    /// - Suppression Rules: `suppression-rule`
     ///
     /// #### Supported relations for resources
     /// Resource Type               | Supported Relations
@@ -330,6 +331,7 @@ impl RestrictionPoliciesAPI {
     /// Synthetic Tests             | `viewer`, `editor`
     /// Synthetic Private Locations | `viewer`, `editor`
     /// Monitors                    | `viewer`, `editor`
+    /// Suppression Rules        | `viewer`, `editor`
     pub async fn update_restriction_policy(
         &self,
         resource_id: String,
@@ -368,6 +370,7 @@ impl RestrictionPoliciesAPI {
     /// - Synthetic Tests: `synthetics-test`
     /// - Synthetic Private Locations: `synthetics-private-location`
     /// - Monitors: `monitor`
+    /// - Suppression Rules: `suppression-rule`
     ///
     /// #### Supported relations for resources
     /// Resource Type               | Supported Relations
@@ -381,6 +384,7 @@ impl RestrictionPoliciesAPI {
     /// Synthetic Tests             | `viewer`, `editor`
     /// Synthetic Private Locations | `viewer`, `editor`
     /// Monitors                    | `viewer`, `editor`
+    /// Suppression Rules        | `viewer`, `editor`
     pub async fn update_restriction_policy_with_http_info(
         &self,
         resource_id: String,
