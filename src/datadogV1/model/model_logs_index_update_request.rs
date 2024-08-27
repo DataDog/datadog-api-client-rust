@@ -33,11 +33,18 @@ pub struct LogsIndexUpdateRequest {
     /// Filter for logs.
     #[serde(rename = "filter")]
     pub filter: crate::datadogV1::model::LogsFilter,
-    /// The number of days before logs are deleted from this index. Available values depend on
-    /// retention plans specified in your organization's contract/subscriptions.
+    /// The total number of days logs are stored in Standard and Flex Tier before being deleted from the index.
+    /// If Standard Tier is enabled on this index, logs are first retained in Standard Tier for the number of days specified through `num_retention_days`,
+    /// and then stored in Flex Tier until the number of days specified in `num_flex_logs_retention_days` is reached.
+    /// The available values depend on retention plans specified in your organization's contract/subscriptions.
     ///
-    /// **Note:** Changing the retention for an index adjusts the length of retention for all logs
-    /// already in this index. It may also affect billing.
+    /// **Note**: Changing this value affects all logs already in this index. It may also affect billing.
+    #[serde(rename = "num_flex_logs_retention_days")]
+    pub num_flex_logs_retention_days: Option<i64>,
+    /// The number of days logs are stored in Standard Tier before aging into the Flex Tier or being deleted from the index.
+    /// The available values depend on retention plans specified in your organization's contract/subscriptions.
+    ///
+    /// **Note**: Changing this value affects all logs already in this index. It may also affect billing.
     #[serde(rename = "num_retention_days")]
     pub num_retention_days: Option<i64>,
     #[serde(flatten)]
@@ -56,6 +63,7 @@ impl LogsIndexUpdateRequest {
             disable_daily_limit: None,
             exclusion_filters: None,
             filter,
+            num_flex_logs_retention_days: None,
             num_retention_days: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -87,6 +95,11 @@ impl LogsIndexUpdateRequest {
 
     pub fn exclusion_filters(mut self, value: Vec<crate::datadogV1::model::LogsExclusion>) -> Self {
         self.exclusion_filters = Some(value);
+        self
+    }
+
+    pub fn num_flex_logs_retention_days(mut self, value: i64) -> Self {
+        self.num_flex_logs_retention_days = Some(value);
         self
     }
 
@@ -129,6 +142,7 @@ impl<'de> Deserialize<'de> for LogsIndexUpdateRequest {
                 let mut exclusion_filters: Option<Vec<crate::datadogV1::model::LogsExclusion>> =
                     None;
                 let mut filter: Option<crate::datadogV1::model::LogsFilter> = None;
+                let mut num_flex_logs_retention_days: Option<i64> = None;
                 let mut num_retention_days: Option<i64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -176,6 +190,13 @@ impl<'de> Deserialize<'de> for LogsIndexUpdateRequest {
                         "filter" => {
                             filter = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "num_flex_logs_retention_days" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            num_flex_logs_retention_days =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "num_retention_days" => {
                             if v.is_null() {
                                 continue;
@@ -199,6 +220,7 @@ impl<'de> Deserialize<'de> for LogsIndexUpdateRequest {
                     disable_daily_limit,
                     exclusion_filters,
                     filter,
+                    num_flex_logs_retention_days,
                     num_retention_days,
                     additional_properties,
                     _unparsed,

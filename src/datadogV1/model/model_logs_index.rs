@@ -35,8 +35,14 @@ pub struct LogsIndex {
     /// The name of the index.
     #[serde(rename = "name")]
     pub name: String,
-    /// The number of days before logs are deleted from this index. Available values depend on
-    /// retention plans specified in your organization's contract/subscriptions.
+    /// The total number of days logs are stored in Standard and Flex Tier before being deleted from the index.
+    /// If Standard Tier is enabled on this index, logs are first retained in Standard Tier for the number of days specified through `num_retention_days`,
+    /// and then stored in Flex Tier until the number of days specified in `num_flex_logs_retention_days` is reached.
+    /// The available values depend on retention plans specified in your organization's contract/subscriptions.
+    #[serde(rename = "num_flex_logs_retention_days")]
+    pub num_flex_logs_retention_days: Option<i64>,
+    /// The number of days logs are stored in Standard Tier before aging into the Flex Tier or being deleted from the index.
+    /// The available values depend on retention plans specified in your organization's contract/subscriptions.
     #[serde(rename = "num_retention_days")]
     pub num_retention_days: Option<i64>,
     #[serde(flatten)]
@@ -56,6 +62,7 @@ impl LogsIndex {
             filter,
             is_rate_limited: None,
             name,
+            num_flex_logs_retention_days: None,
             num_retention_days: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -87,6 +94,11 @@ impl LogsIndex {
 
     pub fn is_rate_limited(mut self, value: bool) -> Self {
         self.is_rate_limited = Some(value);
+        self
+    }
+
+    pub fn num_flex_logs_retention_days(mut self, value: i64) -> Self {
+        self.num_flex_logs_retention_days = Some(value);
         self
     }
 
@@ -130,6 +142,7 @@ impl<'de> Deserialize<'de> for LogsIndex {
                 let mut filter: Option<crate::datadogV1::model::LogsFilter> = None;
                 let mut is_rate_limited: Option<bool> = None;
                 let mut name: Option<String> = None;
+                let mut num_flex_logs_retention_days: Option<i64> = None;
                 let mut num_retention_days: Option<i64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -180,6 +193,13 @@ impl<'de> Deserialize<'de> for LogsIndex {
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "num_flex_logs_retention_days" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            num_flex_logs_retention_days =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "num_retention_days" => {
                             if v.is_null() {
                                 continue;
@@ -205,6 +225,7 @@ impl<'de> Deserialize<'de> for LogsIndex {
                     filter,
                     is_rate_limited,
                     name,
+                    num_flex_logs_retention_days,
                     num_retention_days,
                     additional_properties,
                     _unparsed,
