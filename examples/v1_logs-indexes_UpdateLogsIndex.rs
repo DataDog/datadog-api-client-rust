@@ -20,6 +20,7 @@ async fn main() {
         .disable_daily_limit(false)
         .exclusion_filters(vec![LogsExclusion::new("payment".to_string())
             .filter(LogsExclusionFilter::new(1.0).query("*".to_string()))])
+        .num_flex_logs_retention_days(360)
         .num_retention_days(15);
     let configuration = datadog::Configuration::new();
     let api = LogsIndexesAPI::with_config(configuration);
