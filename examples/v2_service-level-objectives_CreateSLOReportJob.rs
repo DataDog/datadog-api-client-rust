@@ -10,9 +10,9 @@ use datadog_api_client::datadogV2::model::SloReportCreateRequestData;
 async fn main() {
     let body = SloReportCreateRequest::new(SloReportCreateRequestData::new(
         SloReportCreateRequestAttributes::new(
-            1690901870,
+            1633173071,
             r#"slo_type:metric "SLO Reporting Test""#.to_string(),
-            1706803070,
+            1636629071,
         )
         .interval(SLOReportInterval::MONTHLY)
         .timezone("America/New_York".to_string()),
