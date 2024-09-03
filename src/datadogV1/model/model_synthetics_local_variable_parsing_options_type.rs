@@ -6,27 +6,29 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum SyntheticsGlobalVariableParseTestOptionsType {
+pub enum SyntheticsLocalVariableParsingOptionsType {
+    GRPC_MESSAGE,
+    GRPC_METADATA,
     HTTP_BODY,
     HTTP_HEADER,
     HTTP_STATUS_CODE,
-    LOCAL_VARIABLE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for SyntheticsGlobalVariableParseTestOptionsType {
+impl ToString for SyntheticsLocalVariableParsingOptionsType {
     fn to_string(&self) -> String {
         match self {
+            Self::GRPC_MESSAGE => String::from("grpc_message"),
+            Self::GRPC_METADATA => String::from("grpc_metadata"),
             Self::HTTP_BODY => String::from("http_body"),
             Self::HTTP_HEADER => String::from("http_header"),
             Self::HTTP_STATUS_CODE => String::from("http_status_code"),
-            Self::LOCAL_VARIABLE => String::from("local_variable"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for SyntheticsGlobalVariableParseTestOptionsType {
+impl Serialize for SyntheticsLocalVariableParsingOptionsType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -38,17 +40,18 @@ impl Serialize for SyntheticsGlobalVariableParseTestOptionsType {
     }
 }
 
-impl<'de> Deserialize<'de> for SyntheticsGlobalVariableParseTestOptionsType {
+impl<'de> Deserialize<'de> for SyntheticsLocalVariableParsingOptionsType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
+            "grpc_message" => Self::GRPC_MESSAGE,
+            "grpc_metadata" => Self::GRPC_METADATA,
             "http_body" => Self::HTTP_BODY,
             "http_header" => Self::HTTP_HEADER,
             "http_status_code" => Self::HTTP_STATUS_CODE,
-            "local_variable" => Self::LOCAL_VARIABLE,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
