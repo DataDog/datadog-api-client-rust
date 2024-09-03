@@ -1,53 +1,17 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
 use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
-use std::fmt::{self, Formatter};
 
 /// Time setting for the widget.
 #[non_exhaustive]
-#[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct WidgetTime {
-    /// The available timeframes depend on the widget you are using.
-    #[serde(rename = "live_span")]
-    pub live_span: Option<crate::datadogV1::model::WidgetLiveSpan>,
-    #[serde(flatten)]
-    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
-    #[serde(skip)]
-    #[serde(default)]
-    pub(crate) _unparsed: bool,
-}
-
-impl WidgetTime {
-    pub fn new() -> WidgetTime {
-        WidgetTime {
-            live_span: None,
-            additional_properties: std::collections::BTreeMap::new(),
-            _unparsed: false,
-        }
-    }
-
-    pub fn live_span(mut self, value: crate::datadogV1::model::WidgetLiveSpan) -> Self {
-        self.live_span = Some(value);
-        self
-    }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
-        self.additional_properties = value;
-        self
-    }
-}
-
-impl Default for WidgetTime {
-    fn default() -> Self {
-        Self::new()
-    }
+#[serde(untagged)]
+pub enum WidgetTime {
+    WidgetLegacyLiveSpan(Box<crate::datadogV1::model::WidgetLegacyLiveSpan>),
+    WidgetNewLiveSpan(Box<crate::datadogV1::model::WidgetNewLiveSpan>),
+    WidgetNewFixedSpan(Box<crate::datadogV1::model::WidgetNewFixedSpan>),
+    UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for WidgetTime {
@@ -55,61 +19,31 @@ impl<'de> Deserialize<'de> for WidgetTime {
     where
         D: Deserializer<'de>,
     {
-        struct WidgetTimeVisitor;
-        impl<'a> Visitor<'a> for WidgetTimeVisitor {
-            type Value = WidgetTime;
-
-            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
-                f.write_str("a mapping")
+        let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
+        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::WidgetLegacyLiveSpan>>(
+            value.clone(),
+        ) {
+            if !_v._unparsed {
+                return Ok(WidgetTime::WidgetLegacyLiveSpan(_v));
             }
-
-            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
-            where
-                M: MapAccess<'a>,
-            {
-                let mut live_span: Option<crate::datadogV1::model::WidgetLiveSpan> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
-                let mut _unparsed = false;
-
-                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
-                    match k.as_str() {
-                        "live_span" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            live_span = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _live_span) = live_span {
-                                match _live_span {
-                                    crate::datadogV1::model::WidgetLiveSpan::UnparsedObject(
-                                        _live_span,
-                                    ) => {
-                                        _unparsed = true;
-                                    }
-                                    _ => {}
-                                }
-                            }
-                        }
-                        &_ => {
-                            if let Ok(value) = serde_json::from_value(v.clone()) {
-                                additional_properties.insert(k, value);
-                            }
-                        }
-                    }
-                }
-
-                let content = WidgetTime {
-                    live_span,
-                    additional_properties,
-                    _unparsed,
-                };
-
-                Ok(content)
+        }
+        if let Ok(_v) =
+            serde_json::from_value::<Box<crate::datadogV1::model::WidgetNewLiveSpan>>(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(WidgetTime::WidgetNewLiveSpan(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::WidgetNewFixedSpan>>(
+            value.clone(),
+        ) {
+            if !_v._unparsed {
+                return Ok(WidgetTime::WidgetNewFixedSpan(_v));
             }
         }
 
-        deserializer.deserialize_any(WidgetTimeVisitor)
+        return Ok(WidgetTime::UnparsedObject(crate::datadog::UnparsedObject {
+            value,
+        }));
     }
 }

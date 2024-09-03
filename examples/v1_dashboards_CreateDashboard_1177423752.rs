@@ -9,6 +9,7 @@ use datadog_api_client::datadogV1::model::HeatMapWidgetRequest;
 use datadog_api_client::datadogV1::model::Widget;
 use datadog_api_client::datadogV1::model::WidgetDefinition;
 use datadog_api_client::datadogV1::model::WidgetLayout;
+use datadog_api_client::datadogV1::model::WidgetLegacyLiveSpan;
 use datadog_api_client::datadogV1::model::WidgetStyle;
 use datadog_api_client::datadogV1::model::WidgetTextAlign;
 use datadog_api_client::datadogV1::model::WidgetTime;
@@ -26,7 +27,9 @@ async fn main() {
                         .style(WidgetStyle::new().palette("dog_classic".to_string()))],
                     HeatMapWidgetDefinitionType::HEATMAP,
                 )
-                .time(WidgetTime::new())
+                .time(WidgetTime::WidgetLegacyLiveSpan(Box::new(
+                    WidgetLegacyLiveSpan::new(),
+                )))
                 .title("".to_string())
                 .title_align(WidgetTextAlign::LEFT)
                 .title_size("16".to_string()),

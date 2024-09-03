@@ -1,4 +1,4 @@
-// Create a new timeseries widget with ci_pipelines data source
+// Create a new timeseries widget with new live span time format
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api_dashboards::DashboardsAPI;
 use datadog_api_client::datadogV1::model::Dashboard;
@@ -20,9 +20,11 @@ use datadog_api_client::datadogV1::model::Widget;
 use datadog_api_client::datadogV1::model::WidgetDefinition;
 use datadog_api_client::datadogV1::model::WidgetDisplayType;
 use datadog_api_client::datadogV1::model::WidgetFormula;
-use datadog_api_client::datadogV1::model::WidgetLegacyLiveSpan;
 use datadog_api_client::datadogV1::model::WidgetLineType;
 use datadog_api_client::datadogV1::model::WidgetLineWidth;
+use datadog_api_client::datadogV1::model::WidgetLiveSpanUnit;
+use datadog_api_client::datadogV1::model::WidgetNewLiveSpan;
+use datadog_api_client::datadogV1::model::WidgetNewLiveSpanType;
 use datadog_api_client::datadogV1::model::WidgetRequestStyle;
 use datadog_api_client::datadogV1::model::WidgetTime;
 
@@ -31,7 +33,7 @@ async fn main() {
     let body =
         Dashboard::new(
             DashboardLayoutType::ORDERED,
-            "Example-Dashboard with ci_pipelines datasource".to_string(),
+            "Example-Dashboard with new live span time".to_string(),
             vec![
                 Widget::new(
                     WidgetDefinition::TimeseriesWidgetDefinition(
@@ -85,7 +87,17 @@ async fn main() {
                                 )
                                 .legend_layout(TimeseriesWidgetLegendLayout::AUTO)
                                 .show_legend(true)
-                                .time(WidgetTime::WidgetLegacyLiveSpan(Box::new(WidgetLegacyLiveSpan::new())))
+                                .time(
+                                    WidgetTime::WidgetNewLiveSpan(
+                                        Box::new(
+                                            WidgetNewLiveSpan::new(
+                                                WidgetNewLiveSpanType::LIVE,
+                                                WidgetLiveSpanUnit::MINUTE,
+                                                8,
+                                            ),
+                                        ),
+                                    ),
+                                )
                                 .title("".to_string()),
                         ),
                     ),

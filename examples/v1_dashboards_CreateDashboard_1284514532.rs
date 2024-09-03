@@ -15,6 +15,7 @@ use datadog_api_client::datadogV1::model::Widget;
 use datadog_api_client::datadogV1::model::WidgetDefinition;
 use datadog_api_client::datadogV1::model::WidgetDisplayType;
 use datadog_api_client::datadogV1::model::WidgetFormula;
+use datadog_api_client::datadogV1::model::WidgetLegacyLiveSpan;
 use datadog_api_client::datadogV1::model::WidgetLineType;
 use datadog_api_client::datadogV1::model::WidgetLineWidth;
 use datadog_api_client::datadogV1::model::WidgetLiveSpan;
@@ -61,7 +62,11 @@ async fn main() {
                                 ],
                                 TimeseriesWidgetDefinitionType::TIMESERIES,
                             )
-                                .time(WidgetTime::new().live_span(WidgetLiveSpan::WEEK_TO_DATE))
+                                .time(
+                                    WidgetTime::WidgetLegacyLiveSpan(
+                                        Box::new(WidgetLegacyLiveSpan::new().live_span(WidgetLiveSpan::WEEK_TO_DATE)),
+                                    ),
+                                )
                                 .title("Example Cloud Cost Query".to_string())
                                 .title_align(WidgetTextAlign::LEFT)
                                 .title_size("16".to_string()),
