@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SyntheticsParsingOptions {
-    /// When type is `http_header`, name of the header to use to extract the value.
+    /// When type is `http_header` or `grpc_metadata`, name of the header or metadatum to extract.
     #[serde(rename = "field")]
     pub field: Option<String>,
     /// Name of the variable to extract.
@@ -23,9 +23,9 @@ pub struct SyntheticsParsingOptions {
     /// Determines whether or not the extracted value will be obfuscated.
     #[serde(rename = "secure")]
     pub secure: Option<bool>,
-    /// Property of the Synthetic Test Response to use for a Synthetic global variable.
+    /// Property of the Synthetic Test Response to extract into a local variable.
     #[serde(rename = "type")]
-    pub type_: Option<crate::datadogV1::model::SyntheticsGlobalVariableParseTestOptionsType>,
+    pub type_: Option<crate::datadogV1::model::SyntheticsLocalVariableParsingOptionsType>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -68,7 +68,7 @@ impl SyntheticsParsingOptions {
 
     pub fn type_(
         mut self,
-        value: crate::datadogV1::model::SyntheticsGlobalVariableParseTestOptionsType,
+        value: crate::datadogV1::model::SyntheticsLocalVariableParsingOptionsType,
     ) -> Self {
         self.type_ = Some(value);
         self
@@ -111,7 +111,7 @@ impl<'de> Deserialize<'de> for SyntheticsParsingOptions {
                 let mut parser: Option<crate::datadogV1::model::SyntheticsVariableParser> = None;
                 let mut secure: Option<bool> = None;
                 let mut type_: Option<
-                    crate::datadogV1::model::SyntheticsGlobalVariableParseTestOptionsType,
+                    crate::datadogV1::model::SyntheticsLocalVariableParsingOptionsType,
                 > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -152,7 +152,7 @@ impl<'de> Deserialize<'de> for SyntheticsParsingOptions {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV1::model::SyntheticsGlobalVariableParseTestOptionsType::UnparsedObject(_type_) => {
+                                    crate::datadogV1::model::SyntheticsLocalVariableParsingOptionsType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}

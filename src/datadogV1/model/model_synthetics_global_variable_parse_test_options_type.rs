@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum SyntheticsGlobalVariableParseTestOptionsType {
     HTTP_BODY,
     HTTP_HEADER,
+    HTTP_STATUS_CODE,
     LOCAL_VARIABLE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
@@ -18,6 +19,7 @@ impl ToString for SyntheticsGlobalVariableParseTestOptionsType {
         match self {
             Self::HTTP_BODY => String::from("http_body"),
             Self::HTTP_HEADER => String::from("http_header"),
+            Self::HTTP_STATUS_CODE => String::from("http_status_code"),
             Self::LOCAL_VARIABLE => String::from("local_variable"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
@@ -45,6 +47,7 @@ impl<'de> Deserialize<'de> for SyntheticsGlobalVariableParseTestOptionsType {
         Ok(match s.as_str() {
             "http_body" => Self::HTTP_BODY,
             "http_header" => Self::HTTP_HEADER,
+            "http_status_code" => Self::HTTP_STATUS_CODE,
             "local_variable" => Self::LOCAL_VARIABLE,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
