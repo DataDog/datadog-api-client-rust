@@ -18,9 +18,9 @@ use std::io::Write;
 pub struct ListEventsOptionalParams {
     /// Search query following events syntax.
     pub filter_query: Option<String>,
-    /// Minimum timestamp for requested events.
+    /// Minimum timestamp for requested events, in milliseconds.
     pub filter_from: Option<String>,
-    /// Maximum timestamp for requested events.
+    /// Maximum timestamp for requested events, in milliseconds.
     pub filter_to: Option<String>,
     /// Order of events in results.
     pub sort: Option<crate::datadogV2::model::EventsSort>,
@@ -36,12 +36,12 @@ impl ListEventsOptionalParams {
         self.filter_query = Some(value);
         self
     }
-    /// Minimum timestamp for requested events.
+    /// Minimum timestamp for requested events, in milliseconds.
     pub fn filter_from(mut self, value: String) -> Self {
         self.filter_from = Some(value);
         self
     }
-    /// Maximum timestamp for requested events.
+    /// Maximum timestamp for requested events, in milliseconds.
     pub fn filter_to(mut self, value: String) -> Self {
         self.filter_to = Some(value);
         self
