@@ -20,7 +20,7 @@ pub struct SyntheticsGlobalVariableParseTestOptions {
     /// Details of the parser to use for the global variable.
     #[serde(rename = "parser")]
     pub parser: Option<crate::datadogV1::model::SyntheticsVariableParser>,
-    /// Property of the Synthetic Test Response to use for a Synthetic global variable.
+    /// Type of value to extract from a test for a Synthetic global variable.
     #[serde(rename = "type")]
     pub type_: crate::datadogV1::model::SyntheticsGlobalVariableParseTestOptionsType,
     #[serde(flatten)]
