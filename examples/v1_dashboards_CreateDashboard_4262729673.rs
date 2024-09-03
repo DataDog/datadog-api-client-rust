@@ -1,4 +1,4 @@
-// Create a new timeseries widget with ci_pipelines data source
+// Create a new timeseries widget with legacy live span time format
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api_dashboards::DashboardsAPI;
 use datadog_api_client::datadogV1::model::Dashboard;
@@ -23,6 +23,7 @@ use datadog_api_client::datadogV1::model::WidgetFormula;
 use datadog_api_client::datadogV1::model::WidgetLegacyLiveSpan;
 use datadog_api_client::datadogV1::model::WidgetLineType;
 use datadog_api_client::datadogV1::model::WidgetLineWidth;
+use datadog_api_client::datadogV1::model::WidgetLiveSpan;
 use datadog_api_client::datadogV1::model::WidgetRequestStyle;
 use datadog_api_client::datadogV1::model::WidgetTime;
 
@@ -31,7 +32,7 @@ async fn main() {
     let body =
         Dashboard::new(
             DashboardLayoutType::ORDERED,
-            "Example-Dashboard with ci_pipelines datasource".to_string(),
+            "Example-Dashboard with legacy live span time".to_string(),
             vec![
                 Widget::new(
                     WidgetDefinition::TimeseriesWidgetDefinition(
@@ -85,7 +86,13 @@ async fn main() {
                                 )
                                 .legend_layout(TimeseriesWidgetLegendLayout::AUTO)
                                 .show_legend(true)
-                                .time(WidgetTime::WidgetLegacyLiveSpan(Box::new(WidgetLegacyLiveSpan::new())))
+                                .time(
+                                    WidgetTime::WidgetLegacyLiveSpan(
+                                        Box::new(
+                                            WidgetLegacyLiveSpan::new().live_span(WidgetLiveSpan::PAST_FIVE_MINUTES),
+                                        ),
+                                    ),
+                                )
                                 .title("".to_string()),
                         ),
                     ),

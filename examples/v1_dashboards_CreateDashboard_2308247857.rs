@@ -8,6 +8,7 @@ use datadog_api_client::datadogV1::model::DashboardLayoutType;
 use datadog_api_client::datadogV1::model::Widget;
 use datadog_api_client::datadogV1::model::WidgetDefinition;
 use datadog_api_client::datadogV1::model::WidgetLayout;
+use datadog_api_client::datadogV1::model::WidgetLegacyLiveSpan;
 use datadog_api_client::datadogV1::model::WidgetTextAlign;
 use datadog_api_client::datadogV1::model::WidgetTime;
 use datadog_api_client::datadogV1::model::WidgetVizType;
@@ -25,7 +26,9 @@ async fn main() {
                     AlertGraphWidgetDefinitionType::ALERT_GRAPH,
                     WidgetVizType::TIMESERIES,
                 )
-                .time(WidgetTime::new())
+                .time(WidgetTime::WidgetLegacyLiveSpan(Box::new(
+                    WidgetLegacyLiveSpan::new(),
+                )))
                 .title("".to_string())
                 .title_align(WidgetTextAlign::LEFT)
                 .title_size("16".to_string()),

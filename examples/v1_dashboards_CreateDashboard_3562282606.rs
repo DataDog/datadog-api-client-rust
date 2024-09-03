@@ -19,6 +19,7 @@ use datadog_api_client::datadogV1::model::WidgetChangeType;
 use datadog_api_client::datadogV1::model::WidgetDefinition;
 use datadog_api_client::datadogV1::model::WidgetFormula;
 use datadog_api_client::datadogV1::model::WidgetLayout;
+use datadog_api_client::datadogV1::model::WidgetLegacyLiveSpan;
 use datadog_api_client::datadogV1::model::WidgetOrderBy;
 use datadog_api_client::datadogV1::model::WidgetSort;
 use datadog_api_client::datadogV1::model::WidgetTextAlign;
@@ -61,7 +62,9 @@ async fn main() {
                         .response_format(FormulaAndFunctionResponseFormat::SCALAR)],
                     ChangeWidgetDefinitionType::CHANGE,
                 )
-                .time(WidgetTime::new())
+                .time(WidgetTime::WidgetLegacyLiveSpan(Box::new(
+                    WidgetLegacyLiveSpan::new(),
+                )))
                 .title("".to_string())
                 .title_align(WidgetTextAlign::LEFT)
                 .title_size("16".to_string()),

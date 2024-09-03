@@ -8,6 +8,7 @@ use datadog_api_client::datadogV1::model::ServiceSummaryWidgetDefinitionType;
 use datadog_api_client::datadogV1::model::Widget;
 use datadog_api_client::datadogV1::model::WidgetDefinition;
 use datadog_api_client::datadogV1::model::WidgetLayout;
+use datadog_api_client::datadogV1::model::WidgetLegacyLiveSpan;
 use datadog_api_client::datadogV1::model::WidgetServiceSummaryDisplayFormat;
 use datadog_api_client::datadogV1::model::WidgetSizeFormat;
 use datadog_api_client::datadogV1::model::WidgetTime;
@@ -33,7 +34,9 @@ async fn main() {
                 .show_latency(true)
                 .show_resource_list(false)
                 .size_format(WidgetSizeFormat::MEDIUM)
-                .time(WidgetTime::new())
+                .time(WidgetTime::WidgetLegacyLiveSpan(Box::new(
+                    WidgetLegacyLiveSpan::new(),
+                )))
                 .title("Service Summary".to_string()),
             )))
             .layout(WidgetLayout::new(72, 72, 0, 0)),

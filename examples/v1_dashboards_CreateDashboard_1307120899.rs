@@ -20,6 +20,7 @@ use datadog_api_client::datadogV1::model::Widget;
 use datadog_api_client::datadogV1::model::WidgetDefinition;
 use datadog_api_client::datadogV1::model::WidgetDisplayType;
 use datadog_api_client::datadogV1::model::WidgetFormula;
+use datadog_api_client::datadogV1::model::WidgetLegacyLiveSpan;
 use datadog_api_client::datadogV1::model::WidgetLineType;
 use datadog_api_client::datadogV1::model::WidgetLineWidth;
 use datadog_api_client::datadogV1::model::WidgetRequestStyle;
@@ -84,7 +85,7 @@ async fn main() {
                                 )
                                 .legend_layout(TimeseriesWidgetLegendLayout::AUTO)
                                 .show_legend(true)
-                                .time(WidgetTime::new())
+                                .time(WidgetTime::WidgetLegacyLiveSpan(Box::new(WidgetLegacyLiveSpan::new())))
                                 .title("".to_string()),
                         ),
                     ),

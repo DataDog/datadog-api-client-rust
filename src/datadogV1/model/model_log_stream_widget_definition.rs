@@ -267,6 +267,14 @@ impl<'de> Deserialize<'de> for LogStreamWidgetDefinition {
                                 continue;
                             }
                             time = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _time) = time {
+                                match _time {
+                                    crate::datadogV1::model::WidgetTime::UnparsedObject(_time) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
                         }
                         "title" => {
                             if v.is_null() {
