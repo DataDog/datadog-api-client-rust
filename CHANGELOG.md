@@ -1,5 +1,31 @@
 # CHANGELOG
 
+## 0.4.0 / 2024-09-04
+
+### Fixed
+* Add `is_totp` and `is_fido` to Synthetic global variables by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/197
+### Added
+* Enable automerging for cloudflare routes. by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/241
+* Enable automerging for Fastly routes. by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/242
+* Enable automerging for opsgenie routes. by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/243
+* Enable auto-merging for keys routes. by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/244
+* Allow 4 group-bys for pattern viz by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/250
+* add url attribute to metrics assets v2 api by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/252
+* Add editable field to suppression rule by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/161
+* Handle nested oneOf models by @skarimo in https://github.com/DataDog/datadog-api-client-rust/pull/259
+* Add `num_flex_logs_retention_days` field to logs_indexes api spec by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/253
+* Software catalog openapi spec by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/260
+### Changed
+* include additionalProperties by default and check when false by @amaskara-dd in https://github.com/DataDog/datadog-api-client-rust/pull/249
+* allow variables in port by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/236
+* Fix VFTs and extracted local variables enum types by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/218
+* Extend Widget time schema with support for new fixed_span and live_span object by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/239
+### Deprecated
+* mark groupby_simple_monitor as deprecated by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/269
+
+
+**Full Changelog**: https://github.com/DataDog/datadog-api-client-rust/compare/0.3.0...v0.4.0
+
 ## 0.3.0 / 2024-08-12
 
 ### Added
