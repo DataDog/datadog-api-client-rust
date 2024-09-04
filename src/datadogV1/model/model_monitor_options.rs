@@ -45,7 +45,8 @@ pub struct MonitorOptions {
     /// This option is only available for APM Trace Analytics, Audit Trail, CI, Error Tracking, Event, Logs, and RUM monitors.
     #[serde(rename = "group_retention_duration")]
     pub group_retention_duration: Option<String>,
-    /// Whether the log alert monitor triggers a single alert or multiple alerts when any group breaches a threshold.
+    /// Whether the log alert monitor triggers a single alert or multiple alerts when any group breaches a threshold. Use `notify_by` instead.
+    #[deprecated]
     #[serde(rename = "groupby_simple_monitor")]
     pub groupby_simple_monitor: Option<bool>,
     /// A Boolean indicating whether notifications from this monitor automatically inserts its triggering tags into the title.
