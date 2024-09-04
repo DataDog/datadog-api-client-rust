@@ -26,7 +26,7 @@ async fn main() {
                 SecurityMonitoringRuleOptions::new()
                     .detection_method(SecurityMonitoringRuleDetectionMethod::THIRD_PARTY)
                     .keep_alive(SecurityMonitoringRuleKeepAlive::ZERO_MINUTES)
-                    .max_signal_duration(SecurityMonitoringRuleMaxSignalDuration::ZERO_MINUTES)
+                    .max_signal_duration(SecurityMonitoringRuleMaxSignalDuration::TEN_MINUTES)
                     .third_party_rule_options(
                         SecurityMonitoringRuleThirdPartyOptions::new()
                             .default_status(SecurityMonitoringRuleSeverity::INFO)
