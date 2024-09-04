@@ -5,10 +5,10 @@
 ### Fixed
 * Add `is_totp` and `is_fido` to Synthetic global variables by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/197
 ### Added
-* Enable automerging for cloudflare routes. by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/241
-* Enable automerging for Fastly routes. by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/242
-* Enable automerging for opsgenie routes. by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/243
-* Enable auto-merging for keys routes. by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/244
+* Add `api_key` and `name` to `CloudflareAccountResponseAttributes`. by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/241
+* Add `api_key` and `name` to `FastlyAccountUpdateRequestAttributes`. by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/242
+* Add `opsgenie_api_key` to `OpsgenieServiceResponseAttributes`. by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/243
+* Add `category` and `remote_config_read_enabled` to `APIKeyCreateAttributes`, add `LeakedKey`. by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/244
 * Allow 4 group-bys for pattern viz by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/250
 * add url attribute to metrics assets v2 api by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/252
 * Add editable field to suppression rule by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/161
@@ -19,7 +19,7 @@
 * include additionalProperties by default and check when false by @amaskara-dd in https://github.com/DataDog/datadog-api-client-rust/pull/249
 * allow variables in port by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/236
 * Fix VFTs and extracted local variables enum types by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/218
-* Extend Widget time schema with support for new fixed_span and live_span object by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/239
+* Changed Widget time schema to add support for new fixed_span and live_span object by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/239
 ### Deprecated
 * mark groupby_simple_monitor as deprecated by @api-clients-generation-pipeline in https://github.com/DataDog/datadog-api-client-rust/pull/269
 
