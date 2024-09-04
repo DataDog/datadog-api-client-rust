@@ -15,6 +15,8 @@ use datadog_api_client::datadogV1::model::SyntheticsAssertionJSONSchemaMetaSchem
 use datadog_api_client::datadogV1::model::SyntheticsAssertionJSONSchemaOperator;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionJSONSchemaTarget;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionJSONSchemaTargetTarget;
+use datadog_api_client::datadogV1::model::SyntheticsAssertionJavascript;
+use datadog_api_client::datadogV1::model::SyntheticsAssertionJavascriptType;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionOperator;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionTarget;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionTimingsScope;
@@ -124,6 +126,14 @@ async fn main() {
                                     SyntheticsAssertionBodyHashOperator::MD5,
                                     Value::from("a"),
                                     SyntheticsAssertionBodyHashType::BODY_HASH,
+                                ),
+                            ),
+                        ),
+                        SyntheticsAssertion::SyntheticsAssertionJavascript(
+                            Box::new(
+                                SyntheticsAssertionJavascript::new(
+                                    "const hello = 'world';".to_string(),
+                                    SyntheticsAssertionJavascriptType::JAVASCRIPT,
                                 ),
                             ),
                         )
