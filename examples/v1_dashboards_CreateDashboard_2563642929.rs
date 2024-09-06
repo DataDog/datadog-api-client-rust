@@ -91,6 +91,7 @@ async fn main() {
                                                 ),
                                             ),
                                         )
+                                        .palette("dog_classic".to_string())
                                         .scaling(ToplistWidgetScaling::RELATIVE),
                                 )
                                 .time(WidgetTime::WidgetLegacyLiveSpan(Box::new(WidgetLegacyLiveSpan::new())))
