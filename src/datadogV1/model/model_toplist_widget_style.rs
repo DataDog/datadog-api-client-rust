@@ -14,6 +14,9 @@ pub struct ToplistWidgetStyle {
     /// Top list widget display options.
     #[serde(rename = "display")]
     pub display: Option<crate::datadogV1::model::ToplistWidgetDisplay>,
+    /// Color palette to apply to the widget.
+    #[serde(rename = "palette")]
+    pub palette: Option<String>,
     /// Top list widget scaling definition.
     #[serde(rename = "scaling")]
     pub scaling: Option<crate::datadogV1::model::ToplistWidgetScaling>,
@@ -28,6 +31,7 @@ impl ToplistWidgetStyle {
     pub fn new() -> ToplistWidgetStyle {
         ToplistWidgetStyle {
             display: None,
+            palette: None,
             scaling: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -36,6 +40,11 @@ impl ToplistWidgetStyle {
 
     pub fn display(mut self, value: crate::datadogV1::model::ToplistWidgetDisplay) -> Self {
         self.display = Some(value);
+        self
+    }
+
+    pub fn palette(mut self, value: String) -> Self {
+        self.palette = Some(value);
         self
     }
 
@@ -77,6 +86,7 @@ impl<'de> Deserialize<'de> for ToplistWidgetStyle {
                 M: MapAccess<'a>,
             {
                 let mut display: Option<crate::datadogV1::model::ToplistWidgetDisplay> = None;
+                let mut palette: Option<String> = None;
                 let mut scaling: Option<crate::datadogV1::model::ToplistWidgetScaling> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -99,6 +109,12 @@ impl<'de> Deserialize<'de> for ToplistWidgetStyle {
                                     _ => {}
                                 }
                             }
+                        }
+                        "palette" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            palette = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "scaling" => {
                             if v.is_null() {
@@ -124,6 +140,7 @@ impl<'de> Deserialize<'de> for ToplistWidgetStyle {
 
                 let content = ToplistWidgetStyle {
                     display,
+                    palette,
                     scaling,
                     additional_properties,
                     _unparsed,
