@@ -25,6 +25,7 @@ use datadog_api_client::datadogV1::model::SyntheticsTestOptions;
 use datadog_api_client::datadogV1::model::SyntheticsTestOptionsHTTPVersion;
 use datadog_api_client::datadogV1::model::SyntheticsTestOptionsRetry;
 use datadog_api_client::datadogV1::model::SyntheticsTestRequest;
+use datadog_api_client::datadogV1::model::SyntheticsTestRequestPort;
 use datadog_api_client::datadogV1::model::SyntheticsVariableParser;
 use serde_json::Value;
 use std::collections::BTreeMap;
@@ -113,7 +114,7 @@ async fn main() {
                                         .message("{}".to_string())
                                         .metadata(BTreeMap::from([]))
                                         .method("Index".to_string())
-                                        .port("9000".to_string())
+                                        .port(SyntheticsTestRequestPort::SyntheticsTestRequestNumericalPort(9000))
                                         .service("grpcbin.GRPCBin".to_string()),
                                     SyntheticsAPITestStepSubtype::GRPC,
                                 )

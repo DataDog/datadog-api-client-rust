@@ -11,6 +11,7 @@ use datadog_api_client::datadogV1::model::SyntheticsAssertionType;
 use datadog_api_client::datadogV1::model::SyntheticsTestDetailsSubType;
 use datadog_api_client::datadogV1::model::SyntheticsTestOptions;
 use datadog_api_client::datadogV1::model::SyntheticsTestRequest;
+use datadog_api_client::datadogV1::model::SyntheticsTestRequestPort;
 use serde_json::Value;
 
 #[tokio::main]
@@ -27,7 +28,11 @@ async fn main() {
             .request(
                 SyntheticsTestRequest::new()
                     .host("datadoghq.com".to_string())
-                    .port("443".to_string()),
+                    .port(
+                        SyntheticsTestRequestPort::SyntheticsTestRequestVariablePort(
+                            "{{ DATADOG_PORT }}".to_string(),
+                        ),
+                    ),
             ),
         vec!["aws:us-east-2".to_string()],
         "BDD test payload: synthetics_api_ssl_test_payload.json".to_string(),
