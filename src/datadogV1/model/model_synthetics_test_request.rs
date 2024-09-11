@@ -79,7 +79,7 @@ pub struct SyntheticsTestRequest {
     pub persist_cookies: Option<bool>,
     /// Port to use when performing the test.
     #[serde(rename = "port")]
-    pub port: Option<String>,
+    pub port: Option<crate::datadogV1::model::SyntheticsTestRequestPort>,
     /// The proxy to perform the test.
     #[serde(rename = "proxy")]
     pub proxy: Option<crate::datadogV1::model::SyntheticsTestRequestProxy>,
@@ -270,7 +270,7 @@ impl SyntheticsTestRequest {
         self
     }
 
-    pub fn port(mut self, value: String) -> Self {
+    pub fn port(mut self, value: crate::datadogV1::model::SyntheticsTestRequestPort) -> Self {
         self.port = Some(value);
         self
     }
@@ -370,7 +370,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                 let mut no_saving_response_body: Option<bool> = None;
                 let mut number_of_packets: Option<i32> = None;
                 let mut persist_cookies: Option<bool> = None;
-                let mut port: Option<String> = None;
+                let mut port: Option<crate::datadogV1::model::SyntheticsTestRequestPort> = None;
                 let mut proxy: Option<crate::datadogV1::model::SyntheticsTestRequestProxy> = None;
                 let mut query: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
                 let mut servername: Option<String> = None;
@@ -566,6 +566,14 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                                 continue;
                             }
                             port = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _port) = port {
+                                match _port {
+                                    crate::datadogV1::model::SyntheticsTestRequestPort::UnparsedObject(_port) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "proxy" => {
                             if v.is_null() {

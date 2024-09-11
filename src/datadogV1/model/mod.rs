@@ -1370,6 +1370,8 @@ pub mod model_synthetics_test_request_body_file;
 pub use self::model_synthetics_test_request_body_file::SyntheticsTestRequestBodyFile;
 pub mod model_synthetics_test_options_http_version;
 pub use self::model_synthetics_test_options_http_version::SyntheticsTestOptionsHTTPVersion;
+pub mod model_synthetics_test_request_port;
+pub use self::model_synthetics_test_request_port::SyntheticsTestRequestPort;
 pub mod model_synthetics_test_request_proxy;
 pub use self::model_synthetics_test_request_proxy::SyntheticsTestRequestProxy;
 pub mod model_synthetics_browser_variable;

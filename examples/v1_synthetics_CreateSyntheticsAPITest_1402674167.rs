@@ -13,6 +13,7 @@ use datadog_api_client::datadogV1::model::SyntheticsTestDetailsSubType;
 use datadog_api_client::datadogV1::model::SyntheticsTestOptions;
 use datadog_api_client::datadogV1::model::SyntheticsTestOptionsMonitorOptions;
 use datadog_api_client::datadogV1::model::SyntheticsTestRequest;
+use datadog_api_client::datadogV1::model::SyntheticsTestRequestPort;
 use serde_json::Value;
 use std::collections::BTreeMap;
 
@@ -50,7 +51,7 @@ async fn main() {
                     .message("".to_string())
                     .metadata(BTreeMap::from([]))
                     .method("GET".to_string())
-                    .port("50051".to_string())
+                    .port(SyntheticsTestRequestPort::SyntheticsTestRequestNumericalPort(50051))
                     .service("Hello".to_string()),
             ),
         vec!["aws:us-east-2".to_string()],

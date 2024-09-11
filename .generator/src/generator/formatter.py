@@ -428,7 +428,7 @@ def format_data_with_schema(
                 return str(float(x)), set()
 
             def format_number(x):
-                if isinstance(x, bool):
+                if isinstance(x, (bool, str)):
                     raise TypeError(f"{x} is not supported type {schema}")
                 return str(x), set()
 
