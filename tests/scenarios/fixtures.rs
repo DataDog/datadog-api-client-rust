@@ -66,6 +66,7 @@ lazy_static! {
     static ref NON_ALNUM_RE: Regex = Regex::new(r"[^A-Za-z0-9]+").unwrap();
     static ref TIME_FMT_HELPER_RE: Regex =
         Regex::new(r"now(?: *([+-]) *(\d+)([smhdMy]))?").unwrap();
+    static ref LEADING_ARR_RE: Regex = Regex::new(r"^\/[\/]+").unwrap();
     static ref TEMPLATE_ENV: Environment<'static> = {
         let mut env = Environment::new();
         env.add_function("timestamp", timestamp_helper);
@@ -701,6 +702,13 @@ fn lookup(path: &String, object: &Value) -> Option<Value> {
             .replace(&json_pointer, format!("/{idx}"))
             .to_string();
     }
+
+    // Handle leading indexes and current object references
+    json_pointer = LEADING_ARR_RE.replace(&json_pointer, "/").to_string();
+    if json_pointer == "/" {
+        return Some(object.clone());
+    }
+
     return object.pointer(&json_pointer).cloned();
 }
 
