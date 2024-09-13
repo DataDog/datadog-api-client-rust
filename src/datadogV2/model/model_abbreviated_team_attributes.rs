@@ -6,32 +6,32 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Team update attributes
+/// The definition of `AbbreviatedTeamAttributes` object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct TeamUpdateAttributes {
+pub struct AbbreviatedTeamAttributes {
     /// Unicode representation of the avatar for the team, limited to a single grapheme
     #[serde(rename = "avatar", default, with = "::serde_with::rust::double_option")]
     pub avatar: Option<Option<String>>,
     /// Banner selection for the team
-    #[serde(rename = "banner", default, with = "::serde_with::rust::double_option")]
-    pub banner: Option<Option<i64>>,
-    /// Free-form markdown description/content for the team's homepage
-    #[serde(rename = "description")]
-    pub description: Option<String>,
+    #[serde(rename = "banner")]
+    pub banner: Option<i64>,
     /// The team's identifier
     #[serde(rename = "handle")]
     pub handle: String,
-    /// Collection of hidden modules for the team
-    #[serde(rename = "hidden_modules")]
-    pub hidden_modules: Option<Vec<String>>,
+    /// The `AbbreviatedTeamAttributes` `handles`.
+    #[serde(rename = "handles")]
+    pub handles: Option<String>,
+    /// The `AbbreviatedTeamAttributes` `is_open_membership`.
+    #[serde(rename = "is_open_membership")]
+    pub is_open_membership: Option<bool>,
     /// The name of the team
     #[serde(rename = "name")]
     pub name: String,
-    /// Collection of visible modules for the team
-    #[serde(rename = "visible_modules")]
-    pub visible_modules: Option<Vec<String>>,
+    /// A brief summary of the team
+    #[serde(rename = "summary")]
+    pub summary: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -39,16 +39,16 @@ pub struct TeamUpdateAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl TeamUpdateAttributes {
-    pub fn new(handle: String, name: String) -> TeamUpdateAttributes {
-        TeamUpdateAttributes {
+impl AbbreviatedTeamAttributes {
+    pub fn new(handle: String, name: String) -> AbbreviatedTeamAttributes {
+        AbbreviatedTeamAttributes {
             avatar: None,
             banner: None,
-            description: None,
             handle,
-            hidden_modules: None,
+            handles: None,
+            is_open_membership: None,
             name,
-            visible_modules: None,
+            summary: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -59,23 +59,23 @@ impl TeamUpdateAttributes {
         self
     }
 
-    pub fn banner(mut self, value: Option<i64>) -> Self {
+    pub fn banner(mut self, value: i64) -> Self {
         self.banner = Some(value);
         self
     }
 
-    pub fn description(mut self, value: String) -> Self {
-        self.description = Some(value);
+    pub fn handles(mut self, value: String) -> Self {
+        self.handles = Some(value);
         self
     }
 
-    pub fn hidden_modules(mut self, value: Vec<String>) -> Self {
-        self.hidden_modules = Some(value);
+    pub fn is_open_membership(mut self, value: bool) -> Self {
+        self.is_open_membership = Some(value);
         self
     }
 
-    pub fn visible_modules(mut self, value: Vec<String>) -> Self {
-        self.visible_modules = Some(value);
+    pub fn summary(mut self, value: String) -> Self {
+        self.summary = Some(value);
         self
     }
 
@@ -88,14 +88,14 @@ impl TeamUpdateAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for TeamUpdateAttributes {
+impl<'de> Deserialize<'de> for AbbreviatedTeamAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct TeamUpdateAttributesVisitor;
-        impl<'a> Visitor<'a> for TeamUpdateAttributesVisitor {
-            type Value = TeamUpdateAttributes;
+        struct AbbreviatedTeamAttributesVisitor;
+        impl<'a> Visitor<'a> for AbbreviatedTeamAttributesVisitor {
+            type Value = AbbreviatedTeamAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -106,12 +106,12 @@ impl<'de> Deserialize<'de> for TeamUpdateAttributes {
                 M: MapAccess<'a>,
             {
                 let mut avatar: Option<Option<String>> = None;
-                let mut banner: Option<Option<i64>> = None;
-                let mut description: Option<String> = None;
+                let mut banner: Option<i64> = None;
                 let mut handle: Option<String> = None;
-                let mut hidden_modules: Option<Vec<String>> = None;
+                let mut handles: Option<String> = None;
+                let mut is_open_membership: Option<bool> = None;
                 let mut name: Option<String> = None;
-                let mut visible_modules: Option<Vec<String>> = None;
+                let mut summary: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -124,34 +124,35 @@ impl<'de> Deserialize<'de> for TeamUpdateAttributes {
                             avatar = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "banner" => {
-                            banner = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "description" => {
                             if v.is_null() {
                                 continue;
                             }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            banner = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "handle" => {
                             handle = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "hidden_modules" => {
+                        "handles" => {
                             if v.is_null() {
                                 continue;
                             }
-                            hidden_modules =
+                            handles = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "is_open_membership" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            is_open_membership =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "visible_modules" => {
+                        "summary" => {
                             if v.is_null() {
                                 continue;
                             }
-                            visible_modules =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            summary = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -163,14 +164,14 @@ impl<'de> Deserialize<'de> for TeamUpdateAttributes {
                 let handle = handle.ok_or_else(|| M::Error::missing_field("handle"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
 
-                let content = TeamUpdateAttributes {
+                let content = AbbreviatedTeamAttributes {
                     avatar,
                     banner,
-                    description,
                     handle,
-                    hidden_modules,
+                    handles,
+                    is_open_membership,
                     name,
-                    visible_modules,
+                    summary,
                     additional_properties,
                     _unparsed,
                 };
@@ -179,6 +180,6 @@ impl<'de> Deserialize<'de> for TeamUpdateAttributes {
             }
         }
 
-        deserializer.deserialize_any(TeamUpdateAttributesVisitor)
+        deserializer.deserialize_any(AbbreviatedTeamAttributesVisitor)
     }
 }
