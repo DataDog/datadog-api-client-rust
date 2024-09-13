@@ -14,7 +14,7 @@ pub struct IncidentNotificationHandle {
     /// The name of the notified handle.
     #[serde(rename = "display_name")]
     pub display_name: Option<String>,
-    /// The email address used for the notification.
+    /// The handle used for the notification. This includes an email address, Slack channel, or workflow.
     #[serde(rename = "handle")]
     pub handle: Option<String>,
     #[serde(flatten)]
