@@ -71,6 +71,9 @@ pub struct TableWidgetRequest {
     /// The controls for sorting the widget.
     #[serde(rename = "sort")]
     pub sort: Option<crate::datadogV1::model::WidgetSortBy>,
+    /// List of text formats for columns produced by tags.
+    #[serde(rename = "text_formats")]
+    pub text_formats: Option<Vec<Vec<crate::datadogV1::model::TableWidgetTextFormatRule>>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -101,6 +104,7 @@ impl TableWidgetRequest {
             rum_query: None,
             security_query: None,
             sort: None,
+            text_formats: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -224,6 +228,14 @@ impl TableWidgetRequest {
         self
     }
 
+    pub fn text_formats(
+        mut self,
+        value: Vec<Vec<crate::datadogV1::model::TableWidgetTextFormatRule>>,
+    ) -> Self {
+        self.text_formats = Some(value);
+        self
+    }
+
     pub fn additional_properties(
         mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
@@ -287,6 +299,9 @@ impl<'de> Deserialize<'de> for TableWidgetRequest {
                 let mut rum_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
                 let mut security_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
                 let mut sort: Option<crate::datadogV1::model::WidgetSortBy> = None;
+                let mut text_formats: Option<
+                    Vec<Vec<crate::datadogV1::model::TableWidgetTextFormatRule>>,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -450,6 +465,13 @@ impl<'de> Deserialize<'de> for TableWidgetRequest {
                             }
                             sort = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "text_formats" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            text_formats =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -479,6 +501,7 @@ impl<'de> Deserialize<'de> for TableWidgetRequest {
                     rum_query,
                     security_query,
                     sort,
+                    text_formats,
                     additional_properties,
                     _unparsed,
                 };
