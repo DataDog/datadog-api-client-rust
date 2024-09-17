@@ -6,17 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A notification handle that will be notified at incident creation.
+/// Match All definition.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct IncidentNotificationHandle {
-    /// The name of the notified handle.
-    #[serde(rename = "display_name")]
-    pub display_name: Option<String>,
-    /// The handle used for the notification. This includes an email address, Slack channel, or workflow.
-    #[serde(rename = "handle")]
-    pub handle: Option<String>,
+pub struct TableWidgetTextFormatReplaceAll {
+    /// Table widget text format replace all type.
+    #[serde(rename = "type")]
+    pub type_: crate::datadogV1::model::TableWidgetTextFormatReplaceAllType,
+    /// Replace All type.
+    #[serde(rename = "with")]
+    pub with: String,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,24 +24,17 @@ pub struct IncidentNotificationHandle {
     pub(crate) _unparsed: bool,
 }
 
-impl IncidentNotificationHandle {
-    pub fn new() -> IncidentNotificationHandle {
-        IncidentNotificationHandle {
-            display_name: None,
-            handle: None,
+impl TableWidgetTextFormatReplaceAll {
+    pub fn new(
+        type_: crate::datadogV1::model::TableWidgetTextFormatReplaceAllType,
+        with: String,
+    ) -> TableWidgetTextFormatReplaceAll {
+        TableWidgetTextFormatReplaceAll {
+            type_,
+            with,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn display_name(mut self, value: String) -> Self {
-        self.display_name = Some(value);
-        self
-    }
-
-    pub fn handle(mut self, value: String) -> Self {
-        self.handle = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -53,20 +46,14 @@ impl IncidentNotificationHandle {
     }
 }
 
-impl Default for IncidentNotificationHandle {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<'de> Deserialize<'de> for IncidentNotificationHandle {
+impl<'de> Deserialize<'de> for TableWidgetTextFormatReplaceAll {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct IncidentNotificationHandleVisitor;
-        impl<'a> Visitor<'a> for IncidentNotificationHandleVisitor {
-            type Value = IncidentNotificationHandle;
+        struct TableWidgetTextFormatReplaceAllVisitor;
+        impl<'a> Visitor<'a> for TableWidgetTextFormatReplaceAllVisitor {
+            type Value = TableWidgetTextFormatReplaceAll;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -76,8 +63,10 @@ impl<'de> Deserialize<'de> for IncidentNotificationHandle {
             where
                 M: MapAccess<'a>,
             {
-                let mut display_name: Option<String> = None;
-                let mut handle: Option<String> = None;
+                let mut type_: Option<
+                    crate::datadogV1::model::TableWidgetTextFormatReplaceAllType,
+                > = None;
+                let mut with: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -86,18 +75,19 @@ impl<'de> Deserialize<'de> for IncidentNotificationHandle {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "display_name" => {
-                            if v.is_null() {
-                                continue;
+                        "type" => {
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _type_) = type_ {
+                                match _type_ {
+                                    crate::datadogV1::model::TableWidgetTextFormatReplaceAllType::UnparsedObject(_type_) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
                             }
-                            display_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "handle" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            handle = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "with" => {
+                            with = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -106,10 +96,12 @@ impl<'de> Deserialize<'de> for IncidentNotificationHandle {
                         }
                     }
                 }
+                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
+                let with = with.ok_or_else(|| M::Error::missing_field("with"))?;
 
-                let content = IncidentNotificationHandle {
-                    display_name,
-                    handle,
+                let content = TableWidgetTextFormatReplaceAll {
+                    type_,
+                    with,
                     additional_properties,
                     _unparsed,
                 };
@@ -118,6 +110,6 @@ impl<'de> Deserialize<'de> for IncidentNotificationHandle {
             }
         }
 
-        deserializer.deserialize_any(IncidentNotificationHandleVisitor)
+        deserializer.deserialize_any(TableWidgetTextFormatReplaceAllVisitor)
     }
 }

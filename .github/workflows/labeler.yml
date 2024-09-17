@@ -1,4 +1,9 @@
 name: "Pull Request Labeler and Checker"
+
+permissions:
+  contents: read
+  pull-requests: write
+
 on:
   - pull_request
 

@@ -6,17 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A notification handle that will be notified at incident creation.
+/// The definition of `UserTeamUser` object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct IncidentNotificationHandle {
-    /// The name of the notified handle.
-    #[serde(rename = "display_name")]
-    pub display_name: Option<String>,
-    /// The handle used for the notification. This includes an email address, Slack channel, or workflow.
-    #[serde(rename = "handle")]
-    pub handle: Option<String>,
+pub struct UserTeamUser {
+    /// The definition of `UserTeamUserAttributes` object.
+    #[serde(rename = "attributes")]
+    pub attributes: Option<crate::datadogV2::model::UserTeamUserAttributes>,
+    /// The `UserTeamUser` ID.
+    #[serde(rename = "id")]
+    pub id: Option<String>,
+    /// User team user type
+    #[serde(rename = "type")]
+    pub type_: crate::datadogV2::model::UserTeamUserType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,23 +27,24 @@ pub struct IncidentNotificationHandle {
     pub(crate) _unparsed: bool,
 }
 
-impl IncidentNotificationHandle {
-    pub fn new() -> IncidentNotificationHandle {
-        IncidentNotificationHandle {
-            display_name: None,
-            handle: None,
+impl UserTeamUser {
+    pub fn new(type_: crate::datadogV2::model::UserTeamUserType) -> UserTeamUser {
+        UserTeamUser {
+            attributes: None,
+            id: None,
+            type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn display_name(mut self, value: String) -> Self {
-        self.display_name = Some(value);
+    pub fn attributes(mut self, value: crate::datadogV2::model::UserTeamUserAttributes) -> Self {
+        self.attributes = Some(value);
         self
     }
 
-    pub fn handle(mut self, value: String) -> Self {
-        self.handle = Some(value);
+    pub fn id(mut self, value: String) -> Self {
+        self.id = Some(value);
         self
     }
 
@@ -53,20 +57,14 @@ impl IncidentNotificationHandle {
     }
 }
 
-impl Default for IncidentNotificationHandle {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<'de> Deserialize<'de> for IncidentNotificationHandle {
+impl<'de> Deserialize<'de> for UserTeamUser {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct IncidentNotificationHandleVisitor;
-        impl<'a> Visitor<'a> for IncidentNotificationHandleVisitor {
-            type Value = IncidentNotificationHandle;
+        struct UserTeamUserVisitor;
+        impl<'a> Visitor<'a> for UserTeamUserVisitor {
+            type Value = UserTeamUser;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -76,8 +74,9 @@ impl<'de> Deserialize<'de> for IncidentNotificationHandle {
             where
                 M: MapAccess<'a>,
             {
-                let mut display_name: Option<String> = None;
-                let mut handle: Option<String> = None;
+                let mut attributes: Option<crate::datadogV2::model::UserTeamUserAttributes> = None;
+                let mut id: Option<String> = None;
+                let mut type_: Option<crate::datadogV2::model::UserTeamUserType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -86,18 +85,30 @@ impl<'de> Deserialize<'de> for IncidentNotificationHandle {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "display_name" => {
+                        "attributes" => {
                             if v.is_null() {
                                 continue;
                             }
-                            display_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "handle" => {
+                        "id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            handle = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "type" => {
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _type_) = type_ {
+                                match _type_ {
+                                    crate::datadogV2::model::UserTeamUserType::UnparsedObject(
+                                        _type_,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -106,10 +117,12 @@ impl<'de> Deserialize<'de> for IncidentNotificationHandle {
                         }
                     }
                 }
+                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = IncidentNotificationHandle {
-                    display_name,
-                    handle,
+                let content = UserTeamUser {
+                    attributes,
+                    id,
+                    type_,
                     additional_properties,
                     _unparsed,
                 };
@@ -118,6 +131,6 @@ impl<'de> Deserialize<'de> for IncidentNotificationHandle {
             }
         }
 
-        deserializer.deserialize_any(IncidentNotificationHandleVisitor)
+        deserializer.deserialize_any(UserTeamUserVisitor)
     }
 }
