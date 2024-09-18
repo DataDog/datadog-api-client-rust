@@ -11,12 +11,22 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct PowerpackTemplateVariable {
+    /// The list of values that the template variable drop-down is limited to.
+    #[serde(
+        rename = "available_values",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub available_values: Option<Option<Vec<String>>>,
     /// One or many template variable default values within the saved view, which are unioned together using `OR` if more than one is specified.
     #[serde(rename = "defaults")]
     pub defaults: Option<Vec<String>>,
     /// The name of the variable.
     #[serde(rename = "name")]
     pub name: String,
+    /// The tag prefix associated with the variable. Only tags with this prefix appear in the variable drop-down.
+    #[serde(rename = "prefix", default, with = "::serde_with::rust::double_option")]
+    pub prefix: Option<Option<String>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,15 +37,27 @@ pub struct PowerpackTemplateVariable {
 impl PowerpackTemplateVariable {
     pub fn new(name: String) -> PowerpackTemplateVariable {
         PowerpackTemplateVariable {
+            available_values: None,
             defaults: None,
             name,
+            prefix: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
+    pub fn available_values(mut self, value: Option<Vec<String>>) -> Self {
+        self.available_values = Some(value);
+        self
+    }
+
     pub fn defaults(mut self, value: Vec<String>) -> Self {
         self.defaults = Some(value);
+        self
+    }
+
+    pub fn prefix(mut self, value: Option<String>) -> Self {
+        self.prefix = Some(value);
         self
     }
 
@@ -65,8 +87,10 @@ impl<'de> Deserialize<'de> for PowerpackTemplateVariable {
             where
                 M: MapAccess<'a>,
             {
+                let mut available_values: Option<Option<Vec<String>>> = None;
                 let mut defaults: Option<Vec<String>> = None;
                 let mut name: Option<String> = None;
+                let mut prefix: Option<Option<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -75,6 +99,10 @@ impl<'de> Deserialize<'de> for PowerpackTemplateVariable {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "available_values" => {
+                            available_values =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "defaults" => {
                             if v.is_null() {
                                 continue;
@@ -83,6 +111,9 @@ impl<'de> Deserialize<'de> for PowerpackTemplateVariable {
                         }
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "prefix" => {
+                            prefix = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -94,8 +125,10 @@ impl<'de> Deserialize<'de> for PowerpackTemplateVariable {
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
 
                 let content = PowerpackTemplateVariable {
+                    available_values,
                     defaults,
                     name,
+                    prefix,
                     additional_properties,
                     _unparsed,
                 };
