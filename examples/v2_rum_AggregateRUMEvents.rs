@@ -28,7 +28,6 @@ async fn main() {
             .total(RUMGroupByTotal::RUMGroupByTotalBoolean(false))])
         .options(RUMQueryOptions::new().timezone("GMT".to_string()))
         .page(RUMQueryPageOptions::new().limit(25));
-
     let configuration = datadog::Configuration::new();
     let api = RUMAPI::with_config(configuration);
     let resp = api.aggregate_rum_events(body).await;

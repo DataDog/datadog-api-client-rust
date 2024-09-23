@@ -6,7 +6,6 @@ use datadog_api_client::datadogV2::api_service_level_objectives::ServiceLevelObj
 async fn main() {
     // there is a valid "report" in the system
     let report_data_id = std::env::var("REPORT_DATA_ID").unwrap();
-
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.GetSLOReportJobStatus", true);
     let api = ServiceLevelObjectivesAPI::with_config(configuration);

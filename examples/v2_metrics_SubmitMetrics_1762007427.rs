@@ -15,7 +15,6 @@ async fn main() {
         vec![MetricPoint::new().timestamp(1636629071).value(0.7 as f64)],
     )
     .type_(MetricIntakeType::UNSPECIFIED)]);
-
     let configuration = datadog::Configuration::new();
     let api = MetricsAPI::with_config(configuration);
     let resp = api

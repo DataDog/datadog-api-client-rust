@@ -16,7 +16,6 @@ async fn main() {
             .compute(LogsMetricUpdateCompute::new().include_percentiles(false)),
         LogsMetricType::LOGS_METRICS,
     ));
-
     let configuration = datadog::Configuration::new();
     let api = LogsMetricsAPI::with_config(configuration);
     let resp = api

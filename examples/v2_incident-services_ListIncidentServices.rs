@@ -7,7 +7,6 @@ use datadog_api_client::datadogV2::api_incident_services::ListIncidentServicesOp
 async fn main() {
     // there is a valid "service" in the system
     let service_data_attributes_name = std::env::var("SERVICE_DATA_ATTRIBUTES_NAME").unwrap();
-
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.ListIncidentServices", true);
     let api = IncidentServicesAPI::with_config(configuration);

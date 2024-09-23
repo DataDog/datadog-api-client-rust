@@ -15,7 +15,6 @@ async fn main() {
             IncidentServiceUpdateAttributes::new("service name-updated".to_string()),
         ),
     );
-
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.UpdateIncidentService", true);
     let api = IncidentServicesAPI::with_config(configuration);

@@ -9,6 +9,7 @@ use datadog_api_client::datadogV2::model::RelationshipToPermissionData;
 async fn main() {
     // there is a valid "role" in the system
     let role_data_id = std::env::var("ROLE_DATA_ID").unwrap();
+
     // there is a valid "permission" in the system
     let permission_id = std::env::var("PERMISSION_ID").unwrap();
     let body = RelationshipToPermission::new().data(
@@ -16,7 +17,6 @@ async fn main() {
             .id(permission_id.clone())
             .type_(PermissionsType::PERMISSIONS),
     );
-
     let configuration = datadog::Configuration::new();
     let api = RolesAPI::with_config(configuration);
     let resp = api.add_permission_to_role(role_data_id.clone(), body).await;

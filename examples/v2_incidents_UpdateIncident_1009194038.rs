@@ -18,7 +18,6 @@ async fn main() {
                 .commander_user(Some(NullableRelationshipToUser::new(None))),
         ),
     );
-
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.UpdateIncident", true);
     let api = IncidentsAPI::with_config(configuration);

@@ -7,7 +7,6 @@ use datadog_api_client::datadogV1::api_service_level_objectives::ServiceLevelObj
 async fn main() {
     // there is a valid "slo" in the system
     let slo_data_0_id = std::env::var("SLO_DATA_0_ID").unwrap();
-
     let configuration = datadog::Configuration::new();
     let api = ServiceLevelObjectivesAPI::with_config(configuration);
     let resp = api

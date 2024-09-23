@@ -15,7 +15,6 @@ async fn main() {
                 .tags(true),
         )
         .name("#general".to_string());
-
     let configuration = datadog::Configuration::new();
     let api = SlackIntegrationAPI::with_config(configuration);
     let resp = api

@@ -16,7 +16,6 @@ async fn main() {
     ))
     .share_list(Some(vec![]))
     .share_type(Some(DashboardShareType::OPEN));
-
     let configuration = datadog::Configuration::new();
     let api = DashboardsAPI::with_config(configuration);
     let resp = api

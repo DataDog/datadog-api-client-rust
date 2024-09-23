@@ -11,7 +11,6 @@ async fn main() {
         .charge_description("Monthly usage charge for my service".to_string())
         .charge_period_end("2023-02-28".to_string())
         .charge_period_start("2023-02-01".to_string())];
-
     let configuration = datadog::Configuration::new();
     let api = CloudCostManagementAPI::with_config(configuration);
     let resp = api.upload_custom_costs_file(body).await;

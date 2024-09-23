@@ -23,7 +23,6 @@ async fn main() {
         )
         .page(RUMQueryPageOptions::new().limit(25))
         .sort(RUMSort::TIMESTAMP_ASCENDING);
-
     let configuration = datadog::Configuration::new();
     let api = RUMAPI::with_config(configuration);
     let resp = api.search_rum_events(body).await;

@@ -21,7 +21,6 @@ async fn main() {
             .team("backend".to_string())
             .version("v1.12.07".to_string()),
     ));
-
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.CreateDORAIncident", true);
     let api = DORAMetricsAPI::with_config(configuration);

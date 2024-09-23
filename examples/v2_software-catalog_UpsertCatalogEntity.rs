@@ -65,7 +65,6 @@ async fn main() {
                 .languages(vec![]),
         ),
     ))));
-
     let configuration = datadog::Configuration::new();
     let api = SoftwareCatalogAPI::with_config(configuration);
     let resp = api.upsert_catalog_entity(body).await;

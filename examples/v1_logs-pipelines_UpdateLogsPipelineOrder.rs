@@ -10,7 +10,6 @@ async fn main() {
         "org_ids".to_string(),
         "products".to_string(),
     ]);
-
     let configuration = datadog::Configuration::new();
     let api = LogsPipelinesAPI::with_config(configuration);
     let resp = api.update_logs_pipeline_order(body).await;

@@ -39,7 +39,6 @@ async fn main() {
     )
     .description(Some("description".to_string()))
     .is_read_only(false);
-
     let configuration = datadog::Configuration::new();
     let api = DashboardsAPI::with_config(configuration);
     let resp = api.create_dashboard(body).await;

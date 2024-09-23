@@ -44,7 +44,6 @@ async fn main() {
             )
             .type_("powerpack".to_string()),
     );
-
     let configuration = datadog::Configuration::new();
     let api = PowerpackAPI::with_config(configuration);
     let resp = api.update_powerpack(powerpack_data_id.clone(), body).await;

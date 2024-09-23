@@ -23,7 +23,6 @@ async fn main() {
             .timezone("UTC".to_string()),
         ),
     );
-
     let configuration = datadog::Configuration::new();
     let api = ServiceLevelObjectiveCorrectionsAPI::with_config(configuration);
     let resp = api.create_slo_correction(body).await;

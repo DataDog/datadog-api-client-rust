@@ -9,7 +9,6 @@ async fn main() {
         "Example-Webhooks-Integration".to_string(),
         "https://example.com/webhook".to_string(),
     );
-
     let configuration = datadog::Configuration::new();
     let api = WebhooksIntegrationAPI::with_config(configuration);
     let resp = api.create_webhooks_integration(body).await;

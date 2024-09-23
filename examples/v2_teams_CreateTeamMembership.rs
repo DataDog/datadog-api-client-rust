@@ -1,4 +1,5 @@
-// Add a user to a team returns "Represents a user's association to a team" response
+// Add a user to a team returns "Represents a user's association to a team"
+// response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_teams::TeamsAPI;
 use datadog_api_client::datadogV2::model::RelationshipToUserTeamTeam;
@@ -35,7 +36,6 @@ async fn main() {
                     )),
             ),
     );
-
     let configuration = datadog::Configuration::new();
     let api = TeamsAPI::with_config(configuration);
     let resp = api

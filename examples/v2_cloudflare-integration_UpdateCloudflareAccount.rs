@@ -19,7 +19,6 @@ async fn main() {
             )
             .type_(CloudflareAccountType::CLOUDFLARE_ACCOUNTS),
     );
-
     let configuration = datadog::Configuration::new();
     let api = CloudflareIntegrationAPI::with_config(configuration);
     let resp = api

@@ -1,4 +1,5 @@
-// Remove a Slack integration channel returns "The channel was removed successfully." response
+// Remove a Slack integration channel returns "The channel was removed
+// successfully." response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api_slack_integration::SlackIntegrationAPI;
 

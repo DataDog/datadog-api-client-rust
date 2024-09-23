@@ -31,7 +31,6 @@ async fn main() {
         .interval(5000),
         TimeseriesFormulaRequestType::TIMESERIES_REQUEST,
     ));
-
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.QueryTimeseriesData", true);
     let api = MetricsAPI::with_config(configuration);

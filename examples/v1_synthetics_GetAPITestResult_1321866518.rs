@@ -7,10 +7,10 @@ async fn main() {
     // there is a "synthetics_api_test_with_wrong_dns" in the system
     let synthetics_api_test_with_wrong_dns_public_id =
         std::env::var("SYNTHETICS_API_TEST_WITH_WRONG_DNS_PUBLIC_ID").unwrap();
+
     // the "synthetics_api_test_with_wrong_dns" is triggered
     let synthetics_api_test_with_wrong_dns_result_results_0_result_id =
         std::env::var("SYNTHETICS_API_TEST_WITH_WRONG_DNS_RESULT_RESULTS_0_RESULT_ID").unwrap();
-
     let configuration = datadog::Configuration::new();
     let api = SyntheticsAPI::with_config(configuration);
     let resp = api

@@ -41,7 +41,6 @@ async fn main() {
             )),
         ))],
     );
-
     let configuration = datadog::Configuration::new();
     let api = DashboardsAPI::with_config(configuration);
     let resp = api.create_dashboard(body).await;

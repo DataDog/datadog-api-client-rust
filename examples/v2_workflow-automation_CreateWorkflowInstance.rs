@@ -12,7 +12,6 @@ async fn main() {
         WorkflowInstanceCreateRequest::new().meta(WorkflowInstanceCreateMeta::new().payload(
             BTreeMap::from([("input".to_string(), Value::from("value"))]),
         ));
-
     let configuration = datadog::Configuration::new();
     let api = WorkflowAutomationAPI::with_config(configuration);
     let resp = api

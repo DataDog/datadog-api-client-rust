@@ -20,7 +20,6 @@ async fn main() {
             .id(gcp_sts_account_data_id.clone())
             .type_(GCPServiceAccountType::GCP_SERVICE_ACCOUNT),
     );
-
     let configuration = datadog::Configuration::new();
     let api = GCPIntegrationAPI::with_config(configuration);
     let resp = api

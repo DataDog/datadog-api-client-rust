@@ -40,7 +40,6 @@ async fn main() {
     ]))
     .defaults(vec!["my-host".to_string()])
     .prefix(Some("host".to_string()))]));
-
     let configuration = datadog::Configuration::new();
     let api = DashboardsAPI::with_config(configuration);
     let resp = api.create_dashboard(body).await;

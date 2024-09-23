@@ -20,7 +20,6 @@ async fn main() {
         )
         .relationships(TeamCreateRelationships::new().users(RelationshipToUsers::new(vec![]))),
     );
-
     let configuration = datadog::Configuration::new();
     let api = TeamsAPI::with_config(configuration);
     let resp = api.create_team(body).await;

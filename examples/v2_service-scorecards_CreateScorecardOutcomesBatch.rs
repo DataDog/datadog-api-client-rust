@@ -26,7 +26,6 @@ async fn main() {
             )
             .type_(OutcomesBatchType::BATCHED_OUTCOME),
     );
-
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.CreateScorecardOutcomesBatch", true);
     let api = ServiceScorecardsAPI::with_config(configuration);

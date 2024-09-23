@@ -25,11 +25,11 @@ async fn main() {
             .scheduling_options(
                 MonitorOptionsSchedulingOptions::new()
                     .custom_schedule(MonitorOptionsCustomSchedule::new().recurrences(vec![
-                            MonitorOptionsCustomScheduleRecurrence::new()
-                                .rrule("FREQ=DAILY;INTERVAL=1".to_string())
-                                .start("2024-10-26T09:13:00".to_string())
-                                .timezone("America/Los_Angeles".to_string()),
-                        ]))
+                                        MonitorOptionsCustomScheduleRecurrence::new()
+                                            .rrule("FREQ=DAILY;INTERVAL=1".to_string())
+                                            .start("2024-10-26T09:13:00".to_string())
+                                            .timezone("America/Los_Angeles".to_string())
+                                    ]))
                     .evaluation_window(
                         MonitorOptionsSchedulingOptionsEvaluationWindow::new()
                             .day_starts("04:00".to_string())
@@ -39,7 +39,6 @@ async fn main() {
             .thresholds(MonitorThresholds::new().critical(0.5 as f64)),
     )
     .tags(vec![]);
-
     let configuration = datadog::Configuration::new();
     let api = MonitorsAPI::with_config(configuration);
     let resp = api.create_monitor(body).await;

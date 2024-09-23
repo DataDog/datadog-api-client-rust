@@ -9,7 +9,6 @@ async fn main() {
     let synthetics_api_test_public_id = std::env::var("SYNTHETICS_API_TEST_PUBLIC_ID").unwrap();
     let body =
         SyntheticsDeleteTestsPayload::new().public_ids(vec![synthetics_api_test_public_id.clone()]);
-
     let configuration = datadog::Configuration::new();
     let api = SyntheticsAPI::with_config(configuration);
     let resp = api.delete_tests(body).await;

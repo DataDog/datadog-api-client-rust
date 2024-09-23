@@ -44,7 +44,6 @@ async fn main() {
             .tags(vec!["env:prod".to_string(), "team:security".to_string()])
             .type_(SecurityMonitoringRuleTypeCreate::LOG_DETECTION),
         ));
-
     let configuration = datadog::Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api.validate_security_monitoring_rule(body).await;

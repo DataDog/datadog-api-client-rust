@@ -27,7 +27,6 @@ async fn main() {
             )
             .thresholds(MonitorThresholds::new().critical(0.5 as f64)),
     );
-
     let configuration = datadog::Configuration::new();
     let api = MonitorsAPI::with_config(configuration);
     let resp = api.create_monitor(body).await;

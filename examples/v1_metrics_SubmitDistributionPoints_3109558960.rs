@@ -16,7 +16,6 @@ async fn main() {
             DistributionPointItem::DistributionPointData(vec![1.0, 2.0]),
         ]],
     )]);
-
     let configuration = datadog::Configuration::new();
     let api = MetricsAPI::with_config(configuration);
     let resp = api

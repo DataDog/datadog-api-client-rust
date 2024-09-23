@@ -17,7 +17,6 @@ async fn main() {
         .host_tags(vec!["$KEY:$VALUE".to_string()])
         .metrics_collection_enabled(true)
         .role_name("DatadogAWSIntegrationRole".to_string());
-
     let configuration = datadog::Configuration::new();
     let api = AWSIntegrationAPI::with_config(configuration);
     let resp = api

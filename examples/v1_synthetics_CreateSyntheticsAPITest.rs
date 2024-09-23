@@ -74,7 +74,6 @@ async fn main() {
     .status(SyntheticsTestPauseStatus::LIVE)
     .subtype(SyntheticsTestDetailsSubType::HTTP)
     .tags(vec!["env:production".to_string()]);
-
     let configuration = datadog::Configuration::new();
     let api = SyntheticsAPI::with_config(configuration);
     let resp = api.create_synthetics_api_test(body).await;

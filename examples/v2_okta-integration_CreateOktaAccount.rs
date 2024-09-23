@@ -21,7 +21,6 @@ async fn main() {
         )
         .id("f749daaf-682e-4208-a38d-c9b43162c609".to_string()),
     );
-
     let configuration = datadog::Configuration::new();
     let api = OktaIntegrationAPI::with_config(configuration);
     let resp = api.create_okta_account(body).await;

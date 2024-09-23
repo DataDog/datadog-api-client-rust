@@ -20,7 +20,6 @@ async fn main() {
         )
         .id(agent_rule_data_id.clone()),
     );
-
     let configuration = datadog::Configuration::new();
     let api = CSMThreatsAPI::with_config(configuration);
     let resp = api

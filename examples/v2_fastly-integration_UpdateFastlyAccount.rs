@@ -17,7 +17,6 @@ async fn main() {
             )
             .type_(FastlyAccountType::FASTLY_ACCOUNTS),
     );
-
     let configuration = datadog::Configuration::new();
     let api = FastlyIntegrationAPI::with_config(configuration);
     let resp = api

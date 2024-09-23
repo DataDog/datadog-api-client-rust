@@ -16,7 +16,6 @@ async fn main() {
         .email("dev@datadoghq.com".to_string()),
         CloudflareAccountType::CLOUDFLARE_ACCOUNTS,
     ));
-
     let configuration = datadog::Configuration::new();
     let api = CloudflareIntegrationAPI::with_config(configuration);
     let resp = api.create_cloudflare_account(body).await;

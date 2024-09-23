@@ -13,7 +13,6 @@ async fn main() {
             IncidentTeamCreateAttributes::new("Example-Incident-Team".to_string()),
         ),
     );
-
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.CreateIncidentTeam", true);
     let api = IncidentTeamsAPI::with_config(configuration);

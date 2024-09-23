@@ -13,7 +13,6 @@ async fn main() {
         ListContainerImagesOptionalParams::default().page_size(2),
     );
     pin_mut!(response);
-
     while let Some(resp) = response.next().await {
         if let Ok(value) = resp {
             println!("{:#?}", value);

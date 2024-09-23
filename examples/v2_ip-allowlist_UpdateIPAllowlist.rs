@@ -25,7 +25,6 @@ async fn main() {
                 )]),
         ),
     );
-
     let configuration = datadog::Configuration::new();
     let api = IPAllowlistAPI::with_config(configuration);
     let resp = api.update_ip_allowlist(body).await;

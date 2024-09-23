@@ -43,7 +43,6 @@ async fn main() {
             )),
         ])
         .tags(vec![]);
-
     let configuration = datadog::Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api

@@ -6,7 +6,6 @@ use datadog_api_client::datadogV1::model::DashboardList;
 #[tokio::main]
 async fn main() {
     let body = DashboardList::new("Example-Dashboard-List".to_string());
-
     let configuration = datadog::Configuration::new();
     let api = DashboardListsAPI::with_config(configuration);
     let resp = api.create_dashboard_list(body).await;

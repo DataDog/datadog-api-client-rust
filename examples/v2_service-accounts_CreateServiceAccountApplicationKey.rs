@@ -14,7 +14,6 @@ async fn main() {
         ApplicationKeyCreateAttributes::new("Example-Service-Account".to_string()),
         ApplicationKeysType::APPLICATION_KEYS,
     ));
-
     let configuration = datadog::Configuration::new();
     let api = ServiceAccountsAPI::with_config(configuration);
     let resp = api

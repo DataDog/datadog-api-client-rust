@@ -10,7 +10,6 @@ async fn main() {
         "payments".to_string(),
         "web".to_string(),
     ]);
-
     let configuration = datadog::Configuration::new();
     let api = LogsIndexesAPI::with_config(configuration);
     let resp = api.update_logs_index_order(body).await;

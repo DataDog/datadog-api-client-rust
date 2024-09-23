@@ -6,7 +6,6 @@ use datadog_api_client::datadogV2::api_cloudflare_integration::CloudflareIntegra
 async fn main() {
     // there is a valid "cloudflare_account" in the system
     let cloudflare_account_data_id = std::env::var("CLOUDFLARE_ACCOUNT_DATA_ID").unwrap();
-
     let configuration = datadog::Configuration::new();
     let api = CloudflareIntegrationAPI::with_config(configuration);
     let resp = api

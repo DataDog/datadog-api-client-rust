@@ -1,4 +1,5 @@
-// Create a new dashboard with template variable presets using values returns "OK" response
+// Create a new dashboard with template variable presets using values returns "OK"
+// response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api_dashboards::DashboardsAPI;
 use datadog_api_client::datadogV1::model::Dashboard;
@@ -47,7 +48,6 @@ async fn main() {
     ]))
     .defaults(vec!["my-host".to_string()])
     .prefix(Some("host".to_string()))]));
-
     let configuration = datadog::Configuration::new();
     let api = DashboardsAPI::with_config(configuration);
     let resp = api.create_dashboard(body).await;

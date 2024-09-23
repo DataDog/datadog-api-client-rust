@@ -23,7 +23,6 @@ async fn main() {
                     .service("payment".to_string()),
             ),
     ]);
-
     let configuration = datadog::Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api

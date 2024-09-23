@@ -44,7 +44,6 @@ async fn main() {
             ))
             .type_(CIAppCreatePipelineEventRequestDataType::CIPIPELINE_RESOURCE_REQUEST),
     );
-
     let configuration = datadog::Configuration::new();
     let api = CIVisibilityPipelinesAPI::with_config(configuration);
     let resp = api.create_ci_app_pipeline_event(body).await;

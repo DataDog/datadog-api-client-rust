@@ -1,4 +1,5 @@
-// Create a multi-step api test with every type of basicAuth returns "OK - Returns the created test details." response
+// Create a multi-step api test with every type of basicAuth returns "OK - Returns
+// the created test details." response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api_synthetics::SyntheticsAPI;
 use datadog_api_client::datadogV1::model::SyntheticsAPIStep;
@@ -183,7 +184,6 @@ async fn main() {
         SyntheticsAPITestType::API,
     )
     .subtype(SyntheticsTestDetailsSubType::MULTI);
-
     let configuration = datadog::Configuration::new();
     let api = SyntheticsAPI::with_config(configuration);
     let resp = api.create_synthetics_api_test(body).await;

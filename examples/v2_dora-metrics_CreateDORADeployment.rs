@@ -20,7 +20,6 @@ async fn main() {
         ))
         .version("v1.12.07".to_string()),
     ));
-
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.CreateDORADeployment", true);
     let api = DORAMetricsAPI::with_config(configuration);

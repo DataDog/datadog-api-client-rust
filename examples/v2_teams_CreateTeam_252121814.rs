@@ -19,7 +19,6 @@ async fn main() {
         .visible_modules(vec!["m1".to_string(), "m2".to_string()]),
         TeamType::TEAM,
     ));
-
     let configuration = datadog::Configuration::new();
     let api = TeamsAPI::with_config(configuration);
     let resp = api.create_team(body).await;

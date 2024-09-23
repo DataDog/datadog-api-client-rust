@@ -13,7 +13,6 @@ async fn main() {
             .name("Datadog API Client Python".to_string()),
         UsersType::USERS,
     ));
-
     let configuration = datadog::Configuration::new();
     let api = UsersAPI::with_config(configuration);
     let resp = api.create_user(body).await;

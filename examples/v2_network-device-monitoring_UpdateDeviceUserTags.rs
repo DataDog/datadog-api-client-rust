@@ -16,7 +16,6 @@ async fn main() {
             .id("default_device".to_string())
             .type_("tags".to_string()),
     );
-
     let configuration = datadog::Configuration::new();
     let api = NetworkDeviceMonitoringAPI::with_config(configuration);
     let resp = api

@@ -8,7 +8,6 @@ async fn main() {
     let body = AWSAccountDeleteRequest::new()
         .account_id("163662907100".to_string())
         .role_name("DatadogAWSIntegrationRole".to_string());
-
     let configuration = datadog::Configuration::new();
     let api = AWSIntegrationAPI::with_config(configuration);
     let resp = api.delete_aws_account(body).await;

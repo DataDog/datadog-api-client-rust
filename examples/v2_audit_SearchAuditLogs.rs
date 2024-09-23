@@ -24,7 +24,6 @@ async fn main() {
         )
         .page(AuditLogsQueryPageOptions::new().limit(25))
         .sort(AuditLogsSort::TIMESTAMP_ASCENDING);
-
     let configuration = datadog::Configuration::new();
     let api = AuditAPI::with_config(configuration);
     let resp = api

@@ -22,7 +22,6 @@ async fn main() {
         .resource_collection_enabled(true)
         .token_uri("https://accounts.google.com/o/oauth2/token".to_string())
         .type_("service_account".to_string());
-
     let configuration = datadog::Configuration::new();
     let api = GCPIntegrationAPI::with_config(configuration);
     let resp = api.update_gcp_integration(body).await;

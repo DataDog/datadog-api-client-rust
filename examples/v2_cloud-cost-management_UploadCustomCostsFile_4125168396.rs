@@ -14,7 +14,6 @@ async fn main() {
         .charge_period_start("2023-05-06".to_string())
         .provider_name("my_provider".to_string())
         .tags(BTreeMap::from([("key".to_string(), "value".to_string())]))];
-
     let configuration = datadog::Configuration::new();
     let api = CloudCostManagementAPI::with_config(configuration);
     let resp = api.upload_custom_costs_file(body).await;

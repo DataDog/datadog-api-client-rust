@@ -42,7 +42,6 @@ async fn main() {
             .tags(vec![])
             .type_(SecurityMonitoringRuleTypeCreate::WORKLOAD_SECURITY),
         ));
-
     let configuration = datadog::Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api.create_security_monitoring_rule(body).await;

@@ -9,7 +9,6 @@ async fn main() {
     let body = HostTags::new()
         .host("test.host".to_string())
         .tags(vec!["environment:production".to_string()]);
-
     let configuration = datadog::Configuration::new();
     let api = TagsAPI::with_config(configuration);
     let resp = api

@@ -19,7 +19,6 @@ async fn main() {
             CloudWorkloadSecurityAgentRuleType::AGENT_RULE,
         ),
     );
-
     let configuration = datadog::Configuration::new();
     let api = CSMThreatsAPI::with_config(configuration);
     let resp = api.create_cloud_workload_security_agent_rule(body).await;

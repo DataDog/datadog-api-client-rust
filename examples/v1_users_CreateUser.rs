@@ -12,7 +12,6 @@ async fn main() {
         .email("test@datadoghq.com".to_string())
         .handle("test@datadoghq.com".to_string())
         .name("test user".to_string());
-
     let configuration = datadog::Configuration::new();
     let api = UsersAPI::with_config(configuration);
     let resp = api.create_user(body).await;

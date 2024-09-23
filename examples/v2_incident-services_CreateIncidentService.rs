@@ -13,7 +13,6 @@ async fn main() {
             IncidentServiceCreateAttributes::new("Example-Incident-Service".to_string()),
         ),
     );
-
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.CreateIncidentService", true);
     let api = IncidentServicesAPI::with_config(configuration);

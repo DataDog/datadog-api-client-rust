@@ -17,7 +17,6 @@ async fn main() {
             ApmRetentionFilterType::apm_retention_filter,
         ),
     ]);
-
     let configuration = datadog::Configuration::new();
     let api = APMRetentionFiltersAPI::with_config(configuration);
     let resp = api.reorder_apm_retention_filters(body).await;

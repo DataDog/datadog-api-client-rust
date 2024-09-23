@@ -48,7 +48,6 @@ async fn main() {
     .target_threshold(97.0 as f64)
     .timeframe(SLOTimeframe::SEVEN_DAYS)
     .warning_threshold(98.0 as f64);
-
     let configuration = datadog::Configuration::new();
     let api = ServiceLevelObjectivesAPI::with_config(configuration);
     let resp = api.create_slo(body).await;

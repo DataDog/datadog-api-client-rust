@@ -33,7 +33,6 @@ async fn main() {
             .rehydration_tags(vec!["team:intake".to_string(), "team:app".to_string()]),
         ),
     );
-
     let configuration = datadog::Configuration::new();
     let api = LogsArchivesAPI::with_config(configuration);
     let resp = api.create_logs_archive(body).await;

@@ -11,7 +11,6 @@ async fn main() {
     let api = CaseManagementAPI::with_config(configuration);
     let response = api.search_cases_with_pagination(SearchCasesOptionalParams::default());
     pin_mut!(response);
-
     while let Some(resp) = response.next().await {
         if let Ok(value) = resp {
             println!("{:#?}", value);

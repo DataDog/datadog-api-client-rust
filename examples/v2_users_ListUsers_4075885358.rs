@@ -11,7 +11,6 @@ async fn main() {
     let api = UsersAPI::with_config(configuration);
     let response = api.list_users_with_pagination(ListUsersOptionalParams::default().page_size(2));
     pin_mut!(response);
-
     while let Some(resp) = response.next().await {
         if let Ok(value) = resp {
             println!("{:#?}", value);

@@ -38,7 +38,6 @@ async fn main() {
             )))),
         ),
     );
-
     let configuration = datadog::Configuration::new();
     let api = CaseManagementAPI::with_config(configuration);
     let resp = api.create_case(body).await;

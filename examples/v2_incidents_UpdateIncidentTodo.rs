@@ -11,6 +11,7 @@ use datadog_api_client::datadogV2::model::IncidentTodoType;
 async fn main() {
     // there is a valid "incident" in the system
     let incident_data_id = std::env::var("INCIDENT_DATA_ID").unwrap();
+
     // the "incident" has an "incident_todo"
     let incident_todo_data_id = std::env::var("INCIDENT_TODO_DATA_ID").unwrap();
     let body = IncidentTodoPatchRequest::new(IncidentTodoPatchData::new(
@@ -24,7 +25,6 @@ async fn main() {
         .due_date(Some("2023-07-10T05:00:00.000000+00:00".to_string())),
         IncidentTodoType::INCIDENT_TODOS,
     ));
-
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.UpdateIncidentTodo", true);
     let api = IncidentsAPI::with_config(configuration);

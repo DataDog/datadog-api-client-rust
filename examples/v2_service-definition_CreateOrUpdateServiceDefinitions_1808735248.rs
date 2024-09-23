@@ -67,7 +67,6 @@ async fn main() {
         .tags(vec!["my:tag".to_string(), "service:tag".to_string()])
         .team("my-team".to_string()),
     ));
-
     let configuration = datadog::Configuration::new();
     let api = ServiceDefinitionAPI::with_config(configuration);
     let resp = api.create_or_update_service_definitions(body).await;

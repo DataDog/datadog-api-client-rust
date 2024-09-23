@@ -29,7 +29,6 @@ async fn main() {
             .sort(CIAppAggregateSort::new().order(CIAppSortOrder::ASCENDING))
             .total(CIAppGroupByTotal::CIAppGroupByTotalBoolean(false))])
         .options(CIAppQueryOptions::new().timezone("GMT".to_string()));
-
     let configuration = datadog::Configuration::new();
     let api = CIVisibilityTestsAPI::with_config(configuration);
     let resp = api.aggregate_ci_app_test_events(body).await;

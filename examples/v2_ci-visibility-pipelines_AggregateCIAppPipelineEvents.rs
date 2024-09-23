@@ -28,7 +28,6 @@ async fn main() {
             .limit(10)
             .total(CIAppGroupByTotal::CIAppGroupByTotalBoolean(false))])
         .options(CIAppQueryOptions::new().timezone("GMT".to_string()));
-
     let configuration = datadog::Configuration::new();
     let api = CIVisibilityPipelinesAPI::with_config(configuration);
     let resp = api.aggregate_ci_app_pipeline_events(body).await;

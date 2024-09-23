@@ -10,7 +10,6 @@ async fn main() {
     let body = vec![HTTPLogItem::new("Example-Log".to_string())
         .ddtags("host:ExampleLog".to_string())
         .additional_properties(BTreeMap::from([]))];
-
     let configuration = datadog::Configuration::new();
     let api = LogsAPI::with_config(configuration);
     let resp = api

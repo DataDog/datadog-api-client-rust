@@ -16,7 +16,6 @@ async fn main() {
             vec![SLOTimeframe::SEVEN_DAYS, SLOTimeframe::THIRTY_DAYS],
         ),
     ]);
-
     let configuration = datadog::Configuration::new();
     let api = ServiceLevelObjectivesAPI::with_config(configuration);
     let resp = api.delete_slo_timeframe_in_bulk(body).await;

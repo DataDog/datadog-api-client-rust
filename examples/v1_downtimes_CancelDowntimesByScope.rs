@@ -8,7 +8,6 @@ async fn main() {
     // there is a valid "downtime" in the system
     let downtime_scope_0 = std::env::var("DOWNTIME_SCOPE_0").unwrap();
     let body = CancelDowntimesByScopeRequest::new(downtime_scope_0.clone());
-
     let configuration = datadog::Configuration::new();
     let api = DowntimesAPI::with_config(configuration);
     let resp = api.cancel_downtimes_by_scope(body).await;

@@ -26,7 +26,6 @@ async fn main() {
         "ExampleSpansMetric".to_string(),
         SpansMetricType::SPANS_METRICS,
     ));
-
     let configuration = datadog::Configuration::new();
     let api = SpansMetricsAPI::with_config(configuration);
     let resp = api.create_spans_metric(body).await;

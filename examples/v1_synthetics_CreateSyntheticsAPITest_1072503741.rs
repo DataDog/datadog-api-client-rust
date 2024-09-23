@@ -45,7 +45,6 @@ async fn main() {
     )
     .subtype(SyntheticsTestDetailsSubType::SSL)
     .tags(vec!["testing:api".to_string()]);
-
     let configuration = datadog::Configuration::new();
     let api = SyntheticsAPI::with_config(configuration);
     let resp = api.create_synthetics_api_test(body).await;

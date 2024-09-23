@@ -16,7 +16,6 @@ async fn main() {
         application_key_data_id.clone(),
         ApplicationKeysType::APPLICATION_KEYS,
     ));
-
     let configuration = datadog::Configuration::new();
     let api = KeyManagementAPI::with_config(configuration);
     let resp = api

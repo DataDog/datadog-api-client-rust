@@ -14,7 +14,6 @@ async fn main() {
         ListMonitorDowntimesOptionalParams::default(),
     );
     pin_mut!(response);
-
     while let Some(resp) = response.next().await {
         if let Ok(value) = resp {
             println!("{:#?}", value);

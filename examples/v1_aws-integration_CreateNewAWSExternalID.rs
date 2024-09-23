@@ -20,7 +20,6 @@ async fn main() {
         .metrics_collection_enabled(false)
         .resource_collection_enabled(true)
         .role_name("DatadogAWSIntegrationRole".to_string());
-
     let configuration = datadog::Configuration::new();
     let api = AWSIntegrationAPI::with_config(configuration);
     let resp = api.create_new_aws_external_id(body).await;

@@ -23,7 +23,6 @@ async fn main() {
         .tags(vec!["myTag".to_string(), "myTag2:myValue".to_string()]),
         ConfluentAccountType::CONFLUENT_CLOUD_ACCOUNTS,
     ));
-
     let configuration = datadog::Configuration::new();
     let api = ConfluentCloudAPI::with_config(configuration);
     let resp = api.create_confluent_account(body).await;

@@ -30,12 +30,10 @@ async fn main() {
             )
             .type_(SpansListRequestType::SEARCH_REQUEST),
     );
-
     let configuration = datadog::Configuration::new();
     let api = SpansAPI::with_config(configuration);
     let response = api.list_spans_with_pagination(body);
     pin_mut!(response);
-
     while let Some(resp) = response.next().await {
         if let Ok(value) = resp {
             println!("{:#?}", value);

@@ -20,7 +20,6 @@ async fn main() {
         ))),
         UserInvitationsType::USER_INVITATIONS,
     )]);
-
     let configuration = datadog::Configuration::new();
     let api = UsersAPI::with_config(configuration);
     let resp = api.send_invitations(body).await;

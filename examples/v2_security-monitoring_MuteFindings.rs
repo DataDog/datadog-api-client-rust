@@ -24,7 +24,6 @@ async fn main() {
             )]),
         FindingType::FINDING,
     ));
-
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.MuteFindings", true);
     let api = SecurityMonitoringAPI::with_config(configuration);

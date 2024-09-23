@@ -9,7 +9,6 @@ async fn main() {
         .account_id("123456789012".to_string())
         .event_generator_name("app-alerts-zyxw3210".to_string())
         .region("us-east-1".to_string());
-
     let configuration = datadog::Configuration::new();
     let api = AWSIntegrationAPI::with_config(configuration);
     let resp = api.delete_aws_event_bridge_source(body).await;

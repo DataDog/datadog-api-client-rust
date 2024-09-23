@@ -19,7 +19,6 @@ async fn main() {
             .op(SyntheticsPatchTestOperationName::REMOVE)
             .path("/config/assertions/0".to_string()),
     ]);
-
     let configuration = datadog::Configuration::new();
     let api = SyntheticsAPI::with_config(configuration);
     let resp = api

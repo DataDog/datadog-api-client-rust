@@ -12,7 +12,6 @@ async fn main() {
     let response =
         api.list_catalog_entity_with_pagination(ListCatalogEntityOptionalParams::default());
     pin_mut!(response);
-
     while let Some(resp) = response.next().await {
         if let Ok(value) = resp {
             println!("{:#?}", value);

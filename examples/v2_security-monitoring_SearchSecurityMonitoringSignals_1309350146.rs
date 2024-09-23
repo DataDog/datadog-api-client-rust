@@ -27,14 +27,12 @@ async fn main() {
         )
         .page(SecurityMonitoringSignalListRequestPage::new().limit(2))
         .sort(SecurityMonitoringSignalsSort::TIMESTAMP_ASCENDING);
-
     let configuration = datadog::Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
     let response = api.search_security_monitoring_signals_with_pagination(
         SearchSecurityMonitoringSignalsOptionalParams::default().body(body),
     );
     pin_mut!(response);
-
     while let Some(resp) = response.next().await {
         if let Ok(value) = resp {
             println!("{:#?}", value);

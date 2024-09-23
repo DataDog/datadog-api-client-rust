@@ -43,7 +43,6 @@ async fn main() {
         IncidentAttachmentUpdateData::new(IncidentAttachmentType::INCIDENT_ATTACHMENTS)
             .id("00000000-abcd-0003-0000-000000000000".to_string()),
     ]);
-
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.UpdateIncidentAttachments", true);
     let api = IncidentsAPI::with_config(configuration);

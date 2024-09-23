@@ -34,7 +34,6 @@ async fn main() {
                 )),
             ),
     );
-
     let configuration = datadog::Configuration::new();
     let api = AuthNMappingsAPI::with_config(configuration);
     let resp = api.create_authn_mapping(body).await;

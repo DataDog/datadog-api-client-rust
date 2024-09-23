@@ -7,7 +7,6 @@ use datadog_api_client::datadogV1::model::EventCreateRequest;
 async fn main() {
     let body = EventCreateRequest::new("A text message.".to_string(), "Example-Event".to_string())
         .tags(vec!["test:ExampleEvent".to_string()]);
-
     let configuration = datadog::Configuration::new();
     let api = EventsAPI::with_config(configuration);
     let resp = api.create_event(body).await;

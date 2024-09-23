@@ -12,7 +12,6 @@ async fn main() {
     let response =
         api.list_rum_events_with_pagination(ListRUMEventsOptionalParams::default().page_limit(2));
     pin_mut!(response);
-
     while let Some(resp) = response.next().await {
         if let Ok(value) = resp {
             println!("{:#?}", value);

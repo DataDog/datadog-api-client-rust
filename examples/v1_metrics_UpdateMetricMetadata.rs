@@ -9,7 +9,6 @@ async fn main() {
         .per_unit("second".to_string())
         .type_("count".to_string())
         .unit("byte".to_string());
-
     let configuration = datadog::Configuration::new();
     let api = MetricsAPI::with_config(configuration);
     let resp = api

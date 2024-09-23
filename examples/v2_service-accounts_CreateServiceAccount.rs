@@ -30,7 +30,6 @@ async fn main() {
                     .type_(RolesType::ROLES)]),
             )),
         );
-
     let configuration = datadog::Configuration::new();
     let api = ServiceAccountsAPI::with_config(configuration);
     let resp = api.create_service_account(body).await;

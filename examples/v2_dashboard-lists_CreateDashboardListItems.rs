@@ -11,7 +11,6 @@ async fn main() {
         "q5j-nti-fv6".to_string(),
         DashboardType::HOST_TIMEBOARD,
     )]);
-
     let configuration = datadog::Configuration::new();
     let api = DashboardListsAPI::with_config(configuration);
     let resp = api

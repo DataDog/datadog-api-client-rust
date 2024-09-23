@@ -39,7 +39,6 @@ async fn main() {
         )
         .subscription(OrganizationSubscription::new().type_("pro".to_string()))
         .trial(false);
-
     let configuration = datadog::Configuration::new();
     let api = OrganizationsAPI::with_config(configuration);
     let resp = api.update_org("abc123".to_string(), body).await;

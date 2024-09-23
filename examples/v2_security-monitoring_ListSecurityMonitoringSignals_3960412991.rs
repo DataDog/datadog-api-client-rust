@@ -13,7 +13,6 @@ async fn main() {
         ListSecurityMonitoringSignalsOptionalParams::default().page_limit(2),
     );
     pin_mut!(response);
-
     while let Some(resp) = response.next().await {
         if let Ok(value) = resp {
             println!("{:#?}", value);

@@ -15,7 +15,6 @@ async fn main() {
         CaseUpdatePriorityAttributes::new(CasePriority::P3),
         CaseResourceType::CASE,
     ));
-
     let configuration = datadog::Configuration::new();
     let api = CaseManagementAPI::with_config(configuration);
     let resp = api.update_priority(case_id.clone(), body).await;

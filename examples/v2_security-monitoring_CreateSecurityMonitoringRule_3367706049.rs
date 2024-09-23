@@ -1,4 +1,5 @@
-// Create a detection rule with detection method 'third_party' returns "OK" response
+// Create a detection rule with detection method 'third_party' returns "OK"
+// response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_security_monitoring::SecurityMonitoringAPI;
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleCreatePayload;
@@ -54,7 +55,6 @@ async fn main() {
             ])
             .type_(SecurityMonitoringRuleTypeCreate::LOG_DETECTION),
         ));
-
     let configuration = datadog::Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api.create_security_monitoring_rule(body).await;

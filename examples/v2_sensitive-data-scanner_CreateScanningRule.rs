@@ -49,7 +49,6 @@ async fn main() {
         ),
         SensitiveDataScannerMetaVersionOnly::new(),
     );
-
     let configuration = datadog::Configuration::new();
     let api = SensitiveDataScannerAPI::with_config(configuration);
     let resp = api.create_scanning_rule(body).await;

@@ -18,7 +18,6 @@ async fn main() {
         .bucket_region("us-east-1".to_string()),
         AwsCURConfigPostRequestType::AWS_CUR_CONFIG_POST_REQUEST,
     ));
-
     let configuration = datadog::Configuration::new();
     let api = CloudCostManagementAPI::with_config(configuration);
     let resp = api.create_cost_awscur_config(body).await;

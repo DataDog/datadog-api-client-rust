@@ -20,14 +20,12 @@ async fn main() {
         )
         .page(CIAppQueryPageOptions::new().limit(2))
         .sort(CIAppSort::TIMESTAMP_ASCENDING);
-
     let configuration = datadog::Configuration::new();
     let api = CIVisibilityTestsAPI::with_config(configuration);
     let response = api.search_ci_app_test_events_with_pagination(
         SearchCIAppTestEventsOptionalParams::default().body(body),
     );
     pin_mut!(response);
-
     while let Some(resp) = response.next().await {
         if let Ok(value) = resp {
             println!("{:#?}", value);

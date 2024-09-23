@@ -1,4 +1,5 @@
-// Send logs returns "Request accepted for processing (always 202 empty JSON)." response
+// Send logs returns "Request accepted for processing (always 202 empty JSON)."
+// response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_logs::LogsAPI;
 use datadog_api_client::datadogV2::api_logs::SubmitLogOptionalParams;
@@ -15,7 +16,6 @@ async fn main() {
     .hostname("i-012345678".to_string())
     .service("payment".to_string())
     .additional_properties(BTreeMap::from([("status".to_string(), "info".to_string())]))];
-
     let configuration = datadog::Configuration::new();
     let api = LogsAPI::with_config(configuration);
     let resp = api

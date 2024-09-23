@@ -18,7 +18,6 @@ async fn main() {
                     .value(TeamPermissionSettingValue::ADMINS),
             ),
     );
-
     let configuration = datadog::Configuration::new();
     let api = TeamsAPI::with_config(configuration);
     let resp = api

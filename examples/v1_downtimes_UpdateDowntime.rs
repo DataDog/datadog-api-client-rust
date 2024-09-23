@@ -18,7 +18,6 @@ async fn main() {
             NotifyEndState::WARN,
         ])
         .notify_end_types(vec![NotifyEndType::CANCELED, NotifyEndType::EXPIRED]);
-
     let configuration = datadog::Configuration::new();
     let api = DowntimesAPI::with_config(configuration);
     let resp = api.update_downtime(downtime_id.clone(), body).await;

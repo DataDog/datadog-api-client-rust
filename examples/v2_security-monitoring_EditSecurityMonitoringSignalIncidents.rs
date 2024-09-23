@@ -12,7 +12,6 @@ async fn main() {
             SecurityMonitoringSignalIncidentsUpdateAttributes::new(vec![2066]),
         ),
     );
-
     let configuration = datadog::Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api

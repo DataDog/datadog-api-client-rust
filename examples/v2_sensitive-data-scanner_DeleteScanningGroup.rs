@@ -10,7 +10,6 @@ async fn main() {
     let group_data_id = std::env::var("GROUP_DATA_ID").unwrap();
     let body =
         SensitiveDataScannerGroupDeleteRequest::new(SensitiveDataScannerMetaVersionOnly::new());
-
     let configuration = datadog::Configuration::new();
     let api = SensitiveDataScannerAPI::with_config(configuration);
     let resp = api.delete_scanning_group(group_data_id.clone(), body).await;

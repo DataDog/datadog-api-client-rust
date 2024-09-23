@@ -12,7 +12,6 @@ async fn main() {
         APIKeyCreateAttributes::new("Example-Key-Management".to_string()),
         APIKeysType::API_KEYS,
     ));
-
     let configuration = datadog::Configuration::new();
     let api = KeyManagementAPI::with_config(configuration);
     let resp = api.create_api_key(body).await;

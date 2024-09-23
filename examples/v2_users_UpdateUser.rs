@@ -17,7 +17,6 @@ async fn main() {
         user_data_id.clone(),
         UsersType::USERS,
     ));
-
     let configuration = datadog::Configuration::new();
     let api = UsersAPI::with_config(configuration);
     let resp = api.update_user(user_data_id.clone(), body).await;

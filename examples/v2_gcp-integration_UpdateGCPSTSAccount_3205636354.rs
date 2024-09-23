@@ -1,4 +1,5 @@
-// Update STS Service Account returns "OK" response with enable resource collection turned on
+// Update STS Service Account returns "OK" response with enable resource
+// collection turned on
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_gcp_integration::GCPIntegrationAPI;
 use datadog_api_client::datadogV2::model::GCPSTSServiceAccountAttributes;
@@ -20,7 +21,6 @@ async fn main() {
             .id(gcp_sts_account_data_id.clone())
             .type_(GCPServiceAccountType::GCP_SERVICE_ACCOUNT),
     );
-
     let configuration = datadog::Configuration::new();
     let api = GCPIntegrationAPI::with_config(configuration);
     let resp = api

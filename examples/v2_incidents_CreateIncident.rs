@@ -39,7 +39,6 @@ async fn main() {
             ))),
         ))),
     );
-
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.CreateIncident", true);
     let api = IncidentsAPI::with_config(configuration);

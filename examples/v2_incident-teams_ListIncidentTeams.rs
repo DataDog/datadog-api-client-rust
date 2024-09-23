@@ -7,7 +7,6 @@ use datadog_api_client::datadogV2::api_incident_teams::ListIncidentTeamsOptional
 async fn main() {
     // there is a valid "team" in the system
     let team_data_attributes_name = std::env::var("TEAM_DATA_ATTRIBUTES_NAME").unwrap();
-
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.ListIncidentTeams", true);
     let api = IncidentTeamsAPI::with_config(configuration);

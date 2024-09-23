@@ -6,7 +6,6 @@ use datadog_api_client::datadogV2::api_security_monitoring::SecurityMonitoringAP
 async fn main() {
     // there is a valid "cloud_configuration_rule" in the system
     let cloud_configuration_rule_id = std::env::var("CLOUD_CONFIGURATION_RULE_ID").unwrap();
-
     let configuration = datadog::Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api

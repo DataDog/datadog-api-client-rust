@@ -16,7 +16,6 @@ async fn main() {
             "lambda".to_string(),
         ],
     );
-
     let configuration = datadog::Configuration::new();
     let api = AWSLogsIntegrationAPI::with_config(configuration);
     let resp = api.enable_aws_log_services(body).await;

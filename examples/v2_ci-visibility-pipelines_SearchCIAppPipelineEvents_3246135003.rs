@@ -21,14 +21,12 @@ async fn main() {
         .options(CIAppQueryOptions::new().timezone("GMT".to_string()))
         .page(CIAppQueryPageOptions::new().limit(2))
         .sort(CIAppSort::TIMESTAMP_ASCENDING);
-
     let configuration = datadog::Configuration::new();
     let api = CIVisibilityPipelinesAPI::with_config(configuration);
     let response = api.search_ci_app_pipeline_events_with_pagination(
         SearchCIAppPipelineEventsOptionalParams::default().body(body),
     );
     pin_mut!(response);
-
     while let Some(resp) = response.next().await {
         if let Ok(value) = resp {
             println!("{:#?}", value);

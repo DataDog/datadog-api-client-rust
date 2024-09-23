@@ -15,7 +15,27 @@ use datadog_api_client::datadogV2::model::SecurityMonitoringRuleSeverity;
 
 #[tokio::main]
 async fn main() {
-    let body = SecurityMonitoringRuleCreatePayload::CloudConfigurationRuleCreatePayload(Box::new(CloudConfigurationRuleCreatePayload::new(vec![CloudConfigurationRuleCaseCreate::new(SecurityMonitoringRuleSeverity::INFO, ).notifications(vec!["channel".to_string(),]),], CloudConfigurationRuleComplianceSignalOptions::new().user_activation_status(Some(true)).user_group_by_fields(Some(vec!["@account_id".to_string(),])), false, "ddd".to_string(), "Example-Security-Monitoring_cloud".to_string(), CloudConfigurationRuleOptions::new(CloudConfigurationComplianceRuleOptions::new().complex_rule(false).rego_rule(CloudConfigurationRegoRule::new(r#"package datadog
+    let body =
+        SecurityMonitoringRuleCreatePayload::CloudConfigurationRuleCreatePayload(
+            Box::new(
+                CloudConfigurationRuleCreatePayload::new(
+                    vec![
+                        CloudConfigurationRuleCaseCreate::new(
+                            SecurityMonitoringRuleSeverity::INFO,
+                        ).notifications(vec!["channel".to_string()])
+                    ],
+                    CloudConfigurationRuleComplianceSignalOptions::new()
+                        .user_activation_status(Some(true))
+                        .user_group_by_fields(Some(vec!["@account_id".to_string()])),
+                    false,
+                    "ddd".to_string(),
+                    "Example-Security-Monitoring_cloud".to_string(),
+                    CloudConfigurationRuleOptions::new(
+                        CloudConfigurationComplianceRuleOptions::new()
+                            .complex_rule(false)
+                            .rego_rule(
+                                CloudConfigurationRegoRule::new(
+                                    r#"package datadog
 
 import data.datadog.output as dd_output
 
@@ -36,8 +56,27 @@ results contains result if {
 	some resource in input.resources[input.main_resource_type]
 	result := dd_output.format(resource, eval(resource))
 }
-"#.to_string(), vec!["gcp_compute_disk".to_string(),], )).resource_type("gcp_compute_disk".to_string()), ), ).filters(vec![SecurityMonitoringFilter::new().action(SecurityMonitoringFilterAction::REQUIRE).query("resource_id:helo*".to_string()),SecurityMonitoringFilter::new().action(SecurityMonitoringFilterAction::SUPPRESS).query("control:helo*".to_string()),]).tags(vec!["my:tag".to_string(),]).type_(CloudConfigurationRuleType::CLOUD_CONFIGURATION)));
-
+"#.to_string(),
+                                    vec!["gcp_compute_disk".to_string()],
+                                ),
+                            )
+                            .resource_type("gcp_compute_disk".to_string()),
+                    ),
+                )
+                    .filters(
+                        vec![
+                            SecurityMonitoringFilter::new()
+                                .action(SecurityMonitoringFilterAction::REQUIRE)
+                                .query("resource_id:helo*".to_string()),
+                            SecurityMonitoringFilter::new()
+                                .action(SecurityMonitoringFilterAction::SUPPRESS)
+                                .query("control:helo*".to_string())
+                        ],
+                    )
+                    .tags(vec!["my:tag".to_string()])
+                    .type_(CloudConfigurationRuleType::CLOUD_CONFIGURATION),
+            ),
+        );
     let configuration = datadog::Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api.create_security_monitoring_rule(body).await;

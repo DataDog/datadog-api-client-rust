@@ -17,7 +17,6 @@ async fn main() {
         .interval(SLOReportInterval::MONTHLY)
         .timezone("America/New_York".to_string()),
     ));
-
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.CreateSLOReportJob", true);
     let api = ServiceLevelObjectivesAPI::with_config(configuration);

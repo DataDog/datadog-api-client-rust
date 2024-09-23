@@ -15,7 +15,6 @@ async fn main() {
                     .tags(vec!["myTag".to_string(), "myTag2:myValue".to_string()]),
             ),
     );
-
     let configuration = datadog::Configuration::new();
     let api = FastlyIntegrationAPI::with_config(configuration);
     let resp = api

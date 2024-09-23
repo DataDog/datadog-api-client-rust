@@ -28,7 +28,6 @@ async fn main() {
             .secure(false)
             .value("".to_string()),
     );
-
     let configuration = datadog::Configuration::new();
     let api = SyntheticsAPI::with_config(configuration);
     let resp = api.create_global_variable(body).await;

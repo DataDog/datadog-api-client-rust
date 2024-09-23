@@ -18,7 +18,6 @@ async fn main() {
         )
         .attributes(MetricTagConfigurationUpdateAttributes::new().tags(vec!["app".to_string()])),
     );
-
     let configuration = datadog::Configuration::new();
     let api = MetricsAPI::with_config(configuration);
     let resp = api

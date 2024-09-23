@@ -21,7 +21,6 @@ async fn main() {
             ))
             .type_(RolesType::ROLES),
     );
-
     let configuration = datadog::Configuration::new();
     let api = RolesAPI::with_config(configuration);
     let resp = api.create_role(body).await;
