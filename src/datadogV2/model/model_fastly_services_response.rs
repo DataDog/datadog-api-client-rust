@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct FastlyServicesResponse {
     /// The JSON:API data schema.
     #[serde(rename = "data")]
-    pub data: Option<Vec<crate::datadogV2::model::FastlyServiceResponse>>,
+    pub data: Option<Vec<crate::datadogV2::model::FastlyServiceData>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -30,7 +30,7 @@ impl FastlyServicesResponse {
         }
     }
 
-    pub fn data(mut self, value: Vec<crate::datadogV2::model::FastlyServiceResponse>) -> Self {
+    pub fn data(mut self, value: Vec<crate::datadogV2::model::FastlyServiceData>) -> Self {
         self.data = Some(value);
         self
     }
@@ -67,7 +67,7 @@ impl<'de> Deserialize<'de> for FastlyServicesResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<Vec<crate::datadogV2::model::FastlyServiceResponse>> = None;
+                let mut data: Option<Vec<crate::datadogV2::model::FastlyServiceData>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
