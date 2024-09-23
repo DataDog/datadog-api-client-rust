@@ -18,6 +18,7 @@ async fn main() {
             )
             .type_(RuleType::RULE),
     );
+
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.CreateScorecardRule", true);
     let api = ServiceScorecardsAPI::with_config(configuration);

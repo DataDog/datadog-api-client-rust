@@ -26,6 +26,7 @@ async fn main() {
         .new_tenant_name("".to_string())
         .resource_collection_enabled(true)
         .tenant_name("".to_string());
+
     let configuration = datadog::Configuration::new();
     let api = AzureIntegrationAPI::with_config(configuration);
     let resp = api.update_azure_integration(body).await;

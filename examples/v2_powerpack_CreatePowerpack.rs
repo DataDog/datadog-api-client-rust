@@ -42,6 +42,7 @@ async fn main() {
             )
             .type_("powerpack".to_string()),
     );
+
     let configuration = datadog::Configuration::new();
     let api = PowerpackAPI::with_config(configuration);
     let resp = api.create_powerpack(body).await;

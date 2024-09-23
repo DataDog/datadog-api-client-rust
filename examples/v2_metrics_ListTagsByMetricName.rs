@@ -7,6 +7,7 @@ async fn main() {
     // there is a valid "metric_tag_configuration" in the system
     let metric_tag_configuration_data_id =
         std::env::var("METRIC_TAG_CONFIGURATION_DATA_ID").unwrap();
+
     let configuration = datadog::Configuration::new();
     let api = MetricsAPI::with_config(configuration);
     let resp = api

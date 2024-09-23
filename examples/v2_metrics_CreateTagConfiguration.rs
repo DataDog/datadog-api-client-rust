@@ -19,6 +19,7 @@ async fn main() {
             vec!["app".to_string(), "datacenter".to_string()],
         )),
     );
+
     let configuration = datadog::Configuration::new();
     let api = MetricsAPI::with_config(configuration);
     let resp = api

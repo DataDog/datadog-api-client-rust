@@ -14,6 +14,7 @@ async fn main() {
         RoleCloneAttributes::new("Example-Role clone".to_string()),
         RolesType::ROLES,
     ));
+
     let configuration = datadog::Configuration::new();
     let api = RolesAPI::with_config(configuration);
     let resp = api.clone_role(role_data_id.clone(), body).await;

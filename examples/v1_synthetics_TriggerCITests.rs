@@ -32,6 +32,7 @@ async fn main() {
                     .git(SyntheticsCIBatchMetadataGit::new()),
             )
             .retry(SyntheticsTestOptionsRetry::new())]);
+
     let configuration = datadog::Configuration::new();
     let api = SyntheticsAPI::with_config(configuration);
     let resp = api.trigger_ci_tests(body).await;

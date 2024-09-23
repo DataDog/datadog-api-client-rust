@@ -12,6 +12,7 @@ async fn main() {
         ApplicationKeyCreateAttributes::new("Example-Key-Management".to_string()),
         ApplicationKeysType::APPLICATION_KEYS,
     ));
+
     let configuration = datadog::Configuration::new();
     let api = KeyManagementAPI::with_config(configuration);
     let resp = api.create_current_user_application_key(body).await;

@@ -68,6 +68,7 @@ async fn main() {
         .tier("High".to_string())
         .type_(ServiceDefinitionV2Dot2Type::WEB),
     ));
+
     let configuration = datadog::Configuration::new();
     let api = ServiceDefinitionAPI::with_config(configuration);
     let resp = api.create_or_update_service_definitions(body).await;

@@ -19,6 +19,7 @@ async fn main() {
         "ExampleLogsMetric".to_string(),
         LogsMetricType::LOGS_METRICS,
     ));
+
     let configuration = datadog::Configuration::new();
     let api = LogsMetricsAPI::with_config(configuration);
     let resp = api.create_logs_metric(body).await;

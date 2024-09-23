@@ -6,6 +6,7 @@ use datadog_api_client::datadogV2::api_logs_metrics::LogsMetricsAPI;
 async fn main() {
     // there is a valid "logs_metric" in the system
     let logs_metric_data_id = std::env::var("LOGS_METRIC_DATA_ID").unwrap();
+
     let configuration = datadog::Configuration::new();
     let api = LogsMetricsAPI::with_config(configuration);
     let resp = api.delete_logs_metric(logs_metric_data_id.clone()).await;

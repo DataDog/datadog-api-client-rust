@@ -6,6 +6,7 @@ use datadog_api_client::datadogV1::model::AddSignalToIncidentRequest;
 #[tokio::main]
 async fn main() {
     let body = AddSignalToIncidentRequest::new(2609);
+
     let configuration = datadog::Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api

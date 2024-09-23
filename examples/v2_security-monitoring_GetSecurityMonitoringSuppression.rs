@@ -6,6 +6,7 @@ use datadog_api_client::datadogV2::api_security_monitoring::SecurityMonitoringAP
 async fn main() {
     // there is a valid "suppression" in the system
     let suppression_data_id = std::env::var("SUPPRESSION_DATA_ID").unwrap();
+
     let configuration = datadog::Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api

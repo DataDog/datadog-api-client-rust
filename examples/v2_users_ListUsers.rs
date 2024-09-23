@@ -7,6 +7,7 @@ use datadog_api_client::datadogV2::api_users::UsersAPI;
 async fn main() {
     // there is a valid "user" in the system
     let user_data_attributes_email = std::env::var("USER_DATA_ATTRIBUTES_EMAIL").unwrap();
+
     let configuration = datadog::Configuration::new();
     let api = UsersAPI::with_config(configuration);
     let resp = api

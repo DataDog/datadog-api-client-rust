@@ -13,6 +13,7 @@ async fn main() {
         OrgConfigWriteAttributes::new(Value::from("UTC")),
         OrgConfigType::ORG_CONFIGS,
     ));
+
     let configuration = datadog::Configuration::new();
     let api = OrganizationsAPI::with_config(configuration);
     let resp = api

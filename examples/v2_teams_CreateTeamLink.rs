@@ -15,6 +15,7 @@ async fn main() {
             .position(0),
         TeamLinkType::TEAM_LINKS,
     ));
+
     let configuration = datadog::Configuration::new();
     let api = TeamsAPI::with_config(configuration);
     let resp = api.create_team_link(dd_team_data_id.clone(), body).await;

@@ -6,6 +6,7 @@ use datadog_api_client::datadogV1::model::SignalAssigneeUpdateRequest;
 #[tokio::main]
 async fn main() {
     let body = SignalAssigneeUpdateRequest::new("773b045d-ccf8-4808-bd3b-955ef6a8c940".to_string());
+
     let configuration = datadog::Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api

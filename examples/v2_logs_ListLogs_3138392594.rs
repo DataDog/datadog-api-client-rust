@@ -22,10 +22,12 @@ async fn main() {
         .options(LogsQueryOptions::new().timezone("GMT".to_string()))
         .page(LogsListRequestPage::new().limit(2))
         .sort(LogsSort::TIMESTAMP_ASCENDING);
+
     let configuration = datadog::Configuration::new();
     let api = LogsAPI::with_config(configuration);
     let response = api.list_logs_with_pagination(ListLogsOptionalParams::default().body(body));
     pin_mut!(response);
+
     while let Some(resp) = response.next().await {
         if let Ok(value) = resp {
             println!("{:#?}", value);

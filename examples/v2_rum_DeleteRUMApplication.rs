@@ -6,6 +6,7 @@ use datadog_api_client::datadogV2::api_rum::RUMAPI;
 async fn main() {
     // there is a valid "rum_application" in the system
     let rum_application_data_id = std::env::var("RUM_APPLICATION_DATA_ID").unwrap();
+
     let configuration = datadog::Configuration::new();
     let api = RUMAPI::with_config(configuration);
     let resp = api

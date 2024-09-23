@@ -12,6 +12,7 @@ async fn main() {
         ServiceCheckStatus::OK,
         vec!["test:ExampleServiceCheck".to_string()],
     )];
+
     let configuration = datadog::Configuration::new();
     let api = ServiceChecksAPI::with_config(configuration);
     let resp = api.submit_service_check(body).await;

@@ -23,6 +23,7 @@ async fn main() {
         ),
         SecurityFilterType::SECURITY_FILTERS,
     ));
+
     let configuration = datadog::Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api.create_security_filter(body).await;

@@ -15,7 +15,6 @@ use datadog_api_client::datadogV2::model::RolesType;
 async fn main() {
     // there is a valid "authn_mapping" in the system
     let authn_mapping_data_id = std::env::var("AUTHN_MAPPING_DATA_ID").unwrap();
-
     // there is a valid "role" in the system
     let role_data_id = std::env::var("ROLE_DATA_ID").unwrap();
     let body = AuthNMappingUpdateRequest::new(
@@ -40,6 +39,7 @@ async fn main() {
             )),
         ),
     );
+
     let configuration = datadog::Configuration::new();
     let api = AuthNMappingsAPI::with_config(configuration);
     let resp = api

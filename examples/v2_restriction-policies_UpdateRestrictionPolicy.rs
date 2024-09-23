@@ -18,6 +18,7 @@ async fn main() {
         "dashboard:test-update".to_string(),
         RestrictionPolicyType::RESTRICTION_POLICY,
     ));
+
     let configuration = datadog::Configuration::new();
     let api = RestrictionPoliciesAPI::with_config(configuration);
     let resp = api

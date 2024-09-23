@@ -10,6 +10,7 @@ async fn main() {
         "EXAMPLEWEBHOOKSINTEGRATION".to_string(),
         "CUSTOM_VARIABLE_VALUE".to_string(),
     );
+
     let configuration = datadog::Configuration::new();
     let api = WebhooksIntegrationAPI::with_config(configuration);
     let resp = api.create_webhooks_integration_custom_variable(body).await;

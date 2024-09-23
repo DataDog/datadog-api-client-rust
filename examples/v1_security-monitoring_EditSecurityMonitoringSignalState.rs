@@ -9,6 +9,7 @@ use datadog_api_client::datadogV1::model::SignalTriageState;
 async fn main() {
     let body = SignalStateUpdateRequest::new(SignalTriageState::OPEN)
         .archive_reason(SignalArchiveReason::NONE);
+
     let configuration = datadog::Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api

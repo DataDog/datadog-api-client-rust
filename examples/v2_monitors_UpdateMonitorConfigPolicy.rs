@@ -27,6 +27,7 @@ async fn main() {
         monitor_configuration_policy_data_id.clone(),
         MonitorConfigPolicyResourceType::MONITOR_CONFIG_POLICY,
     ));
+
     let configuration = datadog::Configuration::new();
     let api = MonitorsAPI::with_config(configuration);
     let resp = api

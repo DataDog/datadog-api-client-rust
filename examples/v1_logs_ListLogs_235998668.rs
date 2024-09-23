@@ -22,6 +22,7 @@ async fn main() {
     .index("main".to_string())
     .query("host:Test*".to_string())
     .sort(LogsSort::TIME_ASCENDING);
+
     let configuration = datadog::Configuration::new();
     let api = LogsAPI::with_config(configuration);
     let resp = api.list_logs(body).await;

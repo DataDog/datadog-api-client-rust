@@ -9,6 +9,7 @@ async fn main() {
         "1234567".to_string(),
         "arn:aws:lambda:us-east-1:1234567:function:LogsCollectionAPITest".to_string(),
     );
+
     let configuration = datadog::Configuration::new();
     let api = AWSLogsIntegrationAPI::with_config(configuration);
     let resp = api.create_aws_lambda_arn(body).await;

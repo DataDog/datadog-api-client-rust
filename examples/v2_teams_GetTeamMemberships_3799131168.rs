@@ -1,5 +1,4 @@
-// Get team memberships returns "Represents a user's association to a team"
-// response with pagination
+// Get team memberships returns "Represents a user's association to a team" response with pagination
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_teams::GetTeamMembershipsOptionalParams;
 use datadog_api_client::datadogV2::api_teams::TeamsAPI;
@@ -15,6 +14,7 @@ async fn main() {
         GetTeamMembershipsOptionalParams::default().page_size(2),
     );
     pin_mut!(response);
+
     while let Some(resp) = response.next().await {
         if let Ok(value) = resp {
             println!("{:#?}", value);

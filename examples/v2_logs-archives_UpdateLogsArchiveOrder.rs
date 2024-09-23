@@ -16,6 +16,7 @@ async fn main() {
         ]),
         LogsArchiveOrderDefinitionType::ARCHIVE_ORDER,
     ));
+
     let configuration = datadog::Configuration::new();
     let api = LogsArchivesAPI::with_config(configuration);
     let resp = api.update_logs_archive_order(body).await;

@@ -28,6 +28,7 @@ async fn main() {
             )
             .type_(SpansAggregateRequestType::AGGREGATE_REQUEST),
     );
+
     let configuration = datadog::Configuration::new();
     let api = SpansAPI::with_config(configuration);
     let resp = api.aggregate_spans(body).await;

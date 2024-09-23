@@ -15,6 +15,7 @@ async fn main() {
         CaseUpdateStatusAttributes::new(CaseStatus::IN_PROGRESS),
         CaseResourceType::CASE,
     ));
+
     let configuration = datadog::Configuration::new();
     let api = CaseManagementAPI::with_config(configuration);
     let resp = api.update_status(case_id.clone(), body).await;

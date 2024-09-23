@@ -23,6 +23,7 @@ async fn main() {
             SecurityMonitoringSuppressionType::SUPPRESSIONS,
         ),
     );
+
     let configuration = datadog::Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api.create_security_monitoring_suppression(body).await;

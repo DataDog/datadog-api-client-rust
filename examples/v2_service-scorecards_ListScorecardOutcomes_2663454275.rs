@@ -17,6 +17,7 @@ async fn main() {
             .filter_outcome_service_name("my-service".to_string()),
     );
     pin_mut!(response);
+
     while let Some(resp) = response.next().await {
         if let Ok(value) = resp {
             println!("{:#?}", value);

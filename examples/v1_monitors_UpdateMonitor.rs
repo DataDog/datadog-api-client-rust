@@ -21,6 +21,7 @@ async fn main() {
                 .timeout_h(None),
         )
         .priority(None);
+
     let configuration = datadog::Configuration::new();
     let api = MonitorsAPI::with_config(configuration);
     let resp = api.update_monitor(monitor_id.clone(), body).await;

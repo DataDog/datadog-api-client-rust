@@ -12,6 +12,7 @@ async fn main() {
         AzureUCConfigPatchRequestAttributes::new(true),
         AzureUCConfigPatchRequestType::AZURE_UC_CONFIG_PATCH_REQUEST,
     ));
+
     let configuration = datadog::Configuration::new();
     let api = CloudCostManagementAPI::with_config(configuration);
     let resp = api
