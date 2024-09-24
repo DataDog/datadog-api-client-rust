@@ -176,6 +176,9 @@ pub struct UsageSummaryResponse {
     /// Shows the 99th percentile of all Cloud Workload Security hosts over all hours in the current month for all organizations.
     #[serde(rename = "cws_host_top99p_sum")]
     pub cws_host_top99p_sum: Option<i64>,
+    /// Shows the sum of Data Jobs Monitoring hosts over all hours in the current months for all organizations
+    #[serde(rename = "data_jobs_monitoring_host_hr_agg_sum")]
+    pub data_jobs_monitoring_host_hr_agg_sum: Option<i64>,
     /// Shows the 99th percentile of all Database Monitoring hosts over all hours in the current month for all organizations.
     #[serde(rename = "dbm_host_top99p_sum")]
     pub dbm_host_top99p_sum: Option<i64>,
@@ -522,6 +525,7 @@ impl UsageSummaryResponse {
             custom_ts_sum: None,
             cws_containers_avg_sum: None,
             cws_host_top99p_sum: None,
+            data_jobs_monitoring_host_hr_agg_sum: None,
             dbm_host_top99p_sum: None,
             dbm_queries_avg_sum: None,
             end_date: None,
@@ -937,6 +941,12 @@ impl UsageSummaryResponse {
     #[allow(deprecated)]
     pub fn cws_host_top99p_sum(mut self, value: i64) -> Self {
         self.cws_host_top99p_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn data_jobs_monitoring_host_hr_agg_sum(mut self, value: i64) -> Self {
+        self.data_jobs_monitoring_host_hr_agg_sum = Some(value);
         self
     }
 
@@ -1560,6 +1570,7 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                 let mut custom_ts_sum: Option<i64> = None;
                 let mut cws_containers_avg_sum: Option<i64> = None;
                 let mut cws_host_top99p_sum: Option<i64> = None;
+                let mut data_jobs_monitoring_host_hr_agg_sum: Option<i64> = None;
                 let mut dbm_host_top99p_sum: Option<i64> = None;
                 let mut dbm_queries_avg_sum: Option<i64> = None;
                 let mut end_date: Option<chrono::DateTime<chrono::Utc>> = None;
@@ -2033,6 +2044,13 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                                 continue;
                             }
                             cws_host_top99p_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "data_jobs_monitoring_host_hr_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            data_jobs_monitoring_host_hr_agg_sum =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "dbm_host_top99p_sum" => {
@@ -2719,6 +2737,7 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                     custom_ts_sum,
                     cws_containers_avg_sum,
                     cws_host_top99p_sum,
+                    data_jobs_monitoring_host_hr_agg_sum,
                     dbm_host_top99p_sum,
                     dbm_queries_avg_sum,
                     end_date,
