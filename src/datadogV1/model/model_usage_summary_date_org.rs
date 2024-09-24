@@ -179,6 +179,9 @@ pub struct UsageSummaryDateOrg {
     /// Shows the 99th percentile of all Cloud Workload Security hosts over all hours in the current date for the given org.
     #[serde(rename = "cws_host_top99p")]
     pub cws_host_top99p: Option<i64>,
+    /// Shows the sum of all Data Jobs Monitoring hosts over all hours in the current date for the given org.
+    #[serde(rename = "data_jobs_monitoring_host_hr_sum")]
+    pub data_jobs_monitoring_host_hr_sum: Option<i64>,
     /// Shows the 99th percentile of all Database Monitoring hosts over all hours in the current month for the given org.
     #[serde(rename = "dbm_host_top99p_sum")]
     pub dbm_host_top99p_sum: Option<i64>,
@@ -506,6 +509,7 @@ impl UsageSummaryDateOrg {
             custom_ts_avg: None,
             cws_container_count_avg: None,
             cws_host_top99p: None,
+            data_jobs_monitoring_host_hr_sum: None,
             dbm_host_top99p_sum: None,
             dbm_queries_avg_sum: None,
             error_tracking_events_sum: None,
@@ -921,6 +925,12 @@ impl UsageSummaryDateOrg {
     #[allow(deprecated)]
     pub fn cws_host_top99p(mut self, value: i64) -> Self {
         self.cws_host_top99p = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn data_jobs_monitoring_host_hr_sum(mut self, value: i64) -> Self {
+        self.data_jobs_monitoring_host_hr_sum = Some(value);
         self
     }
 
@@ -1509,6 +1519,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                 let mut custom_ts_avg: Option<i64> = None;
                 let mut cws_container_count_avg: Option<i64> = None;
                 let mut cws_host_top99p: Option<i64> = None;
+                let mut data_jobs_monitoring_host_hr_sum: Option<i64> = None;
                 let mut dbm_host_top99p_sum: Option<i64> = None;
                 let mut dbm_queries_avg_sum: Option<i64> = None;
                 let mut error_tracking_events_sum: Option<i64> = None;
@@ -1983,6 +1994,13 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                                 continue;
                             }
                             cws_host_top99p =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "data_jobs_monitoring_host_hr_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            data_jobs_monitoring_host_hr_sum =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "dbm_host_top99p_sum" => {
@@ -2627,6 +2645,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                     custom_ts_avg,
                     cws_container_count_avg,
                     cws_host_top99p,
+                    data_jobs_monitoring_host_hr_sum,
                     dbm_host_top99p_sum,
                     dbm_queries_avg_sum,
                     error_tracking_events_sum,
