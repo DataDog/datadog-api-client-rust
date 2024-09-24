@@ -20,6 +20,13 @@ pub struct UserInvitationDataAttributes {
     /// Type of invitation.
     #[serde(rename = "invite_type")]
     pub invite_type: Option<String>,
+    /// The `UserInvitationDataAttributes` `login_method`.
+    #[serde(
+        rename = "login_method",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub login_method: Option<Option<String>>,
     /// UUID of the user invitation.
     #[serde(rename = "uuid")]
     pub uuid: Option<String>,
@@ -36,6 +43,7 @@ impl UserInvitationDataAttributes {
             created_at: None,
             expires_at: None,
             invite_type: None,
+            login_method: None,
             uuid: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -54,6 +62,11 @@ impl UserInvitationDataAttributes {
 
     pub fn invite_type(mut self, value: String) -> Self {
         self.invite_type = Some(value);
+        self
+    }
+
+    pub fn login_method(mut self, value: Option<String>) -> Self {
+        self.login_method = Some(value);
         self
     }
 
@@ -97,6 +110,7 @@ impl<'de> Deserialize<'de> for UserInvitationDataAttributes {
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut expires_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut invite_type: Option<String> = None;
+                let mut login_method: Option<Option<String>> = None;
                 let mut uuid: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -125,6 +139,10 @@ impl<'de> Deserialize<'de> for UserInvitationDataAttributes {
                             invite_type =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "login_method" => {
+                            login_method =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "uuid" => {
                             if v.is_null() {
                                 continue;
@@ -143,6 +161,7 @@ impl<'de> Deserialize<'de> for UserInvitationDataAttributes {
                     created_at,
                     expires_at,
                     invite_type,
+                    login_method,
                     uuid,
                     additional_properties,
                     _unparsed,
