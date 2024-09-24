@@ -11,6 +11,8 @@ pub enum UserResponseIncludedItem {
     Organization(Box<crate::datadogV2::model::Organization>),
     Permission(Box<crate::datadogV2::model::Permission>),
     Role(Box<crate::datadogV2::model::Role>),
+    UserOverrideIdentityProvider(Box<crate::datadogV2::model::UserOverrideIdentityProvider>),
+    UserOrgsSerializable(Box<crate::datadogV2::model::UserOrgsSerializable>),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -38,6 +40,21 @@ impl<'de> Deserialize<'de> for UserResponseIncludedItem {
         {
             if !_v._unparsed {
                 return Ok(UserResponseIncludedItem::Role(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::UserOverrideIdentityProvider>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(UserResponseIncludedItem::UserOverrideIdentityProvider(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::UserOrgsSerializable>>(
+            value.clone(),
+        ) {
+            if !_v._unparsed {
+                return Ok(UserResponseIncludedItem::UserOrgsSerializable(_v));
             }
         }
 
