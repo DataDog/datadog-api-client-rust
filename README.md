@@ -70,7 +70,9 @@ configuration.server_index = 0;
 configuration.server_variables.insert("site".into(), "datadoghq.eu".into());
 ```
 
-For a list of sites, and alternative server URL schemes, you can refer to the code [here](https://github.com/DataDog/datadog-api-client-rust/blob/1e121063af9e4983a34d1c6185936dda621cad8b/src/datadog/configuration.rs#L223).
+Alternatively, you can set the environment variable `DD_SITE=datadoghq.eu` to achieve the same result.
+
+For a list of sites and alternative server URL schemes, you can refer to the code [here](https://github.com/DataDog/datadog-api-client-rust/blob/1e121063af9e4983a34d1c6185936dda621cad8b/src/datadog/configuration.rs#L223).
 
 ### Unstable Endpoints
 
