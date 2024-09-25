@@ -29,6 +29,9 @@ pub struct DORADeploymentRequestAttributes {
     /// Unix timestamp when the deployment started. It must be in nanoseconds, milliseconds, or seconds.
     #[serde(rename = "started_at")]
     pub started_at: i64,
+    /// Name of the team owning the deployed service. If not provided, this is automatically populated with the team associated with the service in the Service Catalog.
+    #[serde(rename = "team")]
+    pub team: Option<String>,
     /// Version to correlate with [APM Deployment Tracking](<https://docs.datadoghq.com/tracing/services/deployment_tracking/>).
     #[serde(rename = "version")]
     pub version: Option<String>,
@@ -52,6 +55,7 @@ impl DORADeploymentRequestAttributes {
             id: None,
             service,
             started_at,
+            team: None,
             version: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -70,6 +74,11 @@ impl DORADeploymentRequestAttributes {
 
     pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
+        self
+    }
+
+    pub fn team(mut self, value: String) -> Self {
+        self.team = Some(value);
         self
     }
 
@@ -110,6 +119,7 @@ impl<'de> Deserialize<'de> for DORADeploymentRequestAttributes {
                 let mut id: Option<String> = None;
                 let mut service: Option<String> = None;
                 let mut started_at: Option<i64> = None;
+                let mut team: Option<String> = None;
                 let mut version: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -147,6 +157,12 @@ impl<'de> Deserialize<'de> for DORADeploymentRequestAttributes {
                         "started_at" => {
                             started_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "team" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            team = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "version" => {
                             if v.is_null() {
                                 continue;
@@ -172,6 +188,7 @@ impl<'de> Deserialize<'de> for DORADeploymentRequestAttributes {
                     id,
                     service,
                     started_at,
+                    team,
                     version,
                     additional_properties,
                     _unparsed,
