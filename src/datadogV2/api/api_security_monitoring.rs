@@ -39,6 +39,8 @@ pub struct ListFindingsOptionalParams {
     pub snapshot_timestamp: Option<i64>,
     /// Return the next page of findings pointed to by the cursor.
     pub page_cursor: Option<String>,
+    /// Return findings that match the selected detection types (repeatable).
+    pub filter_detection_type: Option<Vec<crate::datadogV2::model::FindingDetectionType>>,
     /// Return findings that have these associated tags (repeatable).
     pub filter_tags: Option<String>,
     /// Return findings that have changed from pass to fail or vice versa on a specified date (Unix ms) or date range (using comparison operators).
@@ -73,6 +75,14 @@ impl ListFindingsOptionalParams {
     /// Return the next page of findings pointed to by the cursor.
     pub fn page_cursor(mut self, value: String) -> Self {
         self.page_cursor = Some(value);
+        self
+    }
+    /// Return findings that match the selected detection types (repeatable).
+    pub fn filter_detection_type(
+        mut self,
+        value: Vec<crate::datadogV2::model::FindingDetectionType>,
+    ) -> Self {
+        self.filter_detection_type = Some(value);
         self
     }
     /// Return findings that have these associated tags (repeatable).
@@ -2740,6 +2750,7 @@ impl SecurityMonitoringAPI {
         let page_limit = params.page_limit;
         let snapshot_timestamp = params.snapshot_timestamp;
         let page_cursor = params.page_cursor;
+        let filter_detection_type = params.filter_detection_type;
         let filter_tags = params.filter_tags;
         let filter_evaluation_changed_at = params.filter_evaluation_changed_at;
         let filter_muted = params.filter_muted;
@@ -2770,6 +2781,17 @@ impl SecurityMonitoringAPI {
         if let Some(ref local_query_param) = page_cursor {
             local_req_builder =
                 local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local) = filter_detection_type {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[detection_type]",
+                &local
+                    .iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]);
         };
         if let Some(ref local_query_param) = filter_tags {
             local_req_builder =
