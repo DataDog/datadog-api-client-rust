@@ -1912,6 +1912,8 @@ pub mod model_permission;
 pub use self::model_permission::Permission;
 pub mod model_permission_attributes;
 pub use self::model_permission_attributes::PermissionAttributes;
+pub mod model_finding_detection_type;
+pub use self::model_finding_detection_type::FindingDetectionType;
 pub mod model_finding_evaluation;
 pub use self::model_finding_evaluation::FindingEvaluation;
 pub mod model_finding_status;
