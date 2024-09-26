@@ -61,6 +61,19 @@ configuration.set_auth_key(
 );
 ```
 
+### Datacenter Selection
+
+By default the library will use the US1 Datadog datacenter, at `datadoghq.com`. To change this, we expose OpenAPI-style server index and server variable fields. For example, to switch the target datacenter to the EU datacenter, you can set the following values on the configuration object:
+
+```rust
+configuration.server_index = 0;
+configuration.server_variables.insert("site".into(), "datadoghq.eu".into());
+```
+
+Alternatively, you can set the environment variable `DD_SITE=datadoghq.eu` to achieve the same result.
+
+For a list of sites and alternative server URL schemes, you can refer to the code [here](https://github.com/DataDog/datadog-api-client-rust/blob/1e121063af9e4983a34d1c6185936dda621cad8b/src/datadog/configuration.rs#L223).
+
 ### Unstable Endpoints
 
 This client includes access to Datadog API endpoints while they are in an unstable state and may undergo breaking changes. An extra configuration step is required to use these endpoints:

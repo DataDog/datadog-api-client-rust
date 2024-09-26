@@ -202,7 +202,10 @@ impl Default for Configuration {
             unstable_operations,
             auth_keys,
             server_index: 0,
-            server_variables: HashMap::new(),
+            server_variables: HashMap::from([(
+                "site".into(),
+                env::var("DD_SITE").unwrap_or("datadoghq.com".into()),
+            )]),
             server_operation_index: HashMap::new(),
             server_operation_variables: HashMap::new(),
             proxy_url: None,
