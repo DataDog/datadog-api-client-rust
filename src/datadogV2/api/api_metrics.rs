@@ -17,13 +17,13 @@ use std::io::Write;
 pub struct EstimateMetricsOutputSeriesOptionalParams {
     /// Filtered tag keys that the metric is configured to query with.
     pub filter_groups: Option<String>,
-    /// The number of hours of look back (from now) to estimate cardinality with. Estimates are based on historical data, and unspecified fields default to the minimum 49 hours.
+    /// The number of hours of look back (from now) to estimate cardinality with. If unspecified, it defaults to 0 hours.
     pub filter_hours_ago: Option<i32>,
     /// The number of aggregations that a `count`, `rate`, or `gauge` metric is configured to use. Max number of aggregation combos is 9.
     pub filter_num_aggregations: Option<i32>,
     /// A boolean, for distribution metrics only, to estimate cardinality if the metric includes additional percentile aggregators.
     pub filter_pct: Option<bool>,
-    /// A window, in hours, from the look back to estimate cardinality with.
+    /// A window, in hours, from the look back to estimate cardinality with. The minimum and default is 1 hour.
     pub filter_timespan_h: Option<i32>,
 }
 
@@ -33,7 +33,7 @@ impl EstimateMetricsOutputSeriesOptionalParams {
         self.filter_groups = Some(value);
         self
     }
-    /// The number of hours of look back (from now) to estimate cardinality with. Estimates are based on historical data, and unspecified fields default to the minimum 49 hours.
+    /// The number of hours of look back (from now) to estimate cardinality with. If unspecified, it defaults to 0 hours.
     pub fn filter_hours_ago(mut self, value: i32) -> Self {
         self.filter_hours_ago = Some(value);
         self
@@ -48,7 +48,7 @@ impl EstimateMetricsOutputSeriesOptionalParams {
         self.filter_pct = Some(value);
         self
     }
-    /// A window, in hours, from the look back to estimate cardinality with.
+    /// A window, in hours, from the look back to estimate cardinality with. The minimum and default is 1 hour.
     pub fn filter_timespan_h(mut self, value: i32) -> Self {
         self.filter_timespan_h = Some(value);
         self
