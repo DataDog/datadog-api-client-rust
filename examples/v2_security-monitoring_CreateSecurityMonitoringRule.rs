@@ -1,7 +1,6 @@
 // Create a detection rule returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_security_monitoring::SecurityMonitoringAPI;
-use datadog_api_client::datadogV2::model::SecurityMonitoringReferenceTable;
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleCaseCreate;
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleCreatePayload;
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleEvaluationWindow;
@@ -40,12 +39,6 @@ async fn main() {
                     .query("@test:true".to_string())],
             )
             .filters(vec![])
-            .reference_tables(vec![SecurityMonitoringReferenceTable::new()
-                .check_presence(true)
-                .column_name("value".to_string())
-                .log_field_path("testtag".to_string())
-                .rule_query_name("a".to_string())
-                .table_name("synthetics_test_reference_table_dont_delete".to_string())])
             .tags(vec![])
             .type_(SecurityMonitoringRuleTypeCreate::LOG_DETECTION),
         ));

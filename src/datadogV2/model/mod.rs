@@ -2440,8 +2440,6 @@ pub mod model_security_monitoring_standard_rule_query;
 pub use self::model_security_monitoring_standard_rule_query::SecurityMonitoringStandardRuleQuery;
 pub mod model_security_monitoring_rule_query_aggregation;
 pub use self::model_security_monitoring_rule_query_aggregation::SecurityMonitoringRuleQueryAggregation;
-pub mod model_security_monitoring_reference_table;
-pub use self::model_security_monitoring_reference_table::SecurityMonitoringReferenceTable;
 pub mod model_security_monitoring_third_party_rule_case;
 pub use self::model_security_monitoring_third_party_rule_case::SecurityMonitoringThirdPartyRuleCase;
 pub mod model_security_monitoring_rule_type_read;

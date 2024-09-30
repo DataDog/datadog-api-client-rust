@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct ToplistWidgetStacked {
     /// Top list widget stacked legend behavior.
     #[serde(rename = "legend")]
-    pub legend: crate::datadogV1::model::ToplistWidgetLegend,
+    pub legend: Option<crate::datadogV1::model::ToplistWidgetLegend>,
     /// Top list widget stacked display type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV1::model::ToplistWidgetStackedType,
@@ -25,16 +25,18 @@ pub struct ToplistWidgetStacked {
 }
 
 impl ToplistWidgetStacked {
-    pub fn new(
-        legend: crate::datadogV1::model::ToplistWidgetLegend,
-        type_: crate::datadogV1::model::ToplistWidgetStackedType,
-    ) -> ToplistWidgetStacked {
+    pub fn new(type_: crate::datadogV1::model::ToplistWidgetStackedType) -> ToplistWidgetStacked {
         ToplistWidgetStacked {
-            legend,
+            legend: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn legend(mut self, value: crate::datadogV1::model::ToplistWidgetLegend) -> Self {
+        self.legend = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -74,6 +76,9 @@ impl<'de> Deserialize<'de> for ToplistWidgetStacked {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "legend" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             legend = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _legend) = legend {
                                 match _legend {
@@ -102,7 +107,6 @@ impl<'de> Deserialize<'de> for ToplistWidgetStacked {
                         }
                     }
                 }
-                let legend = legend.ok_or_else(|| M::Error::missing_field("legend"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ToplistWidgetStacked {
