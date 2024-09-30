@@ -314,12 +314,13 @@ impl {{ structName }} {
         let mut local_req_builder = local_client.request(reqwest::Method::{{ httpMethod }}, local_uri_str.as_str());
 
         {% for name, parameter in operation|parameters if parameter.in == "query" %}
+        {%- set collectionFormat = parameter|collection_format %}
         {%- set schema = parameter | parameter_schema %}
         {%- if parameter.required and schema.type == "array" %}
         local_req_builder = local_req_builder.query(&[("{{name}}", &{{name|variable_name}}.iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]);
         {%- elif not parameter.required and schema.type == "array" %}
         if let Some(ref local) = {{name|variable_name}} {
-            {%- if parameter.explode %}
+            {%- if collectionFormat == "multi" -%}
             for param in local {
                 local_req_builder = local_req_builder.query(&[("{{name}}", &param.to_string())]);
             }
