@@ -2771,15 +2771,6 @@ impl SecurityMonitoringAPI {
             local_req_builder =
                 local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
         };
-<<<<<<< Updated upstream
-=======
-        if let Some(ref local) = filter_detection_type {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[detection_type]", &param.to_string())]);
-            }
-        };
->>>>>>> Stashed changes
         if let Some(ref local_query_param) = filter_tags {
             local_req_builder =
                 local_req_builder.query(&[("filter[tags]", &local_query_param.to_string())]);
