@@ -6,17 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The team associated with the membership
+/// The definition of `UserTeamUser` object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RelationshipToUserTeamTeamData {
-    /// The ID of the team associated with the membership
+pub struct UserTeamUser {
+    /// The definition of `UserTeamUserAttributes` object.
+    #[serde(rename = "attributes")]
+    pub attributes: Option<crate::datadogV2::model::UserTeamUserAttributes>,
+    /// The `UserTeamUser` ID.
     #[serde(rename = "id")]
-    pub id: String,
-    /// User team team type
+    pub id: Option<String>,
+    /// User team user type
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::UserTeamTeamType,
+    pub type_: crate::datadogV2::model::UserTeamUserType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,17 +27,25 @@ pub struct RelationshipToUserTeamTeamData {
     pub(crate) _unparsed: bool,
 }
 
-impl RelationshipToUserTeamTeamData {
-    pub fn new(
-        id: String,
-        type_: crate::datadogV2::model::UserTeamTeamType,
-    ) -> RelationshipToUserTeamTeamData {
-        RelationshipToUserTeamTeamData {
-            id,
+impl UserTeamUser {
+    pub fn new(type_: crate::datadogV2::model::UserTeamUserType) -> UserTeamUser {
+        UserTeamUser {
+            attributes: None,
+            id: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn attributes(mut self, value: crate::datadogV2::model::UserTeamUserAttributes) -> Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn id(mut self, value: String) -> Self {
+        self.id = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -46,14 +57,14 @@ impl RelationshipToUserTeamTeamData {
     }
 }
 
-impl<'de> Deserialize<'de> for RelationshipToUserTeamTeamData {
+impl<'de> Deserialize<'de> for UserTeamUser {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RelationshipToUserTeamTeamDataVisitor;
-        impl<'a> Visitor<'a> for RelationshipToUserTeamTeamDataVisitor {
-            type Value = RelationshipToUserTeamTeamData;
+        struct UserTeamUserVisitor;
+        impl<'a> Visitor<'a> for UserTeamUserVisitor {
+            type Value = UserTeamUser;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -63,8 +74,9 @@ impl<'de> Deserialize<'de> for RelationshipToUserTeamTeamData {
             where
                 M: MapAccess<'a>,
             {
+                let mut attributes: Option<crate::datadogV2::model::UserTeamUserAttributes> = None;
                 let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::UserTeamTeamType> = None;
+                let mut type_: Option<crate::datadogV2::model::UserTeamUserType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -73,14 +85,23 @@ impl<'de> Deserialize<'de> for RelationshipToUserTeamTeamData {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "attributes" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "id" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::UserTeamTeamType::UnparsedObject(
+                                    crate::datadogV2::model::UserTeamUserType::UnparsedObject(
                                         _type_,
                                     ) => {
                                         _unparsed = true;
@@ -96,10 +117,10 @@ impl<'de> Deserialize<'de> for RelationshipToUserTeamTeamData {
                         }
                     }
                 }
-                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = RelationshipToUserTeamTeamData {
+                let content = UserTeamUser {
+                    attributes,
                     id,
                     type_,
                     additional_properties,
@@ -110,6 +131,6 @@ impl<'de> Deserialize<'de> for RelationshipToUserTeamTeamData {
             }
         }
 
-        deserializer.deserialize_any(RelationshipToUserTeamTeamDataVisitor)
+        deserializer.deserialize_any(UserTeamUserVisitor)
     }
 }
