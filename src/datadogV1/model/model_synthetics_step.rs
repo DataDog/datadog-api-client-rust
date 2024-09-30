@@ -26,6 +26,9 @@ pub struct SyntheticsStep {
     /// The parameters of the step.
     #[serde(rename = "params")]
     pub params: Option<std::collections::BTreeMap<String, serde_json::Value>>,
+    /// The public ID of the step.
+    #[serde(rename = "public_id")]
+    pub public_id: Option<String>,
     /// The time before declaring a step failed.
     #[serde(rename = "timeout")]
     pub timeout: Option<i64>,
@@ -47,6 +50,7 @@ impl SyntheticsStep {
             name: None,
             no_screenshot: None,
             params: None,
+            public_id: None,
             timeout: None,
             type_: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -76,6 +80,11 @@ impl SyntheticsStep {
 
     pub fn params(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.params = Some(value);
+        self
+    }
+
+    pub fn public_id(mut self, value: String) -> Self {
+        self.public_id = Some(value);
         self
     }
 
@@ -127,6 +136,7 @@ impl<'de> Deserialize<'de> for SyntheticsStep {
                 let mut no_screenshot: Option<bool> = None;
                 let mut params: Option<std::collections::BTreeMap<String, serde_json::Value>> =
                     None;
+                let mut public_id: Option<String> = None;
                 let mut timeout: Option<i64> = None;
                 let mut type_: Option<crate::datadogV1::model::SyntheticsStepType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -170,6 +180,12 @@ impl<'de> Deserialize<'de> for SyntheticsStep {
                             }
                             params = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "public_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            public_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "timeout" => {
                             if v.is_null() {
                                 continue;
@@ -206,6 +222,7 @@ impl<'de> Deserialize<'de> for SyntheticsStep {
                     name,
                     no_screenshot,
                     params,
+                    public_id,
                     timeout,
                     type_,
                     additional_properties,
