@@ -85,9 +85,8 @@ async fn main() {
                                             ToplistWidgetDisplay::ToplistWidgetStacked(
                                                 Box::new(
                                                     ToplistWidgetStacked::new(
-                                                        ToplistWidgetLegend::INLINE,
                                                         ToplistWidgetStackedType::STACKED,
-                                                    ),
+                                                    ).legend(ToplistWidgetLegend::INLINE),
                                                 ),
                                             ),
                                         )

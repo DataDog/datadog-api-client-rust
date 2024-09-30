@@ -1,4 +1,5 @@
-// Create a new dashboard with toplist widget
+// Create a new dashboard with a toplist widget with stacked type and no legend
+// specified
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api_dashboards::DashboardsAPI;
 use datadog_api_client::datadogV1::model::Dashboard;
@@ -8,11 +9,10 @@ use datadog_api_client::datadogV1::model::FormulaAndFunctionMetricDataSource;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionMetricQueryDefinition;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionQueryDefinition;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionResponseFormat;
-use datadog_api_client::datadogV1::model::FormulaType;
+use datadog_api_client::datadogV1::model::GroupType;
 use datadog_api_client::datadogV1::model::ToplistWidgetDefinition;
 use datadog_api_client::datadogV1::model::ToplistWidgetDefinitionType;
 use datadog_api_client::datadogV1::model::ToplistWidgetDisplay;
-use datadog_api_client::datadogV1::model::ToplistWidgetLegend;
 use datadog_api_client::datadogV1::model::ToplistWidgetRequest;
 use datadog_api_client::datadogV1::model::ToplistWidgetScaling;
 use datadog_api_client::datadogV1::model::ToplistWidgetStacked;
@@ -21,7 +21,7 @@ use datadog_api_client::datadogV1::model::ToplistWidgetStyle;
 use datadog_api_client::datadogV1::model::Widget;
 use datadog_api_client::datadogV1::model::WidgetDefinition;
 use datadog_api_client::datadogV1::model::WidgetFormula;
-use datadog_api_client::datadogV1::model::WidgetFormulaSort;
+use datadog_api_client::datadogV1::model::WidgetGroupSort;
 use datadog_api_client::datadogV1::model::WidgetLayout;
 use datadog_api_client::datadogV1::model::WidgetLegacyLiveSpan;
 use datadog_api_client::datadogV1::model::WidgetSort;
@@ -64,12 +64,12 @@ async fn main() {
                                                 .count(10)
                                                 .order_by(
                                                     vec![
-                                                        WidgetSortOrderBy::WidgetFormulaSort(
+                                                        WidgetSortOrderBy::WidgetGroupSort(
                                                             Box::new(
-                                                                WidgetFormulaSort::new(
-                                                                    0,
-                                                                    WidgetSort::DESCENDING,
-                                                                    FormulaType::FORMULA,
+                                                                WidgetGroupSort::new(
+                                                                    "service".to_string(),
+                                                                    WidgetSort::ASCENDING,
+                                                                    GroupType::GROUP,
                                                                 ),
                                                             ),
                                                         )
@@ -84,9 +84,7 @@ async fn main() {
                                         .display(
                                             ToplistWidgetDisplay::ToplistWidgetStacked(
                                                 Box::new(
-                                                    ToplistWidgetStacked::new(
-                                                        ToplistWidgetStackedType::STACKED,
-                                                    ).legend(ToplistWidgetLegend::INLINE),
+                                                    ToplistWidgetStacked::new(ToplistWidgetStackedType::STACKED),
                                                 ),
                                             ),
                                         )
