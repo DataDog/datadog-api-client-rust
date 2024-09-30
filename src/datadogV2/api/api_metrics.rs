@@ -82,7 +82,8 @@ pub struct ListTagConfigurationsOptionalParams {
     /// Filter tag configurations by configured tags.
     pub filter_tags_configured: Option<String>,
     /// Filter metrics by metric type.
-    pub filter_metric_type: Option<crate::datadogV2::model::MetricTagConfigurationMetricTypes>,
+    pub filter_metric_type:
+        Option<crate::datadogV2::model::MetricTagConfigurationMetricTypeCategory>,
     /// Filter distributions with additional percentile
     /// aggregations enabled or disabled.
     pub filter_include_percentiles: Option<bool>,
@@ -111,7 +112,7 @@ impl ListTagConfigurationsOptionalParams {
     /// Filter metrics by metric type.
     pub fn filter_metric_type(
         mut self,
-        value: crate::datadogV2::model::MetricTagConfigurationMetricTypes,
+        value: crate::datadogV2::model::MetricTagConfigurationMetricTypeCategory,
     ) -> Self {
         self.filter_metric_type = Some(value);
         self

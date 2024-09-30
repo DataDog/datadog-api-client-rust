@@ -26,7 +26,7 @@ pub struct MetricTagConfigurationAttributes {
     /// - time: sum, space: avg
     /// - time: sum, space: sum
     ///
-    /// Can only be applied to metrics that have a `metric_type` of `count`, `rate`, or `gauge`.
+    /// Can only be applied to non_distribution metrics that have a `metric_type` of `count`, `rate`, or `gauge`.
     #[serde(rename = "aggregations")]
     pub aggregations: Option<Vec<crate::datadogV2::model::MetricCustomAggregation>>,
     /// Timestamp when the tag configuration was created.
