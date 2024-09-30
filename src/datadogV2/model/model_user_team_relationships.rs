@@ -11,9 +11,6 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct UserTeamRelationships {
-    /// Relationship between team membership and team
-    #[serde(rename = "team")]
-    pub team: Option<crate::datadogV2::model::RelationshipToUserTeamTeam>,
     /// Relationship between team membership and user
     #[serde(rename = "user")]
     pub user: Option<crate::datadogV2::model::RelationshipToUserTeamUser>,
@@ -27,16 +24,10 @@ pub struct UserTeamRelationships {
 impl UserTeamRelationships {
     pub fn new() -> UserTeamRelationships {
         UserTeamRelationships {
-            team: None,
             user: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn team(mut self, value: crate::datadogV2::model::RelationshipToUserTeamTeam) -> Self {
-        self.team = Some(value);
-        self
     }
 
     pub fn user(mut self, value: crate::datadogV2::model::RelationshipToUserTeamUser) -> Self {
@@ -76,7 +67,6 @@ impl<'de> Deserialize<'de> for UserTeamRelationships {
             where
                 M: MapAccess<'a>,
             {
-                let mut team: Option<crate::datadogV2::model::RelationshipToUserTeamTeam> = None;
                 let mut user: Option<crate::datadogV2::model::RelationshipToUserTeamUser> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -86,12 +76,6 @@ impl<'de> Deserialize<'de> for UserTeamRelationships {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "team" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            team = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "user" => {
                             if v.is_null() {
                                 continue;
@@ -107,7 +91,6 @@ impl<'de> Deserialize<'de> for UserTeamRelationships {
                 }
 
                 let content = UserTeamRelationships {
-                    team,
                     user,
                     additional_properties,
                     _unparsed,

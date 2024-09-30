@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum UserTeamTeamType {
+pub enum AbbreviatedTeamType {
     TEAM,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for UserTeamTeamType {
+impl ToString for AbbreviatedTeamType {
     fn to_string(&self) -> String {
         match self {
             Self::TEAM => String::from("team"),
@@ -20,7 +20,7 @@ impl ToString for UserTeamTeamType {
     }
 }
 
-impl Serialize for UserTeamTeamType {
+impl Serialize for AbbreviatedTeamType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -32,7 +32,7 @@ impl Serialize for UserTeamTeamType {
     }
 }
 
-impl<'de> Deserialize<'de> for UserTeamTeamType {
+impl<'de> Deserialize<'de> for AbbreviatedTeamType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
