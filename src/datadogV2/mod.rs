@@ -31,6 +31,7 @@ pub use self::api::api_logs;
 pub use self::api::api_logs_archives;
 pub use self::api::api_logs_custom_destinations;
 pub use self::api::api_logs_metrics;
+pub use self::api::api_logs_restriction_queries;
 pub use self::api::api_metrics;
 pub use self::api::api_monitors;
 pub use self::api::api_network_device_monitoring;
