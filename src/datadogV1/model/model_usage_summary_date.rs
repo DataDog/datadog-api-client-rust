@@ -284,6 +284,12 @@ pub struct UsageSummaryDate {
     /// Sum of all observability pipelines bytes processed over all hours in the current date for the given org.
     #[serde(rename = "observability_pipelines_bytes_processed_sum")]
     pub observability_pipelines_bytes_processed_sum: Option<i64>,
+    /// Shows the sum of all Oracle Cloud Infrastructure hosts over all hours in the current date for the given org.
+    #[serde(rename = "oci_host_sum")]
+    pub oci_host_sum: Option<i64>,
+    /// Shows the 99th percentile of all Oracle Cloud Infrastructure hosts over all hours in the current date for the given org.
+    #[serde(rename = "oci_host_top99p")]
+    pub oci_host_top99p: Option<i64>,
     /// Sum of all online archived events over all hours in the current date for all organizations.
     #[serde(rename = "online_archive_events_count_sum")]
     pub online_archive_events_count_sum: Option<i64>,
@@ -522,6 +528,8 @@ impl UsageSummaryDate {
             netflow_indexed_events_count_sum: None,
             npm_host_top99p: None,
             observability_pipelines_bytes_processed_sum: None,
+            oci_host_sum: None,
+            oci_host_top99p: None,
             online_archive_events_count_sum: None,
             opentelemetry_apm_host_top99p: None,
             opentelemetry_host_top99p: None,
@@ -1096,6 +1104,18 @@ impl UsageSummaryDate {
     }
 
     #[allow(deprecated)]
+    pub fn oci_host_sum(mut self, value: i64) -> Self {
+        self.oci_host_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn oci_host_top99p(mut self, value: i64) -> Self {
+        self.oci_host_top99p = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn online_archive_events_count_sum(mut self, value: i64) -> Self {
         self.online_archive_events_count_sum = Some(value);
         self
@@ -1490,6 +1510,8 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                 let mut netflow_indexed_events_count_sum: Option<i64> = None;
                 let mut npm_host_top99p: Option<i64> = None;
                 let mut observability_pipelines_bytes_processed_sum: Option<i64> = None;
+                let mut oci_host_sum: Option<i64> = None;
+                let mut oci_host_top99p: Option<i64> = None;
                 let mut online_archive_events_count_sum: Option<i64> = None;
                 let mut opentelemetry_apm_host_top99p: Option<i64> = None;
                 let mut opentelemetry_host_top99p: Option<i64> = None;
@@ -2152,6 +2174,20 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                             observability_pipelines_bytes_processed_sum =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "oci_host_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            oci_host_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "oci_host_top99p" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            oci_host_top99p =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "online_archive_events_count_sum" => {
                             if v.is_null() {
                                 continue;
@@ -2570,6 +2606,8 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                     netflow_indexed_events_count_sum,
                     npm_host_top99p,
                     observability_pipelines_bytes_processed_sum,
+                    oci_host_sum,
+                    oci_host_top99p,
                     online_archive_events_count_sum,
                     opentelemetry_apm_host_top99p,
                     opentelemetry_host_top99p,
