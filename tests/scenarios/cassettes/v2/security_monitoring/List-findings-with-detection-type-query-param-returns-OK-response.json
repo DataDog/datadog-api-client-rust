@@ -1,0 +1,33 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "application/json"
+          ]
+        },
+        "method": "get",
+        "uri": "https://api.datadoghq.com/api/v2/posture_management/findings?filter%5Bdetection_type%5D=misconfiguration&filter%5Bdetection_type%5D=attack_path"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":[],\"meta\":{\"page\":{\"total_filtered_count\":0},\"snapshot_timestamp\":1727465091308}}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Fri, 27 Sep 2024 19:24:51 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

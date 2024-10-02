@@ -4018,15 +4018,9 @@ impl UsageMeteringAPI {
             )]);
         };
         if let Some(ref local) = index_name {
-            local_req_builder = local_req_builder.query(&[(
-                "index_name",
-                &local
-                    .iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .to_string(),
-            )]);
+            for param in local {
+                local_req_builder = local_req_builder.query(&[("index_name", &param.to_string())]);
+            }
         };
 
         // build headers
@@ -6005,15 +5999,9 @@ impl UsageMeteringAPI {
             )]);
         };
         if let Some(ref local) = names {
-            local_req_builder = local_req_builder.query(&[(
-                "names",
-                &local
-                    .iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .to_string(),
-            )]);
+            for param in local {
+                local_req_builder = local_req_builder.query(&[("names", &param.to_string())]);
+            }
         };
         if let Some(ref local_query_param) = limit {
             local_req_builder =
