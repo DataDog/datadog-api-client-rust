@@ -137,6 +137,9 @@ pub struct MonthlyUsageAttributionValues {
     /// The Cloud Workload Security host usage by tag(s).
     #[serde(rename = "cws_hosts_usage")]
     pub cws_hosts_usage: Option<f64>,
+    /// The Data Jobs Monitoring usage by tag(s).
+    #[serde(rename = "data_jobs_monitoring_usage")]
+    pub data_jobs_monitoring_usage: Option<f64>,
     /// The percentage of Database Monitoring host usage by tag(s).
     #[serde(rename = "dbm_hosts_percentage")]
     pub dbm_hosts_percentage: Option<f64>,
@@ -477,6 +480,7 @@ impl MonthlyUsageAttributionValues {
             cws_containers_usage: None,
             cws_hosts_percentage: None,
             cws_hosts_usage: None,
+            data_jobs_monitoring_usage: None,
             dbm_hosts_percentage: None,
             dbm_hosts_usage: None,
             dbm_queries_percentage: None,
@@ -785,6 +789,11 @@ impl MonthlyUsageAttributionValues {
 
     pub fn cws_hosts_usage(mut self, value: f64) -> Self {
         self.cws_hosts_usage = Some(value);
+        self
+    }
+
+    pub fn data_jobs_monitoring_usage(mut self, value: f64) -> Self {
+        self.data_jobs_monitoring_usage = Some(value);
         self
     }
 
@@ -1342,6 +1351,7 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                 let mut cws_containers_usage: Option<f64> = None;
                 let mut cws_hosts_percentage: Option<f64> = None;
                 let mut cws_hosts_usage: Option<f64> = None;
+                let mut data_jobs_monitoring_usage: Option<f64> = None;
                 let mut dbm_hosts_percentage: Option<f64> = None;
                 let mut dbm_hosts_usage: Option<f64> = None;
                 let mut dbm_queries_percentage: Option<f64> = None;
@@ -1737,6 +1747,13 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                                 continue;
                             }
                             cws_hosts_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "data_jobs_monitoring_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            data_jobs_monitoring_usage =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "dbm_hosts_percentage" => {
@@ -2461,6 +2478,7 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                     cws_containers_usage,
                     cws_hosts_percentage,
                     cws_hosts_usage,
+                    data_jobs_monitoring_usage,
                     dbm_hosts_percentage,
                     dbm_hosts_usage,
                     dbm_queries_percentage,

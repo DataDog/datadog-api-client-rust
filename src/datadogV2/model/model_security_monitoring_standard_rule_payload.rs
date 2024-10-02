@@ -35,6 +35,9 @@ pub struct SecurityMonitoringStandardRulePayload {
     /// Queries for selecting logs which are part of the rule.
     #[serde(rename = "queries")]
     pub queries: Vec<crate::datadogV2::model::SecurityMonitoringStandardRuleQuery>,
+    /// Reference tables for the rule.
+    #[serde(rename = "referenceTables")]
+    pub reference_tables: Option<Vec<crate::datadogV2::model::SecurityMonitoringReferenceTable>>,
     /// Tags for generated signals.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
@@ -70,6 +73,7 @@ impl SecurityMonitoringStandardRulePayload {
             name,
             options,
             queries,
+            reference_tables: None,
             tags: None,
             third_party_cases: None,
             type_: None,
@@ -88,6 +92,14 @@ impl SecurityMonitoringStandardRulePayload {
 
     pub fn has_extended_title(mut self, value: bool) -> Self {
         self.has_extended_title = Some(value);
+        self
+    }
+
+    pub fn reference_tables(
+        mut self,
+        value: Vec<crate::datadogV2::model::SecurityMonitoringReferenceTable>,
+    ) -> Self {
+        self.reference_tables = Some(value);
         self
     }
 
@@ -152,6 +164,9 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRulePayload {
                 let mut queries: Option<
                     Vec<crate::datadogV2::model::SecurityMonitoringStandardRuleQuery>,
                 > = None;
+                let mut reference_tables: Option<
+                    Vec<crate::datadogV2::model::SecurityMonitoringReferenceTable>,
+                > = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut third_party_cases: Option<
                     Vec<crate::datadogV2::model::SecurityMonitoringThirdPartyRuleCaseCreate>,
@@ -196,6 +211,13 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRulePayload {
                         }
                         "queries" => {
                             queries = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "referenceTables" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            reference_tables =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "tags" => {
                             if v.is_null() {
@@ -247,6 +269,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRulePayload {
                     name,
                     options,
                     queries,
+                    reference_tables,
                     tags,
                     third_party_cases,
                     type_,

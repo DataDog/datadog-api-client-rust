@@ -26,7 +26,7 @@ pub struct MetricTagConfigurationCreateAttributes {
     /// - time: sum, space: avg
     /// - time: sum, space: sum
     ///
-    /// Can only be applied to metrics that have a `metric_type` of `count`, `rate`, or `gauge`.
+    /// Can only be applied to non_distribution metrics that have a `metric_type` of `count`, `rate`, or `gauge`.
     #[serde(rename = "aggregations")]
     pub aggregations: Option<Vec<crate::datadogV2::model::MetricCustomAggregation>>,
     /// When set to true, the configuration will exclude the configured tags and include any other submitted tags.

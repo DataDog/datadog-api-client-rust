@@ -307,6 +307,12 @@ pub struct UsageSummaryResponse {
     /// Sum of all observability pipelines bytes processed over all hours in the current month for all organizations.
     #[serde(rename = "observability_pipelines_bytes_processed_agg_sum")]
     pub observability_pipelines_bytes_processed_agg_sum: Option<i64>,
+    /// Shows the sum of Oracle Cloud Infrastructure hosts over all hours in the current months for all organizations
+    #[serde(rename = "oci_host_agg_sum")]
+    pub oci_host_agg_sum: Option<i64>,
+    /// Shows the 99th percentile of Oracle Cloud Infrastructure hosts over all hours in the current months for all organizations
+    #[serde(rename = "oci_host_top99p_sum")]
+    pub oci_host_top99p_sum: Option<i64>,
     /// Sum of all online archived events over all hours in the current month for all organizations.
     #[serde(rename = "online_archive_events_count_agg_sum")]
     pub online_archive_events_count_agg_sum: Option<i64>,
@@ -565,6 +571,8 @@ impl UsageSummaryResponse {
             netflow_indexed_events_count_agg_sum: None,
             npm_host_top99p_sum: None,
             observability_pipelines_bytes_processed_agg_sum: None,
+            oci_host_agg_sum: None,
+            oci_host_top99p_sum: None,
             online_archive_events_count_agg_sum: None,
             opentelemetry_apm_host_top99p_sum: None,
             opentelemetry_host_top99p_sum: None,
@@ -1185,6 +1193,18 @@ impl UsageSummaryResponse {
     }
 
     #[allow(deprecated)]
+    pub fn oci_host_agg_sum(mut self, value: i64) -> Self {
+        self.oci_host_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn oci_host_top99p_sum(mut self, value: i64) -> Self {
+        self.oci_host_top99p_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn online_archive_events_count_agg_sum(mut self, value: i64) -> Self {
         self.online_archive_events_count_agg_sum = Some(value);
         self
@@ -1610,6 +1630,8 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                 let mut netflow_indexed_events_count_agg_sum: Option<i64> = None;
                 let mut npm_host_top99p_sum: Option<i64> = None;
                 let mut observability_pipelines_bytes_processed_agg_sum: Option<i64> = None;
+                let mut oci_host_agg_sum: Option<i64> = None;
+                let mut oci_host_top99p_sum: Option<i64> = None;
                 let mut online_archive_events_count_agg_sum: Option<i64> = None;
                 let mut opentelemetry_apm_host_top99p_sum: Option<i64> = None;
                 let mut opentelemetry_host_top99p_sum: Option<i64> = None;
@@ -2325,6 +2347,20 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                             observability_pipelines_bytes_processed_agg_sum =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "oci_host_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            oci_host_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "oci_host_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            oci_host_top99p_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "online_archive_events_count_agg_sum" => {
                             if v.is_null() {
                                 continue;
@@ -2777,6 +2813,8 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                     netflow_indexed_events_count_agg_sum,
                     npm_host_top99p_sum,
                     observability_pipelines_bytes_processed_agg_sum,
+                    oci_host_agg_sum,
+                    oci_host_top99p_sum,
                     online_archive_events_count_agg_sum,
                     opentelemetry_apm_host_top99p_sum,
                     opentelemetry_host_top99p_sum,
