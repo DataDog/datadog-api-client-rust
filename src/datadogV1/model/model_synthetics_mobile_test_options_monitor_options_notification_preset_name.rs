@@ -6,25 +6,27 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum SyntheticsConfigVariableType {
-    GLOBAL,
-    TEXT,
-    EMAIL,
+pub enum SyntheticsMobileTestOptionsMonitorOptionsNotificationPresetName {
+    SHOW_ALL,
+    HIDE_ALL,
+    HIDE_QUERY,
+    HIDE_HANDLES,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for SyntheticsConfigVariableType {
+impl ToString for SyntheticsMobileTestOptionsMonitorOptionsNotificationPresetName {
     fn to_string(&self) -> String {
         match self {
-            Self::GLOBAL => String::from("global"),
-            Self::TEXT => String::from("text"),
-            Self::EMAIL => String::from("email"),
+            Self::SHOW_ALL => String::from("show_all"),
+            Self::HIDE_ALL => String::from("hide_all"),
+            Self::HIDE_QUERY => String::from("hide_query"),
+            Self::HIDE_HANDLES => String::from("hide_handles"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for SyntheticsConfigVariableType {
+impl Serialize for SyntheticsMobileTestOptionsMonitorOptionsNotificationPresetName {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -36,16 +38,17 @@ impl Serialize for SyntheticsConfigVariableType {
     }
 }
 
-impl<'de> Deserialize<'de> for SyntheticsConfigVariableType {
+impl<'de> Deserialize<'de> for SyntheticsMobileTestOptionsMonitorOptionsNotificationPresetName {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "global" => Self::GLOBAL,
-            "text" => Self::TEXT,
-            "email" => Self::EMAIL,
+            "show_all" => Self::SHOW_ALL,
+            "hide_all" => Self::HIDE_ALL,
+            "hide_query" => Self::HIDE_QUERY,
+            "hide_handles" => Self::HIDE_HANDLES,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
