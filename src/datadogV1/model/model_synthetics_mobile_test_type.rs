@@ -6,25 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum SyntheticsConfigVariableType {
-    GLOBAL,
-    TEXT,
-    EMAIL,
+pub enum SyntheticsMobileTestType {
+    MOBILE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for SyntheticsConfigVariableType {
+impl ToString for SyntheticsMobileTestType {
     fn to_string(&self) -> String {
         match self {
-            Self::GLOBAL => String::from("global"),
-            Self::TEXT => String::from("text"),
-            Self::EMAIL => String::from("email"),
+            Self::MOBILE => String::from("mobile"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for SyntheticsConfigVariableType {
+impl Serialize for SyntheticsMobileTestType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -36,16 +32,14 @@ impl Serialize for SyntheticsConfigVariableType {
     }
 }
 
-impl<'de> Deserialize<'de> for SyntheticsConfigVariableType {
+impl<'de> Deserialize<'de> for SyntheticsMobileTestType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "global" => Self::GLOBAL,
-            "text" => Self::TEXT,
-            "email" => Self::EMAIL,
+            "mobile" => Self::MOBILE,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
