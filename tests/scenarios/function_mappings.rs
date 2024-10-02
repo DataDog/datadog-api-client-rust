@@ -18233,6 +18233,9 @@ fn test_v2_list_findings(world: &mut DatadogWorld, _parameters: &HashMap<String,
     let page_cursor = _parameters
         .get("page[cursor]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_detection_type = _parameters
+        .get("filter[detection_type]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let filter_tags = _parameters
         .get("filter[tags]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
@@ -18264,6 +18267,7 @@ fn test_v2_list_findings(world: &mut DatadogWorld, _parameters: &HashMap<String,
     params.page_limit = page_limit;
     params.snapshot_timestamp = snapshot_timestamp;
     params.page_cursor = page_cursor;
+    params.filter_detection_type = filter_detection_type;
     params.filter_tags = filter_tags;
     params.filter_evaluation_changed_at = filter_evaluation_changed_at;
     params.filter_muted = filter_muted;
@@ -18308,6 +18312,9 @@ fn test_v2_list_findings_with_pagination(
     let page_cursor = _parameters
         .get("page[cursor]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_detection_type = _parameters
+        .get("filter[detection_type]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let filter_tags = _parameters
         .get("filter[tags]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
@@ -18339,6 +18346,7 @@ fn test_v2_list_findings_with_pagination(
     params.page_limit = page_limit;
     params.snapshot_timestamp = snapshot_timestamp;
     params.page_cursor = page_cursor;
+    params.filter_detection_type = filter_detection_type;
     params.filter_tags = filter_tags;
     params.filter_evaluation_changed_at = filter_evaluation_changed_at;
     params.filter_muted = filter_muted;
