@@ -9,7 +9,6 @@ use datadog_api_client::datadogV2::model::LogsCompute;
 use datadog_api_client::datadogV2::model::LogsComputeType;
 use datadog_api_client::datadogV2::model::LogsGroupBy;
 use datadog_api_client::datadogV2::model::LogsGroupByMissing;
-use datadog_api_client::datadogV2::model::LogsGroupByTotal;
 use datadog_api_client::datadogV2::model::LogsQueryFilter;
 use datadog_api_client::datadogV2::model::LogsSortOrder;
 
@@ -36,10 +35,7 @@ async fn main() {
                     .metric("@duration".to_string())
                     .order(LogsSortOrder::ASCENDING)
                     .type_(LogsAggregateSortType::MEASURE),
-            )
-            .total(LogsGroupByTotal::LogsGroupByTotalString(
-                "recall".to_string(),
-            ))]);
+            )]);
     let configuration = datadog::Configuration::new();
     let api = LogsAPI::with_config(configuration);
     let resp = api.aggregate_logs(body).await;

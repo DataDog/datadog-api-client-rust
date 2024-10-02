@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"from_ts\":1726041488,\"public_ids\":[\"p8m-9gw-nte\"],\"to_ts\":1726055954}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v1/synthetics/tests/uptimes"
+      },
+      "response": {
+        "body": {
+          "string": "[{\"from_ts\":1726041488,\"to_ts\":1726055954,\"overall\":{\"name\":\"[Synthetics] Synthetics test\",\"preview\":false,\"monitor_type\":\"synthetics alert\",\"monitor_modified\":1726060063,\"errors\":null,\"span_precision\":0,\"history\":[[1726004543,0],[1726053503,1]],\"uptime\":83.05682373046875},\"public_id\":\"p8m-9gw-nte\",\"groups\":[]}]\n",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Wed, 11 Sep 2024 13:09:28 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

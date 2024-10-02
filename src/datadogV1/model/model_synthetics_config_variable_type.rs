@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum SyntheticsConfigVariableType {
     GLOBAL,
     TEXT,
+    EMAIL,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -17,6 +18,7 @@ impl ToString for SyntheticsConfigVariableType {
         match self {
             Self::GLOBAL => String::from("global"),
             Self::TEXT => String::from("text"),
+            Self::EMAIL => String::from("email"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -43,6 +45,7 @@ impl<'de> Deserialize<'de> for SyntheticsConfigVariableType {
         Ok(match s.as_str() {
             "global" => Self::GLOBAL,
             "text" => Self::TEXT,
+            "email" => Self::EMAIL,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

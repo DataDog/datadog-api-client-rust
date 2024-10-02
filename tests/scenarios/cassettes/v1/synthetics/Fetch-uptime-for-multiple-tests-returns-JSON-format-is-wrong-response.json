@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"from_ts\":0,\"public_ids\":[],\"to_ts\":0}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v1/synthetics/tests/uptimes"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[\"Minimum number of elements in parameter 'public_ids' should be 1\"]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Wed, 02 Oct 2024 14:22:00 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

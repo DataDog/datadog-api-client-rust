@@ -19,7 +19,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"data\":[]}",
+          "string": "{\"data\":[],\"meta\":{\"elapsed\":0,\"request_id\":\"pddv1ChZDajdxSjQ4ZFJOT1VyZ2xURmRrSW5BIi0KHTBXibXkWStvRXkS72BJw44UvhZhIF-UDmT52UYhEgyW3j58vq2SlrrUWNc\",\"status\":\"done\"}}\n",
           "encoding": null
         },
         "headers": {
@@ -32,7 +32,7 @@
           "message": "OK"
         }
       },
-      "recorded_at": "Thu, 06 Jan 2022 00:51:50 GMT"
+      "recorded_at": "Tue, 01 Oct 2024 15:36:43 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"
