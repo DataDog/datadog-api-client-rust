@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum IncidentResponseIncludedItem {
-    User(Box<crate::datadogV2::model::User>),
+    IncidentUserData(Box<crate::datadogV2::model::IncidentUserData>),
     IncidentAttachmentData(Box<crate::datadogV2::model::IncidentAttachmentData>),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
@@ -19,10 +19,11 @@ impl<'de> Deserialize<'de> for IncidentResponseIncludedItem {
         D: Deserializer<'de>,
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
-        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::User>>(value.clone())
+        if let Ok(_v) =
+            serde_json::from_value::<Box<crate::datadogV2::model::IncidentUserData>>(value.clone())
         {
             if !_v._unparsed {
-                return Ok(IncidentResponseIncludedItem::User(_v));
+                return Ok(IncidentResponseIncludedItem::IncidentUserData(_v));
             }
         }
         if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::IncidentAttachmentData>>(
