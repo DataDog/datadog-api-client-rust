@@ -6,23 +6,23 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Handle attributes.
+/// Tenant-based handle attributes.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct MicrosoftTeamsApiHandleAttributes {
+pub struct MicrosoftTeamsTenantBasedHandleRequestAttributes {
     /// Channel id.
     #[serde(rename = "channel_id")]
-    pub channel_id: Option<String>,
-    /// Handle name.
+    pub channel_id: String,
+    /// Tenant-based handle name.
     #[serde(rename = "name")]
-    pub name: Option<String>,
+    pub name: String,
     /// Team id.
     #[serde(rename = "team_id")]
-    pub team_id: Option<String>,
+    pub team_id: String,
     /// Tenant id.
     #[serde(rename = "tenant_id")]
-    pub tenant_id: Option<String>,
+    pub tenant_id: String,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -30,36 +30,21 @@ pub struct MicrosoftTeamsApiHandleAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl MicrosoftTeamsApiHandleAttributes {
-    pub fn new() -> MicrosoftTeamsApiHandleAttributes {
-        MicrosoftTeamsApiHandleAttributes {
-            channel_id: None,
-            name: None,
-            team_id: None,
-            tenant_id: None,
+impl MicrosoftTeamsTenantBasedHandleRequestAttributes {
+    pub fn new(
+        channel_id: String,
+        name: String,
+        team_id: String,
+        tenant_id: String,
+    ) -> MicrosoftTeamsTenantBasedHandleRequestAttributes {
+        MicrosoftTeamsTenantBasedHandleRequestAttributes {
+            channel_id,
+            name,
+            team_id,
+            tenant_id,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn channel_id(mut self, value: String) -> Self {
-        self.channel_id = Some(value);
-        self
-    }
-
-    pub fn name(mut self, value: String) -> Self {
-        self.name = Some(value);
-        self
-    }
-
-    pub fn team_id(mut self, value: String) -> Self {
-        self.team_id = Some(value);
-        self
-    }
-
-    pub fn tenant_id(mut self, value: String) -> Self {
-        self.tenant_id = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -71,20 +56,14 @@ impl MicrosoftTeamsApiHandleAttributes {
     }
 }
 
-impl Default for MicrosoftTeamsApiHandleAttributes {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<'de> Deserialize<'de> for MicrosoftTeamsApiHandleAttributes {
+impl<'de> Deserialize<'de> for MicrosoftTeamsTenantBasedHandleRequestAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct MicrosoftTeamsApiHandleAttributesVisitor;
-        impl<'a> Visitor<'a> for MicrosoftTeamsApiHandleAttributesVisitor {
-            type Value = MicrosoftTeamsApiHandleAttributes;
+        struct MicrosoftTeamsTenantBasedHandleRequestAttributesVisitor;
+        impl<'a> Visitor<'a> for MicrosoftTeamsTenantBasedHandleRequestAttributesVisitor {
+            type Value = MicrosoftTeamsTenantBasedHandleRequestAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -107,27 +86,15 @@ impl<'de> Deserialize<'de> for MicrosoftTeamsApiHandleAttributes {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "channel_id" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             channel_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "name" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "team_id" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             team_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "tenant_id" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             tenant_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -137,8 +104,12 @@ impl<'de> Deserialize<'de> for MicrosoftTeamsApiHandleAttributes {
                         }
                     }
                 }
+                let channel_id = channel_id.ok_or_else(|| M::Error::missing_field("channel_id"))?;
+                let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
+                let team_id = team_id.ok_or_else(|| M::Error::missing_field("team_id"))?;
+                let tenant_id = tenant_id.ok_or_else(|| M::Error::missing_field("tenant_id"))?;
 
-                let content = MicrosoftTeamsApiHandleAttributes {
+                let content = MicrosoftTeamsTenantBasedHandleRequestAttributes {
                     channel_id,
                     name,
                     team_id,
@@ -151,6 +122,6 @@ impl<'de> Deserialize<'de> for MicrosoftTeamsApiHandleAttributes {
             }
         }
 
-        deserializer.deserialize_any(MicrosoftTeamsApiHandleAttributesVisitor)
+        deserializer.deserialize_any(MicrosoftTeamsTenantBasedHandleRequestAttributesVisitor)
     }
 }

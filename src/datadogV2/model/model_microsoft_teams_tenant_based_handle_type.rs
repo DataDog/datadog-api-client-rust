@@ -6,21 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum MicrosoftTeamsApiHandleInfoType {
-    MS_TEAMS_HANDLE_INFO,
+pub enum MicrosoftTeamsTenantBasedHandleType {
+    TENANT_BASED_HANDLE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for MicrosoftTeamsApiHandleInfoType {
+impl ToString for MicrosoftTeamsTenantBasedHandleType {
     fn to_string(&self) -> String {
         match self {
-            Self::MS_TEAMS_HANDLE_INFO => String::from("ms-teams-handle-info"),
+            Self::TENANT_BASED_HANDLE => String::from("tenant-based-handle"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for MicrosoftTeamsApiHandleInfoType {
+impl Serialize for MicrosoftTeamsTenantBasedHandleType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -32,14 +32,14 @@ impl Serialize for MicrosoftTeamsApiHandleInfoType {
     }
 }
 
-impl<'de> Deserialize<'de> for MicrosoftTeamsApiHandleInfoType {
+impl<'de> Deserialize<'de> for MicrosoftTeamsTenantBasedHandleType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "ms-teams-handle-info" => Self::MS_TEAMS_HANDLE_INFO,
+            "tenant-based-handle" => Self::TENANT_BASED_HANDLE,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
