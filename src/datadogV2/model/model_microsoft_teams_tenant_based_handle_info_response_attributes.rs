@@ -6,18 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Handle attributes.
+/// Tenant-based handle attributes.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct MicrosoftTeamsApiHandleInfoResponseAttributes {
+pub struct MicrosoftTeamsTenantBasedHandleInfoResponseAttributes {
     /// Channel id.
     #[serde(rename = "channel_id")]
     pub channel_id: Option<String>,
     /// Channel name.
     #[serde(rename = "channel_name")]
     pub channel_name: Option<String>,
-    /// Handle name.
+    /// Tenant-based handle name.
     #[serde(rename = "name")]
     pub name: Option<String>,
     /// Team id.
@@ -39,9 +39,9 @@ pub struct MicrosoftTeamsApiHandleInfoResponseAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl MicrosoftTeamsApiHandleInfoResponseAttributes {
-    pub fn new() -> MicrosoftTeamsApiHandleInfoResponseAttributes {
-        MicrosoftTeamsApiHandleInfoResponseAttributes {
+impl MicrosoftTeamsTenantBasedHandleInfoResponseAttributes {
+    pub fn new() -> MicrosoftTeamsTenantBasedHandleInfoResponseAttributes {
+        MicrosoftTeamsTenantBasedHandleInfoResponseAttributes {
             channel_id: None,
             channel_name: None,
             name: None,
@@ -98,20 +98,20 @@ impl MicrosoftTeamsApiHandleInfoResponseAttributes {
     }
 }
 
-impl Default for MicrosoftTeamsApiHandleInfoResponseAttributes {
+impl Default for MicrosoftTeamsTenantBasedHandleInfoResponseAttributes {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for MicrosoftTeamsApiHandleInfoResponseAttributes {
+impl<'de> Deserialize<'de> for MicrosoftTeamsTenantBasedHandleInfoResponseAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct MicrosoftTeamsApiHandleInfoResponseAttributesVisitor;
-        impl<'a> Visitor<'a> for MicrosoftTeamsApiHandleInfoResponseAttributesVisitor {
-            type Value = MicrosoftTeamsApiHandleInfoResponseAttributes;
+        struct MicrosoftTeamsTenantBasedHandleInfoResponseAttributesVisitor;
+        impl<'a> Visitor<'a> for MicrosoftTeamsTenantBasedHandleInfoResponseAttributesVisitor {
+            type Value = MicrosoftTeamsTenantBasedHandleInfoResponseAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -188,7 +188,7 @@ impl<'de> Deserialize<'de> for MicrosoftTeamsApiHandleInfoResponseAttributes {
                     }
                 }
 
-                let content = MicrosoftTeamsApiHandleInfoResponseAttributes {
+                let content = MicrosoftTeamsTenantBasedHandleInfoResponseAttributes {
                     channel_id,
                     channel_name,
                     name,
@@ -204,6 +204,6 @@ impl<'de> Deserialize<'de> for MicrosoftTeamsApiHandleInfoResponseAttributes {
             }
         }
 
-        deserializer.deserialize_any(MicrosoftTeamsApiHandleInfoResponseAttributesVisitor)
+        deserializer.deserialize_any(MicrosoftTeamsTenantBasedHandleInfoResponseAttributesVisitor)
     }
 }

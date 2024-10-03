@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response of a handle.
+/// Response of a tenant-based handle.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct MicrosoftTeamsApiHandleInfoResponse {
-    /// Handle data from a response.
+pub struct MicrosoftTeamsTenantBasedHandleResponse {
+    /// Tenant-based handle data from a response.
     #[serde(rename = "data")]
-    pub data: Option<crate::datadogV2::model::MicrosoftTeamsApiHandleInfoResponseData>,
+    pub data: crate::datadogV2::model::MicrosoftTeamsTenantBasedHandleResponseData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,21 +21,15 @@ pub struct MicrosoftTeamsApiHandleInfoResponse {
     pub(crate) _unparsed: bool,
 }
 
-impl MicrosoftTeamsApiHandleInfoResponse {
-    pub fn new() -> MicrosoftTeamsApiHandleInfoResponse {
-        MicrosoftTeamsApiHandleInfoResponse {
-            data: None,
+impl MicrosoftTeamsTenantBasedHandleResponse {
+    pub fn new(
+        data: crate::datadogV2::model::MicrosoftTeamsTenantBasedHandleResponseData,
+    ) -> MicrosoftTeamsTenantBasedHandleResponse {
+        MicrosoftTeamsTenantBasedHandleResponse {
+            data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn data(
-        mut self,
-        value: crate::datadogV2::model::MicrosoftTeamsApiHandleInfoResponseData,
-    ) -> Self {
-        self.data = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -47,20 +41,14 @@ impl MicrosoftTeamsApiHandleInfoResponse {
     }
 }
 
-impl Default for MicrosoftTeamsApiHandleInfoResponse {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<'de> Deserialize<'de> for MicrosoftTeamsApiHandleInfoResponse {
+impl<'de> Deserialize<'de> for MicrosoftTeamsTenantBasedHandleResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct MicrosoftTeamsApiHandleInfoResponseVisitor;
-        impl<'a> Visitor<'a> for MicrosoftTeamsApiHandleInfoResponseVisitor {
-            type Value = MicrosoftTeamsApiHandleInfoResponse;
+        struct MicrosoftTeamsTenantBasedHandleResponseVisitor;
+        impl<'a> Visitor<'a> for MicrosoftTeamsTenantBasedHandleResponseVisitor {
+            type Value = MicrosoftTeamsTenantBasedHandleResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -71,7 +59,7 @@ impl<'de> Deserialize<'de> for MicrosoftTeamsApiHandleInfoResponse {
                 M: MapAccess<'a>,
             {
                 let mut data: Option<
-                    crate::datadogV2::model::MicrosoftTeamsApiHandleInfoResponseData,
+                    crate::datadogV2::model::MicrosoftTeamsTenantBasedHandleResponseData,
                 > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -82,9 +70,6 @@ impl<'de> Deserialize<'de> for MicrosoftTeamsApiHandleInfoResponse {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "data" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -94,8 +79,9 @@ impl<'de> Deserialize<'de> for MicrosoftTeamsApiHandleInfoResponse {
                         }
                     }
                 }
+                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = MicrosoftTeamsApiHandleInfoResponse {
+                let content = MicrosoftTeamsTenantBasedHandleResponse {
                     data,
                     additional_properties,
                     _unparsed,
@@ -105,6 +91,6 @@ impl<'de> Deserialize<'de> for MicrosoftTeamsApiHandleInfoResponse {
             }
         }
 
-        deserializer.deserialize_any(MicrosoftTeamsApiHandleInfoResponseVisitor)
+        deserializer.deserialize_any(MicrosoftTeamsTenantBasedHandleResponseVisitor)
     }
 }

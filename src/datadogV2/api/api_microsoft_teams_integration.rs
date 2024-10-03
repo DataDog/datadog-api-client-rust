@@ -10,50 +10,41 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
-/// ListApiHandlesOptionalParams is a struct for passing parameters to the method [`MicrosoftTeamsIntegrationAPI::list_api_handles`]
+/// ListTenantBasedHandlesOptionalParams is a struct for passing parameters to the method [`MicrosoftTeamsIntegrationAPI::list_tenant_based_handles`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
-pub struct ListApiHandlesOptionalParams {
+pub struct ListTenantBasedHandlesOptionalParams {
     /// Your tenant id.
     pub tenant_id: Option<String>,
+    /// Your tenant-based handle name.
+    pub name: Option<String>,
 }
 
-impl ListApiHandlesOptionalParams {
+impl ListTenantBasedHandlesOptionalParams {
     /// Your tenant id.
     pub fn tenant_id(mut self, value: String) -> Self {
         self.tenant_id = Some(value);
         self
     }
+    /// Your tenant-based handle name.
+    pub fn name(mut self, value: String) -> Self {
+        self.name = Some(value);
+        self
+    }
 }
 
-/// CreateApiHandleError is a struct for typed errors of method [`MicrosoftTeamsIntegrationAPI::create_api_handle`]
+/// CreateTenantBasedHandleError is a struct for typed errors of method [`MicrosoftTeamsIntegrationAPI::create_tenant_based_handle`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum CreateApiHandleError {
+pub enum CreateTenantBasedHandleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteApiHandleError is a struct for typed errors of method [`MicrosoftTeamsIntegrationAPI::delete_api_handle`]
+/// DeleteTenantBasedHandleError is a struct for typed errors of method [`MicrosoftTeamsIntegrationAPI::delete_tenant_based_handle`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum DeleteApiHandleError {
-    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
-    UnknownValue(serde_json::Value),
-}
-
-/// GetApiHandleError is a struct for typed errors of method [`MicrosoftTeamsIntegrationAPI::get_api_handle`]
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum GetApiHandleError {
-    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
-    UnknownValue(serde_json::Value),
-}
-
-/// GetApiHandleByNameError is a struct for typed errors of method [`MicrosoftTeamsIntegrationAPI::get_api_handle_by_name`]
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum GetApiHandleByNameError {
+pub enum DeleteTenantBasedHandleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -66,18 +57,26 @@ pub enum GetChannelByNameError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListApiHandlesError is a struct for typed errors of method [`MicrosoftTeamsIntegrationAPI::list_api_handles`]
+/// GetTenantBasedHandleError is a struct for typed errors of method [`MicrosoftTeamsIntegrationAPI::get_tenant_based_handle`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum ListApiHandlesError {
+pub enum GetTenantBasedHandleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateApiHandleError is a struct for typed errors of method [`MicrosoftTeamsIntegrationAPI::update_api_handle`]
+/// ListTenantBasedHandlesError is a struct for typed errors of method [`MicrosoftTeamsIntegrationAPI::list_tenant_based_handles`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum UpdateApiHandleError {
+pub enum ListTenantBasedHandlesError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// UpdateTenantBasedHandleError is a struct for typed errors of method [`MicrosoftTeamsIntegrationAPI::update_tenant_based_handle`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum UpdateTenantBasedHandleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -148,15 +147,15 @@ impl MicrosoftTeamsIntegrationAPI {
         Self { config, client }
     }
 
-    /// Create a handle in the Datadog Microsoft Teams integration.
-    pub async fn create_api_handle(
+    /// Create a tenant-based handle in the Datadog Microsoft Teams integration.
+    pub async fn create_tenant_based_handle(
         &self,
-        body: crate::datadogV2::model::MicrosoftTeamsCreateApiHandleRequest,
+        body: crate::datadogV2::model::MicrosoftTeamsCreateTenantBasedHandleRequest,
     ) -> Result<
-        crate::datadogV2::model::MicrosoftTeamsCreateApiHandleResponse,
-        datadog::Error<CreateApiHandleError>,
+        crate::datadogV2::model::MicrosoftTeamsTenantBasedHandleResponse,
+        datadog::Error<CreateTenantBasedHandleError>,
     > {
-        match self.create_api_handle_with_http_info(body).await {
+        match self.create_tenant_based_handle_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
@@ -170,16 +169,16 @@ impl MicrosoftTeamsIntegrationAPI {
         }
     }
 
-    /// Create a handle in the Datadog Microsoft Teams integration.
-    pub async fn create_api_handle_with_http_info(
+    /// Create a tenant-based handle in the Datadog Microsoft Teams integration.
+    pub async fn create_tenant_based_handle_with_http_info(
         &self,
-        body: crate::datadogV2::model::MicrosoftTeamsCreateApiHandleRequest,
+        body: crate::datadogV2::model::MicrosoftTeamsCreateTenantBasedHandleRequest,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::MicrosoftTeamsCreateApiHandleResponse>,
-        datadog::Error<CreateApiHandleError>,
+        datadog::ResponseContent<crate::datadogV2::model::MicrosoftTeamsTenantBasedHandleResponse>,
+        datadog::Error<CreateTenantBasedHandleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_api_handle";
+        let operation_id = "v2.create_tenant_based_handle";
 
         let local_client = &self.client;
 
@@ -279,7 +278,7 @@ impl MicrosoftTeamsIntegrationAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<
-                crate::datadogV2::model::MicrosoftTeamsCreateApiHandleResponse,
+                crate::datadogV2::model::MicrosoftTeamsTenantBasedHandleResponse,
             >(&local_content)
             {
                 Ok(e) => {
@@ -292,7 +291,7 @@ impl MicrosoftTeamsIntegrationAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateApiHandleError> =
+            let local_entity: Option<CreateTenantBasedHandleError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -303,24 +302,27 @@ impl MicrosoftTeamsIntegrationAPI {
         }
     }
 
-    /// Delete a handle from the Datadog Microsoft Teams integration.
-    pub async fn delete_api_handle(
+    /// Delete a tenant-based handle from the Datadog Microsoft Teams integration.
+    pub async fn delete_tenant_based_handle(
         &self,
         handle_id: String,
-    ) -> Result<(), datadog::Error<DeleteApiHandleError>> {
-        match self.delete_api_handle_with_http_info(handle_id).await {
+    ) -> Result<(), datadog::Error<DeleteTenantBasedHandleError>> {
+        match self
+            .delete_tenant_based_handle_with_http_info(handle_id)
+            .await
+        {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
-    /// Delete a handle from the Datadog Microsoft Teams integration.
-    pub async fn delete_api_handle_with_http_info(
+    /// Delete a tenant-based handle from the Datadog Microsoft Teams integration.
+    pub async fn delete_tenant_based_handle_with_http_info(
         &self,
         handle_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteApiHandleError>> {
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTenantBasedHandleError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_api_handle";
+        let operation_id = "v2.delete_tenant_based_handle";
 
         let local_client = &self.client;
 
@@ -380,227 +382,7 @@ impl MicrosoftTeamsIntegrationAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteApiHandleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
-            Err(datadog::Error::ResponseError(local_error))
-        }
-    }
-
-    /// Get the tenant, team, and channel information of a handle from the Datadog Microsoft Teams integration.
-    pub async fn get_api_handle(
-        &self,
-        handle_id: String,
-    ) -> Result<
-        crate::datadogV2::model::MicrosoftTeamsApiHandleInfoResponse,
-        datadog::Error<GetApiHandleError>,
-    > {
-        match self.get_api_handle_with_http_info(handle_id).await {
-            Ok(response_content) => {
-                if let Some(e) = response_content.entity {
-                    Ok(e)
-                } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
-                }
-            }
-            Err(err) => Err(err),
-        }
-    }
-
-    /// Get the tenant, team, and channel information of a handle from the Datadog Microsoft Teams integration.
-    pub async fn get_api_handle_with_http_info(
-        &self,
-        handle_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::MicrosoftTeamsApiHandleInfoResponse>,
-        datadog::Error<GetApiHandleError>,
-    > {
-        let local_configuration = &self.config;
-        let operation_id = "v2.get_api_handle";
-
-        let local_client = &self.client;
-
-        let local_uri_str = format!(
-            "{}/api/v2/integration/ms-teams/configuration/tenant-based-handles/{handle_id}",
-            local_configuration.get_operation_host(operation_id),
-            handle_id = datadog::urlencode(handle_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
-
-        // build headers
-        let mut headers = HeaderMap::new();
-        headers.insert("Accept", HeaderValue::from_static("application/json"));
-
-        // build user agent
-        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
-            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
-            Err(e) => {
-                log::warn!("Failed to parse user agent header: {e}, falling back to default");
-                headers.insert(
-                    reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
-                )
-            }
-        };
-
-        // build auth
-        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
-        };
-        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
-        };
-
-        local_req_builder = local_req_builder.headers(headers);
-        let local_req = local_req_builder.build()?;
-        log::debug!("request content: {:?}", local_req.body());
-        let local_resp = local_client.execute(local_req).await?;
-
-        let local_status = local_resp.status();
-        let local_content = local_resp.text().await?;
-        log::debug!("response content: {}", local_content);
-
-        if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::MicrosoftTeamsApiHandleInfoResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
-                Err(e) => return Err(datadog::Error::Serde(e)),
-            };
-        } else {
-            let local_entity: Option<GetApiHandleError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
-            Err(datadog::Error::ResponseError(local_error))
-        }
-    }
-
-    /// Get the tenant, team, and channel information of a handle by name from the Datadog Microsoft Teams integration.
-    pub async fn get_api_handle_by_name(
-        &self,
-        handle_name: String,
-    ) -> Result<
-        crate::datadogV2::model::MicrosoftTeamsApiHandleInfoResponse,
-        datadog::Error<GetApiHandleByNameError>,
-    > {
-        match self
-            .get_api_handle_by_name_with_http_info(handle_name)
-            .await
-        {
-            Ok(response_content) => {
-                if let Some(e) = response_content.entity {
-                    Ok(e)
-                } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
-                }
-            }
-            Err(err) => Err(err),
-        }
-    }
-
-    /// Get the tenant, team, and channel information of a handle by name from the Datadog Microsoft Teams integration.
-    pub async fn get_api_handle_by_name_with_http_info(
-        &self,
-        handle_name: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::MicrosoftTeamsApiHandleInfoResponse>,
-        datadog::Error<GetApiHandleByNameError>,
-    > {
-        let local_configuration = &self.config;
-        let operation_id = "v2.get_api_handle_by_name";
-
-        let local_client = &self.client;
-
-        let local_uri_str = format!(
-            "{}/api/v2/integration/ms-teams/configuration/tenant-based-handles/name/{handle_name}",
-            local_configuration.get_operation_host(operation_id),
-            handle_name = datadog::urlencode(handle_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
-
-        // build headers
-        let mut headers = HeaderMap::new();
-        headers.insert("Accept", HeaderValue::from_static("application/json"));
-
-        // build user agent
-        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
-            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
-            Err(e) => {
-                log::warn!("Failed to parse user agent header: {e}, falling back to default");
-                headers.insert(
-                    reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
-                )
-            }
-        };
-
-        // build auth
-        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
-        };
-        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
-        };
-
-        local_req_builder = local_req_builder.headers(headers);
-        let local_req = local_req_builder.build()?;
-        log::debug!("request content: {:?}", local_req.body());
-        let local_resp = local_client.execute(local_req).await?;
-
-        let local_status = local_resp.status();
-        let local_content = local_resp.text().await?;
-        log::debug!("response content: {}", local_content);
-
-        if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::MicrosoftTeamsApiHandleInfoResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
-                Err(e) => return Err(datadog::Error::Serde(e)),
-            };
-        } else {
-            let local_entity: Option<GetApiHandleByNameError> =
+            let local_entity: Option<DeleteTenantBasedHandleError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -732,15 +514,15 @@ impl MicrosoftTeamsIntegrationAPI {
         }
     }
 
-    /// Get a list of all handles from the Datadog Microsoft Teams integration.
-    pub async fn list_api_handles(
+    /// Get the tenant, team, and channel information of a tenant-based handle from the Datadog Microsoft Teams integration.
+    pub async fn get_tenant_based_handle(
         &self,
-        params: ListApiHandlesOptionalParams,
+        handle_id: String,
     ) -> Result<
-        crate::datadogV2::model::MicrosoftTeamsApiHandlesResponse,
-        datadog::Error<ListApiHandlesError>,
+        crate::datadogV2::model::MicrosoftTeamsTenantBasedHandleResponse,
+        datadog::Error<GetTenantBasedHandleError>,
     > {
-        match self.list_api_handles_with_http_info(params).await {
+        match self.get_tenant_based_handle_with_http_info(handle_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
@@ -754,19 +536,130 @@ impl MicrosoftTeamsIntegrationAPI {
         }
     }
 
-    /// Get a list of all handles from the Datadog Microsoft Teams integration.
-    pub async fn list_api_handles_with_http_info(
+    /// Get the tenant, team, and channel information of a tenant-based handle from the Datadog Microsoft Teams integration.
+    pub async fn get_tenant_based_handle_with_http_info(
         &self,
-        params: ListApiHandlesOptionalParams,
+        handle_id: String,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::MicrosoftTeamsApiHandlesResponse>,
-        datadog::Error<ListApiHandlesError>,
+        datadog::ResponseContent<crate::datadogV2::model::MicrosoftTeamsTenantBasedHandleResponse>,
+        datadog::Error<GetTenantBasedHandleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_api_handles";
+        let operation_id = "v2.get_tenant_based_handle";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/integration/ms-teams/configuration/tenant-based-handles/{handle_id}",
+            local_configuration.get_operation_host(operation_id),
+            handle_id = datadog::urlencode(handle_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::MicrosoftTeamsTenantBasedHandleResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetTenantBasedHandleError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get a list of all tenant-based handles from the Datadog Microsoft Teams integration.
+    pub async fn list_tenant_based_handles(
+        &self,
+        params: ListTenantBasedHandlesOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::MicrosoftTeamsTenantBasedHandlesResponse,
+        datadog::Error<ListTenantBasedHandlesError>,
+    > {
+        match self.list_tenant_based_handles_with_http_info(params).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get a list of all tenant-based handles from the Datadog Microsoft Teams integration.
+    pub async fn list_tenant_based_handles_with_http_info(
+        &self,
+        params: ListTenantBasedHandlesOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::MicrosoftTeamsTenantBasedHandlesResponse>,
+        datadog::Error<ListTenantBasedHandlesError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_tenant_based_handles";
 
         // unbox and build optional parameters
         let tenant_id = params.tenant_id;
+        let name = params.name;
 
         let local_client = &self.client;
 
@@ -780,6 +673,10 @@ impl MicrosoftTeamsIntegrationAPI {
         if let Some(ref local_query_param) = tenant_id {
             local_req_builder =
                 local_req_builder.query(&[("tenant_id", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = name {
+            local_req_builder =
+                local_req_builder.query(&[("name", &local_query_param.to_string())]);
         };
 
         // build headers
@@ -824,9 +721,10 @@ impl MicrosoftTeamsIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::MicrosoftTeamsApiHandlesResponse>(
-                &local_content,
-            ) {
+            match serde_json::from_str::<
+                crate::datadogV2::model::MicrosoftTeamsTenantBasedHandlesResponse,
+            >(&local_content)
+            {
                 Ok(e) => {
                     return Ok(datadog::ResponseContent {
                         status: local_status,
@@ -837,7 +735,7 @@ impl MicrosoftTeamsIntegrationAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListApiHandlesError> =
+            let local_entity: Option<ListTenantBasedHandlesError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -848,16 +746,19 @@ impl MicrosoftTeamsIntegrationAPI {
         }
     }
 
-    /// Update a handle from the Datadog Microsoft Teams integration.
-    pub async fn update_api_handle(
+    /// Update a tenant-based handle from the Datadog Microsoft Teams integration.
+    pub async fn update_tenant_based_handle(
         &self,
         handle_id: String,
-        body: crate::datadogV2::model::MicrosoftTeamsUpdateApiHandleRequest,
+        body: crate::datadogV2::model::MicrosoftTeamsUpdateTenantBasedHandleRequest,
     ) -> Result<
-        crate::datadogV2::model::MicrosoftTeamsApiHandleInfoResponse,
-        datadog::Error<UpdateApiHandleError>,
+        crate::datadogV2::model::MicrosoftTeamsTenantBasedHandleResponse,
+        datadog::Error<UpdateTenantBasedHandleError>,
     > {
-        match self.update_api_handle_with_http_info(handle_id, body).await {
+        match self
+            .update_tenant_based_handle_with_http_info(handle_id, body)
+            .await
+        {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
@@ -871,17 +772,17 @@ impl MicrosoftTeamsIntegrationAPI {
         }
     }
 
-    /// Update a handle from the Datadog Microsoft Teams integration.
-    pub async fn update_api_handle_with_http_info(
+    /// Update a tenant-based handle from the Datadog Microsoft Teams integration.
+    pub async fn update_tenant_based_handle_with_http_info(
         &self,
         handle_id: String,
-        body: crate::datadogV2::model::MicrosoftTeamsUpdateApiHandleRequest,
+        body: crate::datadogV2::model::MicrosoftTeamsUpdateTenantBasedHandleRequest,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::MicrosoftTeamsApiHandleInfoResponse>,
-        datadog::Error<UpdateApiHandleError>,
+        datadog::ResponseContent<crate::datadogV2::model::MicrosoftTeamsTenantBasedHandleResponse>,
+        datadog::Error<UpdateTenantBasedHandleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_api_handle";
+        let operation_id = "v2.update_tenant_based_handle";
 
         let local_client = &self.client;
 
@@ -981,9 +882,10 @@ impl MicrosoftTeamsIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::MicrosoftTeamsApiHandleInfoResponse>(
-                &local_content,
-            ) {
+            match serde_json::from_str::<
+                crate::datadogV2::model::MicrosoftTeamsTenantBasedHandleResponse,
+            >(&local_content)
+            {
                 Ok(e) => {
                     return Ok(datadog::ResponseContent {
                         status: local_status,
@@ -994,7 +896,7 @@ impl MicrosoftTeamsIntegrationAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateApiHandleError> =
+            let local_entity: Option<UpdateTenantBasedHandleError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,

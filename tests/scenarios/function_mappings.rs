@@ -2067,25 +2067,26 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.GetChannelByName".into(), test_v2_get_channel_by_name);
-    world
-        .function_mappings
-        .insert("v2.ListApiHandles".into(), test_v2_list_api_handles);
-    world
-        .function_mappings
-        .insert("v2.CreateApiHandle".into(), test_v2_create_api_handle);
     world.function_mappings.insert(
-        "v2.GetApiHandleByName".into(),
-        test_v2_get_api_handle_by_name,
+        "v2.ListTenantBasedHandles".into(),
+        test_v2_list_tenant_based_handles,
     );
-    world
-        .function_mappings
-        .insert("v2.DeleteApiHandle".into(), test_v2_delete_api_handle);
-    world
-        .function_mappings
-        .insert("v2.GetApiHandle".into(), test_v2_get_api_handle);
-    world
-        .function_mappings
-        .insert("v2.UpdateApiHandle".into(), test_v2_update_api_handle);
+    world.function_mappings.insert(
+        "v2.CreateTenantBasedHandle".into(),
+        test_v2_create_tenant_based_handle,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteTenantBasedHandle".into(),
+        test_v2_delete_tenant_based_handle,
+    );
+    world.function_mappings.insert(
+        "v2.GetTenantBasedHandle".into(),
+        test_v2_get_tenant_based_handle,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateTenantBasedHandle".into(),
+        test_v2_update_tenant_based_handle,
+    );
     world.function_mappings.insert(
         "v2.ListOpsgenieServices".into(),
         test_v2_list_opsgenie_services,
@@ -15023,7 +15024,10 @@ fn test_v2_get_channel_by_name(world: &mut DatadogWorld, _parameters: &HashMap<S
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_list_api_handles(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+fn test_v2_list_tenant_based_handles(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
     let api = world
         .api_instances
         .v2_api_microsoft_teams_integration
@@ -15032,10 +15036,14 @@ fn test_v2_list_api_handles(world: &mut DatadogWorld, _parameters: &HashMap<Stri
     let tenant_id = _parameters
         .get("tenant_id")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let name = _parameters
+        .get("name")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params =
-        datadogV2::api_microsoft_teams_integration::ListApiHandlesOptionalParams::default();
+        datadogV2::api_microsoft_teams_integration::ListTenantBasedHandlesOptionalParams::default();
     params.tenant_id = tenant_id;
-    let response = match block_on(api.list_api_handles_with_http_info(params)) {
+    params.name = name;
+    let response = match block_on(api.list_tenant_based_handles_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -15053,14 +15061,17 @@ fn test_v2_list_api_handles(world: &mut DatadogWorld, _parameters: &HashMap<Stri
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_create_api_handle(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+fn test_v2_create_tenant_based_handle(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
     let api = world
         .api_instances
         .v2_api_microsoft_teams_integration
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.create_api_handle_with_http_info(body)) {
+    let response = match block_on(api.create_tenant_based_handle_with_http_info(body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -15078,40 +15089,17 @@ fn test_v2_create_api_handle(world: &mut DatadogWorld, _parameters: &HashMap<Str
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_get_api_handle_by_name(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_microsoft_teams_integration
-        .as_ref()
-        .expect("api instance not found");
-    let handle_name =
-        serde_json::from_value(_parameters.get("handle_name").unwrap().clone()).unwrap();
-    let response = match block_on(api.get_api_handle_by_name_with_http_info(handle_name)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_delete_api_handle(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+fn test_v2_delete_tenant_based_handle(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
     let api = world
         .api_instances
         .v2_api_microsoft_teams_integration
         .as_ref()
         .expect("api instance not found");
     let handle_id = serde_json::from_value(_parameters.get("handle_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.delete_api_handle_with_http_info(handle_id)) {
+    let response = match block_on(api.delete_tenant_based_handle_with_http_info(handle_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -15129,14 +15117,14 @@ fn test_v2_delete_api_handle(world: &mut DatadogWorld, _parameters: &HashMap<Str
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_get_api_handle(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+fn test_v2_get_tenant_based_handle(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
         .v2_api_microsoft_teams_integration
         .as_ref()
         .expect("api instance not found");
     let handle_id = serde_json::from_value(_parameters.get("handle_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.get_api_handle_with_http_info(handle_id)) {
+    let response = match block_on(api.get_tenant_based_handle_with_http_info(handle_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -15154,7 +15142,10 @@ fn test_v2_get_api_handle(world: &mut DatadogWorld, _parameters: &HashMap<String
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_update_api_handle(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+fn test_v2_update_tenant_based_handle(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
     let api = world
         .api_instances
         .v2_api_microsoft_teams_integration
@@ -15162,7 +15153,7 @@ fn test_v2_update_api_handle(world: &mut DatadogWorld, _parameters: &HashMap<Str
         .expect("api instance not found");
     let handle_id = serde_json::from_value(_parameters.get("handle_id").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.update_api_handle_with_http_info(handle_id, body)) {
+    let response = match block_on(api.update_tenant_based_handle_with_http_info(handle_id, body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {

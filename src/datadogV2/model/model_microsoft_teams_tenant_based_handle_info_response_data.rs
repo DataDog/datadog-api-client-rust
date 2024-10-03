@@ -6,17 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Handle data from a response.
+/// Tenant-based handle data from a response.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct MicrosoftTeamsUpdateApiHandleRequestData {
-    /// Handle attributes.
+pub struct MicrosoftTeamsTenantBasedHandleInfoResponseData {
+    /// Tenant-based handle attributes.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::MicrosoftTeamsApiHandleAttributes,
-    /// Specifies the handle resource type.
+    pub attributes:
+        Option<crate::datadogV2::model::MicrosoftTeamsTenantBasedHandleInfoResponseAttributes>,
+    /// The ID of the tenant-based handle.
+    #[serde(rename = "id")]
+    pub id: Option<String>,
+    /// Tenant-based handle resource type.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::MicrosoftTeamsApiHandleType,
+    pub type_: Option<crate::datadogV2::model::MicrosoftTeamsTenantBasedHandleInfoType>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,17 +28,36 @@ pub struct MicrosoftTeamsUpdateApiHandleRequestData {
     pub(crate) _unparsed: bool,
 }
 
-impl MicrosoftTeamsUpdateApiHandleRequestData {
-    pub fn new(
-        attributes: crate::datadogV2::model::MicrosoftTeamsApiHandleAttributes,
-        type_: crate::datadogV2::model::MicrosoftTeamsApiHandleType,
-    ) -> MicrosoftTeamsUpdateApiHandleRequestData {
-        MicrosoftTeamsUpdateApiHandleRequestData {
-            attributes,
-            type_,
+impl MicrosoftTeamsTenantBasedHandleInfoResponseData {
+    pub fn new() -> MicrosoftTeamsTenantBasedHandleInfoResponseData {
+        MicrosoftTeamsTenantBasedHandleInfoResponseData {
+            attributes: None,
+            id: None,
+            type_: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn attributes(
+        mut self,
+        value: crate::datadogV2::model::MicrosoftTeamsTenantBasedHandleInfoResponseAttributes,
+    ) -> Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn id(mut self, value: String) -> Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn type_(
+        mut self,
+        value: crate::datadogV2::model::MicrosoftTeamsTenantBasedHandleInfoType,
+    ) -> Self {
+        self.type_ = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -46,14 +69,20 @@ impl MicrosoftTeamsUpdateApiHandleRequestData {
     }
 }
 
-impl<'de> Deserialize<'de> for MicrosoftTeamsUpdateApiHandleRequestData {
+impl Default for MicrosoftTeamsTenantBasedHandleInfoResponseData {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for MicrosoftTeamsTenantBasedHandleInfoResponseData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct MicrosoftTeamsUpdateApiHandleRequestDataVisitor;
-        impl<'a> Visitor<'a> for MicrosoftTeamsUpdateApiHandleRequestDataVisitor {
-            type Value = MicrosoftTeamsUpdateApiHandleRequestData;
+        struct MicrosoftTeamsTenantBasedHandleInfoResponseDataVisitor;
+        impl<'a> Visitor<'a> for MicrosoftTeamsTenantBasedHandleInfoResponseDataVisitor {
+            type Value = MicrosoftTeamsTenantBasedHandleInfoResponseData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -64,9 +93,12 @@ impl<'de> Deserialize<'de> for MicrosoftTeamsUpdateApiHandleRequestData {
                 M: MapAccess<'a>,
             {
                 let mut attributes: Option<
-                    crate::datadogV2::model::MicrosoftTeamsApiHandleAttributes,
+                    crate::datadogV2::model::MicrosoftTeamsTenantBasedHandleInfoResponseAttributes,
                 > = None;
-                let mut type_: Option<crate::datadogV2::model::MicrosoftTeamsApiHandleType> = None;
+                let mut id: Option<String> = None;
+                let mut type_: Option<
+                    crate::datadogV2::model::MicrosoftTeamsTenantBasedHandleInfoType,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -76,13 +108,25 @@ impl<'de> Deserialize<'de> for MicrosoftTeamsUpdateApiHandleRequestData {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "attributes" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "type" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::MicrosoftTeamsApiHandleType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::MicrosoftTeamsTenantBasedHandleInfoType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -96,11 +140,10 @@ impl<'de> Deserialize<'de> for MicrosoftTeamsUpdateApiHandleRequestData {
                         }
                     }
                 }
-                let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
-                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = MicrosoftTeamsUpdateApiHandleRequestData {
+                let content = MicrosoftTeamsTenantBasedHandleInfoResponseData {
                     attributes,
+                    id,
                     type_,
                     additional_properties,
                     _unparsed,
@@ -110,6 +153,6 @@ impl<'de> Deserialize<'de> for MicrosoftTeamsUpdateApiHandleRequestData {
             }
         }
 
-        deserializer.deserialize_any(MicrosoftTeamsUpdateApiHandleRequestDataVisitor)
+        deserializer.deserialize_any(MicrosoftTeamsTenantBasedHandleInfoResponseDataVisitor)
     }
 }
