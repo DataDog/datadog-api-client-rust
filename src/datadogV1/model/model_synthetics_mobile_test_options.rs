@@ -25,7 +25,7 @@ pub struct SyntheticsMobileTestOptions {
     pub default_step_timeout: Option<i32>,
     /// For mobile test, array with the different device IDs used to run the test.
     #[serde(rename = "device_ids")]
-    pub device_ids: Option<Vec<crate::datadogV1::model::SyntheticsMobileDeviceID>>,
+    pub device_ids: Option<Vec<String>>,
     /// The `SyntheticsMobileTestOptions` `disableAutoAcceptAlert`.
     #[serde(rename = "disableAutoAcceptAlert")]
     pub disable_auto_accept_alert: Option<bool>,
@@ -118,10 +118,7 @@ impl SyntheticsMobileTestOptions {
         self
     }
 
-    pub fn device_ids(
-        mut self,
-        value: Vec<crate::datadogV1::model::SyntheticsMobileDeviceID>,
-    ) -> Self {
+    pub fn device_ids(mut self, value: Vec<String>) -> Self {
         self.device_ids = Some(value);
         self
     }
@@ -233,8 +230,7 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestOptions {
                 > = None;
                 let mut ci: Option<crate::datadogV1::model::SyntheticsMobileTestCiOptions> = None;
                 let mut default_step_timeout: Option<i32> = None;
-                let mut device_ids: Option<Vec<crate::datadogV1::model::SyntheticsMobileDeviceID>> =
-                    None;
+                let mut device_ids: Option<Vec<String>> = None;
                 let mut disable_auto_accept_alert: Option<bool> = None;
                 let mut min_failure_duration: Option<i64> = None;
                 let mut mobile_application: Option<

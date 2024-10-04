@@ -1,7 +1,6 @@
 // Edit a Mobile test returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api_synthetics::SyntheticsAPI;
-use datadog_api_client::datadogV1::model::SyntheticsMobileDeviceID;
 use datadog_api_client::datadogV1::model::SyntheticsMobileTest;
 use datadog_api_client::datadogV1::model::SyntheticsMobileTestConfig;
 use datadog_api_client::datadogV1::model::SyntheticsMobileTestOptions;
@@ -19,9 +18,7 @@ async fn main() {
         SyntheticsMobileTestConfig::new().variables(vec![]),
         "Example-Synthetic-updated".to_string(),
         SyntheticsMobileTestOptions::new()
-            .device_ids(vec![
-                SyntheticsMobileDeviceID::SYNTHETICS_MOBILE_DEVICE_IPHONE_15_IOS_17,
-            ])
+            .device_ids(vec!["synthetics:mobile:device:iphone_15_ios_17".to_string()])
             .mobile_application(
                 SyntheticsMobileTestsMobileApplication::new()
                     .application_id("ab0e0aed-536d-411a-9a99-5428c27d8f8e".to_string())
