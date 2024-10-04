@@ -77,7 +77,7 @@ async fn main() {
                                 ),
                         ),
                     ),
-                ).layout(WidgetLayout::new(2, 4, 8, 0))
+                ).layout(WidgetLayout::new(2, 4, 8.0, 0.0))
             ],
         ).description(Some("".to_string()));
     let configuration = datadog::Configuration::new();
