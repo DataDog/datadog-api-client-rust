@@ -98,6 +98,12 @@ pub struct UsageSummaryDate {
     /// Shows the sum of all Cloud Security Information and Event Management events over all hours in the current date for the given org.
     #[serde(rename = "cloud_siem_events_sum")]
     pub cloud_siem_events_sum: Option<i64>,
+    /// Shows the high-water mark of all Static Analysis committers over all hours in the current date for the given org.
+    #[serde(rename = "code_analysis_sa_committers_hwm")]
+    pub code_analysis_sa_committers_hwm: Option<i64>,
+    /// Shows the high-water mark of all static Software Composition Analysis committers over all hours in the current date for the given org.
+    #[serde(rename = "code_analysis_sca_committers_hwm")]
+    pub code_analysis_sca_committers_hwm: Option<i64>,
     /// Shows the average of all distinct containers over all hours in the current date for all organizations.
     #[serde(rename = "container_avg")]
     pub container_avg: Option<i64>,
@@ -469,6 +475,8 @@ impl UsageSummaryDate {
             cloud_cost_management_gcp_host_count_avg: None,
             cloud_cost_management_host_count_avg: None,
             cloud_siem_events_sum: None,
+            code_analysis_sa_committers_hwm: None,
+            code_analysis_sca_committers_hwm: None,
             container_avg: None,
             container_excl_agent_avg: None,
             container_hwm: None,
@@ -746,6 +754,18 @@ impl UsageSummaryDate {
     #[allow(deprecated)]
     pub fn cloud_siem_events_sum(mut self, value: i64) -> Self {
         self.cloud_siem_events_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn code_analysis_sa_committers_hwm(mut self, value: i64) -> Self {
+        self.code_analysis_sa_committers_hwm = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn code_analysis_sca_committers_hwm(mut self, value: i64) -> Self {
+        self.code_analysis_sca_committers_hwm = Some(value);
         self
     }
 
@@ -1451,6 +1471,8 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                 let mut cloud_cost_management_gcp_host_count_avg: Option<i64> = None;
                 let mut cloud_cost_management_host_count_avg: Option<i64> = None;
                 let mut cloud_siem_events_sum: Option<i64> = None;
+                let mut code_analysis_sa_committers_hwm: Option<i64> = None;
+                let mut code_analysis_sca_committers_hwm: Option<i64> = None;
                 let mut container_avg: Option<i64> = None;
                 let mut container_excl_agent_avg: Option<i64> = None;
                 let mut container_hwm: Option<i64> = None;
@@ -1760,6 +1782,20 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                                 continue;
                             }
                             cloud_siem_events_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "code_analysis_sa_committers_hwm" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            code_analysis_sa_committers_hwm =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "code_analysis_sca_committers_hwm" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            code_analysis_sca_committers_hwm =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "container_avg" => {
@@ -2547,6 +2583,8 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                     cloud_cost_management_gcp_host_count_avg,
                     cloud_cost_management_host_count_avg,
                     cloud_siem_events_sum,
+                    code_analysis_sa_committers_hwm,
+                    code_analysis_sca_committers_hwm,
                     container_avg,
                     container_excl_agent_avg,
                     container_hwm,
