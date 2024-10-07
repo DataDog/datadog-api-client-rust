@@ -44,6 +44,9 @@ pub struct GCPAccount {
     /// When enabled, Datadog will activate the Cloud Security Monitoring product for this service account. Note: This requires resource_collection_enabled to be set to true.
     #[serde(rename = "is_cspm_enabled")]
     pub is_cspm_enabled: Option<bool>,
+    /// When enabled, Datadog scans for all resource change data in your Google Cloud environment.
+    #[serde(rename = "is_resource_change_collection_enabled")]
+    pub is_resource_change_collection_enabled: Option<bool>,
     /// When enabled, Datadog will attempt to collect Security Command Center Findings. Note: This requires additional permissions on the service account.
     #[serde(rename = "is_security_command_center_enabled")]
     pub is_security_command_center_enabled: Option<bool>,
@@ -85,6 +88,7 @@ impl GCPAccount {
             errors: None,
             host_filters: None,
             is_cspm_enabled: None,
+            is_resource_change_collection_enabled: None,
             is_security_command_center_enabled: None,
             private_key: None,
             private_key_id: None,
@@ -144,6 +148,11 @@ impl GCPAccount {
 
     pub fn is_cspm_enabled(mut self, value: bool) -> Self {
         self.is_cspm_enabled = Some(value);
+        self
+    }
+
+    pub fn is_resource_change_collection_enabled(mut self, value: bool) -> Self {
+        self.is_resource_change_collection_enabled = Some(value);
         self
     }
 
@@ -224,6 +233,7 @@ impl<'de> Deserialize<'de> for GCPAccount {
                 let mut errors: Option<Vec<String>> = None;
                 let mut host_filters: Option<String> = None;
                 let mut is_cspm_enabled: Option<bool> = None;
+                let mut is_resource_change_collection_enabled: Option<bool> = None;
                 let mut is_security_command_center_enabled: Option<bool> = None;
                 let mut private_key: Option<String> = None;
                 let mut private_key_id: Option<String> = None;
@@ -305,6 +315,13 @@ impl<'de> Deserialize<'de> for GCPAccount {
                             is_cspm_enabled =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "is_resource_change_collection_enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            is_resource_change_collection_enabled =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "is_security_command_center_enabled" => {
                             if v.is_null() {
                                 continue;
@@ -370,6 +387,7 @@ impl<'de> Deserialize<'de> for GCPAccount {
                     errors,
                     host_filters,
                     is_cspm_enabled,
+                    is_resource_change_collection_enabled,
                     is_security_command_center_enabled,
                     private_key,
                     private_key_id,
