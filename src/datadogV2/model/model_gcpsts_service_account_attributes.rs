@@ -30,6 +30,9 @@ pub struct GCPSTSServiceAccountAttributes {
     /// When enabled, Datadog will activate the Cloud Security Monitoring product for this service account. Note: This requires resource_collection_enabled to be set to true.
     #[serde(rename = "is_cspm_enabled")]
     pub is_cspm_enabled: Option<bool>,
+    /// When enabled, Datadog scans for all resource change data in your Google Cloud environment.
+    #[serde(rename = "is_resource_change_collection_enabled")]
+    pub is_resource_change_collection_enabled: Option<bool>,
     /// When enabled, Datadog will attempt to collect Security Command Center Findings. Note: This requires additional permissions on the service account.
     #[serde(rename = "is_security_command_center_enabled")]
     pub is_security_command_center_enabled: Option<bool>,
@@ -52,6 +55,7 @@ impl GCPSTSServiceAccountAttributes {
             cloud_run_revision_filters: None,
             host_filters: None,
             is_cspm_enabled: None,
+            is_resource_change_collection_enabled: None,
             is_security_command_center_enabled: None,
             resource_collection_enabled: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -86,6 +90,11 @@ impl GCPSTSServiceAccountAttributes {
 
     pub fn is_cspm_enabled(mut self, value: bool) -> Self {
         self.is_cspm_enabled = Some(value);
+        self
+    }
+
+    pub fn is_resource_change_collection_enabled(mut self, value: bool) -> Self {
+        self.is_resource_change_collection_enabled = Some(value);
         self
     }
 
@@ -137,6 +146,7 @@ impl<'de> Deserialize<'de> for GCPSTSServiceAccountAttributes {
                 let mut cloud_run_revision_filters: Option<Vec<String>> = None;
                 let mut host_filters: Option<Vec<String>> = None;
                 let mut is_cspm_enabled: Option<bool> = None;
+                let mut is_resource_change_collection_enabled: Option<bool> = None;
                 let mut is_security_command_center_enabled: Option<bool> = None;
                 let mut resource_collection_enabled: Option<bool> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -188,6 +198,13 @@ impl<'de> Deserialize<'de> for GCPSTSServiceAccountAttributes {
                             is_cspm_enabled =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "is_resource_change_collection_enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            is_resource_change_collection_enabled =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "is_security_command_center_enabled" => {
                             if v.is_null() {
                                 continue;
@@ -217,6 +234,7 @@ impl<'de> Deserialize<'de> for GCPSTSServiceAccountAttributes {
                     cloud_run_revision_filters,
                     host_filters,
                     is_cspm_enabled,
+                    is_resource_change_collection_enabled,
                     is_security_command_center_enabled,
                     resource_collection_enabled,
                     additional_properties,

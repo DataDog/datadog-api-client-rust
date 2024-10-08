@@ -16,6 +16,7 @@ async fn main() {
         .cloud_run_revision_filters(vec!["dr:dre".to_string()])
         .host_filters("key:value,filter:example".to_string())
         .is_cspm_enabled(true)
+        .is_resource_change_collection_enabled(true)
         .is_security_command_center_enabled(true)
         .private_key("private_key".to_string())
         .private_key_id("123456789abcdefghi123456789abcdefghijklm".to_string())

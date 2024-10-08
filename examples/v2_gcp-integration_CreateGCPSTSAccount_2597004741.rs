@@ -17,6 +17,7 @@ async fn main() {
                         "Test-252bf553ef04b351@test-project.iam.gserviceaccount.com".to_string(),
                     )
                     .host_filters(vec![])
+                    .is_resource_change_collection_enabled(true)
                     .is_security_command_center_enabled(true),
             )
             .type_(GCPServiceAccountType::GCP_SERVICE_ACCOUNT),
