@@ -98,6 +98,8 @@ pub struct ApiInstances {
         Option<datadogV2::api_security_monitoring::SecurityMonitoringAPI>,
     pub v2_api_powerpack: Option<datadogV2::api_powerpack::PowerpackAPI>,
     pub v2_api_processes: Option<datadogV2::api_processes::ProcessesAPI>,
+    pub v2_api_asm_exclusion_filters:
+        Option<datadogV2::api_asm_exclusion_filters::ASMExclusionFiltersAPI>,
     pub v2_api_csm_threats: Option<datadogV2::api_csm_threats::CSMThreatsAPI>,
     pub v2_api_restriction_policies:
         Option<datadogV2::api_restriction_policies::RestrictionPoliciesAPI>,
@@ -642,6 +644,12 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                     world.http_client.as_ref().unwrap().clone(),
                 ),
             );
+        }
+        "ASMExclusionFilters" => {
+            world.api_instances.v2_api_asm_exclusion_filters = Some(datadogV2::api_asm_exclusion_filters::ASMExclusionFiltersAPI::with_client_and_config(
+                world.config.clone(),
+                world.http_client.as_ref().unwrap().clone()
+            ));
         }
         "CSMThreats" => {
             world.api_instances.v2_api_csm_threats = Some(
@@ -2611,6 +2619,26 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.ListProcessesWithPagination".into(),
         test_v2_list_processes_with_pagination,
+    );
+    world.function_mappings.insert(
+        "v2.ListASMExclusionFilters".into(),
+        test_v2_list_asm_exclusion_filters,
+    );
+    world.function_mappings.insert(
+        "v2.CreateASMExclusionFilter".into(),
+        test_v2_create_asm_exclusion_filter,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteASMExclusionFilter".into(),
+        test_v2_delete_asm_exclusion_filter,
+    );
+    world.function_mappings.insert(
+        "v2.GetASMExclusionFilters".into(),
+        test_v2_get_asm_exclusion_filters,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateASMExclusionFilter".into(),
+        test_v2_update_asm_exclusion_filter,
     );
     world.function_mappings.insert(
         "v2.ListCSMThreatsAgentRules".into(),
@@ -19597,6 +19625,152 @@ fn test_v2_list_processes_with_pagination(
     });
     world.response.object = serde_json::to_value(result).unwrap();
     world.response.code = 200;
+}
+
+fn test_v2_list_asm_exclusion_filters(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_asm_exclusion_filters
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_asm_exclusion_filters_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_asm_exclusion_filter(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_asm_exclusion_filters
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_asm_exclusion_filter_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_asm_exclusion_filter(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_asm_exclusion_filters
+        .as_ref()
+        .expect("api instance not found");
+    let exclusion_filter_id =
+        serde_json::from_value(_parameters.get("exclusion_filter_id").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.delete_asm_exclusion_filter_with_http_info(exclusion_filter_id)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_asm_exclusion_filters(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_asm_exclusion_filters
+        .as_ref()
+        .expect("api instance not found");
+    let exclusion_filter_id =
+        serde_json::from_value(_parameters.get("exclusion_filter_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_asm_exclusion_filters_with_http_info(exclusion_filter_id))
+    {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_asm_exclusion_filter(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_asm_exclusion_filters
+        .as_ref()
+        .expect("api instance not found");
+    let exclusion_filter_id =
+        serde_json::from_value(_parameters.get("exclusion_filter_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.update_asm_exclusion_filter_with_http_info(exclusion_filter_id, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
 }
 
 fn test_v2_list_csm_threats_agent_rules(
