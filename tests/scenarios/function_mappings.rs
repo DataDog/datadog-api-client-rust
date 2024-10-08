@@ -13151,8 +13151,10 @@ fn test_v2_get_monthly_cost_attribution(
         .expect("api instance not found");
     let start_month =
         serde_json::from_value(_parameters.get("start_month").unwrap().clone()).unwrap();
-    let end_month = serde_json::from_value(_parameters.get("end_month").unwrap().clone()).unwrap();
     let fields = serde_json::from_value(_parameters.get("fields").unwrap().clone()).unwrap();
+    let end_month = _parameters
+        .get("end_month")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let sort_direction = _parameters
         .get("sort_direction")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
@@ -13170,6 +13172,7 @@ fn test_v2_get_monthly_cost_attribution(
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params =
         datadogV2::api_usage_metering::GetMonthlyCostAttributionOptionalParams::default();
+    params.end_month = end_month;
     params.sort_direction = sort_direction;
     params.sort_name = sort_name;
     params.tag_breakdown_keys = tag_breakdown_keys;
@@ -13177,7 +13180,6 @@ fn test_v2_get_monthly_cost_attribution(
     params.include_descendants = include_descendants;
     let response = match block_on(api.get_monthly_cost_attribution_with_http_info(
         start_month,
-        end_month,
         fields,
         params,
     )) {
