@@ -22,7 +22,6 @@ async fn main() {
                     .enable_logs_sample(true)
                     .escalation_message("the situation has escalated".to_string())
                     .evaluation_delay(Some(700))
-                    .groupby_simple_monitor(true)
                     .include_tags(true)
                     .locked(false)
                     .new_host_delay(Some(600))
