@@ -1960,6 +1960,8 @@ pub mod model_finding_evaluation;
 pub use self::model_finding_evaluation::FindingEvaluation;
 pub mod model_finding_status;
 pub use self::model_finding_status::FindingStatus;
+pub mod model_finding_vulnerability_type;
+pub use self::model_finding_vulnerability_type::FindingVulnerabilityType;
 pub mod model_list_findings_response;
 pub use self::model_list_findings_response::ListFindingsResponse;
 pub mod model_finding;
