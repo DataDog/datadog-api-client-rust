@@ -1591,7 +1591,7 @@ impl MetricsAPI {
         }
     }
 
-    /// View indexed tag key-value pairs for a given metric name.
+    /// View indexed tag key-value pairs for a given metric name over the previous hour.
     pub async fn list_tags_by_metric_name(
         &self,
         metric_name: String,
@@ -1616,7 +1616,7 @@ impl MetricsAPI {
         }
     }
 
-    /// View indexed tag key-value pairs for a given metric name.
+    /// View indexed tag key-value pairs for a given metric name over the previous hour.
     pub async fn list_tags_by_metric_name_with_http_info(
         &self,
         metric_name: String,
