@@ -45,6 +45,8 @@ pub enum MonthlyUsageAttributionSupportedMetrics {
     CWS_HOSTS_USAGE,
     DATA_JOBS_MONITORING_USAGE,
     DATA_JOBS_MONITORING_PERCENTAGE,
+    DATA_STREAM_MONITORING_USAGE,
+    DATA_STREAM_MONITORING_PERCENTAGE,
     DBM_HOSTS_PERCENTAGE,
     DBM_HOSTS_USAGE,
     DBM_QUERIES_PERCENTAGE,
@@ -203,6 +205,10 @@ impl ToString for MonthlyUsageAttributionSupportedMetrics {
             Self::DATA_JOBS_MONITORING_USAGE => String::from("data_jobs_monitoring_usage"),
             Self::DATA_JOBS_MONITORING_PERCENTAGE => {
                 String::from("data_jobs_monitoring_percentage")
+            }
+            Self::DATA_STREAM_MONITORING_USAGE => String::from("data_stream_monitoring_usage"),
+            Self::DATA_STREAM_MONITORING_PERCENTAGE => {
+                String::from("data_stream_monitoring_percentage")
             }
             Self::DBM_HOSTS_PERCENTAGE => String::from("dbm_hosts_percentage"),
             Self::DBM_HOSTS_USAGE => String::from("dbm_hosts_usage"),
@@ -417,6 +423,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionSupportedMetrics {
             "cws_hosts_usage" => Self::CWS_HOSTS_USAGE,
             "data_jobs_monitoring_usage" => Self::DATA_JOBS_MONITORING_USAGE,
             "data_jobs_monitoring_percentage" => Self::DATA_JOBS_MONITORING_PERCENTAGE,
+            "data_stream_monitoring_usage" => Self::DATA_STREAM_MONITORING_USAGE,
+            "data_stream_monitoring_percentage" => Self::DATA_STREAM_MONITORING_PERCENTAGE,
             "dbm_hosts_percentage" => Self::DBM_HOSTS_PERCENTAGE,
             "dbm_hosts_usage" => Self::DBM_HOSTS_USAGE,
             "dbm_queries_percentage" => Self::DBM_QUERIES_PERCENTAGE,
