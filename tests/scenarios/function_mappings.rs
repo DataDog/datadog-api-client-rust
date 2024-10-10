@@ -11872,26 +11872,26 @@ fn test_v2_list_catalog_entity(world: &mut DatadogWorld, _parameters: &HashMap<S
     let page_limit = _parameters
         .get("page[limit]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let fitler_id = _parameters
-        .get("fitler[id]")
+    let filter_id = _parameters
+        .get("filter[id]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let fitler_ref = _parameters
-        .get("fitler[ref]")
+    let filter_ref = _parameters
+        .get("filter[ref]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let fitler_name = _parameters
-        .get("fitler[name]")
+    let filter_name = _parameters
+        .get("filter[name]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let fitler_kind = _parameters
-        .get("fitler[kind]")
+    let filter_kind = _parameters
+        .get("filter[kind]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let fitler_owner = _parameters
-        .get("fitler[owner]")
+    let filter_owner = _parameters
+        .get("filter[owner]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let fitler_relation_type = _parameters
-        .get("fitler[relation][type]")
+    let filter_relation_type = _parameters
+        .get("filter[relation][type]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let fitler_exclude_snapshot = _parameters
-        .get("fitler[exclude_snapshot]")
+    let filter_exclude_snapshot = _parameters
+        .get("filter[exclude_snapshot]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let include = _parameters
         .get("include")
@@ -11899,13 +11899,13 @@ fn test_v2_list_catalog_entity(world: &mut DatadogWorld, _parameters: &HashMap<S
     let mut params = datadogV2::api_software_catalog::ListCatalogEntityOptionalParams::default();
     params.page_offset = page_offset;
     params.page_limit = page_limit;
-    params.fitler_id = fitler_id;
-    params.fitler_ref = fitler_ref;
-    params.fitler_name = fitler_name;
-    params.fitler_kind = fitler_kind;
-    params.fitler_owner = fitler_owner;
-    params.fitler_relation_type = fitler_relation_type;
-    params.fitler_exclude_snapshot = fitler_exclude_snapshot;
+    params.filter_id = filter_id;
+    params.filter_ref = filter_ref;
+    params.filter_name = filter_name;
+    params.filter_kind = filter_kind;
+    params.filter_owner = filter_owner;
+    params.filter_relation_type = filter_relation_type;
+    params.filter_exclude_snapshot = filter_exclude_snapshot;
     params.include = include;
     let response = match block_on(api.list_catalog_entity_with_http_info(params)) {
         Ok(response) => response,
@@ -11939,26 +11939,26 @@ fn test_v2_list_catalog_entity_with_pagination(
     let page_limit = _parameters
         .get("page[limit]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let fitler_id = _parameters
-        .get("fitler[id]")
+    let filter_id = _parameters
+        .get("filter[id]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let fitler_ref = _parameters
-        .get("fitler[ref]")
+    let filter_ref = _parameters
+        .get("filter[ref]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let fitler_name = _parameters
-        .get("fitler[name]")
+    let filter_name = _parameters
+        .get("filter[name]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let fitler_kind = _parameters
-        .get("fitler[kind]")
+    let filter_kind = _parameters
+        .get("filter[kind]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let fitler_owner = _parameters
-        .get("fitler[owner]")
+    let filter_owner = _parameters
+        .get("filter[owner]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let fitler_relation_type = _parameters
-        .get("fitler[relation][type]")
+    let filter_relation_type = _parameters
+        .get("filter[relation][type]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let fitler_exclude_snapshot = _parameters
-        .get("fitler[exclude_snapshot]")
+    let filter_exclude_snapshot = _parameters
+        .get("filter[exclude_snapshot]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let include = _parameters
         .get("include")
@@ -11966,13 +11966,13 @@ fn test_v2_list_catalog_entity_with_pagination(
     let mut params = datadogV2::api_software_catalog::ListCatalogEntityOptionalParams::default();
     params.page_offset = page_offset;
     params.page_limit = page_limit;
-    params.fitler_id = fitler_id;
-    params.fitler_ref = fitler_ref;
-    params.fitler_name = fitler_name;
-    params.fitler_kind = fitler_kind;
-    params.fitler_owner = fitler_owner;
-    params.fitler_relation_type = fitler_relation_type;
-    params.fitler_exclude_snapshot = fitler_exclude_snapshot;
+    params.filter_id = filter_id;
+    params.filter_ref = filter_ref;
+    params.filter_name = filter_name;
+    params.filter_kind = filter_kind;
+    params.filter_owner = filter_owner;
+    params.filter_relation_type = filter_relation_type;
+    params.filter_exclude_snapshot = filter_exclude_snapshot;
     params.include = include;
     let response = api.list_catalog_entity_with_pagination(params);
     let mut result = Vec::new();

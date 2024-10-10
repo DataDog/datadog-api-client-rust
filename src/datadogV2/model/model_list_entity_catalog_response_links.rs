@@ -11,13 +11,13 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ListEntityCatalogResponseLinks {
-    /// next link.
+    /// Next link.
     #[serde(rename = "next")]
     pub next: Option<String>,
-    /// previous link.
+    /// Previous link.
     #[serde(rename = "previous")]
     pub previous: Option<String>,
-    /// current link.
+    /// Current link.
     #[serde(rename = "self")]
     pub self_: Option<String>,
     #[serde(flatten)]

@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Performance stats association
+/// Performance stats association.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EntityV3DatadogPerformance {
-    /// A list of APM entity tags that associates the APM Stats data with the entity
+    /// A list of APM entity tags that associates the APM Stats data with the entity.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
     #[serde(skip)]

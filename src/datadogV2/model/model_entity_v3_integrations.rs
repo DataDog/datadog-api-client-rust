@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A base schema for defining third party integrations
+/// A base schema for defining third-party integrations.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EntityV3Integrations {
-    /// An Opsgenie integration schema
+    /// An Opsgenie integration schema.
     #[serde(rename = "opsgenie")]
     pub opsgenie: Option<crate::datadogV2::model::EntityV3DatadogIntegrationOpsgenie>,
-    /// An PagerDuty integration schema
+    /// A PagerDuty integration schema.
     #[serde(rename = "pagerduty")]
     pub pagerduty: Option<crate::datadogV2::model::EntityV3DatadogIntegrationPagerduty>,
     #[serde(skip)]

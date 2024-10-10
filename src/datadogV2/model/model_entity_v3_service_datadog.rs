@@ -6,24 +6,24 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Datadog product integrations for the service entity
+/// Datadog product integrations for the service entity.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EntityV3ServiceDatadog {
-    /// Schema for mapping source code locations to an entity
+    /// Schema for mapping source code locations to an entity.
     #[serde(rename = "codeLocations")]
     pub code_locations: Option<Vec<crate::datadogV2::model::EntityV3DatadogCodeLocationItem>>,
-    /// Events associations
+    /// Events associations.
     #[serde(rename = "events")]
     pub events: Option<Vec<crate::datadogV2::model::EntityV3DatadogEventItem>>,
-    /// Logs association
+    /// Logs association.
     #[serde(rename = "logs")]
     pub logs: Option<Vec<crate::datadogV2::model::EntityV3DatadogLogItem>>,
-    /// Performance stats association
+    /// Performance stats association.
     #[serde(rename = "performanceData")]
     pub performance_data: Option<crate::datadogV2::model::EntityV3DatadogPerformance>,
-    /// CI Pipelines association
+    /// CI Pipelines association.
     #[serde(rename = "pipelines")]
     pub pipelines: Option<crate::datadogV2::model::EntityV3DatadogPipelines>,
     #[serde(skip)]

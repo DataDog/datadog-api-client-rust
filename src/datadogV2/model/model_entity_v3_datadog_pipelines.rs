@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// CI Pipelines association
+/// CI Pipelines association.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EntityV3DatadogPipelines {
-    /// A list of CI Fingerprints that associate CI Pipelines with the entity
+    /// A list of CI Fingerprints that associate CI Pipelines with the entity.
     #[serde(rename = "fingerprints")]
     pub fingerprints: Option<Vec<String>>,
     #[serde(skip)]
