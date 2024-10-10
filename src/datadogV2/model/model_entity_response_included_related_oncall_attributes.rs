@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EntityResponseIncludedRelatedOncallAttributes {
-    /// Oncall escalations
+    /// Oncall escalations.
     #[serde(rename = "escalations")]
     pub escalations:
         Option<Vec<crate::datadogV2::model::EntityResponseIncludedRelatedOncallEscalationItem>>,

@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RelationshipItem {
-    /// Associated data id.
+    /// Associated data ID.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Relationship type.

@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// code location item.
+/// Code location item.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EntityV3DatadogCodeLocationItem {
-    /// The paths (glob) to the source code of the service
+    /// The paths (glob) to the source code of the service.
     #[serde(rename = "paths")]
     pub paths: Option<Vec<String>>,
-    /// The repository path of the source code of the entity
+    /// The repository path of the source code of the entity.
     #[serde(rename = "repositoryURL")]
     pub repository_url: Option<String>,
     #[serde(skip)]

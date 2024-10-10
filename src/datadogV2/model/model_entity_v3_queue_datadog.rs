@@ -6,18 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Datadog product integrations for the datastore entity
+/// Datadog product integrations for the datastore entity.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EntityV3QueueDatadog {
-    /// Events associations
+    /// Events associations.
     #[serde(rename = "events")]
     pub events: Option<Vec<crate::datadogV2::model::EntityV3DatadogEventItem>>,
-    /// Logs association
+    /// Logs association.
     #[serde(rename = "logs")]
     pub logs: Option<Vec<crate::datadogV2::model::EntityV3DatadogLogItem>>,
-    /// Performance stats association
+    /// Performance stats association.
     #[serde(rename = "performanceData")]
     pub performance_data: Option<crate::datadogV2::model::EntityV3DatadogPerformance>,
     #[serde(skip)]

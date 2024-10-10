@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// An Opsgenie integration schema
+/// An Opsgenie integration schema.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -14,7 +14,7 @@ pub struct EntityV3DatadogIntegrationOpsgenie {
     /// The region for the Opsgenie integration.
     #[serde(rename = "region")]
     pub region: Option<String>,
-    /// The service url for the Opsgenie integration.
+    /// The service URL for the Opsgenie integration.
     #[serde(rename = "serviceURL")]
     pub service_url: String,
     #[serde(skip)]

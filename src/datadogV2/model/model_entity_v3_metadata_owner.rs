@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The owner of the entity, usually a team
+/// The owner of the entity, usually a team.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EntityV3MetadataOwner {
-    /// Team name
+    /// Team name.
     #[serde(rename = "name")]
     pub name: Option<String>,
     #[serde(skip)]

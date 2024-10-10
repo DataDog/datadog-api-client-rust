@@ -11,10 +11,10 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EntityV3MetadataAdditionalOwnersItems {
-    /// Team name
+    /// Team name.
     #[serde(rename = "name")]
     pub name: String,
-    /// Team type
+    /// Team type.
     #[serde(rename = "type")]
     pub type_: Option<String>,
     #[serde(flatten)]

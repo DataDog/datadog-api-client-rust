@@ -15,7 +15,7 @@ pub struct EntityResponseIncludedIncident {
     #[serde(rename = "attributes")]
     pub attributes:
         Option<crate::datadogV2::model::EntityResponseIncludedRelatedIncidentAttributes>,
-    /// Incident id.
+    /// Incident ID.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Incident description.

@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EntityV3ServiceSpec {
-    /// A list of components the service depends on
+    /// A list of components the service depends on.
     #[serde(rename = "dependsOn")]
     pub depends_on: Option<Vec<String>>,
     /// The service's programming language.
@@ -20,10 +20,10 @@ pub struct EntityV3ServiceSpec {
     /// The lifecycle state of the component.
     #[serde(rename = "lifecycle")]
     pub lifecycle: Option<String>,
-    /// The importance of the component
+    /// The importance of the component.
     #[serde(rename = "tier")]
     pub tier: Option<String>,
-    /// The type of service
+    /// The type of service.
     #[serde(rename = "type")]
     pub type_: Option<String>,
     #[serde(skip)]

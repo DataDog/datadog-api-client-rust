@@ -6,21 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Schema for system entities
+/// Schema for system entities.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EntityV3System {
-    /// The schema version of entity type. The field is known as schema-version in the previous version
+    /// The schema version of entity type. The field is known as schema-version in the previous version.
     #[serde(rename = "apiVersion")]
     pub api_version: crate::datadogV2::model::EntityV3APIVersion,
-    /// Datadog product integrations for the service entity
+    /// Datadog product integrations for the service entity.
     #[serde(rename = "datadog")]
     pub datadog: Option<crate::datadogV2::model::EntityV3SystemDatadog>,
-    /// Custom extensions. This is the free-formed field to send client side metadata. No Datadog features are affected by this field.
+    /// Custom extensions. This is the free-formed field to send client-side metadata. No Datadog features are affected by this field.
     #[serde(rename = "extensions")]
     pub extensions: Option<std::collections::BTreeMap<String, serde_json::Value>>,
-    /// A base schema for defining third party integrations
+    /// A base schema for defining third-party integrations.
     #[serde(rename = "integrations")]
     pub integrations: Option<crate::datadogV2::model::EntityV3Integrations>,
     /// The definition of Entity V3 System Kind object.
