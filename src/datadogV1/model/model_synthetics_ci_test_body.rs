@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SyntheticsCITestBody {
-    /// Individual synthetics test.
+    /// List of individual synthetic tests.
     #[serde(rename = "tests")]
     pub tests: Option<Vec<crate::datadogV1::model::SyntheticsCITest>>,
     #[serde(flatten)]
