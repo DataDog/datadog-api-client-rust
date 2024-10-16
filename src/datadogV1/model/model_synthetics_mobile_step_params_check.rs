@@ -6,17 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Objects describing the binding used for a mobile test.
+/// The definition of `SyntheticsMobileStepParamsCheck` object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct SyntheticsMobileTestBinding {
-    /// List of principals for a mobile test binding.
-    #[serde(rename = "principals")]
-    pub principals: Option<Vec<String>>,
-    /// The definition of `SyntheticsMobileTestBindingRelation` object.
-    #[serde(rename = "relation")]
-    pub relation: Option<crate::datadogV1::model::SyntheticsMobileTestBindingRelation>,
+pub struct SyntheticsMobileStepParamsCheck {
+    /// Type of assertion to apply in an API test.
+    #[serde(rename = "type")]
+    pub type_: Option<crate::datadogV1::model::SyntheticsCheckType>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,26 +21,17 @@ pub struct SyntheticsMobileTestBinding {
     pub(crate) _unparsed: bool,
 }
 
-impl SyntheticsMobileTestBinding {
-    pub fn new() -> SyntheticsMobileTestBinding {
-        SyntheticsMobileTestBinding {
-            principals: None,
-            relation: None,
+impl SyntheticsMobileStepParamsCheck {
+    pub fn new() -> SyntheticsMobileStepParamsCheck {
+        SyntheticsMobileStepParamsCheck {
+            type_: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn principals(mut self, value: Vec<String>) -> Self {
-        self.principals = Some(value);
-        self
-    }
-
-    pub fn relation(
-        mut self,
-        value: crate::datadogV1::model::SyntheticsMobileTestBindingRelation,
-    ) -> Self {
-        self.relation = Some(value);
+    pub fn type_(mut self, value: crate::datadogV1::model::SyntheticsCheckType) -> Self {
+        self.type_ = Some(value);
         self
     }
 
@@ -56,20 +44,20 @@ impl SyntheticsMobileTestBinding {
     }
 }
 
-impl Default for SyntheticsMobileTestBinding {
+impl Default for SyntheticsMobileStepParamsCheck {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for SyntheticsMobileTestBinding {
+impl<'de> Deserialize<'de> for SyntheticsMobileStepParamsCheck {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct SyntheticsMobileTestBindingVisitor;
-        impl<'a> Visitor<'a> for SyntheticsMobileTestBindingVisitor {
-            type Value = SyntheticsMobileTestBinding;
+        struct SyntheticsMobileStepParamsCheckVisitor;
+        impl<'a> Visitor<'a> for SyntheticsMobileStepParamsCheckVisitor {
+            type Value = SyntheticsMobileStepParamsCheck;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -79,10 +67,7 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestBinding {
             where
                 M: MapAccess<'a>,
             {
-                let mut principals: Option<Vec<String>> = None;
-                let mut relation: Option<
-                    crate::datadogV1::model::SyntheticsMobileTestBindingRelation,
-                > = None;
+                let mut type_: Option<crate::datadogV1::model::SyntheticsCheckType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -91,20 +76,14 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestBinding {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "principals" => {
+                        "type" => {
                             if v.is_null() {
                                 continue;
                             }
-                            principals = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "relation" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            relation = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _relation) = relation {
-                                match _relation {
-                                    crate::datadogV1::model::SyntheticsMobileTestBindingRelation::UnparsedObject(_relation) => {
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _type_) = type_ {
+                                match _type_ {
+                                    crate::datadogV1::model::SyntheticsCheckType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -119,9 +98,8 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestBinding {
                     }
                 }
 
-                let content = SyntheticsMobileTestBinding {
-                    principals,
-                    relation,
+                let content = SyntheticsMobileStepParamsCheck {
+                    type_,
                     additional_properties,
                     _unparsed,
                 };
@@ -130,6 +108,6 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestBinding {
             }
         }
 
-        deserializer.deserialize_any(SyntheticsMobileTestBindingVisitor)
+        deserializer.deserialize_any(SyntheticsMobileStepParamsCheckVisitor)
     }
 }

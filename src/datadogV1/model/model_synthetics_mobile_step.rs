@@ -26,9 +26,9 @@ pub struct SyntheticsMobileStep {
     /// A boolean set to not take a screenshot for the step.
     #[serde(rename = "noScreenshot")]
     pub no_screenshot: Option<bool>,
-    /// The parameters of the mobile step.
+    /// The parameters of a mobile step.
     #[serde(rename = "params")]
-    pub params: Option<std::collections::BTreeMap<String, serde_json::Value>>,
+    pub params: Option<crate::datadogV1::model::SyntheticsMobileStepParams>,
     /// The public ID of the step.
     #[serde(rename = "publicId")]
     pub public_id: Option<String>,
@@ -87,7 +87,7 @@ impl SyntheticsMobileStep {
         self
     }
 
-    pub fn params(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
+    pub fn params(mut self, value: crate::datadogV1::model::SyntheticsMobileStepParams) -> Self {
         self.params = Some(value);
         self
     }
@@ -144,8 +144,7 @@ impl<'de> Deserialize<'de> for SyntheticsMobileStep {
                 let mut is_critical: Option<bool> = None;
                 let mut name: Option<String> = None;
                 let mut no_screenshot: Option<bool> = None;
-                let mut params: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                    None;
+                let mut params: Option<crate::datadogV1::model::SyntheticsMobileStepParams> = None;
                 let mut public_id: Option<String> = None;
                 let mut timeout: Option<i64> = None;
                 let mut type_: Option<crate::datadogV1::model::SyntheticsMobileStepType> = None;

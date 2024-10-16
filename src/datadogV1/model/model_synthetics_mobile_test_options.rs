@@ -19,7 +19,7 @@ pub struct SyntheticsMobileTestOptions {
     pub bindings: Option<Vec<crate::datadogV1::model::SyntheticsMobileTestBinding>>,
     /// CI/CD options for a Synthetic test.
     #[serde(rename = "ci")]
-    pub ci: Option<crate::datadogV1::model::SyntheticsMobileTestCiOptions>,
+    pub ci: Option<crate::datadogV1::model::SyntheticsTestCiOptions>,
     /// The `SyntheticsMobileTestOptions` `defaultStepTimeout`.
     #[serde(rename = "defaultStepTimeout")]
     pub default_step_timeout: Option<i32>,
@@ -108,7 +108,7 @@ impl SyntheticsMobileTestOptions {
         self
     }
 
-    pub fn ci(mut self, value: crate::datadogV1::model::SyntheticsMobileTestCiOptions) -> Self {
+    pub fn ci(mut self, value: crate::datadogV1::model::SyntheticsTestCiOptions) -> Self {
         self.ci = Some(value);
         self
     }
@@ -228,7 +228,7 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestOptions {
                 let mut bindings: Option<
                     Vec<crate::datadogV1::model::SyntheticsMobileTestBinding>,
                 > = None;
-                let mut ci: Option<crate::datadogV1::model::SyntheticsMobileTestCiOptions> = None;
+                let mut ci: Option<crate::datadogV1::model::SyntheticsTestCiOptions> = None;
                 let mut default_step_timeout: Option<i32> = None;
                 let mut device_ids: Option<Vec<String>> = None;
                 let mut disable_auto_accept_alert: Option<bool> = None;
