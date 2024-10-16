@@ -33,7 +33,7 @@ pub struct HTTPLogItem {
     #[serde(rename = "service")]
     pub service: Option<String>,
     #[serde(flatten)]
-    pub additional_properties: std::collections::BTreeMap<String, String>,
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -74,7 +74,7 @@ impl HTTPLogItem {
 
     pub fn additional_properties(
         mut self,
-        value: std::collections::BTreeMap<String, String>,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
     ) -> Self {
         self.additional_properties = value;
         self
@@ -103,8 +103,10 @@ impl<'de> Deserialize<'de> for HTTPLogItem {
                 let mut hostname: Option<String> = None;
                 let mut message: Option<String> = None;
                 let mut service: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<String, String> =
-                    std::collections::BTreeMap::new();
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
