@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SyntheticsStepDetail {
+    /// Whether or not the step was allowed to fail.
+    #[serde(rename = "allowFailure")]
+    pub allow_failure: Option<bool>,
     /// Array of errors collected for a browser test.
     #[serde(rename = "browserErrors")]
     pub browser_errors: Option<Vec<crate::datadogV1::model::SyntheticsBrowserError>>,
@@ -26,6 +29,9 @@ pub struct SyntheticsStepDetail {
     /// Error returned by the test.
     #[serde(rename = "error")]
     pub error: Option<String>,
+    /// The browser test failure details.
+    #[serde(rename = "failure")]
+    pub failure: Option<crate::datadogV1::model::SyntheticsBrowserTestResultFailure>,
     /// Navigate between different tabs for your browser test.
     #[serde(rename = "playingTab")]
     pub playing_tab: Option<crate::datadogV1::model::SyntheticsPlayingTab>,
@@ -73,11 +79,13 @@ pub struct SyntheticsStepDetail {
 impl SyntheticsStepDetail {
     pub fn new() -> SyntheticsStepDetail {
         SyntheticsStepDetail {
+            allow_failure: None,
             browser_errors: None,
             check_type: None,
             description: None,
             duration: None,
             error: None,
+            failure: None,
             playing_tab: None,
             screenshot_bucket_key: None,
             skipped: None,
@@ -93,6 +101,11 @@ impl SyntheticsStepDetail {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn allow_failure(mut self, value: bool) -> Self {
+        self.allow_failure = Some(value);
+        self
     }
 
     pub fn browser_errors(
@@ -120,6 +133,14 @@ impl SyntheticsStepDetail {
 
     pub fn error(mut self, value: String) -> Self {
         self.error = Some(value);
+        self
+    }
+
+    pub fn failure(
+        mut self,
+        value: crate::datadogV1::model::SyntheticsBrowserTestResultFailure,
+    ) -> Self {
+        self.failure = Some(value);
         self
     }
 
@@ -224,6 +245,7 @@ impl<'de> Deserialize<'de> for SyntheticsStepDetail {
             where
                 M: MapAccess<'a>,
             {
+                let mut allow_failure: Option<bool> = None;
                 let mut browser_errors: Option<
                     Vec<crate::datadogV1::model::SyntheticsBrowserError>,
                 > = None;
@@ -231,6 +253,9 @@ impl<'de> Deserialize<'de> for SyntheticsStepDetail {
                 let mut description: Option<String> = None;
                 let mut duration: Option<f64> = None;
                 let mut error: Option<String> = None;
+                let mut failure: Option<
+                    crate::datadogV1::model::SyntheticsBrowserTestResultFailure,
+                > = None;
                 let mut playing_tab: Option<crate::datadogV1::model::SyntheticsPlayingTab> = None;
                 let mut screenshot_bucket_key: Option<bool> = None;
                 let mut skipped: Option<bool> = None;
@@ -257,6 +282,13 @@ impl<'de> Deserialize<'de> for SyntheticsStepDetail {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "allowFailure" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            allow_failure =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "browserErrors" => {
                             if v.is_null() {
                                 continue;
@@ -296,6 +328,12 @@ impl<'de> Deserialize<'de> for SyntheticsStepDetail {
                                 continue;
                             }
                             error = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "failure" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            failure = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "playingTab" => {
                             if v.is_null() {
@@ -402,11 +440,13 @@ impl<'de> Deserialize<'de> for SyntheticsStepDetail {
                 }
 
                 let content = SyntheticsStepDetail {
+                    allow_failure,
                     browser_errors,
                     check_type,
                     description,
                     duration,
                     error,
+                    failure,
                     playing_tab,
                     screenshot_bucket_key,
                     skipped,
