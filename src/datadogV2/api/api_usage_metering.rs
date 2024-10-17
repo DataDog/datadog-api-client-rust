@@ -169,6 +169,8 @@ impl GetHourlyUsageOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetMonthlyCostAttributionOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost ending this month.
+    pub end_month: Option<chrono::DateTime<chrono::Utc>>,
     /// The direction to sort by: `[desc, asc]`.
     pub sort_direction: Option<crate::datadogV2::model::SortDirection>,
     /// The billing dimension to sort by. Always sorted by total cost. Example: `infra_host`.
@@ -183,6 +185,11 @@ pub struct GetMonthlyCostAttributionOptionalParams {
 }
 
 impl GetMonthlyCostAttributionOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost ending this month.
+    pub fn end_month(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
+        self.end_month = Some(value);
+        self
+    }
     /// The direction to sort by: `[desc, asc]`.
     pub fn sort_direction(mut self, value: crate::datadogV2::model::SortDirection) -> Self {
         self.sort_direction = Some(value);
@@ -1193,7 +1200,6 @@ impl UsageMeteringAPI {
     pub async fn get_monthly_cost_attribution(
         &self,
         start_month: chrono::DateTime<chrono::Utc>,
-        end_month: chrono::DateTime<chrono::Utc>,
         fields: String,
         params: GetMonthlyCostAttributionOptionalParams,
     ) -> Result<
@@ -1201,7 +1207,7 @@ impl UsageMeteringAPI {
         datadog::Error<GetMonthlyCostAttributionError>,
     > {
         match self
-            .get_monthly_cost_attribution_with_http_info(start_month, end_month, fields, params)
+            .get_monthly_cost_attribution_with_http_info(start_month, fields, params)
             .await
         {
             Ok(response_content) => {
@@ -1236,7 +1242,6 @@ impl UsageMeteringAPI {
     pub async fn get_monthly_cost_attribution_with_http_info(
         &self,
         start_month: chrono::DateTime<chrono::Utc>,
-        end_month: chrono::DateTime<chrono::Utc>,
         fields: String,
         params: GetMonthlyCostAttributionOptionalParams,
     ) -> Result<
@@ -1255,6 +1260,7 @@ impl UsageMeteringAPI {
         }
 
         // unbox and build optional parameters
+        let end_month = params.end_month;
         let sort_direction = params.sort_direction;
         let sort_name = params.sort_name;
         let tag_breakdown_keys = params.tag_breakdown_keys;
@@ -1274,11 +1280,13 @@ impl UsageMeteringAPI {
             "start_month",
             &start_month.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
         )]);
-        local_req_builder = local_req_builder.query(&[(
-            "end_month",
-            &end_month.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-        )]);
         local_req_builder = local_req_builder.query(&[("fields", &fields.to_string())]);
+        if let Some(ref local_query_param) = end_month {
+            local_req_builder = local_req_builder.query(&[(
+                "end_month",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
+        };
         if let Some(ref local_query_param) = sort_direction {
             local_req_builder =
                 local_req_builder.query(&[("sort_direction", &local_query_param.to_string())]);

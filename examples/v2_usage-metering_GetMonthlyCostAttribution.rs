@@ -14,11 +14,12 @@ async fn main() {
             DateTime::parse_from_rfc3339("2021-11-06T11:11:11+00:00")
                 .expect("Failed to parse datetime")
                 .with_timezone(&Utc),
-            DateTime::parse_from_rfc3339("2021-11-08T11:11:11+00:00")
-                .expect("Failed to parse datetime")
-                .with_timezone(&Utc),
             "infra_host_total_cost".to_string(),
-            GetMonthlyCostAttributionOptionalParams::default(),
+            GetMonthlyCostAttributionOptionalParams::default().end_month(
+                DateTime::parse_from_rfc3339("2021-11-08T11:11:11+00:00")
+                    .expect("Failed to parse datetime")
+                    .with_timezone(&Utc),
+            ),
         )
         .await;
     if let Ok(value) = resp {
