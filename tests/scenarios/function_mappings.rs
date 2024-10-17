@@ -23,28 +23,21 @@ pub struct ApiInstances {
     pub v1_api_snapshots: Option<datadogV1::api_snapshots::SnapshotsAPI>,
     pub v1_api_hosts: Option<datadogV1::api_hosts::HostsAPI>,
     pub v1_api_aws_integration: Option<datadogV1::api_aws_integration::AWSIntegrationAPI>,
-    pub v1_api_aws_logs_integration:
-        Option<datadogV1::api_aws_logs_integration::AWSLogsIntegrationAPI>,
+    pub v1_api_aws_logs_integration: Option<datadogV1::api_aws_logs_integration::AWSLogsIntegrationAPI>,
     pub v1_api_azure_integration: Option<datadogV1::api_azure_integration::AzureIntegrationAPI>,
     pub v1_api_gcp_integration: Option<datadogV1::api_gcp_integration::GCPIntegrationAPI>,
-    pub v1_api_pager_duty_integration:
-        Option<datadogV1::api_pager_duty_integration::PagerDutyIntegrationAPI>,
+    pub v1_api_pager_duty_integration: Option<datadogV1::api_pager_duty_integration::PagerDutyIntegrationAPI>,
     pub v1_api_slack_integration: Option<datadogV1::api_slack_integration::SlackIntegrationAPI>,
-    pub v1_api_webhooks_integration:
-        Option<datadogV1::api_webhooks_integration::WebhooksIntegrationAPI>,
+    pub v1_api_webhooks_integration: Option<datadogV1::api_webhooks_integration::WebhooksIntegrationAPI>,
     pub v1_api_logs: Option<datadogV1::api_logs::LogsAPI>,
     pub v1_api_logs_indexes: Option<datadogV1::api_logs_indexes::LogsIndexesAPI>,
     pub v1_api_logs_pipelines: Option<datadogV1::api_logs_pipelines::LogsPipelinesAPI>,
     pub v1_api_monitors: Option<datadogV1::api_monitors::MonitorsAPI>,
     pub v1_api_notebooks: Option<datadogV1::api_notebooks::NotebooksAPI>,
     pub v1_api_organizations: Option<datadogV1::api_organizations::OrganizationsAPI>,
-    pub v1_api_security_monitoring:
-        Option<datadogV1::api_security_monitoring::SecurityMonitoringAPI>,
-    pub v1_api_service_level_objectives:
-        Option<datadogV1::api_service_level_objectives::ServiceLevelObjectivesAPI>,
-    pub v1_api_service_level_objective_corrections: Option<
-        datadogV1::api_service_level_objective_corrections::ServiceLevelObjectiveCorrectionsAPI,
-    >,
+    pub v1_api_security_monitoring: Option<datadogV1::api_security_monitoring::SecurityMonitoringAPI>,
+    pub v1_api_service_level_objectives: Option<datadogV1::api_service_level_objectives::ServiceLevelObjectivesAPI>,
+    pub v1_api_service_level_objective_corrections: Option<datadogV1::api_service_level_objective_corrections::ServiceLevelObjectiveCorrectionsAPI>,
     pub v1_api_synthetics: Option<datadogV1::api_synthetics::SyntheticsAPI>,
     pub v1_api_tags: Option<datadogV1::api_tags::TagsAPI>,
     pub v1_api_users: Option<datadogV1::api_users::UsersAPI>,
@@ -52,20 +45,16 @@ pub struct ApiInstances {
     pub v2_api_key_management: Option<datadogV2::api_key_management::KeyManagementAPI>,
     pub v2_api_api_management: Option<datadogV2::api_api_management::APIManagementAPI>,
     pub v2_api_spans_metrics: Option<datadogV2::api_spans_metrics::SpansMetricsAPI>,
-    pub v2_api_apm_retention_filters:
-        Option<datadogV2::api_apm_retention_filters::APMRetentionFiltersAPI>,
+    pub v2_api_apm_retention_filters: Option<datadogV2::api_apm_retention_filters::APMRetentionFiltersAPI>,
     pub v2_api_audit: Option<datadogV2::api_audit::AuditAPI>,
     pub v2_api_authn_mappings: Option<datadogV2::api_authn_mappings::AuthNMappingsAPI>,
     pub v2_api_case_management: Option<datadogV2::api_case_management::CaseManagementAPI>,
     pub v2_api_software_catalog: Option<datadogV2::api_software_catalog::SoftwareCatalogAPI>,
-    pub v2_api_ci_visibility_pipelines:
-        Option<datadogV2::api_ci_visibility_pipelines::CIVisibilityPipelinesAPI>,
-    pub v2_api_ci_visibility_tests:
-        Option<datadogV2::api_ci_visibility_tests::CIVisibilityTestsAPI>,
+    pub v2_api_ci_visibility_pipelines: Option<datadogV2::api_ci_visibility_pipelines::CIVisibilityPipelinesAPI>,
+    pub v2_api_ci_visibility_tests: Option<datadogV2::api_ci_visibility_tests::CIVisibilityTestsAPI>,
     pub v2_api_container_images: Option<datadogV2::api_container_images::ContainerImagesAPI>,
     pub v2_api_containers: Option<datadogV2::api_containers::ContainersAPI>,
-    pub v2_api_cloud_cost_management:
-        Option<datadogV2::api_cloud_cost_management::CloudCostManagementAPI>,
+    pub v2_api_cloud_cost_management: Option<datadogV2::api_cloud_cost_management::CloudCostManagementAPI>,
     pub v2_api_usage_metering: Option<datadogV2::api_usage_metering::UsageMeteringAPI>,
     pub v2_api_dashboard_lists: Option<datadogV2::api_dashboard_lists::DashboardListsAPI>,
     pub v2_api_dora_metrics: Option<datadogV2::api_dora_metrics::DORAMetricsAPI>,
@@ -73,50 +62,41 @@ pub struct ApiInstances {
     pub v2_api_events: Option<datadogV2::api_events::EventsAPI>,
     pub v2_api_incidents: Option<datadogV2::api_incidents::IncidentsAPI>,
     pub v2_api_gcp_integration: Option<datadogV2::api_gcp_integration::GCPIntegrationAPI>,
-    pub v2_api_microsoft_teams_integration:
-        Option<datadogV2::api_microsoft_teams_integration::MicrosoftTeamsIntegrationAPI>,
-    pub v2_api_opsgenie_integration:
-        Option<datadogV2::api_opsgenie_integration::OpsgenieIntegrationAPI>,
-    pub v2_api_cloudflare_integration:
-        Option<datadogV2::api_cloudflare_integration::CloudflareIntegrationAPI>,
+    pub v2_api_microsoft_teams_integration: Option<datadogV2::api_microsoft_teams_integration::MicrosoftTeamsIntegrationAPI>,
+    pub v2_api_opsgenie_integration: Option<datadogV2::api_opsgenie_integration::OpsgenieIntegrationAPI>,
+    pub v2_api_cloudflare_integration: Option<datadogV2::api_cloudflare_integration::CloudflareIntegrationAPI>,
     pub v2_api_confluent_cloud: Option<datadogV2::api_confluent_cloud::ConfluentCloudAPI>,
     pub v2_api_fastly_integration: Option<datadogV2::api_fastly_integration::FastlyIntegrationAPI>,
     pub v2_api_okta_integration: Option<datadogV2::api_okta_integration::OktaIntegrationAPI>,
     pub v2_api_ip_allowlist: Option<datadogV2::api_ip_allowlist::IPAllowlistAPI>,
     pub v2_api_logs: Option<datadogV2::api_logs::LogsAPI>,
     pub v2_api_logs_archives: Option<datadogV2::api_logs_archives::LogsArchivesAPI>,
-    pub v2_api_logs_custom_destinations:
-        Option<datadogV2::api_logs_custom_destinations::LogsCustomDestinationsAPI>,
+    pub v2_api_logs_custom_destinations: Option<datadogV2::api_logs_custom_destinations::LogsCustomDestinationsAPI>,
     pub v2_api_logs_metrics: Option<datadogV2::api_logs_metrics::LogsMetricsAPI>,
     pub v2_api_metrics: Option<datadogV2::api_metrics::MetricsAPI>,
     pub v2_api_monitors: Option<datadogV2::api_monitors::MonitorsAPI>,
-    pub v2_api_network_device_monitoring:
-        Option<datadogV2::api_network_device_monitoring::NetworkDeviceMonitoringAPI>,
+    pub v2_api_network_device_monitoring: Option<datadogV2::api_network_device_monitoring::NetworkDeviceMonitoringAPI>,
     pub v2_api_organizations: Option<datadogV2::api_organizations::OrganizationsAPI>,
     pub v2_api_roles: Option<datadogV2::api_roles::RolesAPI>,
-    pub v2_api_security_monitoring:
-        Option<datadogV2::api_security_monitoring::SecurityMonitoringAPI>,
+    pub v2_api_security_monitoring: Option<datadogV2::api_security_monitoring::SecurityMonitoringAPI>,
     pub v2_api_powerpack: Option<datadogV2::api_powerpack::PowerpackAPI>,
     pub v2_api_processes: Option<datadogV2::api_processes::ProcessesAPI>,
+    pub v2_api_application_security_exclusion_filters: Option<datadogV2::api_application_security_exclusion_filters::ApplicationSecurityExclusionFiltersAPI>,
     pub v2_api_csm_threats: Option<datadogV2::api_csm_threats::CSMThreatsAPI>,
-    pub v2_api_restriction_policies:
-        Option<datadogV2::api_restriction_policies::RestrictionPoliciesAPI>,
+    pub v2_api_restriction_policies: Option<datadogV2::api_restriction_policies::RestrictionPoliciesAPI>,
     pub v2_api_rum: Option<datadogV2::api_rum::RUMAPI>,
     pub v2_api_service_scorecards: Option<datadogV2::api_service_scorecards::ServiceScorecardsAPI>,
-    pub v2_api_sensitive_data_scanner:
-        Option<datadogV2::api_sensitive_data_scanner::SensitiveDataScannerAPI>,
+    pub v2_api_sensitive_data_scanner: Option<datadogV2::api_sensitive_data_scanner::SensitiveDataScannerAPI>,
     pub v2_api_service_accounts: Option<datadogV2::api_service_accounts::ServiceAccountsAPI>,
     pub v2_api_incident_services: Option<datadogV2::api_incident_services::IncidentServicesAPI>,
     pub v2_api_service_definition: Option<datadogV2::api_service_definition::ServiceDefinitionAPI>,
-    pub v2_api_service_level_objectives:
-        Option<datadogV2::api_service_level_objectives::ServiceLevelObjectivesAPI>,
+    pub v2_api_service_level_objectives: Option<datadogV2::api_service_level_objectives::ServiceLevelObjectivesAPI>,
     pub v2_api_spans: Option<datadogV2::api_spans::SpansAPI>,
     pub v2_api_synthetics: Option<datadogV2::api_synthetics::SyntheticsAPI>,
     pub v2_api_teams: Option<datadogV2::api_teams::TeamsAPI>,
     pub v2_api_incident_teams: Option<datadogV2::api_incident_teams::IncidentTeamsAPI>,
     pub v2_api_users: Option<datadogV2::api_users::UsersAPI>,
-    pub v2_api_workflow_automation:
-        Option<datadogV2::api_workflow_automation::WorkflowAutomationAPI>,
+    pub v2_api_workflow_automation: Option<datadogV2::api_workflow_automation::WorkflowAutomationAPI>,
 }
 
 pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
@@ -642,6 +622,12 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                     world.http_client.as_ref().unwrap().clone(),
                 ),
             );
+        }
+        "ApplicationSecurityExclusionFilters" => {
+            world.api_instances.v2_api_application_security_exclusion_filters = Some(datadogV2::api_application_security_exclusion_filters::ApplicationSecurityExclusionFiltersAPI::with_client_and_config(
+                world.config.clone(),
+                world.http_client.as_ref().unwrap().clone()
+            ));
         }
         "CSMThreats" => {
             world.api_instances.v2_api_csm_threats = Some(
@@ -2611,6 +2597,26 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.ListProcessesWithPagination".into(),
         test_v2_list_processes_with_pagination,
+    );
+    world.function_mappings.insert(
+        "v2.ListApplicationSecurityExclusionFilters".into(),
+        test_v2_list_application_security_exclusion_filters,
+    );
+    world.function_mappings.insert(
+        "v2.CreateApplicationSecurityExclusionFilter".into(),
+        test_v2_create_application_security_exclusion_filter,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteApplicationSecurityExclusionFilter".into(),
+        test_v2_delete_application_security_exclusion_filter,
+    );
+    world.function_mappings.insert(
+        "v2.GetApplicationSecurityExclusionFilters".into(),
+        test_v2_get_application_security_exclusion_filters,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateApplicationSecurityExclusionFilter".into(),
+        test_v2_update_application_security_exclusion_filter,
     );
     world.function_mappings.insert(
         "v2.ListCSMThreatsAgentRules".into(),
@@ -19605,6 +19611,157 @@ fn test_v2_list_processes_with_pagination(
     });
     world.response.object = serde_json::to_value(result).unwrap();
     world.response.code = 200;
+}
+
+fn test_v2_list_application_security_exclusion_filters(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_application_security_exclusion_filters
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_application_security_exclusion_filters_with_http_info())
+    {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_application_security_exclusion_filter(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_application_security_exclusion_filters
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.create_application_security_exclusion_filter_with_http_info(body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_application_security_exclusion_filter(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_application_security_exclusion_filters
+        .as_ref()
+        .expect("api instance not found");
+    let exclusion_filter_id =
+        serde_json::from_value(_parameters.get("exclusion_filter_id").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.delete_application_security_exclusion_filter_with_http_info(exclusion_filter_id),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_application_security_exclusion_filters(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_application_security_exclusion_filters
+        .as_ref()
+        .expect("api instance not found");
+    let exclusion_filter_id =
+        serde_json::from_value(_parameters.get("exclusion_filter_id").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.get_application_security_exclusion_filters_with_http_info(exclusion_filter_id),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_application_security_exclusion_filter(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_application_security_exclusion_filters
+        .as_ref()
+        .expect("api instance not found");
+    let exclusion_filter_id =
+        serde_json::from_value(_parameters.get("exclusion_filter_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.update_application_security_exclusion_filter_with_http_info(exclusion_filter_id, body),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
 }
 
 fn test_v2_list_csm_threats_agent_rules(
