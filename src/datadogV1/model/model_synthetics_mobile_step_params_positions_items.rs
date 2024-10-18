@@ -6,14 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Name of the property.
+/// The definition of `SyntheticsMobileStepParamsPositionsItems` object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct SyntheticsMobileTestInitialApplicationArgumentsPropertyNames {
-    /// The `propertyNames` `pattern`.
-    #[serde(rename = "pattern")]
-    pub pattern: Option<String>,
+pub struct SyntheticsMobileStepParamsPositionsItems {
+    /// The `SyntheticsMobileStepParamsPositionsItems` `x`.
+    #[serde(rename = "x")]
+    pub x: Option<i64>,
+    /// The `SyntheticsMobileStepParamsPositionsItems` `y`.
+    #[serde(rename = "y")]
+    pub y: Option<i64>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,17 +24,23 @@ pub struct SyntheticsMobileTestInitialApplicationArgumentsPropertyNames {
     pub(crate) _unparsed: bool,
 }
 
-impl SyntheticsMobileTestInitialApplicationArgumentsPropertyNames {
-    pub fn new() -> SyntheticsMobileTestInitialApplicationArgumentsPropertyNames {
-        SyntheticsMobileTestInitialApplicationArgumentsPropertyNames {
-            pattern: None,
+impl SyntheticsMobileStepParamsPositionsItems {
+    pub fn new() -> SyntheticsMobileStepParamsPositionsItems {
+        SyntheticsMobileStepParamsPositionsItems {
+            x: None,
+            y: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn pattern(mut self, value: String) -> Self {
-        self.pattern = Some(value);
+    pub fn x(mut self, value: i64) -> Self {
+        self.x = Some(value);
+        self
+    }
+
+    pub fn y(mut self, value: i64) -> Self {
+        self.y = Some(value);
         self
     }
 
@@ -44,20 +53,20 @@ impl SyntheticsMobileTestInitialApplicationArgumentsPropertyNames {
     }
 }
 
-impl Default for SyntheticsMobileTestInitialApplicationArgumentsPropertyNames {
+impl Default for SyntheticsMobileStepParamsPositionsItems {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for SyntheticsMobileTestInitialApplicationArgumentsPropertyNames {
+impl<'de> Deserialize<'de> for SyntheticsMobileStepParamsPositionsItems {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct SyntheticsMobileTestInitialApplicationArgumentsPropertyNamesVisitor;
-        impl<'a> Visitor<'a> for SyntheticsMobileTestInitialApplicationArgumentsPropertyNamesVisitor {
-            type Value = SyntheticsMobileTestInitialApplicationArgumentsPropertyNames;
+        struct SyntheticsMobileStepParamsPositionsItemsVisitor;
+        impl<'a> Visitor<'a> for SyntheticsMobileStepParamsPositionsItemsVisitor {
+            type Value = SyntheticsMobileStepParamsPositionsItems;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -67,7 +76,8 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestInitialApplicationArgumentsPr
             where
                 M: MapAccess<'a>,
             {
-                let mut pattern: Option<String> = None;
+                let mut x: Option<i64> = None;
+                let mut y: Option<i64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -76,11 +86,17 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestInitialApplicationArgumentsPr
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "pattern" => {
+                        "x" => {
                             if v.is_null() {
                                 continue;
                             }
-                            pattern = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            x = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "y" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            y = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -90,8 +106,9 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestInitialApplicationArgumentsPr
                     }
                 }
 
-                let content = SyntheticsMobileTestInitialApplicationArgumentsPropertyNames {
-                    pattern,
+                let content = SyntheticsMobileStepParamsPositionsItems {
+                    x,
+                    y,
                     additional_properties,
                     _unparsed,
                 };
@@ -100,7 +117,6 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestInitialApplicationArgumentsPr
             }
         }
 
-        deserializer
-            .deserialize_any(SyntheticsMobileTestInitialApplicationArgumentsPropertyNamesVisitor)
+        deserializer.deserialize_any(SyntheticsMobileStepParamsPositionsItemsVisitor)
     }
 }

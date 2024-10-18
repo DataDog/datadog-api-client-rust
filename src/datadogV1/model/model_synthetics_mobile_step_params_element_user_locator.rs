@@ -6,15 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Initial application arguments for a mobile test.
+/// The definition of `SyntheticsMobileStepParamsElementUserLocator` object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct SyntheticsMobileTestInitialApplicationArguments {
-    /// Name of the property.
-    #[serde(rename = "propertyNames")]
-    pub property_names: Option<
-        crate::datadogV1::model::SyntheticsMobileTestInitialApplicationArgumentsPropertyNames,
+pub struct SyntheticsMobileStepParamsElementUserLocator {
+    /// The `userLocator` `failTestOnCannotLocate`.
+    #[serde(rename = "failTestOnCannotLocate")]
+    pub fail_test_on_cannot_locate: Option<bool>,
+    /// The `userLocator` `values`.
+    #[serde(rename = "values")]
+    pub values: Option<
+        Vec<crate::datadogV1::model::SyntheticsMobileStepParamsElementUserLocatorValuesItems>,
     >,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
@@ -23,20 +26,28 @@ pub struct SyntheticsMobileTestInitialApplicationArguments {
     pub(crate) _unparsed: bool,
 }
 
-impl SyntheticsMobileTestInitialApplicationArguments {
-    pub fn new() -> SyntheticsMobileTestInitialApplicationArguments {
-        SyntheticsMobileTestInitialApplicationArguments {
-            property_names: None,
+impl SyntheticsMobileStepParamsElementUserLocator {
+    pub fn new() -> SyntheticsMobileStepParamsElementUserLocator {
+        SyntheticsMobileStepParamsElementUserLocator {
+            fail_test_on_cannot_locate: None,
+            values: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn property_names(
+    pub fn fail_test_on_cannot_locate(mut self, value: bool) -> Self {
+        self.fail_test_on_cannot_locate = Some(value);
+        self
+    }
+
+    pub fn values(
         mut self,
-        value: crate::datadogV1::model::SyntheticsMobileTestInitialApplicationArgumentsPropertyNames,
+        value: Vec<
+            crate::datadogV1::model::SyntheticsMobileStepParamsElementUserLocatorValuesItems,
+        >,
     ) -> Self {
-        self.property_names = Some(value);
+        self.values = Some(value);
         self
     }
 
@@ -49,20 +60,20 @@ impl SyntheticsMobileTestInitialApplicationArguments {
     }
 }
 
-impl Default for SyntheticsMobileTestInitialApplicationArguments {
+impl Default for SyntheticsMobileStepParamsElementUserLocator {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for SyntheticsMobileTestInitialApplicationArguments {
+impl<'de> Deserialize<'de> for SyntheticsMobileStepParamsElementUserLocator {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct SyntheticsMobileTestInitialApplicationArgumentsVisitor;
-        impl<'a> Visitor<'a> for SyntheticsMobileTestInitialApplicationArgumentsVisitor {
-            type Value = SyntheticsMobileTestInitialApplicationArguments;
+        struct SyntheticsMobileStepParamsElementUserLocatorVisitor;
+        impl<'a> Visitor<'a> for SyntheticsMobileStepParamsElementUserLocatorVisitor {
+            type Value = SyntheticsMobileStepParamsElementUserLocator;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -72,7 +83,8 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestInitialApplicationArguments {
             where
                 M: MapAccess<'a>,
             {
-                let mut property_names: Option<crate::datadogV1::model::SyntheticsMobileTestInitialApplicationArgumentsPropertyNames> = None;
+                let mut fail_test_on_cannot_locate: Option<bool> = None;
+                let mut values: Option<Vec<crate::datadogV1::model::SyntheticsMobileStepParamsElementUserLocatorValuesItems>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -81,12 +93,18 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestInitialApplicationArguments {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "propertyNames" => {
+                        "failTestOnCannotLocate" => {
                             if v.is_null() {
                                 continue;
                             }
-                            property_names =
+                            fail_test_on_cannot_locate =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "values" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            values = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -96,8 +114,9 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestInitialApplicationArguments {
                     }
                 }
 
-                let content = SyntheticsMobileTestInitialApplicationArguments {
-                    property_names,
+                let content = SyntheticsMobileStepParamsElementUserLocator {
+                    fail_test_on_cannot_locate,
+                    values,
                     additional_properties,
                     _unparsed,
                 };
@@ -106,6 +125,6 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestInitialApplicationArguments {
             }
         }
 
-        deserializer.deserialize_any(SyntheticsMobileTestInitialApplicationArgumentsVisitor)
+        deserializer.deserialize_any(SyntheticsMobileStepParamsElementUserLocatorVisitor)
     }
 }
