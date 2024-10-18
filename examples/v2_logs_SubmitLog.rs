@@ -4,6 +4,7 @@ use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_logs::LogsAPI;
 use datadog_api_client::datadogV2::api_logs::SubmitLogOptionalParams;
 use datadog_api_client::datadogV2::model::HTTPLogItem;
+use serde_json::Value;
 use std::collections::BTreeMap;
 
 #[tokio::main]
@@ -15,7 +16,10 @@ async fn main() {
     .ddtags("env:staging,version:5.1".to_string())
     .hostname("i-012345678".to_string())
     .service("payment".to_string())
-    .additional_properties(BTreeMap::from([("status".to_string(), "info".to_string())]))];
+    .additional_properties(BTreeMap::from([(
+        "status".to_string(),
+        Value::from("info"),
+    )]))];
     let configuration = datadog::Configuration::new();
     let api = LogsAPI::with_config(configuration);
     let resp = api
