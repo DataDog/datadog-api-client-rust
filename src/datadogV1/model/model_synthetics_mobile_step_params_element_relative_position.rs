@@ -6,17 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Object describing the binding used for a mobile test.
+/// The definition of `SyntheticsMobileStepParamsElementRelativePosition` object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct SyntheticsMobileTestBindingItems {
-    /// List of principals for a mobile test binding.
-    #[serde(rename = "principals")]
-    pub principals: Option<Vec<String>>,
-    /// The definition of `SyntheticsMobileTestBindingItemsRole` object.
-    #[serde(rename = "role")]
-    pub role: Option<crate::datadogV1::model::SyntheticsMobileTestBindingItemsRole>,
+pub struct SyntheticsMobileStepParamsElementRelativePosition {
+    /// The `relativePosition` `x`.
+    #[serde(rename = "x")]
+    pub x: Option<i64>,
+    /// The `relativePosition` `y`.
+    #[serde(rename = "y")]
+    pub y: Option<i64>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,26 +24,23 @@ pub struct SyntheticsMobileTestBindingItems {
     pub(crate) _unparsed: bool,
 }
 
-impl SyntheticsMobileTestBindingItems {
-    pub fn new() -> SyntheticsMobileTestBindingItems {
-        SyntheticsMobileTestBindingItems {
-            principals: None,
-            role: None,
+impl SyntheticsMobileStepParamsElementRelativePosition {
+    pub fn new() -> SyntheticsMobileStepParamsElementRelativePosition {
+        SyntheticsMobileStepParamsElementRelativePosition {
+            x: None,
+            y: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn principals(mut self, value: Vec<String>) -> Self {
-        self.principals = Some(value);
+    pub fn x(mut self, value: i64) -> Self {
+        self.x = Some(value);
         self
     }
 
-    pub fn role(
-        mut self,
-        value: crate::datadogV1::model::SyntheticsMobileTestBindingItemsRole,
-    ) -> Self {
-        self.role = Some(value);
+    pub fn y(mut self, value: i64) -> Self {
+        self.y = Some(value);
         self
     }
 
@@ -56,20 +53,20 @@ impl SyntheticsMobileTestBindingItems {
     }
 }
 
-impl Default for SyntheticsMobileTestBindingItems {
+impl Default for SyntheticsMobileStepParamsElementRelativePosition {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for SyntheticsMobileTestBindingItems {
+impl<'de> Deserialize<'de> for SyntheticsMobileStepParamsElementRelativePosition {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct SyntheticsMobileTestBindingItemsVisitor;
-        impl<'a> Visitor<'a> for SyntheticsMobileTestBindingItemsVisitor {
-            type Value = SyntheticsMobileTestBindingItems;
+        struct SyntheticsMobileStepParamsElementRelativePositionVisitor;
+        impl<'a> Visitor<'a> for SyntheticsMobileStepParamsElementRelativePositionVisitor {
+            type Value = SyntheticsMobileStepParamsElementRelativePosition;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -79,10 +76,8 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestBindingItems {
             where
                 M: MapAccess<'a>,
             {
-                let mut principals: Option<Vec<String>> = None;
-                let mut role: Option<
-                    crate::datadogV1::model::SyntheticsMobileTestBindingItemsRole,
-                > = None;
+                let mut x: Option<i64> = None;
+                let mut y: Option<i64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -91,25 +86,17 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestBindingItems {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "principals" => {
+                        "x" => {
                             if v.is_null() {
                                 continue;
                             }
-                            principals = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            x = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "role" => {
+                        "y" => {
                             if v.is_null() {
                                 continue;
                             }
-                            role = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _role) = role {
-                                match _role {
-                                    crate::datadogV1::model::SyntheticsMobileTestBindingItemsRole::UnparsedObject(_role) => {
-                                        _unparsed = true;
-                                    },
-                                    _ => {}
-                                }
-                            }
+                            y = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -119,9 +106,9 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestBindingItems {
                     }
                 }
 
-                let content = SyntheticsMobileTestBindingItems {
-                    principals,
-                    role,
+                let content = SyntheticsMobileStepParamsElementRelativePosition {
+                    x,
+                    y,
                     additional_properties,
                     _unparsed,
                 };
@@ -130,6 +117,6 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestBindingItems {
             }
         }
 
-        deserializer.deserialize_any(SyntheticsMobileTestBindingItemsVisitor)
+        deserializer.deserialize_any(SyntheticsMobileStepParamsElementRelativePositionVisitor)
     }
 }

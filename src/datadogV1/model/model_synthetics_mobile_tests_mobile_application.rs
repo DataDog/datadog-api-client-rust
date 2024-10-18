@@ -13,14 +13,14 @@ use std::fmt::{self, Formatter};
 pub struct SyntheticsMobileTestsMobileApplication {
     /// Application ID of the mobile application.
     #[serde(rename = "applicationId")]
-    pub application_id: Option<String>,
+    pub application_id: String,
     /// Reference ID of the mobile application.
     #[serde(rename = "referenceId")]
-    pub reference_id: Option<String>,
+    pub reference_id: String,
     /// Reference type for the mobile application for a mobile synthetics test.
     #[serde(rename = "referenceType")]
     pub reference_type:
-        Option<crate::datadogV1::model::SyntheticsMobileTestsMobileApplicationReferenceType>,
+        crate::datadogV1::model::SyntheticsMobileTestsMobileApplicationReferenceType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -29,32 +29,18 @@ pub struct SyntheticsMobileTestsMobileApplication {
 }
 
 impl SyntheticsMobileTestsMobileApplication {
-    pub fn new() -> SyntheticsMobileTestsMobileApplication {
+    pub fn new(
+        application_id: String,
+        reference_id: String,
+        reference_type: crate::datadogV1::model::SyntheticsMobileTestsMobileApplicationReferenceType,
+    ) -> SyntheticsMobileTestsMobileApplication {
         SyntheticsMobileTestsMobileApplication {
-            application_id: None,
-            reference_id: None,
-            reference_type: None,
+            application_id,
+            reference_id,
+            reference_type,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn application_id(mut self, value: String) -> Self {
-        self.application_id = Some(value);
-        self
-    }
-
-    pub fn reference_id(mut self, value: String) -> Self {
-        self.reference_id = Some(value);
-        self
-    }
-
-    pub fn reference_type(
-        mut self,
-        value: crate::datadogV1::model::SyntheticsMobileTestsMobileApplicationReferenceType,
-    ) -> Self {
-        self.reference_type = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -63,12 +49,6 @@ impl SyntheticsMobileTestsMobileApplication {
     ) -> Self {
         self.additional_properties = value;
         self
-    }
-}
-
-impl Default for SyntheticsMobileTestsMobileApplication {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
@@ -103,23 +83,14 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestsMobileApplication {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "applicationId" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             application_id =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "referenceId" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             reference_id =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "referenceType" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             reference_type =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _reference_type) = reference_type {
@@ -138,6 +109,12 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestsMobileApplication {
                         }
                     }
                 }
+                let application_id =
+                    application_id.ok_or_else(|| M::Error::missing_field("application_id"))?;
+                let reference_id =
+                    reference_id.ok_or_else(|| M::Error::missing_field("reference_id"))?;
+                let reference_type =
+                    reference_type.ok_or_else(|| M::Error::missing_field("reference_type"))?;
 
                 let content = SyntheticsMobileTestsMobileApplication {
                     application_id,
