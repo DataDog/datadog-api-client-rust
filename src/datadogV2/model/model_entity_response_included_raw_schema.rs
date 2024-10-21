@@ -14,7 +14,7 @@ pub struct EntityResponseIncludedRawSchema {
     /// Included raw schema attributes.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::EntityResponseIncludedRawSchemaAttributes>,
-    /// Raw schema id.
+    /// Raw schema ID.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Raw schema type.

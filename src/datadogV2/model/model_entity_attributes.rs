@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EntityAttributes {
-    /// The api version.
+    /// The API version.
     #[serde(rename = "apiVersion")]
     pub api_version: Option<String>,
     /// The description.

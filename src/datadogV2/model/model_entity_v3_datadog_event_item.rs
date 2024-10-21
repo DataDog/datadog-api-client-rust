@@ -11,10 +11,10 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EntityV3DatadogEventItem {
-    /// The name of the query
+    /// The name of the query.
     #[serde(rename = "name")]
     pub name: Option<String>,
-    /// The query to run
+    /// The query to run.
     #[serde(rename = "query")]
     pub query: Option<String>,
     #[serde(skip)]

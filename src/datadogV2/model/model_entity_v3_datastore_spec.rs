@@ -14,10 +14,10 @@ pub struct EntityV3DatastoreSpec {
     /// The lifecycle state of the datastore.
     #[serde(rename = "lifecycle")]
     pub lifecycle: Option<String>,
-    /// The importance of the datastore
+    /// The importance of the datastore.
     #[serde(rename = "tier")]
     pub tier: Option<String>,
-    /// The type of datastore
+    /// The type of datastore.
     #[serde(rename = "type")]
     pub type_: Option<String>,
     #[serde(skip)]

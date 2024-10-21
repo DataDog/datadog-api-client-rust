@@ -2067,25 +2067,26 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.GetChannelByName".into(), test_v2_get_channel_by_name);
-    world
-        .function_mappings
-        .insert("v2.ListApiHandles".into(), test_v2_list_api_handles);
-    world
-        .function_mappings
-        .insert("v2.CreateApiHandle".into(), test_v2_create_api_handle);
     world.function_mappings.insert(
-        "v2.GetApiHandleByName".into(),
-        test_v2_get_api_handle_by_name,
+        "v2.ListTenantBasedHandles".into(),
+        test_v2_list_tenant_based_handles,
     );
-    world
-        .function_mappings
-        .insert("v2.DeleteApiHandle".into(), test_v2_delete_api_handle);
-    world
-        .function_mappings
-        .insert("v2.GetApiHandle".into(), test_v2_get_api_handle);
-    world
-        .function_mappings
-        .insert("v2.UpdateApiHandle".into(), test_v2_update_api_handle);
+    world.function_mappings.insert(
+        "v2.CreateTenantBasedHandle".into(),
+        test_v2_create_tenant_based_handle,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteTenantBasedHandle".into(),
+        test_v2_delete_tenant_based_handle,
+    );
+    world.function_mappings.insert(
+        "v2.GetTenantBasedHandle".into(),
+        test_v2_get_tenant_based_handle,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateTenantBasedHandle".into(),
+        test_v2_update_tenant_based_handle,
+    );
     world.function_mappings.insert(
         "v2.ListOpsgenieServices".into(),
         test_v2_list_opsgenie_services,
@@ -11871,26 +11872,26 @@ fn test_v2_list_catalog_entity(world: &mut DatadogWorld, _parameters: &HashMap<S
     let page_limit = _parameters
         .get("page[limit]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let fitler_id = _parameters
-        .get("fitler[id]")
+    let filter_id = _parameters
+        .get("filter[id]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let fitler_ref = _parameters
-        .get("fitler[ref]")
+    let filter_ref = _parameters
+        .get("filter[ref]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let fitler_name = _parameters
-        .get("fitler[name]")
+    let filter_name = _parameters
+        .get("filter[name]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let fitler_kind = _parameters
-        .get("fitler[kind]")
+    let filter_kind = _parameters
+        .get("filter[kind]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let fitler_owner = _parameters
-        .get("fitler[owner]")
+    let filter_owner = _parameters
+        .get("filter[owner]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let fitler_relation_type = _parameters
-        .get("fitler[relation][type]")
+    let filter_relation_type = _parameters
+        .get("filter[relation][type]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let fitler_exclude_snapshot = _parameters
-        .get("fitler[exclude_snapshot]")
+    let filter_exclude_snapshot = _parameters
+        .get("filter[exclude_snapshot]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let include = _parameters
         .get("include")
@@ -11898,13 +11899,13 @@ fn test_v2_list_catalog_entity(world: &mut DatadogWorld, _parameters: &HashMap<S
     let mut params = datadogV2::api_software_catalog::ListCatalogEntityOptionalParams::default();
     params.page_offset = page_offset;
     params.page_limit = page_limit;
-    params.fitler_id = fitler_id;
-    params.fitler_ref = fitler_ref;
-    params.fitler_name = fitler_name;
-    params.fitler_kind = fitler_kind;
-    params.fitler_owner = fitler_owner;
-    params.fitler_relation_type = fitler_relation_type;
-    params.fitler_exclude_snapshot = fitler_exclude_snapshot;
+    params.filter_id = filter_id;
+    params.filter_ref = filter_ref;
+    params.filter_name = filter_name;
+    params.filter_kind = filter_kind;
+    params.filter_owner = filter_owner;
+    params.filter_relation_type = filter_relation_type;
+    params.filter_exclude_snapshot = filter_exclude_snapshot;
     params.include = include;
     let response = match block_on(api.list_catalog_entity_with_http_info(params)) {
         Ok(response) => response,
@@ -11938,26 +11939,26 @@ fn test_v2_list_catalog_entity_with_pagination(
     let page_limit = _parameters
         .get("page[limit]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let fitler_id = _parameters
-        .get("fitler[id]")
+    let filter_id = _parameters
+        .get("filter[id]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let fitler_ref = _parameters
-        .get("fitler[ref]")
+    let filter_ref = _parameters
+        .get("filter[ref]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let fitler_name = _parameters
-        .get("fitler[name]")
+    let filter_name = _parameters
+        .get("filter[name]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let fitler_kind = _parameters
-        .get("fitler[kind]")
+    let filter_kind = _parameters
+        .get("filter[kind]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let fitler_owner = _parameters
-        .get("fitler[owner]")
+    let filter_owner = _parameters
+        .get("filter[owner]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let fitler_relation_type = _parameters
-        .get("fitler[relation][type]")
+    let filter_relation_type = _parameters
+        .get("filter[relation][type]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let fitler_exclude_snapshot = _parameters
-        .get("fitler[exclude_snapshot]")
+    let filter_exclude_snapshot = _parameters
+        .get("filter[exclude_snapshot]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let include = _parameters
         .get("include")
@@ -11965,13 +11966,13 @@ fn test_v2_list_catalog_entity_with_pagination(
     let mut params = datadogV2::api_software_catalog::ListCatalogEntityOptionalParams::default();
     params.page_offset = page_offset;
     params.page_limit = page_limit;
-    params.fitler_id = fitler_id;
-    params.fitler_ref = fitler_ref;
-    params.fitler_name = fitler_name;
-    params.fitler_kind = fitler_kind;
-    params.fitler_owner = fitler_owner;
-    params.fitler_relation_type = fitler_relation_type;
-    params.fitler_exclude_snapshot = fitler_exclude_snapshot;
+    params.filter_id = filter_id;
+    params.filter_ref = filter_ref;
+    params.filter_name = filter_name;
+    params.filter_kind = filter_kind;
+    params.filter_owner = filter_owner;
+    params.filter_relation_type = filter_relation_type;
+    params.filter_exclude_snapshot = filter_exclude_snapshot;
     params.include = include;
     let response = api.list_catalog_entity_with_pagination(params);
     let mut result = Vec::new();
@@ -13150,8 +13151,10 @@ fn test_v2_get_monthly_cost_attribution(
         .expect("api instance not found");
     let start_month =
         serde_json::from_value(_parameters.get("start_month").unwrap().clone()).unwrap();
-    let end_month = serde_json::from_value(_parameters.get("end_month").unwrap().clone()).unwrap();
     let fields = serde_json::from_value(_parameters.get("fields").unwrap().clone()).unwrap();
+    let end_month = _parameters
+        .get("end_month")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let sort_direction = _parameters
         .get("sort_direction")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
@@ -13169,6 +13172,7 @@ fn test_v2_get_monthly_cost_attribution(
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params =
         datadogV2::api_usage_metering::GetMonthlyCostAttributionOptionalParams::default();
+    params.end_month = end_month;
     params.sort_direction = sort_direction;
     params.sort_name = sort_name;
     params.tag_breakdown_keys = tag_breakdown_keys;
@@ -13176,7 +13180,6 @@ fn test_v2_get_monthly_cost_attribution(
     params.include_descendants = include_descendants;
     let response = match block_on(api.get_monthly_cost_attribution_with_http_info(
         start_month,
-        end_month,
         fields,
         params,
     )) {
@@ -15023,7 +15026,10 @@ fn test_v2_get_channel_by_name(world: &mut DatadogWorld, _parameters: &HashMap<S
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_list_api_handles(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+fn test_v2_list_tenant_based_handles(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
     let api = world
         .api_instances
         .v2_api_microsoft_teams_integration
@@ -15032,10 +15038,14 @@ fn test_v2_list_api_handles(world: &mut DatadogWorld, _parameters: &HashMap<Stri
     let tenant_id = _parameters
         .get("tenant_id")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let name = _parameters
+        .get("name")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params =
-        datadogV2::api_microsoft_teams_integration::ListApiHandlesOptionalParams::default();
+        datadogV2::api_microsoft_teams_integration::ListTenantBasedHandlesOptionalParams::default();
     params.tenant_id = tenant_id;
-    let response = match block_on(api.list_api_handles_with_http_info(params)) {
+    params.name = name;
+    let response = match block_on(api.list_tenant_based_handles_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -15053,14 +15063,17 @@ fn test_v2_list_api_handles(world: &mut DatadogWorld, _parameters: &HashMap<Stri
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_create_api_handle(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+fn test_v2_create_tenant_based_handle(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
     let api = world
         .api_instances
         .v2_api_microsoft_teams_integration
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.create_api_handle_with_http_info(body)) {
+    let response = match block_on(api.create_tenant_based_handle_with_http_info(body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -15078,40 +15091,17 @@ fn test_v2_create_api_handle(world: &mut DatadogWorld, _parameters: &HashMap<Str
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_get_api_handle_by_name(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_microsoft_teams_integration
-        .as_ref()
-        .expect("api instance not found");
-    let handle_name =
-        serde_json::from_value(_parameters.get("handle_name").unwrap().clone()).unwrap();
-    let response = match block_on(api.get_api_handle_by_name_with_http_info(handle_name)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_delete_api_handle(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+fn test_v2_delete_tenant_based_handle(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
     let api = world
         .api_instances
         .v2_api_microsoft_teams_integration
         .as_ref()
         .expect("api instance not found");
     let handle_id = serde_json::from_value(_parameters.get("handle_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.delete_api_handle_with_http_info(handle_id)) {
+    let response = match block_on(api.delete_tenant_based_handle_with_http_info(handle_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -15129,14 +15119,14 @@ fn test_v2_delete_api_handle(world: &mut DatadogWorld, _parameters: &HashMap<Str
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_get_api_handle(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+fn test_v2_get_tenant_based_handle(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
         .v2_api_microsoft_teams_integration
         .as_ref()
         .expect("api instance not found");
     let handle_id = serde_json::from_value(_parameters.get("handle_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.get_api_handle_with_http_info(handle_id)) {
+    let response = match block_on(api.get_tenant_based_handle_with_http_info(handle_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -15154,7 +15144,10 @@ fn test_v2_get_api_handle(world: &mut DatadogWorld, _parameters: &HashMap<String
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_update_api_handle(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+fn test_v2_update_tenant_based_handle(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
     let api = world
         .api_instances
         .v2_api_microsoft_teams_integration
@@ -15162,7 +15155,7 @@ fn test_v2_update_api_handle(world: &mut DatadogWorld, _parameters: &HashMap<Str
         .expect("api instance not found");
     let handle_id = serde_json::from_value(_parameters.get("handle_id").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.update_api_handle_with_http_info(handle_id, body)) {
+    let response = match block_on(api.update_tenant_based_handle_with_http_info(handle_id, body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -18260,6 +18253,9 @@ fn test_v2_list_findings(world: &mut DatadogWorld, _parameters: &HashMap<String,
     let filter_status = _parameters
         .get("filter[status]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_vulnerability_type = _parameters
+        .get("filter[vulnerability_type]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_security_monitoring::ListFindingsOptionalParams::default();
     params.page_limit = page_limit;
     params.snapshot_timestamp = snapshot_timestamp;
@@ -18273,6 +18269,7 @@ fn test_v2_list_findings(world: &mut DatadogWorld, _parameters: &HashMap<String,
     params.filter_discovery_timestamp = filter_discovery_timestamp;
     params.filter_evaluation = filter_evaluation;
     params.filter_status = filter_status;
+    params.filter_vulnerability_type = filter_vulnerability_type;
     let response = match block_on(api.list_findings_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -18335,6 +18332,9 @@ fn test_v2_list_findings_with_pagination(
     let filter_status = _parameters
         .get("filter[status]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_vulnerability_type = _parameters
+        .get("filter[vulnerability_type]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_security_monitoring::ListFindingsOptionalParams::default();
     params.page_limit = page_limit;
     params.snapshot_timestamp = snapshot_timestamp;
@@ -18348,6 +18348,7 @@ fn test_v2_list_findings_with_pagination(
     params.filter_discovery_timestamp = filter_discovery_timestamp;
     params.filter_evaluation = filter_evaluation;
     params.filter_status = filter_status;
+    params.filter_vulnerability_type = filter_vulnerability_type;
     let response = api.list_findings_with_pagination(params);
     let mut result = Vec::new();
 

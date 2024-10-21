@@ -101,6 +101,12 @@ pub struct UsageSummaryResponse {
     /// Shows the sum of all Cloud Security Information and Event Management events over all hours in the current month for all organizations.
     #[serde(rename = "cloud_siem_events_agg_sum")]
     pub cloud_siem_events_agg_sum: Option<i64>,
+    /// Shows the high-water mark of all Static Analysis committers over all hours in the current month for all organizations.
+    #[serde(rename = "code_analysis_sa_committers_hwm_sum")]
+    pub code_analysis_sa_committers_hwm_sum: Option<i64>,
+    /// Shows the high-water mark of all static Software Composition Analysis committers over all hours in the current month for all organizations.
+    #[serde(rename = "code_analysis_sca_committers_hwm_sum")]
+    pub code_analysis_sca_committers_hwm_sum: Option<i64>,
     /// Shows the average of all distinct containers over all hours in the current month for all organizations.
     #[serde(rename = "container_avg_sum")]
     pub container_avg_sum: Option<i64>,
@@ -506,6 +512,8 @@ impl UsageSummaryResponse {
             cloud_cost_management_gcp_host_count_avg_sum: None,
             cloud_cost_management_host_count_avg_sum: None,
             cloud_siem_events_agg_sum: None,
+            code_analysis_sa_committers_hwm_sum: None,
+            code_analysis_sca_committers_hwm_sum: None,
             container_avg_sum: None,
             container_excl_agent_avg_sum: None,
             container_hwm_sum: None,
@@ -799,6 +807,18 @@ impl UsageSummaryResponse {
     #[allow(deprecated)]
     pub fn cloud_siem_events_agg_sum(mut self, value: i64) -> Self {
         self.cloud_siem_events_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn code_analysis_sa_committers_hwm_sum(mut self, value: i64) -> Self {
+        self.code_analysis_sa_committers_hwm_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn code_analysis_sca_committers_hwm_sum(mut self, value: i64) -> Self {
+        self.code_analysis_sca_committers_hwm_sum = Some(value);
         self
     }
 
@@ -1565,6 +1585,8 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                 let mut cloud_cost_management_gcp_host_count_avg_sum: Option<i64> = None;
                 let mut cloud_cost_management_host_count_avg_sum: Option<i64> = None;
                 let mut cloud_siem_events_agg_sum: Option<i64> = None;
+                let mut code_analysis_sa_committers_hwm_sum: Option<i64> = None;
+                let mut code_analysis_sca_committers_hwm_sum: Option<i64> = None;
                 let mut container_avg_sum: Option<i64> = None;
                 let mut container_excl_agent_avg_sum: Option<i64> = None;
                 let mut container_hwm_sum: Option<i64> = None;
@@ -1891,6 +1913,20 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                                 continue;
                             }
                             cloud_siem_events_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "code_analysis_sa_committers_hwm_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            code_analysis_sa_committers_hwm_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "code_analysis_sca_committers_hwm_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            code_analysis_sca_committers_hwm_sum =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "container_avg_sum" => {
@@ -2748,6 +2784,8 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                     cloud_cost_management_gcp_host_count_avg_sum,
                     cloud_cost_management_host_count_avg_sum,
                     cloud_siem_events_agg_sum,
+                    code_analysis_sa_committers_hwm_sum,
+                    code_analysis_sca_committers_hwm_sum,
                     container_avg_sum,
                     container_excl_agent_avg_sum,
                     container_hwm_sum,

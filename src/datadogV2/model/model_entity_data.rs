@@ -14,7 +14,7 @@ pub struct EntityData {
     /// Entity attributes.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::EntityAttributes>,
-    /// Entity id.
+    /// Entity ID.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Entity metadata.

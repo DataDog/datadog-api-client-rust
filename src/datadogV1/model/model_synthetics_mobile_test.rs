@@ -16,7 +16,7 @@ pub struct SyntheticsMobileTest {
     pub config: crate::datadogV1::model::SyntheticsMobileTestConfig,
     /// The `SyntheticsMobileTest` `device_ids`.
     #[serde(rename = "device_ids")]
-    pub device_ids: Option<Vec<crate::datadogV1::model::SyntheticsMobileDeviceID>>,
+    pub device_ids: Option<Vec<String>>,
     /// Notification message associated with the test.
     #[serde(rename = "message")]
     pub message: Option<String>,
@@ -76,10 +76,7 @@ impl SyntheticsMobileTest {
         }
     }
 
-    pub fn device_ids(
-        mut self,
-        value: Vec<crate::datadogV1::model::SyntheticsMobileDeviceID>,
-    ) -> Self {
+    pub fn device_ids(mut self, value: Vec<String>) -> Self {
         self.device_ids = Some(value);
         self
     }
@@ -141,8 +138,7 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTest {
                 M: MapAccess<'a>,
             {
                 let mut config: Option<crate::datadogV1::model::SyntheticsMobileTestConfig> = None;
-                let mut device_ids: Option<Vec<crate::datadogV1::model::SyntheticsMobileDeviceID>> =
-                    None;
+                let mut device_ids: Option<Vec<String>> = None;
                 let mut message: Option<String> = None;
                 let mut monitor_id: Option<i64> = None;
                 let mut name: Option<String> = None;

@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// An PagerDuty integration schema
+/// A PagerDuty integration schema.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EntityV3DatadogIntegrationPagerduty {
-    /// The service url for the PagerDuty integration.
+    /// The service URL for the PagerDuty integration.
     #[serde(rename = "serviceURL")]
     pub service_url: String,
     #[serde(skip)]

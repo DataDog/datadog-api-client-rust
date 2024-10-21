@@ -57,6 +57,8 @@ pub struct ListFindingsOptionalParams {
     pub filter_evaluation: Option<crate::datadogV2::model::FindingEvaluation>,
     /// Return only findings with the specified status.
     pub filter_status: Option<crate::datadogV2::model::FindingStatus>,
+    /// Return findings that match the selected vulnerability types (repeatable).
+    pub filter_vulnerability_type: Option<Vec<crate::datadogV2::model::FindingVulnerabilityType>>,
 }
 
 impl ListFindingsOptionalParams {
@@ -118,6 +120,14 @@ impl ListFindingsOptionalParams {
     /// Return only findings with the specified status.
     pub fn filter_status(mut self, value: crate::datadogV2::model::FindingStatus) -> Self {
         self.filter_status = Some(value);
+        self
+    }
+    /// Return findings that match the selected vulnerability types (repeatable).
+    pub fn filter_vulnerability_type(
+        mut self,
+        value: Vec<crate::datadogV2::model::FindingVulnerabilityType>,
+    ) -> Self {
+        self.filter_vulnerability_type = Some(value);
         self
     }
 }
@@ -2749,6 +2759,7 @@ impl SecurityMonitoringAPI {
         let filter_discovery_timestamp = params.filter_discovery_timestamp;
         let filter_evaluation = params.filter_evaluation;
         let filter_status = params.filter_status;
+        let filter_vulnerability_type = params.filter_vulnerability_type;
 
         let local_client = &self.client;
 
@@ -2810,6 +2821,17 @@ impl SecurityMonitoringAPI {
         if let Some(ref local_query_param) = filter_status {
             local_req_builder =
                 local_req_builder.query(&[("filter[status]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local) = filter_vulnerability_type {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[vulnerability_type]",
+                &local
+                    .iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]);
         };
 
         // build headers

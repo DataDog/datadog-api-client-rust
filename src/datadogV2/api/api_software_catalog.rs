@@ -20,21 +20,21 @@ pub struct ListCatalogEntityOptionalParams {
     pub page_offset: Option<i64>,
     /// Maximum number of entities in the response.
     pub page_limit: Option<i64>,
-    /// Filter entities by UUID
-    pub fitler_id: Option<String>,
+    /// Filter entities by UUID.
+    pub filter_id: Option<String>,
     /// Filter entities by reference
-    pub fitler_ref: Option<String>,
-    /// Filter entities by name
-    pub fitler_name: Option<String>,
-    /// Filter entities by kind
-    pub fitler_kind: Option<String>,
-    /// Filter entities by owner
-    pub fitler_owner: Option<String>,
-    /// Filter entities by relation type
-    pub fitler_relation_type: Option<crate::datadogV2::model::RelationType>,
-    /// Filter entities by excluding snapshotted entities
-    pub fitler_exclude_snapshot: Option<String>,
-    /// include relationship data
+    pub filter_ref: Option<String>,
+    /// Filter entities by name.
+    pub filter_name: Option<String>,
+    /// Filter entities by kind.
+    pub filter_kind: Option<String>,
+    /// Filter entities by owner.
+    pub filter_owner: Option<String>,
+    /// Filter entities by relation type.
+    pub filter_relation_type: Option<crate::datadogV2::model::RelationType>,
+    /// Filter entities by excluding snapshotted entities.
+    pub filter_exclude_snapshot: Option<String>,
+    /// Include relationship data.
     pub include: Option<crate::datadogV2::model::IncludeType>,
 }
 
@@ -49,42 +49,42 @@ impl ListCatalogEntityOptionalParams {
         self.page_limit = Some(value);
         self
     }
-    /// Filter entities by UUID
-    pub fn fitler_id(mut self, value: String) -> Self {
-        self.fitler_id = Some(value);
+    /// Filter entities by UUID.
+    pub fn filter_id(mut self, value: String) -> Self {
+        self.filter_id = Some(value);
         self
     }
     /// Filter entities by reference
-    pub fn fitler_ref(mut self, value: String) -> Self {
-        self.fitler_ref = Some(value);
+    pub fn filter_ref(mut self, value: String) -> Self {
+        self.filter_ref = Some(value);
         self
     }
-    /// Filter entities by name
-    pub fn fitler_name(mut self, value: String) -> Self {
-        self.fitler_name = Some(value);
+    /// Filter entities by name.
+    pub fn filter_name(mut self, value: String) -> Self {
+        self.filter_name = Some(value);
         self
     }
-    /// Filter entities by kind
-    pub fn fitler_kind(mut self, value: String) -> Self {
-        self.fitler_kind = Some(value);
+    /// Filter entities by kind.
+    pub fn filter_kind(mut self, value: String) -> Self {
+        self.filter_kind = Some(value);
         self
     }
-    /// Filter entities by owner
-    pub fn fitler_owner(mut self, value: String) -> Self {
-        self.fitler_owner = Some(value);
+    /// Filter entities by owner.
+    pub fn filter_owner(mut self, value: String) -> Self {
+        self.filter_owner = Some(value);
         self
     }
-    /// Filter entities by relation type
-    pub fn fitler_relation_type(mut self, value: crate::datadogV2::model::RelationType) -> Self {
-        self.fitler_relation_type = Some(value);
+    /// Filter entities by relation type.
+    pub fn filter_relation_type(mut self, value: crate::datadogV2::model::RelationType) -> Self {
+        self.filter_relation_type = Some(value);
         self
     }
-    /// Filter entities by excluding snapshotted entities
-    pub fn fitler_exclude_snapshot(mut self, value: String) -> Self {
-        self.fitler_exclude_snapshot = Some(value);
+    /// Filter entities by excluding snapshotted entities.
+    pub fn filter_exclude_snapshot(mut self, value: String) -> Self {
+        self.filter_exclude_snapshot = Some(value);
         self
     }
-    /// include relationship data
+    /// Include relationship data.
     pub fn include(mut self, value: crate::datadogV2::model::IncludeType) -> Self {
         self.include = Some(value);
         self
@@ -115,7 +115,7 @@ pub enum UpsertCatalogEntityError {
     UnknownValue(serde_json::Value),
 }
 
-/// API to create, update, retrieve and delete Software Catalog entities.
+/// API to create, update, retrieve, and delete Software Catalog entities.
 #[derive(Debug, Clone)]
 pub struct SoftwareCatalogAPI {
     config: datadog::Configuration,
@@ -338,13 +338,13 @@ impl SoftwareCatalogAPI {
         // unbox and build optional parameters
         let page_offset = params.page_offset;
         let page_limit = params.page_limit;
-        let fitler_id = params.fitler_id;
-        let fitler_ref = params.fitler_ref;
-        let fitler_name = params.fitler_name;
-        let fitler_kind = params.fitler_kind;
-        let fitler_owner = params.fitler_owner;
-        let fitler_relation_type = params.fitler_relation_type;
-        let fitler_exclude_snapshot = params.fitler_exclude_snapshot;
+        let filter_id = params.filter_id;
+        let filter_ref = params.filter_ref;
+        let filter_name = params.filter_name;
+        let filter_kind = params.filter_kind;
+        let filter_owner = params.filter_owner;
+        let filter_relation_type = params.filter_relation_type;
+        let filter_exclude_snapshot = params.filter_exclude_snapshot;
         let include = params.include;
 
         let local_client = &self.client;
@@ -364,33 +364,33 @@ impl SoftwareCatalogAPI {
             local_req_builder =
                 local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_query_param) = fitler_id {
+        if let Some(ref local_query_param) = filter_id {
             local_req_builder =
-                local_req_builder.query(&[("fitler[id]", &local_query_param.to_string())]);
+                local_req_builder.query(&[("filter[id]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_query_param) = fitler_ref {
+        if let Some(ref local_query_param) = filter_ref {
             local_req_builder =
-                local_req_builder.query(&[("fitler[ref]", &local_query_param.to_string())]);
+                local_req_builder.query(&[("filter[ref]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_query_param) = fitler_name {
+        if let Some(ref local_query_param) = filter_name {
             local_req_builder =
-                local_req_builder.query(&[("fitler[name]", &local_query_param.to_string())]);
+                local_req_builder.query(&[("filter[name]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_query_param) = fitler_kind {
+        if let Some(ref local_query_param) = filter_kind {
             local_req_builder =
-                local_req_builder.query(&[("fitler[kind]", &local_query_param.to_string())]);
+                local_req_builder.query(&[("filter[kind]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_query_param) = fitler_owner {
+        if let Some(ref local_query_param) = filter_owner {
             local_req_builder =
-                local_req_builder.query(&[("fitler[owner]", &local_query_param.to_string())]);
+                local_req_builder.query(&[("filter[owner]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_query_param) = fitler_relation_type {
+        if let Some(ref local_query_param) = filter_relation_type {
             local_req_builder = local_req_builder
-                .query(&[("fitler[relation][type]", &local_query_param.to_string())]);
+                .query(&[("filter[relation][type]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_query_param) = fitler_exclude_snapshot {
+        if let Some(ref local_query_param) = filter_exclude_snapshot {
             local_req_builder = local_req_builder
-                .query(&[("fitler[exclude_snapshot]", &local_query_param.to_string())]);
+                .query(&[("filter[exclude_snapshot]", &local_query_param.to_string())]);
         };
         if let Some(ref local_query_param) = include {
             local_req_builder =

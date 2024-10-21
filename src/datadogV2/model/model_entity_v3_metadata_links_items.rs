@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EntityV3MetadataLinksItems {
-    /// Link name
+    /// Link name.
     #[serde(rename = "name")]
     pub name: String,
     /// Link provider.
@@ -20,7 +20,7 @@ pub struct EntityV3MetadataLinksItems {
     /// Link type.
     #[serde(rename = "type")]
     pub type_: String,
-    /// Link url
+    /// Link URL.
     #[serde(rename = "url")]
     pub url: String,
     #[serde(skip)]

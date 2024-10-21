@@ -14,10 +14,10 @@ pub struct EntityV3QueueSpec {
     /// The lifecycle state of the queue.
     #[serde(rename = "lifecycle")]
     pub lifecycle: Option<String>,
-    /// The importance of the queue
+    /// The importance of the queue.
     #[serde(rename = "tier")]
     pub tier: Option<String>,
-    /// The type of queue
+    /// The type of queue.
     #[serde(rename = "type")]
     pub type_: Option<String>,
     #[serde(skip)]
