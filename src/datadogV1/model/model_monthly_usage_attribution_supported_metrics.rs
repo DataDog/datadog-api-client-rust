@@ -57,10 +57,6 @@ pub enum MonthlyUsageAttributionSupportedMetrics {
     ESTIMATED_INDEXED_LOGS_PERCENTAGE,
     ESTIMATED_INGESTED_LOGS_USAGE,
     ESTIMATED_INGESTED_LOGS_PERCENTAGE,
-    ESTIMATED_INDEXED_SPANS_USAGE,
-    ESTIMATED_INDEXED_SPANS_PERCENTAGE,
-    ESTIMATED_INGESTED_SPANS_USAGE,
-    ESTIMATED_INGESTED_SPANS_PERCENTAGE,
     FARGATE_USAGE,
     FARGATE_PERCENTAGE,
     FUNCTIONS_USAGE,
@@ -223,14 +219,6 @@ impl ToString for MonthlyUsageAttributionSupportedMetrics {
             Self::ESTIMATED_INGESTED_LOGS_USAGE => String::from("estimated_ingested_logs_usage"),
             Self::ESTIMATED_INGESTED_LOGS_PERCENTAGE => {
                 String::from("estimated_ingested_logs_percentage")
-            }
-            Self::ESTIMATED_INDEXED_SPANS_USAGE => String::from("estimated_indexed_spans_usage"),
-            Self::ESTIMATED_INDEXED_SPANS_PERCENTAGE => {
-                String::from("estimated_indexed_spans_percentage")
-            }
-            Self::ESTIMATED_INGESTED_SPANS_USAGE => String::from("estimated_ingested_spans_usage"),
-            Self::ESTIMATED_INGESTED_SPANS_PERCENTAGE => {
-                String::from("estimated_ingested_spans_percentage")
             }
             Self::FARGATE_USAGE => String::from("fargate_usage"),
             Self::FARGATE_PERCENTAGE => String::from("fargate_percentage"),
@@ -435,10 +423,6 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionSupportedMetrics {
             "estimated_indexed_logs_percentage" => Self::ESTIMATED_INDEXED_LOGS_PERCENTAGE,
             "estimated_ingested_logs_usage" => Self::ESTIMATED_INGESTED_LOGS_USAGE,
             "estimated_ingested_logs_percentage" => Self::ESTIMATED_INGESTED_LOGS_PERCENTAGE,
-            "estimated_indexed_spans_usage" => Self::ESTIMATED_INDEXED_SPANS_USAGE,
-            "estimated_indexed_spans_percentage" => Self::ESTIMATED_INDEXED_SPANS_PERCENTAGE,
-            "estimated_ingested_spans_usage" => Self::ESTIMATED_INGESTED_SPANS_USAGE,
-            "estimated_ingested_spans_percentage" => Self::ESTIMATED_INGESTED_SPANS_PERCENTAGE,
             "fargate_usage" => Self::FARGATE_USAGE,
             "fargate_percentage" => Self::FARGATE_PERCENTAGE,
             "functions_usage" => Self::FUNCTIONS_USAGE,
