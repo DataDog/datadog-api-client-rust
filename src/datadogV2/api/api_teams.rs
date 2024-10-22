@@ -1838,15 +1838,9 @@ impl TeamsAPI {
                 local_req_builder.query(&[("sort", &local_query_param.to_string())]);
         };
         if let Some(ref local) = include {
-            local_req_builder = local_req_builder.query(&[(
-                "include",
-                &local
-                    .iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .to_string(),
-            )]);
+            for param in local {
+                local_req_builder = local_req_builder.query(&[("include", &param.to_string())]);
+            }
         };
         if let Some(ref local_query_param) = filter_keyword {
             local_req_builder =
