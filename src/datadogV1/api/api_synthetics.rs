@@ -2024,15 +2024,9 @@ impl SyntheticsAPI {
                 local_req_builder.query(&[("to_ts", &local_query_param.to_string())]);
         };
         if let Some(ref local) = probe_dc {
-            local_req_builder = local_req_builder.query(&[(
-                "probe_dc",
-                &local
-                    .iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .to_string(),
-            )]);
+            for param in local {
+                local_req_builder = local_req_builder.query(&[("probe_dc", &param.to_string())]);
+            }
         };
 
         // build headers
@@ -2390,15 +2384,9 @@ impl SyntheticsAPI {
                 local_req_builder.query(&[("to_ts", &local_query_param.to_string())]);
         };
         if let Some(ref local) = probe_dc {
-            local_req_builder = local_req_builder.query(&[(
-                "probe_dc",
-                &local
-                    .iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .to_string(),
-            )]);
+            for param in local {
+                local_req_builder = local_req_builder.query(&[("probe_dc", &param.to_string())]);
+            }
         };
 
         // build headers
