@@ -40,7 +40,9 @@ async fn main() {
         SyntheticsTestOptions::new()
             .accept_self_signed(false)
             .allow_insecure(true)
-            .ci(SyntheticsTestCiOptions::new().execution_rule(SyntheticsTestExecutionRule::SKIPPED))
+            .ci(SyntheticsTestCiOptions::new(
+                SyntheticsTestExecutionRule::SKIPPED,
+            ))
             .device_ids(vec![SyntheticsDeviceID::TABLET])
             .disable_cors(true)
             .disable_csp(true)

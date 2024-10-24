@@ -43,8 +43,9 @@ async fn main() {
         "Notification message".to_string(),
         "Example test name".to_string(),
         SyntheticsTestOptions::new()
-            .ci(SyntheticsTestCiOptions::new()
-                .execution_rule(SyntheticsTestExecutionRule::BLOCKING))
+            .ci(SyntheticsTestCiOptions::new(
+                SyntheticsTestExecutionRule::BLOCKING,
+            ))
             .device_ids(vec![SyntheticsDeviceID::CHROME_LAPTOP_LARGE])
             .http_version(SyntheticsTestOptionsHTTPVersion::HTTP1)
             .monitor_options(SyntheticsTestOptionsMonitorOptions::new())
@@ -55,20 +56,21 @@ async fn main() {
                     .application_id("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx".to_string())
                     .client_token_id(12345),
             )
-            .scheduling(
-                SyntheticsTestOptionsScheduling::new()
-                    .timeframes(vec![
-                        SyntheticsTestOptionsSchedulingTimeframe::new()
-                            .day(1)
-                            .from("07:00".to_string())
-                            .to("16:00".to_string()),
-                        SyntheticsTestOptionsSchedulingTimeframe::new()
-                            .day(3)
-                            .from("07:00".to_string())
-                            .to("16:00".to_string()),
-                    ])
-                    .timezone("America/New_York".to_string()),
-            ),
+            .scheduling(SyntheticsTestOptionsScheduling::new(
+                vec![
+                    SyntheticsTestOptionsSchedulingTimeframe::new(
+                        1,
+                        "07:00".to_string(),
+                        "16:00".to_string(),
+                    ),
+                    SyntheticsTestOptionsSchedulingTimeframe::new(
+                        3,
+                        "07:00".to_string(),
+                        "16:00".to_string(),
+                    ),
+                ],
+                "America/New_York".to_string(),
+            )),
         SyntheticsAPITestType::API,
     )
     .status(SyntheticsTestPauseStatus::LIVE)

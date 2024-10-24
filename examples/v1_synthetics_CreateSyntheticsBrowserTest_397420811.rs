@@ -50,20 +50,21 @@ async fn main() {
                     .count(2)
                     .interval(10.0 as f64),
             )
-            .scheduling(
-                SyntheticsTestOptionsScheduling::new()
-                    .timeframes(vec![
-                        SyntheticsTestOptionsSchedulingTimeframe::new()
-                            .day(1)
-                            .from("07:00".to_string())
-                            .to("16:00".to_string()),
-                        SyntheticsTestOptionsSchedulingTimeframe::new()
-                            .day(3)
-                            .from("07:00".to_string())
-                            .to("16:00".to_string()),
-                    ])
-                    .timezone("America/New_York".to_string()),
-            )
+            .scheduling(SyntheticsTestOptionsScheduling::new(
+                vec![
+                    SyntheticsTestOptionsSchedulingTimeframe::new(
+                        1,
+                        "07:00".to_string(),
+                        "16:00".to_string(),
+                    ),
+                    SyntheticsTestOptionsSchedulingTimeframe::new(
+                        3,
+                        "07:00".to_string(),
+                        "16:00".to_string(),
+                    ),
+                ],
+                "America/New_York".to_string(),
+            ))
             .tick_every(300),
         SyntheticsBrowserTestType::BROWSER,
     )

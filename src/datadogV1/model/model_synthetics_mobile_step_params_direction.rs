@@ -6,23 +6,27 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum SyntheticsMobileTestBindingItemsRole {
-    EDITOR,
-    VIEWER,
+pub enum SyntheticsMobileStepParamsDirection {
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for SyntheticsMobileTestBindingItemsRole {
+impl ToString for SyntheticsMobileStepParamsDirection {
     fn to_string(&self) -> String {
         match self {
-            Self::EDITOR => String::from("editor"),
-            Self::VIEWER => String::from("viewer"),
+            Self::UP => String::from("up"),
+            Self::DOWN => String::from("down"),
+            Self::LEFT => String::from("left"),
+            Self::RIGHT => String::from("right"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for SyntheticsMobileTestBindingItemsRole {
+impl Serialize for SyntheticsMobileStepParamsDirection {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -34,15 +38,17 @@ impl Serialize for SyntheticsMobileTestBindingItemsRole {
     }
 }
 
-impl<'de> Deserialize<'de> for SyntheticsMobileTestBindingItemsRole {
+impl<'de> Deserialize<'de> for SyntheticsMobileStepParamsDirection {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "editor" => Self::EDITOR,
-            "viewer" => Self::VIEWER,
+            "up" => Self::UP,
+            "down" => Self::DOWN,
+            "left" => Self::LEFT,
+            "right" => Self::RIGHT,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

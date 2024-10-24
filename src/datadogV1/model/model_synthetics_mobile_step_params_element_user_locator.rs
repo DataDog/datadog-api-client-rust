@@ -6,17 +6,19 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Object describing the binding used for a mobile test.
+/// UserLocator for the element.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct SyntheticsMobileTestBindingItems {
-    /// List of principals for a mobile test binding.
-    #[serde(rename = "principals")]
-    pub principals: Option<Vec<String>>,
-    /// The definition of `SyntheticsMobileTestBindingItemsRole` object.
-    #[serde(rename = "role")]
-    pub role: Option<crate::datadogV1::model::SyntheticsMobileTestBindingItemsRole>,
+pub struct SyntheticsMobileStepParamsElementUserLocator {
+    /// Flag if the the test should fail if the element can not be found.
+    #[serde(rename = "failTestOnCannotLocate")]
+    pub fail_test_on_cannot_locate: Option<bool>,
+    /// Values of the User Locator.
+    #[serde(rename = "values")]
+    pub values: Option<
+        Vec<crate::datadogV1::model::SyntheticsMobileStepParamsElementUserLocatorValuesItems>,
+    >,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,26 +26,28 @@ pub struct SyntheticsMobileTestBindingItems {
     pub(crate) _unparsed: bool,
 }
 
-impl SyntheticsMobileTestBindingItems {
-    pub fn new() -> SyntheticsMobileTestBindingItems {
-        SyntheticsMobileTestBindingItems {
-            principals: None,
-            role: None,
+impl SyntheticsMobileStepParamsElementUserLocator {
+    pub fn new() -> SyntheticsMobileStepParamsElementUserLocator {
+        SyntheticsMobileStepParamsElementUserLocator {
+            fail_test_on_cannot_locate: None,
+            values: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn principals(mut self, value: Vec<String>) -> Self {
-        self.principals = Some(value);
+    pub fn fail_test_on_cannot_locate(mut self, value: bool) -> Self {
+        self.fail_test_on_cannot_locate = Some(value);
         self
     }
 
-    pub fn role(
+    pub fn values(
         mut self,
-        value: crate::datadogV1::model::SyntheticsMobileTestBindingItemsRole,
+        value: Vec<
+            crate::datadogV1::model::SyntheticsMobileStepParamsElementUserLocatorValuesItems,
+        >,
     ) -> Self {
-        self.role = Some(value);
+        self.values = Some(value);
         self
     }
 
@@ -56,20 +60,20 @@ impl SyntheticsMobileTestBindingItems {
     }
 }
 
-impl Default for SyntheticsMobileTestBindingItems {
+impl Default for SyntheticsMobileStepParamsElementUserLocator {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for SyntheticsMobileTestBindingItems {
+impl<'de> Deserialize<'de> for SyntheticsMobileStepParamsElementUserLocator {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct SyntheticsMobileTestBindingItemsVisitor;
-        impl<'a> Visitor<'a> for SyntheticsMobileTestBindingItemsVisitor {
-            type Value = SyntheticsMobileTestBindingItems;
+        struct SyntheticsMobileStepParamsElementUserLocatorVisitor;
+        impl<'a> Visitor<'a> for SyntheticsMobileStepParamsElementUserLocatorVisitor {
+            type Value = SyntheticsMobileStepParamsElementUserLocator;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -79,10 +83,8 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestBindingItems {
             where
                 M: MapAccess<'a>,
             {
-                let mut principals: Option<Vec<String>> = None;
-                let mut role: Option<
-                    crate::datadogV1::model::SyntheticsMobileTestBindingItemsRole,
-                > = None;
+                let mut fail_test_on_cannot_locate: Option<bool> = None;
+                let mut values: Option<Vec<crate::datadogV1::model::SyntheticsMobileStepParamsElementUserLocatorValuesItems>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -91,25 +93,18 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestBindingItems {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "principals" => {
+                        "failTestOnCannotLocate" => {
                             if v.is_null() {
                                 continue;
                             }
-                            principals = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            fail_test_on_cannot_locate =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "role" => {
+                        "values" => {
                             if v.is_null() {
                                 continue;
                             }
-                            role = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _role) = role {
-                                match _role {
-                                    crate::datadogV1::model::SyntheticsMobileTestBindingItemsRole::UnparsedObject(_role) => {
-                                        _unparsed = true;
-                                    },
-                                    _ => {}
-                                }
-                            }
+                            values = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -119,9 +114,9 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestBindingItems {
                     }
                 }
 
-                let content = SyntheticsMobileTestBindingItems {
-                    principals,
-                    role,
+                let content = SyntheticsMobileStepParamsElementUserLocator {
+                    fail_test_on_cannot_locate,
+                    values,
                     additional_properties,
                     _unparsed,
                 };
@@ -130,6 +125,6 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestBindingItems {
             }
         }
 
-        deserializer.deserialize_any(SyntheticsMobileTestBindingItemsVisitor)
+        deserializer.deserialize_any(SyntheticsMobileStepParamsElementUserLocatorVisitor)
     }
 }
