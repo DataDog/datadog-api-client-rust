@@ -15,7 +15,7 @@ pub struct SyntheticsMobileTestOptionsMonitorOptions {
     /// Message to include in the escalation notification.
     #[serde(rename = "escalation_message")]
     pub escalation_message: Option<String>,
-    /// The definition of `SyntheticsMobileTestOptionsMonitorOptionsNotificationPresetName` object.
+    /// The name of the preset for the notification for the monitor.
     #[serde(rename = "notification_preset_name")]
     pub notification_preset_name: Option<
         crate::datadogV1::model::SyntheticsMobileTestOptionsMonitorOptionsNotificationPresetName,
@@ -24,7 +24,7 @@ pub struct SyntheticsMobileTestOptionsMonitorOptions {
     /// (in minutes).
     #[serde(rename = "renotify_interval")]
     pub renotify_interval: Option<i64>,
-    /// The `SyntheticsMobileTestOptionsMonitorOptions` `renotify_occurrences`.
+    /// The number renotify_occurrences for the test.
     #[serde(rename = "renotify_occurrences")]
     pub renotify_occurrences: Option<i64>,
     #[serde(flatten)]

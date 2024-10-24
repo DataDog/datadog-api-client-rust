@@ -14,7 +14,7 @@ pub struct SyntheticsMobileTest {
     /// Configuration object for a Synthetic mobile test.
     #[serde(rename = "config")]
     pub config: crate::datadogV1::model::SyntheticsMobileTestConfig,
-    /// The `SyntheticsMobileTest` `device_ids`.
+    /// Array with the different device IDs used to run the test.
     #[serde(rename = "device_ids")]
     pub device_ids: Option<Vec<String>>,
     /// Notification message associated with the test.

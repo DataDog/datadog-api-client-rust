@@ -13,8 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct SyntheticsMobileTestConfig {
     /// Initial application arguments for a mobile test.
     #[serde(rename = "initialApplicationArguments")]
-    pub initial_application_arguments:
-        Option<crate::datadogV1::model::SyntheticsMobileTestInitialApplicationArguments>,
+    pub initial_application_arguments: Option<std::collections::BTreeMap<String, String>>,
     /// Array of variables used for the test steps.
     #[serde(rename = "variables")]
     pub variables: Option<Vec<crate::datadogV1::model::SyntheticsConfigVariable>>,
@@ -37,7 +36,7 @@ impl SyntheticsMobileTestConfig {
 
     pub fn initial_application_arguments(
         mut self,
-        value: crate::datadogV1::model::SyntheticsMobileTestInitialApplicationArguments,
+        value: std::collections::BTreeMap<String, String>,
     ) -> Self {
         self.initial_application_arguments = Some(value);
         self
@@ -84,7 +83,7 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestConfig {
                 M: MapAccess<'a>,
             {
                 let mut initial_application_arguments: Option<
-                    crate::datadogV1::model::SyntheticsMobileTestInitialApplicationArguments,
+                    std::collections::BTreeMap<String, String>,
                 > = None;
                 let mut variables: Option<Vec<crate::datadogV1::model::SyntheticsConfigVariable>> =
                     None;
