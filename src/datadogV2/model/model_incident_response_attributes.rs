@@ -68,6 +68,9 @@ pub struct IncidentResponseAttributes {
     pub fields: Option<
         std::collections::BTreeMap<String, crate::datadogV2::model::IncidentFieldAttributes>,
     >,
+    /// A unique identifier that represents an incident type.
+    #[serde(rename = "incident_type_uuid")]
+    pub incident_type_uuid: Option<String>,
     /// Timestamp when the incident was last modified.
     #[serde(rename = "modified")]
     pub modified: Option<chrono::DateTime<chrono::Utc>>,
@@ -145,6 +148,7 @@ impl IncidentResponseAttributes {
             customer_impacted: None,
             detected: None,
             fields: None,
+            incident_type_uuid: None,
             modified: None,
             non_datadog_creator: None,
             notification_handles: None,
@@ -213,6 +217,11 @@ impl IncidentResponseAttributes {
         value: std::collections::BTreeMap<String, crate::datadogV2::model::IncidentFieldAttributes>,
     ) -> Self {
         self.fields = Some(value);
+        self
+    }
+
+    pub fn incident_type_uuid(mut self, value: String) -> Self {
+        self.incident_type_uuid = Some(value);
         self
     }
 
@@ -323,6 +332,7 @@ impl<'de> Deserialize<'de> for IncidentResponseAttributes {
                         crate::datadogV2::model::IncidentFieldAttributes,
                     >,
                 > = None;
+                let mut incident_type_uuid: Option<String> = None;
                 let mut modified: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut non_datadog_creator: Option<
                     Option<crate::datadogV2::model::IncidentNonDatadogCreator>,
@@ -394,6 +404,13 @@ impl<'de> Deserialize<'de> for IncidentResponseAttributes {
                                 continue;
                             }
                             fields = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "incident_type_uuid" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            incident_type_uuid =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "modified" => {
                             if v.is_null() {
@@ -491,6 +508,7 @@ impl<'de> Deserialize<'de> for IncidentResponseAttributes {
                     customer_impacted,
                     detected,
                     fields,
+                    incident_type_uuid,
                     modified,
                     non_datadog_creator,
                     notification_handles,
