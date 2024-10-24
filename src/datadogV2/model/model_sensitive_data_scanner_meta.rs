@@ -17,10 +17,12 @@ pub struct SensitiveDataScannerMeta {
     /// Maximum number of scanning groups allowed for the org.
     #[serde(rename = "group_count_limit")]
     pub group_count_limit: Option<i64>,
-    /// Whether or not scanned events are highlighted in Logs or RUM for the org.
+    /// (Deprecated) Whether or not scanned events are highlighted in Logs or RUM for the org.
+    #[deprecated]
     #[serde(rename = "has_highlight_enabled")]
     pub has_highlight_enabled: Option<bool>,
-    /// Whether or not scanned events have multi-pass enabled.
+    /// (Deprecated) Whether or not scanned events have multi-pass enabled.
+    #[deprecated]
     #[serde(rename = "has_multi_pass_enabled")]
     pub has_multi_pass_enabled: Option<bool>,
     /// Whether or not the org is compliant to the payment card industry standard.
@@ -38,6 +40,7 @@ pub struct SensitiveDataScannerMeta {
 
 impl SensitiveDataScannerMeta {
     pub fn new() -> SensitiveDataScannerMeta {
+        #[allow(deprecated)]
         SensitiveDataScannerMeta {
             count_limit: None,
             group_count_limit: None,
@@ -50,31 +53,37 @@ impl SensitiveDataScannerMeta {
         }
     }
 
+    #[allow(deprecated)]
     pub fn count_limit(mut self, value: i64) -> Self {
         self.count_limit = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn group_count_limit(mut self, value: i64) -> Self {
         self.group_count_limit = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn has_highlight_enabled(mut self, value: bool) -> Self {
         self.has_highlight_enabled = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn has_multi_pass_enabled(mut self, value: bool) -> Self {
         self.has_multi_pass_enabled = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn is_pci_compliant(mut self, value: bool) -> Self {
         self.is_pci_compliant = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn version(mut self, value: i64) -> Self {
         self.version = Some(value);
         self
@@ -175,6 +184,7 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerMeta {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = SensitiveDataScannerMeta {
                     count_limit,
                     group_count_limit,
