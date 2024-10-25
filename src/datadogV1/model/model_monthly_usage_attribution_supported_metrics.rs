@@ -53,10 +53,6 @@ pub enum MonthlyUsageAttributionSupportedMetrics {
     DBM_QUERIES_USAGE,
     ERROR_TRACKING_USAGE,
     ERROR_TRACKING_PERCENTAGE,
-    ESTIMATED_INDEXED_LOGS_USAGE,
-    ESTIMATED_INDEXED_LOGS_PERCENTAGE,
-    ESTIMATED_INGESTED_LOGS_USAGE,
-    ESTIMATED_INGESTED_LOGS_PERCENTAGE,
     ESTIMATED_INDEXED_SPANS_USAGE,
     ESTIMATED_INDEXED_SPANS_PERCENTAGE,
     ESTIMATED_INGESTED_SPANS_USAGE,
@@ -95,8 +91,6 @@ pub enum MonthlyUsageAttributionSupportedMetrics {
     SERVERLESS_APPS_PERCENTAGE,
     SNMP_USAGE,
     SNMP_PERCENTAGE,
-    ESTIMATED_RUM_SESSIONS_USAGE,
-    ESTIMATED_RUM_SESSIONS_PERCENTAGE,
     UNIVERSAL_SERVICE_MONITORING_USAGE,
     UNIVERSAL_SERVICE_MONITORING_PERCENTAGE,
     VULN_MANAGEMENT_HOSTS_USAGE,
@@ -216,14 +210,6 @@ impl ToString for MonthlyUsageAttributionSupportedMetrics {
             Self::DBM_QUERIES_USAGE => String::from("dbm_queries_usage"),
             Self::ERROR_TRACKING_USAGE => String::from("error_tracking_usage"),
             Self::ERROR_TRACKING_PERCENTAGE => String::from("error_tracking_percentage"),
-            Self::ESTIMATED_INDEXED_LOGS_USAGE => String::from("estimated_indexed_logs_usage"),
-            Self::ESTIMATED_INDEXED_LOGS_PERCENTAGE => {
-                String::from("estimated_indexed_logs_percentage")
-            }
-            Self::ESTIMATED_INGESTED_LOGS_USAGE => String::from("estimated_ingested_logs_usage"),
-            Self::ESTIMATED_INGESTED_LOGS_PERCENTAGE => {
-                String::from("estimated_ingested_logs_percentage")
-            }
             Self::ESTIMATED_INDEXED_SPANS_USAGE => String::from("estimated_indexed_spans_usage"),
             Self::ESTIMATED_INDEXED_SPANS_PERCENTAGE => {
                 String::from("estimated_indexed_spans_percentage")
@@ -274,10 +260,6 @@ impl ToString for MonthlyUsageAttributionSupportedMetrics {
             Self::SERVERLESS_APPS_PERCENTAGE => String::from("serverless_apps_percentage"),
             Self::SNMP_USAGE => String::from("snmp_usage"),
             Self::SNMP_PERCENTAGE => String::from("snmp_percentage"),
-            Self::ESTIMATED_RUM_SESSIONS_USAGE => String::from("estimated_rum_sessions_usage"),
-            Self::ESTIMATED_RUM_SESSIONS_PERCENTAGE => {
-                String::from("estimated_rum_sessions_percentage")
-            }
             Self::UNIVERSAL_SERVICE_MONITORING_USAGE => {
                 String::from("universal_service_monitoring_usage")
             }
@@ -431,10 +413,6 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionSupportedMetrics {
             "dbm_queries_usage" => Self::DBM_QUERIES_USAGE,
             "error_tracking_usage" => Self::ERROR_TRACKING_USAGE,
             "error_tracking_percentage" => Self::ERROR_TRACKING_PERCENTAGE,
-            "estimated_indexed_logs_usage" => Self::ESTIMATED_INDEXED_LOGS_USAGE,
-            "estimated_indexed_logs_percentage" => Self::ESTIMATED_INDEXED_LOGS_PERCENTAGE,
-            "estimated_ingested_logs_usage" => Self::ESTIMATED_INGESTED_LOGS_USAGE,
-            "estimated_ingested_logs_percentage" => Self::ESTIMATED_INGESTED_LOGS_PERCENTAGE,
             "estimated_indexed_spans_usage" => Self::ESTIMATED_INDEXED_SPANS_USAGE,
             "estimated_indexed_spans_percentage" => Self::ESTIMATED_INDEXED_SPANS_PERCENTAGE,
             "estimated_ingested_spans_usage" => Self::ESTIMATED_INGESTED_SPANS_USAGE,
@@ -477,8 +455,6 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionSupportedMetrics {
             "serverless_apps_percentage" => Self::SERVERLESS_APPS_PERCENTAGE,
             "snmp_usage" => Self::SNMP_USAGE,
             "snmp_percentage" => Self::SNMP_PERCENTAGE,
-            "estimated_rum_sessions_usage" => Self::ESTIMATED_RUM_SESSIONS_USAGE,
-            "estimated_rum_sessions_percentage" => Self::ESTIMATED_RUM_SESSIONS_PERCENTAGE,
             "universal_service_monitoring_usage" => Self::UNIVERSAL_SERVICE_MONITORING_USAGE,
             "universal_service_monitoring_percentage" => {
                 Self::UNIVERSAL_SERVICE_MONITORING_PERCENTAGE
