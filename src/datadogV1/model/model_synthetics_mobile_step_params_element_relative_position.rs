@@ -6,14 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Objects describing the binding used for a mobile test.
+/// Position of the action relative to the element.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct SyntheticsMobileTestBinding {
-    /// Object describing the binding used for a mobile test.
-    #[serde(rename = "items")]
-    pub items: Option<crate::datadogV1::model::SyntheticsMobileTestBindingItems>,
+pub struct SyntheticsMobileStepParamsElementRelativePosition {
+    /// The `relativePosition` on the `x` axis for the element.
+    #[serde(rename = "x")]
+    pub x: Option<i64>,
+    /// The `relativePosition` on the `y` axis for the element.
+    #[serde(rename = "y")]
+    pub y: Option<i64>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,20 +24,23 @@ pub struct SyntheticsMobileTestBinding {
     pub(crate) _unparsed: bool,
 }
 
-impl SyntheticsMobileTestBinding {
-    pub fn new() -> SyntheticsMobileTestBinding {
-        SyntheticsMobileTestBinding {
-            items: None,
+impl SyntheticsMobileStepParamsElementRelativePosition {
+    pub fn new() -> SyntheticsMobileStepParamsElementRelativePosition {
+        SyntheticsMobileStepParamsElementRelativePosition {
+            x: None,
+            y: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn items(
-        mut self,
-        value: crate::datadogV1::model::SyntheticsMobileTestBindingItems,
-    ) -> Self {
-        self.items = Some(value);
+    pub fn x(mut self, value: i64) -> Self {
+        self.x = Some(value);
+        self
+    }
+
+    pub fn y(mut self, value: i64) -> Self {
+        self.y = Some(value);
         self
     }
 
@@ -47,20 +53,20 @@ impl SyntheticsMobileTestBinding {
     }
 }
 
-impl Default for SyntheticsMobileTestBinding {
+impl Default for SyntheticsMobileStepParamsElementRelativePosition {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for SyntheticsMobileTestBinding {
+impl<'de> Deserialize<'de> for SyntheticsMobileStepParamsElementRelativePosition {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct SyntheticsMobileTestBindingVisitor;
-        impl<'a> Visitor<'a> for SyntheticsMobileTestBindingVisitor {
-            type Value = SyntheticsMobileTestBinding;
+        struct SyntheticsMobileStepParamsElementRelativePositionVisitor;
+        impl<'a> Visitor<'a> for SyntheticsMobileStepParamsElementRelativePositionVisitor {
+            type Value = SyntheticsMobileStepParamsElementRelativePosition;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -70,8 +76,8 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestBinding {
             where
                 M: MapAccess<'a>,
             {
-                let mut items: Option<crate::datadogV1::model::SyntheticsMobileTestBindingItems> =
-                    None;
+                let mut x: Option<i64> = None;
+                let mut y: Option<i64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -80,11 +86,17 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestBinding {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "items" => {
+                        "x" => {
                             if v.is_null() {
                                 continue;
                             }
-                            items = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            x = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "y" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            y = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -94,8 +106,9 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestBinding {
                     }
                 }
 
-                let content = SyntheticsMobileTestBinding {
-                    items,
+                let content = SyntheticsMobileStepParamsElementRelativePosition {
+                    x,
+                    y,
                     additional_properties,
                     _unparsed,
                 };
@@ -104,6 +117,6 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestBinding {
             }
         }
 
-        deserializer.deserialize_any(SyntheticsMobileTestBindingVisitor)
+        deserializer.deserialize_any(SyntheticsMobileStepParamsElementRelativePositionVisitor)
     }
 }

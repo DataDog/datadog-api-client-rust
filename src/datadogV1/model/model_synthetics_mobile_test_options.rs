@@ -11,22 +11,22 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SyntheticsMobileTestOptions {
-    /// The `SyntheticsMobileTestOptions` `allowApplicationCrash`.
+    /// A boolean to set if an application crash would mark the test as failed.
     #[serde(rename = "allowApplicationCrash")]
     pub allow_application_crash: Option<bool>,
     /// Array of bindings used for the mobile test.
     #[serde(rename = "bindings")]
-    pub bindings: Option<Vec<crate::datadogV1::model::SyntheticsMobileTestBinding>>,
+    pub bindings: Option<Vec<crate::datadogV1::model::SyntheticsTestRestrictionPolicyBinding>>,
     /// CI/CD options for a Synthetic test.
     #[serde(rename = "ci")]
-    pub ci: Option<crate::datadogV1::model::SyntheticsMobileTestCiOptions>,
-    /// The `SyntheticsMobileTestOptions` `defaultStepTimeout`.
+    pub ci: Option<crate::datadogV1::model::SyntheticsTestCiOptions>,
+    /// The default timeout for steps in the test (in seconds).
     #[serde(rename = "defaultStepTimeout")]
     pub default_step_timeout: Option<i32>,
     /// For mobile test, array with the different device IDs used to run the test.
     #[serde(rename = "device_ids")]
-    pub device_ids: Option<Vec<String>>,
-    /// The `SyntheticsMobileTestOptions` `disableAutoAcceptAlert`.
+    pub device_ids: Vec<String>,
+    /// A boolean to disable auto accepting alerts.
     #[serde(rename = "disableAutoAcceptAlert")]
     pub disable_auto_accept_alert: Option<bool>,
     /// Minimum amount of time in failure required to trigger an alert.
@@ -34,18 +34,18 @@ pub struct SyntheticsMobileTestOptions {
     pub min_failure_duration: Option<i64>,
     /// Mobile application for mobile synthetics test.
     #[serde(rename = "mobileApplication")]
-    pub mobile_application: Option<crate::datadogV1::model::SyntheticsMobileTestsMobileApplication>,
+    pub mobile_application: crate::datadogV1::model::SyntheticsMobileTestsMobileApplication,
     /// The monitor name is used for the alert title as well as for all monitor dashboard widgets and SLOs.
     #[serde(rename = "monitor_name")]
     pub monitor_name: Option<String>,
-    /// Object containing the options for a mobile Synthetic test as a monitor
+    /// Object containing the options for a Synthetic test as a monitor
     /// (for example, renotification).
     #[serde(rename = "monitor_options")]
-    pub monitor_options: Option<crate::datadogV1::model::SyntheticsMobileTestOptionsMonitorOptions>,
+    pub monitor_options: Option<crate::datadogV1::model::SyntheticsTestOptionsMonitorOptions>,
     /// Integer from 1 (high) to 5 (low) indicating alert severity.
     #[serde(rename = "monitor_priority")]
     pub monitor_priority: Option<i32>,
-    /// The `SyntheticsMobileTestOptions` `noScreenshot`.
+    /// A boolean set to not take a screenshot for the step.
     #[serde(rename = "noScreenshot")]
     pub no_screenshot: Option<bool>,
     /// A list of role identifiers that can be pulled from the Roles API, for restricting read and write access.
@@ -59,8 +59,8 @@ pub struct SyntheticsMobileTestOptions {
     pub scheduling: Option<crate::datadogV1::model::SyntheticsTestOptionsScheduling>,
     /// The frequency at which to run the Synthetic test (in seconds).
     #[serde(rename = "tick_every")]
-    pub tick_every: Option<i64>,
-    /// The `SyntheticsMobileTestOptions` `verbosity`.
+    pub tick_every: i64,
+    /// The level of verbosity for the mobile test.
     #[serde(rename = "verbosity")]
     pub verbosity: Option<i32>,
     #[serde(flatten)]
@@ -71,16 +71,20 @@ pub struct SyntheticsMobileTestOptions {
 }
 
 impl SyntheticsMobileTestOptions {
-    pub fn new() -> SyntheticsMobileTestOptions {
+    pub fn new(
+        device_ids: Vec<String>,
+        mobile_application: crate::datadogV1::model::SyntheticsMobileTestsMobileApplication,
+        tick_every: i64,
+    ) -> SyntheticsMobileTestOptions {
         SyntheticsMobileTestOptions {
             allow_application_crash: None,
             bindings: None,
             ci: None,
             default_step_timeout: None,
-            device_ids: None,
+            device_ids,
             disable_auto_accept_alert: None,
             min_failure_duration: None,
-            mobile_application: None,
+            mobile_application,
             monitor_name: None,
             monitor_options: None,
             monitor_priority: None,
@@ -88,7 +92,7 @@ impl SyntheticsMobileTestOptions {
             restricted_roles: None,
             retry: None,
             scheduling: None,
-            tick_every: None,
+            tick_every,
             verbosity: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -102,24 +106,19 @@ impl SyntheticsMobileTestOptions {
 
     pub fn bindings(
         mut self,
-        value: Vec<crate::datadogV1::model::SyntheticsMobileTestBinding>,
+        value: Vec<crate::datadogV1::model::SyntheticsTestRestrictionPolicyBinding>,
     ) -> Self {
         self.bindings = Some(value);
         self
     }
 
-    pub fn ci(mut self, value: crate::datadogV1::model::SyntheticsMobileTestCiOptions) -> Self {
+    pub fn ci(mut self, value: crate::datadogV1::model::SyntheticsTestCiOptions) -> Self {
         self.ci = Some(value);
         self
     }
 
     pub fn default_step_timeout(mut self, value: i32) -> Self {
         self.default_step_timeout = Some(value);
-        self
-    }
-
-    pub fn device_ids(mut self, value: Vec<String>) -> Self {
-        self.device_ids = Some(value);
         self
     }
 
@@ -133,14 +132,6 @@ impl SyntheticsMobileTestOptions {
         self
     }
 
-    pub fn mobile_application(
-        mut self,
-        value: crate::datadogV1::model::SyntheticsMobileTestsMobileApplication,
-    ) -> Self {
-        self.mobile_application = Some(value);
-        self
-    }
-
     pub fn monitor_name(mut self, value: String) -> Self {
         self.monitor_name = Some(value);
         self
@@ -148,7 +139,7 @@ impl SyntheticsMobileTestOptions {
 
     pub fn monitor_options(
         mut self,
-        value: crate::datadogV1::model::SyntheticsMobileTestOptionsMonitorOptions,
+        value: crate::datadogV1::model::SyntheticsTestOptionsMonitorOptions,
     ) -> Self {
         self.monitor_options = Some(value);
         self
@@ -182,11 +173,6 @@ impl SyntheticsMobileTestOptions {
         self
     }
 
-    pub fn tick_every(mut self, value: i64) -> Self {
-        self.tick_every = Some(value);
-        self
-    }
-
     pub fn verbosity(mut self, value: i32) -> Self {
         self.verbosity = Some(value);
         self
@@ -198,12 +184,6 @@ impl SyntheticsMobileTestOptions {
     ) -> Self {
         self.additional_properties = value;
         self
-    }
-}
-
-impl Default for SyntheticsMobileTestOptions {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
@@ -226,9 +206,9 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestOptions {
             {
                 let mut allow_application_crash: Option<bool> = None;
                 let mut bindings: Option<
-                    Vec<crate::datadogV1::model::SyntheticsMobileTestBinding>,
+                    Vec<crate::datadogV1::model::SyntheticsTestRestrictionPolicyBinding>,
                 > = None;
-                let mut ci: Option<crate::datadogV1::model::SyntheticsMobileTestCiOptions> = None;
+                let mut ci: Option<crate::datadogV1::model::SyntheticsTestCiOptions> = None;
                 let mut default_step_timeout: Option<i32> = None;
                 let mut device_ids: Option<Vec<String>> = None;
                 let mut disable_auto_accept_alert: Option<bool> = None;
@@ -238,7 +218,7 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestOptions {
                 > = None;
                 let mut monitor_name: Option<String> = None;
                 let mut monitor_options: Option<
-                    crate::datadogV1::model::SyntheticsMobileTestOptionsMonitorOptions,
+                    crate::datadogV1::model::SyntheticsTestOptionsMonitorOptions,
                 > = None;
                 let mut monitor_priority: Option<i32> = None;
                 let mut no_screenshot: Option<bool> = None;
@@ -284,9 +264,6 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestOptions {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "device_ids" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             device_ids = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "disableAutoAcceptAlert" => {
@@ -304,9 +281,6 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestOptions {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "mobileApplication" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             mobile_application =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -358,9 +332,6 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestOptions {
                             scheduling = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "tick_every" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             tick_every = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "verbosity" => {
@@ -376,6 +347,10 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestOptions {
                         }
                     }
                 }
+                let device_ids = device_ids.ok_or_else(|| M::Error::missing_field("device_ids"))?;
+                let mobile_application = mobile_application
+                    .ok_or_else(|| M::Error::missing_field("mobile_application"))?;
+                let tick_every = tick_every.ok_or_else(|| M::Error::missing_field("tick_every"))?;
 
                 let content = SyntheticsMobileTestOptions {
                     allow_application_crash,

@@ -6,14 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// CI/CD options for a Synthetic test.
+/// A description of a single position for a `flick` step type.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct SyntheticsMobileTestCiOptions {
-    /// Execution rule for a Synthetic test.
-    #[serde(rename = "executionRule")]
-    pub execution_rule: crate::datadogV1::model::SyntheticsTestExecutionRule,
+pub struct SyntheticsMobileStepParamsPositionsItems {
+    /// The `x` position for the flick.
+    #[serde(rename = "x")]
+    pub x: Option<i64>,
+    /// The `y` position for the flick.
+    #[serde(rename = "y")]
+    pub y: Option<i64>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,15 +24,24 @@ pub struct SyntheticsMobileTestCiOptions {
     pub(crate) _unparsed: bool,
 }
 
-impl SyntheticsMobileTestCiOptions {
-    pub fn new(
-        execution_rule: crate::datadogV1::model::SyntheticsTestExecutionRule,
-    ) -> SyntheticsMobileTestCiOptions {
-        SyntheticsMobileTestCiOptions {
-            execution_rule,
+impl SyntheticsMobileStepParamsPositionsItems {
+    pub fn new() -> SyntheticsMobileStepParamsPositionsItems {
+        SyntheticsMobileStepParamsPositionsItems {
+            x: None,
+            y: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn x(mut self, value: i64) -> Self {
+        self.x = Some(value);
+        self
+    }
+
+    pub fn y(mut self, value: i64) -> Self {
+        self.y = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -41,14 +53,20 @@ impl SyntheticsMobileTestCiOptions {
     }
 }
 
-impl<'de> Deserialize<'de> for SyntheticsMobileTestCiOptions {
+impl Default for SyntheticsMobileStepParamsPositionsItems {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for SyntheticsMobileStepParamsPositionsItems {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct SyntheticsMobileTestCiOptionsVisitor;
-        impl<'a> Visitor<'a> for SyntheticsMobileTestCiOptionsVisitor {
-            type Value = SyntheticsMobileTestCiOptions;
+        struct SyntheticsMobileStepParamsPositionsItemsVisitor;
+        impl<'a> Visitor<'a> for SyntheticsMobileStepParamsPositionsItemsVisitor {
+            type Value = SyntheticsMobileStepParamsPositionsItems;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -58,9 +76,8 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestCiOptions {
             where
                 M: MapAccess<'a>,
             {
-                let mut execution_rule: Option<
-                    crate::datadogV1::model::SyntheticsTestExecutionRule,
-                > = None;
+                let mut x: Option<i64> = None;
+                let mut y: Option<i64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -69,17 +86,17 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestCiOptions {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "executionRule" => {
-                            execution_rule =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _execution_rule) = execution_rule {
-                                match _execution_rule {
-                                    crate::datadogV1::model::SyntheticsTestExecutionRule::UnparsedObject(_execution_rule) => {
-                                        _unparsed = true;
-                                    },
-                                    _ => {}
-                                }
+                        "x" => {
+                            if v.is_null() {
+                                continue;
                             }
+                            x = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "y" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            y = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -88,11 +105,10 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestCiOptions {
                         }
                     }
                 }
-                let execution_rule =
-                    execution_rule.ok_or_else(|| M::Error::missing_field("execution_rule"))?;
 
-                let content = SyntheticsMobileTestCiOptions {
-                    execution_rule,
+                let content = SyntheticsMobileStepParamsPositionsItems {
+                    x,
+                    y,
                     additional_properties,
                     _unparsed,
                 };
@@ -101,6 +117,6 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestCiOptions {
             }
         }
 
-        deserializer.deserialize_any(SyntheticsMobileTestCiOptionsVisitor)
+        deserializer.deserialize_any(SyntheticsMobileStepParamsPositionsItemsVisitor)
     }
 }

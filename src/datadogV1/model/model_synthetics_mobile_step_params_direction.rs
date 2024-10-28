@@ -6,27 +6,27 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum SyntheticsMobileTestOptionsMonitorOptionsNotificationPresetName {
-    SHOW_ALL,
-    HIDE_ALL,
-    HIDE_QUERY,
-    HIDE_HANDLES,
+pub enum SyntheticsMobileStepParamsDirection {
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for SyntheticsMobileTestOptionsMonitorOptionsNotificationPresetName {
+impl ToString for SyntheticsMobileStepParamsDirection {
     fn to_string(&self) -> String {
         match self {
-            Self::SHOW_ALL => String::from("show_all"),
-            Self::HIDE_ALL => String::from("hide_all"),
-            Self::HIDE_QUERY => String::from("hide_query"),
-            Self::HIDE_HANDLES => String::from("hide_handles"),
+            Self::UP => String::from("up"),
+            Self::DOWN => String::from("down"),
+            Self::LEFT => String::from("left"),
+            Self::RIGHT => String::from("right"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for SyntheticsMobileTestOptionsMonitorOptionsNotificationPresetName {
+impl Serialize for SyntheticsMobileStepParamsDirection {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -38,17 +38,17 @@ impl Serialize for SyntheticsMobileTestOptionsMonitorOptionsNotificationPresetNa
     }
 }
 
-impl<'de> Deserialize<'de> for SyntheticsMobileTestOptionsMonitorOptionsNotificationPresetName {
+impl<'de> Deserialize<'de> for SyntheticsMobileStepParamsDirection {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "show_all" => Self::SHOW_ALL,
-            "hide_all" => Self::HIDE_ALL,
-            "hide_query" => Self::HIDE_QUERY,
-            "hide_handles" => Self::HIDE_HANDLES,
+            "up" => Self::UP,
+            "down" => Self::DOWN,
+            "left" => Self::LEFT,
+            "right" => Self::RIGHT,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

@@ -14,15 +14,15 @@ async fn main() {
     let body = SyntheticsMobileTest::new(
         SyntheticsMobileTestConfig::new().variables(vec![]),
         "Example-Synthetic".to_string(),
-        SyntheticsMobileTestOptions::new()
-            .device_ids(vec!["synthetics:mobile:device:iphone_15_ios_17".to_string()])
-            .mobile_application(
-                SyntheticsMobileTestsMobileApplication::new()
-                    .application_id("ab0e0aed-536d-411a-9a99-5428c27d8f8e".to_string())
-                    .reference_id("6115922a-5f5d-455e-bc7e-7955a57f3815".to_string())
-                    .reference_type(SyntheticsMobileTestsMobileApplicationReferenceType::VERSION),
-            )
-            .tick_every(3600),
+        SyntheticsMobileTestOptions::new(
+            vec!["synthetics:mobile:device:iphone_15_ios_17".to_string()],
+            SyntheticsMobileTestsMobileApplication::new(
+                "ab0e0aed-536d-411a-9a99-5428c27d8f8e".to_string(),
+                "6115922a-5f5d-455e-bc7e-7955a57f3815".to_string(),
+                SyntheticsMobileTestsMobileApplicationReferenceType::VERSION,
+            ),
+            3600,
+        ),
         SyntheticsMobileTestType::MOBILE,
     )
     .message("".to_string())

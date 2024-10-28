@@ -6,17 +6,19 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Configuration object for a Synthetic mobile test.
+/// A single user locator object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct SyntheticsMobileTestConfig {
-    /// Initial application arguments for a mobile test.
-    #[serde(rename = "initialApplicationArguments")]
-    pub initial_application_arguments: Option<std::collections::BTreeMap<String, String>>,
-    /// Array of variables used for the test steps.
-    #[serde(rename = "variables")]
-    pub variables: Option<Vec<crate::datadogV1::model::SyntheticsConfigVariable>>,
+pub struct SyntheticsMobileStepParamsElementUserLocatorValuesItems {
+    /// Type of a user locator.
+    #[serde(rename = "type")]
+    pub type_: Option<
+        crate::datadogV1::model::SyntheticsMobileStepParamsElementUserLocatorValuesItemsType,
+    >,
+    /// Value of a user locator.
+    #[serde(rename = "value")]
+    pub value: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,29 +26,26 @@ pub struct SyntheticsMobileTestConfig {
     pub(crate) _unparsed: bool,
 }
 
-impl SyntheticsMobileTestConfig {
-    pub fn new() -> SyntheticsMobileTestConfig {
-        SyntheticsMobileTestConfig {
-            initial_application_arguments: None,
-            variables: None,
+impl SyntheticsMobileStepParamsElementUserLocatorValuesItems {
+    pub fn new() -> SyntheticsMobileStepParamsElementUserLocatorValuesItems {
+        SyntheticsMobileStepParamsElementUserLocatorValuesItems {
+            type_: None,
+            value: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn initial_application_arguments(
+    pub fn type_(
         mut self,
-        value: std::collections::BTreeMap<String, String>,
+        value: crate::datadogV1::model::SyntheticsMobileStepParamsElementUserLocatorValuesItemsType,
     ) -> Self {
-        self.initial_application_arguments = Some(value);
+        self.type_ = Some(value);
         self
     }
 
-    pub fn variables(
-        mut self,
-        value: Vec<crate::datadogV1::model::SyntheticsConfigVariable>,
-    ) -> Self {
-        self.variables = Some(value);
+    pub fn value(mut self, value: String) -> Self {
+        self.value = Some(value);
         self
     }
 
@@ -59,20 +58,20 @@ impl SyntheticsMobileTestConfig {
     }
 }
 
-impl Default for SyntheticsMobileTestConfig {
+impl Default for SyntheticsMobileStepParamsElementUserLocatorValuesItems {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for SyntheticsMobileTestConfig {
+impl<'de> Deserialize<'de> for SyntheticsMobileStepParamsElementUserLocatorValuesItems {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct SyntheticsMobileTestConfigVisitor;
-        impl<'a> Visitor<'a> for SyntheticsMobileTestConfigVisitor {
-            type Value = SyntheticsMobileTestConfig;
+        struct SyntheticsMobileStepParamsElementUserLocatorValuesItemsVisitor;
+        impl<'a> Visitor<'a> for SyntheticsMobileStepParamsElementUserLocatorValuesItemsVisitor {
+            type Value = SyntheticsMobileStepParamsElementUserLocatorValuesItems;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -82,11 +81,8 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestConfig {
             where
                 M: MapAccess<'a>,
             {
-                let mut initial_application_arguments: Option<
-                    std::collections::BTreeMap<String, String>,
-                > = None;
-                let mut variables: Option<Vec<crate::datadogV1::model::SyntheticsConfigVariable>> =
-                    None;
+                let mut type_: Option<crate::datadogV1::model::SyntheticsMobileStepParamsElementUserLocatorValuesItemsType> = None;
+                let mut value: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -95,18 +91,25 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestConfig {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "initialApplicationArguments" => {
+                        "type" => {
                             if v.is_null() {
                                 continue;
                             }
-                            initial_application_arguments =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _type_) = type_ {
+                                match _type_ {
+                                    crate::datadogV1::model::SyntheticsMobileStepParamsElementUserLocatorValuesItemsType::UnparsedObject(_type_) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
-                        "variables" => {
+                        "value" => {
                             if v.is_null() {
                                 continue;
                             }
-                            variables = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -116,9 +119,9 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestConfig {
                     }
                 }
 
-                let content = SyntheticsMobileTestConfig {
-                    initial_application_arguments,
-                    variables,
+                let content = SyntheticsMobileStepParamsElementUserLocatorValuesItems {
+                    type_,
+                    value,
                     additional_properties,
                     _unparsed,
                 };
@@ -127,6 +130,6 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestConfig {
             }
         }
 
-        deserializer.deserialize_any(SyntheticsMobileTestConfigVisitor)
+        deserializer.deserialize_any(SyntheticsMobileStepParamsElementUserLocatorValuesItemsVisitor)
     }
 }

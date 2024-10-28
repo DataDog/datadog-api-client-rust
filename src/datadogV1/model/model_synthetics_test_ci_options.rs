@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct SyntheticsTestCiOptions {
     /// Execution rule for a Synthetic test.
     #[serde(rename = "executionRule")]
-    pub execution_rule: Option<crate::datadogV1::model::SyntheticsTestExecutionRule>,
+    pub execution_rule: crate::datadogV1::model::SyntheticsTestExecutionRule,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -22,20 +22,14 @@ pub struct SyntheticsTestCiOptions {
 }
 
 impl SyntheticsTestCiOptions {
-    pub fn new() -> SyntheticsTestCiOptions {
+    pub fn new(
+        execution_rule: crate::datadogV1::model::SyntheticsTestExecutionRule,
+    ) -> SyntheticsTestCiOptions {
         SyntheticsTestCiOptions {
-            execution_rule: None,
+            execution_rule,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn execution_rule(
-        mut self,
-        value: crate::datadogV1::model::SyntheticsTestExecutionRule,
-    ) -> Self {
-        self.execution_rule = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -44,12 +38,6 @@ impl SyntheticsTestCiOptions {
     ) -> Self {
         self.additional_properties = value;
         self
-    }
-}
-
-impl Default for SyntheticsTestCiOptions {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
@@ -82,9 +70,6 @@ impl<'de> Deserialize<'de> for SyntheticsTestCiOptions {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "executionRule" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             execution_rule =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _execution_rule) = execution_rule {
@@ -103,6 +88,8 @@ impl<'de> Deserialize<'de> for SyntheticsTestCiOptions {
                         }
                     }
                 }
+                let execution_rule =
+                    execution_rule.ok_or_else(|| M::Error::missing_field("execution_rule"))?;
 
                 let content = SyntheticsTestCiOptions {
                     execution_rule,
