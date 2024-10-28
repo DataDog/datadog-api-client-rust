@@ -13,10 +13,10 @@ use std::fmt::{self, Formatter};
 pub struct SyntheticsTestOptionsScheduling {
     /// Array containing objects describing the scheduling pattern to apply to each day.
     #[serde(rename = "timeframes")]
-    pub timeframes: Option<Vec<crate::datadogV1::model::SyntheticsTestOptionsSchedulingTimeframe>>,
+    pub timeframes: Vec<crate::datadogV1::model::SyntheticsTestOptionsSchedulingTimeframe>,
     /// Timezone in which the timeframe is based.
     #[serde(rename = "timezone")]
-    pub timezone: Option<String>,
+    pub timezone: String,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -25,26 +25,16 @@ pub struct SyntheticsTestOptionsScheduling {
 }
 
 impl SyntheticsTestOptionsScheduling {
-    pub fn new() -> SyntheticsTestOptionsScheduling {
+    pub fn new(
+        timeframes: Vec<crate::datadogV1::model::SyntheticsTestOptionsSchedulingTimeframe>,
+        timezone: String,
+    ) -> SyntheticsTestOptionsScheduling {
         SyntheticsTestOptionsScheduling {
-            timeframes: None,
-            timezone: None,
+            timeframes,
+            timezone,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn timeframes(
-        mut self,
-        value: Vec<crate::datadogV1::model::SyntheticsTestOptionsSchedulingTimeframe>,
-    ) -> Self {
-        self.timeframes = Some(value);
-        self
-    }
-
-    pub fn timezone(mut self, value: String) -> Self {
-        self.timezone = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -53,12 +43,6 @@ impl SyntheticsTestOptionsScheduling {
     ) -> Self {
         self.additional_properties = value;
         self
-    }
-}
-
-impl Default for SyntheticsTestOptionsScheduling {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
@@ -92,15 +76,9 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptionsScheduling {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "timeframes" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             timeframes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "timezone" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             timezone = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -110,6 +88,8 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptionsScheduling {
                         }
                     }
                 }
+                let timeframes = timeframes.ok_or_else(|| M::Error::missing_field("timeframes"))?;
+                let timezone = timezone.ok_or_else(|| M::Error::missing_field("timezone"))?;
 
                 let content = SyntheticsTestOptionsScheduling {
                     timeframes,

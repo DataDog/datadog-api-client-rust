@@ -22,13 +22,13 @@ pub struct SyntheticsMobileStep {
     pub is_critical: Option<bool>,
     /// The name of the step.
     #[serde(rename = "name")]
-    pub name: Option<String>,
+    pub name: String,
     /// A boolean set to not take a screenshot for the step.
     #[serde(rename = "noScreenshot")]
     pub no_screenshot: Option<bool>,
-    /// The parameters of the mobile step.
+    /// The parameters of a mobile step.
     #[serde(rename = "params")]
-    pub params: Option<std::collections::BTreeMap<String, serde_json::Value>>,
+    pub params: crate::datadogV1::model::SyntheticsMobileStepParams,
     /// The public ID of the step.
     #[serde(rename = "publicId")]
     pub public_id: Option<String>,
@@ -37,7 +37,7 @@ pub struct SyntheticsMobileStep {
     pub timeout: Option<i64>,
     /// Step type used in your mobile Synthetic test.
     #[serde(rename = "type")]
-    pub type_: Option<crate::datadogV1::model::SyntheticsMobileStepType>,
+    pub type_: crate::datadogV1::model::SyntheticsMobileStepType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -46,17 +46,21 @@ pub struct SyntheticsMobileStep {
 }
 
 impl SyntheticsMobileStep {
-    pub fn new() -> SyntheticsMobileStep {
+    pub fn new(
+        name: String,
+        params: crate::datadogV1::model::SyntheticsMobileStepParams,
+        type_: crate::datadogV1::model::SyntheticsMobileStepType,
+    ) -> SyntheticsMobileStep {
         SyntheticsMobileStep {
             allow_failure: None,
             has_new_step_element: None,
             is_critical: None,
-            name: None,
+            name,
             no_screenshot: None,
-            params: None,
+            params,
             public_id: None,
             timeout: None,
-            type_: None,
+            type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -77,18 +81,8 @@ impl SyntheticsMobileStep {
         self
     }
 
-    pub fn name(mut self, value: String) -> Self {
-        self.name = Some(value);
-        self
-    }
-
     pub fn no_screenshot(mut self, value: bool) -> Self {
         self.no_screenshot = Some(value);
-        self
-    }
-
-    pub fn params(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
-        self.params = Some(value);
         self
     }
 
@@ -102,23 +96,12 @@ impl SyntheticsMobileStep {
         self
     }
 
-    pub fn type_(mut self, value: crate::datadogV1::model::SyntheticsMobileStepType) -> Self {
-        self.type_ = Some(value);
-        self
-    }
-
     pub fn additional_properties(
         mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
     ) -> Self {
         self.additional_properties = value;
         self
-    }
-}
-
-impl Default for SyntheticsMobileStep {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
@@ -144,8 +127,7 @@ impl<'de> Deserialize<'de> for SyntheticsMobileStep {
                 let mut is_critical: Option<bool> = None;
                 let mut name: Option<String> = None;
                 let mut no_screenshot: Option<bool> = None;
-                let mut params: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                    None;
+                let mut params: Option<crate::datadogV1::model::SyntheticsMobileStepParams> = None;
                 let mut public_id: Option<String> = None;
                 let mut timeout: Option<i64> = None;
                 let mut type_: Option<crate::datadogV1::model::SyntheticsMobileStepType> = None;
@@ -179,9 +161,6 @@ impl<'de> Deserialize<'de> for SyntheticsMobileStep {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "name" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "noScreenshot" => {
@@ -192,9 +171,6 @@ impl<'de> Deserialize<'de> for SyntheticsMobileStep {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "params" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             params = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "publicId" => {
@@ -210,9 +186,6 @@ impl<'de> Deserialize<'de> for SyntheticsMobileStep {
                             timeout = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
@@ -230,6 +203,9 @@ impl<'de> Deserialize<'de> for SyntheticsMobileStep {
                         }
                     }
                 }
+                let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
+                let params = params.ok_or_else(|| M::Error::missing_field("params"))?;
+                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = SyntheticsMobileStep {
                     allow_failure,

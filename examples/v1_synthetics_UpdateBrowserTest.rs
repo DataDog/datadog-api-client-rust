@@ -21,6 +21,7 @@ use datadog_api_client::datadogV1::model::SyntheticsTestExecutionRule;
 use datadog_api_client::datadogV1::model::SyntheticsTestOptions;
 use datadog_api_client::datadogV1::model::SyntheticsTestOptionsHTTPVersion;
 use datadog_api_client::datadogV1::model::SyntheticsTestOptionsMonitorOptions;
+use datadog_api_client::datadogV1::model::SyntheticsTestOptionsMonitorOptionsNotificationPresetName;
 use datadog_api_client::datadogV1::model::SyntheticsTestOptionsRetry;
 use datadog_api_client::datadogV1::model::SyntheticsTestOptionsScheduling;
 use datadog_api_client::datadogV1::model::SyntheticsTestOptionsSchedulingTimeframe;
@@ -71,11 +72,16 @@ async fn main() {
         "".to_string(),
         "Example test name".to_string(),
         SyntheticsTestOptions::new()
-            .ci(SyntheticsTestCiOptions::new()
-                .execution_rule(SyntheticsTestExecutionRule::BLOCKING))
+            .ci(SyntheticsTestCiOptions::new(
+                SyntheticsTestExecutionRule::BLOCKING,
+            ))
             .device_ids(vec![SyntheticsDeviceID::CHROME_LAPTOP_LARGE])
             .http_version(SyntheticsTestOptionsHTTPVersion::HTTP1)
-            .monitor_options(SyntheticsTestOptionsMonitorOptions::new())
+            .monitor_options(
+                SyntheticsTestOptionsMonitorOptions::new().notification_preset_name(
+                    SyntheticsTestOptionsMonitorOptionsNotificationPresetName::SHOW_ALL,
+                ),
+            )
             .restricted_roles(vec!["xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx".to_string()])
             .retry(SyntheticsTestOptionsRetry::new())
             .rum_settings(
@@ -83,20 +89,21 @@ async fn main() {
                     .application_id("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx".to_string())
                     .client_token_id(12345),
             )
-            .scheduling(
-                SyntheticsTestOptionsScheduling::new()
-                    .timeframes(vec![
-                        SyntheticsTestOptionsSchedulingTimeframe::new()
-                            .day(1)
-                            .from("07:00".to_string())
-                            .to("16:00".to_string()),
-                        SyntheticsTestOptionsSchedulingTimeframe::new()
-                            .day(3)
-                            .from("07:00".to_string())
-                            .to("16:00".to_string()),
-                    ])
-                    .timezone("America/New_York".to_string()),
-            ),
+            .scheduling(SyntheticsTestOptionsScheduling::new(
+                vec![
+                    SyntheticsTestOptionsSchedulingTimeframe::new(
+                        1,
+                        "07:00".to_string(),
+                        "16:00".to_string(),
+                    ),
+                    SyntheticsTestOptionsSchedulingTimeframe::new(
+                        3,
+                        "07:00".to_string(),
+                        "16:00".to_string(),
+                    ),
+                ],
+                "America/New_York".to_string(),
+            )),
         SyntheticsBrowserTestType::BROWSER,
     )
     .status(SyntheticsTestPauseStatus::LIVE)

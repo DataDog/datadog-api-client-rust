@@ -6,16 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Initial application arguments for a mobile test.
+/// Variable object for `extractVariable` step type.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct SyntheticsMobileTestInitialApplicationArguments {
-    /// Name of the property.
-    #[serde(rename = "propertyNames")]
-    pub property_names: Option<
-        crate::datadogV1::model::SyntheticsMobileTestInitialApplicationArgumentsPropertyNames,
-    >,
+pub struct SyntheticsMobileStepParamsVariable {
+    /// An example for the variable.
+    #[serde(rename = "example")]
+    pub example: String,
+    /// The variable name.
+    #[serde(rename = "name")]
+    pub name: String,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -23,21 +24,14 @@ pub struct SyntheticsMobileTestInitialApplicationArguments {
     pub(crate) _unparsed: bool,
 }
 
-impl SyntheticsMobileTestInitialApplicationArguments {
-    pub fn new() -> SyntheticsMobileTestInitialApplicationArguments {
-        SyntheticsMobileTestInitialApplicationArguments {
-            property_names: None,
+impl SyntheticsMobileStepParamsVariable {
+    pub fn new(example: String, name: String) -> SyntheticsMobileStepParamsVariable {
+        SyntheticsMobileStepParamsVariable {
+            example,
+            name,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn property_names(
-        mut self,
-        value: crate::datadogV1::model::SyntheticsMobileTestInitialApplicationArgumentsPropertyNames,
-    ) -> Self {
-        self.property_names = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -49,20 +43,14 @@ impl SyntheticsMobileTestInitialApplicationArguments {
     }
 }
 
-impl Default for SyntheticsMobileTestInitialApplicationArguments {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<'de> Deserialize<'de> for SyntheticsMobileTestInitialApplicationArguments {
+impl<'de> Deserialize<'de> for SyntheticsMobileStepParamsVariable {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct SyntheticsMobileTestInitialApplicationArgumentsVisitor;
-        impl<'a> Visitor<'a> for SyntheticsMobileTestInitialApplicationArgumentsVisitor {
-            type Value = SyntheticsMobileTestInitialApplicationArguments;
+        struct SyntheticsMobileStepParamsVariableVisitor;
+        impl<'a> Visitor<'a> for SyntheticsMobileStepParamsVariableVisitor {
+            type Value = SyntheticsMobileStepParamsVariable;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -72,7 +60,8 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestInitialApplicationArguments {
             where
                 M: MapAccess<'a>,
             {
-                let mut property_names: Option<crate::datadogV1::model::SyntheticsMobileTestInitialApplicationArgumentsPropertyNames> = None;
+                let mut example: Option<String> = None;
+                let mut name: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -81,12 +70,11 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestInitialApplicationArguments {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "propertyNames" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            property_names =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "example" => {
+                            example = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "name" => {
+                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -95,9 +83,12 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestInitialApplicationArguments {
                         }
                     }
                 }
+                let example = example.ok_or_else(|| M::Error::missing_field("example"))?;
+                let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
 
-                let content = SyntheticsMobileTestInitialApplicationArguments {
-                    property_names,
+                let content = SyntheticsMobileStepParamsVariable {
+                    example,
+                    name,
                     additional_properties,
                     _unparsed,
                 };
@@ -106,6 +97,6 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestInitialApplicationArguments {
             }
         }
 
-        deserializer.deserialize_any(SyntheticsMobileTestInitialApplicationArgumentsVisitor)
+        deserializer.deserialize_any(SyntheticsMobileStepParamsVariableVisitor)
     }
 }

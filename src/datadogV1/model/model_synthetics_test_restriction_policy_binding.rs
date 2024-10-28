@@ -6,17 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Object describing the binding used for a mobile test.
+/// Objects describing the binding used for a mobile test.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct SyntheticsMobileTestBindingItems {
+pub struct SyntheticsTestRestrictionPolicyBinding {
     /// List of principals for a mobile test binding.
     #[serde(rename = "principals")]
     pub principals: Option<Vec<String>>,
-    /// The definition of `SyntheticsMobileTestBindingItemsRole` object.
-    #[serde(rename = "role")]
-    pub role: Option<crate::datadogV1::model::SyntheticsMobileTestBindingItemsRole>,
+    /// The type of relation for the binding.
+    #[serde(rename = "relation")]
+    pub relation: Option<crate::datadogV1::model::SyntheticsTestRestrictionPolicyBindingRelation>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,11 +24,11 @@ pub struct SyntheticsMobileTestBindingItems {
     pub(crate) _unparsed: bool,
 }
 
-impl SyntheticsMobileTestBindingItems {
-    pub fn new() -> SyntheticsMobileTestBindingItems {
-        SyntheticsMobileTestBindingItems {
+impl SyntheticsTestRestrictionPolicyBinding {
+    pub fn new() -> SyntheticsTestRestrictionPolicyBinding {
+        SyntheticsTestRestrictionPolicyBinding {
             principals: None,
-            role: None,
+            relation: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -39,11 +39,11 @@ impl SyntheticsMobileTestBindingItems {
         self
     }
 
-    pub fn role(
+    pub fn relation(
         mut self,
-        value: crate::datadogV1::model::SyntheticsMobileTestBindingItemsRole,
+        value: crate::datadogV1::model::SyntheticsTestRestrictionPolicyBindingRelation,
     ) -> Self {
-        self.role = Some(value);
+        self.relation = Some(value);
         self
     }
 
@@ -56,20 +56,20 @@ impl SyntheticsMobileTestBindingItems {
     }
 }
 
-impl Default for SyntheticsMobileTestBindingItems {
+impl Default for SyntheticsTestRestrictionPolicyBinding {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for SyntheticsMobileTestBindingItems {
+impl<'de> Deserialize<'de> for SyntheticsTestRestrictionPolicyBinding {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct SyntheticsMobileTestBindingItemsVisitor;
-        impl<'a> Visitor<'a> for SyntheticsMobileTestBindingItemsVisitor {
-            type Value = SyntheticsMobileTestBindingItems;
+        struct SyntheticsTestRestrictionPolicyBindingVisitor;
+        impl<'a> Visitor<'a> for SyntheticsTestRestrictionPolicyBindingVisitor {
+            type Value = SyntheticsTestRestrictionPolicyBinding;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -80,8 +80,8 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestBindingItems {
                 M: MapAccess<'a>,
             {
                 let mut principals: Option<Vec<String>> = None;
-                let mut role: Option<
-                    crate::datadogV1::model::SyntheticsMobileTestBindingItemsRole,
+                let mut relation: Option<
+                    crate::datadogV1::model::SyntheticsTestRestrictionPolicyBindingRelation,
                 > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -97,14 +97,14 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestBindingItems {
                             }
                             principals = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "role" => {
+                        "relation" => {
                             if v.is_null() {
                                 continue;
                             }
-                            role = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _role) = role {
-                                match _role {
-                                    crate::datadogV1::model::SyntheticsMobileTestBindingItemsRole::UnparsedObject(_role) => {
+                            relation = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _relation) = relation {
+                                match _relation {
+                                    crate::datadogV1::model::SyntheticsTestRestrictionPolicyBindingRelation::UnparsedObject(_relation) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -119,9 +119,9 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestBindingItems {
                     }
                 }
 
-                let content = SyntheticsMobileTestBindingItems {
+                let content = SyntheticsTestRestrictionPolicyBinding {
                     principals,
-                    role,
+                    relation,
                     additional_properties,
                     _unparsed,
                 };
@@ -130,6 +130,6 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestBindingItems {
             }
         }
 
-        deserializer.deserialize_any(SyntheticsMobileTestBindingItemsVisitor)
+        deserializer.deserialize_any(SyntheticsTestRestrictionPolicyBindingVisitor)
     }
 }
