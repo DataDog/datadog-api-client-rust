@@ -13,13 +13,13 @@ use std::fmt::{self, Formatter};
 pub struct SyntheticsTestOptionsSchedulingTimeframe {
     /// Number representing the day of the week.
     #[serde(rename = "day")]
-    pub day: Option<i32>,
+    pub day: i32,
     /// The hour of the day on which scheduling starts.
     #[serde(rename = "from")]
-    pub from: Option<String>,
+    pub from: String,
     /// The hour of the day on which scheduling ends.
     #[serde(rename = "to")]
-    pub to: Option<String>,
+    pub to: String,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -28,29 +28,14 @@ pub struct SyntheticsTestOptionsSchedulingTimeframe {
 }
 
 impl SyntheticsTestOptionsSchedulingTimeframe {
-    pub fn new() -> SyntheticsTestOptionsSchedulingTimeframe {
+    pub fn new(day: i32, from: String, to: String) -> SyntheticsTestOptionsSchedulingTimeframe {
         SyntheticsTestOptionsSchedulingTimeframe {
-            day: None,
-            from: None,
-            to: None,
+            day,
+            from,
+            to,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn day(mut self, value: i32) -> Self {
-        self.day = Some(value);
-        self
-    }
-
-    pub fn from(mut self, value: String) -> Self {
-        self.from = Some(value);
-        self
-    }
-
-    pub fn to(mut self, value: String) -> Self {
-        self.to = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -59,12 +44,6 @@ impl SyntheticsTestOptionsSchedulingTimeframe {
     ) -> Self {
         self.additional_properties = value;
         self
-    }
-}
-
-impl Default for SyntheticsTestOptionsSchedulingTimeframe {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
@@ -97,21 +76,12 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptionsSchedulingTimeframe {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "day" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             day = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "from" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             from = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "to" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             to = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -121,6 +91,9 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptionsSchedulingTimeframe {
                         }
                     }
                 }
+                let day = day.ok_or_else(|| M::Error::missing_field("day"))?;
+                let from = from.ok_or_else(|| M::Error::missing_field("from"))?;
+                let to = to.ok_or_else(|| M::Error::missing_field("to"))?;
 
                 let content = SyntheticsTestOptionsSchedulingTimeframe {
                     day,

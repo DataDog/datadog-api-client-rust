@@ -161,36 +161,18 @@ pub struct MonthlyUsageAttributionValues {
     /// The error tracking events usage by tag(s).
     #[serde(rename = "error_tracking_usage")]
     pub error_tracking_usage: Option<f64>,
-    /// The percentage of estimated live indexed logs usage by tag(s).
-    #[serde(rename = "estimated_indexed_logs_percentage")]
-    pub estimated_indexed_logs_percentage: Option<f64>,
-    /// The estimated live indexed logs usage by tag(s).
-    #[serde(rename = "estimated_indexed_logs_usage")]
-    pub estimated_indexed_logs_usage: Option<f64>,
     /// The percentage of estimated indexed spans usage by tag(s).
     #[serde(rename = "estimated_indexed_spans_percentage")]
     pub estimated_indexed_spans_percentage: Option<f64>,
     /// The estimated indexed spans usage by tag(s).
     #[serde(rename = "estimated_indexed_spans_usage")]
     pub estimated_indexed_spans_usage: Option<f64>,
-    /// The percentage of estimated live ingested logs usage by tag(s).
-    #[serde(rename = "estimated_ingested_logs_percentage")]
-    pub estimated_ingested_logs_percentage: Option<f64>,
-    /// The estimated live ingested logs usage by tag(s).
-    #[serde(rename = "estimated_ingested_logs_usage")]
-    pub estimated_ingested_logs_usage: Option<f64>,
     /// The percentage of estimated ingested spans usage by tag(s).
     #[serde(rename = "estimated_ingested_spans_percentage")]
     pub estimated_ingested_spans_percentage: Option<f64>,
     /// The estimated ingested spans usage by tag(s).
     #[serde(rename = "estimated_ingested_spans_usage")]
     pub estimated_ingested_spans_usage: Option<f64>,
-    /// The percentage of estimated rum sessions usage by tag(s).
-    #[serde(rename = "estimated_rum_sessions_percentage")]
-    pub estimated_rum_sessions_percentage: Option<f64>,
-    /// The estimated rum sessions usage by tag(s).
-    #[serde(rename = "estimated_rum_sessions_usage")]
-    pub estimated_rum_sessions_usage: Option<f64>,
     /// The percentage of Fargate usage by tags.
     #[serde(rename = "fargate_percentage")]
     pub fargate_percentage: Option<f64>,
@@ -491,16 +473,10 @@ impl MonthlyUsageAttributionValues {
             dbm_queries_usage: None,
             error_tracking_percentage: None,
             error_tracking_usage: None,
-            estimated_indexed_logs_percentage: None,
-            estimated_indexed_logs_usage: None,
             estimated_indexed_spans_percentage: None,
             estimated_indexed_spans_usage: None,
-            estimated_ingested_logs_percentage: None,
-            estimated_ingested_logs_usage: None,
             estimated_ingested_spans_percentage: None,
             estimated_ingested_spans_usage: None,
-            estimated_rum_sessions_percentage: None,
-            estimated_rum_sessions_usage: None,
             fargate_percentage: None,
             fargate_usage: None,
             functions_percentage: None,
@@ -836,16 +812,6 @@ impl MonthlyUsageAttributionValues {
         self
     }
 
-    pub fn estimated_indexed_logs_percentage(mut self, value: f64) -> Self {
-        self.estimated_indexed_logs_percentage = Some(value);
-        self
-    }
-
-    pub fn estimated_indexed_logs_usage(mut self, value: f64) -> Self {
-        self.estimated_indexed_logs_usage = Some(value);
-        self
-    }
-
     pub fn estimated_indexed_spans_percentage(mut self, value: f64) -> Self {
         self.estimated_indexed_spans_percentage = Some(value);
         self
@@ -856,16 +822,6 @@ impl MonthlyUsageAttributionValues {
         self
     }
 
-    pub fn estimated_ingested_logs_percentage(mut self, value: f64) -> Self {
-        self.estimated_ingested_logs_percentage = Some(value);
-        self
-    }
-
-    pub fn estimated_ingested_logs_usage(mut self, value: f64) -> Self {
-        self.estimated_ingested_logs_usage = Some(value);
-        self
-    }
-
     pub fn estimated_ingested_spans_percentage(mut self, value: f64) -> Self {
         self.estimated_ingested_spans_percentage = Some(value);
         self
@@ -873,16 +829,6 @@ impl MonthlyUsageAttributionValues {
 
     pub fn estimated_ingested_spans_usage(mut self, value: f64) -> Self {
         self.estimated_ingested_spans_usage = Some(value);
-        self
-    }
-
-    pub fn estimated_rum_sessions_percentage(mut self, value: f64) -> Self {
-        self.estimated_rum_sessions_percentage = Some(value);
-        self
-    }
-
-    pub fn estimated_rum_sessions_usage(mut self, value: f64) -> Self {
-        self.estimated_rum_sessions_usage = Some(value);
         self
     }
 
@@ -1368,16 +1314,10 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                 let mut dbm_queries_usage: Option<f64> = None;
                 let mut error_tracking_percentage: Option<f64> = None;
                 let mut error_tracking_usage: Option<f64> = None;
-                let mut estimated_indexed_logs_percentage: Option<f64> = None;
-                let mut estimated_indexed_logs_usage: Option<f64> = None;
                 let mut estimated_indexed_spans_percentage: Option<f64> = None;
                 let mut estimated_indexed_spans_usage: Option<f64> = None;
-                let mut estimated_ingested_logs_percentage: Option<f64> = None;
-                let mut estimated_ingested_logs_usage: Option<f64> = None;
                 let mut estimated_ingested_spans_percentage: Option<f64> = None;
                 let mut estimated_ingested_spans_usage: Option<f64> = None;
-                let mut estimated_rum_sessions_percentage: Option<f64> = None;
-                let mut estimated_rum_sessions_usage: Option<f64> = None;
                 let mut fargate_percentage: Option<f64> = None;
                 let mut fargate_usage: Option<f64> = None;
                 let mut functions_percentage: Option<f64> = None;
@@ -1815,20 +1755,6 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                             error_tracking_usage =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "estimated_indexed_logs_percentage" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            estimated_indexed_logs_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "estimated_indexed_logs_usage" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            estimated_indexed_logs_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "estimated_indexed_spans_percentage" => {
                             if v.is_null() {
                                 continue;
@@ -1843,20 +1769,6 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                             estimated_indexed_spans_usage =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "estimated_ingested_logs_percentage" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            estimated_ingested_logs_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "estimated_ingested_logs_usage" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            estimated_ingested_logs_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "estimated_ingested_spans_percentage" => {
                             if v.is_null() {
                                 continue;
@@ -1869,20 +1781,6 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                                 continue;
                             }
                             estimated_ingested_spans_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "estimated_rum_sessions_percentage" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            estimated_rum_sessions_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "estimated_rum_sessions_usage" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            estimated_rum_sessions_usage =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "fargate_percentage" => {
@@ -2503,16 +2401,10 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                     dbm_queries_usage,
                     error_tracking_percentage,
                     error_tracking_usage,
-                    estimated_indexed_logs_percentage,
-                    estimated_indexed_logs_usage,
                     estimated_indexed_spans_percentage,
                     estimated_indexed_spans_usage,
-                    estimated_ingested_logs_percentage,
-                    estimated_ingested_logs_usage,
                     estimated_ingested_spans_percentage,
                     estimated_ingested_spans_usage,
-                    estimated_rum_sessions_percentage,
-                    estimated_rum_sessions_usage,
                     fargate_percentage,
                     fargate_usage,
                     functions_percentage,
