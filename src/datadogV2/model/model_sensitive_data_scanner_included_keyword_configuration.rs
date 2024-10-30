@@ -22,6 +22,10 @@ pub struct SensitiveDataScannerIncludedKeywordConfiguration {
     /// The number of keywords in the list must be less than or equal to 30.
     #[serde(rename = "keywords")]
     pub keywords: Vec<String>,
+    /// Should the rule use the underlying standard pattern keyword configuration. If set to `true`, the rule must be tied
+    /// to a standard pattern. If set to `false`, the specified keywords and `character_count` are applied.
+    #[serde(rename = "use_recommended_keywords")]
+    pub use_recommended_keywords: Option<bool>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -37,9 +41,15 @@ impl SensitiveDataScannerIncludedKeywordConfiguration {
         SensitiveDataScannerIncludedKeywordConfiguration {
             character_count,
             keywords,
+            use_recommended_keywords: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn use_recommended_keywords(mut self, value: bool) -> Self {
+        self.use_recommended_keywords = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -70,6 +80,7 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerIncludedKeywordConfiguration 
             {
                 let mut character_count: Option<i64> = None;
                 let mut keywords: Option<Vec<String>> = None;
+                let mut use_recommended_keywords: Option<bool> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -85,6 +96,13 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerIncludedKeywordConfiguration 
                         "keywords" => {
                             keywords = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "use_recommended_keywords" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            use_recommended_keywords =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -99,6 +117,7 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerIncludedKeywordConfiguration 
                 let content = SensitiveDataScannerIncludedKeywordConfiguration {
                     character_count,
                     keywords,
+                    use_recommended_keywords,
                     additional_properties,
                     _unparsed,
                 };
