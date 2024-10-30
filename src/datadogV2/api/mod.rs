@@ -16,6 +16,7 @@ pub mod api_container_images;
 pub mod api_containers;
 pub mod api_csm_threats;
 pub mod api_dashboard_lists;
+pub mod api_domain_allowlist;
 pub mod api_dora_metrics;
 pub mod api_downtimes;
 pub mod api_events;
