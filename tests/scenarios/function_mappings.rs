@@ -68,6 +68,7 @@ pub struct ApiInstances {
         Option<datadogV2::api_cloud_cost_management::CloudCostManagementAPI>,
     pub v2_api_usage_metering: Option<datadogV2::api_usage_metering::UsageMeteringAPI>,
     pub v2_api_dashboard_lists: Option<datadogV2::api_dashboard_lists::DashboardListsAPI>,
+    pub v2_api_domain_allowlist: Option<datadogV2::api_domain_allowlist::DomainAllowlistAPI>,
     pub v2_api_dora_metrics: Option<datadogV2::api_dora_metrics::DORAMetricsAPI>,
     pub v2_api_downtimes: Option<datadogV2::api_downtimes::DowntimesAPI>,
     pub v2_api_events: Option<datadogV2::api_events::EventsAPI>,
@@ -523,6 +524,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 world.config.clone(),
                 world.http_client.as_ref().unwrap().clone()
             ));
+        }
+        "DomainAllowlist" => {
+            world.api_instances.v2_api_domain_allowlist = Some(
+                datadogV2::api_domain_allowlist::DomainAllowlistAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
         }
         "DORAMetrics" => {
             world.api_instances.v2_api_dora_metrics = Some(
@@ -1925,6 +1934,13 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.UpdateDashboardListItems".into(),
         test_v2_update_dashboard_list_items,
+    );
+    world
+        .function_mappings
+        .insert("v2.GetDomainAllowlist".into(), test_v2_get_domain_allowlist);
+    world.function_mappings.insert(
+        "v2.PatchDomainAllowlist".into(),
+        test_v2_patch_domain_allowlist,
     );
     world.function_mappings.insert(
         "v2.CreateDORADeployment".into(),
@@ -13662,6 +13678,55 @@ fn test_v2_update_dashboard_list_items(
                 };
             }
         };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_domain_allowlist(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_domain_allowlist
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.get_domain_allowlist_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_patch_domain_allowlist(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_domain_allowlist
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.patch_domain_allowlist_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
