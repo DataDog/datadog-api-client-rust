@@ -1903,6 +1903,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.GetUsageApplicationSecurityMonitoring".into(),
         test_v2_get_usage_application_security_monitoring,
     );
+    world.function_mappings.insert(
+        "v2.GetBillingDimensionMapping".into(),
+        test_v2_get_billing_dimension_mapping,
+    );
     world
         .function_mappings
         .insert("v2.GetCostByOrg".into(), test_v2_get_cost_by_org);
@@ -13275,6 +13279,43 @@ fn test_v2_get_usage_application_security_monitoring(
     let response = match block_on(
         api.get_usage_application_security_monitoring_with_http_info(start_hr, params),
     ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_billing_dimension_mapping(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_usage_metering
+        .as_ref()
+        .expect("api instance not found");
+    let filter_month = _parameters
+        .get("filter[month]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_view = _parameters
+        .get("filter[view]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_usage_metering::GetBillingDimensionMappingOptionalParams::default();
+    params.filter_month = filter_month;
+    params.filter_view = filter_view;
+    let response = match block_on(api.get_billing_dimension_mapping_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
