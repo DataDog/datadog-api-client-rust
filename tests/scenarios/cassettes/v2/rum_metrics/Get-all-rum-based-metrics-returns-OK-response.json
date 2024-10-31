@@ -1,0 +1,33 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "application/json"
+          ]
+        },
+        "method": "get",
+        "uri": "https://api.datadoghq.com/api/v2/rum/config/metrics"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":[]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Tue, 29 Oct 2024 11:59:25 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
