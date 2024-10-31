@@ -24,8 +24,8 @@ pub struct SyntheticsMobileStepParams {
     #[serde(rename = "element")]
     pub element: Option<crate::datadogV1::model::SyntheticsMobileStepParamsElement>,
     /// Boolean to change the state of the wifi for a `toggleWiFi` step type.
-    #[serde(rename = "enable")]
-    pub enable: Option<bool>,
+    #[serde(rename = "enabled")]
+    pub enabled: Option<bool>,
     /// Maximum number of scrolls to do for a `scrollToElement` step type.
     #[serde(rename = "maxScrolls")]
     pub max_scrolls: Option<i64>,
@@ -35,9 +35,9 @@ pub struct SyntheticsMobileStepParams {
     /// Public ID of the test to be played as part of a `playSubTest` step type.
     #[serde(rename = "subtestPublicId")]
     pub subtest_public_id: Option<String>,
-    /// Values used in the step. Used in multiple step types.
+    /// Values used in the step for in multiple step types.
     #[serde(rename = "value")]
-    pub value: Option<String>,
+    pub value: Option<crate::datadogV1::model::SyntheticsMobileStepParamsValue>,
     /// Variable object for `extractVariable` step type.
     #[serde(rename = "variable")]
     pub variable: Option<crate::datadogV1::model::SyntheticsMobileStepParamsVariable>,
@@ -46,10 +46,10 @@ pub struct SyntheticsMobileStepParams {
     pub with_enter: Option<bool>,
     /// Amount to scroll by on the `x` axis for a `scroll` step type.
     #[serde(rename = "x")]
-    pub x: Option<i64>,
+    pub x: Option<f64>,
     /// Amount to scroll by on the `y` axis for a `scroll` step type.
     #[serde(rename = "y")]
-    pub y: Option<i64>,
+    pub y: Option<f64>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -64,7 +64,7 @@ impl SyntheticsMobileStepParams {
             delay: None,
             direction: None,
             element: None,
-            enable: None,
+            enabled: None,
             max_scrolls: None,
             positions: None,
             subtest_public_id: None,
@@ -104,8 +104,8 @@ impl SyntheticsMobileStepParams {
         self
     }
 
-    pub fn enable(mut self, value: bool) -> Self {
-        self.enable = Some(value);
+    pub fn enabled(mut self, value: bool) -> Self {
+        self.enabled = Some(value);
         self
     }
 
@@ -127,7 +127,10 @@ impl SyntheticsMobileStepParams {
         self
     }
 
-    pub fn value(mut self, value: String) -> Self {
+    pub fn value(
+        mut self,
+        value: crate::datadogV1::model::SyntheticsMobileStepParamsValue,
+    ) -> Self {
         self.value = Some(value);
         self
     }
@@ -145,12 +148,12 @@ impl SyntheticsMobileStepParams {
         self
     }
 
-    pub fn x(mut self, value: i64) -> Self {
+    pub fn x(mut self, value: f64) -> Self {
         self.x = Some(value);
         self
     }
 
-    pub fn y(mut self, value: i64) -> Self {
+    pub fn y(mut self, value: f64) -> Self {
         self.y = Some(value);
         self
     }
@@ -195,19 +198,20 @@ impl<'de> Deserialize<'de> for SyntheticsMobileStepParams {
                 let mut element: Option<
                     crate::datadogV1::model::SyntheticsMobileStepParamsElement,
                 > = None;
-                let mut enable: Option<bool> = None;
+                let mut enabled: Option<bool> = None;
                 let mut max_scrolls: Option<i64> = None;
                 let mut positions: Option<
                     Vec<crate::datadogV1::model::SyntheticsMobileStepParamsPositionsItems>,
                 > = None;
                 let mut subtest_public_id: Option<String> = None;
-                let mut value: Option<String> = None;
+                let mut value: Option<crate::datadogV1::model::SyntheticsMobileStepParamsValue> =
+                    None;
                 let mut variable: Option<
                     crate::datadogV1::model::SyntheticsMobileStepParamsVariable,
                 > = None;
                 let mut with_enter: Option<bool> = None;
-                let mut x: Option<i64> = None;
-                let mut y: Option<i64> = None;
+                let mut x: Option<f64> = None;
+                let mut y: Option<f64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -256,11 +260,11 @@ impl<'de> Deserialize<'de> for SyntheticsMobileStepParams {
                             }
                             element = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "enable" => {
+                        "enabled" => {
                             if v.is_null() {
                                 continue;
                             }
-                            enable = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "maxScrolls" => {
                             if v.is_null() {
@@ -287,6 +291,14 @@ impl<'de> Deserialize<'de> for SyntheticsMobileStepParams {
                                 continue;
                             }
                             value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _value) = value {
+                                match _value {
+                                    crate::datadogV1::model::SyntheticsMobileStepParamsValue::UnparsedObject(_value) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "variable" => {
                             if v.is_null() {
@@ -325,7 +337,7 @@ impl<'de> Deserialize<'de> for SyntheticsMobileStepParams {
                     delay,
                     direction,
                     element,
-                    enable,
+                    enabled,
                     max_scrolls,
                     positions,
                     subtest_public_id,
