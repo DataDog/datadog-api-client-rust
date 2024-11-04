@@ -13,10 +13,10 @@ use std::fmt::{self, Formatter};
 pub struct SyntheticsMobileStepParamsPositionsItems {
     /// The `x` position for the flick.
     #[serde(rename = "x")]
-    pub x: Option<i64>,
+    pub x: Option<f64>,
     /// The `y` position for the flick.
     #[serde(rename = "y")]
-    pub y: Option<i64>,
+    pub y: Option<f64>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -34,12 +34,12 @@ impl SyntheticsMobileStepParamsPositionsItems {
         }
     }
 
-    pub fn x(mut self, value: i64) -> Self {
+    pub fn x(mut self, value: f64) -> Self {
         self.x = Some(value);
         self
     }
 
-    pub fn y(mut self, value: i64) -> Self {
+    pub fn y(mut self, value: f64) -> Self {
         self.y = Some(value);
         self
     }
@@ -76,8 +76,8 @@ impl<'de> Deserialize<'de> for SyntheticsMobileStepParamsPositionsItems {
             where
                 M: MapAccess<'a>,
             {
-                let mut x: Option<i64> = None;
-                let mut y: Option<i64> = None;
+                let mut x: Option<f64> = None;
+                let mut y: Option<f64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,

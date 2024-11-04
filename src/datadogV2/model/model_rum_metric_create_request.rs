@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// List of AWS related accounts.
+/// The new rum-based metric body.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct AWSRelatedAccountsResponse {
-    /// An AWS related account.
+pub struct RumMetricCreateRequest {
+    /// The new rum-based metric properties.
     #[serde(rename = "data")]
-    pub data: Option<Vec<crate::datadogV2::model::AWSRelatedAccount>>,
+    pub data: crate::datadogV2::model::RumMetricCreateData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,18 +21,13 @@ pub struct AWSRelatedAccountsResponse {
     pub(crate) _unparsed: bool,
 }
 
-impl AWSRelatedAccountsResponse {
-    pub fn new() -> AWSRelatedAccountsResponse {
-        AWSRelatedAccountsResponse {
-            data: None,
+impl RumMetricCreateRequest {
+    pub fn new(data: crate::datadogV2::model::RumMetricCreateData) -> RumMetricCreateRequest {
+        RumMetricCreateRequest {
+            data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn data(mut self, value: Vec<crate::datadogV2::model::AWSRelatedAccount>) -> Self {
-        self.data = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -44,20 +39,14 @@ impl AWSRelatedAccountsResponse {
     }
 }
 
-impl Default for AWSRelatedAccountsResponse {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<'de> Deserialize<'de> for AWSRelatedAccountsResponse {
+impl<'de> Deserialize<'de> for RumMetricCreateRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct AWSRelatedAccountsResponseVisitor;
-        impl<'a> Visitor<'a> for AWSRelatedAccountsResponseVisitor {
-            type Value = AWSRelatedAccountsResponse;
+        struct RumMetricCreateRequestVisitor;
+        impl<'a> Visitor<'a> for RumMetricCreateRequestVisitor {
+            type Value = RumMetricCreateRequest;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -67,7 +56,7 @@ impl<'de> Deserialize<'de> for AWSRelatedAccountsResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<Vec<crate::datadogV2::model::AWSRelatedAccount>> = None;
+                let mut data: Option<crate::datadogV2::model::RumMetricCreateData> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -77,9 +66,6 @@ impl<'de> Deserialize<'de> for AWSRelatedAccountsResponse {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "data" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -89,8 +75,9 @@ impl<'de> Deserialize<'de> for AWSRelatedAccountsResponse {
                         }
                     }
                 }
+                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = AWSRelatedAccountsResponse {
+                let content = RumMetricCreateRequest {
                     data,
                     additional_properties,
                     _unparsed,
@@ -100,6 +87,6 @@ impl<'de> Deserialize<'de> for AWSRelatedAccountsResponse {
             }
         }
 
-        deserializer.deserialize_any(AWSRelatedAccountsResponseVisitor)
+        deserializer.deserialize_any(RumMetricCreateRequestVisitor)
     }
 }

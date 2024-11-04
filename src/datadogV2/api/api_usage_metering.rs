@@ -6,6 +6,29 @@ use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 
+/// GetBillingDimensionMappingOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_billing_dimension_mapping`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetBillingDimensionMappingOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, and for mappings beginning this month. Defaults to the current month.
+    pub filter_month: Option<chrono::DateTime<chrono::Utc>>,
+    /// String to specify whether to retrieve active billing dimension mappings for the contract or for all available mappings. Allowed views have the string `active` or `all`. Defaults to `active`.
+    pub filter_view: Option<String>,
+}
+
+impl GetBillingDimensionMappingOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, and for mappings beginning this month. Defaults to the current month.
+    pub fn filter_month(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
+        self.filter_month = Some(value);
+        self
+    }
+    /// String to specify whether to retrieve active billing dimension mappings for the contract or for all available mappings. Allowed views have the string `active` or `all`. Defaults to `active`.
+    pub fn filter_view(mut self, value: String) -> Self {
+        self.filter_view = Some(value);
+        self
+    }
+}
+
 /// GetCostByOrgOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_cost_by_org`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -303,6 +326,14 @@ pub enum GetActiveBillingDimensionsError {
     UnknownValue(serde_json::Value),
 }
 
+/// GetBillingDimensionMappingError is a struct for typed errors of method [`UsageMeteringAPI::get_billing_dimension_mapping`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetBillingDimensionMappingError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// GetCostByOrgError is a struct for typed errors of method [`UsageMeteringAPI::get_cost_by_org`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -556,6 +587,149 @@ impl UsageMeteringAPI {
             };
         } else {
             let local_entity: Option<GetActiveBillingDimensionsError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get a mapping of billing dimensions to the corresponding keys for the supported usage metering public API endpoints.
+    /// Mapping data is updated on a monthly cadence.
+    ///
+    /// This endpoint is only accessible to [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
+    pub async fn get_billing_dimension_mapping(
+        &self,
+        params: GetBillingDimensionMappingOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::BillingDimensionsMappingResponse,
+        datadog::Error<GetBillingDimensionMappingError>,
+    > {
+        match self
+            .get_billing_dimension_mapping_with_http_info(params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get a mapping of billing dimensions to the corresponding keys for the supported usage metering public API endpoints.
+    /// Mapping data is updated on a monthly cadence.
+    ///
+    /// This endpoint is only accessible to [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
+    pub async fn get_billing_dimension_mapping_with_http_info(
+        &self,
+        params: GetBillingDimensionMappingOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::BillingDimensionsMappingResponse>,
+        datadog::Error<GetBillingDimensionMappingError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_billing_dimension_mapping";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_billing_dimension_mapping' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let filter_month = params.filter_month;
+        let filter_view = params.filter_view;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/usage/billing_dimension_mapping",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = filter_month {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[month]",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_view {
+            local_req_builder =
+                local_req_builder.query(&[("filter[view]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
+        );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::BillingDimensionsMappingResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetBillingDimensionMappingError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,

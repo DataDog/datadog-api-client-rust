@@ -6,20 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// AWS related account.
+/// Incident type data for a patch request.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct AWSRelatedAccount {
-    /// Attributes for an AWS related account.
+pub struct IncidentTypePatchData {
+    /// Incident type's attributes for updates.
     #[serde(rename = "attributes")]
-    pub attributes: Option<crate::datadogV2::model::AWSRelatedAccountAttributes>,
-    /// The AWS account ID.
+    pub attributes: crate::datadogV2::model::IncidentTypeUpdateAttributes,
+    /// The incident type's ID.
     #[serde(rename = "id")]
     pub id: String,
-    /// Type of AWS related account.
+    /// Incident type resource type.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::AWSRelatedAccountType,
+    pub type_: crate::datadogV2::model::IncidentTypeType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,26 +27,19 @@ pub struct AWSRelatedAccount {
     pub(crate) _unparsed: bool,
 }
 
-impl AWSRelatedAccount {
+impl IncidentTypePatchData {
     pub fn new(
+        attributes: crate::datadogV2::model::IncidentTypeUpdateAttributes,
         id: String,
-        type_: crate::datadogV2::model::AWSRelatedAccountType,
-    ) -> AWSRelatedAccount {
-        AWSRelatedAccount {
-            attributes: None,
+        type_: crate::datadogV2::model::IncidentTypeType,
+    ) -> IncidentTypePatchData {
+        IncidentTypePatchData {
+            attributes,
             id,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn attributes(
-        mut self,
-        value: crate::datadogV2::model::AWSRelatedAccountAttributes,
-    ) -> Self {
-        self.attributes = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -58,14 +51,14 @@ impl AWSRelatedAccount {
     }
 }
 
-impl<'de> Deserialize<'de> for AWSRelatedAccount {
+impl<'de> Deserialize<'de> for IncidentTypePatchData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct AWSRelatedAccountVisitor;
-        impl<'a> Visitor<'a> for AWSRelatedAccountVisitor {
-            type Value = AWSRelatedAccount;
+        struct IncidentTypePatchDataVisitor;
+        impl<'a> Visitor<'a> for IncidentTypePatchDataVisitor {
+            type Value = IncidentTypePatchData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -75,10 +68,10 @@ impl<'de> Deserialize<'de> for AWSRelatedAccount {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::AWSRelatedAccountAttributes> =
+                let mut attributes: Option<crate::datadogV2::model::IncidentTypeUpdateAttributes> =
                     None;
                 let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::AWSRelatedAccountType> = None;
+                let mut type_: Option<crate::datadogV2::model::IncidentTypeType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -88,9 +81,6 @@ impl<'de> Deserialize<'de> for AWSRelatedAccount {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "attributes" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "id" => {
@@ -100,9 +90,11 @@ impl<'de> Deserialize<'de> for AWSRelatedAccount {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::AWSRelatedAccountType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::IncidentTypeType::UnparsedObject(
+                                        _type_,
+                                    ) => {
                                         _unparsed = true;
-                                    },
+                                    }
                                     _ => {}
                                 }
                             }
@@ -114,10 +106,11 @@ impl<'de> Deserialize<'de> for AWSRelatedAccount {
                         }
                     }
                 }
+                let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = AWSRelatedAccount {
+                let content = IncidentTypePatchData {
                     attributes,
                     id,
                     type_,
@@ -129,6 +122,6 @@ impl<'de> Deserialize<'de> for AWSRelatedAccount {
             }
         }
 
-        deserializer.deserialize_any(AWSRelatedAccountVisitor)
+        deserializer.deserialize_any(IncidentTypePatchDataVisitor)
     }
 }

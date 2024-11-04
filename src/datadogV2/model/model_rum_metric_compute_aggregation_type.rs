@@ -6,21 +6,23 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum AWSRelatedAccountType {
-    AWS_ACCOUNT,
+pub enum RumMetricComputeAggregationType {
+    COUNT,
+    DISTRIBUTION,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for AWSRelatedAccountType {
+impl ToString for RumMetricComputeAggregationType {
     fn to_string(&self) -> String {
         match self {
-            Self::AWS_ACCOUNT => String::from("aws_account"),
+            Self::COUNT => String::from("count"),
+            Self::DISTRIBUTION => String::from("distribution"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for AWSRelatedAccountType {
+impl Serialize for RumMetricComputeAggregationType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -32,14 +34,15 @@ impl Serialize for AWSRelatedAccountType {
     }
 }
 
-impl<'de> Deserialize<'de> for AWSRelatedAccountType {
+impl<'de> Deserialize<'de> for RumMetricComputeAggregationType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "aws_account" => Self::AWS_ACCOUNT,
+            "count" => Self::COUNT,
+            "distribution" => Self::DISTRIBUTION,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

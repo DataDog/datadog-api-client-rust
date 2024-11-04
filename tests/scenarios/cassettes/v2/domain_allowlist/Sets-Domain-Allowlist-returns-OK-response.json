@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"domains\":[\"@static-test-domain.test\"],\"enabled\":false},\"type\":\"domain_allowlist\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "patch",
+        "uri": "https://api.datadoghq.com/api/v2/domain_allowlist"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":{\"type\":\"domain_allowlist\",\"attributes\":{\"enabled\":false,\"domains\":[\"@static-test-domain.test\"]}}}\n",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Wed, 23 Oct 2024 18:16:16 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

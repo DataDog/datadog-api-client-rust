@@ -17,7 +17,7 @@ pub struct CloudflareAccountResponseAttributes {
     /// The name of the Cloudflare account.
     #[serde(rename = "name")]
     pub name: String,
-    /// An allowlist of resources to restrict pulling metrics for.
+    /// An allowlist of resources to restrict pulling metrics for including `'web', 'dns', 'lb' (load balancer), 'worker'`.
     #[serde(rename = "resources")]
     pub resources: Option<Vec<String>>,
     /// An allowlist of zones to restrict pulling metrics for.

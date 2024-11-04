@@ -6,17 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes for an AWS related account.
+/// All the available rum-based metric objects.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct AWSRelatedAccountAttributes {
-    /// Whether or not the AWS account has a Datadog integration.
-    #[serde(rename = "has_datadog_integration")]
-    pub has_datadog_integration: Option<bool>,
-    /// The name of the AWS account.
-    #[serde(rename = "name")]
-    pub name: Option<String>,
+pub struct RumMetricsResponse {
+    /// A list of rum-based metric objects.
+    #[serde(rename = "data")]
+    pub data: Option<Vec<crate::datadogV2::model::RumMetricResponseData>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,23 +21,17 @@ pub struct AWSRelatedAccountAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl AWSRelatedAccountAttributes {
-    pub fn new() -> AWSRelatedAccountAttributes {
-        AWSRelatedAccountAttributes {
-            has_datadog_integration: None,
-            name: None,
+impl RumMetricsResponse {
+    pub fn new() -> RumMetricsResponse {
+        RumMetricsResponse {
+            data: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn has_datadog_integration(mut self, value: bool) -> Self {
-        self.has_datadog_integration = Some(value);
-        self
-    }
-
-    pub fn name(mut self, value: String) -> Self {
-        self.name = Some(value);
+    pub fn data(mut self, value: Vec<crate::datadogV2::model::RumMetricResponseData>) -> Self {
+        self.data = Some(value);
         self
     }
 
@@ -53,20 +44,20 @@ impl AWSRelatedAccountAttributes {
     }
 }
 
-impl Default for AWSRelatedAccountAttributes {
+impl Default for RumMetricsResponse {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for AWSRelatedAccountAttributes {
+impl<'de> Deserialize<'de> for RumMetricsResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct AWSRelatedAccountAttributesVisitor;
-        impl<'a> Visitor<'a> for AWSRelatedAccountAttributesVisitor {
-            type Value = AWSRelatedAccountAttributes;
+        struct RumMetricsResponseVisitor;
+        impl<'a> Visitor<'a> for RumMetricsResponseVisitor {
+            type Value = RumMetricsResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -76,8 +67,7 @@ impl<'de> Deserialize<'de> for AWSRelatedAccountAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut has_datadog_integration: Option<bool> = None;
-                let mut name: Option<String> = None;
+                let mut data: Option<Vec<crate::datadogV2::model::RumMetricResponseData>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -86,18 +76,11 @@ impl<'de> Deserialize<'de> for AWSRelatedAccountAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "has_datadog_integration" => {
+                        "data" => {
                             if v.is_null() {
                                 continue;
                             }
-                            has_datadog_integration =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "name" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -107,9 +90,8 @@ impl<'de> Deserialize<'de> for AWSRelatedAccountAttributes {
                     }
                 }
 
-                let content = AWSRelatedAccountAttributes {
-                    has_datadog_integration,
-                    name,
+                let content = RumMetricsResponse {
+                    data,
                     additional_properties,
                     _unparsed,
                 };
@@ -118,6 +100,6 @@ impl<'de> Deserialize<'de> for AWSRelatedAccountAttributes {
             }
         }
 
-        deserializer.deserialize_any(AWSRelatedAccountAttributesVisitor)
+        deserializer.deserialize_any(RumMetricsResponseVisitor)
     }
 }
