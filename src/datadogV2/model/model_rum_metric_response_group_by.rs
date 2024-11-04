@@ -14,7 +14,7 @@ pub struct RumMetricResponseGroupBy {
     /// The path to the value the rum-based metric will be aggregated over.
     #[serde(rename = "path")]
     pub path: Option<String>,
-    /// Eventual name of the tag that gets created. By default, the path attribute is used as the tag name.
+    /// Eventual name of the tag that gets created. By default, `path` is used as the tag name.
     #[serde(rename = "tag_name")]
     pub tag_name: Option<String>,
     #[serde(flatten)]

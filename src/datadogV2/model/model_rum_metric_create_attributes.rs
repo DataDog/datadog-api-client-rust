@@ -23,7 +23,7 @@ pub struct RumMetricCreateAttributes {
     /// The rules for the group by.
     #[serde(rename = "group_by")]
     pub group_by: Option<Vec<crate::datadogV2::model::RumMetricGroupBy>>,
-    /// The rule to count updatable events. Is only set if "event_type" is "sessions" or "views".
+    /// The rule to count updatable events. Is only set if `event_type` is `sessions` or `views`.
     #[serde(rename = "uniqueness")]
     pub uniqueness: Option<crate::datadogV2::model::RumMetricUniqueness>,
     #[serde(flatten)]
