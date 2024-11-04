@@ -2823,15 +2823,10 @@ impl SecurityMonitoringAPI {
                 local_req_builder.query(&[("filter[status]", &local_query_param.to_string())]);
         };
         if let Some(ref local) = filter_vulnerability_type {
-            local_req_builder = local_req_builder.query(&[(
-                "filter[vulnerability_type]",
-                &local
-                    .iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .to_string(),
-            )]);
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[vulnerability_type]", &param.to_string())]);
+            }
         };
 
         // build headers
