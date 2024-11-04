@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The rule to count updatable events. Is only set if "event_type" is "sessions" or "views".
+/// The rule to count updatable events. Is only set if `event_type` is `session` or `view`.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RumMetricResponseUniqueness {
-    /// When to count updatable events. "match" when the event is first seen, or "end" when the event is complete.
+    /// When to count updatable events. `match` when the event is first seen, or `end` when the event is complete.
     #[serde(rename = "when")]
     pub when: Option<crate::datadogV2::model::RumMetricUniquenessWhen>,
     #[serde(flatten)]

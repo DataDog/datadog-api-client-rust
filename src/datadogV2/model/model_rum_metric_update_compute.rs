@@ -12,7 +12,7 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RumMetricUpdateCompute {
     /// Toggle to include or exclude percentile aggregations for distribution metrics.
-    /// Only present when the `aggregation_type` is `distribution`.
+    /// Only present when `aggregation_type` is `distribution`.
     #[serde(rename = "include_percentiles")]
     pub include_percentiles: Option<bool>,
     #[serde(flatten)]

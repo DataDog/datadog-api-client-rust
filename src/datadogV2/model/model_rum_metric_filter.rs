@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RumMetricFilter {
-    /// The search query - following the RUM search syntax. Must include an @type facet query.
+    /// The search query - following the RUM search syntax.
     #[serde(rename = "query")]
     pub query: String,
     #[serde(flatten)]

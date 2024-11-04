@@ -15,10 +15,11 @@ pub struct RumMetricResponseCompute {
     #[serde(rename = "aggregation_type")]
     pub aggregation_type: Option<crate::datadogV2::model::RumMetricComputeAggregationType>,
     /// Toggle to include or exclude percentile aggregations for distribution metrics.
-    /// Only present when the `aggregation_type` is `distribution`.
+    /// Only present when `aggregation_type` is `distribution`.
     #[serde(rename = "include_percentiles")]
     pub include_percentiles: Option<bool>,
-    /// The path to the value the rum-based metric will aggregate on (only used if the aggregation type is a "distribution").
+    /// The path to the value the rum-based metric will aggregate on.
+    /// Only present when `aggregation_type` is `distribution`.
     #[serde(rename = "path")]
     pub path: Option<String>,
     #[serde(flatten)]
