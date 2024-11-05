@@ -14,13 +14,19 @@ pub struct SyntheticsStep {
     /// A boolean set to allow this step to fail.
     #[serde(rename = "allowFailure")]
     pub allow_failure: Option<bool>,
+    /// A boolean set to always execute this step even if the previous step failed or was skipped.
+    #[serde(rename = "alwaysExecute")]
+    pub always_execute: Option<bool>,
+    /// A boolean set to exit the test if the step succeeds.
+    #[serde(rename = "exitIfSucceed")]
+    pub exit_if_succeed: Option<bool>,
     /// A boolean to use in addition to `allowFailure` to determine if the test should be marked as failed when the step fails.
     #[serde(rename = "isCritical")]
     pub is_critical: Option<bool>,
     /// The name of the step.
     #[serde(rename = "name")]
     pub name: Option<String>,
-    /// A boolean set to not take a screenshot for the step.
+    /// A boolean set to skip taking a screenshot for the step.
     #[serde(rename = "noScreenshot")]
     pub no_screenshot: Option<bool>,
     /// The parameters of the step.
@@ -43,6 +49,8 @@ impl SyntheticsStep {
     pub fn new() -> SyntheticsStep {
         SyntheticsStep {
             allow_failure: None,
+            always_execute: None,
+            exit_if_succeed: None,
             is_critical: None,
             name: None,
             no_screenshot: None,
@@ -56,6 +64,16 @@ impl SyntheticsStep {
 
     pub fn allow_failure(mut self, value: bool) -> Self {
         self.allow_failure = Some(value);
+        self
+    }
+
+    pub fn always_execute(mut self, value: bool) -> Self {
+        self.always_execute = Some(value);
+        self
+    }
+
+    pub fn exit_if_succeed(mut self, value: bool) -> Self {
+        self.exit_if_succeed = Some(value);
         self
     }
 
@@ -122,6 +140,8 @@ impl<'de> Deserialize<'de> for SyntheticsStep {
                 M: MapAccess<'a>,
             {
                 let mut allow_failure: Option<bool> = None;
+                let mut always_execute: Option<bool> = None;
+                let mut exit_if_succeed: Option<bool> = None;
                 let mut is_critical: Option<bool> = None;
                 let mut name: Option<String> = None;
                 let mut no_screenshot: Option<bool> = None;
@@ -142,6 +162,20 @@ impl<'de> Deserialize<'de> for SyntheticsStep {
                                 continue;
                             }
                             allow_failure =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "alwaysExecute" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            always_execute =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "exitIfSucceed" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            exit_if_succeed =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "isCritical" => {
@@ -202,6 +236,8 @@ impl<'de> Deserialize<'de> for SyntheticsStep {
 
                 let content = SyntheticsStep {
                     allow_failure,
+                    always_execute,
+                    exit_if_succeed,
                     is_critical,
                     name,
                     no_screenshot,
