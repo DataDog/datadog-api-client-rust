@@ -17,9 +17,9 @@ pub struct SyntheticsBatchDetailsData {
     /// List of results for the batch.
     #[serde(rename = "results")]
     pub results: Option<Vec<crate::datadogV1::model::SyntheticsBatchResult>>,
-    /// Determines whether or not the batch has passed, failed, or is in progress.
+    /// Determines whether the batch has passed, failed, or is in progress.
     #[serde(rename = "status")]
-    pub status: Option<crate::datadogV1::model::SyntheticsStatus>,
+    pub status: Option<crate::datadogV1::model::SyntheticsBatchStatus>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -48,7 +48,7 @@ impl SyntheticsBatchDetailsData {
         self
     }
 
-    pub fn status(mut self, value: crate::datadogV1::model::SyntheticsStatus) -> Self {
+    pub fn status(mut self, value: crate::datadogV1::model::SyntheticsBatchStatus) -> Self {
         self.status = Some(value);
         self
     }
@@ -87,7 +87,7 @@ impl<'de> Deserialize<'de> for SyntheticsBatchDetailsData {
             {
                 let mut metadata: Option<crate::datadogV1::model::SyntheticsCIBatchMetadata> = None;
                 let mut results: Option<Vec<crate::datadogV1::model::SyntheticsBatchResult>> = None;
-                let mut status: Option<crate::datadogV1::model::SyntheticsStatus> = None;
+                let mut status: Option<crate::datadogV1::model::SyntheticsBatchStatus> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -115,11 +115,9 @@ impl<'de> Deserialize<'de> for SyntheticsBatchDetailsData {
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _status) = status {
                                 match _status {
-                                    crate::datadogV1::model::SyntheticsStatus::UnparsedObject(
-                                        _status,
-                                    ) => {
+                                    crate::datadogV1::model::SyntheticsBatchStatus::UnparsedObject(_status) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
