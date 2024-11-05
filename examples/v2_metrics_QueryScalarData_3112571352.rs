@@ -32,8 +32,7 @@ async fn main() {
             .limit(FormulaLimit::new().count(10).order(QuerySortOrder::DESC))]),
         ScalarFormulaRequestType::SCALAR_REQUEST,
     ));
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.QueryScalarData", true);
+    let configuration = datadog::Configuration::new();
     let api = MetricsAPI::with_config(configuration);
     let resp = api.query_scalar_data(body).await;
     if let Ok(value) = resp {

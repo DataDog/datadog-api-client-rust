@@ -162,8 +162,6 @@ impl Default for Configuration {
             ("v2.update_incident_integration".to_owned(), false),
             ("v2.update_incident_todo".to_owned(), false),
             ("v2.update_incident_type".to_owned(), false),
-            ("v2.query_scalar_data".to_owned(), false),
-            ("v2.query_timeseries_data".to_owned(), false),
             ("v2.get_finding".to_owned(), false),
             ("v2.list_findings".to_owned(), false),
             ("v2.mute_findings".to_owned(), false),
