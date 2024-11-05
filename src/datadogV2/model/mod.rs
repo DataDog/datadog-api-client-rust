@@ -1296,6 +1296,8 @@ pub mod model_gcpsts_service_account;
 pub use self::model_gcpsts_service_account::GCPSTSServiceAccount;
 pub mod model_gcpsts_service_account_attributes;
 pub use self::model_gcpsts_service_account_attributes::GCPSTSServiceAccountAttributes;
+pub mod model_gcp_metric_namespace_config;
+pub use self::model_gcp_metric_namespace_config::GCPMetricNamespaceConfig;
 pub mod model_gcp_service_account_meta;
 pub use self::model_gcp_service_account_meta::GCPServiceAccountMeta;
 pub mod model_gcp_service_account_type;
