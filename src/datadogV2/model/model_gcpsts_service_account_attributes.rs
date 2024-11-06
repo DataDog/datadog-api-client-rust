@@ -36,6 +36,9 @@ pub struct GCPSTSServiceAccountAttributes {
     /// When enabled, Datadog will attempt to collect Security Command Center Findings. Note: This requires additional permissions on the service account.
     #[serde(rename = "is_security_command_center_enabled")]
     pub is_security_command_center_enabled: Option<bool>,
+    /// Configurations for GCP metric namespaces.
+    #[serde(rename = "metric_namespace_configs")]
+    pub metric_namespace_configs: Option<Vec<crate::datadogV2::model::GCPMetricNamespaceConfig>>,
     /// When enabled, Datadog scans for all resources in your GCP environment.
     #[serde(rename = "resource_collection_enabled")]
     pub resource_collection_enabled: Option<bool>,
@@ -57,6 +60,7 @@ impl GCPSTSServiceAccountAttributes {
             is_cspm_enabled: None,
             is_resource_change_collection_enabled: None,
             is_security_command_center_enabled: None,
+            metric_namespace_configs: None,
             resource_collection_enabled: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -100,6 +104,14 @@ impl GCPSTSServiceAccountAttributes {
 
     pub fn is_security_command_center_enabled(mut self, value: bool) -> Self {
         self.is_security_command_center_enabled = Some(value);
+        self
+    }
+
+    pub fn metric_namespace_configs(
+        mut self,
+        value: Vec<crate::datadogV2::model::GCPMetricNamespaceConfig>,
+    ) -> Self {
+        self.metric_namespace_configs = Some(value);
         self
     }
 
@@ -148,6 +160,9 @@ impl<'de> Deserialize<'de> for GCPSTSServiceAccountAttributes {
                 let mut is_cspm_enabled: Option<bool> = None;
                 let mut is_resource_change_collection_enabled: Option<bool> = None;
                 let mut is_security_command_center_enabled: Option<bool> = None;
+                let mut metric_namespace_configs: Option<
+                    Vec<crate::datadogV2::model::GCPMetricNamespaceConfig>,
+                > = None;
                 let mut resource_collection_enabled: Option<bool> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -212,6 +227,13 @@ impl<'de> Deserialize<'de> for GCPSTSServiceAccountAttributes {
                             is_security_command_center_enabled =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "metric_namespace_configs" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            metric_namespace_configs =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "resource_collection_enabled" => {
                             if v.is_null() {
                                 continue;
@@ -236,6 +258,7 @@ impl<'de> Deserialize<'de> for GCPSTSServiceAccountAttributes {
                     is_cspm_enabled,
                     is_resource_change_collection_enabled,
                     is_security_command_center_enabled,
+                    metric_namespace_configs,
                     resource_collection_enabled,
                     additional_properties,
                     _unparsed,
