@@ -60,7 +60,7 @@ pub struct SyntheticsMobileTestOptions {
     /// The frequency at which to run the Synthetic test (in seconds).
     #[serde(rename = "tick_every")]
     pub tick_every: i64,
-    /// The level of verbosity for the mobile test.
+    /// The level of verbosity for the mobile test. This field can not be set by a user.
     #[serde(rename = "verbosity")]
     pub verbosity: Option<i32>,
     #[serde(flatten)]
