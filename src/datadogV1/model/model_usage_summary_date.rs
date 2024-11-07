@@ -185,9 +185,15 @@ pub struct UsageSummaryDate {
     /// Shows the average of all normalized Database Monitoring queries over all hours in the current date for all organizations.
     #[serde(rename = "dbm_queries_count_avg")]
     pub dbm_queries_count_avg: Option<i64>,
+    /// Shows the sum of all Error Tracking error events over all hours in the current date for the given org.
+    #[serde(rename = "error_tracking_error_events_sum")]
+    pub error_tracking_error_events_sum: Option<i64>,
     /// Shows the sum of all Error Tracking events over all hours in the current date for the given org.
     #[serde(rename = "error_tracking_events_sum")]
     pub error_tracking_events_sum: Option<i64>,
+    /// Shows the sum of all Error Tracking RUM error events over all hours in the current date for the given org.
+    #[serde(rename = "error_tracking_rum_error_events_sum")]
+    pub error_tracking_rum_error_events_sum: Option<i64>,
     /// Shows the high-watermark of all Fargate tasks over all hours in the current date for all organizations.
     #[serde(rename = "fargate_tasks_count_avg")]
     pub fargate_tasks_count_avg: Option<i64>,
@@ -504,7 +510,9 @@ impl UsageSummaryDate {
             date: None,
             dbm_host_top99p: None,
             dbm_queries_count_avg: None,
+            error_tracking_error_events_sum: None,
             error_tracking_events_sum: None,
+            error_tracking_rum_error_events_sum: None,
             fargate_tasks_count_avg: None,
             fargate_tasks_count_hwm: None,
             flex_logs_compute_large_avg: None,
@@ -932,8 +940,20 @@ impl UsageSummaryDate {
     }
 
     #[allow(deprecated)]
+    pub fn error_tracking_error_events_sum(mut self, value: i64) -> Self {
+        self.error_tracking_error_events_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn error_tracking_events_sum(mut self, value: i64) -> Self {
         self.error_tracking_events_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn error_tracking_rum_error_events_sum(mut self, value: i64) -> Self {
+        self.error_tracking_rum_error_events_sum = Some(value);
         self
     }
 
@@ -1500,7 +1520,9 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                 let mut date: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut dbm_host_top99p: Option<i64> = None;
                 let mut dbm_queries_count_avg: Option<i64> = None;
+                let mut error_tracking_error_events_sum: Option<i64> = None;
                 let mut error_tracking_events_sum: Option<i64> = None;
+                let mut error_tracking_rum_error_events_sum: Option<i64> = None;
                 let mut fargate_tasks_count_avg: Option<i64> = None;
                 let mut fargate_tasks_count_hwm: Option<i64> = None;
                 let mut flex_logs_compute_large_avg: Option<i64> = None;
@@ -1986,11 +2008,25 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                             dbm_queries_count_avg =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "error_tracking_error_events_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            error_tracking_error_events_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "error_tracking_events_sum" => {
                             if v.is_null() {
                                 continue;
                             }
                             error_tracking_events_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "error_tracking_rum_error_events_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            error_tracking_rum_error_events_sum =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "fargate_tasks_count_avg" => {
@@ -2612,7 +2648,9 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                     date,
                     dbm_host_top99p,
                     dbm_queries_count_avg,
+                    error_tracking_error_events_sum,
                     error_tracking_events_sum,
+                    error_tracking_rum_error_events_sum,
                     fargate_tasks_count_avg,
                     fargate_tasks_count_hwm,
                     flex_logs_compute_large_avg,
