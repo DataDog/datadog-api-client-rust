@@ -28,6 +28,7 @@ pub enum HourlyUsageAttributionUsageType {
     CUSTOM_INGESTED_TIMESERIES_USAGE,
     CUSTOM_TIMESERIES_USAGE,
     CWS_CONTAINERS_USAGE,
+    CWS_FARGATE_TASK_USAGE,
     CWS_HOSTS_USAGE,
     DATA_JOBS_MONITORING_USAGE,
     DATA_STREAM_MONITORING_USAGE,
@@ -112,6 +113,7 @@ impl ToString for HourlyUsageAttributionUsageType {
             }
             Self::CUSTOM_TIMESERIES_USAGE => String::from("custom_timeseries_usage"),
             Self::CWS_CONTAINERS_USAGE => String::from("cws_containers_usage"),
+            Self::CWS_FARGATE_TASK_USAGE => String::from("cws_fargate_task_usage"),
             Self::CWS_HOSTS_USAGE => String::from("cws_hosts_usage"),
             Self::DATA_JOBS_MONITORING_USAGE => String::from("data_jobs_monitoring_usage"),
             Self::DATA_STREAM_MONITORING_USAGE => String::from("data_stream_monitoring_usage"),
@@ -222,6 +224,7 @@ impl<'de> Deserialize<'de> for HourlyUsageAttributionUsageType {
             "custom_ingested_timeseries_usage" => Self::CUSTOM_INGESTED_TIMESERIES_USAGE,
             "custom_timeseries_usage" => Self::CUSTOM_TIMESERIES_USAGE,
             "cws_containers_usage" => Self::CWS_CONTAINERS_USAGE,
+            "cws_fargate_task_usage" => Self::CWS_FARGATE_TASK_USAGE,
             "cws_hosts_usage" => Self::CWS_HOSTS_USAGE,
             "data_jobs_monitoring_usage" => Self::DATA_JOBS_MONITORING_USAGE,
             "data_stream_monitoring_usage" => Self::DATA_STREAM_MONITORING_USAGE,

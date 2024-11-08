@@ -131,6 +131,12 @@ pub struct MonthlyUsageAttributionValues {
     /// The Cloud Workload Security container usage by tag(s).
     #[serde(rename = "cws_containers_usage")]
     pub cws_containers_usage: Option<f64>,
+    /// The percentage of Cloud Workload Security Fargate task usage by tag(s).
+    #[serde(rename = "cws_fargate_task_percentage")]
+    pub cws_fargate_task_percentage: Option<f64>,
+    /// The Cloud Workload Security Fargate task usage by tag(s).
+    #[serde(rename = "cws_fargate_task_usage")]
+    pub cws_fargate_task_usage: Option<f64>,
     /// The percentage of Cloud Workload Security host usage by tag(s).
     #[serde(rename = "cws_hosts_percentage")]
     pub cws_hosts_percentage: Option<f64>,
@@ -463,6 +469,8 @@ impl MonthlyUsageAttributionValues {
             custom_timeseries_usage: None,
             cws_containers_percentage: None,
             cws_containers_usage: None,
+            cws_fargate_task_percentage: None,
+            cws_fargate_task_usage: None,
             cws_hosts_percentage: None,
             cws_hosts_usage: None,
             data_jobs_monitoring_usage: None,
@@ -759,6 +767,16 @@ impl MonthlyUsageAttributionValues {
 
     pub fn cws_containers_usage(mut self, value: f64) -> Self {
         self.cws_containers_usage = Some(value);
+        self
+    }
+
+    pub fn cws_fargate_task_percentage(mut self, value: f64) -> Self {
+        self.cws_fargate_task_percentage = Some(value);
+        self
+    }
+
+    pub fn cws_fargate_task_usage(mut self, value: f64) -> Self {
+        self.cws_fargate_task_usage = Some(value);
         self
     }
 
@@ -1304,6 +1322,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                 let mut custom_timeseries_usage: Option<f64> = None;
                 let mut cws_containers_percentage: Option<f64> = None;
                 let mut cws_containers_usage: Option<f64> = None;
+                let mut cws_fargate_task_percentage: Option<f64> = None;
+                let mut cws_fargate_task_usage: Option<f64> = None;
                 let mut cws_hosts_percentage: Option<f64> = None;
                 let mut cws_hosts_usage: Option<f64> = None;
                 let mut data_jobs_monitoring_usage: Option<f64> = None;
@@ -1683,6 +1703,20 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                                 continue;
                             }
                             cws_containers_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cws_fargate_task_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cws_fargate_task_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cws_fargate_task_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cws_fargate_task_usage =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "cws_hosts_percentage" => {
@@ -2391,6 +2425,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                     custom_timeseries_usage,
                     cws_containers_percentage,
                     cws_containers_usage,
+                    cws_fargate_task_percentage,
+                    cws_fargate_task_usage,
                     cws_hosts_percentage,
                     cws_hosts_usage,
                     data_jobs_monitoring_usage,
