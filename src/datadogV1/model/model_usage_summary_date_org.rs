@@ -182,6 +182,9 @@ pub struct UsageSummaryDateOrg {
     /// Shows the average of all distinct Cloud Workload Security containers over all hours in the current date for the given org.
     #[serde(rename = "cws_container_count_avg")]
     pub cws_container_count_avg: Option<i64>,
+    /// Shows the average of all distinct Cloud Workload Security Fargate tasks over all hours in the current date for the given org.
+    #[serde(rename = "cws_fargate_task_avg")]
+    pub cws_fargate_task_avg: Option<i64>,
     /// Shows the 99th percentile of all Cloud Workload Security hosts over all hours in the current date for the given org.
     #[serde(rename = "cws_host_top99p")]
     pub cws_host_top99p: Option<i64>,
@@ -528,6 +531,7 @@ impl UsageSummaryDateOrg {
             custom_live_ts_avg: None,
             custom_ts_avg: None,
             cws_container_count_avg: None,
+            cws_fargate_task_avg: None,
             cws_host_top99p: None,
             data_jobs_monitoring_host_hr_sum: None,
             dbm_host_top99p_sum: None,
@@ -955,6 +959,12 @@ impl UsageSummaryDateOrg {
     #[allow(deprecated)]
     pub fn cws_container_count_avg(mut self, value: i64) -> Self {
         self.cws_container_count_avg = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn cws_fargate_task_avg(mut self, value: i64) -> Self {
+        self.cws_fargate_task_avg = Some(value);
         self
     }
 
@@ -1580,6 +1590,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                 let mut custom_live_ts_avg: Option<i64> = None;
                 let mut custom_ts_avg: Option<i64> = None;
                 let mut cws_container_count_avg: Option<i64> = None;
+                let mut cws_fargate_task_avg: Option<i64> = None;
                 let mut cws_host_top99p: Option<i64> = None;
                 let mut data_jobs_monitoring_host_hr_sum: Option<i64> = None;
                 let mut dbm_host_top99p_sum: Option<i64> = None;
@@ -2067,6 +2078,13 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                                 continue;
                             }
                             cws_container_count_avg =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cws_fargate_task_avg" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cws_fargate_task_avg =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "cws_host_top99p" => {
@@ -2754,6 +2772,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                     custom_live_ts_avg,
                     custom_ts_avg,
                     cws_container_count_avg,
+                    cws_fargate_task_avg,
                     cws_host_top99p,
                     data_jobs_monitoring_host_hr_sum,
                     dbm_host_top99p_sum,

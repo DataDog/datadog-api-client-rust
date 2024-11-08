@@ -177,8 +177,11 @@ pub struct UsageSummaryResponse {
     #[serde(rename = "custom_ts_sum")]
     pub custom_ts_sum: Option<i64>,
     /// Shows the average of all distinct Cloud Workload Security containers over all hours in the current month for all organizations.
-    #[serde(rename = "cws_containers_avg_sum")]
-    pub cws_containers_avg_sum: Option<i64>,
+    #[serde(rename = "cws_container_avg_sum")]
+    pub cws_container_avg_sum: Option<i64>,
+    /// Shows the average of all distinct Cloud Workload Security Fargate tasks over all hours in the current month for all organizations.
+    #[serde(rename = "cws_fargate_task_avg_sum")]
+    pub cws_fargate_task_avg_sum: Option<i64>,
     /// Shows the 99th percentile of all Cloud Workload Security hosts over all hours in the current month for all organizations.
     #[serde(rename = "cws_host_top99p_sum")]
     pub cws_host_top99p_sum: Option<i64>,
@@ -543,7 +546,8 @@ impl UsageSummaryResponse {
             custom_historical_ts_sum: None,
             custom_live_ts_sum: None,
             custom_ts_sum: None,
-            cws_containers_avg_sum: None,
+            cws_container_avg_sum: None,
+            cws_fargate_task_avg_sum: None,
             cws_host_top99p_sum: None,
             data_jobs_monitoring_host_hr_agg_sum: None,
             dbm_host_top99p_sum: None,
@@ -969,8 +973,14 @@ impl UsageSummaryResponse {
     }
 
     #[allow(deprecated)]
-    pub fn cws_containers_avg_sum(mut self, value: i64) -> Self {
-        self.cws_containers_avg_sum = Some(value);
+    pub fn cws_container_avg_sum(mut self, value: i64) -> Self {
+        self.cws_container_avg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn cws_fargate_task_avg_sum(mut self, value: i64) -> Self {
+        self.cws_fargate_task_avg_sum = Some(value);
         self
     }
 
@@ -1630,7 +1640,8 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                 let mut custom_historical_ts_sum: Option<i64> = None;
                 let mut custom_live_ts_sum: Option<i64> = None;
                 let mut custom_ts_sum: Option<i64> = None;
-                let mut cws_containers_avg_sum: Option<i64> = None;
+                let mut cws_container_avg_sum: Option<i64> = None;
+                let mut cws_fargate_task_avg_sum: Option<i64> = None;
                 let mut cws_host_top99p_sum: Option<i64> = None;
                 let mut data_jobs_monitoring_host_hr_agg_sum: Option<i64> = None;
                 let mut dbm_host_top99p_sum: Option<i64> = None;
@@ -2112,11 +2123,18 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                             custom_ts_sum =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "cws_containers_avg_sum" => {
+                        "cws_container_avg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cws_containers_avg_sum =
+                            cws_container_avg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cws_fargate_task_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cws_fargate_task_avg_sum =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "cws_host_top99p_sum" => {
@@ -2845,7 +2863,8 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                     custom_historical_ts_sum,
                     custom_live_ts_sum,
                     custom_ts_sum,
-                    cws_containers_avg_sum,
+                    cws_container_avg_sum,
+                    cws_fargate_task_avg_sum,
                     cws_host_top99p_sum,
                     data_jobs_monitoring_host_hr_agg_sum,
                     dbm_host_top99p_sum,
