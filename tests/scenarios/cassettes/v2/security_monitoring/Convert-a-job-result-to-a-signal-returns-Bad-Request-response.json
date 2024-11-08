@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"jobResultIds\":[\"\"],\"notifications\":[\"\"],\"signalMessage\":\"A large number of failed login attempts.\",\"signalSeverity\":\"critical\"},\"type\":\"historicalDetectionsJobResultSignalConversion\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "*/*"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/siem-historical-detections/jobs/signal_convert"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"status\":\"400\",\"title\":\"Generic Error\",\"detail\":\"empty jobResultId provided\"}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Fri, 08 Nov 2024 09:54:39 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
