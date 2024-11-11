@@ -9,6 +9,8 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum FormulaAndFunctionSLOMeasure {
     GOOD_EVENTS,
     BAD_EVENTS,
+    GOOD_MINUTES,
+    BAD_MINUTES,
     SLO_STATUS,
     ERROR_BUDGET_REMAINING,
     BURN_RATE,
@@ -21,6 +23,8 @@ impl ToString for FormulaAndFunctionSLOMeasure {
         match self {
             Self::GOOD_EVENTS => String::from("good_events"),
             Self::BAD_EVENTS => String::from("bad_events"),
+            Self::GOOD_MINUTES => String::from("good_minutes"),
+            Self::BAD_MINUTES => String::from("bad_minutes"),
             Self::SLO_STATUS => String::from("slo_status"),
             Self::ERROR_BUDGET_REMAINING => String::from("error_budget_remaining"),
             Self::BURN_RATE => String::from("burn_rate"),
@@ -51,6 +55,8 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionSLOMeasure {
         Ok(match s.as_str() {
             "good_events" => Self::GOOD_EVENTS,
             "bad_events" => Self::BAD_EVENTS,
+            "good_minutes" => Self::GOOD_MINUTES,
+            "bad_minutes" => Self::BAD_MINUTES,
             "slo_status" => Self::SLO_STATUS,
             "error_budget_remaining" => Self::ERROR_BUDGET_REMAINING,
             "burn_rate" => Self::BURN_RATE,

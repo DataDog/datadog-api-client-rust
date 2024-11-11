@@ -7,8 +7,8 @@ use datadog_api_client::datadogV2::api_security_monitoring::SecurityMonitoringAP
 async fn main() {
     // there is a valid "historical_job" in the system
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListHistoricalJobs", true);
     configuration.set_unstable_operation_enabled("v2.RunHistoricalJob", true);
+    configuration.set_unstable_operation_enabled("v2.ListHistoricalJobs", true);
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api
         .list_historical_jobs(
