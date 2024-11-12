@@ -41,7 +41,7 @@ async fn main() {
     
     let {% if context._enable_operations %}mut{% endif %} configuration = datadog::Configuration::new();
     
-    {%- for operation in context._enable_operations %}
+    {%- for operation in context._enable_operations|sort %}
     configuration.set_unstable_operation_enabled("{{ version }}.{{ operation }}", true);
     {%- endfor %}
     let api = {{context["api_instance"]["name"]}}API::with_config(configuration);
