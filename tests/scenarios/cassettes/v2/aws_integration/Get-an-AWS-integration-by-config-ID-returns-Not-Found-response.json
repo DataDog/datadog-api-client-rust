@@ -1,0 +1,33 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "application/json"
+          ]
+        },
+        "method": "get",
+        "uri": "https://api.datadoghq.com/api/v2/integration/aws/accounts/448169a8-251c-4344-abee-1c4edef39f7a"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"status\":\"404\",\"title\":\"Account not found\",\"detail\":\"AWS account with provided id is not integrated\"}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 404,
+          "message": "Not Found"
+        }
+      },
+      "recorded_at": "Wed, 06 Nov 2024 18:44:53 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

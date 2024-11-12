@@ -7,6 +7,8 @@ pub use self::api::api_api_management;
 pub use self::api::api_apm_retention_filters;
 pub use self::api::api_audit;
 pub use self::api::api_authn_mappings;
+pub use self::api::api_aws_integration;
+pub use self::api::api_aws_logs_integration;
 pub use self::api::api_case_management;
 pub use self::api::api_ci_visibility_pipelines;
 pub use self::api::api_ci_visibility_tests;
