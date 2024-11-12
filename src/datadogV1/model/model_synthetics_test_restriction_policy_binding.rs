@@ -12,8 +12,8 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SyntheticsTestRestrictionPolicyBinding {
     /// List of principals for a mobile test binding.
-    #[serde(rename = "principal")]
-    pub principal: Option<Vec<String>>,
+    #[serde(rename = "principals")]
+    pub principals: Option<Vec<String>>,
     /// The type of relation for the binding.
     #[serde(rename = "relation")]
     pub relation: Option<crate::datadogV1::model::SyntheticsTestRestrictionPolicyBindingRelation>,
@@ -27,15 +27,15 @@ pub struct SyntheticsTestRestrictionPolicyBinding {
 impl SyntheticsTestRestrictionPolicyBinding {
     pub fn new() -> SyntheticsTestRestrictionPolicyBinding {
         SyntheticsTestRestrictionPolicyBinding {
-            principal: None,
+            principals: None,
             relation: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn principal(mut self, value: Vec<String>) -> Self {
-        self.principal = Some(value);
+    pub fn principals(mut self, value: Vec<String>) -> Self {
+        self.principals = Some(value);
         self
     }
 
@@ -79,7 +79,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestRestrictionPolicyBinding {
             where
                 M: MapAccess<'a>,
             {
-                let mut principal: Option<Vec<String>> = None;
+                let mut principals: Option<Vec<String>> = None;
                 let mut relation: Option<
                     crate::datadogV1::model::SyntheticsTestRestrictionPolicyBindingRelation,
                 > = None;
@@ -91,11 +91,11 @@ impl<'de> Deserialize<'de> for SyntheticsTestRestrictionPolicyBinding {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "principal" => {
+                        "principals" => {
                             if v.is_null() {
                                 continue;
                             }
-                            principal = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            principals = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "relation" => {
                             if v.is_null() {
@@ -120,7 +120,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestRestrictionPolicyBinding {
                 }
 
                 let content = SyntheticsTestRestrictionPolicyBinding {
-                    principal,
+                    principals,
                     relation,
                     additional_properties,
                     _unparsed,
