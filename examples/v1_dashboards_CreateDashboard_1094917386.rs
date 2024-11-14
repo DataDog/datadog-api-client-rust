@@ -38,7 +38,6 @@ async fn main() {
         ],
     )
     .description(Some("".to_string()))
-    .is_read_only(false)
     .notify_list(Some(vec![]))
     .template_variables(Some(vec![]));
     let configuration = datadog::Configuration::new();
