@@ -14,6 +14,7 @@ pub enum AWSNamespace {
     CUSTOM,
     NETWORK_ELB,
     LAMBDA,
+    STEP_FUNCTIONS,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -27,6 +28,7 @@ impl ToString for AWSNamespace {
             Self::CUSTOM => String::from("custom"),
             Self::NETWORK_ELB => String::from("network_elb"),
             Self::LAMBDA => String::from("lambda"),
+            Self::STEP_FUNCTIONS => String::from("step_functions"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -58,6 +60,7 @@ impl<'de> Deserialize<'de> for AWSNamespace {
             "custom" => Self::CUSTOM,
             "network_elb" => Self::NETWORK_ELB,
             "lambda" => Self::LAMBDA,
+            "step_functions" => Self::STEP_FUNCTIONS,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
