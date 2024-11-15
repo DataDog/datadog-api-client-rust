@@ -61,7 +61,6 @@ async fn main() {
                 ).layout(WidgetLayout::new(15, 47, 0, 0))
             ],
         )
-            .is_read_only(false)
             .notify_list(Some(vec![]))
             .template_variables(Some(vec![]));
     let configuration = datadog::Configuration::new();

@@ -29,7 +29,6 @@ async fn main() {
         ))],
     )
     .description(None)
-    .is_read_only(false)
     .notify_list(Some(vec![]))
     .reflow_type(DashboardReflowType::AUTO)
     .restricted_roles(vec![])

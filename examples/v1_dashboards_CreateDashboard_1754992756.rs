@@ -37,8 +37,7 @@ async fn main() {
             .layout(WidgetLayout::new(2, 2, 1, 1).is_column_break(false)),
         ],
     )
-    .description(Some("description".to_string()))
-    .is_read_only(false);
+    .description(Some("description".to_string()));
     let configuration = datadog::Configuration::new();
     let api = DashboardsAPI::with_config(configuration);
     let resp = api.create_dashboard(body).await;
