@@ -624,10 +624,13 @@ def format_data_with_schema_dict(
         imports.add("std::collections::BTreeMap")
         if schema.get("additionalProperties") == {}:
             for k, v in data.items():
-                if isinstance(v, (int, float)):
+                if isinstance(v, bool):
+                    imports.add("serde_json::Value")
+                    parameters += f'("{k}".to_string(), Value::from(\"{v}\")),'
+                elif isinstance(v, (int, float)):
                     imports.add("serde_json::Value")
                     parameters += f'("{k}".to_string(), Value::from({v})),'
-                if isinstance(v, str):
+                elif isinstance(v, str):
                     imports.add("serde_json::Value")
                     parameters += f'("{k}".to_string(), Value::from(\"{v}\")),'
             return f"BTreeMap::from([{parameters}])", imports
