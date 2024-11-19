@@ -51,6 +51,7 @@ pub enum UpdateLogsMetricError {
 }
 
 /// Manage configuration of [log-based metrics](<https://app.datadoghq.com/logs/pipelines/generate-metrics>) for your organization.
+/// You need an API and non-scoped application key with Admin rights to interact with these endpoints.
 #[derive(Debug, Clone)]
 pub struct LogsMetricsAPI {
     config: datadog::Configuration,
