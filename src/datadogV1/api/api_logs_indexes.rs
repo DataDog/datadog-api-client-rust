@@ -63,7 +63,7 @@ pub enum UpdateLogsIndexOrderError {
 }
 
 /// Manage configuration of [log indexes](<https://docs.datadoghq.com/logs/indexes/>).
-/// You need an API and application key with Admin rights to interact with this endpoint.
+/// You need an API and non-scoped application key with Admin rights to interact with these endpoints.
 #[derive(Debug, Clone)]
 pub struct LogsIndexesAPI {
     config: datadog::Configuration,
