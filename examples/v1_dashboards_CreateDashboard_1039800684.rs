@@ -23,11 +23,13 @@ async fn main() {
         vec![Widget::new(WidgetDefinition::ListStreamWidgetDefinition(
             Box::new(ListStreamWidgetDefinition::new(
                 vec![ListStreamWidgetRequest::new(
-                    vec![ListStreamColumn::new(
-                        "timestamp".to_string(),
-                        ListStreamColumnWidth::AUTO,
-                    )],
+                    vec![
+                        ListStreamColumn::new("timestamp".to_string(), ListStreamColumnWidth::AUTO),
+                        ListStreamColumn::new("message".to_string(), ListStreamColumnWidth::AUTO)
+                            .is_clustering_pattern_field_path(true),
+                    ],
                     ListStreamQuery::new(ListStreamSource::LOGS_PATTERN_STREAM, "".to_string())
+                        .clustering_pattern_field_path("message".to_string())
                         .group_by(vec![ListStreamGroupByItems::new("service".to_string())]),
                     ListStreamResponseFormat::EVENT_LIST,
                 )],
