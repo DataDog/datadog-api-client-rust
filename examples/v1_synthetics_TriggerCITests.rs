@@ -11,7 +11,6 @@ use datadog_api_client::datadogV1::model::SyntheticsCIBatchMetadataPipeline;
 use datadog_api_client::datadogV1::model::SyntheticsCIBatchMetadataProvider;
 use datadog_api_client::datadogV1::model::SyntheticsCITest;
 use datadog_api_client::datadogV1::model::SyntheticsCITestBody;
-use datadog_api_client::datadogV1::model::SyntheticsDeviceID;
 use datadog_api_client::datadogV1::model::SyntheticsTestOptionsRetry;
 
 #[tokio::main]
@@ -22,7 +21,7 @@ async fn main() {
                 SyntheticsBasicAuthWeb::new("PaSSw0RD!".to_string(), "my_username".to_string())
                     .type_(SyntheticsBasicAuthWebType::WEB),
             )))
-            .device_ids(vec![SyntheticsDeviceID::CHROME_LAPTOP_LARGE])
+            .device_ids(vec!["chrome.laptop_large".to_string()])
             .locations(vec!["aws:eu-west-3".to_string()])
             .metadata(
                 SyntheticsCIBatchMetadata::new()

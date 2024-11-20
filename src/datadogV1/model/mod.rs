@@ -1270,8 +1270,6 @@ pub mod model_synthetics_ci_batch_metadata_git;
 pub use self::model_synthetics_ci_batch_metadata_git::SyntheticsCIBatchMetadataGit;
 pub mod model_synthetics_batch_result;
 pub use self::model_synthetics_batch_result::SyntheticsBatchResult;
-pub mod model_synthetics_device_id;
-pub use self::model_synthetics_device_id::SyntheticsDeviceID;
 pub mod model_synthetics_test_execution_rule;
 pub use self::model_synthetics_test_execution_rule::SyntheticsTestExecutionRule;
 pub mod model_synthetics_batch_status;

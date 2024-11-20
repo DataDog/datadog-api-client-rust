@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct SyntheticsTriggerCITestRunResult {
     /// The device ID.
     #[serde(rename = "device")]
-    pub device: Option<crate::datadogV1::model::SyntheticsDeviceID>,
+    pub device: Option<String>,
     /// The location ID of the test run.
     #[serde(rename = "location")]
     pub location: Option<i64>,
@@ -42,7 +42,7 @@ impl SyntheticsTriggerCITestRunResult {
         }
     }
 
-    pub fn device(mut self, value: crate::datadogV1::model::SyntheticsDeviceID) -> Self {
+    pub fn device(mut self, value: String) -> Self {
         self.device = Some(value);
         self
     }
@@ -94,7 +94,7 @@ impl<'de> Deserialize<'de> for SyntheticsTriggerCITestRunResult {
             where
                 M: MapAccess<'a>,
             {
-                let mut device: Option<crate::datadogV1::model::SyntheticsDeviceID> = None;
+                let mut device: Option<String> = None;
                 let mut location: Option<i64> = None;
                 let mut public_id: Option<String> = None;
                 let mut result_id: Option<String> = None;
@@ -111,16 +111,6 @@ impl<'de> Deserialize<'de> for SyntheticsTriggerCITestRunResult {
                                 continue;
                             }
                             device = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _device) = device {
-                                match _device {
-                                    crate::datadogV1::model::SyntheticsDeviceID::UnparsedObject(
-                                        _device,
-                                    ) => {
-                                        _unparsed = true;
-                                    }
-                                    _ => {}
-                                }
-                            }
                         }
                         "location" => {
                             if v.is_null() {

@@ -28,7 +28,7 @@ pub struct SyntheticsCITest {
     pub cookies: Option<String>,
     /// For browser test, array with the different device IDs used to run the test.
     #[serde(rename = "deviceIds")]
-    pub device_ids: Option<Vec<crate::datadogV1::model::SyntheticsDeviceID>>,
+    pub device_ids: Option<Vec<String>>,
     /// For API HTTP test, whether or not the test should follow redirects.
     #[serde(rename = "followRedirects")]
     pub follow_redirects: Option<bool>,
@@ -107,7 +107,7 @@ impl SyntheticsCITest {
         self
     }
 
-    pub fn device_ids(mut self, value: Vec<crate::datadogV1::model::SyntheticsDeviceID>) -> Self {
+    pub fn device_ids(mut self, value: Vec<String>) -> Self {
         self.device_ids = Some(value);
         self
     }
@@ -178,7 +178,7 @@ impl<'de> Deserialize<'de> for SyntheticsCITest {
                 let mut body: Option<String> = None;
                 let mut body_type: Option<String> = None;
                 let mut cookies: Option<String> = None;
-                let mut device_ids: Option<Vec<crate::datadogV1::model::SyntheticsDeviceID>> = None;
+                let mut device_ids: Option<Vec<String>> = None;
                 let mut follow_redirects: Option<bool> = None;
                 let mut headers: Option<std::collections::BTreeMap<String, String>> = None;
                 let mut locations: Option<Vec<String>> = None;

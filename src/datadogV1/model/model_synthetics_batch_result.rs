@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct SyntheticsBatchResult {
     /// The device ID.
     #[serde(rename = "device")]
-    pub device: Option<crate::datadogV1::model::SyntheticsDeviceID>,
+    pub device: Option<String>,
     /// Total duration in millisecond of the test.
     #[serde(rename = "duration")]
     pub duration: Option<f64>,
@@ -66,7 +66,7 @@ impl SyntheticsBatchResult {
         }
     }
 
-    pub fn device(mut self, value: crate::datadogV1::model::SyntheticsDeviceID) -> Self {
+    pub fn device(mut self, value: String) -> Self {
         self.device = Some(value);
         self
     }
@@ -151,7 +151,7 @@ impl<'de> Deserialize<'de> for SyntheticsBatchResult {
             where
                 M: MapAccess<'a>,
             {
-                let mut device: Option<crate::datadogV1::model::SyntheticsDeviceID> = None;
+                let mut device: Option<String> = None;
                 let mut duration: Option<f64> = None;
                 let mut execution_rule: Option<
                     crate::datadogV1::model::SyntheticsTestExecutionRule,
@@ -177,16 +177,6 @@ impl<'de> Deserialize<'de> for SyntheticsBatchResult {
                                 continue;
                             }
                             device = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _device) = device {
-                                match _device {
-                                    crate::datadogV1::model::SyntheticsDeviceID::UnparsedObject(
-                                        _device,
-                                    ) => {
-                                        _unparsed = true;
-                                    }
-                                    _ => {}
-                                }
-                            }
                         }
                         "duration" => {
                             if v.is_null() {
