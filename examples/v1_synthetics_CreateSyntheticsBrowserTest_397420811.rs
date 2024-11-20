@@ -7,7 +7,6 @@ use datadog_api_client::datadogV1::model::SyntheticsBrowserTestConfig;
 use datadog_api_client::datadogV1::model::SyntheticsBrowserTestType;
 use datadog_api_client::datadogV1::model::SyntheticsConfigVariable;
 use datadog_api_client::datadogV1::model::SyntheticsConfigVariableType;
-use datadog_api_client::datadogV1::model::SyntheticsDeviceID;
 use datadog_api_client::datadogV1::model::SyntheticsStep;
 use datadog_api_client::datadogV1::model::SyntheticsStepType;
 use datadog_api_client::datadogV1::model::SyntheticsTestOptions;
@@ -39,7 +38,7 @@ async fn main() {
         SyntheticsTestOptions::new()
             .accept_self_signed(false)
             .allow_insecure(true)
-            .device_ids(vec![SyntheticsDeviceID::TABLET])
+            .device_ids(vec!["tablet".to_string()])
             .disable_cors(true)
             .follow_redirects(true)
             .min_failure_duration(10)

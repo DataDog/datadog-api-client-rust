@@ -26,7 +26,7 @@ pub struct SyntheticsTestOptions {
     pub ci: Option<crate::datadogV1::model::SyntheticsTestCiOptions>,
     /// For browser test, array with the different device IDs used to run the test.
     #[serde(rename = "device_ids")]
-    pub device_ids: Option<Vec<crate::datadogV1::model::SyntheticsDeviceID>>,
+    pub device_ids: Option<Vec<String>>,
     /// Whether or not to disable CORS mechanism.
     #[serde(rename = "disableCors")]
     pub disable_cors: Option<bool>,
@@ -162,7 +162,7 @@ impl SyntheticsTestOptions {
     }
 
     #[allow(deprecated)]
-    pub fn device_ids(mut self, value: Vec<crate::datadogV1::model::SyntheticsDeviceID>) -> Self {
+    pub fn device_ids(mut self, value: Vec<String>) -> Self {
         self.device_ids = Some(value);
         self
     }
@@ -329,7 +329,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptions {
                 let mut allow_insecure: Option<bool> = None;
                 let mut check_certificate_revocation: Option<bool> = None;
                 let mut ci: Option<crate::datadogV1::model::SyntheticsTestCiOptions> = None;
-                let mut device_ids: Option<Vec<crate::datadogV1::model::SyntheticsDeviceID>> = None;
+                let mut device_ids: Option<Vec<String>> = None;
                 let mut disable_cors: Option<bool> = None;
                 let mut disable_csp: Option<bool> = None;
                 let mut enable_profiling: Option<bool> = None;

@@ -8,7 +8,6 @@ use datadog_api_client::datadogV1::model::SyntheticsBrowserVariable;
 use datadog_api_client::datadogV1::model::SyntheticsBrowserVariableType;
 use datadog_api_client::datadogV1::model::SyntheticsConfigVariable;
 use datadog_api_client::datadogV1::model::SyntheticsConfigVariableType;
-use datadog_api_client::datadogV1::model::SyntheticsDeviceID;
 use datadog_api_client::datadogV1::model::SyntheticsStep;
 use datadog_api_client::datadogV1::model::SyntheticsStepType;
 use datadog_api_client::datadogV1::model::SyntheticsTestOptions;
@@ -46,7 +45,7 @@ async fn main() {
         SyntheticsTestOptions::new()
             .accept_self_signed(false)
             .allow_insecure(true)
-            .device_ids(vec![SyntheticsDeviceID::CHROME_LAPTOP_LARGE])
+            .device_ids(vec!["chrome.laptop_large".to_string()])
             .disable_cors(true)
             .enable_profiling(true)
             .enable_security_testing(true)

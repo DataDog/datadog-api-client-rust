@@ -16,7 +16,7 @@ pub struct SyntheticsDevice {
     pub height: i64,
     /// The device ID.
     #[serde(rename = "id")]
-    pub id: crate::datadogV1::model::SyntheticsDeviceID,
+    pub id: String,
     /// Whether or not the device is a mobile.
     #[serde(rename = "isMobile")]
     pub is_mobile: Option<bool>,
@@ -34,12 +34,7 @@ pub struct SyntheticsDevice {
 }
 
 impl SyntheticsDevice {
-    pub fn new(
-        height: i64,
-        id: crate::datadogV1::model::SyntheticsDeviceID,
-        name: String,
-        width: i64,
-    ) -> SyntheticsDevice {
+    pub fn new(height: i64, id: String, name: String, width: i64) -> SyntheticsDevice {
         SyntheticsDevice {
             height,
             id,
@@ -83,7 +78,7 @@ impl<'de> Deserialize<'de> for SyntheticsDevice {
                 M: MapAccess<'a>,
             {
                 let mut height: Option<i64> = None;
-                let mut id: Option<crate::datadogV1::model::SyntheticsDeviceID> = None;
+                let mut id: Option<String> = None;
                 let mut is_mobile: Option<bool> = None;
                 let mut name: Option<String> = None;
                 let mut width: Option<i64> = None;
@@ -100,16 +95,6 @@ impl<'de> Deserialize<'de> for SyntheticsDevice {
                         }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _id) = id {
-                                match _id {
-                                    crate::datadogV1::model::SyntheticsDeviceID::UnparsedObject(
-                                        _id,
-                                    ) => {
-                                        _unparsed = true;
-                                    }
-                                    _ => {}
-                                }
-                            }
                         }
                         "isMobile" => {
                             if v.is_null() {
