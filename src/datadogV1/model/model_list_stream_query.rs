@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ListStreamQuery {
+    /// Specifies the field for logs pattern clustering. Usable only with logs_pattern_stream.
+    #[serde(rename = "clustering_pattern_field_path")]
+    pub clustering_pattern_field_path: Option<String>,
     /// Compute configuration for the List Stream Widget. Compute can be used only with the logs_transaction_stream (from 1 to 5 items) list stream source.
     #[serde(rename = "compute")]
     pub compute: Option<Vec<crate::datadogV1::model::ListStreamComputeItems>>,
@@ -48,6 +51,7 @@ impl ListStreamQuery {
         query_string: String,
     ) -> ListStreamQuery {
         ListStreamQuery {
+            clustering_pattern_field_path: None,
             compute: None,
             data_source,
             event_size: None,
@@ -59,6 +63,11 @@ impl ListStreamQuery {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn clustering_pattern_field_path(mut self, value: String) -> Self {
+        self.clustering_pattern_field_path = Some(value);
+        self
     }
 
     pub fn compute(mut self, value: Vec<crate::datadogV1::model::ListStreamComputeItems>) -> Self {
@@ -117,6 +126,7 @@ impl<'de> Deserialize<'de> for ListStreamQuery {
             where
                 M: MapAccess<'a>,
             {
+                let mut clustering_pattern_field_path: Option<String> = None;
                 let mut compute: Option<Vec<crate::datadogV1::model::ListStreamComputeItems>> =
                     None;
                 let mut data_source: Option<crate::datadogV1::model::ListStreamSource> = None;
@@ -135,6 +145,13 @@ impl<'de> Deserialize<'de> for ListStreamQuery {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "clustering_pattern_field_path" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            clustering_pattern_field_path =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "compute" => {
                             if v.is_null() {
                                 continue;
@@ -212,6 +229,7 @@ impl<'de> Deserialize<'de> for ListStreamQuery {
                     query_string.ok_or_else(|| M::Error::missing_field("query_string"))?;
 
                 let content = ListStreamQuery {
+                    clustering_pattern_field_path,
                     compute,
                     data_source,
                     event_size,

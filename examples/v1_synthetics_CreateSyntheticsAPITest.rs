@@ -9,7 +9,6 @@ use datadog_api_client::datadogV1::model::SyntheticsAssertionOperator;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionTarget;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionType;
 use datadog_api_client::datadogV1::model::SyntheticsBrowserTestRumSettings;
-use datadog_api_client::datadogV1::model::SyntheticsDeviceID;
 use datadog_api_client::datadogV1::model::SyntheticsTestCiOptions;
 use datadog_api_client::datadogV1::model::SyntheticsTestDetailsSubType;
 use datadog_api_client::datadogV1::model::SyntheticsTestExecutionRule;
@@ -47,7 +46,7 @@ async fn main() {
             .ci(SyntheticsTestCiOptions::new(
                 SyntheticsTestExecutionRule::BLOCKING,
             ))
-            .device_ids(vec![SyntheticsDeviceID::CHROME_LAPTOP_LARGE])
+            .device_ids(vec!["chrome.laptop_large".to_string()])
             .http_version(SyntheticsTestOptionsHTTPVersion::HTTP1)
             .monitor_options(
                 SyntheticsTestOptionsMonitorOptions::new().notification_preset_name(

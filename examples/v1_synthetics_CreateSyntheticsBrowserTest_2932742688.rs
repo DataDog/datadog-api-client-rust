@@ -7,7 +7,6 @@ use datadog_api_client::datadogV1::model::SyntheticsBrowserTestRumSettings;
 use datadog_api_client::datadogV1::model::SyntheticsBrowserTestType;
 use datadog_api_client::datadogV1::model::SyntheticsConfigVariable;
 use datadog_api_client::datadogV1::model::SyntheticsConfigVariableType;
-use datadog_api_client::datadogV1::model::SyntheticsDeviceID;
 use datadog_api_client::datadogV1::model::SyntheticsStep;
 use datadog_api_client::datadogV1::model::SyntheticsStepType;
 use datadog_api_client::datadogV1::model::SyntheticsTestCiOptions;
@@ -43,7 +42,7 @@ async fn main() {
             .ci(SyntheticsTestCiOptions::new(
                 SyntheticsTestExecutionRule::SKIPPED,
             ))
-            .device_ids(vec![SyntheticsDeviceID::TABLET])
+            .device_ids(vec!["tablet".to_string()])
             .disable_cors(true)
             .disable_csp(true)
             .follow_redirects(true)
