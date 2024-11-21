@@ -863,6 +863,10 @@ fn build_undo(
                 world.api_name.clone().unwrap()
             };
 
+            if undo.get("operationId").is_none() {
+                return Ok(None);
+            }
+
             let mut undo_operation = UndoOperation {
                 operation_id: undo
                     .get("operationId")
