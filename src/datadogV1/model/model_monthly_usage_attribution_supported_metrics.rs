@@ -27,6 +27,8 @@ pub enum MonthlyUsageAttributionSupportedMetrics {
     CI_VISIBILITY_ITR_PERCENTAGE,
     CLOUD_SIEM_USAGE,
     CLOUD_SIEM_PERCENTAGE,
+    CODE_SECURITY_HOST_USAGE,
+    CODE_SECURITY_HOST_PERCENTAGE,
     CONTAINER_EXCL_AGENT_USAGE,
     CONTAINER_EXCL_AGENT_PERCENTAGE,
     CONTAINER_USAGE,
@@ -176,6 +178,8 @@ impl ToString for MonthlyUsageAttributionSupportedMetrics {
             Self::CI_VISIBILITY_ITR_PERCENTAGE => String::from("ci_visibility_itr_percentage"),
             Self::CLOUD_SIEM_USAGE => String::from("cloud_siem_usage"),
             Self::CLOUD_SIEM_PERCENTAGE => String::from("cloud_siem_percentage"),
+            Self::CODE_SECURITY_HOST_USAGE => String::from("code_security_host_usage"),
+            Self::CODE_SECURITY_HOST_PERCENTAGE => String::from("code_security_host_percentage"),
             Self::CONTAINER_EXCL_AGENT_USAGE => String::from("container_excl_agent_usage"),
             Self::CONTAINER_EXCL_AGENT_PERCENTAGE => {
                 String::from("container_excl_agent_percentage")
@@ -391,6 +395,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionSupportedMetrics {
             "ci_visibility_itr_percentage" => Self::CI_VISIBILITY_ITR_PERCENTAGE,
             "cloud_siem_usage" => Self::CLOUD_SIEM_USAGE,
             "cloud_siem_percentage" => Self::CLOUD_SIEM_PERCENTAGE,
+            "code_security_host_usage" => Self::CODE_SECURITY_HOST_USAGE,
+            "code_security_host_percentage" => Self::CODE_SECURITY_HOST_PERCENTAGE,
             "container_excl_agent_usage" => Self::CONTAINER_EXCL_AGENT_USAGE,
             "container_excl_agent_percentage" => Self::CONTAINER_EXCL_AGENT_PERCENTAGE,
             "container_usage" => Self::CONTAINER_USAGE,
