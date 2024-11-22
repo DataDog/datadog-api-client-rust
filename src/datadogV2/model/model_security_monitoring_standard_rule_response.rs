@@ -76,6 +76,9 @@ pub struct SecurityMonitoringStandardRuleResponse {
     /// User ID of the user who updated the rule.
     #[serde(rename = "updateAuthorId")]
     pub update_author_id: Option<i64>,
+    /// The date the rule was last updated, in milliseconds.
+    #[serde(rename = "updatedAt")]
+    pub updated_at: Option<i64>,
     /// The version of the rule.
     #[serde(rename = "version")]
     pub version: Option<i64>,
@@ -110,6 +113,7 @@ impl SecurityMonitoringStandardRuleResponse {
             third_party_cases: None,
             type_: None,
             update_author_id: None,
+            updated_at: None,
             version: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -242,6 +246,11 @@ impl SecurityMonitoringStandardRuleResponse {
         self
     }
 
+    pub fn updated_at(mut self, value: i64) -> Self {
+        self.updated_at = Some(value);
+        self
+    }
+
     pub fn version(mut self, value: i64) -> Self {
         self.version = Some(value);
         self
@@ -312,6 +321,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleResponse {
                 let mut type_: Option<crate::datadogV2::model::SecurityMonitoringRuleTypeRead> =
                     None;
                 let mut update_author_id: Option<i64> = None;
+                let mut updated_at: Option<i64> = None;
                 let mut version: Option<i64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -463,6 +473,12 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleResponse {
                             update_author_id =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "updatedAt" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "version" => {
                             if v.is_null() {
                                 continue;
@@ -499,6 +515,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleResponse {
                     third_party_cases,
                     type_,
                     update_author_id,
+                    updated_at,
                     version,
                     additional_properties,
                     _unparsed,
