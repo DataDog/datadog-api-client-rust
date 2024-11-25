@@ -25,12 +25,13 @@ impl<'de> Deserialize<'de> for CIAppCreatePipelineEventRequestAttributesResource
             Box<crate::datadogV2::model::CIAppPipelineEventPipeline>,
         >(value.clone())
         {
-            if !_v._unparsed {
-                return Ok(
+            match *_v {
+                crate::datadogV2::model::CIAppPipelineEventPipeline::UnparsedObject(_v) => {}
+                _ => return Ok(
                     CIAppCreatePipelineEventRequestAttributesResource::CIAppPipelineEventPipeline(
                         _v,
                     ),
-                );
+                ),
             }
         }
         if let Ok(_v) = serde_json::from_value::<
