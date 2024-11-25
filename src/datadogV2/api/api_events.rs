@@ -168,7 +168,9 @@ impl EventsAPI {
         Self { config, client }
     }
 
-    /// This endpoint allows you to post events. Only events with `change` category are under General Availability.
+    /// This endpoint allows you to post events.
+    ///
+    /// Only events with **`change` category** are under General Availability. Refer to [Change Tracking](<https://docs.datadoghq.com/change_tracking>) for further details.
     pub async fn create_event(
         &self,
         body: crate::datadogV2::model::EventCreateRequestPayload,
@@ -188,7 +190,9 @@ impl EventsAPI {
         }
     }
 
-    /// This endpoint allows you to post events. Only events with `change` category are under General Availability.
+    /// This endpoint allows you to post events.
+    ///
+    /// Only events with **`change` category** are under General Availability. Refer to [Change Tracking](<https://docs.datadoghq.com/change_tracking>) for further details.
     pub async fn create_event_with_http_info(
         &self,
         body: crate::datadogV2::model::EventCreateRequestPayload,
