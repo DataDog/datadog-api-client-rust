@@ -51,11 +51,11 @@ impl GetCostByOrgOptionalParams {
 pub struct GetEstimatedCostByOrgOptionalParams {
     /// String to specify whether cost is broken down at a parent-org level or at the sub-org level. Available views are `summary` and `sub-org`. Defaults to `summary`.
     pub view: Option<String>,
-    /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost beginning this month. Either start_month or start_date should be specified, but not both. (start_month cannot go beyond two months in the past). Provide an `end_month` to view month-over-month cost.
+    /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost beginning this month. **Either start_month or start_date should be specified, but not both.** (start_month cannot go beyond two months in the past). Provide an `end_month` to view month-over-month cost.
     pub start_month: Option<chrono::DateTime<chrono::Utc>>,
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost ending this month.
     pub end_month: Option<chrono::DateTime<chrono::Utc>>,
-    /// Datetime in ISO-8601 format, UTC, precise to day: `[YYYY-MM-DD]` for cost beginning this day. Either start_month or start_date should be specified, but not both. (start_date cannot go beyond two months in the past). Provide an `end_date` to view day-over-day cumulative cost.
+    /// Datetime in ISO-8601 format, UTC, precise to day: `[YYYY-MM-DD]` for cost beginning this day. **Either start_month or start_date should be specified, but not both.** (start_date cannot go beyond two months in the past). Provide an `end_date` to view day-over-day cumulative cost.
     pub start_date: Option<chrono::DateTime<chrono::Utc>>,
     /// Datetime in ISO-8601 format, UTC, precise to day: `[YYYY-MM-DD]` for cost ending this day.
     pub end_date: Option<chrono::DateTime<chrono::Utc>>,
@@ -69,7 +69,7 @@ impl GetEstimatedCostByOrgOptionalParams {
         self.view = Some(value);
         self
     }
-    /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost beginning this month. Either start_month or start_date should be specified, but not both. (start_month cannot go beyond two months in the past). Provide an `end_month` to view month-over-month cost.
+    /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]` for cost beginning this month. **Either start_month or start_date should be specified, but not both.** (start_month cannot go beyond two months in the past). Provide an `end_month` to view month-over-month cost.
     pub fn start_month(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.start_month = Some(value);
         self
@@ -79,7 +79,7 @@ impl GetEstimatedCostByOrgOptionalParams {
         self.end_month = Some(value);
         self
     }
-    /// Datetime in ISO-8601 format, UTC, precise to day: `[YYYY-MM-DD]` for cost beginning this day. Either start_month or start_date should be specified, but not both. (start_date cannot go beyond two months in the past). Provide an `end_date` to view day-over-day cumulative cost.
+    /// Datetime in ISO-8601 format, UTC, precise to day: `[YYYY-MM-DD]` for cost beginning this day. **Either start_month or start_date should be specified, but not both.** (start_date cannot go beyond two months in the past). Provide an `end_date` to view day-over-day cumulative cost.
     pub fn start_date(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.start_date = Some(value);
         self
