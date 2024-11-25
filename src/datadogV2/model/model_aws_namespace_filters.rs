@@ -8,9 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum AWSNamespaceFilters {
-    AWSNamespaceFiltersExcludeAll(Box<crate::datadogV2::model::AWSNamespaceFiltersExcludeAll>),
     AWSNamespaceFiltersExcludeOnly(Box<crate::datadogV2::model::AWSNamespaceFiltersExcludeOnly>),
-    AWSNamespaceFiltersIncludeAll(Box<crate::datadogV2::model::AWSNamespaceFiltersIncludeAll>),
     AWSNamespaceFiltersIncludeOnly(Box<crate::datadogV2::model::AWSNamespaceFiltersIncludeOnly>),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
@@ -22,27 +20,11 @@ impl<'de> Deserialize<'de> for AWSNamespaceFilters {
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
         if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::AWSNamespaceFiltersExcludeAll>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(AWSNamespaceFilters::AWSNamespaceFiltersExcludeAll(_v));
-            }
-        }
-        if let Ok(_v) = serde_json::from_value::<
             Box<crate::datadogV2::model::AWSNamespaceFiltersExcludeOnly>,
         >(value.clone())
         {
             if !_v._unparsed {
                 return Ok(AWSNamespaceFilters::AWSNamespaceFiltersExcludeOnly(_v));
-            }
-        }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::AWSNamespaceFiltersIncludeAll>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(AWSNamespaceFilters::AWSNamespaceFiltersIncludeAll(_v));
             }
         }
         if let Ok(_v) = serde_json::from_value::<
