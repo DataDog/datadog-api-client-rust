@@ -32,19 +32,19 @@ pub struct JobDefinition {
     /// Job name.
     #[serde(rename = "name")]
     pub name: String,
-    /// Options on rules.
+    /// Options.
     #[serde(rename = "options")]
     pub options: Option<crate::datadogV2::model::SecurityMonitoringRuleOptions>,
     /// Queries for selecting logs analyzed by the job.
     #[serde(rename = "queries")]
     pub queries: Vec<crate::datadogV2::model::SecurityMonitoringStandardRuleQuery>,
-    /// Reference tables for the rule.
+    /// Reference tables used in the queries.
     #[serde(rename = "referenceTables")]
     pub reference_tables: Option<Vec<crate::datadogV2::model::SecurityMonitoringReferenceTable>>,
     /// Tags for generated signals.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
-    /// Cases for generating results from third-party rules. Only available for third-party rules.
+    /// Cases for generating results from third-party detection method. Only available for third-party detection method.
     #[serde(rename = "thirdPartyCases")]
     pub third_party_cases:
         Option<Vec<crate::datadogV2::model::SecurityMonitoringThirdPartyRuleCaseCreate>>,

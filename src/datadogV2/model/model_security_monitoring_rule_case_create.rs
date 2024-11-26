@@ -11,14 +11,14 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SecurityMonitoringRuleCaseCreate {
-    /// A rule case contains logical operations (`>`,`>=`, `&&`, `||`) to determine if a signal should be generated
+    /// A case contains logical operations (`>`,`>=`, `&&`, `||`) to determine if a signal should be generated
     /// based on the event counts in the previously defined queries.
     #[serde(rename = "condition")]
     pub condition: Option<String>,
     /// Name of the case.
     #[serde(rename = "name")]
     pub name: Option<String>,
-    /// Notification targets for each rule case.
+    /// Notification targets.
     #[serde(rename = "notifications")]
     pub notifications: Option<Vec<String>>,
     /// Severity of the Security Signal.
