@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Reference table for the rule.
+/// Reference tables used in the queries.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -20,7 +20,7 @@ pub struct SecurityMonitoringReferenceTable {
     /// The field in the log to match against the reference table.
     #[serde(rename = "logFieldPath")]
     pub log_field_path: Option<String>,
-    /// The name of the rule query to apply the reference table to.
+    /// The name of the query to apply the reference table to.
     #[serde(rename = "ruleQueryName")]
     pub rule_query_name: Option<String>,
     /// The name of the reference table.

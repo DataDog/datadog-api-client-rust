@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Options on rules.
+/// Options.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -26,19 +26,19 @@ pub struct SecurityMonitoringRuleOptions {
     #[serde(rename = "detectionMethod")]
     pub detection_method: Option<crate::datadogV2::model::SecurityMonitoringRuleDetectionMethod>,
     /// A time window is specified to match when at least one of the cases matches true. This is a sliding window
-    /// and evaluates in real time. For third party rules, this field is not used.
+    /// and evaluates in real time. For third party detection method, this field is not used.
     #[serde(rename = "evaluationWindow")]
     pub evaluation_window: Option<crate::datadogV2::model::SecurityMonitoringRuleEvaluationWindow>,
     /// Hardcoded evaluator type.
     #[serde(rename = "hardcodedEvaluatorType")]
     pub hardcoded_evaluator_type:
         Option<crate::datadogV2::model::SecurityMonitoringRuleHardcodedEvaluatorType>,
-    /// Options on impossible travel rules.
+    /// Options on impossible travel detection method.
     #[serde(rename = "impossibleTravelOptions")]
     pub impossible_travel_options:
         Option<crate::datadogV2::model::SecurityMonitoringRuleImpossibleTravelOptions>,
     /// Once a signal is generated, the signal will remain “open” if a case is matched at least once within
-    /// this keep alive window. For third party rules, this field is not used.
+    /// this keep alive window. For third party detection method, this field is not used.
     #[serde(rename = "keepAlive")]
     pub keep_alive: Option<crate::datadogV2::model::SecurityMonitoringRuleKeepAlive>,
     /// A signal will “close” regardless of the query being matched once the time exceeds the maximum duration.
@@ -46,10 +46,10 @@ pub struct SecurityMonitoringRuleOptions {
     #[serde(rename = "maxSignalDuration")]
     pub max_signal_duration:
         Option<crate::datadogV2::model::SecurityMonitoringRuleMaxSignalDuration>,
-    /// Options on new value rules.
+    /// Options on new value detection method.
     #[serde(rename = "newValueOptions")]
     pub new_value_options: Option<crate::datadogV2::model::SecurityMonitoringRuleNewValueOptions>,
-    /// Options on third party rules.
+    /// Options on third party detection method.
     #[serde(rename = "thirdPartyRuleOptions")]
     pub third_party_rule_options:
         Option<crate::datadogV2::model::SecurityMonitoringRuleThirdPartyOptions>,
