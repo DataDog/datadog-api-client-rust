@@ -237,6 +237,13 @@ impl EventsAPI {
                     .expect("failed to parse DD-API-KEY header"),
             );
         };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
 
         // build body parameters
         let output = Vec::new();
