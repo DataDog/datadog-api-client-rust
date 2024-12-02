@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// AWS Namespaces response body
+/// AWS Namespaces response attributes.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AWSNamespacesResponseAttributes {
-    /// AWS CloudWatch namespace
+    /// AWS CloudWatch namespace.
     #[serde(rename = "namespaces")]
     pub namespaces: Vec<String>,
     #[serde(flatten)]

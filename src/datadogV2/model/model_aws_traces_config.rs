@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// AWS Traces config
+/// AWS Traces Collection config.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AWSTracesConfig {
-    /// AWS X-Ray services to collect traces from
+    /// AWS X-Ray services to collect traces from. Defaults to `include_only`.
     #[serde(rename = "xray_services")]
     pub xray_services: Option<crate::datadogV2::model::XRayServicesList>,
     #[serde(flatten)]

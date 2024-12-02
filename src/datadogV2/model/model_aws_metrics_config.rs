@@ -6,27 +6,27 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// AWS Metrics config
+/// AWS Metrics Collection config.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AWSMetricsConfig {
-    /// Enable EC2 automute for AWS metrics
+    /// Enable EC2 automute for AWS metrics. Defaults to `true`.
     #[serde(rename = "automute_enabled")]
     pub automute_enabled: Option<bool>,
-    /// Enable CloudWatch alarms collection
+    /// Enable CloudWatch alarms collection. Defaults to `false`.
     #[serde(rename = "collect_cloudwatch_alarms")]
     pub collect_cloudwatch_alarms: Option<bool>,
-    /// Enable custom metrics collection
+    /// Enable custom metrics collection. Defaults to `false`.
     #[serde(rename = "collect_custom_metrics")]
     pub collect_custom_metrics: Option<bool>,
-    /// Enable AWS metrics collection
+    /// Enable AWS metrics collection. Defaults to `true`.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
-    /// AWS Metrics namespace filters
+    /// AWS Metrics namespace filters. Defaults to `exclude_only`.
     #[serde(rename = "namespace_filters")]
     pub namespace_filters: Option<crate::datadogV2::model::AWSNamespaceFilters>,
-    /// AWS Metrics tag filters list
+    /// AWS Metrics collection tag filters list. Defaults to `[]`.
     #[serde(rename = "tag_filters")]
     pub tag_filters: Option<Vec<crate::datadogV2::model::AWSNamespaceTagFilter>>,
     #[serde(flatten)]
