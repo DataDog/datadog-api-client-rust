@@ -29,6 +29,9 @@ pub struct SecurityMonitoringSuppressionCreateAttributes {
     /// The rule query of the suppression rule, with the same syntax as the search bar for detection rules.
     #[serde(rename = "rule_query")]
     pub rule_query: String,
+    /// A Unix millisecond timestamp giving the start date for the suppression rule. After this date, it starts suppressing signals.
+    #[serde(rename = "start_date")]
+    pub start_date: Option<i64>,
     /// The suppression query of the suppression rule. If a signal matches this query, it is suppressed and is not triggered. It uses the same syntax as the queries to search signals in the Signals Explorer.
     #[serde(rename = "suppression_query")]
     pub suppression_query: Option<String>,
@@ -52,6 +55,7 @@ impl SecurityMonitoringSuppressionCreateAttributes {
             expiration_date: None,
             name,
             rule_query,
+            start_date: None,
             suppression_query: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -70,6 +74,11 @@ impl SecurityMonitoringSuppressionCreateAttributes {
 
     pub fn expiration_date(mut self, value: i64) -> Self {
         self.expiration_date = Some(value);
+        self
+    }
+
+    pub fn start_date(mut self, value: i64) -> Self {
+        self.start_date = Some(value);
         self
     }
 
@@ -110,6 +119,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSuppressionCreateAttributes {
                 let mut expiration_date: Option<i64> = None;
                 let mut name: Option<String> = None;
                 let mut rule_query: Option<String> = None;
+                let mut start_date: Option<i64> = None;
                 let mut suppression_query: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -149,6 +159,12 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSuppressionCreateAttributes {
                         "rule_query" => {
                             rule_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "start_date" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            start_date = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "suppression_query" => {
                             if v.is_null() {
                                 continue;
@@ -174,6 +190,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSuppressionCreateAttributes {
                     expiration_date,
                     name,
                     rule_query,
+                    start_date,
                     suppression_query,
                     additional_properties,
                     _unparsed,
