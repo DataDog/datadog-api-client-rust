@@ -33,6 +33,13 @@ pub struct SecurityMonitoringSuppressionUpdateAttributes {
     /// The rule query of the suppression rule, with the same syntax as the search bar for detection rules.
     #[serde(rename = "rule_query")]
     pub rule_query: Option<String>,
+    /// A Unix millisecond timestamp giving the start date for the suppression rule. After this date, it starts suppressing signals. If unset, the start date of the suppression rule is left untouched. If set to `null`, the start date is removed.
+    #[serde(
+        rename = "start_date",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub start_date: Option<Option<i64>>,
     /// The suppression query of the suppression rule. If a signal matches this query, it is suppressed and not triggered. Same syntax as the queries to search signals in the signal explorer.
     #[serde(rename = "suppression_query")]
     pub suppression_query: Option<String>,
@@ -55,6 +62,7 @@ impl SecurityMonitoringSuppressionUpdateAttributes {
             expiration_date: None,
             name: None,
             rule_query: None,
+            start_date: None,
             suppression_query: None,
             version: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -89,6 +97,11 @@ impl SecurityMonitoringSuppressionUpdateAttributes {
 
     pub fn rule_query(mut self, value: String) -> Self {
         self.rule_query = Some(value);
+        self
+    }
+
+    pub fn start_date(mut self, value: Option<i64>) -> Self {
+        self.start_date = Some(value);
         self
     }
 
@@ -140,6 +153,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSuppressionUpdateAttributes {
                 let mut expiration_date: Option<Option<i64>> = None;
                 let mut name: Option<String> = None;
                 let mut rule_query: Option<String> = None;
+                let mut start_date: Option<Option<i64>> = None;
                 let mut suppression_query: Option<String> = None;
                 let mut version: Option<i32> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -186,6 +200,9 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSuppressionUpdateAttributes {
                             }
                             rule_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "start_date" => {
+                            start_date = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "suppression_query" => {
                             if v.is_null() {
                                 continue;
@@ -214,6 +231,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSuppressionUpdateAttributes {
                     expiration_date,
                     name,
                     rule_query,
+                    start_date,
                     suppression_query,
                     version,
                     additional_properties,
