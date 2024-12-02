@@ -316,7 +316,7 @@ pub struct UsageSummaryResponse {
     #[deprecated]
     #[serde(rename = "netflow_indexed_events_count_agg_sum")]
     pub netflow_indexed_events_count_agg_sum: Option<i64>,
-    /// Shows the 99th percentile of all distinct Networks hosts over all hours in the current month for all organizations.
+    /// Shows the 99th percentile of all distinct Cloud Network Monitoring hosts (formerly known as Network hosts) over all hours in the current month for all organizations.
     #[serde(rename = "npm_host_top99p_sum")]
     pub npm_host_top99p_sum: Option<i64>,
     /// Sum of all observability pipelines bytes processed over all hours in the current month for all organizations.
