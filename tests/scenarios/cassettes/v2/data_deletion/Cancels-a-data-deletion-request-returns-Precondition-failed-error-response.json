@@ -1,0 +1,33 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "application/json"
+          ]
+        },
+        "method": "put",
+        "uri": "https://api.datadoghq.com/api/v2/deletion/requests/-1/cancel"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"status\":\"412\",\"code\":\"INVALID_ID\",\"title\":\"INVALID_ID\",\"detail\":\"INVALID_ID\"}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 412,
+          "message": "Precondition Failed"
+        }
+      },
+      "recorded_at": "Fri, 15 Nov 2024 08:57:14 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
