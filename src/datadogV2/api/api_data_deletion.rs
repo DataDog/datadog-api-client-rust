@@ -252,7 +252,7 @@ impl DataDeletionAPI {
         }
     }
 
-    /// Creates a data deletion request by providing a query and a time frame targeting the proper data.
+    /// Creates a data deletion request by providing a query and a timeframe targeting the proper data.
     pub async fn create_data_deletion_request(
         &self,
         product: String,
@@ -278,7 +278,7 @@ impl DataDeletionAPI {
         }
     }
 
-    /// Creates a data deletion request by providing a query and a time frame targeting the proper data.
+    /// Creates a data deletion request by providing a query and a timeframe targeting the proper data.
     pub async fn create_data_deletion_request_with_http_info(
         &self,
         product: String,
