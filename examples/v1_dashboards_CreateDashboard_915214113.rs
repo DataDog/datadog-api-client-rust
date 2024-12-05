@@ -111,7 +111,7 @@ async fn main() {
                                 .title_size("16".to_string()),
                         ),
                     ),
-                ).layout(WidgetLayout::new(30, 47, 0, 0))
+                ).layout(WidgetLayout::new(30, 47, 0.0, 0.0))
             ],
         )
             .description(None)

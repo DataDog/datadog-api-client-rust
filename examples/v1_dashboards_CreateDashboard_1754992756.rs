@@ -34,7 +34,7 @@ async fn main() {
                         .controlled_externally(vec![]),
                 ),
             )))
-            .layout(WidgetLayout::new(2, 2, 1, 1).is_column_break(false)),
+            .layout(WidgetLayout::new(2, 2, 1.0, 1.0).is_column_break(false)),
         ],
     )
     .description(Some("description".to_string()));

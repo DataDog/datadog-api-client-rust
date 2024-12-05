@@ -30,7 +30,7 @@ async fn main() {
                 .title_size("16".to_string())
                 .view_mode(WidgetViewMode::OVERALL),
         )))
-        .layout(WidgetLayout::new(21, 60, 0, 0))],
+        .layout(WidgetLayout::new(21, 60, 0.0, 0.0))],
     )
     .description(Some("".to_string()))
     .notify_list(Some(vec![]))

@@ -29,7 +29,7 @@ async fn main() {
                 .title_size("16".to_string())
                 .unit("auto".to_string()),
             )))
-            .layout(WidgetLayout::new(8, 15, 0, 0)),
+            .layout(WidgetLayout::new(8, 15, 0.0, 0.0)),
         ],
     )
     .description(Some("".to_string()))

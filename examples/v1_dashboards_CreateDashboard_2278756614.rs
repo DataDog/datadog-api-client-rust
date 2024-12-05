@@ -102,7 +102,7 @@ async fn main() {
                                 .title("".to_string()),
                         ),
                     ),
-                ).layout(WidgetLayout::new(8, 12, 0, 0))
+                ).layout(WidgetLayout::new(8, 12, 0.0, 0.0))
             ],
         )
             .description(Some("".to_string()))

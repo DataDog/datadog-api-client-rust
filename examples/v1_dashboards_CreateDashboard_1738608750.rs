@@ -25,7 +25,7 @@ async fn main() {
                 .font_size("auto".to_string())
                 .text_align(WidgetTextAlign::LEFT),
             )))
-            .layout(WidgetLayout::new(6, 24, 0, 0)),
+            .layout(WidgetLayout::new(6, 24, 0.0, 0.0)),
         ],
     )
     .description(None)

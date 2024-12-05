@@ -17,7 +17,7 @@ async fn main() {
         vec![Widget::new(WidgetDefinition::NoteWidgetDefinition(Box::new(
             NoteWidgetDefinition::new("# Example Note".to_string(), NoteWidgetDefinitionType::NOTE),
         )))
-        .layout(WidgetLayout::new(24, 18, 0, 0))],
+        .layout(WidgetLayout::new(24, 18, 0.0, 0.0))],
     )
     .description(Some("".to_string()))
     .notify_list(Some(vec![]))
