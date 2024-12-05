@@ -23,7 +23,7 @@ pub struct DataDeletionResponseItemAttributes {
     /// List of indexes for the search. If not provided, the search is performed in all indexes.
     #[serde(rename = "indexes")]
     pub indexes: Option<Vec<String>>,
-    /// Whether the deletion request is fully created or not.
+    /// Whether the deletion request is fully created or not. It can take several minutes to fully create a deletion request depending on the target query and timeframe.
     #[serde(rename = "is_created")]
     pub is_created: bool,
     /// Organization ID.

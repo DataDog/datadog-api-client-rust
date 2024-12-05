@@ -17,7 +17,7 @@ async fn main() {
             ]),
             1704063600000,
         )
-        .indexes(vec!["index-1".to_string(), "index-2".to_string()]),
+        .indexes(vec!["test-index".to_string(), "test-index-2".to_string()]),
     ));
     let configuration = datadog::Configuration::new();
     let api = DataDeletionAPI::with_config(configuration);
