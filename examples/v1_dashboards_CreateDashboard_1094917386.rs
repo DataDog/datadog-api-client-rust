@@ -34,7 +34,7 @@ async fn main() {
                 .start(0)
                 .summary_type(WidgetSummaryType::MONITORS),
             )))
-            .layout(WidgetLayout::new(25, 50, 0, 0)),
+            .layout(WidgetLayout::new(25, 50, 0.0, 0.0)),
         ],
     )
     .description(Some("".to_string()))

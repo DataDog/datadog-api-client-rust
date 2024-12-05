@@ -23,7 +23,7 @@ async fn main() {
                 )
                 .sizing(WidgetImageSizing::COVER),
             )))
-            .layout(WidgetLayout::new(12, 12, 0, 0)),
+            .layout(WidgetLayout::new(12, 12, 0.0, 0.0)),
         ],
     )
     .description(Some("".to_string()))

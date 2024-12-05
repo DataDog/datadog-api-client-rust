@@ -79,7 +79,7 @@ async fn main() {
                                 ),
                         ),
                     ),
-                ).layout(WidgetLayout::new(2, 4, 0, 0))
+                ).layout(WidgetLayout::new(2, 4, 0.0, 0.0))
             ],
         ).description(Some("Example-Dashboard".to_string()));
     let configuration = datadog::Configuration::new();

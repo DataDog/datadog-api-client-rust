@@ -21,7 +21,7 @@ async fn main() {
                     "https://docs.datadoghq.com/api/latest/".to_string(),
                 ),
             )))
-            .layout(WidgetLayout::new(12, 12, 0, 0)),
+            .layout(WidgetLayout::new(12, 12, 0.0, 0.0)),
         ],
     )
     .description(Some("".to_string()))

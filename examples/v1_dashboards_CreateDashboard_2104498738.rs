@@ -80,7 +80,7 @@ async fn main() {
                     ),
                 )
                     .id(5346764334358972)
-                    .layout(WidgetLayout::new(2, 4, 0, 0))
+                    .layout(WidgetLayout::new(2, 4, 0.0, 0.0))
             ],
         );
     let configuration = datadog::Configuration::new();

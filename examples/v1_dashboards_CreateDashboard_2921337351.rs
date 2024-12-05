@@ -39,7 +39,7 @@ async fn main() {
                 )))
                 .title("Service Summary".to_string()),
             )))
-            .layout(WidgetLayout::new(72, 72, 0, 0)),
+            .layout(WidgetLayout::new(72, 72, 0.0, 0.0)),
         ],
     )
     .description(Some("".to_string()))

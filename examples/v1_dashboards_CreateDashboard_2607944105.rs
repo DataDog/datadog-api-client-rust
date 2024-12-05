@@ -27,7 +27,7 @@ async fn main() {
                 .title_align(WidgetTextAlign::LEFT)
                 .title_size("16".to_string()),
             )))
-            .layout(WidgetLayout::new(8, 15, 0, 0)),
+            .layout(WidgetLayout::new(8, 15, 0.0, 0.0)),
         ],
     )
     .description(Some("".to_string()))

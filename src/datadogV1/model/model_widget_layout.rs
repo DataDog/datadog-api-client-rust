@@ -21,12 +21,12 @@ pub struct WidgetLayout {
     /// The width of the widget. Should be a non-negative integer.
     #[serde(rename = "width")]
     pub width: i64,
-    /// The position of the widget on the x (horizontal) axis. Should be a non-negative integer.
+    /// The position of the widget on the x (horizontal) axis. Should be a non-negative number.
     #[serde(rename = "x")]
-    pub x: i64,
-    /// The position of the widget on the y (vertical) axis. Should be a non-negative integer.
+    pub x: f64,
+    /// The position of the widget on the y (vertical) axis. Should be a non-negative number.
     #[serde(rename = "y")]
-    pub y: i64,
+    pub y: f64,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -35,7 +35,7 @@ pub struct WidgetLayout {
 }
 
 impl WidgetLayout {
-    pub fn new(height: i64, width: i64, x: i64, y: i64) -> WidgetLayout {
+    pub fn new(height: i64, width: i64, x: f64, y: f64) -> WidgetLayout {
         WidgetLayout {
             height,
             is_column_break: None,
@@ -81,8 +81,8 @@ impl<'de> Deserialize<'de> for WidgetLayout {
                 let mut height: Option<i64> = None;
                 let mut is_column_break: Option<bool> = None;
                 let mut width: Option<i64> = None;
-                let mut x: Option<i64> = None;
-                let mut y: Option<i64> = None;
+                let mut x: Option<f64> = None;
+                let mut y: Option<f64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,

@@ -82,7 +82,7 @@ async fn main() {
                                 .title_size("16".to_string()),
                         ),
                     ),
-                ).layout(WidgetLayout::new(4, 4, 0, 0))
+                ).layout(WidgetLayout::new(4, 4, 0.0, 0.0))
             ],
         ).tags(Some(vec!["team:foobar".to_string()]));
     let configuration = datadog::Configuration::new();

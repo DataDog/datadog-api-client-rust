@@ -36,7 +36,7 @@ async fn main() {
                 .title_align(WidgetTextAlign::LEFT)
                 .title_size("16".to_string()),
             )))
-            .layout(WidgetLayout::new(4, 4, 0, 0)),
+            .layout(WidgetLayout::new(4, 4, 0.0, 0.0)),
         ],
     );
     let configuration = datadog::Configuration::new();

@@ -59,7 +59,7 @@ async fn main() {
                             ),
                         ),
                     ),
-                ).layout(WidgetLayout::new(2, 4, 2, 0))
+                ).layout(WidgetLayout::new(2, 4, 2.0, 0.0))
             ],
         );
     let configuration = datadog::Configuration::new();
