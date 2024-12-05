@@ -3,7 +3,7 @@
     {
       "request": {
         "body": {
-          "string": "{\"data\":{\"attributes\":{\"compute\":{\"aggregation_type\":\"distribution\",\"include_percentiles\":true,\"path\":\"@duration\"},\"event_type\":\"session\",\"filter\":{\"query\":\"source:Test-Delete_a_rum_based_metric_returns_No_Content_response-1730203162\"},\"group_by\":[{\"path\":\"@browser.name\",\"tag_name\":\"browser_name\"}],\"uniqueness\":{\"when\":\"match\"}},\"id\":\"Test-Delete_a_rum_based_metric_returns_No_Content_response-1730203162\",\"type\":\"rum_metrics\"}}",
+          "string": "{\"data\":{\"attributes\":{\"compute\":{\"aggregation_type\":\"distribution\",\"include_percentiles\":true,\"path\":\"@duration\"},\"event_type\":\"session\",\"filter\":{\"query\":\"source:Test-Delete_a_rum_based_metric_returns_No_Content_response-1732807880\"},\"group_by\":[{\"path\":\"@browser.name\",\"tag_name\":\"browser_name\"}],\"uniqueness\":{\"when\":\"match\"}},\"id\":\"testdeletearumbasedmetricreturnsnocontentresponse1732807880\",\"type\":\"rum_metrics\"}}",
           "encoding": null
         },
         "headers": {
@@ -19,7 +19,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"id\":\"Test_Delete_a_rum_based_metric_returns_No_Content_response_1730203162\",\"type\":\"rum_metrics\",\"attributes\":{\"compute\":{\"aggregation_type\":\"distribution\",\"include_percentiles\":true,\"path\":\"@duration\"},\"event_type\":\"session\",\"filter\":{\"query\":\"source:Test-Delete_a_rum_based_metric_returns_No_Content_response-1730203162\"},\"group_by\":[{\"path\":\"@browser.name\",\"tag_name\":\"browser_name\"}],\"uniqueness\":{\"when\":\"match\"}}}}",
+          "string": "{\"data\":{\"id\":\"testdeletearumbasedmetricreturnsnocontentresponse1732807880\",\"type\":\"rum_metrics\",\"attributes\":{\"compute\":{\"aggregation_type\":\"distribution\",\"include_percentiles\":true,\"path\":\"@duration\"},\"event_type\":\"session\",\"filter\":{\"query\":\"source:Test-Delete_a_rum_based_metric_returns_No_Content_response-1732807880\"},\"group_by\":[{\"path\":\"@browser.name\",\"tag_name\":\"browser_name\"}],\"uniqueness\":{\"when\":\"match\"}}}}",
           "encoding": null
         },
         "headers": {
@@ -32,7 +32,7 @@
           "message": "Created"
         }
       },
-      "recorded_at": "Tue, 29 Oct 2024 11:59:22 GMT"
+      "recorded_at": "Thu, 28 Nov 2024 15:31:20 GMT"
     },
     {
       "request": {
@@ -43,7 +43,7 @@
           ]
         },
         "method": "delete",
-        "uri": "https://api.datadoghq.com/api/v2/rum/config/metrics/Test_Delete_a_rum_based_metric_returns_No_Content_response_1730203162"
+        "uri": "https://api.datadoghq.com/api/v2/rum/config/metrics/testdeletearumbasedmetricreturnsnocontentresponse1732807880"
       },
       "response": {
         "body": {
@@ -56,7 +56,7 @@
           "message": "No Content"
         }
       },
-      "recorded_at": "Tue, 29 Oct 2024 11:59:22 GMT"
+      "recorded_at": "Thu, 28 Nov 2024 15:31:20 GMT"
     },
     {
       "request": {
@@ -67,11 +67,11 @@
           ]
         },
         "method": "delete",
-        "uri": "https://api.datadoghq.com/api/v2/rum/config/metrics/Test_Delete_a_rum_based_metric_returns_No_Content_response_1730203162"
+        "uri": "https://api.datadoghq.com/api/v2/rum/config/metrics/testdeletearumbasedmetricreturnsnocontentresponse1732807880"
       },
       "response": {
         "body": {
-          "string": "{\"errors\":[{\"status\":\"404\",\"title\":\"Not Found\",\"detail\":\"not_found(Metric with name 'Test_Delete_a_rum_based_metric_returns_No_Content_response_1730203162' not found)\"}]}",
+          "string": "{\"errors\":[{\"status\":\"404\",\"title\":\"Not Found\",\"detail\":\"not_found(Metric with name 'testdeletearumbasedmetricreturnsnocontentresponse1732807880' not found)\"}]}",
           "encoding": null
         },
         "headers": {
@@ -84,7 +84,7 @@
           "message": "Not Found"
         }
       },
-      "recorded_at": "Tue, 29 Oct 2024 11:59:22 GMT"
+      "recorded_at": "Thu, 28 Nov 2024 15:31:20 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"
