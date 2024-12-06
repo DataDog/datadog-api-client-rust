@@ -311,6 +311,7 @@ impl RestrictionPoliciesAPI {
     /// - Dashboards: `dashboard`
     /// - Notebooks: `notebook`
     /// - Powerpacks: `powerpack`
+    /// - Reference Tables: `reference-table`
     /// - Security Rules: `security-rule`
     /// - Service Level Objectives: `slo`
     /// - Synthetic Global Variables: `synthetics-global-variable`
@@ -330,6 +331,7 @@ impl RestrictionPoliciesAPI {
     /// Synthetic Tests             | `viewer`, `editor`
     /// Synthetic Private Locations | `viewer`, `editor`
     /// Monitors                    | `viewer`, `editor`
+    /// Reference Tables            | `viewer`, `editor`
     pub async fn update_restriction_policy(
         &self,
         resource_id: String,
@@ -362,6 +364,7 @@ impl RestrictionPoliciesAPI {
     /// - Dashboards: `dashboard`
     /// - Notebooks: `notebook`
     /// - Powerpacks: `powerpack`
+    /// - Reference Tables: `reference-table`
     /// - Security Rules: `security-rule`
     /// - Service Level Objectives: `slo`
     /// - Synthetic Global Variables: `synthetics-global-variable`
@@ -381,6 +384,7 @@ impl RestrictionPoliciesAPI {
     /// Synthetic Tests             | `viewer`, `editor`
     /// Synthetic Private Locations | `viewer`, `editor`
     /// Monitors                    | `viewer`, `editor`
+    /// Reference Tables            | `viewer`, `editor`
     pub async fn update_restriction_policy_with_http_info(
         &self,
         resource_id: String,
