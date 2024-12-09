@@ -63,6 +63,8 @@ async fn main() {
     )
     .steps(vec![SyntheticsStep::new()
         .allow_failure(false)
+        .always_execute(true)
+        .exit_if_succeed(true)
         .is_critical(true)
         .name("Refresh page".to_string())
         .params(BTreeMap::new())

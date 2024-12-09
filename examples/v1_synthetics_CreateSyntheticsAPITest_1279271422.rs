@@ -67,6 +67,7 @@ async fn main() {
                                     SyntheticsAPITestStepSubtype::HTTP,
                                 )
                                     .allow_failure(true)
+                                    .exit_if_succeed(true)
                                     .extracted_values(
                                         vec![
                                             SyntheticsParsingOptions::new()

@@ -17,6 +17,9 @@ pub struct SyntheticsAPITestStep {
     /// Array of assertions used for the test.
     #[serde(rename = "assertions")]
     pub assertions: Vec<crate::datadogV1::model::SyntheticsAssertion>,
+    /// Determines whether or not to exit the test if the step succeeds.
+    #[serde(rename = "exitIfSucceed")]
+    pub exit_if_succeed: Option<bool>,
     /// Array of values to parse and save as variables from the response.
     #[serde(rename = "extractedValues")]
     pub extracted_values: Option<Vec<crate::datadogV1::model::SyntheticsParsingOptions>>,
@@ -53,6 +56,7 @@ impl SyntheticsAPITestStep {
         SyntheticsAPITestStep {
             allow_failure: None,
             assertions,
+            exit_if_succeed: None,
             extracted_values: None,
             is_critical: None,
             name,
@@ -66,6 +70,11 @@ impl SyntheticsAPITestStep {
 
     pub fn allow_failure(mut self, value: bool) -> Self {
         self.allow_failure = Some(value);
+        self
+    }
+
+    pub fn exit_if_succeed(mut self, value: bool) -> Self {
+        self.exit_if_succeed = Some(value);
         self
     }
 
@@ -116,6 +125,7 @@ impl<'de> Deserialize<'de> for SyntheticsAPITestStep {
                 let mut allow_failure: Option<bool> = None;
                 let mut assertions: Option<Vec<crate::datadogV1::model::SyntheticsAssertion>> =
                     None;
+                let mut exit_if_succeed: Option<bool> = None;
                 let mut extracted_values: Option<
                     Vec<crate::datadogV1::model::SyntheticsParsingOptions>,
                 > = None;
@@ -142,6 +152,13 @@ impl<'de> Deserialize<'de> for SyntheticsAPITestStep {
                         }
                         "assertions" => {
                             assertions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "exitIfSucceed" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            exit_if_succeed =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "extractedValues" => {
                             if v.is_null() {
@@ -195,6 +212,7 @@ impl<'de> Deserialize<'de> for SyntheticsAPITestStep {
                 let content = SyntheticsAPITestStep {
                     allow_failure,
                     assertions,
+                    exit_if_succeed,
                     extracted_values,
                     is_critical,
                     name,
