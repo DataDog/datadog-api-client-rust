@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Include all services
+/// Include all services.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct XRayServicesIncludeAll {
-    /// Include all services
+    /// Include all services.
     #[serde(rename = "include_all")]
     pub include_all: bool,
     #[serde(flatten)]

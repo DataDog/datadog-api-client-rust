@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// AWS Authentication config for role-based account
+/// AWS Authentication config to integrate your account using an IAM role.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AWSAuthConfigRole {
-    /// AWS IAM External ID for associated role
+    /// AWS IAM External ID for associated role.
     #[serde(rename = "external_id")]
     pub external_id: Option<String>,
-    /// AWS IAM Role name
+    /// AWS IAM Role name.
     #[serde(rename = "role_name")]
     pub role_name: String,
     #[serde(flatten)]

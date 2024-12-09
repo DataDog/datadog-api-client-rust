@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Include only these regions
+/// Include only these regions.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AWSRegionsIncludeOnly {
-    /// Include only these regions
+    /// Include only these regions.
     #[serde(rename = "include_only")]
     pub include_only: Vec<String>,
     #[serde(flatten)]

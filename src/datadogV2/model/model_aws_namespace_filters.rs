@@ -3,7 +3,7 @@
 // Copyright 2019-Present Datadog, Inc.
 use serde::{Deserialize, Deserializer, Serialize};
 
-/// AWS Metrics namespace filters
+/// AWS Metrics namespace filters. Defaults to `exclude_only`.
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]

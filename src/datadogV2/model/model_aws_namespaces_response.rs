@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// AWS Namespaces response body
+/// AWS Namespaces response body.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AWSNamespacesResponse {
-    /// AWS Namespaces response body
+    /// AWS Namespaces response data.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::AWSNamespacesResponseData,
     #[serde(flatten)]
