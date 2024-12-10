@@ -256,12 +256,13 @@ impl {{ structName }} {
                 {%- set cursorPathParts = pagination.cursorPath.split(".") %}
                 {%- for i in range(cursorPathParts|length) %}
                 {%- set ns.required = cursorPathParts[i] in ns.parentSchema.get("required", []) %}
+                {%- set ns.nullable = ns.parentSchema.properties[cursorPathParts[i]].get("nullable", False) %}
 
                 {%- if ns.required %}
                 {%- set ns.cursorGetter = ns.cursorGetter ~ "." ~ cursorPathParts[i] %}
                 {%- else %}
                 {%- set attrName = cursorPathParts[i]|variable_name %}
-                let Some({{ attrName }}) = {{ ns.cursorGetter }}.{{ attrName }} else { break };
+                let Some({{ attrName }}) = {{ ns.cursorGetter }}.{{ attrName }}{%if ns.nullable %}.unwrap(){% endif %} else { break };
                 {%- set ns.cursorGetter = attrName %}
                 {%- endif %}
 
