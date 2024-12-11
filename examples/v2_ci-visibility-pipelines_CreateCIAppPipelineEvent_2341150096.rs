@@ -1,4 +1,4 @@
-// Send pipeline event returns "Request accepted for processing" response
+// Send running pipeline event returns "Request accepted for processing" response
 use chrono::{DateTime, Utc};
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_ci_visibility_pipelines::CIVisibilityPipelinesAPI;
@@ -8,10 +8,10 @@ use datadog_api_client::datadogV2::model::CIAppCreatePipelineEventRequestAttribu
 use datadog_api_client::datadogV2::model::CIAppCreatePipelineEventRequestData;
 use datadog_api_client::datadogV2::model::CIAppCreatePipelineEventRequestDataType;
 use datadog_api_client::datadogV2::model::CIAppGitInfo;
-use datadog_api_client::datadogV2::model::CIAppPipelineEventFinishedPipeline;
+use datadog_api_client::datadogV2::model::CIAppPipelineEventInProgressPipeline;
 use datadog_api_client::datadogV2::model::CIAppPipelineEventPipeline;
+use datadog_api_client::datadogV2::model::CIAppPipelineEventPipelineInProgressStatus;
 use datadog_api_client::datadogV2::model::CIAppPipelineEventPipelineLevel;
-use datadog_api_client::datadogV2::model::CIAppPipelineEventPipelineStatus;
 
 #[tokio::main]
 async fn main() {
@@ -20,18 +20,15 @@ async fn main() {
             .attributes(CIAppCreatePipelineEventRequestAttributes::new(
                 CIAppCreatePipelineEventRequestAttributesResource::CIAppPipelineEventPipeline(
                     Box::new(
-                        CIAppPipelineEventPipeline::CIAppPipelineEventFinishedPipeline(Box::new(
-                            CIAppPipelineEventFinishedPipeline::new(
-                                DateTime::parse_from_rfc3339("2021-11-11T11:10:41+00:00")
-                                    .expect("Failed to parse datetime")
-                                    .with_timezone(&Utc),
+                        CIAppPipelineEventPipeline::CIAppPipelineEventInProgressPipeline(Box::new(
+                            CIAppPipelineEventInProgressPipeline::new(
                                 CIAppPipelineEventPipelineLevel::PIPELINE,
                                 "Deploy to AWS".to_string(),
                                 false,
                                 DateTime::parse_from_rfc3339("2021-11-11T11:09:11+00:00")
                                     .expect("Failed to parse datetime")
                                     .with_timezone(&Utc),
-                                CIAppPipelineEventPipelineStatus::SUCCESS,
+                                CIAppPipelineEventPipelineInProgressStatus::RUNNING,
                                 "3eacb6f3-ff04-4e10-8a9c-46e6d054024a".to_string(),
                                 "https://my-ci-provider.example/pipelines/my-pipeline/run/1"
                                     .to_string(),
