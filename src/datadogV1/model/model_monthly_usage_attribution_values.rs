@@ -83,6 +83,12 @@ pub struct MonthlyUsageAttributionValues {
     /// The Cloud Security Information and Event Management usage by tag(s).
     #[serde(rename = "cloud_siem_usage")]
     pub cloud_siem_usage: Option<f64>,
+    /// The percentage of Code Security host usage by tags.
+    #[serde(rename = "code_security_host_percentage")]
+    pub code_security_host_percentage: Option<f64>,
+    /// The Code Security host usage by tags.
+    #[serde(rename = "code_security_host_usage")]
+    pub code_security_host_usage: Option<f64>,
     /// The percentage of container usage without the Datadog Agent by tag(s).
     #[serde(rename = "container_excl_agent_percentage")]
     pub container_excl_agent_percentage: Option<f64>,
@@ -453,6 +459,8 @@ impl MonthlyUsageAttributionValues {
             ci_visibility_itr_usage: None,
             cloud_siem_percentage: None,
             cloud_siem_usage: None,
+            code_security_host_percentage: None,
+            code_security_host_usage: None,
             container_excl_agent_percentage: None,
             container_excl_agent_usage: None,
             container_percentage: None,
@@ -687,6 +695,16 @@ impl MonthlyUsageAttributionValues {
 
     pub fn cloud_siem_usage(mut self, value: f64) -> Self {
         self.cloud_siem_usage = Some(value);
+        self
+    }
+
+    pub fn code_security_host_percentage(mut self, value: f64) -> Self {
+        self.code_security_host_percentage = Some(value);
+        self
+    }
+
+    pub fn code_security_host_usage(mut self, value: f64) -> Self {
+        self.code_security_host_usage = Some(value);
         self
     }
 
@@ -1306,6 +1324,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                 let mut ci_visibility_itr_usage: Option<f64> = None;
                 let mut cloud_siem_percentage: Option<f64> = None;
                 let mut cloud_siem_usage: Option<f64> = None;
+                let mut code_security_host_percentage: Option<f64> = None;
+                let mut code_security_host_usage: Option<f64> = None;
                 let mut container_excl_agent_percentage: Option<f64> = None;
                 let mut container_excl_agent_usage: Option<f64> = None;
                 let mut container_percentage: Option<f64> = None;
@@ -1591,6 +1611,20 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                                 continue;
                             }
                             cloud_siem_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "code_security_host_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            code_security_host_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "code_security_host_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            code_security_host_usage =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "container_excl_agent_percentage" => {
@@ -2409,6 +2443,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                     ci_visibility_itr_usage,
                     cloud_siem_percentage,
                     cloud_siem_usage,
+                    code_security_host_percentage,
+                    code_security_host_usage,
                     container_excl_agent_percentage,
                     container_excl_agent_usage,
                     container_percentage,
