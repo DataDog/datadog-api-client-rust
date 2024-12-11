@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// AWS Account Update Request body
+/// AWS Account Update Request body.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AWSAccountUpdateRequest {
-    /// AWS Account Update Request data
+    /// AWS Account Update Request data.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::AWSAccountUpdateRequestData,
     #[serde(flatten)]

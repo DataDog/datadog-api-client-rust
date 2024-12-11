@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Include only these namespaces
+/// Include only these namespaces.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AWSNamespaceFiltersIncludeOnly {
-    /// Include only these namespaces
+    /// Include only these namespaces.
     #[serde(rename = "include_only")]
     pub include_only: Vec<String>,
     #[serde(flatten)]

@@ -6,40 +6,41 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The AWS Account Integration Config to be created
+/// The AWS Account Integration Config to be created.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AWSAccountCreateRequestAttributes {
-    /// Tags to apply to all metrics in the account
+    /// Tags to apply to all hosts and metrics reporting for this account. Defaults to `[]`.
     #[serde(
         rename = "account_tags",
         default,
         with = "::serde_with::rust::double_option"
     )]
     pub account_tags: Option<Option<Vec<String>>>,
-    /// AWS Authentication config
+    /// AWS Authentication config.
     #[serde(rename = "auth_config")]
     pub auth_config: crate::datadogV2::model::AWSAuthConfig,
-    /// AWS Account ID
+    /// AWS Account ID.
     #[serde(rename = "aws_account_id")]
     pub aws_account_id: String,
-    /// AWS Account partition
+    /// AWS partition your AWS account is scoped to. Defaults to `aws`.
+    /// See [Partitions](<https://docs.aws.amazon.com/whitepapers/latest/aws-fault-isolation-boundaries/partitions.html>) in the AWS documentation for more information.
     #[serde(rename = "aws_partition")]
     pub aws_partition: crate::datadogV2::model::AWSAccountPartition,
-    /// AWS Regions to collect data from
+    /// AWS Regions to collect data from. Defaults to `include_all`.
     #[serde(rename = "aws_regions")]
     pub aws_regions: Option<crate::datadogV2::model::AWSRegions>,
-    /// AWS Logs config
+    /// AWS Logs Collection config.
     #[serde(rename = "logs_config")]
     pub logs_config: Option<crate::datadogV2::model::AWSLogsConfig>,
-    /// AWS Metrics config
+    /// AWS Metrics Collection config.
     #[serde(rename = "metrics_config")]
     pub metrics_config: Option<crate::datadogV2::model::AWSMetricsConfig>,
-    /// AWS Resources config
+    /// AWS Resources Collection config.
     #[serde(rename = "resources_config")]
     pub resources_config: Option<crate::datadogV2::model::AWSResourcesConfig>,
-    /// AWS Traces config
+    /// AWS Traces Collection config.
     #[serde(rename = "traces_config")]
     pub traces_config: Option<crate::datadogV2::model::AWSTracesConfig>,
     #[serde(flatten)]

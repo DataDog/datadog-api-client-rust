@@ -6,15 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// AWS Account Response body
+/// AWS Account response data.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AWSAccountResponseData {
-    /// The AWS Account Integration Config
+    /// AWS Account response attributes.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::AWSAccountResponseAttributes>,
-    /// Unique Datadog ID of the AWS Account Integration Config
+    /// Unique Datadog ID of the AWS Account Integration Config.
+    /// To get the config ID for an account, use the [List all AWS integrations](<https://docs.datadoghq.com/api/latest/aws-integration/#list-all-aws-integrations>)
+    /// endpoint and query by AWS Account ID.
     #[serde(rename = "id")]
     pub id: String,
     /// AWS Account resource type.

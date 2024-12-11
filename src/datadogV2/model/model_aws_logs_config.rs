@@ -6,12 +6,13 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// AWS Logs config
+/// AWS Logs Collection config.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AWSLogsConfig {
-    /// AWS Lambda forwarder
+    /// Log Autosubscription configuration for Datadog Forwarder Lambda functions. Automatically set up triggers for existing
+    /// and new logs for some services, ensuring no logs from new resources are missed and saving time spent on manual configuration.
     #[serde(rename = "lambda_forwarder")]
     pub lambda_forwarder: Option<crate::datadogV2::model::AWSLambdaForwarderConfig>,
     #[serde(flatten)]

@@ -15,12 +15,12 @@ use std::io::Write;
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListAWSAccountsOptionalParams {
-    /// Optional query filter accounts by AWS Account ID
+    /// Optional query parameter to filter accounts by AWS Account ID. If not provided, all accounts are returned.
     pub aws_account_id: Option<String>,
 }
 
 impl ListAWSAccountsOptionalParams {
-    /// Optional query filter accounts by AWS Account ID
+    /// Optional query parameter to filter accounts by AWS Account ID. If not provided, all accounts are returned.
     pub fn aws_account_id(mut self, value: String) -> Self {
         self.aws_account_id = Some(value);
         self
@@ -423,7 +423,7 @@ impl AWSIntegrationAPI {
         }
     }
 
-    /// Delete an AWS Account Integration Config
+    /// Delete an AWS Account Integration Config by config ID.
     pub async fn delete_aws_account(
         &self,
         aws_account_config_id: String,
@@ -437,7 +437,7 @@ impl AWSIntegrationAPI {
         }
     }
 
-    /// Delete an AWS Account Integration Config
+    /// Delete an AWS Account Integration Config by config ID.
     pub async fn delete_aws_account_with_http_info(
         &self,
         aws_account_config_id: String,
@@ -522,7 +522,7 @@ impl AWSIntegrationAPI {
         }
     }
 
-    /// Get an AWS Account Integration Config
+    /// Get an AWS Account Integration Config by config ID.
     pub async fn get_aws_account(
         &self,
         aws_account_config_id: String,
@@ -545,7 +545,7 @@ impl AWSIntegrationAPI {
         }
     }
 
-    /// Get an AWS Account Integration Config
+    /// Get an AWS Account Integration Config by config ID.
     pub async fn get_aws_account_with_http_info(
         &self,
         aws_account_config_id: String,
@@ -876,7 +876,7 @@ impl AWSIntegrationAPI {
         }
     }
 
-    /// Update an AWS Account Integration Config
+    /// Update an AWS Account Integration Config by config ID.
     pub async fn update_aws_account(
         &self,
         aws_account_config_id: String,
@@ -900,7 +900,7 @@ impl AWSIntegrationAPI {
         }
     }
 
-    /// Update an AWS Account Integration Config
+    /// Update an AWS Account Integration Config by config ID.
     pub async fn update_aws_account_with_http_info(
         &self,
         aws_account_config_id: String,
