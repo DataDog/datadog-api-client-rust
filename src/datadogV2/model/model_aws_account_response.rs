@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// AWS Account response body
+/// AWS Account response body.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AWSAccountResponse {
-    /// AWS Account Response body
+    /// AWS Account response data.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::AWSAccountResponseData,
     #[serde(flatten)]

@@ -6,15 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// AWS Account Update Request data
+/// AWS Account Update Request data.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AWSAccountUpdateRequestData {
-    /// The AWS Account Integration Config to be updated
+    /// The AWS Account Integration Config to be updated.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::AWSAccountUpdateRequestAttributes,
-    /// Unique Datadog ID of the AWS Account Integration Config
+    /// Unique Datadog ID of the AWS Account Integration Config.
+    /// To get the config ID for an account, use the [List all AWS integrations](<https://docs.datadoghq.com/api/latest/aws-integration/#list-all-aws-integrations>)
+    /// endpoint and query by AWS Account ID.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// AWS Account resource type.

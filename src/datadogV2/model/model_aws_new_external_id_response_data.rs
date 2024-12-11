@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// AWS External ID response body
+/// AWS External ID response body.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AWSNewExternalIDResponseData {
-    /// AWS External ID response body
+    /// AWS External ID response body.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::AWSNewExternalIDResponseAttributes>,
     /// The `AWSNewExternalIDResponseData` `id`.

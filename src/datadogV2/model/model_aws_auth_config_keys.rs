@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// AWS Authentication config for key-based account
+/// AWS Authentication config to integrate your account using an access key pair.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AWSAuthConfigKeys {
-    /// AWS Access Key ID
+    /// AWS Access Key ID.
     #[serde(rename = "access_key_id")]
     pub access_key_id: String,
-    /// AWS Secret Access Key
+    /// AWS Secret Access Key.
     #[serde(rename = "secret_access_key")]
     pub secret_access_key: Option<String>,
     #[serde(flatten)]

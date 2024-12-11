@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// AWS Account Create Request data
+/// AWS Account Create Request data.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AWSAccountCreateRequestData {
-    /// The AWS Account Integration Config to be created
+    /// The AWS Account Integration Config to be created.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::AWSAccountCreateRequestAttributes,
     /// AWS Account resource type.
