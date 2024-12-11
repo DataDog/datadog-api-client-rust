@@ -17,6 +17,7 @@ pub use self::api::api_cloudflare_integration;
 pub use self::api::api_confluent_cloud;
 pub use self::api::api_container_images;
 pub use self::api::api_containers;
+pub use self::api::api_csm_agents;
 pub use self::api::api_csm_threats;
 pub use self::api::api_dashboard_lists;
 pub use self::api::api_data_deletion;
