@@ -34,8 +34,6 @@ jobs:
         with:
           app-id: ${{ secrets.PIPELINE_GITHUB_APP_ID }}
           private-key: ${{ secrets.PIPELINE_GITHUB_APP_PRIVATE_KEY }}
-          installation_retrieval_mode: repository
-          installation_retrieval_payload: DataDog/datadog-api-spec
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
