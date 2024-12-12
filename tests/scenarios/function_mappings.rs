@@ -2419,6 +2419,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_list_tag_configurations,
     );
     world.function_mappings.insert(
+        "v2.ListTagConfigurationsWithPagination".into(),
+        test_v2_list_tag_configurations_with_pagination,
+    );
+    world.function_mappings.insert(
         "v2.DeleteBulkTagsMetricsConfiguration".into(),
         test_v2_delete_bulk_tags_metrics_configuration,
     );
@@ -17631,6 +17635,12 @@ fn test_v2_list_tag_configurations(world: &mut DatadogWorld, _parameters: &HashM
     let window_seconds = _parameters
         .get("window[seconds]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_cursor = _parameters
+        .get("page[cursor]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_metrics::ListTagConfigurationsOptionalParams::default();
     params.filter_configured = filter_configured;
     params.filter_tags_configured = filter_tags_configured;
@@ -17639,6 +17649,8 @@ fn test_v2_list_tag_configurations(world: &mut DatadogWorld, _parameters: &HashM
     params.filter_queried = filter_queried;
     params.filter_tags = filter_tags;
     params.window_seconds = window_seconds;
+    params.page_size = page_size;
+    params.page_cursor = page_cursor;
     let response = match block_on(api.list_tag_configurations_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -17655,6 +17667,79 @@ fn test_v2_list_tag_configurations(world: &mut DatadogWorld, _parameters: &HashM
     };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
+}
+fn test_v2_list_tag_configurations_with_pagination(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_metrics
+        .as_ref()
+        .expect("api instance not found");
+    let filter_configured = _parameters
+        .get("filter[configured]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_tags_configured = _parameters
+        .get("filter[tags_configured]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_metric_type = _parameters
+        .get("filter[metric_type]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_include_percentiles = _parameters
+        .get("filter[include_percentiles]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_queried = _parameters
+        .get("filter[queried]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_tags = _parameters
+        .get("filter[tags]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let window_seconds = _parameters
+        .get("window[seconds]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_cursor = _parameters
+        .get("page[cursor]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_metrics::ListTagConfigurationsOptionalParams::default();
+    params.filter_configured = filter_configured;
+    params.filter_tags_configured = filter_tags_configured;
+    params.filter_metric_type = filter_metric_type;
+    params.filter_include_percentiles = filter_include_percentiles;
+    params.filter_queried = filter_queried;
+    params.filter_tags = filter_tags;
+    params.window_seconds = window_seconds;
+    params.page_size = page_size;
+    params.page_cursor = page_cursor;
+    let response = api.list_tag_configurations_with_pagination(params);
+    let mut result = Vec::new();
+
+    block_on(async {
+        pin_mut!(response);
+
+        while let Some(resp) = response.next().await {
+            match resp {
+                Ok(response) => {
+                    result.push(response);
+                }
+                Err(error) => {
+                    return match error {
+                        Error::ResponseError(e) => {
+                            if let Some(entity) = e.entity {
+                                world.response.object = serde_json::to_value(entity).unwrap();
+                            }
+                        }
+                        _ => panic!("error parsing response: {}", error),
+                    };
+                }
+            }
+        }
+    });
+    world.response.object = serde_json::to_value(result).unwrap();
+    world.response.code = 200;
 }
 
 fn test_v2_delete_bulk_tags_metrics_configuration(

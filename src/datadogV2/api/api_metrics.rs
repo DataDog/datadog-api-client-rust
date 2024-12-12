@@ -2,10 +2,12 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog;
+use async_stream::try_stream;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
 };
+use futures_core::stream::Stream;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
@@ -95,6 +97,12 @@ pub struct ListTagConfigurationsOptionalParams {
     /// The number of seconds of look back (from now) to apply to a filter[tag] or filter[queried] query.
     /// Default value is 3600 (1 hour), maximum value is 2,592,000 (30 days).
     pub window_seconds: Option<i64>,
+    /// Maximum number of results returned.
+    pub page_size: Option<i32>,
+    /// String to query the next page of results.
+    /// This key is provided with each valid response from the API in `meta.pagination.next_cursor`.
+    /// Once the `meta.pagination.next_cursor` key is null, all pages have been retrieved.
+    pub page_cursor: Option<String>,
 }
 
 impl ListTagConfigurationsOptionalParams {
@@ -138,6 +146,18 @@ impl ListTagConfigurationsOptionalParams {
     /// Default value is 3600 (1 hour), maximum value is 2,592,000 (30 days).
     pub fn window_seconds(mut self, value: i64) -> Self {
         self.window_seconds = Some(value);
+        self
+    }
+    /// Maximum number of results returned.
+    pub fn page_size(mut self, value: i32) -> Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// String to query the next page of results.
+    /// This key is provided with each valid response from the API in `meta.pagination.next_cursor`.
+    /// Once the `meta.pagination.next_cursor` key is null, all pages have been retrieved.
+    pub fn page_cursor(mut self, value: String) -> Self {
+        self.page_cursor = Some(value);
         self
     }
 }
@@ -1440,6 +1460,9 @@ impl MetricsAPI {
     }
 
     /// Returns all metrics that can be configured in the Metrics Summary page or with Metrics without Limits™ (matching additional filters if specified).
+    /// Optionally, paginate by using the `page[cursor]` and/or `page[size]` query parameters.
+    /// To fetch the first page, pass in a query parameter with either a valid `page[size]` or an empty cursor like `page[cursor]=`. To fetch the next page, pass in the `next_cursor` value from the response as the new `page[cursor]` value.
+    /// Once the `meta.pagination.next_cursor` value is null, all pages have been retrieved.
     pub async fn list_tag_configurations(
         &self,
         params: ListTagConfigurationsOptionalParams,
@@ -1461,7 +1484,48 @@ impl MetricsAPI {
         }
     }
 
+    pub fn list_tag_configurations_with_pagination(
+        &self,
+        mut params: ListTagConfigurationsOptionalParams,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV2::model::MetricsAndMetricTagConfigurations,
+            datadog::Error<ListTagConfigurationsError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i32 = 10000;
+            if params.page_size.is_none() {
+                params.page_size = Some(page_size);
+            } else {
+                page_size = params.page_size.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_tag_configurations(params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                let Some(meta) = resp.meta else { break };
+                let Some(pagination) = meta.pagination else { break };
+                let Some(next_cursor) = pagination.next_cursor.unwrap() else { break };
+
+                params.page_cursor = Some(next_cursor);
+            }
+        }
+    }
+
     /// Returns all metrics that can be configured in the Metrics Summary page or with Metrics without Limits™ (matching additional filters if specified).
+    /// Optionally, paginate by using the `page[cursor]` and/or `page[size]` query parameters.
+    /// To fetch the first page, pass in a query parameter with either a valid `page[size]` or an empty cursor like `page[cursor]=`. To fetch the next page, pass in the `next_cursor` value from the response as the new `page[cursor]` value.
+    /// Once the `meta.pagination.next_cursor` value is null, all pages have been retrieved.
     pub async fn list_tag_configurations_with_http_info(
         &self,
         params: ListTagConfigurationsOptionalParams,
@@ -1482,6 +1546,8 @@ impl MetricsAPI {
         let filter_queried = params.filter_queried;
         let filter_tags = params.filter_tags;
         let window_seconds = params.window_seconds;
+        let page_size = params.page_size;
+        let page_cursor = params.page_cursor;
 
         let local_client = &self.client;
 
@@ -1521,6 +1587,14 @@ impl MetricsAPI {
         if let Some(ref local_query_param) = window_seconds {
             local_req_builder =
                 local_req_builder.query(&[("window[seconds]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_size {
+            local_req_builder =
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_cursor {
+            local_req_builder =
+                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
         };
 
         // build headers
