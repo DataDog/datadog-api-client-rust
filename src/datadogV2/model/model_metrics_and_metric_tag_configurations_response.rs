@@ -14,6 +14,12 @@ pub struct MetricsAndMetricTagConfigurationsResponse {
     /// Array of metrics and metric tag configurations.
     #[serde(rename = "data")]
     pub data: Option<Vec<crate::datadogV2::model::MetricsAndMetricTagConfigurations>>,
+    /// Pagination links. Only present if pagination query parameters were provided.
+    #[serde(rename = "links")]
+    pub links: Option<crate::datadogV2::model::MetricsListResponseLinks>,
+    /// Response metadata object.
+    #[serde(rename = "meta")]
+    pub meta: Option<crate::datadogV2::model::MetricPaginationMeta>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -25,6 +31,8 @@ impl MetricsAndMetricTagConfigurationsResponse {
     pub fn new() -> MetricsAndMetricTagConfigurationsResponse {
         MetricsAndMetricTagConfigurationsResponse {
             data: None,
+            links: None,
+            meta: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -35,6 +43,16 @@ impl MetricsAndMetricTagConfigurationsResponse {
         value: Vec<crate::datadogV2::model::MetricsAndMetricTagConfigurations>,
     ) -> Self {
         self.data = Some(value);
+        self
+    }
+
+    pub fn links(mut self, value: crate::datadogV2::model::MetricsListResponseLinks) -> Self {
+        self.links = Some(value);
+        self
+    }
+
+    pub fn meta(mut self, value: crate::datadogV2::model::MetricPaginationMeta) -> Self {
+        self.meta = Some(value);
         self
     }
 
@@ -73,6 +91,8 @@ impl<'de> Deserialize<'de> for MetricsAndMetricTagConfigurationsResponse {
                 let mut data: Option<
                     Vec<crate::datadogV2::model::MetricsAndMetricTagConfigurations>,
                 > = None;
+                let mut links: Option<crate::datadogV2::model::MetricsListResponseLinks> = None;
+                let mut meta: Option<crate::datadogV2::model::MetricPaginationMeta> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -87,6 +107,18 @@ impl<'de> Deserialize<'de> for MetricsAndMetricTagConfigurationsResponse {
                             }
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "links" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            links = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "meta" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -97,6 +129,8 @@ impl<'de> Deserialize<'de> for MetricsAndMetricTagConfigurationsResponse {
 
                 let content = MetricsAndMetricTagConfigurationsResponse {
                     data,
+                    links,
+                    meta,
                     additional_properties,
                     _unparsed,
                 };
