@@ -64,7 +64,7 @@ def type_to_rust(schema, alternative_name=None, render_nullable=False, render_op
         else:
             type_ = "object"
             warnings.warn(f"Unknown type for schema: {schema} ({name or alternative_name})")
-            return option_wrapper(f"serde_json::Value", render_option, render_nullable)
+            return option_wrapper("serde_json::Value", render_option, render_nullable)
 
     if type_ == "array":
         if name or alternative_name:

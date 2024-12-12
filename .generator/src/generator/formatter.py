@@ -360,7 +360,7 @@ def _format_oneof(schema, data, name, replace_values, imports, **kwargs):
 
     one_of_schema_name = schema_name(one_of_schema)
     if not one_of_schema_name:
-        one_of_schema_name = simple_type(one_of_schema).title()
+        one_of_schema_name = simple_type(one_of_schema, render_option=False).title()
 
     if not is_primitive(one_of_schema) and one_of_schema.get("type") != "array":
         # TODO: revisit possibility of removing all boxes
@@ -491,7 +491,6 @@ def format_data_with_schema(
             parameters = f"{parameters}"
         return parameters, imports
 
-    
     if (not required or schema.get("nullable")) and schema.get("type") is not None:
         imports.update(extra_imports)
         return reference_to_value(schema, parameters, print_nullable=True, **kwargs), imports
@@ -500,7 +499,7 @@ def format_data_with_schema(
         if default_name and schema_name(schema) is None:
             return _format_oneof(schema, data, default_name+"Item", replace_values, imports, **kwargs)
         return _format_oneof(schema, data, schema_name(schema), replace_values, imports, **kwargs)
-    
+
     imports.update(extra_imports)
     return parameters, imports
 
