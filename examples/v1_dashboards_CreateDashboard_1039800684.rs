@@ -25,8 +25,7 @@ async fn main() {
                 vec![ListStreamWidgetRequest::new(
                     vec![
                         ListStreamColumn::new("timestamp".to_string(), ListStreamColumnWidth::AUTO),
-                        ListStreamColumn::new("message".to_string(), ListStreamColumnWidth::AUTO)
-                            .is_clustering_pattern_field_path(true),
+                        ListStreamColumn::new("message".to_string(), ListStreamColumnWidth::AUTO),
                     ],
                     ListStreamQuery::new(ListStreamSource::LOGS_PATTERN_STREAM, "".to_string())
                         .clustering_pattern_field_path("message".to_string())

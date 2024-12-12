@@ -14,9 +14,6 @@ pub struct ListStreamColumn {
     /// Widget column field.
     #[serde(rename = "field")]
     pub field: String,
-    /// Identifies the clustering pattern field column, usable only with logs_pattern_stream.
-    #[serde(rename = "is_clustering_pattern_field_path")]
-    pub is_clustering_pattern_field_path: Option<bool>,
     /// Widget column width.
     #[serde(rename = "width")]
     pub width: crate::datadogV1::model::ListStreamColumnWidth,
@@ -34,16 +31,10 @@ impl ListStreamColumn {
     ) -> ListStreamColumn {
         ListStreamColumn {
             field,
-            is_clustering_pattern_field_path: None,
             width,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn is_clustering_pattern_field_path(mut self, value: bool) -> Self {
-        self.is_clustering_pattern_field_path = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -73,7 +64,6 @@ impl<'de> Deserialize<'de> for ListStreamColumn {
                 M: MapAccess<'a>,
             {
                 let mut field: Option<String> = None;
-                let mut is_clustering_pattern_field_path: Option<bool> = None;
                 let mut width: Option<crate::datadogV1::model::ListStreamColumnWidth> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -85,13 +75,6 @@ impl<'de> Deserialize<'de> for ListStreamColumn {
                     match k.as_str() {
                         "field" => {
                             field = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "is_clustering_pattern_field_path" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            is_clustering_pattern_field_path =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "width" => {
                             width = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -116,7 +99,6 @@ impl<'de> Deserialize<'de> for ListStreamColumn {
 
                 let content = ListStreamColumn {
                     field,
-                    is_clustering_pattern_field_path,
                     width,
                     additional_properties,
                     _unparsed,
