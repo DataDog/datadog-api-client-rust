@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// AWS External ID response body
+/// AWS External ID response body.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AWSNewExternalIDResponseAttributes {
-    /// AWS IAM External ID for associated role
+    /// AWS IAM External ID for associated role.
     #[serde(rename = "external_id")]
     pub external_id: String,
     #[serde(flatten)]

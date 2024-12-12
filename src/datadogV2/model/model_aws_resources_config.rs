@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// AWS Resources config
+/// AWS Resources Collection config.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AWSResourcesConfig {
-    /// Whether Datadog collects cloud security posture management resources from your AWS account.
+    /// Enable Cloud Security Management to scan AWS resources for vulnerabilities, misconfigurations, identity risks, and compliance violations. Defaults to `false`. Requires `extended_collection` to be set to `true`.
     #[serde(rename = "cloud_security_posture_management_collection")]
     pub cloud_security_posture_management_collection: Option<bool>,
-    /// Whether Datadog collects additional attributes and configuration information about the resources in your AWS account. Required for `cspm_resource_collection`.
+    /// Whether Datadog collects additional attributes and configuration information about the resources in your AWS account. Defaults to `true`. Required for `cloud_security_posture_management_collection`.
     #[serde(rename = "extended_collection")]
     pub extended_collection: Option<bool>,
     #[serde(flatten)]
