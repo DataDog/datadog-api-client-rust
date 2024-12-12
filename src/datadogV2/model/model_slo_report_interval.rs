@@ -7,6 +7,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SLOReportInterval {
+    DAILY,
     WEEKLY,
     MONTHLY,
     UnparsedObject(crate::datadog::UnparsedObject),
@@ -15,6 +16,7 @@ pub enum SLOReportInterval {
 impl ToString for SLOReportInterval {
     fn to_string(&self) -> String {
         match self {
+            Self::DAILY => String::from("daily"),
             Self::WEEKLY => String::from("weekly"),
             Self::MONTHLY => String::from("monthly"),
             Self::UnparsedObject(v) => v.value.to_string(),
@@ -41,6 +43,7 @@ impl<'de> Deserialize<'de> for SLOReportInterval {
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
+            "daily" => Self::DAILY,
             "weekly" => Self::WEEKLY,
             "monthly" => Self::MONTHLY,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
