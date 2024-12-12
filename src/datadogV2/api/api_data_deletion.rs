@@ -6,6 +6,7 @@ use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
 };
+use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
@@ -175,6 +176,14 @@ impl DataDeletionAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.cancel_data_deletion_request";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.cancel_data_deletion_request' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
 
         let local_client = &self.client;
 
@@ -289,6 +298,14 @@ impl DataDeletionAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_data_deletion_request";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.create_data_deletion_request' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
 
         let local_client = &self.client;
 
@@ -444,6 +461,14 @@ impl DataDeletionAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_data_deletion_requests";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_data_deletion_requests' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
 
         // unbox and build optional parameters
         let next_page = params.next_page;
