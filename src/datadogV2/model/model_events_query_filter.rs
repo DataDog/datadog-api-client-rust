@@ -14,7 +14,7 @@ pub struct EventsQueryFilter {
     /// The minimum time for the requested events. Supports date math and regular timestamps in milliseconds.
     #[serde(rename = "from")]
     pub from: Option<String>,
-    /// The search query following the event search syntax.
+    /// The search query following the [event search syntax](<https://docs.datadoghq.com/service_management/events/explorer/searching>).
     #[serde(rename = "query")]
     pub query: Option<String>,
     /// The maximum time for the requested events. Supports date math and regular timestamps in milliseconds.
