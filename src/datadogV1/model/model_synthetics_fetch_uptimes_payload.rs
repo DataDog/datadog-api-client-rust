@@ -14,7 +14,7 @@ pub struct SyntheticsFetchUptimesPayload {
     /// Timestamp in seconds (Unix epoch) for the start of uptime.
     #[serde(rename = "from_ts")]
     pub from_ts: i64,
-    /// An array of Synthetic test IDs you want to delete.
+    /// An array of Synthetic test IDs you want uptimes for.
     #[serde(rename = "public_ids")]
     pub public_ids: Vec<String>,
     /// Timestamp in seconds (Unix epoch) for the end of uptime.
