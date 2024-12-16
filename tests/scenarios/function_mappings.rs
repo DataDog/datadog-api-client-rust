@@ -67,6 +67,7 @@ pub struct ApiInstances {
     pub v2_api_cloud_cost_management:
         Option<datadogV2::api_cloud_cost_management::CloudCostManagementAPI>,
     pub v2_api_usage_metering: Option<datadogV2::api_usage_metering::UsageMeteringAPI>,
+    pub v2_api_csm_agents: Option<datadogV2::api_csm_agents::CSMAgentsAPI>,
     pub v2_api_dashboard_lists: Option<datadogV2::api_dashboard_lists::DashboardListsAPI>,
     pub v2_api_data_deletion: Option<datadogV2::api_data_deletion::DataDeletionAPI>,
     pub v2_api_domain_allowlist: Option<datadogV2::api_domain_allowlist::DomainAllowlistAPI>,
@@ -541,6 +542,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 world.config.clone(),
                 world.http_client.as_ref().unwrap().clone()
             ));
+        }
+        "CSMAgents" => {
+            world.api_instances.v2_api_csm_agents = Some(
+                datadogV2::api_csm_agents::CSMAgentsAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
         }
         "DataDeletion" => {
             world.api_instances.v2_api_data_deletion = Some(
@@ -1948,6 +1957,13 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.GetProjectedCost".into(), test_v2_get_projected_cost);
+    world
+        .function_mappings
+        .insert("v2.ListAllCSMAgents".into(), test_v2_list_all_csm_agents);
+    world.function_mappings.insert(
+        "v2.ListAllCSMServerlessAgents".into(),
+        test_v2_list_all_csm_serverless_agents,
+    );
     world.function_mappings.insert(
         "v2.DeleteDashboardListItems".into(),
         test_v2_delete_dashboard_list_items,
@@ -13630,6 +13646,91 @@ fn test_v2_get_projected_cost(world: &mut DatadogWorld, _parameters: &HashMap<St
     params.view = view;
     params.include_connected_accounts = include_connected_accounts;
     let response = match block_on(api.get_projected_cost_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_all_csm_agents(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_csm_agents
+        .as_ref()
+        .expect("api instance not found");
+    let page = _parameters
+        .get("page")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let size = _parameters
+        .get("size")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let query = _parameters
+        .get("query")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let order_direction = _parameters
+        .get("order_direction")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_csm_agents::ListAllCSMAgentsOptionalParams::default();
+    params.page = page;
+    params.size = size;
+    params.query = query;
+    params.order_direction = order_direction;
+    let response = match block_on(api.list_all_csm_agents_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_all_csm_serverless_agents(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_csm_agents
+        .as_ref()
+        .expect("api instance not found");
+    let page = _parameters
+        .get("page")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let size = _parameters
+        .get("size")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let query = _parameters
+        .get("query")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let order_direction = _parameters
+        .get("order_direction")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_csm_agents::ListAllCSMServerlessAgentsOptionalParams::default();
+    params.page = page;
+    params.size = size;
+    params.query = query;
+    params.order_direction = order_direction;
+    let response = match block_on(api.list_all_csm_serverless_agents_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
