@@ -104,6 +104,9 @@ pub struct UsageSummaryDate {
     /// Shows the high-water mark of all static Software Composition Analysis committers over all hours in the current date for the given org.
     #[serde(rename = "code_analysis_sca_committers_hwm")]
     pub code_analysis_sca_committers_hwm: Option<i64>,
+    /// Shows the 99th percentile of all Code Security hosts over all hours in the current date for the given org.
+    #[serde(rename = "code_security_host_top99p")]
+    pub code_security_host_top99p: Option<i64>,
     /// Shows the average of all distinct containers over all hours in the current date for all organizations.
     #[serde(rename = "container_avg")]
     pub container_avg: Option<i64>,
@@ -486,6 +489,7 @@ impl UsageSummaryDate {
             cloud_siem_events_sum: None,
             code_analysis_sa_committers_hwm: None,
             code_analysis_sca_committers_hwm: None,
+            code_security_host_top99p: None,
             container_avg: None,
             container_excl_agent_avg: None,
             container_hwm: None,
@@ -778,6 +782,12 @@ impl UsageSummaryDate {
     #[allow(deprecated)]
     pub fn code_analysis_sca_committers_hwm(mut self, value: i64) -> Self {
         self.code_analysis_sca_committers_hwm = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn code_security_host_top99p(mut self, value: i64) -> Self {
+        self.code_security_host_top99p = Some(value);
         self
     }
 
@@ -1503,6 +1513,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                 let mut cloud_siem_events_sum: Option<i64> = None;
                 let mut code_analysis_sa_committers_hwm: Option<i64> = None;
                 let mut code_analysis_sca_committers_hwm: Option<i64> = None;
+                let mut code_security_host_top99p: Option<i64> = None;
                 let mut container_avg: Option<i64> = None;
                 let mut container_excl_agent_avg: Option<i64> = None;
                 let mut container_hwm: Option<i64> = None;
@@ -1829,6 +1840,13 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                                 continue;
                             }
                             code_analysis_sca_committers_hwm =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "code_security_host_top99p" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            code_security_host_top99p =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "container_avg" => {
@@ -2639,6 +2657,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                     cloud_siem_events_sum,
                     code_analysis_sa_committers_hwm,
                     code_analysis_sca_committers_hwm,
+                    code_security_host_top99p,
                     container_avg,
                     container_excl_agent_avg,
                     container_hwm,
