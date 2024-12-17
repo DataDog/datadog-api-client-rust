@@ -855,13 +855,19 @@ fn build_undo(
     let undo = UNDO_MAP.get(operation_id).unwrap().get("undo").unwrap();
     match undo.get("type").unwrap().as_str() {
         Some("unsafe") => {
-            let api_name = if let Some(tag) = undo.get("tag") {
-                let mut api_name = tag.as_str().unwrap().to_string();
-                api_name.retain(|c| !c.is_whitespace());
-                api_name
+            let mut api_name = if let Some(tag) = undo.get("tag") {
+                tag.as_str().unwrap().to_string()
             } else {
-                world.api_name.clone().unwrap()
+                UNDO_MAP
+                    .get(operation_id)
+                    .unwrap()
+                    .get("tag")
+                    .unwrap()
+                    .as_str()
+                    .unwrap()
+                    .to_string()
             };
+            api_name.retain(|c| !c.is_whitespace());
 
             if undo.get("operationId").is_none() {
                 return Ok(None);
@@ -887,7 +893,6 @@ fn build_undo(
                     .unwrap()
                     .to_case(Case::Snake)
             );
-
             if world.config.is_unstable_operation(&unstable_operation_id) {
                 world
                     .config
