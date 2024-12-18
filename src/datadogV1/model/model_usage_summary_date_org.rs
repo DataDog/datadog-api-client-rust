@@ -45,7 +45,7 @@ pub struct UsageSummaryDateOrg {
     /// Shows whether Audit Trail is enabled for the current date for the given org.
     #[serde(rename = "audit_trail_enabled_hwm")]
     pub audit_trail_enabled_hwm: Option<i64>,
-    /// The average profiled task count for Fargate Profiling.
+    /// The average total count for Fargate Container Profiler over all hours in the current month for the given org.
     #[serde(rename = "avg_profiled_fargate_tasks")]
     pub avg_profiled_fargate_tasks: Option<i64>,
     /// Shows the 99th percentile of all AWS hosts over all hours in the current date for the given org.
@@ -209,6 +209,12 @@ pub struct UsageSummaryDateOrg {
     /// Shows the sum of all Error Tracking RUM error events over all hours in the current date for the given org.
     #[serde(rename = "error_tracking_rum_error_events_sum")]
     pub error_tracking_rum_error_events_sum: Option<i64>,
+    /// The average number of Profiling Fargate tasks over all hours in the current month for the given org.
+    #[serde(rename = "fargate_container_profiler_profiling_fargate_avg")]
+    pub fargate_container_profiler_profiling_fargate_avg: Option<i64>,
+    /// The average number of Profiling Fargate Elastic Kubernetes Service tasks over all hours in the current month for the given org.
+    #[serde(rename = "fargate_container_profiler_profiling_fargate_eks_avg")]
+    pub fargate_container_profiler_profiling_fargate_eks_avg: Option<i64>,
     /// The average task count for Fargate.
     #[serde(rename = "fargate_tasks_count_avg")]
     pub fargate_tasks_count_avg: Option<i64>,
@@ -543,6 +549,8 @@ impl UsageSummaryDateOrg {
             error_tracking_error_events_sum: None,
             error_tracking_events_sum: None,
             error_tracking_rum_error_events_sum: None,
+            fargate_container_profiler_profiling_fargate_avg: None,
+            fargate_container_profiler_profiling_fargate_eks_avg: None,
             fargate_tasks_count_avg: None,
             fargate_tasks_count_hwm: None,
             flex_logs_compute_large_avg: None,
@@ -1017,6 +1025,18 @@ impl UsageSummaryDateOrg {
     #[allow(deprecated)]
     pub fn error_tracking_rum_error_events_sum(mut self, value: i64) -> Self {
         self.error_tracking_rum_error_events_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn fargate_container_profiler_profiling_fargate_avg(mut self, value: i64) -> Self {
+        self.fargate_container_profiler_profiling_fargate_avg = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn fargate_container_profiler_profiling_fargate_eks_avg(mut self, value: i64) -> Self {
+        self.fargate_container_profiler_profiling_fargate_eks_avg = Some(value);
         self
     }
 
@@ -1609,6 +1629,8 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                 let mut error_tracking_error_events_sum: Option<i64> = None;
                 let mut error_tracking_events_sum: Option<i64> = None;
                 let mut error_tracking_rum_error_events_sum: Option<i64> = None;
+                let mut fargate_container_profiler_profiling_fargate_avg: Option<i64> = None;
+                let mut fargate_container_profiler_profiling_fargate_eks_avg: Option<i64> = None;
                 let mut fargate_tasks_count_avg: Option<i64> = None;
                 let mut fargate_tasks_count_hwm: Option<i64> = None;
                 let mut flex_logs_compute_large_avg: Option<i64> = None;
@@ -2152,6 +2174,20 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                                 continue;
                             }
                             error_tracking_rum_error_events_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "fargate_container_profiler_profiling_fargate_avg" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            fargate_container_profiler_profiling_fargate_avg =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "fargate_container_profiler_profiling_fargate_eks_avg" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            fargate_container_profiler_profiling_fargate_eks_avg =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "fargate_tasks_count_avg" => {
@@ -2799,6 +2835,8 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                     error_tracking_error_events_sum,
                     error_tracking_events_sum,
                     error_tracking_rum_error_events_sum,
+                    fargate_container_profiler_profiling_fargate_avg,
+                    fargate_container_profiler_profiling_fargate_eks_avg,
                     fargate_tasks_count_avg,
                     fargate_tasks_count_hwm,
                     flex_logs_compute_large_avg,
