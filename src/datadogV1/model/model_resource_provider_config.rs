@@ -6,17 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Dictionary containing the key `excluded_resource_providers` which has to be a list of Microsoft Azure Resource Provider names.
-/// This feature is currently being beta tested.
-/// In order to enable all resource providers for metric collection, pass:
-/// `metrics_config: {"excluded_resource_providers": []}` (i.e., an empty list for `excluded_resource_providers`).
+/// Configuration settings applied to resources from the specified Azure resource provider.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct AzureAccountMetricsConfig {
-    /// List of Microsoft Azure Resource Providers to exclude from metric collection.
-    #[serde(rename = "excluded_resource_providers")]
-    pub excluded_resource_providers: Option<Vec<String>>,
+pub struct ResourceProviderConfig {
+    /// Collect metrics for resources from this provider.
+    #[serde(rename = "metrics_enabled")]
+    pub metrics_enabled: Option<bool>,
+    /// The provider namespace to apply this configuration to.
+    #[serde(rename = "namespace")]
+    pub namespace: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,17 +24,23 @@ pub struct AzureAccountMetricsConfig {
     pub(crate) _unparsed: bool,
 }
 
-impl AzureAccountMetricsConfig {
-    pub fn new() -> AzureAccountMetricsConfig {
-        AzureAccountMetricsConfig {
-            excluded_resource_providers: None,
+impl ResourceProviderConfig {
+    pub fn new() -> ResourceProviderConfig {
+        ResourceProviderConfig {
+            metrics_enabled: None,
+            namespace: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn excluded_resource_providers(mut self, value: Vec<String>) -> Self {
-        self.excluded_resource_providers = Some(value);
+    pub fn metrics_enabled(mut self, value: bool) -> Self {
+        self.metrics_enabled = Some(value);
+        self
+    }
+
+    pub fn namespace(mut self, value: String) -> Self {
+        self.namespace = Some(value);
         self
     }
 
@@ -47,20 +53,20 @@ impl AzureAccountMetricsConfig {
     }
 }
 
-impl Default for AzureAccountMetricsConfig {
+impl Default for ResourceProviderConfig {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for AzureAccountMetricsConfig {
+impl<'de> Deserialize<'de> for ResourceProviderConfig {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct AzureAccountMetricsConfigVisitor;
-        impl<'a> Visitor<'a> for AzureAccountMetricsConfigVisitor {
-            type Value = AzureAccountMetricsConfig;
+        struct ResourceProviderConfigVisitor;
+        impl<'a> Visitor<'a> for ResourceProviderConfigVisitor {
+            type Value = ResourceProviderConfig;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -70,7 +76,8 @@ impl<'de> Deserialize<'de> for AzureAccountMetricsConfig {
             where
                 M: MapAccess<'a>,
             {
-                let mut excluded_resource_providers: Option<Vec<String>> = None;
+                let mut metrics_enabled: Option<bool> = None;
+                let mut namespace: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -79,12 +86,18 @@ impl<'de> Deserialize<'de> for AzureAccountMetricsConfig {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "excluded_resource_providers" => {
+                        "metrics_enabled" => {
                             if v.is_null() {
                                 continue;
                             }
-                            excluded_resource_providers =
+                            metrics_enabled =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "namespace" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            namespace = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -94,8 +107,9 @@ impl<'de> Deserialize<'de> for AzureAccountMetricsConfig {
                     }
                 }
 
-                let content = AzureAccountMetricsConfig {
-                    excluded_resource_providers,
+                let content = ResourceProviderConfig {
+                    metrics_enabled,
+                    namespace,
                     additional_properties,
                     _unparsed,
                 };
@@ -104,6 +118,6 @@ impl<'de> Deserialize<'de> for AzureAccountMetricsConfig {
             }
         }
 
-        deserializer.deserialize_any(AzureAccountMetricsConfigVisitor)
+        deserializer.deserialize_any(ResourceProviderConfigVisitor)
     }
 }

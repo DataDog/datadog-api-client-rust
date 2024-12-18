@@ -42,12 +42,12 @@ pub struct AzureAccount {
     /// Only hosts that match one of the defined tags are imported into Datadog.
     #[serde(rename = "host_filters")]
     pub host_filters: Option<String>,
-    /// Dictionary containing the key `excluded_resource_providers` which has to be a list of Microsoft Azure Resource Provider names.
-    /// This feature is currently being beta tested.
-    /// In order to enable all resource providers for metric collection, pass:
-    /// `metrics_config: {"excluded_resource_providers": []}` (i.e., an empty list for `excluded_resource_providers`).
-    #[serde(rename = "metrics_config")]
-    pub metrics_config: Option<crate::datadogV1::model::AzureAccountMetricsConfig>,
+    /// Enable Azure metrics for your organization.
+    #[serde(rename = "metrics_enabled")]
+    pub metrics_enabled: Option<bool>,
+    /// Enable Azure metrics for your organization for resource providers where no resource provider config is specified.
+    #[serde(rename = "metrics_enabled_default")]
+    pub metrics_enabled_default: Option<bool>,
     /// Your New Azure web application ID.
     #[serde(rename = "new_client_id")]
     pub new_client_id: Option<String>,
@@ -57,9 +57,15 @@ pub struct AzureAccount {
     /// When enabled, Datadog collects metadata and configuration info from cloud resources (compute instances, databases, load balancers, etc.) monitored by this app registration.
     #[serde(rename = "resource_collection_enabled")]
     pub resource_collection_enabled: Option<bool>,
+    /// Configuration settings applied to resources from the specified Azure resource providers.
+    #[serde(rename = "resource_provider_configs")]
+    pub resource_provider_configs: Option<Vec<crate::datadogV1::model::ResourceProviderConfig>>,
     /// Your Azure Active Directory ID.
     #[serde(rename = "tenant_name")]
     pub tenant_name: Option<String>,
+    /// Enable azure.usage metrics for your organization.
+    #[serde(rename = "usage_metrics_enabled")]
+    pub usage_metrics_enabled: Option<bool>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -79,11 +85,14 @@ impl AzureAccount {
             custom_metrics_enabled: None,
             errors: None,
             host_filters: None,
-            metrics_config: None,
+            metrics_enabled: None,
+            metrics_enabled_default: None,
             new_client_id: None,
             new_tenant_name: None,
             resource_collection_enabled: None,
+            resource_provider_configs: None,
             tenant_name: None,
+            usage_metrics_enabled: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -134,11 +143,13 @@ impl AzureAccount {
         self
     }
 
-    pub fn metrics_config(
-        mut self,
-        value: crate::datadogV1::model::AzureAccountMetricsConfig,
-    ) -> Self {
-        self.metrics_config = Some(value);
+    pub fn metrics_enabled(mut self, value: bool) -> Self {
+        self.metrics_enabled = Some(value);
+        self
+    }
+
+    pub fn metrics_enabled_default(mut self, value: bool) -> Self {
+        self.metrics_enabled_default = Some(value);
         self
     }
 
@@ -157,8 +168,21 @@ impl AzureAccount {
         self
     }
 
+    pub fn resource_provider_configs(
+        mut self,
+        value: Vec<crate::datadogV1::model::ResourceProviderConfig>,
+    ) -> Self {
+        self.resource_provider_configs = Some(value);
+        self
+    }
+
     pub fn tenant_name(mut self, value: String) -> Self {
         self.tenant_name = Some(value);
+        self
+    }
+
+    pub fn usage_metrics_enabled(mut self, value: bool) -> Self {
+        self.usage_metrics_enabled = Some(value);
         self
     }
 
@@ -203,12 +227,16 @@ impl<'de> Deserialize<'de> for AzureAccount {
                 let mut custom_metrics_enabled: Option<bool> = None;
                 let mut errors: Option<Vec<String>> = None;
                 let mut host_filters: Option<String> = None;
-                let mut metrics_config: Option<crate::datadogV1::model::AzureAccountMetricsConfig> =
-                    None;
+                let mut metrics_enabled: Option<bool> = None;
+                let mut metrics_enabled_default: Option<bool> = None;
                 let mut new_client_id: Option<String> = None;
                 let mut new_tenant_name: Option<String> = None;
                 let mut resource_collection_enabled: Option<bool> = None;
+                let mut resource_provider_configs: Option<
+                    Vec<crate::datadogV1::model::ResourceProviderConfig>,
+                > = None;
                 let mut tenant_name: Option<String> = None;
+                let mut usage_metrics_enabled: Option<bool> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -277,11 +305,18 @@ impl<'de> Deserialize<'de> for AzureAccount {
                             host_filters =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "metrics_config" => {
+                        "metrics_enabled" => {
                             if v.is_null() {
                                 continue;
                             }
-                            metrics_config =
+                            metrics_enabled =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "metrics_enabled_default" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            metrics_enabled_default =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "new_client_id" => {
@@ -305,11 +340,25 @@ impl<'de> Deserialize<'de> for AzureAccount {
                             resource_collection_enabled =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "resource_provider_configs" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            resource_provider_configs =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "tenant_name" => {
                             if v.is_null() {
                                 continue;
                             }
                             tenant_name =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "usage_metrics_enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            usage_metrics_enabled =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -330,11 +379,14 @@ impl<'de> Deserialize<'de> for AzureAccount {
                     custom_metrics_enabled,
                     errors,
                     host_filters,
-                    metrics_config,
+                    metrics_enabled,
+                    metrics_enabled_default,
                     new_client_id,
                     new_tenant_name,
                     resource_collection_enabled,
+                    resource_provider_configs,
                     tenant_name,
+                    usage_metrics_enabled,
                     additional_properties,
                     _unparsed,
                 };
