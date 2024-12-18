@@ -1370,7 +1370,7 @@ impl UsageMeteringAPI {
     /// END
     /// ```
     ///
-    /// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
+    /// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>). This endpoint is not available in the Government (US1-FED) site.
     pub async fn get_monthly_cost_attribution(
         &self,
         start_month: chrono::DateTime<chrono::Utc>,
@@ -1412,7 +1412,7 @@ impl UsageMeteringAPI {
     /// END
     /// ```
     ///
-    /// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
+    /// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>). This endpoint is not available in the Government (US1-FED) site.
     pub async fn get_monthly_cost_attribution_with_http_info(
         &self,
         start_month: chrono::DateTime<chrono::Utc>,
