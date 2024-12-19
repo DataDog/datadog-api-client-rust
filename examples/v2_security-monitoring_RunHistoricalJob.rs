@@ -1,6 +1,8 @@
 // Run a historical job returns "Status created" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_security_monitoring::SecurityMonitoringAPI;
+use datadog_api_client::datadogV2::model::HistoricalJobOptions;
+use datadog_api_client::datadogV2::model::HistoricalJobQuery;
 use datadog_api_client::datadogV2::model::JobDefinition;
 use datadog_api_client::datadogV2::model::RunHistoricalJobRequest;
 use datadog_api_client::datadogV2::model::RunHistoricalJobRequestAttributes;
@@ -10,10 +12,8 @@ use datadog_api_client::datadogV2::model::SecurityMonitoringRuleCaseCreate;
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleEvaluationWindow;
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleKeepAlive;
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleMaxSignalDuration;
-use datadog_api_client::datadogV2::model::SecurityMonitoringRuleOptions;
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleQueryAggregation;
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleSeverity;
-use datadog_api_client::datadogV2::model::SecurityMonitoringStandardRuleQuery;
 
 #[tokio::main]
 async fn main() {
@@ -32,7 +32,7 @@ async fn main() {
                         "main".to_string(),
                         "A large number of failed login attempts.".to_string(),
                         "Excessive number of failed attempts.".to_string(),
-                        vec![SecurityMonitoringStandardRuleQuery::new()
+                        vec![HistoricalJobQuery::new()
                             .aggregation(SecurityMonitoringRuleQueryAggregation::COUNT)
                             .distinct_fields(vec![])
                             .group_by_fields(vec![])
@@ -40,7 +40,7 @@ async fn main() {
                         1730387532611,
                     )
                     .options(
-                        SecurityMonitoringRuleOptions::new()
+                        HistoricalJobOptions::new()
                             .evaluation_window(
                                 SecurityMonitoringRuleEvaluationWindow::FIFTEEN_MINUTES,
                             )

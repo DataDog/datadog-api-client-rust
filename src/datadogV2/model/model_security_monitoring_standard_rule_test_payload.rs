@@ -29,7 +29,7 @@ pub struct SecurityMonitoringStandardRuleTestPayload {
     /// The name of the rule.
     #[serde(rename = "name")]
     pub name: String,
-    /// Options on rules.
+    /// Options.
     #[serde(rename = "options")]
     pub options: crate::datadogV2::model::SecurityMonitoringRuleOptions,
     /// Queries for selecting logs which are part of the rule.
