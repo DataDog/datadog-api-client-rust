@@ -2,6 +2,16 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
+pub mod model_aws_scan_options_response;
+pub use self::model_aws_scan_options_response::AwsScanOptionsResponse;
+pub mod model_aws_scan_options_data;
+pub use self::model_aws_scan_options_data::AwsScanOptionsData;
+pub mod model_aws_scan_options_attributes;
+pub use self::model_aws_scan_options_attributes::AwsScanOptionsAttributes;
+pub mod model_aws_scan_options_type;
+pub use self::model_aws_scan_options_type::AwsScanOptionsType;
+pub mod model_api_error_response;
+pub use self::model_api_error_response::APIErrorResponse;
 pub mod model_api_keys_sort;
 pub use self::model_api_keys_sort::APIKeysSort;
 pub mod model_api_keys_response;
@@ -58,8 +68,6 @@ pub mod model_api_keys_response_meta;
 pub use self::model_api_keys_response_meta::APIKeysResponseMeta;
 pub mod model_api_keys_response_meta_page;
 pub use self::model_api_keys_response_meta_page::APIKeysResponseMetaPage;
-pub mod model_api_error_response;
-pub use self::model_api_error_response::APIErrorResponse;
 pub mod model_api_key_create_request;
 pub use self::model_api_key_create_request::APIKeyCreateRequest;
 pub mod model_api_key_create_data;
