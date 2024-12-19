@@ -14,7 +14,7 @@ pub struct SecurityMonitoringThirdPartyRuleCaseCreate {
     /// Name of the case.
     #[serde(rename = "name")]
     pub name: Option<String>,
-    /// Notification targets for each rule case.
+    /// Notification targets for each case.
     #[serde(rename = "notifications")]
     pub notifications: Option<Vec<String>>,
     /// A query to map a third party event to this case.

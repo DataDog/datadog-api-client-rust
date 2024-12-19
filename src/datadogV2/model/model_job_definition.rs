@@ -17,9 +17,6 @@ pub struct JobDefinition {
     /// Cases used for generating job results.
     #[serde(rename = "cases")]
     pub cases: Vec<crate::datadogV2::model::SecurityMonitoringRuleCaseCreate>,
-    /// Additional queries to filter matched events before they are processed. This field is deprecated for log detection, signal correlation, and workload security rules.
-    #[serde(rename = "filters")]
-    pub filters: Option<Vec<crate::datadogV2::model::SecurityMonitoringFilter>>,
     /// Starting time of data analyzed by the job.
     #[serde(rename = "from")]
     pub from: i64,
@@ -32,19 +29,19 @@ pub struct JobDefinition {
     /// Job name.
     #[serde(rename = "name")]
     pub name: String,
-    /// Options on rules.
+    /// Job options.
     #[serde(rename = "options")]
-    pub options: Option<crate::datadogV2::model::SecurityMonitoringRuleOptions>,
+    pub options: Option<crate::datadogV2::model::HistoricalJobOptions>,
     /// Queries for selecting logs analyzed by the job.
     #[serde(rename = "queries")]
-    pub queries: Vec<crate::datadogV2::model::SecurityMonitoringStandardRuleQuery>,
-    /// Reference tables for the rule.
+    pub queries: Vec<crate::datadogV2::model::HistoricalJobQuery>,
+    /// Reference tables used in the queries.
     #[serde(rename = "referenceTables")]
     pub reference_tables: Option<Vec<crate::datadogV2::model::SecurityMonitoringReferenceTable>>,
     /// Tags for generated signals.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
-    /// Cases for generating results from third-party rules. Only available for third-party rules.
+    /// Cases for generating results from third-party detection method. Only available for third-party detection method.
     #[serde(rename = "thirdPartyCases")]
     pub third_party_cases:
         Option<Vec<crate::datadogV2::model::SecurityMonitoringThirdPartyRuleCaseCreate>>,
@@ -68,13 +65,12 @@ impl JobDefinition {
         index: String,
         message: String,
         name: String,
-        queries: Vec<crate::datadogV2::model::SecurityMonitoringStandardRuleQuery>,
+        queries: Vec<crate::datadogV2::model::HistoricalJobQuery>,
         to: i64,
     ) -> JobDefinition {
         JobDefinition {
             calculated_fields: None,
             cases,
-            filters: None,
             from,
             index,
             message,
@@ -99,18 +95,7 @@ impl JobDefinition {
         self
     }
 
-    pub fn filters(
-        mut self,
-        value: Vec<crate::datadogV2::model::SecurityMonitoringFilter>,
-    ) -> Self {
-        self.filters = Some(value);
-        self
-    }
-
-    pub fn options(
-        mut self,
-        value: crate::datadogV2::model::SecurityMonitoringRuleOptions,
-    ) -> Self {
+    pub fn options(mut self, value: crate::datadogV2::model::HistoricalJobOptions) -> Self {
         self.options = Some(value);
         self
     }
@@ -172,17 +157,12 @@ impl<'de> Deserialize<'de> for JobDefinition {
                 let mut cases: Option<
                     Vec<crate::datadogV2::model::SecurityMonitoringRuleCaseCreate>,
                 > = None;
-                let mut filters: Option<Vec<crate::datadogV2::model::SecurityMonitoringFilter>> =
-                    None;
                 let mut from: Option<i64> = None;
                 let mut index: Option<String> = None;
                 let mut message: Option<String> = None;
                 let mut name: Option<String> = None;
-                let mut options: Option<crate::datadogV2::model::SecurityMonitoringRuleOptions> =
-                    None;
-                let mut queries: Option<
-                    Vec<crate::datadogV2::model::SecurityMonitoringStandardRuleQuery>,
-                > = None;
+                let mut options: Option<crate::datadogV2::model::HistoricalJobOptions> = None;
+                let mut queries: Option<Vec<crate::datadogV2::model::HistoricalJobQuery>> = None;
                 let mut reference_tables: Option<
                     Vec<crate::datadogV2::model::SecurityMonitoringReferenceTable>,
                 > = None;
@@ -209,12 +189,6 @@ impl<'de> Deserialize<'de> for JobDefinition {
                         }
                         "cases" => {
                             cases = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "filters" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            filters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "from" => {
                             from = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -284,7 +258,6 @@ impl<'de> Deserialize<'de> for JobDefinition {
                 let content = JobDefinition {
                     calculated_fields,
                     cases,
-                    filters,
                     from,
                     index,
                     message,
