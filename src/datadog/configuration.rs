@@ -188,6 +188,8 @@ impl Default for Configuration {
             ("v2.get_historical_job".to_owned(), false),
             ("v2.list_findings".to_owned(), false),
             ("v2.list_historical_jobs".to_owned(), false),
+            ("v2.list_vulnerabilities".to_owned(), false),
+            ("v2.list_vulnerable_assets".to_owned(), false),
             ("v2.mute_findings".to_owned(), false),
             ("v2.run_historical_job".to_owned(), false),
             ("v2.create_scorecard_outcomes_batch".to_owned(), false),
