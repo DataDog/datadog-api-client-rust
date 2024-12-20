@@ -92,6 +92,8 @@ pub mod model_jsonapi_error_response;
 pub use self::model_jsonapi_error_response::JSONAPIErrorResponse;
 pub mod model_jsonapi_error_item;
 pub use self::model_jsonapi_error_item::JSONAPIErrorItem;
+pub mod model_jsonapi_error_item_source;
+pub use self::model_jsonapi_error_item_source::JSONAPIErrorItemSource;
 pub mod model_open_api_file;
 pub use self::model_open_api_file::OpenAPIFile;
 pub mod model_update_open_api_response;
