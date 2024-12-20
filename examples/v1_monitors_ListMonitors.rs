@@ -1,4 +1,4 @@
-// Get all monitor details returns "OK" response
+// Get all monitors returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api_monitors::ListMonitorsOptionalParams;
 use datadog_api_client::datadogV1::api_monitors::MonitorsAPI;
