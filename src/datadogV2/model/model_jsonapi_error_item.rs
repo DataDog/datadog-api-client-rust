@@ -14,6 +14,12 @@ pub struct JSONAPIErrorItem {
     /// A human-readable explanation specific to this occurrence of the error.
     #[serde(rename = "detail")]
     pub detail: Option<String>,
+    /// Non-standard meta-information about the error
+    #[serde(rename = "meta")]
+    pub meta: Option<std::collections::BTreeMap<String, serde_json::Value>>,
+    /// References to the source of the error.
+    #[serde(rename = "source")]
+    pub source: Option<crate::datadogV2::model::JSONAPIErrorItemSource>,
     /// Status code of the response.
     #[serde(rename = "status")]
     pub status: Option<String>,
@@ -31,6 +37,8 @@ impl JSONAPIErrorItem {
     pub fn new() -> JSONAPIErrorItem {
         JSONAPIErrorItem {
             detail: None,
+            meta: None,
+            source: None,
             status: None,
             title: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -40,6 +48,16 @@ impl JSONAPIErrorItem {
 
     pub fn detail(mut self, value: String) -> Self {
         self.detail = Some(value);
+        self
+    }
+
+    pub fn meta(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
+        self.meta = Some(value);
+        self
+    }
+
+    pub fn source(mut self, value: crate::datadogV2::model::JSONAPIErrorItemSource) -> Self {
+        self.source = Some(value);
         self
     }
 
@@ -86,6 +104,8 @@ impl<'de> Deserialize<'de> for JSONAPIErrorItem {
                 M: MapAccess<'a>,
             {
                 let mut detail: Option<String> = None;
+                let mut meta: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
+                let mut source: Option<crate::datadogV2::model::JSONAPIErrorItemSource> = None;
                 let mut status: Option<String> = None;
                 let mut title: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -101,6 +121,18 @@ impl<'de> Deserialize<'de> for JSONAPIErrorItem {
                                 continue;
                             }
                             detail = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "meta" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "source" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "status" => {
                             if v.is_null() {
@@ -124,6 +156,8 @@ impl<'de> Deserialize<'de> for JSONAPIErrorItem {
 
                 let content = JSONAPIErrorItem {
                     detail,
+                    meta,
+                    source,
                     status,
                     title,
                     additional_properties,
