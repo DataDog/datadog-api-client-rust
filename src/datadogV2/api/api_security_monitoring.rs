@@ -243,6 +243,428 @@ impl ListSecurityMonitoringSignalsOptionalParams {
     }
 }
 
+/// ListVulnerabilitiesOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_vulnerabilities`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListVulnerabilitiesOptionalParams {
+    /// Its value must come from the `links` section of the response of the first request. Do not manually edit it.
+    pub page_token: Option<String>,
+    /// The page number to be retrieved. It should be equal or greater than `1`
+    pub page_number: Option<i64>,
+    /// Filter by vulnerability type.
+    pub filter_type: Option<crate::datadogV2::model::VulnerabilityType>,
+    /// Filter by vulnerability base (i.e. from the original advisory) severity score.
+    pub filter_cvss_base_score_op: Option<f64>,
+    /// Filter by vulnerability base severity.
+    pub filter_cvss_base_severity: Option<crate::datadogV2::model::VulnerabilitySeverity>,
+    /// Filter by vulnerability base CVSS vector.
+    pub filter_cvss_base_vector: Option<String>,
+    /// Filter by vulnerability Datadog severity score.
+    pub filter_cvss_datadog_score_op: Option<f64>,
+    /// Filter by vulnerability Datadog severity.
+    pub filter_cvss_datadog_severity: Option<crate::datadogV2::model::VulnerabilitySeverity>,
+    /// Filter by vulnerability Datadog CVSS vector.
+    pub filter_cvss_datadog_vector: Option<String>,
+    /// Filter by the status of the vulnerability.
+    pub filter_status: Option<crate::datadogV2::model::VulnerabilityStatus>,
+    /// Filter by the tool of the vulnerability.
+    pub filter_tool: Option<crate::datadogV2::model::VulnerabilityTool>,
+    /// Filter by library name.
+    pub filter_library_name: Option<String>,
+    /// Filter by library version.
+    pub filter_library_version: Option<String>,
+    /// Filter by advisory ID.
+    pub filter_advisory_id: Option<String>,
+    /// Filter by exploitation probability.
+    pub filter_risks_exploitation_probability: Option<bool>,
+    /// Filter by POC exploit availability.
+    pub filter_risks_poc_exploit_available: Option<bool>,
+    /// Filter by public exploit availability.
+    pub filter_risks_exploit_available: Option<bool>,
+    /// Filter by vulnerability [EPSS](<https://www.first.org/epss/>) severity score.
+    pub filter_risks_epss_score_op: Option<f64>,
+    /// Filter by vulnerability [EPSS](<https://www.first.org/epss/>) severity.
+    pub filter_risks_epss_severity: Option<crate::datadogV2::model::VulnerabilitySeverity>,
+    /// Filter by language.
+    pub filter_language: Option<String>,
+    /// Filter by ecosystem.
+    pub filter_ecosystem: Option<crate::datadogV2::model::VulnerabilityEcosystem>,
+    /// Filter by vulnerability location.
+    pub filter_code_location_location: Option<String>,
+    /// Filter by vulnerability file path.
+    pub filter_code_location_file_path: Option<String>,
+    /// Filter by method.
+    pub filter_code_location_method: Option<String>,
+    /// Filter by fix availability.
+    pub filter_fix_available: Option<bool>,
+    /// Filter by vulnerability `repo_digest` (when the vulnerability is related to `Image` asset).
+    pub filter_repo_digests: Option<String>,
+    /// Filter by asset name.
+    pub filter_asset_name: Option<String>,
+    /// Filter by asset type.
+    pub filter_asset_type: Option<crate::datadogV2::model::AssetType>,
+    /// Filter by the first version of the asset this vulnerability has been detected on.
+    pub filter_asset_version_first: Option<String>,
+    /// Filter by the last version of the asset this vulnerability has been detected on.
+    pub filter_asset_version_last: Option<String>,
+    /// Filter by the repository url associated to the asset.
+    pub filter_asset_repository_url: Option<String>,
+    /// Filter whether the asset is in production or not.
+    pub filter_asset_risks_in_production: Option<bool>,
+    /// Filter whether the asset is under attack or not.
+    pub filter_asset_risks_under_attack: Option<bool>,
+    /// Filter whether the asset is publicly accessible or not.
+    pub filter_asset_risks_is_publicly_accessible: Option<bool>,
+    /// Filter whether the asset is publicly accessible or not.
+    pub filter_asset_risks_has_privileged_access: Option<bool>,
+    /// Filter whether the asset  has access to sensitive data or not.
+    pub filter_asset_risks_has_access_to_sensitive_data: Option<bool>,
+    /// Filter by asset environments.
+    pub filter_asset_environments: Option<String>,
+    /// Filter by asset architecture.
+    pub filter_asset_arch: Option<String>,
+    /// Filter by asset operating system name.
+    pub filter_asset_operating_system_name: Option<String>,
+    /// Filter by asset operating system version.
+    pub filter_asset_operating_system_version: Option<String>,
+}
+
+impl ListVulnerabilitiesOptionalParams {
+    /// Its value must come from the `links` section of the response of the first request. Do not manually edit it.
+    pub fn page_token(mut self, value: String) -> Self {
+        self.page_token = Some(value);
+        self
+    }
+    /// The page number to be retrieved. It should be equal or greater than `1`
+    pub fn page_number(mut self, value: i64) -> Self {
+        self.page_number = Some(value);
+        self
+    }
+    /// Filter by vulnerability type.
+    pub fn filter_type(mut self, value: crate::datadogV2::model::VulnerabilityType) -> Self {
+        self.filter_type = Some(value);
+        self
+    }
+    /// Filter by vulnerability base (i.e. from the original advisory) severity score.
+    pub fn filter_cvss_base_score_op(mut self, value: f64) -> Self {
+        self.filter_cvss_base_score_op = Some(value);
+        self
+    }
+    /// Filter by vulnerability base severity.
+    pub fn filter_cvss_base_severity(
+        mut self,
+        value: crate::datadogV2::model::VulnerabilitySeverity,
+    ) -> Self {
+        self.filter_cvss_base_severity = Some(value);
+        self
+    }
+    /// Filter by vulnerability base CVSS vector.
+    pub fn filter_cvss_base_vector(mut self, value: String) -> Self {
+        self.filter_cvss_base_vector = Some(value);
+        self
+    }
+    /// Filter by vulnerability Datadog severity score.
+    pub fn filter_cvss_datadog_score_op(mut self, value: f64) -> Self {
+        self.filter_cvss_datadog_score_op = Some(value);
+        self
+    }
+    /// Filter by vulnerability Datadog severity.
+    pub fn filter_cvss_datadog_severity(
+        mut self,
+        value: crate::datadogV2::model::VulnerabilitySeverity,
+    ) -> Self {
+        self.filter_cvss_datadog_severity = Some(value);
+        self
+    }
+    /// Filter by vulnerability Datadog CVSS vector.
+    pub fn filter_cvss_datadog_vector(mut self, value: String) -> Self {
+        self.filter_cvss_datadog_vector = Some(value);
+        self
+    }
+    /// Filter by the status of the vulnerability.
+    pub fn filter_status(mut self, value: crate::datadogV2::model::VulnerabilityStatus) -> Self {
+        self.filter_status = Some(value);
+        self
+    }
+    /// Filter by the tool of the vulnerability.
+    pub fn filter_tool(mut self, value: crate::datadogV2::model::VulnerabilityTool) -> Self {
+        self.filter_tool = Some(value);
+        self
+    }
+    /// Filter by library name.
+    pub fn filter_library_name(mut self, value: String) -> Self {
+        self.filter_library_name = Some(value);
+        self
+    }
+    /// Filter by library version.
+    pub fn filter_library_version(mut self, value: String) -> Self {
+        self.filter_library_version = Some(value);
+        self
+    }
+    /// Filter by advisory ID.
+    pub fn filter_advisory_id(mut self, value: String) -> Self {
+        self.filter_advisory_id = Some(value);
+        self
+    }
+    /// Filter by exploitation probability.
+    pub fn filter_risks_exploitation_probability(mut self, value: bool) -> Self {
+        self.filter_risks_exploitation_probability = Some(value);
+        self
+    }
+    /// Filter by POC exploit availability.
+    pub fn filter_risks_poc_exploit_available(mut self, value: bool) -> Self {
+        self.filter_risks_poc_exploit_available = Some(value);
+        self
+    }
+    /// Filter by public exploit availability.
+    pub fn filter_risks_exploit_available(mut self, value: bool) -> Self {
+        self.filter_risks_exploit_available = Some(value);
+        self
+    }
+    /// Filter by vulnerability [EPSS](<https://www.first.org/epss/>) severity score.
+    pub fn filter_risks_epss_score_op(mut self, value: f64) -> Self {
+        self.filter_risks_epss_score_op = Some(value);
+        self
+    }
+    /// Filter by vulnerability [EPSS](<https://www.first.org/epss/>) severity.
+    pub fn filter_risks_epss_severity(
+        mut self,
+        value: crate::datadogV2::model::VulnerabilitySeverity,
+    ) -> Self {
+        self.filter_risks_epss_severity = Some(value);
+        self
+    }
+    /// Filter by language.
+    pub fn filter_language(mut self, value: String) -> Self {
+        self.filter_language = Some(value);
+        self
+    }
+    /// Filter by ecosystem.
+    pub fn filter_ecosystem(
+        mut self,
+        value: crate::datadogV2::model::VulnerabilityEcosystem,
+    ) -> Self {
+        self.filter_ecosystem = Some(value);
+        self
+    }
+    /// Filter by vulnerability location.
+    pub fn filter_code_location_location(mut self, value: String) -> Self {
+        self.filter_code_location_location = Some(value);
+        self
+    }
+    /// Filter by vulnerability file path.
+    pub fn filter_code_location_file_path(mut self, value: String) -> Self {
+        self.filter_code_location_file_path = Some(value);
+        self
+    }
+    /// Filter by method.
+    pub fn filter_code_location_method(mut self, value: String) -> Self {
+        self.filter_code_location_method = Some(value);
+        self
+    }
+    /// Filter by fix availability.
+    pub fn filter_fix_available(mut self, value: bool) -> Self {
+        self.filter_fix_available = Some(value);
+        self
+    }
+    /// Filter by vulnerability `repo_digest` (when the vulnerability is related to `Image` asset).
+    pub fn filter_repo_digests(mut self, value: String) -> Self {
+        self.filter_repo_digests = Some(value);
+        self
+    }
+    /// Filter by asset name.
+    pub fn filter_asset_name(mut self, value: String) -> Self {
+        self.filter_asset_name = Some(value);
+        self
+    }
+    /// Filter by asset type.
+    pub fn filter_asset_type(mut self, value: crate::datadogV2::model::AssetType) -> Self {
+        self.filter_asset_type = Some(value);
+        self
+    }
+    /// Filter by the first version of the asset this vulnerability has been detected on.
+    pub fn filter_asset_version_first(mut self, value: String) -> Self {
+        self.filter_asset_version_first = Some(value);
+        self
+    }
+    /// Filter by the last version of the asset this vulnerability has been detected on.
+    pub fn filter_asset_version_last(mut self, value: String) -> Self {
+        self.filter_asset_version_last = Some(value);
+        self
+    }
+    /// Filter by the repository url associated to the asset.
+    pub fn filter_asset_repository_url(mut self, value: String) -> Self {
+        self.filter_asset_repository_url = Some(value);
+        self
+    }
+    /// Filter whether the asset is in production or not.
+    pub fn filter_asset_risks_in_production(mut self, value: bool) -> Self {
+        self.filter_asset_risks_in_production = Some(value);
+        self
+    }
+    /// Filter whether the asset is under attack or not.
+    pub fn filter_asset_risks_under_attack(mut self, value: bool) -> Self {
+        self.filter_asset_risks_under_attack = Some(value);
+        self
+    }
+    /// Filter whether the asset is publicly accessible or not.
+    pub fn filter_asset_risks_is_publicly_accessible(mut self, value: bool) -> Self {
+        self.filter_asset_risks_is_publicly_accessible = Some(value);
+        self
+    }
+    /// Filter whether the asset is publicly accessible or not.
+    pub fn filter_asset_risks_has_privileged_access(mut self, value: bool) -> Self {
+        self.filter_asset_risks_has_privileged_access = Some(value);
+        self
+    }
+    /// Filter whether the asset  has access to sensitive data or not.
+    pub fn filter_asset_risks_has_access_to_sensitive_data(mut self, value: bool) -> Self {
+        self.filter_asset_risks_has_access_to_sensitive_data = Some(value);
+        self
+    }
+    /// Filter by asset environments.
+    pub fn filter_asset_environments(mut self, value: String) -> Self {
+        self.filter_asset_environments = Some(value);
+        self
+    }
+    /// Filter by asset architecture.
+    pub fn filter_asset_arch(mut self, value: String) -> Self {
+        self.filter_asset_arch = Some(value);
+        self
+    }
+    /// Filter by asset operating system name.
+    pub fn filter_asset_operating_system_name(mut self, value: String) -> Self {
+        self.filter_asset_operating_system_name = Some(value);
+        self
+    }
+    /// Filter by asset operating system version.
+    pub fn filter_asset_operating_system_version(mut self, value: String) -> Self {
+        self.filter_asset_operating_system_version = Some(value);
+        self
+    }
+}
+
+/// ListVulnerableAssetsOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_vulnerable_assets`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListVulnerableAssetsOptionalParams {
+    /// Its value must come from the `links` section of the response of the first request. Do not manually edit it.
+    pub page_token: Option<String>,
+    /// The page number to be retrieved. It should be equal or greater than `1`
+    pub page_number: Option<i64>,
+    /// Filter by name.
+    pub filter_name: Option<String>,
+    /// Filter by type.
+    pub filter_type: Option<crate::datadogV2::model::AssetType>,
+    /// Filter by the first version of the asset since it has been vulnerable.
+    pub filter_version_first: Option<String>,
+    /// Filter by the last detected version of the asset.
+    pub filter_version_last: Option<String>,
+    /// Filter by the repository url associated to the asset.
+    pub filter_repository_url: Option<String>,
+    /// Filter whether the asset is in production or not.
+    pub filter_risks_in_production: Option<bool>,
+    /// Filter whether the asset (Service) is under attack or not.
+    pub filter_risks_under_attack: Option<bool>,
+    /// Filter whether the asset (Host) is publicly accessible or not.
+    pub filter_risks_is_publicly_accessible: Option<bool>,
+    /// Filter whether the asset (Host) has privileged access or not.
+    pub filter_risks_has_privileged_access: Option<bool>,
+    /// Filter whether the asset (Host)  has access to sensitive data or not.
+    pub filter_risks_has_access_to_sensitive_data: Option<bool>,
+    /// Filter by environment.
+    pub filter_environments: Option<String>,
+    /// Filter by architecture.
+    pub filter_arch: Option<String>,
+    /// Filter by operating system name.
+    pub filter_operating_system_name: Option<String>,
+    /// Filter by operating system version.
+    pub filter_operating_system_version: Option<String>,
+}
+
+impl ListVulnerableAssetsOptionalParams {
+    /// Its value must come from the `links` section of the response of the first request. Do not manually edit it.
+    pub fn page_token(mut self, value: String) -> Self {
+        self.page_token = Some(value);
+        self
+    }
+    /// The page number to be retrieved. It should be equal or greater than `1`
+    pub fn page_number(mut self, value: i64) -> Self {
+        self.page_number = Some(value);
+        self
+    }
+    /// Filter by name.
+    pub fn filter_name(mut self, value: String) -> Self {
+        self.filter_name = Some(value);
+        self
+    }
+    /// Filter by type.
+    pub fn filter_type(mut self, value: crate::datadogV2::model::AssetType) -> Self {
+        self.filter_type = Some(value);
+        self
+    }
+    /// Filter by the first version of the asset since it has been vulnerable.
+    pub fn filter_version_first(mut self, value: String) -> Self {
+        self.filter_version_first = Some(value);
+        self
+    }
+    /// Filter by the last detected version of the asset.
+    pub fn filter_version_last(mut self, value: String) -> Self {
+        self.filter_version_last = Some(value);
+        self
+    }
+    /// Filter by the repository url associated to the asset.
+    pub fn filter_repository_url(mut self, value: String) -> Self {
+        self.filter_repository_url = Some(value);
+        self
+    }
+    /// Filter whether the asset is in production or not.
+    pub fn filter_risks_in_production(mut self, value: bool) -> Self {
+        self.filter_risks_in_production = Some(value);
+        self
+    }
+    /// Filter whether the asset (Service) is under attack or not.
+    pub fn filter_risks_under_attack(mut self, value: bool) -> Self {
+        self.filter_risks_under_attack = Some(value);
+        self
+    }
+    /// Filter whether the asset (Host) is publicly accessible or not.
+    pub fn filter_risks_is_publicly_accessible(mut self, value: bool) -> Self {
+        self.filter_risks_is_publicly_accessible = Some(value);
+        self
+    }
+    /// Filter whether the asset (Host) has privileged access or not.
+    pub fn filter_risks_has_privileged_access(mut self, value: bool) -> Self {
+        self.filter_risks_has_privileged_access = Some(value);
+        self
+    }
+    /// Filter whether the asset (Host)  has access to sensitive data or not.
+    pub fn filter_risks_has_access_to_sensitive_data(mut self, value: bool) -> Self {
+        self.filter_risks_has_access_to_sensitive_data = Some(value);
+        self
+    }
+    /// Filter by environment.
+    pub fn filter_environments(mut self, value: String) -> Self {
+        self.filter_environments = Some(value);
+        self
+    }
+    /// Filter by architecture.
+    pub fn filter_arch(mut self, value: String) -> Self {
+        self.filter_arch = Some(value);
+        self
+    }
+    /// Filter by operating system name.
+    pub fn filter_operating_system_name(mut self, value: String) -> Self {
+        self.filter_operating_system_name = Some(value);
+        self
+    }
+    /// Filter by operating system version.
+    pub fn filter_operating_system_version(mut self, value: String) -> Self {
+        self.filter_operating_system_version = Some(value);
+        self
+    }
+}
+
 /// SearchSecurityMonitoringSignalsOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::search_security_monitoring_signals`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -464,6 +886,24 @@ pub enum ListSecurityMonitoringSignalsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListSecurityMonitoringSuppressionsError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListVulnerabilitiesError is a struct for typed errors of method [`SecurityMonitoringAPI::list_vulnerabilities`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListVulnerabilitiesError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListVulnerableAssetsError is a struct for typed errors of method [`SecurityMonitoringAPI::list_vulnerable_assets`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListVulnerableAssetsError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -4091,6 +4531,768 @@ impl SecurityMonitoringAPI {
             };
         } else {
             let local_entity: Option<ListSecurityMonitoringSuppressionsError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get a list of vulnerabilities.
+    ///
+    /// ### Pagination
+    ///
+    /// Pagination is enabled by default in both `vulnerabilities` and `assets`. The size of the page varies depending on the endpoint and cannot be modified. To automate the request of the next page, you can use the links section in the response.
+    ///
+    /// This endpoint will return paginated responses. The pages are stored in the links section of the response:
+    ///
+    /// ```JSON
+    /// {
+    ///   "data": [...],
+    ///   "meta": {...},
+    ///   "links": {
+    ///     "self": "<https://.../api/v2/security/vulnerabilities",>
+    ///     "first": "<https://.../api/v2/security/vulnerabilities?page[number]=1&page[token]=abc",>
+    ///     "last": "<https://.../api/v2/security/vulnerabilities?page[number]=43&page[token]=abc",>
+    ///     "next": "<https://.../api/v2/security/vulnerabilities?page[number]=2&page[token]=abc">
+    ///   }
+    /// }
+    /// ```
+    ///
+    ///
+    /// - `links.previous` is empty if the first page is requested.
+    /// - `links.next` is empty if the last page is requested.
+    ///
+    /// #### Token
+    ///
+    /// Vulnerabilities can be created, updated or deleted at any point in time.
+    ///
+    /// Upon the first request, a token is created to ensure consistency across subsequent paginated requests.
+    ///
+    /// A token is valid only for 24 hours.
+    ///
+    /// #### First request
+    ///
+    /// We consider a request to be the first request when there is no `page[token]` parameter.
+    ///
+    /// The response of this first request contains the newly created token in the `links` section.
+    ///
+    /// This token can then be used in the subsequent paginated requests.
+    ///
+    /// #### Subsequent requests
+    ///
+    /// Any request containing valid `page[token]` and `page[number]` parameters will be considered a subsequent request.
+    ///
+    /// If the `token` is invalid, a `404` response will be returned.
+    ///
+    /// If the page `number` is invalid, a `400` response will be returned.
+    ///
+    /// ### Filtering
+    ///
+    /// The request can include some filter parameters to filter the data to be retrieved. The format of the filter parameters follows the [JSON:API format](<https://jsonapi.org/format/#fetching-filtering>): `filter[$prop_name]`, where `prop_name` is the property name in the entity being filtered by.
+    ///
+    /// All filters can include multiple values, where data will be filtered with an OR clause: `filter[title]=Title1,Title2` will filter all vulnerabilities where title is equal to `Title1` OR `Title2`.
+    ///
+    /// String filters are case sensitive.
+    ///
+    /// Boolean filters accept `true` or `false` as values.
+    ///
+    /// Number filters must include an operator as a second filter input: `filter[$prop_name][$operator]`. For example, for the vulnerabilities endpoint: `filter[cvss.base.score][lte]=8`.
+    ///
+    /// Available operators are: `eq` (==), `lt` (<), `lte` (<=), `gt` (>) and `gte` (>=).
+    ///
+    /// ### Metadata
+    ///
+    /// Following [JSON:API format](<https://jsonapi.org/format/#document-meta>), object including non-standard meta-information.
+    ///
+    /// This endpoint includes the meta member in the response. For more details on each of the properties included in this section, check the endpoints response tables.
+    ///
+    /// ```JSON
+    /// {
+    ///   "data": [...],
+    ///   "meta": {
+    ///     "total": 1500,
+    ///     "count": 18732,
+    ///     "token": "some_token"
+    ///   },
+    ///   "links": {...}
+    /// }
+    /// ```
+    ///
+    pub async fn list_vulnerabilities(
+        &self,
+        params: ListVulnerabilitiesOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::ListVulnerabilitiesResponse,
+        datadog::Error<ListVulnerabilitiesError>,
+    > {
+        match self.list_vulnerabilities_with_http_info(params).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get a list of vulnerabilities.
+    ///
+    /// ### Pagination
+    ///
+    /// Pagination is enabled by default in both `vulnerabilities` and `assets`. The size of the page varies depending on the endpoint and cannot be modified. To automate the request of the next page, you can use the links section in the response.
+    ///
+    /// This endpoint will return paginated responses. The pages are stored in the links section of the response:
+    ///
+    /// ```JSON
+    /// {
+    ///   "data": [...],
+    ///   "meta": {...},
+    ///   "links": {
+    ///     "self": "<https://.../api/v2/security/vulnerabilities",>
+    ///     "first": "<https://.../api/v2/security/vulnerabilities?page[number]=1&page[token]=abc",>
+    ///     "last": "<https://.../api/v2/security/vulnerabilities?page[number]=43&page[token]=abc",>
+    ///     "next": "<https://.../api/v2/security/vulnerabilities?page[number]=2&page[token]=abc">
+    ///   }
+    /// }
+    /// ```
+    ///
+    ///
+    /// - `links.previous` is empty if the first page is requested.
+    /// - `links.next` is empty if the last page is requested.
+    ///
+    /// #### Token
+    ///
+    /// Vulnerabilities can be created, updated or deleted at any point in time.
+    ///
+    /// Upon the first request, a token is created to ensure consistency across subsequent paginated requests.
+    ///
+    /// A token is valid only for 24 hours.
+    ///
+    /// #### First request
+    ///
+    /// We consider a request to be the first request when there is no `page[token]` parameter.
+    ///
+    /// The response of this first request contains the newly created token in the `links` section.
+    ///
+    /// This token can then be used in the subsequent paginated requests.
+    ///
+    /// #### Subsequent requests
+    ///
+    /// Any request containing valid `page[token]` and `page[number]` parameters will be considered a subsequent request.
+    ///
+    /// If the `token` is invalid, a `404` response will be returned.
+    ///
+    /// If the page `number` is invalid, a `400` response will be returned.
+    ///
+    /// ### Filtering
+    ///
+    /// The request can include some filter parameters to filter the data to be retrieved. The format of the filter parameters follows the [JSON:API format](<https://jsonapi.org/format/#fetching-filtering>): `filter[$prop_name]`, where `prop_name` is the property name in the entity being filtered by.
+    ///
+    /// All filters can include multiple values, where data will be filtered with an OR clause: `filter[title]=Title1,Title2` will filter all vulnerabilities where title is equal to `Title1` OR `Title2`.
+    ///
+    /// String filters are case sensitive.
+    ///
+    /// Boolean filters accept `true` or `false` as values.
+    ///
+    /// Number filters must include an operator as a second filter input: `filter[$prop_name][$operator]`. For example, for the vulnerabilities endpoint: `filter[cvss.base.score][lte]=8`.
+    ///
+    /// Available operators are: `eq` (==), `lt` (<), `lte` (<=), `gt` (>) and `gte` (>=).
+    ///
+    /// ### Metadata
+    ///
+    /// Following [JSON:API format](<https://jsonapi.org/format/#document-meta>), object including non-standard meta-information.
+    ///
+    /// This endpoint includes the meta member in the response. For more details on each of the properties included in this section, check the endpoints response tables.
+    ///
+    /// ```JSON
+    /// {
+    ///   "data": [...],
+    ///   "meta": {
+    ///     "total": 1500,
+    ///     "count": 18732,
+    ///     "token": "some_token"
+    ///   },
+    ///   "links": {...}
+    /// }
+    /// ```
+    ///
+    pub async fn list_vulnerabilities_with_http_info(
+        &self,
+        params: ListVulnerabilitiesOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::ListVulnerabilitiesResponse>,
+        datadog::Error<ListVulnerabilitiesError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_vulnerabilities";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_vulnerabilities' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let page_token = params.page_token;
+        let page_number = params.page_number;
+        let filter_type = params.filter_type;
+        let filter_cvss_base_score_op = params.filter_cvss_base_score_op;
+        let filter_cvss_base_severity = params.filter_cvss_base_severity;
+        let filter_cvss_base_vector = params.filter_cvss_base_vector;
+        let filter_cvss_datadog_score_op = params.filter_cvss_datadog_score_op;
+        let filter_cvss_datadog_severity = params.filter_cvss_datadog_severity;
+        let filter_cvss_datadog_vector = params.filter_cvss_datadog_vector;
+        let filter_status = params.filter_status;
+        let filter_tool = params.filter_tool;
+        let filter_library_name = params.filter_library_name;
+        let filter_library_version = params.filter_library_version;
+        let filter_advisory_id = params.filter_advisory_id;
+        let filter_risks_exploitation_probability = params.filter_risks_exploitation_probability;
+        let filter_risks_poc_exploit_available = params.filter_risks_poc_exploit_available;
+        let filter_risks_exploit_available = params.filter_risks_exploit_available;
+        let filter_risks_epss_score_op = params.filter_risks_epss_score_op;
+        let filter_risks_epss_severity = params.filter_risks_epss_severity;
+        let filter_language = params.filter_language;
+        let filter_ecosystem = params.filter_ecosystem;
+        let filter_code_location_location = params.filter_code_location_location;
+        let filter_code_location_file_path = params.filter_code_location_file_path;
+        let filter_code_location_method = params.filter_code_location_method;
+        let filter_fix_available = params.filter_fix_available;
+        let filter_repo_digests = params.filter_repo_digests;
+        let filter_asset_name = params.filter_asset_name;
+        let filter_asset_type = params.filter_asset_type;
+        let filter_asset_version_first = params.filter_asset_version_first;
+        let filter_asset_version_last = params.filter_asset_version_last;
+        let filter_asset_repository_url = params.filter_asset_repository_url;
+        let filter_asset_risks_in_production = params.filter_asset_risks_in_production;
+        let filter_asset_risks_under_attack = params.filter_asset_risks_under_attack;
+        let filter_asset_risks_is_publicly_accessible =
+            params.filter_asset_risks_is_publicly_accessible;
+        let filter_asset_risks_has_privileged_access =
+            params.filter_asset_risks_has_privileged_access;
+        let filter_asset_risks_has_access_to_sensitive_data =
+            params.filter_asset_risks_has_access_to_sensitive_data;
+        let filter_asset_environments = params.filter_asset_environments;
+        let filter_asset_arch = params.filter_asset_arch;
+        let filter_asset_operating_system_name = params.filter_asset_operating_system_name;
+        let filter_asset_operating_system_version = params.filter_asset_operating_system_version;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security/vulnerabilities",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = page_token {
+            local_req_builder =
+                local_req_builder.query(&[("page[token]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_number {
+            local_req_builder =
+                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_type {
+            local_req_builder =
+                local_req_builder.query(&[("filter[type]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_cvss_base_score_op {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[cvss.base.score][`$op`]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_cvss_base_severity {
+            local_req_builder = local_req_builder
+                .query(&[("filter[cvss.base.severity]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_cvss_base_vector {
+            local_req_builder = local_req_builder
+                .query(&[("filter[cvss.base.vector]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_cvss_datadog_score_op {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[cvss.datadog.score][`$op`]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_cvss_datadog_severity {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[cvss.datadog.severity]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_cvss_datadog_vector {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[cvss.datadog.vector]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_status {
+            local_req_builder =
+                local_req_builder.query(&[("filter[status]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_tool {
+            local_req_builder =
+                local_req_builder.query(&[("filter[tool]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_library_name {
+            local_req_builder = local_req_builder
+                .query(&[("filter[library.name]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_library_version {
+            local_req_builder = local_req_builder
+                .query(&[("filter[library.version]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_advisory_id {
+            local_req_builder =
+                local_req_builder.query(&[("filter[advisory_id]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_risks_exploitation_probability {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[risks.exploitation_probability]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_risks_poc_exploit_available {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[risks.poc_exploit_available]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_risks_exploit_available {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[risks.exploit_available]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_risks_epss_score_op {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[risks.epss.score][`$op`]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_risks_epss_severity {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[risks.epss.severity]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_language {
+            local_req_builder =
+                local_req_builder.query(&[("filter[language]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_ecosystem {
+            local_req_builder =
+                local_req_builder.query(&[("filter[ecosystem]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_code_location_location {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[code_location.location]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_code_location_file_path {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[code_location.file_path]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_code_location_method {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[code_location.method]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_fix_available {
+            local_req_builder = local_req_builder
+                .query(&[("filter[fix_available]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_repo_digests {
+            local_req_builder = local_req_builder
+                .query(&[("filter[repo_digests]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_asset_name {
+            local_req_builder =
+                local_req_builder.query(&[("filter[asset.name]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_asset_type {
+            local_req_builder =
+                local_req_builder.query(&[("filter[asset.type]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_asset_version_first {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[asset.version.first]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_asset_version_last {
+            local_req_builder = local_req_builder
+                .query(&[("filter[asset.version.last]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_asset_repository_url {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[asset.repository_url]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_asset_risks_in_production {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[asset.risks.in_production]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_asset_risks_under_attack {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[asset.risks.under_attack]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_asset_risks_is_publicly_accessible {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[asset.risks.is_publicly_accessible]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_asset_risks_has_privileged_access {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[asset.risks.has_privileged_access]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_asset_risks_has_access_to_sensitive_data {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[asset.risks.has_access_to_sensitive_data]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_asset_environments {
+            local_req_builder = local_req_builder
+                .query(&[("filter[asset.environments]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_asset_arch {
+            local_req_builder =
+                local_req_builder.query(&[("filter[asset.arch]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_asset_operating_system_name {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[asset.operating_system.name]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_asset_operating_system_version {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[asset.operating_system.version]",
+                &local_query_param.to_string(),
+            )]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::ListVulnerabilitiesResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListVulnerabilitiesError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get a list of vulnerable assets.
+    ///
+    /// ### Pagination
+    ///
+    /// Please review the [Pagination section for the "List Vulnerabilities"](#pagination) endpoint.
+    ///
+    /// ### Filtering
+    ///
+    /// Please review the [Filtering section for the "List Vulnerabilities"](#filtering) endpoint.
+    ///
+    /// ### Metadata
+    ///
+    /// Please review the [Metadata section for the "List Vulnerabilities"](#metadata) endpoint.
+    ///
+    pub async fn list_vulnerable_assets(
+        &self,
+        params: ListVulnerableAssetsOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::ListVulnerableAssetsResponse,
+        datadog::Error<ListVulnerableAssetsError>,
+    > {
+        match self.list_vulnerable_assets_with_http_info(params).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get a list of vulnerable assets.
+    ///
+    /// ### Pagination
+    ///
+    /// Please review the [Pagination section for the "List Vulnerabilities"](#pagination) endpoint.
+    ///
+    /// ### Filtering
+    ///
+    /// Please review the [Filtering section for the "List Vulnerabilities"](#filtering) endpoint.
+    ///
+    /// ### Metadata
+    ///
+    /// Please review the [Metadata section for the "List Vulnerabilities"](#metadata) endpoint.
+    ///
+    pub async fn list_vulnerable_assets_with_http_info(
+        &self,
+        params: ListVulnerableAssetsOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::ListVulnerableAssetsResponse>,
+        datadog::Error<ListVulnerableAssetsError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_vulnerable_assets";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_vulnerable_assets' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let page_token = params.page_token;
+        let page_number = params.page_number;
+        let filter_name = params.filter_name;
+        let filter_type = params.filter_type;
+        let filter_version_first = params.filter_version_first;
+        let filter_version_last = params.filter_version_last;
+        let filter_repository_url = params.filter_repository_url;
+        let filter_risks_in_production = params.filter_risks_in_production;
+        let filter_risks_under_attack = params.filter_risks_under_attack;
+        let filter_risks_is_publicly_accessible = params.filter_risks_is_publicly_accessible;
+        let filter_risks_has_privileged_access = params.filter_risks_has_privileged_access;
+        let filter_risks_has_access_to_sensitive_data =
+            params.filter_risks_has_access_to_sensitive_data;
+        let filter_environments = params.filter_environments;
+        let filter_arch = params.filter_arch;
+        let filter_operating_system_name = params.filter_operating_system_name;
+        let filter_operating_system_version = params.filter_operating_system_version;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security/assets",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = page_token {
+            local_req_builder =
+                local_req_builder.query(&[("page[token]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_number {
+            local_req_builder =
+                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_name {
+            local_req_builder =
+                local_req_builder.query(&[("filter[name]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_type {
+            local_req_builder =
+                local_req_builder.query(&[("filter[type]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_version_first {
+            local_req_builder = local_req_builder
+                .query(&[("filter[version.first]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_version_last {
+            local_req_builder = local_req_builder
+                .query(&[("filter[version.last]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_repository_url {
+            local_req_builder = local_req_builder
+                .query(&[("filter[repository_url]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_risks_in_production {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[risks.in_production]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_risks_under_attack {
+            local_req_builder = local_req_builder
+                .query(&[("filter[risks.under_attack]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_risks_is_publicly_accessible {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[risks.is_publicly_accessible]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_risks_has_privileged_access {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[risks.has_privileged_access]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_risks_has_access_to_sensitive_data {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[risks.has_access_to_sensitive_data]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_environments {
+            local_req_builder = local_req_builder
+                .query(&[("filter[environments]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_arch {
+            local_req_builder =
+                local_req_builder.query(&[("filter[arch]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_operating_system_name {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[operating_system.name]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_operating_system_version {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[operating_system.version]",
+                &local_query_param.to_string(),
+            )]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::ListVulnerableAssetsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListVulnerableAssetsError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
