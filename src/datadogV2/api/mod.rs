@@ -19,6 +19,7 @@ pub mod api_confluent_cloud;
 pub mod api_container_images;
 pub mod api_containers;
 pub mod api_csm_agents;
+pub mod api_csm_coverage_analysis;
 pub mod api_csm_threats;
 pub mod api_dashboard_lists;
 pub mod api_data_deletion;
