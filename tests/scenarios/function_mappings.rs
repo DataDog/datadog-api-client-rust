@@ -21683,20 +21683,27 @@ fn test_v2_update_restriction_policy(
     let resource_id =
         serde_json::from_value(_parameters.get("resource_id").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.update_restriction_policy_with_http_info(resource_id, body)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
+    let allow_self_lockout = _parameters
+        .get("allow_self_lockout")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_restriction_policies::UpdateRestrictionPolicyOptionalParams::default();
+    params.allow_self_lockout = allow_self_lockout;
+    let response =
+        match block_on(api.update_restriction_policy_with_http_info(resource_id, body, params)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
                     }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
