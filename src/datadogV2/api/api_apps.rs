@@ -11,77 +11,100 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
+/// GetAppOptionalParams is a struct for passing parameters to the method [`AppsAPI::get_app`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetAppOptionalParams {
+    pub version: Option<String>,
+}
+
+impl GetAppOptionalParams {
+    pub fn version(mut self, value: String) -> Self {
+        self.version = Some(value);
+        self
+    }
+}
+
 /// ListAppsOptionalParams is a struct for passing parameters to the method [`AppsAPI::list_apps`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListAppsOptionalParams {
-    /// The number of apps to return per page
+    /// The number of apps to return per page.
     pub limit: Option<i64>,
-    /// The page number to return
+    /// The page number to return.
     pub page: Option<i64>,
-    /// The `AppsFilter` `user_name`.
+    /// Filter apps by the app creator. Usually the user's email.
     pub filter_user_name: Option<String>,
-    /// The `AppsFilter` `user_uuid`.
-    pub filter_user_uuid: Option<String>,
-    /// The `AppsFilter` `name`.
+    /// Filter apps by the app creator's UUID.
+    pub filter_user_uuid: Option<uuid::Uuid>,
+    /// Filter by app name.
     pub filter_name: Option<String>,
-    /// The `AppsFilter` `query`.
+    /// Filter apps by the app name or the app creator.
     pub filter_query: Option<String>,
-    /// The `AppsFilter` `deployed`.
+    /// Filter apps by whether they are published.
     pub filter_deployed: Option<bool>,
-    /// The `AppsFilter` `tags`.
+    /// Filter apps by tags.
     pub filter_tags: Option<String>,
-    /// The `AppsFilter` `favorite`.
+    /// Filter apps by whether you have added them to your favorites.
     pub filter_favorite: Option<bool>,
+    /// Filter apps by whether they are enabled for self-service.
+    pub filter_self_service: Option<bool>,
+    /// The fields and direction to sort apps by.
     pub sort: Option<Vec<crate::datadogV2::model::AppsSortField>>,
 }
 
 impl ListAppsOptionalParams {
-    /// The number of apps to return per page
+    /// The number of apps to return per page.
     pub fn limit(mut self, value: i64) -> Self {
         self.limit = Some(value);
         self
     }
-    /// The page number to return
+    /// The page number to return.
     pub fn page(mut self, value: i64) -> Self {
         self.page = Some(value);
         self
     }
-    /// The `AppsFilter` `user_name`.
+    /// Filter apps by the app creator. Usually the user's email.
     pub fn filter_user_name(mut self, value: String) -> Self {
         self.filter_user_name = Some(value);
         self
     }
-    /// The `AppsFilter` `user_uuid`.
-    pub fn filter_user_uuid(mut self, value: String) -> Self {
+    /// Filter apps by the app creator's UUID.
+    pub fn filter_user_uuid(mut self, value: uuid::Uuid) -> Self {
         self.filter_user_uuid = Some(value);
         self
     }
-    /// The `AppsFilter` `name`.
+    /// Filter by app name.
     pub fn filter_name(mut self, value: String) -> Self {
         self.filter_name = Some(value);
         self
     }
-    /// The `AppsFilter` `query`.
+    /// Filter apps by the app name or the app creator.
     pub fn filter_query(mut self, value: String) -> Self {
         self.filter_query = Some(value);
         self
     }
-    /// The `AppsFilter` `deployed`.
+    /// Filter apps by whether they are published.
     pub fn filter_deployed(mut self, value: bool) -> Self {
         self.filter_deployed = Some(value);
         self
     }
-    /// The `AppsFilter` `tags`.
+    /// Filter apps by tags.
     pub fn filter_tags(mut self, value: String) -> Self {
         self.filter_tags = Some(value);
         self
     }
-    /// The `AppsFilter` `favorite`.
+    /// Filter apps by whether you have added them to your favorites.
     pub fn filter_favorite(mut self, value: bool) -> Self {
         self.filter_favorite = Some(value);
         self
     }
+    /// Filter apps by whether they are enabled for self-service.
+    pub fn filter_self_service(mut self, value: bool) -> Self {
+        self.filter_self_service = Some(value);
+        self
+    }
+    /// The fields and direction to sort apps by.
     pub fn sort(mut self, value: Vec<crate::datadogV2::model::AppsSortField>) -> Self {
         self.sort = Some(value);
         self
@@ -92,7 +115,7 @@ impl ListAppsOptionalParams {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateAppError {
-    AppBuilderError(crate::datadogV2::model::AppBuilderError),
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -101,7 +124,7 @@ pub enum CreateAppError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteAppError {
-    AppBuilderError(crate::datadogV2::model::AppBuilderError),
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -110,7 +133,25 @@ pub enum DeleteAppError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteAppsError {
-    AppBuilderError(crate::datadogV2::model::AppBuilderError),
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// DeployAppError is a struct for typed errors of method [`AppsAPI::deploy_app`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeployAppError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// DisableAppError is a struct for typed errors of method [`AppsAPI::disable_app`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DisableAppError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -119,7 +160,7 @@ pub enum DeleteAppsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetAppError {
-    AppBuilderError(crate::datadogV2::model::AppBuilderError),
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -128,7 +169,7 @@ pub enum GetAppError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListAppsError {
-    AppBuilderError(crate::datadogV2::model::AppBuilderError),
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -137,12 +178,12 @@ pub enum ListAppsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateAppError {
-    AppBuilderError(crate::datadogV2::model::AppBuilderError),
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// Create, read, update, and delete apps in App Builder.
+/// Datadog App Builder provides a low-code solution to rapidly develop and integrate secure, customized applications into your monitoring stack that are built to accelerate remediation at scale. These API endpoints allow you to create, read, update, delete, and publish apps.
 #[derive(Debug, Clone)]
 pub struct AppsAPI {
     config: datadog::Configuration,
@@ -634,12 +675,238 @@ impl AppsAPI {
         }
     }
 
+    /// Deploy (publish) an app by ID
+    pub async fn deploy_app(
+        &self,
+        app_id: String,
+    ) -> Result<crate::datadogV2::model::DeployAppResponse, datadog::Error<DeployAppError>> {
+        match self.deploy_app_with_http_info(app_id).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Deploy (publish) an app by ID
+    pub async fn deploy_app_with_http_info(
+        &self,
+        app_id: String,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::DeployAppResponse>,
+        datadog::Error<DeployAppError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.deploy_app";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.deploy_app' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/app-builder/apps/{app_id}/deployment",
+            local_configuration.get_operation_host(operation_id),
+            app_id = datadog::urlencode(app_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::DeployAppResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<DeployAppError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Disable an app by ID
+    pub async fn disable_app(
+        &self,
+        app_id: String,
+    ) -> Result<crate::datadogV2::model::DisableAppResponse, datadog::Error<DisableAppError>> {
+        match self.disable_app_with_http_info(app_id).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Disable an app by ID
+    pub async fn disable_app_with_http_info(
+        &self,
+        app_id: String,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::DisableAppResponse>,
+        datadog::Error<DisableAppError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.disable_app";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.disable_app' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/app-builder/apps/{app_id}/deployment",
+            local_configuration.get_operation_host(operation_id),
+            app_id = datadog::urlencode(app_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::DisableAppResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<DisableAppError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Get the full definition of an app by ID
     pub async fn get_app(
         &self,
         app_id: String,
+        params: GetAppOptionalParams,
     ) -> Result<crate::datadogV2::model::GetAppResponse, datadog::Error<GetAppError>> {
-        match self.get_app_with_http_info(app_id).await {
+        match self.get_app_with_http_info(app_id, params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
@@ -657,6 +924,7 @@ impl AppsAPI {
     pub async fn get_app_with_http_info(
         &self,
         app_id: String,
+        params: GetAppOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::GetAppResponse>,
         datadog::Error<GetAppError>,
@@ -672,6 +940,9 @@ impl AppsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        // unbox and build optional parameters
+        let version = params.version;
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
@@ -681,6 +952,11 @@ impl AppsAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = version {
+            local_req_builder =
+                local_req_builder.query(&[("version", &local_query_param.to_string())]);
+        };
 
         // build headers
         let mut headers = HeaderMap::new();
@@ -793,6 +1069,7 @@ impl AppsAPI {
         let filter_deployed = params.filter_deployed;
         let filter_tags = params.filter_tags;
         let filter_favorite = params.filter_favorite;
+        let filter_self_service = params.filter_self_service;
         let sort = params.sort;
 
         let local_client = &self.client;
@@ -839,6 +1116,10 @@ impl AppsAPI {
         if let Some(ref local_query_param) = filter_favorite {
             local_req_builder =
                 local_req_builder.query(&[("filter[favorite]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_self_service {
+            local_req_builder = local_req_builder
+                .query(&[("filter[self_service]", &local_query_param.to_string())]);
         };
         if let Some(ref local) = sort {
             local_req_builder = local_req_builder.query(&[(
