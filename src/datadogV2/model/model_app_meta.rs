@@ -37,7 +37,7 @@ pub struct AppMeta {
     pub user_name: Option<String>,
     /// The `AppMeta` `user_uuid`.
     #[serde(rename = "user_uuid")]
-    pub user_uuid: Option<String>,
+    pub user_uuid: Option<uuid::Uuid>,
     /// The `AppMeta` `version`.
     #[serde(rename = "version")]
     pub version: Option<i64>,
@@ -106,7 +106,7 @@ impl AppMeta {
         self
     }
 
-    pub fn user_uuid(mut self, value: String) -> Self {
+    pub fn user_uuid(mut self, value: uuid::Uuid) -> Self {
         self.user_uuid = Some(value);
         self
     }
@@ -156,7 +156,7 @@ impl<'de> Deserialize<'de> for AppMeta {
                 let mut updated_since_deployment: Option<bool> = None;
                 let mut user_id: Option<i64> = None;
                 let mut user_name: Option<String> = None;
-                let mut user_uuid: Option<String> = None;
+                let mut user_uuid: Option<uuid::Uuid> = None;
                 let mut version: Option<i64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
