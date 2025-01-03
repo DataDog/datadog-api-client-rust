@@ -19,7 +19,8 @@ async fn main() {
             .description(
                 "This rule suppresses low-severity signals in staging environments.".to_string(),
             )
-            .expiration_date(1638443471000),
+            .expiration_date(1638443471000)
+            .start_date(1637493071000),
             SecurityMonitoringSuppressionType::SUPPRESSIONS,
         ),
     );

@@ -368,7 +368,7 @@ impl LogsAPI {
     /// List endpoint returns logs that match a log search query.
     /// [Results are paginated][1].
     ///
-    /// Use this endpoint to build complex logs filtering and search.
+    /// Use this endpoint to search and filter your logs.
     ///
     /// **If you are considering archiving logs for your organization,
     /// consider use of the Datadog archive capabilities instead of the log list API.
@@ -437,7 +437,7 @@ impl LogsAPI {
     /// List endpoint returns logs that match a log search query.
     /// [Results are paginated][1].
     ///
-    /// Use this endpoint to build complex logs filtering and search.
+    /// Use this endpoint to search and filter your logs.
     ///
     /// **If you are considering archiving logs for your organization,
     /// consider use of the Datadog archive capabilities instead of the log list API.
@@ -580,7 +580,7 @@ impl LogsAPI {
     /// List endpoint returns logs that match a log search query.
     /// [Results are paginated][1].
     ///
-    /// Use this endpoint to see your latest logs.
+    /// Use this endpoint to search and filter your logs.
     ///
     /// **If you are considering archiving logs for your organization,
     /// consider use of the Datadog archive capabilities instead of the log list API.
@@ -643,7 +643,7 @@ impl LogsAPI {
     /// List endpoint returns logs that match a log search query.
     /// [Results are paginated][1].
     ///
-    /// Use this endpoint to see your latest logs.
+    /// Use this endpoint to search and filter your logs.
     ///
     /// **If you are considering archiving logs for your organization,
     /// consider use of the Datadog archive capabilities instead of the log list API.

@@ -10,6 +10,22 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
+/// UpdateRestrictionPolicyOptionalParams is a struct for passing parameters to the method [`RestrictionPoliciesAPI::update_restriction_policy`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct UpdateRestrictionPolicyOptionalParams {
+    /// Allows admins (users with the `user_access_manage` permission) to remove their own access from the resource if set to `true`. By default, this is set to `false`, preventing admins from locking themselves out.
+    pub allow_self_lockout: Option<String>,
+}
+
+impl UpdateRestrictionPolicyOptionalParams {
+    /// Allows admins (users with the `user_access_manage` permission) to remove their own access from the resource if set to `true`. By default, this is set to `false`, preventing admins from locking themselves out.
+    pub fn allow_self_lockout(mut self, value: String) -> Self {
+        self.allow_self_lockout = Some(value);
+        self
+    }
+}
+
 /// DeleteRestrictionPolicyError is a struct for typed errors of method [`RestrictionPoliciesAPI::delete_restriction_policy`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -336,12 +352,13 @@ impl RestrictionPoliciesAPI {
         &self,
         resource_id: String,
         body: crate::datadogV2::model::RestrictionPolicyUpdateRequest,
+        params: UpdateRestrictionPolicyOptionalParams,
     ) -> Result<
         crate::datadogV2::model::RestrictionPolicyResponse,
         datadog::Error<UpdateRestrictionPolicyError>,
     > {
         match self
-            .update_restriction_policy_with_http_info(resource_id, body)
+            .update_restriction_policy_with_http_info(resource_id, body, params)
             .await
         {
             Ok(response_content) => {
@@ -389,12 +406,16 @@ impl RestrictionPoliciesAPI {
         &self,
         resource_id: String,
         body: crate::datadogV2::model::RestrictionPolicyUpdateRequest,
+        params: UpdateRestrictionPolicyOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::RestrictionPolicyResponse>,
         datadog::Error<UpdateRestrictionPolicyError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_restriction_policy";
+
+        // unbox and build optional parameters
+        let allow_self_lockout = params.allow_self_lockout;
 
         let local_client = &self.client;
 
@@ -405,6 +426,11 @@ impl RestrictionPoliciesAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = allow_self_lockout {
+            local_req_builder =
+                local_req_builder.query(&[("allow_self_lockout", &local_query_param.to_string())]);
+        };
 
         // build headers
         let mut headers = HeaderMap::new();
