@@ -191,6 +191,45 @@ pub struct UsageSummaryDate {
     /// Shows the average of all normalized Database Monitoring queries over all hours in the current date for all organizations.
     #[serde(rename = "dbm_queries_count_avg")]
     pub dbm_queries_count_avg: Option<i64>,
+    /// Shows the sum of all ephemeral infrastructure hosts with the Datadog Agent over all hours in the current date for the given org.
+    #[serde(rename = "eph_infra_host_agent_sum")]
+    pub eph_infra_host_agent_sum: Option<i64>,
+    /// Shows the sum of all ephemeral infrastructure hosts on Alibaba over all hours in the current date for the given org.
+    #[serde(rename = "eph_infra_host_alibaba_sum")]
+    pub eph_infra_host_alibaba_sum: Option<i64>,
+    /// Shows the sum of all ephemeral infrastructure hosts on AWS over all hours in the current date for the given org.
+    #[serde(rename = "eph_infra_host_aws_sum")]
+    pub eph_infra_host_aws_sum: Option<i64>,
+    /// Shows the sum of all ephemeral infrastructure hosts on Azure over all hours in the current date for the given org.
+    #[serde(rename = "eph_infra_host_azure_sum")]
+    pub eph_infra_host_azure_sum: Option<i64>,
+    /// Shows the sum of all ephemeral infrastructure hosts for Enterprise over all hours in the current date for the given org.
+    #[serde(rename = "eph_infra_host_ent_sum")]
+    pub eph_infra_host_ent_sum: Option<i64>,
+    /// Shows the sum of all ephemeral infrastructure hosts on GCP over all hours in the current date for the given org.
+    #[serde(rename = "eph_infra_host_gcp_sum")]
+    pub eph_infra_host_gcp_sum: Option<i64>,
+    /// Shows the sum of all ephemeral infrastructure hosts on Heroku over all hours in the current date for the given org.
+    #[serde(rename = "eph_infra_host_heroku_sum")]
+    pub eph_infra_host_heroku_sum: Option<i64>,
+    /// Shows the sum of all ephemeral infrastructure hosts with only Azure App Services over all hours in the current date for the given org.
+    #[serde(rename = "eph_infra_host_only_aas_sum")]
+    pub eph_infra_host_only_aas_sum: Option<i64>,
+    /// Shows the sum of all ephemeral infrastructure hosts with only vSphere over all hours in the current date for the given org.
+    #[serde(rename = "eph_infra_host_only_vsphere_sum")]
+    pub eph_infra_host_only_vsphere_sum: Option<i64>,
+    /// Shows the sum of all ephemeral APM hosts reported by the Datadog exporter for the OpenTelemetry Collector over all hours in the current date for the given org.
+    #[serde(rename = "eph_infra_host_opentelemetry_apm_sum")]
+    pub eph_infra_host_opentelemetry_apm_sum: Option<i64>,
+    /// Shows the sum of all ephemeral hosts reported by the Datadog exporter for the OpenTelemetry Collector over all hours in the current date for the given org.
+    #[serde(rename = "eph_infra_host_opentelemetry_sum")]
+    pub eph_infra_host_opentelemetry_sum: Option<i64>,
+    /// Shows the sum of all ephemeral infrastructure hosts for Pro over all hours in the current date for the given org.
+    #[serde(rename = "eph_infra_host_pro_sum")]
+    pub eph_infra_host_pro_sum: Option<i64>,
+    /// Shows the sum of all ephemeral infrastructure hosts for Pro Plus over all hours in the current date for the given org.
+    #[serde(rename = "eph_infra_host_proplus_sum")]
+    pub eph_infra_host_proplus_sum: Option<i64>,
     /// Shows the sum of all Error Tracking error events over all hours in the current date for the given org.
     #[serde(rename = "error_tracking_error_events_sum")]
     pub error_tracking_error_events_sum: Option<i64>,
@@ -524,6 +563,19 @@ impl UsageSummaryDate {
             date: None,
             dbm_host_top99p: None,
             dbm_queries_count_avg: None,
+            eph_infra_host_agent_sum: None,
+            eph_infra_host_alibaba_sum: None,
+            eph_infra_host_aws_sum: None,
+            eph_infra_host_azure_sum: None,
+            eph_infra_host_ent_sum: None,
+            eph_infra_host_gcp_sum: None,
+            eph_infra_host_heroku_sum: None,
+            eph_infra_host_only_aas_sum: None,
+            eph_infra_host_only_vsphere_sum: None,
+            eph_infra_host_opentelemetry_apm_sum: None,
+            eph_infra_host_opentelemetry_sum: None,
+            eph_infra_host_pro_sum: None,
+            eph_infra_host_proplus_sum: None,
             error_tracking_error_events_sum: None,
             error_tracking_events_sum: None,
             error_tracking_rum_error_events_sum: None,
@@ -964,6 +1016,84 @@ impl UsageSummaryDate {
     #[allow(deprecated)]
     pub fn dbm_queries_count_avg(mut self, value: i64) -> Self {
         self.dbm_queries_count_avg = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn eph_infra_host_agent_sum(mut self, value: i64) -> Self {
+        self.eph_infra_host_agent_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn eph_infra_host_alibaba_sum(mut self, value: i64) -> Self {
+        self.eph_infra_host_alibaba_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn eph_infra_host_aws_sum(mut self, value: i64) -> Self {
+        self.eph_infra_host_aws_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn eph_infra_host_azure_sum(mut self, value: i64) -> Self {
+        self.eph_infra_host_azure_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn eph_infra_host_ent_sum(mut self, value: i64) -> Self {
+        self.eph_infra_host_ent_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn eph_infra_host_gcp_sum(mut self, value: i64) -> Self {
+        self.eph_infra_host_gcp_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn eph_infra_host_heroku_sum(mut self, value: i64) -> Self {
+        self.eph_infra_host_heroku_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn eph_infra_host_only_aas_sum(mut self, value: i64) -> Self {
+        self.eph_infra_host_only_aas_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn eph_infra_host_only_vsphere_sum(mut self, value: i64) -> Self {
+        self.eph_infra_host_only_vsphere_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn eph_infra_host_opentelemetry_apm_sum(mut self, value: i64) -> Self {
+        self.eph_infra_host_opentelemetry_apm_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn eph_infra_host_opentelemetry_sum(mut self, value: i64) -> Self {
+        self.eph_infra_host_opentelemetry_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn eph_infra_host_pro_sum(mut self, value: i64) -> Self {
+        self.eph_infra_host_pro_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn eph_infra_host_proplus_sum(mut self, value: i64) -> Self {
+        self.eph_infra_host_proplus_sum = Some(value);
         self
     }
 
@@ -1562,6 +1692,19 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                 let mut date: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut dbm_host_top99p: Option<i64> = None;
                 let mut dbm_queries_count_avg: Option<i64> = None;
+                let mut eph_infra_host_agent_sum: Option<i64> = None;
+                let mut eph_infra_host_alibaba_sum: Option<i64> = None;
+                let mut eph_infra_host_aws_sum: Option<i64> = None;
+                let mut eph_infra_host_azure_sum: Option<i64> = None;
+                let mut eph_infra_host_ent_sum: Option<i64> = None;
+                let mut eph_infra_host_gcp_sum: Option<i64> = None;
+                let mut eph_infra_host_heroku_sum: Option<i64> = None;
+                let mut eph_infra_host_only_aas_sum: Option<i64> = None;
+                let mut eph_infra_host_only_vsphere_sum: Option<i64> = None;
+                let mut eph_infra_host_opentelemetry_apm_sum: Option<i64> = None;
+                let mut eph_infra_host_opentelemetry_sum: Option<i64> = None;
+                let mut eph_infra_host_pro_sum: Option<i64> = None;
+                let mut eph_infra_host_proplus_sum: Option<i64> = None;
                 let mut error_tracking_error_events_sum: Option<i64> = None;
                 let mut error_tracking_events_sum: Option<i64> = None;
                 let mut error_tracking_rum_error_events_sum: Option<i64> = None;
@@ -2064,6 +2207,97 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                                 continue;
                             }
                             dbm_queries_count_avg =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "eph_infra_host_agent_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            eph_infra_host_agent_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "eph_infra_host_alibaba_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            eph_infra_host_alibaba_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "eph_infra_host_aws_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            eph_infra_host_aws_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "eph_infra_host_azure_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            eph_infra_host_azure_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "eph_infra_host_ent_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            eph_infra_host_ent_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "eph_infra_host_gcp_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            eph_infra_host_gcp_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "eph_infra_host_heroku_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            eph_infra_host_heroku_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "eph_infra_host_only_aas_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            eph_infra_host_only_aas_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "eph_infra_host_only_vsphere_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            eph_infra_host_only_vsphere_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "eph_infra_host_opentelemetry_apm_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            eph_infra_host_opentelemetry_apm_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "eph_infra_host_opentelemetry_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            eph_infra_host_opentelemetry_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "eph_infra_host_pro_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            eph_infra_host_pro_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "eph_infra_host_proplus_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            eph_infra_host_proplus_sum =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "error_tracking_error_events_sum" => {
@@ -2722,6 +2956,19 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                     date,
                     dbm_host_top99p,
                     dbm_queries_count_avg,
+                    eph_infra_host_agent_sum,
+                    eph_infra_host_alibaba_sum,
+                    eph_infra_host_aws_sum,
+                    eph_infra_host_azure_sum,
+                    eph_infra_host_ent_sum,
+                    eph_infra_host_gcp_sum,
+                    eph_infra_host_heroku_sum,
+                    eph_infra_host_only_aas_sum,
+                    eph_infra_host_only_vsphere_sum,
+                    eph_infra_host_opentelemetry_apm_sum,
+                    eph_infra_host_opentelemetry_sum,
+                    eph_infra_host_pro_sum,
+                    eph_infra_host_proplus_sum,
                     error_tracking_error_events_sum,
                     error_tracking_events_sum,
                     error_tracking_rum_error_events_sum,

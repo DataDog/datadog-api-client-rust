@@ -15,12 +15,12 @@ use std::io::Write;
 #[derive(Clone, Default, Debug)]
 pub struct UpdateRestrictionPolicyOptionalParams {
     /// Allows admins (users with the `user_access_manage` permission) to remove their own access from the resource if set to `true`. By default, this is set to `false`, preventing admins from locking themselves out.
-    pub allow_self_lockout: Option<String>,
+    pub allow_self_lockout: Option<bool>,
 }
 
 impl UpdateRestrictionPolicyOptionalParams {
     /// Allows admins (users with the `user_access_manage` permission) to remove their own access from the resource if set to `true`. By default, this is set to `false`, preventing admins from locking themselves out.
-    pub fn allow_self_lockout(mut self, value: String) -> Self {
+    pub fn allow_self_lockout(mut self, value: bool) -> Self {
         self.allow_self_lockout = Some(value);
         self
     }
