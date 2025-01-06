@@ -19,7 +19,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"id\":\"2d9dd18e-c574-454c-8d43-3045b731d6a2\",\"type\":\"appDefinitions\"}}",
+          "string": "{\"data\":{\"id\":\"02c52f8c-78d9-4c14-ac27-b0bcac36ce74\",\"type\":\"appDefinitions\"}}",
           "encoding": null
         },
         "headers": {
@@ -32,7 +32,7 @@
           "message": "Created"
         }
       },
-      "recorded_at": "Thu, 12 Dec 2024 20:29:24 GMT"
+      "recorded_at": "Fri, 20 Dec 2024 20:39:18 GMT"
     },
     {
       "request": {
@@ -43,11 +43,11 @@
           ]
         },
         "method": "delete",
-        "uri": "https://api.datadoghq.com/api/v2/app-builder/apps/2d9dd18e-c574-454c-8d43-3045b731d6a2"
+        "uri": "https://api.datadoghq.com/api/v2/app-builder/apps/02c52f8c-78d9-4c14-ac27-b0bcac36ce74"
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"id\":\"2d9dd18e-c574-454c-8d43-3045b731d6a2\",\"type\":\"appDefinitions\"}}",
+          "string": "{\"data\":{\"id\":\"02c52f8c-78d9-4c14-ac27-b0bcac36ce74\",\"type\":\"appDefinitions\"}}",
           "encoding": null
         },
         "headers": {
@@ -60,7 +60,7 @@
           "message": "OK"
         }
       },
-      "recorded_at": "Thu, 12 Dec 2024 20:29:24 GMT"
+      "recorded_at": "Fri, 20 Dec 2024 20:39:18 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"

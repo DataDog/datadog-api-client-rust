@@ -19,7 +19,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"id\":\"9d2ee93b-6ac5-4b0e-abd8-829916f2365d\",\"type\":\"appDefinitions\"}}",
+          "string": "{\"data\":{\"id\":\"2eb79081-77f2-4082-93d5-fbb4d2291dc7\",\"type\":\"appDefinitions\"}}",
           "encoding": null
         },
         "headers": {
@@ -32,12 +32,12 @@
           "message": "Created"
         }
       },
-      "recorded_at": "Thu, 12 Dec 2024 20:29:26 GMT"
+      "recorded_at": "Fri, 20 Dec 2024 20:39:22 GMT"
     },
     {
       "request": {
         "body": {
-          "string": "{\"data\":{\"attributes\":{\"rootInstanceName\":\"\"},\"id\":\"9d2ee93b-6ac5-4b0e-abd8-829916f2365d\",\"type\":\"appDefinitions\"}}",
+          "string": "{\"data\":{\"attributes\":{\"rootInstanceName\":\"\"},\"id\":\"2eb79081-77f2-4082-93d5-fbb4d2291dc7\",\"type\":\"appDefinitions\"}}",
           "encoding": null
         },
         "headers": {
@@ -49,7 +49,7 @@
           ]
         },
         "method": "patch",
-        "uri": "https://api.datadoghq.com/api/v2/app-builder/apps/9d2ee93b-6ac5-4b0e-abd8-829916f2365d"
+        "uri": "https://api.datadoghq.com/api/v2/app-builder/apps/2eb79081-77f2-4082-93d5-fbb4d2291dc7"
       },
       "response": {
         "body": {
@@ -66,7 +66,7 @@
           "message": "Bad Request"
         }
       },
-      "recorded_at": "Thu, 12 Dec 2024 20:29:26 GMT"
+      "recorded_at": "Fri, 20 Dec 2024 20:39:22 GMT"
     },
     {
       "request": {
@@ -77,11 +77,11 @@
           ]
         },
         "method": "delete",
-        "uri": "https://api.datadoghq.com/api/v2/app-builder/apps/9d2ee93b-6ac5-4b0e-abd8-829916f2365d"
+        "uri": "https://api.datadoghq.com/api/v2/app-builder/apps/2eb79081-77f2-4082-93d5-fbb4d2291dc7"
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"id\":\"9d2ee93b-6ac5-4b0e-abd8-829916f2365d\",\"type\":\"appDefinitions\"}}",
+          "string": "{\"data\":{\"id\":\"2eb79081-77f2-4082-93d5-fbb4d2291dc7\",\"type\":\"appDefinitions\"}}",
           "encoding": null
         },
         "headers": {
@@ -94,7 +94,7 @@
           "message": "OK"
         }
       },
-      "recorded_at": "Thu, 12 Dec 2024 20:29:26 GMT"
+      "recorded_at": "Fri, 20 Dec 2024 20:39:22 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"
