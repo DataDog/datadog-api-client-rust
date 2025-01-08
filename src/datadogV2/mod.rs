@@ -6,6 +6,7 @@ pub mod api;
 pub use self::api::api_agentless_scanning;
 pub use self::api::api_api_management;
 pub use self::api::api_apm_retention_filters;
+pub use self::api::api_app_deployment;
 pub use self::api::api_apps;
 pub use self::api::api_audit;
 pub use self::api::api_authn_mappings;

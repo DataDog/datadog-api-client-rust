@@ -56,6 +56,7 @@ pub struct ApiInstances {
     pub v2_api_apm_retention_filters:
         Option<datadogV2::api_apm_retention_filters::APMRetentionFiltersAPI>,
     pub v2_api_apps: Option<datadogV2::api_apps::AppsAPI>,
+    pub v2_api_app_deployment: Option<datadogV2::api_app_deployment::AppDeploymentAPI>,
     pub v2_api_audit: Option<datadogV2::api_audit::AuditAPI>,
     pub v2_api_authn_mappings: Option<datadogV2::api_authn_mappings::AuthNMappingsAPI>,
     pub v2_api_case_management: Option<datadogV2::api_case_management::CaseManagementAPI>,
@@ -494,6 +495,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ));
+        }
+        "AppDeployment" => {
+            world.api_instances.v2_api_app_deployment = Some(
+                datadogV2::api_app_deployment::AppDeploymentAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
         }
         "Audit" => {
             world.api_instances.v2_api_audit =
@@ -11434,9 +11443,6 @@ fn test_v2_list_apps(world: &mut DatadogWorld, _parameters: &HashMap<String, Val
     let filter_favorite = _parameters
         .get("filter[favorite]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let filter_self_service = _parameters
-        .get("filter[self_service]")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let sort = _parameters
         .get("sort")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
@@ -11450,7 +11456,6 @@ fn test_v2_list_apps(world: &mut DatadogWorld, _parameters: &HashMap<String, Val
     params.filter_deployed = filter_deployed;
     params.filter_tags = filter_tags;
     params.filter_favorite = filter_favorite;
-    params.filter_self_service = filter_self_service;
     params.sort = sort;
     let response = match block_on(api.list_apps_with_http_info(params)) {
         Ok(response) => response,
@@ -11527,12 +11532,7 @@ fn test_v2_get_app(world: &mut DatadogWorld, _parameters: &HashMap<String, Value
         .as_ref()
         .expect("api instance not found");
     let app_id = serde_json::from_value(_parameters.get("app_id").unwrap().clone()).unwrap();
-    let version = _parameters
-        .get("version")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let mut params = datadogV2::api_apps::GetAppOptionalParams::default();
-    params.version = version;
-    let response = match block_on(api.get_app_with_http_info(app_id, params)) {
+    let response = match block_on(api.get_app_with_http_info(app_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -11579,7 +11579,7 @@ fn test_v2_update_app(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
 fn test_v2_disable_app(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_apps
+        .v2_api_app_deployment
         .as_ref()
         .expect("api instance not found");
     let app_id = serde_json::from_value(_parameters.get("app_id").unwrap().clone()).unwrap();
@@ -11604,7 +11604,7 @@ fn test_v2_disable_app(world: &mut DatadogWorld, _parameters: &HashMap<String, V
 fn test_v2_deploy_app(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_apps
+        .v2_api_app_deployment
         .as_ref()
         .expect("api instance not found");
     let app_id = serde_json::from_value(_parameters.get("app_id").unwrap().clone()).unwrap();

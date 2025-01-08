@@ -19,7 +19,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"id\":\"884b37bc-71b8-40bc-8967-12684ec7f3c4\",\"type\":\"appDefinitions\"}}",
+          "string": "{\"data\":{\"id\":\"61d36766-5d27-47ea-a3e7-aa7bd77b1da3\",\"type\":\"appDefinitions\"}}",
           "encoding": null
         },
         "headers": {
@@ -32,12 +32,12 @@
           "message": "Created"
         }
       },
-      "recorded_at": "Fri, 20 Dec 2024 20:39:19 GMT"
+      "recorded_at": "Thu, 12 Dec 2024 20:29:25 GMT"
     },
     {
       "request": {
         "body": {
-          "string": "{\"data\":[{\"id\":\"884b37bc-71b8-40bc-8967-12684ec7f3c4\",\"type\":\"appDefinitions\"}]}",
+          "string": "{\"data\":[{\"id\":\"61d36766-5d27-47ea-a3e7-aa7bd77b1da3\",\"type\":\"appDefinitions\"}]}",
           "encoding": null
         },
         "headers": {
@@ -53,7 +53,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"data\":[{\"id\":\"884b37bc-71b8-40bc-8967-12684ec7f3c4\",\"type\":\"appDefinitions\"}]}",
+          "string": "{\"data\":[{\"id\":\"61d36766-5d27-47ea-a3e7-aa7bd77b1da3\",\"type\":\"appDefinitions\"}]}",
           "encoding": null
         },
         "headers": {
@@ -66,7 +66,7 @@
           "message": "OK"
         }
       },
-      "recorded_at": "Fri, 20 Dec 2024 20:39:19 GMT"
+      "recorded_at": "Thu, 12 Dec 2024 20:29:25 GMT"
     },
     {
       "request": {
@@ -77,7 +77,7 @@
           ]
         },
         "method": "delete",
-        "uri": "https://api.datadoghq.com/api/v2/app-builder/apps/884b37bc-71b8-40bc-8967-12684ec7f3c4"
+        "uri": "https://api.datadoghq.com/api/v2/app-builder/apps/61d36766-5d27-47ea-a3e7-aa7bd77b1da3"
       },
       "response": {
         "body": {
@@ -94,7 +94,7 @@
           "message": "Not Found"
         }
       },
-      "recorded_at": "Fri, 20 Dec 2024 20:39:19 GMT"
+      "recorded_at": "Thu, 12 Dec 2024 20:29:25 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"

@@ -9,11 +9,11 @@
           ]
         },
         "method": "delete",
-        "uri": "https://api.datadoghq.com/api/v2/app-builder/apps/7addb29b-f935-472c-ae79-d1963979a23e/deployment"
+        "uri": "https://api.datadoghq.com/api/v2/app-builder/apps/invalid-uuid/deployment"
       },
       "response": {
         "body": {
-          "string": "{\"errors\":[{\"detail\":\"app not found\"}]}",
+          "string": "{\"errors\":[{\"detail\":\"invalid path parameter\",\"source\":{\"parameter\":\"appId\"}}]}",
           "encoding": null
         },
         "headers": {
@@ -22,11 +22,11 @@
           ]
         },
         "status": {
-          "code": 404,
-          "message": "Not Found"
+          "code": 400,
+          "message": "Bad Request"
         }
       },
-      "recorded_at": "Fri, 20 Dec 2024 20:39:21 GMT"
+      "recorded_at": "Tue, 10 Dec 2024 19:57:36 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"
