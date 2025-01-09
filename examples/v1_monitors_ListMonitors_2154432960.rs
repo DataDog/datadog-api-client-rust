@@ -1,4 +1,4 @@
-// Get all monitor details with tags
+// Get all monitors with tags
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api_monitors::ListMonitorsOptionalParams;
 use datadog_api_client::datadogV1::api_monitors::MonitorsAPI;
