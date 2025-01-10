@@ -61,6 +61,7 @@ async fn main() {
             )
             .type_(EventCreateRequestType::EVENT),
     );
+
     let configuration = datadog::Configuration::new();
     let api = EventsAPI::with_config(configuration);
     let resp = api.create_event(body).await;

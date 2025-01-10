@@ -6,6 +6,7 @@ use datadog_api_client::datadogV1::api_downtimes::DowntimesAPI;
 async fn main() {
     // there is a valid "downtime" in the system
     let downtime_id: i64 = std::env::var("DOWNTIME_ID").unwrap().parse().unwrap();
+
     let configuration = datadog::Configuration::new();
     let api = DowntimesAPI::with_config(configuration);
     let resp = api.cancel_downtime(downtime_id.clone()).await;

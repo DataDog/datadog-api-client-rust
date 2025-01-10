@@ -24,6 +24,7 @@ async fn main() {
                 .tag_name("resource_name".to_string())]),
         SpansMetricType::SPANS_METRICS,
     ));
+
     let configuration = datadog::Configuration::new();
     let api = SpansMetricsAPI::with_config(configuration);
     let resp = api

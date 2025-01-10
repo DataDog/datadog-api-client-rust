@@ -7,6 +7,7 @@ use datadog_api_client::datadogV1::model::SyntheticsFetchUptimesPayload;
 async fn main() {
     let body =
         SyntheticsFetchUptimesPayload::new(1726041488, vec!["p8m-9gw-nte".to_string()], 1726055954);
+
     let configuration = datadog::Configuration::new();
     let api = SyntheticsAPI::with_config(configuration);
     let resp = api.fetch_uptimes(body).await;

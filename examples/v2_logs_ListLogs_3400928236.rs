@@ -19,6 +19,7 @@ async fn main() {
         )
         .page(LogsListRequestPage::new().limit(5))
         .sort(LogsSort::TIMESTAMP_ASCENDING);
+
     let configuration = datadog::Configuration::new();
     let api = LogsAPI::with_config(configuration);
     let resp = api

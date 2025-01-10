@@ -1,5 +1,4 @@
-// Create a new dashboard with a change widget using formulas and functions slo
-// query
+// Create a new dashboard with a change widget using formulas and functions slo query
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api_dashboards::DashboardsAPI;
 use datadog_api_client::datadogV1::model::ChangeWidgetDefinition;
@@ -72,6 +71,7 @@ async fn main() {
             .layout(WidgetLayout::new(2, 4, 0, 0)),
         ],
     );
+
     let configuration = datadog::Configuration::new();
     let api = DashboardsAPI::with_config(configuration);
     let resp = api.create_dashboard(body).await;

@@ -7,6 +7,7 @@ use datadog_api_client::datadogV2::api_roles::RolesAPI;
 async fn main() {
     // there is a valid "role" in the system
     let role_data_id = std::env::var("ROLE_DATA_ID").unwrap();
+
     let configuration = datadog::Configuration::new();
     let api = RolesAPI::with_config(configuration);
     let resp = api

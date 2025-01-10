@@ -16,6 +16,7 @@ async fn main() {
     .metadata(
         SyntheticsPrivateLocationMetadata::new().restricted_roles(vec![role_data_id.clone()]),
     );
+
     let configuration = datadog::Configuration::new();
     let api = SyntheticsAPI::with_config(configuration);
     let resp = api.create_private_location(body).await;

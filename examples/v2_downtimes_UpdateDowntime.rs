@@ -15,6 +15,7 @@ async fn main() {
         downtime_v2_data_id.clone(),
         DowntimeResourceType::DOWNTIME,
     ));
+
     let configuration = datadog::Configuration::new();
     let api = DowntimesAPI::with_config(configuration);
     let resp = api.update_downtime(downtime_v2_data_id.clone(), body).await;

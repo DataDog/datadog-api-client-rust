@@ -6,6 +6,7 @@ use datadog_api_client::datadogV2::api_security_monitoring::SecurityMonitoringAP
 async fn main() {
     // there is a valid "historical_job" in the system
     let historical_job_data_id = std::env::var("HISTORICAL_JOB_DATA_ID").unwrap();
+
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.GetHistoricalJob", true);
     configuration.set_unstable_operation_enabled("v2.RunHistoricalJob", true);

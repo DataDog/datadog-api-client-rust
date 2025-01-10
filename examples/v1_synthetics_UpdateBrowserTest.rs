@@ -110,6 +110,7 @@ async fn main() {
         SyntheticsStep::new().type_(SyntheticsStepType::ASSERT_ELEMENT_CONTENT)
     ])
     .tags(vec!["env:prod".to_string()]);
+
     let configuration = datadog::Configuration::new();
     let api = SyntheticsAPI::with_config(configuration);
     let resp = api.update_browser_test("public_id".to_string(), body).await;

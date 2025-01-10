@@ -24,6 +24,7 @@ async fn main() {
         )
         .id(rum_metric_data_id.clone()),
     );
+
     let configuration = datadog::Configuration::new();
     let api = RumMetricsAPI::with_config(configuration);
     let resp = api

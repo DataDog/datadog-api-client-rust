@@ -43,6 +43,7 @@ async fn main() {
                 .root_instance_name("grid0".to_string()),
         ),
     );
+
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.CreateApp", true);
     let api = AppsAPI::with_config(configuration);

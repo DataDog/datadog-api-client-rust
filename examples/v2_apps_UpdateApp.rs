@@ -19,6 +19,7 @@ async fn main() {
             )
             .id(app_data_id.clone()),
     );
+
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.UpdateApp", true);
     let api = AppsAPI::with_config(configuration);

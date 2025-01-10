@@ -92,6 +92,7 @@ y = 6;
         .status(NotebookStatus::PUBLISHED),
         NotebookResourceType::NOTEBOOKS,
     ));
+
     let configuration = datadog::Configuration::new();
     let api = NotebooksAPI::with_config(configuration);
     let resp = api.update_notebook(notebook_data_id.clone(), body).await;

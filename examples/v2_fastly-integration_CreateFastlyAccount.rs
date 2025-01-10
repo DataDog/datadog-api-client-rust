@@ -16,6 +16,7 @@ async fn main() {
         .services(vec![]),
         FastlyAccountType::FASTLY_ACCOUNTS,
     ));
+
     let configuration = datadog::Configuration::new();
     let api = FastlyIntegrationAPI::with_config(configuration);
     let resp = api.create_fastly_account(body).await;

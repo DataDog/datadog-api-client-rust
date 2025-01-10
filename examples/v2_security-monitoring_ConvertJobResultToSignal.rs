@@ -21,6 +21,7 @@ async fn main() {
                 ConvertJobResultsToSignalsDataType::HISTORICALDETECTIONSJOBRESULTSIGNALCONVERSION,
             ),
     );
+
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.ConvertJobResultToSignal", true);
     let api = SecurityMonitoringAPI::with_config(configuration);

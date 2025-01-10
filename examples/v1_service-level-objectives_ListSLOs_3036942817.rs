@@ -11,6 +11,7 @@ async fn main() {
     let api = ServiceLevelObjectivesAPI::with_config(configuration);
     let response = api.list_slos_with_pagination(ListSLOsOptionalParams::default().limit(2));
     pin_mut!(response);
+
     while let Some(resp) = response.next().await {
         if let Ok(value) = resp {
             println!("{:#?}", value);

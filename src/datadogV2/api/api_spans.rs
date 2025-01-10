@@ -26,7 +26,7 @@ pub struct ListSpansGetOptionalParams {
     pub sort: Option<crate::datadogV2::model::SpansSort>,
     /// List following results with a cursor provided in the previous query.
     pub page_cursor: Option<String>,
-    /// Maximum number of spans in the response.
+    /// Maximum number of spans in the response. Defaults to 10 and allows up to 5000.
     pub page_limit: Option<i32>,
 }
 
@@ -56,7 +56,7 @@ impl ListSpansGetOptionalParams {
         self.page_cursor = Some(value);
         self
     }
-    /// Maximum number of spans in the response.
+    /// Maximum number of spans in the response. Defaults to 10 and allows up to 5000.
     pub fn page_limit(mut self, value: i32) -> Self {
         self.page_limit = Some(value);
         self

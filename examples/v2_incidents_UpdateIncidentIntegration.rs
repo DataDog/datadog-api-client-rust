@@ -13,7 +13,6 @@ use datadog_api_client::datadogV2::model::SlackIntegrationMetadataChannelItem;
 async fn main() {
     // there is a valid "incident" in the system
     let incident_data_id = std::env::var("INCIDENT_DATA_ID").unwrap();
-
     // the "incident" has an "incident_integration_metadata"
     let incident_integration_metadata_data_id =
         std::env::var("INCIDENT_INTEGRATION_METADATA_DATA_ID").unwrap();
@@ -34,6 +33,7 @@ async fn main() {
             .incident_id(incident_data_id.clone()),
             IncidentIntegrationMetadataType::INCIDENT_INTEGRATIONS,
         ));
+
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.UpdateIncidentIntegration", true);
     let api = IncidentsAPI::with_config(configuration);

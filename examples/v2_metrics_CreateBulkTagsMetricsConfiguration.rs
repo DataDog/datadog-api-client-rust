@@ -21,6 +21,7 @@ async fn main() {
                 .tags(vec!["test".to_string(), "examplemetric".to_string()]),
         ),
     );
+
     let configuration = datadog::Configuration::new();
     let api = MetricsAPI::with_config(configuration);
     let resp = api.create_bulk_tags_metrics_configuration(body).await;

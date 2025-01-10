@@ -11,6 +11,7 @@ async fn main() {
         vec![],
     )
     .is_fido(true);
+
     let configuration = datadog::Configuration::new();
     let api = SyntheticsAPI::with_config(configuration);
     let resp = api.create_global_variable(body).await;

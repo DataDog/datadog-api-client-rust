@@ -26,71 +26,8 @@ use datadog_api_client::datadogV1::model::WidgetTime;
 
 #[tokio::main]
 async fn main() {
-    let body =
-        Dashboard::new(
-            DashboardLayoutType::ORDERED,
-            "Example-Dashboard with formula style".to_string(),
-            vec![
-                Widget::new(
-                    WidgetDefinition::TimeseriesWidgetDefinition(
-                        Box::new(
-                            TimeseriesWidgetDefinition::new(
-                                vec![
-                                    TimeseriesWidgetRequest::new()
-                                        .display_type(WidgetDisplayType::LINE)
-                                        .formulas(
-                                            vec![
-                                                WidgetFormula::new(
-                                                    "query1".to_string(),
-                                                ).style(
-                                                    WidgetFormulaStyle::new()
-                                                        .palette("classic".to_string())
-                                                        .palette_index(4),
-                                                )
-                                            ],
-                                        )
-                                        .queries(
-                                            vec![
-                                                FormulaAndFunctionQueryDefinition
-                                                ::FormulaAndFunctionMetricQueryDefinition(
-                                                    Box::new(
-                                                        FormulaAndFunctionMetricQueryDefinition::new(
-                                                            FormulaAndFunctionMetricDataSource::METRICS,
-                                                            "query1".to_string(),
-                                                            "avg:system.cpu.user{*}".to_string(),
-                                                        ),
-                                                    ),
-                                                )
-                                            ],
-                                        )
-                                        .response_format(FormulaAndFunctionResponseFormat::TIMESERIES)
-                                        .style(
-                                            WidgetRequestStyle::new()
-                                                .line_type(WidgetLineType::SOLID)
-                                                .line_width(WidgetLineWidth::NORMAL)
-                                                .palette("dog_classic".to_string()),
-                                        )
-                                ],
-                                TimeseriesWidgetDefinitionType::TIMESERIES,
-                            )
-                                .legend_columns(
-                                    vec![
-                                        TimeseriesWidgetLegendColumn::AVG,
-                                        TimeseriesWidgetLegendColumn::MIN,
-                                        TimeseriesWidgetLegendColumn::MAX,
-                                        TimeseriesWidgetLegendColumn::VALUE,
-                                        TimeseriesWidgetLegendColumn::SUM
-                                    ],
-                                )
-                                .legend_layout(TimeseriesWidgetLegendLayout::AUTO)
-                                .show_legend(true)
-                                .time(WidgetTime::WidgetLegacyLiveSpan(Box::new(WidgetLegacyLiveSpan::new())))
-                                .title("styled timeseries".to_string()),
-                        ),
-                    ),
-                )
-            ],
-        ).reflow_type(DashboardReflowType::AUTO);
+    let body = Dashboard::new(DashboardLayoutType::ORDERED, "Example-Dashboard with formula style".to_string(), vec![Widget::new(WidgetDefinition::TimeseriesWidgetDefinition(Box::new(TimeseriesWidgetDefinition::new(vec![TimeseriesWidgetRequest::new().display_type(WidgetDisplayType::LINE).formulas(vec![WidgetFormula::new("query1".to_string(), ).style(WidgetFormulaStyle::new().palette("classic".to_string()).palette_index(4)),]).queries(vec![FormulaAndFunctionQueryDefinition::FormulaAndFunctionMetricQueryDefinition(Box::new(FormulaAndFunctionMetricQueryDefinition::new(FormulaAndFunctionMetricDataSource::METRICS, "query1".to_string(), "avg:system.cpu.user{*}".to_string(), ))),]).response_format(FormulaAndFunctionResponseFormat::TIMESERIES).style(WidgetRequestStyle::new().line_type(WidgetLineType::SOLID).line_width(WidgetLineWidth::NORMAL).palette("dog_classic".to_string())),], TimeseriesWidgetDefinitionType::TIMESERIES, ).legend_columns(vec![TimeseriesWidgetLegendColumn::AVG,TimeseriesWidgetLegendColumn::MIN,TimeseriesWidgetLegendColumn::MAX,TimeseriesWidgetLegendColumn::VALUE,TimeseriesWidgetLegendColumn::SUM,]).legend_layout(TimeseriesWidgetLegendLayout::AUTO).show_legend(true).time(WidgetTime::WidgetLegacyLiveSpan(Box::new(WidgetLegacyLiveSpan::new()))).title("styled timeseries".to_string()))), ),], ).reflow_type(DashboardReflowType::AUTO);
+
     let configuration = datadog::Configuration::new();
     let api = DashboardsAPI::with_config(configuration);
     let resp = api.create_dashboard(body).await;

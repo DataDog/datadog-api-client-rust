@@ -15,6 +15,7 @@ async fn main() {
         "resource-id-123".to_string(),
         ConfluentResourceType::CONFLUENT_CLOUD_RESOURCES,
     ));
+
     let configuration = datadog::Configuration::new();
     let api = ConfluentCloudAPI::with_config(configuration);
     let resp = api

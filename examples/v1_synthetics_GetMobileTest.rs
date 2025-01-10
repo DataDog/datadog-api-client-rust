@@ -7,6 +7,7 @@ async fn main() {
     // there is a valid "synthetics_mobile_test" in the system
     let synthetics_mobile_test_public_id =
         std::env::var("SYNTHETICS_MOBILE_TEST_PUBLIC_ID").unwrap();
+
     let configuration = datadog::Configuration::new();
     let api = SyntheticsAPI::with_config(configuration);
     let resp = api
