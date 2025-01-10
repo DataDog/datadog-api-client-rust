@@ -1275,7 +1275,7 @@ impl MonitorsAPI {
         }
     }
 
-    /// Get details about the specified monitor from your organization.
+    /// Get all monitors from your organization.
     pub async fn list_monitors(
         &self,
         params: ListMonitorsOptionalParams,
@@ -1327,7 +1327,7 @@ impl MonitorsAPI {
         }
     }
 
-    /// Get details about the specified monitor from your organization.
+    /// Get all monitors from your organization.
     pub async fn list_monitors_with_http_info(
         &self,
         params: ListMonitorsOptionalParams,
