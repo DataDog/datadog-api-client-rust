@@ -12,6 +12,7 @@ async fn main() {
         ProjectCreateAttributes::new("SEC".to_string(), "Security Investigation".to_string()),
         ProjectResourceType::PROJECT,
     ));
+
     let configuration = datadog::Configuration::new();
     let api = CaseManagementAPI::with_config(configuration);
     let resp = api.create_project(body).await;

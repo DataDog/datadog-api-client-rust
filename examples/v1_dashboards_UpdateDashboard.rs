@@ -36,6 +36,7 @@ async fn main() {
         ))],
     )
     .description(Some("Updated description".to_string()));
+
     let configuration = datadog::Configuration::new();
     let api = DashboardsAPI::with_config(configuration);
     let resp = api.update_dashboard(dashboard_id.clone(), body).await;

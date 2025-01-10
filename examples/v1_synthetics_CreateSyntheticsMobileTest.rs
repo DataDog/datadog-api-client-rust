@@ -28,6 +28,7 @@ async fn main() {
     .message("".to_string())
     .status(SyntheticsTestPauseStatus::PAUSED)
     .steps(vec![]);
+
     let configuration = datadog::Configuration::new();
     let api = SyntheticsAPI::with_config(configuration);
     let resp = api.create_synthetics_mobile_test(body).await;

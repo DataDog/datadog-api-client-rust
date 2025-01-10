@@ -13,6 +13,7 @@ async fn main() {
         app_data_id.clone(),
         DeleteAppsRequestDataItemsType::APPDEFINITIONS,
     )]);
+
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.DeleteApps", true);
     let api = AppsAPI::with_config(configuration);

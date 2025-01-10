@@ -1,5 +1,4 @@
-// Create an Application key with scopes for current user returns "Created"
-// response
+// Create an Application key with scopes for current user returns "Created" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_key_management::KeyManagementAPI;
 use datadog_api_client::datadogV2::model::ApplicationKeyCreateAttributes;
@@ -19,6 +18,7 @@ async fn main() {
         )),
         ApplicationKeysType::APPLICATION_KEYS,
     ));
+
     let configuration = datadog::Configuration::new();
     let api = KeyManagementAPI::with_config(configuration);
     let resp = api.create_current_user_application_key(body).await;

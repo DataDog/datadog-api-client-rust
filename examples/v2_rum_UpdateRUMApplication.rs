@@ -21,6 +21,7 @@ async fn main() {
                 .type_("browser".to_string()),
         ),
     );
+
     let configuration = datadog::Configuration::new();
     let api = RUMAPI::with_config(configuration);
     let resp = api

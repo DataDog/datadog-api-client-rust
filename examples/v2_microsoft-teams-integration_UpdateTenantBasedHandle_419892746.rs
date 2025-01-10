@@ -17,6 +17,7 @@ async fn main() {
             MicrosoftTeamsTenantBasedHandleType::TENANT_BASED_HANDLE,
         ),
     );
+
     let configuration = datadog::Configuration::new();
     let api = MicrosoftTeamsIntegrationAPI::with_config(configuration);
     let resp = api

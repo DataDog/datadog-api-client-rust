@@ -34,6 +34,7 @@ async fn main() {
     .description(Some("".to_string()))
     .notify_list(Some(vec![]))
     .template_variables(Some(vec![]));
+
     let configuration = datadog::Configuration::new();
     let api = DashboardsAPI::with_config(configuration);
     let resp = api.create_dashboard(body).await;

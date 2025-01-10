@@ -18,6 +18,7 @@ async fn main() {
         )
         .page(EventsRequestPage::new().limit(5))
         .sort(EventsSort::TIMESTAMP_ASCENDING);
+
     let configuration = datadog::Configuration::new();
     let api = EventsAPI::with_config(configuration);
     let resp = api

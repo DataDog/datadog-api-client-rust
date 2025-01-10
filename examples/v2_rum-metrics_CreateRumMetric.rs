@@ -32,6 +32,7 @@ async fn main() {
         "rum.sessions.webui.count".to_string(),
         RumMetricType::RUM_METRICS,
     ));
+
     let configuration = datadog::Configuration::new();
     let api = RumMetricsAPI::with_config(configuration);
     let resp = api.create_rum_metric(body).await;

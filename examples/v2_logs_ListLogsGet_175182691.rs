@@ -11,6 +11,7 @@ async fn main() {
     let api = LogsAPI::with_config(configuration);
     let response = api.list_logs_get_with_pagination(ListLogsGetOptionalParams::default());
     pin_mut!(response);
+
     while let Some(resp) = response.next().await {
         if let Ok(value) = resp {
             println!("{:#?}", value);

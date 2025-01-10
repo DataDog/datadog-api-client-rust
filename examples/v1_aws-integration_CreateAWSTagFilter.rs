@@ -10,6 +10,7 @@ async fn main() {
         .account_id("123456789012".to_string())
         .namespace(AWSNamespace::ELB)
         .tag_filter_str("prod*".to_string());
+
     let configuration = datadog::Configuration::new();
     let api = AWSIntegrationAPI::with_config(configuration);
     let resp = api.create_aws_tag_filter(body).await;

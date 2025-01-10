@@ -19,6 +19,7 @@ async fn main() {
         opsgenie_service_data_id.clone(),
         OpsgenieServiceType::OPSGENIE_SERVICE,
     ));
+
     let configuration = datadog::Configuration::new();
     let api = OpsgenieIntegrationAPI::with_config(configuration);
     let resp = api

@@ -22,6 +22,7 @@ async fn main() {
                 .scorecard_name(create_scorecard_rule_data_attributes_scorecard_name.clone()),
         ),
     );
+
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.UpdateScorecardRule", true);
     let api = ServiceScorecardsAPI::with_config(configuration);

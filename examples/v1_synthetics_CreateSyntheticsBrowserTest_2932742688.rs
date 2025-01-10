@@ -71,6 +71,7 @@ async fn main() {
         .params(BTreeMap::new())
         .type_(SyntheticsStepType::REFRESH)])
     .tags(vec!["testing:browser".to_string()]);
+
     let configuration = datadog::Configuration::new();
     let api = SyntheticsAPI::with_config(configuration);
     let resp = api.create_synthetics_browser_test(body).await;

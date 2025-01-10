@@ -7,6 +7,7 @@ use std::collections::BTreeMap;
 #[tokio::main]
 async fn main() {
     let body = BTreeMap::new();
+
     let configuration = datadog::Configuration::new();
     let api = GCPIntegrationAPI::with_config(configuration);
     let resp = api

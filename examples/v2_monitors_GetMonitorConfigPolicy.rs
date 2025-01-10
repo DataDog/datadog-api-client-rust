@@ -7,6 +7,7 @@ async fn main() {
     // there is a valid "monitor_configuration_policy" in the system
     let monitor_configuration_policy_data_id =
         std::env::var("MONITOR_CONFIGURATION_POLICY_DATA_ID").unwrap();
+
     let configuration = datadog::Configuration::new();
     let api = MonitorsAPI::with_config(configuration);
     let resp = api

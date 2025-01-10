@@ -32,6 +32,7 @@ rule_name_2 bar
             .is_enabled(false)
             .samples(vec![]),
         ))]);
+
     let configuration = datadog::Configuration::new();
     let api = LogsPipelinesAPI::with_config(configuration);
     let resp = api.create_logs_pipeline(body).await;

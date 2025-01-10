@@ -17,6 +17,7 @@ async fn main() {
         ),
         OpsgenieServiceType::OPSGENIE_SERVICE,
     ));
+
     let configuration = datadog::Configuration::new();
     let api = OpsgenieIntegrationAPI::with_config(configuration);
     let resp = api.create_opsgenie_service(body).await;

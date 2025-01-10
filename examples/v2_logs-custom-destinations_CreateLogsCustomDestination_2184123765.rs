@@ -42,6 +42,7 @@ async fn main() {
         .query("source:nginx".to_string()),
         CustomDestinationType::CUSTOM_DESTINATION,
     ));
+
     let configuration = datadog::Configuration::new();
     let api = LogsCustomDestinationsAPI::with_config(configuration);
     let resp = api.create_logs_custom_destination(body).await;

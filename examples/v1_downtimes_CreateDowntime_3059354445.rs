@@ -23,6 +23,7 @@ async fn main() {
         .scope(vec!["*".to_string()])
         .start(1636629071)
         .timezone("Etc/UTC".to_string());
+
     let configuration = datadog::Configuration::new();
     let api = DowntimesAPI::with_config(configuration);
     let resp = api.create_downtime(body).await;

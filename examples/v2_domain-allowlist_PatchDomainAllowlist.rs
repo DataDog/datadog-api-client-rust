@@ -15,6 +15,7 @@ async fn main() {
                 .enabled(false),
         ),
     );
+
     let configuration = datadog::Configuration::new();
     let api = DomainAllowlistAPI::with_config(configuration);
     let resp = api.patch_domain_allowlist(body).await;

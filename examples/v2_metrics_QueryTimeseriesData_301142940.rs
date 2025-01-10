@@ -31,6 +31,7 @@ async fn main() {
         .interval(5000),
         TimeseriesFormulaRequestType::TIMESERIES_REQUEST,
     ));
+
     let configuration = datadog::Configuration::new();
     let api = MetricsAPI::with_config(configuration);
     let resp = api.query_timeseries_data(body).await;

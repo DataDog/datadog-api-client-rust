@@ -9,6 +9,7 @@ async fn main() {
     let body = AWSTagFilterDeleteRequest::new()
         .account_id("FAKEAC0FAKEAC2FAKEAC".to_string())
         .namespace(AWSNamespace::ELB);
+
     let configuration = datadog::Configuration::new();
     let api = AWSIntegrationAPI::with_config(configuration);
     let resp = api.delete_aws_tag_filter(body).await;

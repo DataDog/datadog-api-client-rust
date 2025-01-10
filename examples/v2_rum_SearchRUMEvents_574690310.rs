@@ -25,10 +25,12 @@ async fn main() {
         )
         .page(RUMQueryPageOptions::new().limit(2))
         .sort(RUMSort::TIMESTAMP_ASCENDING);
+
     let configuration = datadog::Configuration::new();
     let api = RUMAPI::with_config(configuration);
     let response = api.search_rum_events_with_pagination(body);
     pin_mut!(response);
+
     while let Some(resp) = response.next().await {
         if let Ok(value) = resp {
             println!("{:#?}", value);

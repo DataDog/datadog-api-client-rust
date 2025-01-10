@@ -11,6 +11,7 @@ async fn main() {
     let body = SyntheticsTriggerBody::new(vec![SyntheticsTriggerTest::new(
         synthetics_api_test_public_id.clone(),
     )]);
+
     let configuration = datadog::Configuration::new();
     let api = SyntheticsAPI::with_config(configuration);
     let resp = api.trigger_tests(body).await;

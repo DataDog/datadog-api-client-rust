@@ -1,5 +1,4 @@
-// Create or update software catalog entity using schema v3 returns "ACCEPTED"
-// response
+// Create or update software catalog entity using schema v3 returns "ACCEPTED" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_software_catalog::SoftwareCatalogAPI;
 use datadog_api_client::datadogV2::model::EntityV3;
@@ -65,6 +64,7 @@ async fn main() {
                 .languages(vec![]),
         ),
     ))));
+
     let configuration = datadog::Configuration::new();
     let api = SoftwareCatalogAPI::with_config(configuration);
     let resp = api.upsert_catalog_entity(body).await;

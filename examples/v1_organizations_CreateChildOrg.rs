@@ -10,6 +10,7 @@ async fn main() {
     let body = OrganizationCreateBody::new("New child org".to_string())
         .billing(OrganizationBilling::new().type_("parent_billing".to_string()))
         .subscription(OrganizationSubscription::new().type_("pro".to_string()));
+
     let configuration = datadog::Configuration::new();
     let api = OrganizationsAPI::with_config(configuration);
     let resp = api.create_child_org(body).await;

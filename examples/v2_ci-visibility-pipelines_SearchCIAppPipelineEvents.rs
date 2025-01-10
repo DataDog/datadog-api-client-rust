@@ -20,6 +20,7 @@ async fn main() {
         .options(CIAppQueryOptions::new().timezone("GMT".to_string()))
         .page(CIAppQueryPageOptions::new().limit(5))
         .sort(CIAppSort::TIMESTAMP_ASCENDING);
+
     let configuration = datadog::Configuration::new();
     let api = CIVisibilityPipelinesAPI::with_config(configuration);
     let resp = api

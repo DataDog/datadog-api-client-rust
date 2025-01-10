@@ -26,6 +26,7 @@ async fn main() {
             .namespace("Microsoft.Compute".to_string())])
         .tenant_name("testc44-1234-5678-9101-cc00736ftest".to_string())
         .usage_metrics_enabled(true);
+
     let configuration = datadog::Configuration::new();
     let api = AzureIntegrationAPI::with_config(configuration);
     let resp = api.update_azure_host_filters(body).await;

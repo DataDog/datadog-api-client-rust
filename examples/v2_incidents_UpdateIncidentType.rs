@@ -15,6 +15,7 @@ async fn main() {
         incident_type_data_id.clone(),
         IncidentTypeType::INCIDENT_TYPES,
     ));
+
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.UpdateIncidentType", true);
     let api = IncidentsAPI::with_config(configuration);

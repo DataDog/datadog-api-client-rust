@@ -18,6 +18,7 @@ async fn main() {
         .name("dummyhost".to_string())
         .type_("host".to_string())])
     .type_(MetricIntakeType::UNSPECIFIED)]);
+
     let configuration = datadog::Configuration::new();
     let api = MetricsAPI::with_config(configuration);
     let resp = api

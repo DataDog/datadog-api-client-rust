@@ -23,6 +23,7 @@ async fn main() {
             )
             .type_(SLOCorrectionType::CORRECTION),
     );
+
     let configuration = datadog::Configuration::new();
     let api = ServiceLevelObjectiveCorrectionsAPI::with_config(configuration);
     let resp = api

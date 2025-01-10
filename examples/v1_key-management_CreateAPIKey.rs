@@ -6,6 +6,7 @@ use datadog_api_client::datadogV1::model::ApiKey;
 #[tokio::main]
 async fn main() {
     let body = ApiKey::new().name("example user".to_string());
+
     let configuration = datadog::Configuration::new();
     let api = KeyManagementAPI::with_config(configuration);
     let resp = api.create_api_key(body).await;

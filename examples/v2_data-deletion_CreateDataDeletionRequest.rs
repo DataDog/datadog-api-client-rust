@@ -19,6 +19,7 @@ async fn main() {
         )
         .indexes(vec!["test-index".to_string(), "test-index-2".to_string()]),
     ));
+
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.CreateDataDeletionRequest", true);
     let api = DataDeletionAPI::with_config(configuration);

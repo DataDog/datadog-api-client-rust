@@ -36,6 +36,7 @@ async fn main() {
                     .order(LogsSortOrder::ASCENDING)
                     .type_(LogsAggregateSortType::MEASURE),
             )]);
+
     let configuration = datadog::Configuration::new();
     let api = LogsAPI::with_config(configuration);
     let resp = api.aggregate_logs(body).await;
