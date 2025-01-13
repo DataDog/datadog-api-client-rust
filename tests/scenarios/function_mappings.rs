@@ -103,9 +103,9 @@ pub struct ApiInstances {
     pub v2_api_network_device_monitoring:
         Option<datadogV2::api_network_device_monitoring::NetworkDeviceMonitoringAPI>,
     pub v2_api_organizations: Option<datadogV2::api_organizations::OrganizationsAPI>,
-    pub v2_api_roles: Option<datadogV2::api_roles::RolesAPI>,
     pub v2_api_security_monitoring:
         Option<datadogV2::api_security_monitoring::SecurityMonitoringAPI>,
+    pub v2_api_roles: Option<datadogV2::api_roles::RolesAPI>,
     pub v2_api_powerpack: Option<datadogV2::api_powerpack::PowerpackAPI>,
     pub v2_api_processes: Option<datadogV2::api_processes::ProcessesAPI>,
     pub v2_api_csm_threats: Option<datadogV2::api_csm_threats::CSMThreatsAPI>,
@@ -2605,49 +2605,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.UploadIdPMetadata".into(), test_v2_upload_idp_metadata);
-    world
-        .function_mappings
-        .insert("v2.ListPermissions".into(), test_v2_list_permissions);
-    world
-        .function_mappings
-        .insert("v2.ListRoles".into(), test_v2_list_roles);
-    world
-        .function_mappings
-        .insert("v2.CreateRole".into(), test_v2_create_role);
-    world
-        .function_mappings
-        .insert("v2.DeleteRole".into(), test_v2_delete_role);
-    world
-        .function_mappings
-        .insert("v2.GetRole".into(), test_v2_get_role);
-    world
-        .function_mappings
-        .insert("v2.UpdateRole".into(), test_v2_update_role);
-    world
-        .function_mappings
-        .insert("v2.CloneRole".into(), test_v2_clone_role);
     world.function_mappings.insert(
-        "v2.RemovePermissionFromRole".into(),
-        test_v2_remove_permission_from_role,
+        "v2.DeleteCustomFramework".into(),
+        test_v2_delete_custom_framework,
     );
-    world.function_mappings.insert(
-        "v2.ListRolePermissions".into(),
-        test_v2_list_role_permissions,
-    );
-    world.function_mappings.insert(
-        "v2.AddPermissionToRole".into(),
-        test_v2_add_permission_to_role,
-    );
-    world.function_mappings.insert(
-        "v2.RemoveUserFromRole".into(),
-        test_v2_remove_user_from_role,
-    );
-    world
-        .function_mappings
-        .insert("v2.ListRoleUsers".into(), test_v2_list_role_users);
-    world
-        .function_mappings
-        .insert("v2.AddUserToRole".into(), test_v2_add_user_to_role);
     world
         .function_mappings
         .insert("v2.ListFindings".into(), test_v2_list_findings);
@@ -2801,6 +2762,49 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.CancelHistoricalJob".into(),
         test_v2_cancel_historical_job,
     );
+    world
+        .function_mappings
+        .insert("v2.ListPermissions".into(), test_v2_list_permissions);
+    world
+        .function_mappings
+        .insert("v2.ListRoles".into(), test_v2_list_roles);
+    world
+        .function_mappings
+        .insert("v2.CreateRole".into(), test_v2_create_role);
+    world
+        .function_mappings
+        .insert("v2.DeleteRole".into(), test_v2_delete_role);
+    world
+        .function_mappings
+        .insert("v2.GetRole".into(), test_v2_get_role);
+    world
+        .function_mappings
+        .insert("v2.UpdateRole".into(), test_v2_update_role);
+    world
+        .function_mappings
+        .insert("v2.CloneRole".into(), test_v2_clone_role);
+    world.function_mappings.insert(
+        "v2.RemovePermissionFromRole".into(),
+        test_v2_remove_permission_from_role,
+    );
+    world.function_mappings.insert(
+        "v2.ListRolePermissions".into(),
+        test_v2_list_role_permissions,
+    );
+    world.function_mappings.insert(
+        "v2.AddPermissionToRole".into(),
+        test_v2_add_permission_to_role,
+    );
+    world.function_mappings.insert(
+        "v2.RemoveUserFromRole".into(),
+        test_v2_remove_user_from_role,
+    );
+    world
+        .function_mappings
+        .insert("v2.ListRoleUsers".into(), test_v2_list_role_users);
+    world
+        .function_mappings
+        .insert("v2.AddUserToRole".into(), test_v2_add_user_to_role);
     world
         .function_mappings
         .insert("v2.ListPowerpacks".into(), test_v2_list_powerpacks);
@@ -19091,372 +19095,30 @@ fn test_v2_upload_idp_metadata(world: &mut DatadogWorld, _parameters: &HashMap<S
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_list_permissions(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+fn test_v2_delete_custom_framework(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_roles
+        .v2_api_security_monitoring
         .as_ref()
         .expect("api instance not found");
-    let response = match block_on(api.list_permissions_with_http_info()) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
+    let org_id = serde_json::from_value(_parameters.get("org_id").unwrap().clone()).unwrap();
+    let handle = serde_json::from_value(_parameters.get("handle").unwrap().clone()).unwrap();
+    let version = serde_json::from_value(_parameters.get("version").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.delete_custom_framework_with_http_info(org_id, handle, version)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
                     }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_list_roles(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_roles
-        .as_ref()
-        .expect("api instance not found");
-    let page_size = _parameters
-        .get("page[size]")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let page_number = _parameters
-        .get("page[number]")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let sort = _parameters
-        .get("sort")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let filter = _parameters
-        .get("filter")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let filter_id = _parameters
-        .get("filter[id]")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let mut params = datadogV2::api_roles::ListRolesOptionalParams::default();
-    params.page_size = page_size;
-    params.page_number = page_number;
-    params.sort = sort;
-    params.filter = filter;
-    params.filter_id = filter_id;
-    let response = match block_on(api.list_roles_with_http_info(params)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_create_role(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_roles
-        .as_ref()
-        .expect("api instance not found");
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.create_role_with_http_info(body)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_delete_role(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_roles
-        .as_ref()
-        .expect("api instance not found");
-    let role_id = serde_json::from_value(_parameters.get("role_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.delete_role_with_http_info(role_id)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_get_role(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_roles
-        .as_ref()
-        .expect("api instance not found");
-    let role_id = serde_json::from_value(_parameters.get("role_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.get_role_with_http_info(role_id)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_update_role(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_roles
-        .as_ref()
-        .expect("api instance not found");
-    let role_id = serde_json::from_value(_parameters.get("role_id").unwrap().clone()).unwrap();
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.update_role_with_http_info(role_id, body)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_clone_role(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_roles
-        .as_ref()
-        .expect("api instance not found");
-    let role_id = serde_json::from_value(_parameters.get("role_id").unwrap().clone()).unwrap();
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.clone_role_with_http_info(role_id, body)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_remove_permission_from_role(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
-    let api = world
-        .api_instances
-        .v2_api_roles
-        .as_ref()
-        .expect("api instance not found");
-    let role_id = serde_json::from_value(_parameters.get("role_id").unwrap().clone()).unwrap();
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.remove_permission_from_role_with_http_info(role_id, body)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_list_role_permissions(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_roles
-        .as_ref()
-        .expect("api instance not found");
-    let role_id = serde_json::from_value(_parameters.get("role_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.list_role_permissions_with_http_info(role_id)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_add_permission_to_role(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_roles
-        .as_ref()
-        .expect("api instance not found");
-    let role_id = serde_json::from_value(_parameters.get("role_id").unwrap().clone()).unwrap();
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.add_permission_to_role_with_http_info(role_id, body)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_remove_user_from_role(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_roles
-        .as_ref()
-        .expect("api instance not found");
-    let role_id = serde_json::from_value(_parameters.get("role_id").unwrap().clone()).unwrap();
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.remove_user_from_role_with_http_info(role_id, body)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_list_role_users(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_roles
-        .as_ref()
-        .expect("api instance not found");
-    let role_id = serde_json::from_value(_parameters.get("role_id").unwrap().clone()).unwrap();
-    let page_size = _parameters
-        .get("page[size]")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let page_number = _parameters
-        .get("page[number]")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let sort = _parameters
-        .get("sort")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let filter = _parameters
-        .get("filter")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let mut params = datadogV2::api_roles::ListRoleUsersOptionalParams::default();
-    params.page_size = page_size;
-    params.page_number = page_number;
-    params.sort = sort;
-    params.filter = filter;
-    let response = match block_on(api.list_role_users_with_http_info(role_id, params)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_add_user_to_role(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_roles
-        .as_ref()
-        .expect("api instance not found");
-    let role_id = serde_json::from_value(_parameters.get("role_id").unwrap().clone()).unwrap();
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.add_user_to_role_with_http_info(role_id, body)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
@@ -20997,6 +20659,376 @@ fn test_v2_cancel_historical_job(world: &mut DatadogWorld, _parameters: &HashMap
         .expect("api instance not found");
     let job_id = serde_json::from_value(_parameters.get("job_id").unwrap().clone()).unwrap();
     let response = match block_on(api.cancel_historical_job_with_http_info(job_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_permissions(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_roles
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_permissions_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_roles(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_roles
+        .as_ref()
+        .expect("api instance not found");
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter = _parameters
+        .get("filter")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_id = _parameters
+        .get("filter[id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_roles::ListRolesOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    params.sort = sort;
+    params.filter = filter;
+    params.filter_id = filter_id;
+    let response = match block_on(api.list_roles_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_role(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_roles
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_role_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_role(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_roles
+        .as_ref()
+        .expect("api instance not found");
+    let role_id = serde_json::from_value(_parameters.get("role_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_role_with_http_info(role_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_role(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_roles
+        .as_ref()
+        .expect("api instance not found");
+    let role_id = serde_json::from_value(_parameters.get("role_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_role_with_http_info(role_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_role(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_roles
+        .as_ref()
+        .expect("api instance not found");
+    let role_id = serde_json::from_value(_parameters.get("role_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_role_with_http_info(role_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_clone_role(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_roles
+        .as_ref()
+        .expect("api instance not found");
+    let role_id = serde_json::from_value(_parameters.get("role_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.clone_role_with_http_info(role_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_remove_permission_from_role(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_roles
+        .as_ref()
+        .expect("api instance not found");
+    let role_id = serde_json::from_value(_parameters.get("role_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.remove_permission_from_role_with_http_info(role_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_role_permissions(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_roles
+        .as_ref()
+        .expect("api instance not found");
+    let role_id = serde_json::from_value(_parameters.get("role_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.list_role_permissions_with_http_info(role_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_add_permission_to_role(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_roles
+        .as_ref()
+        .expect("api instance not found");
+    let role_id = serde_json::from_value(_parameters.get("role_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.add_permission_to_role_with_http_info(role_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_remove_user_from_role(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_roles
+        .as_ref()
+        .expect("api instance not found");
+    let role_id = serde_json::from_value(_parameters.get("role_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.remove_user_from_role_with_http_info(role_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_role_users(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_roles
+        .as_ref()
+        .expect("api instance not found");
+    let role_id = serde_json::from_value(_parameters.get("role_id").unwrap().clone()).unwrap();
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter = _parameters
+        .get("filter")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_roles::ListRoleUsersOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    params.sort = sort;
+    params.filter = filter;
+    let response = match block_on(api.list_role_users_with_http_info(role_id, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_add_user_to_role(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_roles
+        .as_ref()
+        .expect("api instance not found");
+    let role_id = serde_json::from_value(_parameters.get("role_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.add_user_to_role_with_http_info(role_id, body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
