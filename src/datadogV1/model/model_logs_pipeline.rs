@@ -15,9 +15,6 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LogsPipeline {
-    /// A description of the pipeline.
-    #[serde(rename = "description")]
-    pub description: Option<String>,
     /// Filter for logs.
     #[serde(rename = "filter")]
     pub filter: Option<crate::datadogV1::model::LogsFilter>,
@@ -36,9 +33,6 @@ pub struct LogsPipeline {
     /// Ordered list of processors in this pipeline.
     #[serde(rename = "processors")]
     pub processors: Option<Vec<crate::datadogV1::model::LogsProcessor>>,
-    /// A list of tags associated with the pipeline.
-    #[serde(rename = "tags")]
-    pub tags: Option<Vec<String>>,
     /// Type of pipeline.
     #[serde(rename = "type")]
     pub type_: Option<String>,
@@ -52,23 +46,16 @@ pub struct LogsPipeline {
 impl LogsPipeline {
     pub fn new(name: String) -> LogsPipeline {
         LogsPipeline {
-            description: None,
             filter: None,
             id: None,
             is_enabled: None,
             is_read_only: None,
             name,
             processors: None,
-            tags: None,
             type_: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn description(mut self, value: String) -> Self {
-        self.description = Some(value);
-        self
     }
 
     pub fn filter(mut self, value: crate::datadogV1::model::LogsFilter) -> Self {
@@ -93,11 +80,6 @@ impl LogsPipeline {
 
     pub fn processors(mut self, value: Vec<crate::datadogV1::model::LogsProcessor>) -> Self {
         self.processors = Some(value);
-        self
-    }
-
-    pub fn tags(mut self, value: Vec<String>) -> Self {
-        self.tags = Some(value);
         self
     }
 
@@ -132,14 +114,12 @@ impl<'de> Deserialize<'de> for LogsPipeline {
             where
                 M: MapAccess<'a>,
             {
-                let mut description: Option<String> = None;
                 let mut filter: Option<crate::datadogV1::model::LogsFilter> = None;
                 let mut id: Option<String> = None;
                 let mut is_enabled: Option<bool> = None;
                 let mut is_read_only: Option<bool> = None;
                 let mut name: Option<String> = None;
                 let mut processors: Option<Vec<crate::datadogV1::model::LogsProcessor>> = None;
-                let mut tags: Option<Vec<String>> = None;
                 let mut type_: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -149,13 +129,6 @@ impl<'de> Deserialize<'de> for LogsPipeline {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "description" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "filter" => {
                             if v.is_null() {
                                 continue;
@@ -190,12 +163,6 @@ impl<'de> Deserialize<'de> for LogsPipeline {
                             }
                             processors = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "tags" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "type" => {
                             if v.is_null() {
                                 continue;
@@ -212,14 +179,12 @@ impl<'de> Deserialize<'de> for LogsPipeline {
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
 
                 let content = LogsPipeline {
-                    description,
                     filter,
                     id,
                     is_enabled,
                     is_read_only,
                     name,
                     processors,
-                    tags,
                     type_,
                     additional_properties,
                     _unparsed,
