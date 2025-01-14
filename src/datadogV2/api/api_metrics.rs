@@ -1115,7 +1115,7 @@ impl MetricsAPI {
         }
     }
 
-    /// List tags and aggregations that are actively queried on dashboards, notebooks, monitors, and the Metrics Explorer for a given metric name.
+    /// List tags and aggregations that are actively queried on dashboards, notebooks, monitors, the Metrics Explorer, and using the API for a given metric name.
     pub async fn list_active_metric_configurations(
         &self,
         metric_name: String,
@@ -1141,7 +1141,7 @@ impl MetricsAPI {
         }
     }
 
-    /// List tags and aggregations that are actively queried on dashboards, notebooks, monitors, and the Metrics Explorer for a given metric name.
+    /// List tags and aggregations that are actively queried on dashboards, notebooks, monitors, the Metrics Explorer, and using the API for a given metric name.
     pub async fn list_active_metric_configurations_with_http_info(
         &self,
         metric_name: String,
