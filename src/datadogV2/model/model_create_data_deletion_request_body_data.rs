@@ -14,6 +14,9 @@ pub struct CreateDataDeletionRequestBodyData {
     /// Attributes for creating a data deletion request.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::CreateDataDeletionRequestBodyAttributes,
+    /// The deletion request type.
+    #[serde(rename = "type")]
+    pub type_: crate::datadogV2::model::CreateDataDeletionRequestBodyDataType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,9 +27,11 @@ pub struct CreateDataDeletionRequestBodyData {
 impl CreateDataDeletionRequestBodyData {
     pub fn new(
         attributes: crate::datadogV2::model::CreateDataDeletionRequestBodyAttributes,
+        type_: crate::datadogV2::model::CreateDataDeletionRequestBodyDataType,
     ) -> CreateDataDeletionRequestBodyData {
         CreateDataDeletionRequestBodyData {
             attributes,
+            type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -61,6 +66,9 @@ impl<'de> Deserialize<'de> for CreateDataDeletionRequestBodyData {
                 let mut attributes: Option<
                     crate::datadogV2::model::CreateDataDeletionRequestBodyAttributes,
                 > = None;
+                let mut type_: Option<
+                    crate::datadogV2::model::CreateDataDeletionRequestBodyDataType,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -72,6 +80,17 @@ impl<'de> Deserialize<'de> for CreateDataDeletionRequestBodyData {
                         "attributes" => {
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "type" => {
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _type_) = type_ {
+                                match _type_ {
+                                    crate::datadogV2::model::CreateDataDeletionRequestBodyDataType::UnparsedObject(_type_) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -80,9 +99,11 @@ impl<'de> Deserialize<'de> for CreateDataDeletionRequestBodyData {
                     }
                 }
                 let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
+                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = CreateDataDeletionRequestBodyData {
                     attributes,
+                    type_,
                     additional_properties,
                     _unparsed,
                 };

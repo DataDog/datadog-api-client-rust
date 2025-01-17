@@ -1180,6 +1180,8 @@ pub mod model_create_data_deletion_request_body_data;
 pub use self::model_create_data_deletion_request_body_data::CreateDataDeletionRequestBodyData;
 pub mod model_create_data_deletion_request_body_attributes;
 pub use self::model_create_data_deletion_request_body_attributes::CreateDataDeletionRequestBodyAttributes;
+pub mod model_create_data_deletion_request_body_data_type;
+pub use self::model_create_data_deletion_request_body_data_type::CreateDataDeletionRequestBodyDataType;
 pub mod model_create_data_deletion_response_body;
 pub use self::model_create_data_deletion_response_body::CreateDataDeletionResponseBody;
 pub mod model_data_deletion_response_item;

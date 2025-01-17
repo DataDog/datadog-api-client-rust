@@ -4,6 +4,7 @@ use datadog_api_client::datadogV2::api_data_deletion::DataDeletionAPI;
 use datadog_api_client::datadogV2::model::CreateDataDeletionRequestBody;
 use datadog_api_client::datadogV2::model::CreateDataDeletionRequestBodyAttributes;
 use datadog_api_client::datadogV2::model::CreateDataDeletionRequestBodyData;
+use datadog_api_client::datadogV2::model::CreateDataDeletionRequestBodyDataType;
 use std::collections::BTreeMap;
 
 #[tokio::main]
@@ -18,6 +19,7 @@ async fn main() {
             1704063600000,
         )
         .indexes(vec!["test-index".to_string(), "test-index-2".to_string()]),
+        CreateDataDeletionRequestBodyDataType::CREATE_DELETION_REQ,
     ));
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.CreateDataDeletionRequest", true);
