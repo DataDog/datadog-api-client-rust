@@ -2,6 +2,7 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
+pub mod api_action_connection;
 pub mod api_agentless_scanning;
 pub mod api_api_management;
 pub mod api_apm_retention_filters;
