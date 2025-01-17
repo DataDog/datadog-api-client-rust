@@ -352,8 +352,8 @@ impl RestrictionPoliciesAPI {
     /// Synthetic Private Locations | `viewer`, `editor`
     /// Monitors                    | `viewer`, `editor`
     /// Reference Tables            | `viewer`, `editor`
-    /// Workflows                   | `viewer`, `editor`
-    /// App Builder Apps            | `viewer`, `runner`, `editor`
+    /// Workflows                   | `viewer`, `runner`, `editor`
+    /// App Builder Apps            | `viewer`, `editor`
     /// Connections                 | `viewer`, `resolver`, `editor`
     /// Connection Groups           | `viewer`, `editor`
     pub async fn update_restriction_policy(
@@ -414,8 +414,8 @@ impl RestrictionPoliciesAPI {
     /// Synthetic Private Locations | `viewer`, `editor`
     /// Monitors                    | `viewer`, `editor`
     /// Reference Tables            | `viewer`, `editor`
-    /// Workflows                   | `viewer`, `editor`
-    /// App Builder Apps            | `viewer`, `runner`, `editor`
+    /// Workflows                   | `viewer`, `runner`, `editor`
+    /// App Builder Apps            | `viewer`, `editor`
     /// Connections                 | `viewer`, `resolver`, `editor`
     /// Connection Groups           | `viewer`, `editor`
     pub async fn update_restriction_policy_with_http_info(
