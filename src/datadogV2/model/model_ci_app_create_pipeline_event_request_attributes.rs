@@ -14,6 +14,9 @@ pub struct CIAppCreatePipelineEventRequestAttributes {
     /// The Datadog environment.
     #[serde(rename = "env")]
     pub env: Option<String>,
+    /// The name of the CI provider. By default, this is "custom".
+    #[serde(rename = "provider_name")]
+    pub provider_name: Option<String>,
     /// Details of the CI pipeline event.
     #[serde(rename = "resource")]
     pub resource: crate::datadogV2::model::CIAppCreatePipelineEventRequestAttributesResource,
@@ -33,6 +36,7 @@ impl CIAppCreatePipelineEventRequestAttributes {
     ) -> CIAppCreatePipelineEventRequestAttributes {
         CIAppCreatePipelineEventRequestAttributes {
             env: None,
+            provider_name: None,
             resource,
             service: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -42,6 +46,11 @@ impl CIAppCreatePipelineEventRequestAttributes {
 
     pub fn env(mut self, value: String) -> Self {
         self.env = Some(value);
+        self
+    }
+
+    pub fn provider_name(mut self, value: String) -> Self {
+        self.provider_name = Some(value);
         self
     }
 
@@ -77,6 +86,7 @@ impl<'de> Deserialize<'de> for CIAppCreatePipelineEventRequestAttributes {
                 M: MapAccess<'a>,
             {
                 let mut env: Option<String> = None;
+                let mut provider_name: Option<String> = None;
                 let mut resource: Option<
                     crate::datadogV2::model::CIAppCreatePipelineEventRequestAttributesResource,
                 > = None;
@@ -94,6 +104,13 @@ impl<'de> Deserialize<'de> for CIAppCreatePipelineEventRequestAttributes {
                                 continue;
                             }
                             env = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "provider_name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            provider_name =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "resource" => {
                             resource = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -123,6 +140,7 @@ impl<'de> Deserialize<'de> for CIAppCreatePipelineEventRequestAttributes {
 
                 let content = CIAppCreatePipelineEventRequestAttributes {
                     env,
+                    provider_name,
                     resource,
                     service,
                     additional_properties,
