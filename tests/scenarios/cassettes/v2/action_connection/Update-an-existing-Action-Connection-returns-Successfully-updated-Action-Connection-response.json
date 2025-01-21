@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"integration\":{\"credentials\":{\"account_id\":\"123456789123\",\"role\":\"MyRoleUpdated\",\"type\":\"AWSAssumeRole\"},\"type\":\"AWS\"},\"name\":\"Cassette Connection\"},\"type\":\"action_connection\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "patch",
+        "uri": "https://api.datadoghq.com/api/v2/actions/connections/cb460d51-3c88-4e87-adac-d47131d0423d"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":{\"id\":\"cb460d51-3c88-4e87-adac-d47131d0423d\",\"type\":\"action_connection\",\"attributes\":{\"integration\":{\"credentials\":{\"account_id\":\"123456789123\",\"role\":\"MyRoleUpdated\",\"external_id\":\"909b33b1242748cfbef42f20011e2fa0\",\"principal_id\":\"464622532012\",\"type\":\"AWSAssumeRole\"},\"type\":\"AWS\"},\"name\":\"Cassette Connection\"}}}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Mon, 06 Jan 2025 22:02:38 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

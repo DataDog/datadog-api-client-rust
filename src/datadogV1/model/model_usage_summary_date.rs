@@ -368,7 +368,7 @@ pub struct UsageSummaryDate {
     /// Shows the 99th percentile of all profiled Azure app services over all hours in the current date for all organizations.
     #[serde(rename = "profiling_aas_count_top99p")]
     pub profiling_aas_count_top99p: Option<i64>,
-    /// Shows the 99th percentile of all profiled hosts over all hours in the current date for all organizations.
+    /// Shows the 99th percentile of all profiled hosts over all hours within the current date for all organizations.
     #[serde(rename = "profiling_host_top99p")]
     pub profiling_host_top99p: Option<i64>,
     /// Shows the sum of all mobile sessions and all browser lite and legacy sessions over all hours in the current month for all organizations (To be deprecated on October 1st, 2024).
@@ -413,9 +413,18 @@ pub struct UsageSummaryDate {
     /// Shows the sum of all mobile RUM lite sessions on React Native over all hours in the current date for all organizations (To be introduced on October 1st, 2024).
     #[serde(rename = "rum_mobile_lite_session_count_reactnative_sum")]
     pub rum_mobile_lite_session_count_reactnative_sum: Option<i64>,
-    /// Shows the sum of all mobile RUM lite sessions on Roku over all hours in the current date for all organizations (To be introduced on October 1st, 2024).
+    /// Shows the sum of all mobile RUM lite sessions on Roku over all hours within the current date for all organizations (To be introduced on October 1st, 2024).
     #[serde(rename = "rum_mobile_lite_session_count_roku_sum")]
     pub rum_mobile_lite_session_count_roku_sum: Option<i64>,
+    /// Shows the sum of all mobile RUM replay sessions on Android over all hours within the current date for the given org.
+    #[serde(rename = "rum_mobile_replay_session_count_android_sum")]
+    pub rum_mobile_replay_session_count_android_sum: Option<i64>,
+    /// Shows the sum of all mobile RUM replay sessions on iOS over all hours within the current date for the given org.
+    #[serde(rename = "rum_mobile_replay_session_count_ios_sum")]
+    pub rum_mobile_replay_session_count_ios_sum: Option<i64>,
+    /// Shows the sum of all mobile RUM replay sessions on React Native over all hours within the current date for the given org.
+    #[serde(rename = "rum_mobile_replay_session_count_reactnative_sum")]
+    pub rum_mobile_replay_session_count_reactnative_sum: Option<i64>,
     /// Shows the sum of all RUM Session Replay counts over all hours in the current date for all organizations (To be introduced on October 1st, 2024).
     #[serde(rename = "rum_replay_session_count_sum")]
     pub rum_replay_session_count_sum: Option<i64>,
@@ -635,6 +644,9 @@ impl UsageSummaryDate {
             rum_mobile_lite_session_count_ios_sum: None,
             rum_mobile_lite_session_count_reactnative_sum: None,
             rum_mobile_lite_session_count_roku_sum: None,
+            rum_mobile_replay_session_count_android_sum: None,
+            rum_mobile_replay_session_count_ios_sum: None,
+            rum_mobile_replay_session_count_reactnative_sum: None,
             rum_replay_session_count_sum: None,
             rum_session_count_sum: None,
             rum_total_session_count_sum: None,
@@ -1452,6 +1464,24 @@ impl UsageSummaryDate {
     }
 
     #[allow(deprecated)]
+    pub fn rum_mobile_replay_session_count_android_sum(mut self, value: i64) -> Self {
+        self.rum_mobile_replay_session_count_android_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn rum_mobile_replay_session_count_ios_sum(mut self, value: i64) -> Self {
+        self.rum_mobile_replay_session_count_ios_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn rum_mobile_replay_session_count_reactnative_sum(mut self, value: i64) -> Self {
+        self.rum_mobile_replay_session_count_reactnative_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn rum_replay_session_count_sum(mut self, value: i64) -> Self {
         self.rum_replay_session_count_sum = Some(value);
         self
@@ -1764,6 +1794,9 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                 let mut rum_mobile_lite_session_count_ios_sum: Option<i64> = None;
                 let mut rum_mobile_lite_session_count_reactnative_sum: Option<i64> = None;
                 let mut rum_mobile_lite_session_count_roku_sum: Option<i64> = None;
+                let mut rum_mobile_replay_session_count_android_sum: Option<i64> = None;
+                let mut rum_mobile_replay_session_count_ios_sum: Option<i64> = None;
+                let mut rum_mobile_replay_session_count_reactnative_sum: Option<i64> = None;
                 let mut rum_replay_session_count_sum: Option<i64> = None;
                 let mut rum_session_count_sum: Option<i64> = None;
                 let mut rum_total_session_count_sum: Option<i64> = None;
@@ -2712,6 +2745,27 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                             rum_mobile_lite_session_count_roku_sum =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "rum_mobile_replay_session_count_android_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_mobile_replay_session_count_android_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_mobile_replay_session_count_ios_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_mobile_replay_session_count_ios_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_mobile_replay_session_count_reactnative_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_mobile_replay_session_count_reactnative_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "rum_replay_session_count_sum" => {
                             if v.is_null() {
                                 continue;
@@ -3028,6 +3082,9 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                     rum_mobile_lite_session_count_ios_sum,
                     rum_mobile_lite_session_count_reactnative_sum,
                     rum_mobile_lite_session_count_roku_sum,
+                    rum_mobile_replay_session_count_android_sum,
+                    rum_mobile_replay_session_count_ios_sum,
+                    rum_mobile_replay_session_count_reactnative_sum,
                     rum_replay_session_count_sum,
                     rum_session_count_sum,
                     rum_total_session_count_sum,

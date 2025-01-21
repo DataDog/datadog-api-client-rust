@@ -49,6 +49,7 @@ pub struct ApiInstances {
     pub v1_api_tags: Option<datadogV1::api_tags::TagsAPI>,
     pub v1_api_users: Option<datadogV1::api_users::UsersAPI>,
     pub v1_api_authentication: Option<datadogV1::api_authentication::AuthenticationAPI>,
+    pub v2_api_action_connection: Option<datadogV2::api_action_connection::ActionConnectionAPI>,
     pub v2_api_agentless_scanning: Option<datadogV2::api_agentless_scanning::AgentlessScanningAPI>,
     pub v2_api_key_management: Option<datadogV2::api_key_management::KeyManagementAPI>,
     pub v2_api_api_management: Option<datadogV2::api_api_management::APIManagementAPI>,
@@ -453,6 +454,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "Authentication" => {
             world.api_instances.v1_api_authentication = Some(
                 datadogV1::api_authentication::AuthenticationAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+        }
+        "ActionConnection" => {
+            world.api_instances.v2_api_action_connection = Some(
+                datadogV2::api_action_connection::ActionConnectionAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -1643,6 +1652,22 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v1.Validate".into(), test_v1_validate);
+    world.function_mappings.insert(
+        "v2.CreateActionConnection".into(),
+        test_v2_create_action_connection,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteActionConnection".into(),
+        test_v2_delete_action_connection,
+    );
+    world.function_mappings.insert(
+        "v2.GetActionConnection".into(),
+        test_v2_get_action_connection,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateActionConnection".into(),
+        test_v2_update_action_connection,
+    );
     world.function_mappings.insert(
         "v2.ListAwsScanOptions".into(),
         test_v2_list_aws_scan_options,
@@ -10396,6 +10421,120 @@ fn test_v1_validate(world: &mut DatadogWorld, _parameters: &HashMap<String, Valu
         .as_ref()
         .expect("api instance not found");
     let response = match block_on(api.validate_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_action_connection(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_action_connection
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_action_connection_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_action_connection(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_action_connection
+        .as_ref()
+        .expect("api instance not found");
+    let connection_id =
+        serde_json::from_value(_parameters.get("connection_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_action_connection_with_http_info(connection_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_action_connection(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_action_connection
+        .as_ref()
+        .expect("api instance not found");
+    let connection_id =
+        serde_json::from_value(_parameters.get("connection_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_action_connection_with_http_info(connection_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_action_connection(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_action_connection
+        .as_ref()
+        .expect("api instance not found");
+    let connection_id =
+        serde_json::from_value(_parameters.get("connection_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_action_connection_with_http_info(connection_id, body))
+    {
         Ok(response) => response,
         Err(error) => {
             return match error {
