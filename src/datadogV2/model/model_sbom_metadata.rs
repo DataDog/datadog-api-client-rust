@@ -6,17 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Asset version.
+/// Provides additional information about a BOM.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct AssetAttributesVersion {
-    /// Asset first version.
-    #[serde(rename = "first")]
-    pub first: Option<String>,
-    /// Asset last version.
-    #[serde(rename = "last")]
-    pub last: Option<String>,
+pub struct SBOMMetadata {
+    /// The component that the BOM describes.
+    #[serde(rename = "component")]
+    pub component: Option<crate::datadogV2::model::SBOMMetadataComponent>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,23 +21,17 @@ pub struct AssetAttributesVersion {
     pub(crate) _unparsed: bool,
 }
 
-impl AssetAttributesVersion {
-    pub fn new() -> AssetAttributesVersion {
-        AssetAttributesVersion {
-            first: None,
-            last: None,
+impl SBOMMetadata {
+    pub fn new() -> SBOMMetadata {
+        SBOMMetadata {
+            component: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn first(mut self, value: String) -> Self {
-        self.first = Some(value);
-        self
-    }
-
-    pub fn last(mut self, value: String) -> Self {
-        self.last = Some(value);
+    pub fn component(mut self, value: crate::datadogV2::model::SBOMMetadataComponent) -> Self {
+        self.component = Some(value);
         self
     }
 
@@ -53,20 +44,20 @@ impl AssetAttributesVersion {
     }
 }
 
-impl Default for AssetAttributesVersion {
+impl Default for SBOMMetadata {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for AssetAttributesVersion {
+impl<'de> Deserialize<'de> for SBOMMetadata {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct AssetAttributesVersionVisitor;
-        impl<'a> Visitor<'a> for AssetAttributesVersionVisitor {
-            type Value = AssetAttributesVersion;
+        struct SBOMMetadataVisitor;
+        impl<'a> Visitor<'a> for SBOMMetadataVisitor {
+            type Value = SBOMMetadata;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -76,8 +67,7 @@ impl<'de> Deserialize<'de> for AssetAttributesVersion {
             where
                 M: MapAccess<'a>,
             {
-                let mut first: Option<String> = None;
-                let mut last: Option<String> = None;
+                let mut component: Option<crate::datadogV2::model::SBOMMetadataComponent> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -86,17 +76,11 @@ impl<'de> Deserialize<'de> for AssetAttributesVersion {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "first" => {
+                        "component" => {
                             if v.is_null() {
                                 continue;
                             }
-                            first = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "last" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            last = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            component = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -106,9 +90,8 @@ impl<'de> Deserialize<'de> for AssetAttributesVersion {
                     }
                 }
 
-                let content = AssetAttributesVersion {
-                    first,
-                    last,
+                let content = SBOMMetadata {
+                    component,
                     additional_properties,
                     _unparsed,
                 };
@@ -117,6 +100,6 @@ impl<'de> Deserialize<'de> for AssetAttributesVersion {
             }
         }
 
-        deserializer.deserialize_any(AssetAttributesVersionVisitor)
+        deserializer.deserialize_any(SBOMMetadataVisitor)
     }
 }

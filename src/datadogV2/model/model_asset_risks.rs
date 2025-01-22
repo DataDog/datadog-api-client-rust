@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct AssetAttributesRisks {
+pub struct AssetRisks {
     /// Whether the asset has access to sensitive data or not.
     #[serde(rename = "has_access_to_sensitive_data")]
     pub has_access_to_sensitive_data: Option<bool>,
@@ -33,9 +33,9 @@ pub struct AssetAttributesRisks {
     pub(crate) _unparsed: bool,
 }
 
-impl AssetAttributesRisks {
-    pub fn new(in_production: bool) -> AssetAttributesRisks {
-        AssetAttributesRisks {
+impl AssetRisks {
+    pub fn new(in_production: bool) -> AssetRisks {
+        AssetRisks {
             has_access_to_sensitive_data: None,
             has_privileged_access: None,
             in_production,
@@ -75,14 +75,14 @@ impl AssetAttributesRisks {
     }
 }
 
-impl<'de> Deserialize<'de> for AssetAttributesRisks {
+impl<'de> Deserialize<'de> for AssetRisks {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct AssetAttributesRisksVisitor;
-        impl<'a> Visitor<'a> for AssetAttributesRisksVisitor {
-            type Value = AssetAttributesRisks;
+        struct AssetRisksVisitor;
+        impl<'a> Visitor<'a> for AssetRisksVisitor {
+            type Value = AssetRisks;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -147,7 +147,7 @@ impl<'de> Deserialize<'de> for AssetAttributesRisks {
                 let in_production =
                     in_production.ok_or_else(|| M::Error::missing_field("in_production"))?;
 
-                let content = AssetAttributesRisks {
+                let content = AssetRisks {
                     has_access_to_sensitive_data,
                     has_privileged_access,
                     in_production,
@@ -161,6 +161,6 @@ impl<'de> Deserialize<'de> for AssetAttributesRisks {
             }
         }
 
-        deserializer.deserialize_any(AssetAttributesRisksVisitor)
+        deserializer.deserialize_any(AssetRisksVisitor)
     }
 }

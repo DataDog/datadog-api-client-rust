@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct AssetAttributesOperatingSystem {
+pub struct AssetOperatingSystem {
     /// Operating system version.
     #[serde(rename = "description")]
     pub description: Option<String>,
@@ -24,9 +24,9 @@ pub struct AssetAttributesOperatingSystem {
     pub(crate) _unparsed: bool,
 }
 
-impl AssetAttributesOperatingSystem {
-    pub fn new(name: String) -> AssetAttributesOperatingSystem {
-        AssetAttributesOperatingSystem {
+impl AssetOperatingSystem {
+    pub fn new(name: String) -> AssetOperatingSystem {
+        AssetOperatingSystem {
             description: None,
             name,
             additional_properties: std::collections::BTreeMap::new(),
@@ -48,14 +48,14 @@ impl AssetAttributesOperatingSystem {
     }
 }
 
-impl<'de> Deserialize<'de> for AssetAttributesOperatingSystem {
+impl<'de> Deserialize<'de> for AssetOperatingSystem {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct AssetAttributesOperatingSystemVisitor;
-        impl<'a> Visitor<'a> for AssetAttributesOperatingSystemVisitor {
-            type Value = AssetAttributesOperatingSystem;
+        struct AssetOperatingSystemVisitor;
+        impl<'a> Visitor<'a> for AssetOperatingSystemVisitor {
+            type Value = AssetOperatingSystem;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -94,7 +94,7 @@ impl<'de> Deserialize<'de> for AssetAttributesOperatingSystem {
                 }
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
 
-                let content = AssetAttributesOperatingSystem {
+                let content = AssetOperatingSystem {
                     description,
                     name,
                     additional_properties,
@@ -105,6 +105,6 @@ impl<'de> Deserialize<'de> for AssetAttributesOperatingSystem {
             }
         }
 
-        deserializer.deserialize_any(AssetAttributesOperatingSystemVisitor)
+        deserializer.deserialize_any(AssetOperatingSystemVisitor)
     }
 }

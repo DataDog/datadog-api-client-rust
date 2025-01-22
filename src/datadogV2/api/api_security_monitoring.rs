@@ -29,6 +29,22 @@ impl GetFindingOptionalParams {
     }
 }
 
+/// GetSBOMOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::get_sbom`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetSBOMOptionalParams {
+    /// The container image `repo_digest` for the SBOM request. When the requested asset type is 'Image', this filter is mandatory.
+    pub filter_repo_digest: Option<String>,
+}
+
+impl GetSBOMOptionalParams {
+    /// The container image `repo_digest` for the SBOM request. When the requested asset type is 'Image', this filter is mandatory.
+    pub fn filter_repo_digest(mut self, value: String) -> Self {
+        self.filter_repo_digest = Some(value);
+        self
+    }
+}
+
 /// ListFindingsOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_findings`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -806,6 +822,15 @@ pub enum GetFindingError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetHistoricalJobError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetSBOMError is a struct for typed errors of method [`SecurityMonitoringAPI::get_sbom`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetSBOMError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -3123,6 +3148,136 @@ impl SecurityMonitoringAPI {
         } else {
             let local_entity: Option<GetHistoricalJobError> =
                 serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get a single SBOM related to an asset by its type and name.
+    ///
+    pub async fn get_sbom(
+        &self,
+        asset_type: crate::datadogV2::model::AssetType,
+        filter_asset_name: String,
+        params: GetSBOMOptionalParams,
+    ) -> Result<crate::datadogV2::model::GetSBOMResponse, datadog::Error<GetSBOMError>> {
+        match self
+            .get_sbom_with_http_info(asset_type, filter_asset_name, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get a single SBOM related to an asset by its type and name.
+    ///
+    pub async fn get_sbom_with_http_info(
+        &self,
+        asset_type: crate::datadogV2::model::AssetType,
+        filter_asset_name: String,
+        params: GetSBOMOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::GetSBOMResponse>,
+        datadog::Error<GetSBOMError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_sbom";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_sbom' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let filter_repo_digest = params.filter_repo_digest;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security/sboms/{asset_type}",
+            local_configuration.get_operation_host(operation_id),
+            asset_type = datadog::urlencode(asset_type.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        local_req_builder =
+            local_req_builder.query(&[("filter[asset_name]", &filter_asset_name.to_string())]);
+        if let Some(ref local_query_param) = filter_repo_digest {
+            local_req_builder =
+                local_req_builder.query(&[("filter[repo_digest]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::GetSBOMResponse>(&local_content) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetSBOMError> = serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
