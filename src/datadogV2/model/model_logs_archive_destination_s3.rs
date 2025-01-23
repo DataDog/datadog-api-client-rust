@@ -14,6 +14,9 @@ pub struct LogsArchiveDestinationS3 {
     /// The bucket where the archive will be stored.
     #[serde(rename = "bucket")]
     pub bucket: String,
+    /// The S3 encryption settings.
+    #[serde(rename = "encryption")]
+    pub encryption: Option<crate::datadogV2::model::LogsArchiveEncryptionS3>,
     /// The S3 Archive's integration destination.
     #[serde(rename = "integration")]
     pub integration: crate::datadogV2::model::LogsArchiveIntegrationS3,
@@ -38,12 +41,18 @@ impl LogsArchiveDestinationS3 {
     ) -> LogsArchiveDestinationS3 {
         LogsArchiveDestinationS3 {
             bucket,
+            encryption: None,
             integration,
             path: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn encryption(mut self, value: crate::datadogV2::model::LogsArchiveEncryptionS3) -> Self {
+        self.encryption = Some(value);
+        self
     }
 
     pub fn path(mut self, value: String) -> Self {
@@ -78,6 +87,7 @@ impl<'de> Deserialize<'de> for LogsArchiveDestinationS3 {
                 M: MapAccess<'a>,
             {
                 let mut bucket: Option<String> = None;
+                let mut encryption: Option<crate::datadogV2::model::LogsArchiveEncryptionS3> = None;
                 let mut integration: Option<crate::datadogV2::model::LogsArchiveIntegrationS3> =
                     None;
                 let mut path: Option<String> = None;
@@ -92,6 +102,12 @@ impl<'de> Deserialize<'de> for LogsArchiveDestinationS3 {
                     match k.as_str() {
                         "bucket" => {
                             bucket = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "encryption" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            encryption = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "integration" => {
                             integration =
@@ -128,6 +144,7 @@ impl<'de> Deserialize<'de> for LogsArchiveDestinationS3 {
 
                 let content = LogsArchiveDestinationS3 {
                     bucket,
+                    encryption,
                     integration,
                     path,
                     type_,
