@@ -6,17 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Vulnerability severities.
+/// The component that the BOM describes.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct VulnerabilityAttributesCvss {
-    /// Vulnerability severity.
-    #[serde(rename = "base")]
-    pub base: crate::datadogV2::model::CVSS,
-    /// Vulnerability severity.
-    #[serde(rename = "datadog")]
-    pub datadog: crate::datadogV2::model::CVSS,
+pub struct SBOMMetadataComponent {
+    /// The name of the component. This will often be a shortened, single name of the component.
+    #[serde(rename = "name")]
+    pub name: Option<String>,
+    /// Specifies the type of the component.
+    #[serde(rename = "type")]
+    pub type_: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,17 +24,24 @@ pub struct VulnerabilityAttributesCvss {
     pub(crate) _unparsed: bool,
 }
 
-impl VulnerabilityAttributesCvss {
-    pub fn new(
-        base: crate::datadogV2::model::CVSS,
-        datadog: crate::datadogV2::model::CVSS,
-    ) -> VulnerabilityAttributesCvss {
-        VulnerabilityAttributesCvss {
-            base,
-            datadog,
+impl SBOMMetadataComponent {
+    pub fn new() -> SBOMMetadataComponent {
+        SBOMMetadataComponent {
+            name: None,
+            type_: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn name(mut self, value: String) -> Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn type_(mut self, value: String) -> Self {
+        self.type_ = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -46,14 +53,20 @@ impl VulnerabilityAttributesCvss {
     }
 }
 
-impl<'de> Deserialize<'de> for VulnerabilityAttributesCvss {
+impl Default for SBOMMetadataComponent {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for SBOMMetadataComponent {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct VulnerabilityAttributesCvssVisitor;
-        impl<'a> Visitor<'a> for VulnerabilityAttributesCvssVisitor {
-            type Value = VulnerabilityAttributesCvss;
+        struct SBOMMetadataComponentVisitor;
+        impl<'a> Visitor<'a> for SBOMMetadataComponentVisitor {
+            type Value = SBOMMetadataComponent;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -63,8 +76,8 @@ impl<'de> Deserialize<'de> for VulnerabilityAttributesCvss {
             where
                 M: MapAccess<'a>,
             {
-                let mut base: Option<crate::datadogV2::model::CVSS> = None;
-                let mut datadog: Option<crate::datadogV2::model::CVSS> = None;
+                let mut name: Option<String> = None;
+                let mut type_: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -73,11 +86,17 @@ impl<'de> Deserialize<'de> for VulnerabilityAttributesCvss {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "base" => {
-                            base = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "datadog" => {
-                            datadog = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "type" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -86,12 +105,10 @@ impl<'de> Deserialize<'de> for VulnerabilityAttributesCvss {
                         }
                     }
                 }
-                let base = base.ok_or_else(|| M::Error::missing_field("base"))?;
-                let datadog = datadog.ok_or_else(|| M::Error::missing_field("datadog"))?;
 
-                let content = VulnerabilityAttributesCvss {
-                    base,
-                    datadog,
+                let content = SBOMMetadataComponent {
+                    name,
+                    type_,
                     additional_properties,
                     _unparsed,
                 };
@@ -100,6 +117,6 @@ impl<'de> Deserialize<'de> for VulnerabilityAttributesCvss {
             }
         }
 
-        deserializer.deserialize_any(VulnerabilityAttributesCvssVisitor)
+        deserializer.deserialize_any(SBOMMetadataComponentVisitor)
     }
 }

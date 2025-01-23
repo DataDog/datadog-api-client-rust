@@ -6,32 +6,26 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The JSON:API attributes of the asset.
+/// Software or hardware component.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct AssetAttributes {
-    /// Asset architecture.
-    #[serde(rename = "arch")]
-    pub arch: Option<String>,
-    /// List of environments where the asset is deployed.
-    #[serde(rename = "environments")]
-    pub environments: Vec<String>,
-    /// Asset name.
+pub struct SBOMComponent {
+    /// An optional identifier that can be used to reference the component elsewhere in the BOM.
+    #[serde(rename = "bom-ref")]
+    pub bom_ref: Option<String>,
+    /// The name of the component. This will often be a shortened, single name of the component.
     #[serde(rename = "name")]
     pub name: String,
-    /// Asset operating system.
-    #[serde(rename = "operating_system")]
-    pub operating_system: Option<crate::datadogV2::model::AssetOperatingSystem>,
-    /// Asset risks.
-    #[serde(rename = "risks")]
-    pub risks: crate::datadogV2::model::AssetRisks,
-    /// The asset type
+    /// Specifies the package-url (purl). The purl, if specified, MUST be valid and conform to the [specification](<https://github.com/package-url/purl-spec>).
+    #[serde(rename = "purl")]
+    pub purl: Option<String>,
+    /// The SBOM component type
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::AssetType,
-    /// Asset version.
+    pub type_: crate::datadogV2::model::SBOMComponentType,
+    /// The component version.
     #[serde(rename = "version")]
-    pub version: Option<crate::datadogV2::model::AssetVersion>,
+    pub version: String,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -39,41 +33,30 @@ pub struct AssetAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl AssetAttributes {
+impl SBOMComponent {
     pub fn new(
-        environments: Vec<String>,
         name: String,
-        risks: crate::datadogV2::model::AssetRisks,
-        type_: crate::datadogV2::model::AssetType,
-    ) -> AssetAttributes {
-        AssetAttributes {
-            arch: None,
-            environments,
+        type_: crate::datadogV2::model::SBOMComponentType,
+        version: String,
+    ) -> SBOMComponent {
+        SBOMComponent {
+            bom_ref: None,
             name,
-            operating_system: None,
-            risks,
+            purl: None,
             type_,
-            version: None,
+            version,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn arch(mut self, value: String) -> Self {
-        self.arch = Some(value);
+    pub fn bom_ref(mut self, value: String) -> Self {
+        self.bom_ref = Some(value);
         self
     }
 
-    pub fn operating_system(
-        mut self,
-        value: crate::datadogV2::model::AssetOperatingSystem,
-    ) -> Self {
-        self.operating_system = Some(value);
-        self
-    }
-
-    pub fn version(mut self, value: crate::datadogV2::model::AssetVersion) -> Self {
-        self.version = Some(value);
+    pub fn purl(mut self, value: String) -> Self {
+        self.purl = Some(value);
         self
     }
 
@@ -86,14 +69,14 @@ impl AssetAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for AssetAttributes {
+impl<'de> Deserialize<'de> for SBOMComponent {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct AssetAttributesVisitor;
-        impl<'a> Visitor<'a> for AssetAttributesVisitor {
-            type Value = AssetAttributes;
+        struct SBOMComponentVisitor;
+        impl<'a> Visitor<'a> for SBOMComponentVisitor {
+            type Value = SBOMComponent;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -103,14 +86,11 @@ impl<'de> Deserialize<'de> for AssetAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut arch: Option<String> = None;
-                let mut environments: Option<Vec<String>> = None;
+                let mut bom_ref: Option<String> = None;
                 let mut name: Option<String> = None;
-                let mut operating_system: Option<crate::datadogV2::model::AssetOperatingSystem> =
-                    None;
-                let mut risks: Option<crate::datadogV2::model::AssetRisks> = None;
-                let mut type_: Option<crate::datadogV2::model::AssetType> = None;
-                let mut version: Option<crate::datadogV2::model::AssetVersion> = None;
+                let mut purl: Option<String> = None;
+                let mut type_: Option<crate::datadogV2::model::SBOMComponentType> = None;
+                let mut version: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -119,34 +99,28 @@ impl<'de> Deserialize<'de> for AssetAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "arch" => {
+                        "bom-ref" => {
                             if v.is_null() {
                                 continue;
                             }
-                            arch = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "environments" => {
-                            environments =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            bom_ref = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "operating_system" => {
+                        "purl" => {
                             if v.is_null() {
                                 continue;
                             }
-                            operating_system =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "risks" => {
-                            risks = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            purl = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::AssetType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::SBOMComponentType::UnparsedObject(
+                                        _type_,
+                                    ) => {
                                         _unparsed = true;
                                     }
                                     _ => {}
@@ -154,9 +128,6 @@ impl<'de> Deserialize<'de> for AssetAttributes {
                             }
                         }
                         "version" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -166,18 +137,14 @@ impl<'de> Deserialize<'de> for AssetAttributes {
                         }
                     }
                 }
-                let environments =
-                    environments.ok_or_else(|| M::Error::missing_field("environments"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
-                let risks = risks.ok_or_else(|| M::Error::missing_field("risks"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
+                let version = version.ok_or_else(|| M::Error::missing_field("version"))?;
 
-                let content = AssetAttributes {
-                    arch,
-                    environments,
+                let content = SBOMComponent {
+                    bom_ref,
                     name,
-                    operating_system,
-                    risks,
+                    purl,
                     type_,
                     version,
                     additional_properties,
@@ -188,6 +155,6 @@ impl<'de> Deserialize<'de> for AssetAttributes {
             }
         }
 
-        deserializer.deserialize_any(AssetAttributesVisitor)
+        deserializer.deserialize_any(SBOMComponentVisitor)
     }
 }

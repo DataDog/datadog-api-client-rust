@@ -186,6 +186,7 @@ impl Default for Configuration {
             ("v2.delete_historical_job".to_owned(), false),
             ("v2.get_finding".to_owned(), false),
             ("v2.get_historical_job".to_owned(), false),
+            ("v2.get_sbom".to_owned(), false),
             ("v2.list_findings".to_owned(), false),
             ("v2.list_historical_jobs".to_owned(), false),
             ("v2.list_vulnerabilities".to_owned(), false),
