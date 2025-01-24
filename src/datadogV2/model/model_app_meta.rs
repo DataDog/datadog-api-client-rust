@@ -6,39 +6,36 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `AppMeta` object.
+/// Metadata of an app.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AppMeta {
-    /// The `AppMeta` `created_at`.
+    /// Timestamp of when the app was created.
     #[serde(rename = "created_at")]
-    pub created_at: Option<String>,
-    /// The `AppMeta` `deleted_at`.
+    pub created_at: Option<chrono::DateTime<chrono::Utc>>,
+    /// Timestamp of when the app was deleted.
     #[serde(rename = "deleted_at")]
-    pub deleted_at: Option<String>,
-    /// The `AppMeta` `org_id`.
+    pub deleted_at: Option<chrono::DateTime<chrono::Utc>>,
+    /// The Datadog organization ID that owns the app.
     #[serde(rename = "org_id")]
     pub org_id: Option<i64>,
-    /// The `AppMeta` `run_as_user`.
-    #[serde(rename = "run_as_user")]
-    pub run_as_user: Option<String>,
-    /// The `AppMeta` `updated_at`.
+    /// Timestamp of when the app was last updated.
     #[serde(rename = "updated_at")]
-    pub updated_at: Option<String>,
-    /// The `AppMeta` `updated_since_deployment`.
+    pub updated_at: Option<chrono::DateTime<chrono::Utc>>,
+    /// Whether the app was updated since it was last published. Published apps are pinned to a specific version and do not automatically update when the app is updated.
     #[serde(rename = "updated_since_deployment")]
     pub updated_since_deployment: Option<bool>,
-    /// The `AppMeta` `user_id`.
+    /// The ID of the user who created the app.
     #[serde(rename = "user_id")]
     pub user_id: Option<i64>,
-    /// The `AppMeta` `user_name`.
+    /// The name (or email address) of the user who created the app.
     #[serde(rename = "user_name")]
     pub user_name: Option<String>,
-    /// The `AppMeta` `user_uuid`.
+    /// The UUID of the user who created the app.
     #[serde(rename = "user_uuid")]
     pub user_uuid: Option<uuid::Uuid>,
-    /// The `AppMeta` `version`.
+    /// The version number of the app. This starts at 1 and increments with each update.
     #[serde(rename = "version")]
     pub version: Option<i64>,
     #[serde(flatten)]
@@ -54,7 +51,6 @@ impl AppMeta {
             created_at: None,
             deleted_at: None,
             org_id: None,
-            run_as_user: None,
             updated_at: None,
             updated_since_deployment: None,
             user_id: None,
@@ -66,12 +62,12 @@ impl AppMeta {
         }
     }
 
-    pub fn created_at(mut self, value: String) -> Self {
+    pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
 
-    pub fn deleted_at(mut self, value: String) -> Self {
+    pub fn deleted_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.deleted_at = Some(value);
         self
     }
@@ -81,12 +77,7 @@ impl AppMeta {
         self
     }
 
-    pub fn run_as_user(mut self, value: String) -> Self {
-        self.run_as_user = Some(value);
-        self
-    }
-
-    pub fn updated_at(mut self, value: String) -> Self {
+    pub fn updated_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.updated_at = Some(value);
         self
     }
@@ -148,11 +139,10 @@ impl<'de> Deserialize<'de> for AppMeta {
             where
                 M: MapAccess<'a>,
             {
-                let mut created_at: Option<String> = None;
-                let mut deleted_at: Option<String> = None;
+                let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
+                let mut deleted_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut org_id: Option<i64> = None;
-                let mut run_as_user: Option<String> = None;
-                let mut updated_at: Option<String> = None;
+                let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut updated_since_deployment: Option<bool> = None;
                 let mut user_id: Option<i64> = None;
                 let mut user_name: Option<String> = None;
@@ -183,13 +173,6 @@ impl<'de> Deserialize<'de> for AppMeta {
                                 continue;
                             }
                             org_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "run_as_user" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            run_as_user =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "updated_at" => {
                             if v.is_null() {
@@ -240,7 +223,6 @@ impl<'de> Deserialize<'de> for AppMeta {
                     created_at,
                     deleted_at,
                     org_id,
-                    run_as_user,
                     updated_at,
                     updated_since_deployment,
                     user_id,

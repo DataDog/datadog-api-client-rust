@@ -6,20 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `UpdateAppRequestData` object.
+/// The data object containing the new app definition. Any fields not included in the request remain unchanged.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct UpdateAppRequestData {
-    /// The definition of `UpdateAppRequestDataAttributes` object.
+    /// App definition attributes to be updated, such as name, description, and components.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::UpdateAppRequestDataAttributes>,
-    /// The `data` `id`.
+    /// The ID of the app to update. The app ID must match the ID in the URL path.
     #[serde(rename = "id")]
-    pub id: Option<String>,
-    /// The definition of `UpdateAppRequestDataType` object.
+    pub id: Option<uuid::Uuid>,
+    /// The app definition type.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::UpdateAppRequestDataType,
+    pub type_: crate::datadogV2::model::AppDefinitionType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -28,7 +28,7 @@ pub struct UpdateAppRequestData {
 }
 
 impl UpdateAppRequestData {
-    pub fn new(type_: crate::datadogV2::model::UpdateAppRequestDataType) -> UpdateAppRequestData {
+    pub fn new(type_: crate::datadogV2::model::AppDefinitionType) -> UpdateAppRequestData {
         UpdateAppRequestData {
             attributes: None,
             id: None,
@@ -46,7 +46,7 @@ impl UpdateAppRequestData {
         self
     }
 
-    pub fn id(mut self, value: String) -> Self {
+    pub fn id(mut self, value: uuid::Uuid) -> Self {
         self.id = Some(value);
         self
     }
@@ -80,8 +80,8 @@ impl<'de> Deserialize<'de> for UpdateAppRequestData {
                 let mut attributes: Option<
                     crate::datadogV2::model::UpdateAppRequestDataAttributes,
                 > = None;
-                let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::UpdateAppRequestDataType> = None;
+                let mut id: Option<uuid::Uuid> = None;
+                let mut type_: Option<crate::datadogV2::model::AppDefinitionType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -106,9 +106,11 @@ impl<'de> Deserialize<'de> for UpdateAppRequestData {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::UpdateAppRequestDataType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::AppDefinitionType::UnparsedObject(
+                                        _type_,
+                                    ) => {
                                         _unparsed = true;
-                                    },
+                                    }
                                     _ => {}
                                 }
                             }

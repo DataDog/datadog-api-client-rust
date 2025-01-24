@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `ListAppsResponseMetaPage` object.
+/// Information on the total number of apps, to be used for pagination.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ListAppsResponseMetaPage {
-    /// The `page` `totalCount`.
+    /// The total number of apps under the Datadog organization, disregarding any filters applied.
     #[serde(rename = "totalCount")]
     pub total_count: Option<i64>,
-    /// The `page` `totalFilteredCount`.
+    /// The total number of apps that match the specified filters.
     #[serde(rename = "totalFilteredCount")]
     pub total_filtered_count: Option<i64>,
     #[serde(flatten)]

@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `UpdateAppRequest` object.
+/// A request object for updating an existing app.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct UpdateAppRequest {
-    /// The definition of `UpdateAppRequestData` object.
+    /// The data object containing the new app definition. Any fields not included in the request remain unchanged.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::UpdateAppRequestData>,
     #[serde(flatten)]

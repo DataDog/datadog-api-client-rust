@@ -6,20 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `GetAppResponseData` object.
+/// The data object containing the app definition.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct GetAppResponseData {
-    /// The definition of `GetAppResponseDataAttributes` object.
+    /// The app definition attributes, such as name, description, and components.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::GetAppResponseDataAttributes,
-    /// The `data` `id`.
+    /// The ID of the app.
     #[serde(rename = "id")]
-    pub id: String,
-    /// The definition of `GetAppResponseDataType` object.
+    pub id: uuid::Uuid,
+    /// The app definition type.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::GetAppResponseDataType,
+    pub type_: crate::datadogV2::model::AppDefinitionType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -30,8 +30,8 @@ pub struct GetAppResponseData {
 impl GetAppResponseData {
     pub fn new(
         attributes: crate::datadogV2::model::GetAppResponseDataAttributes,
-        id: String,
-        type_: crate::datadogV2::model::GetAppResponseDataType,
+        id: uuid::Uuid,
+        type_: crate::datadogV2::model::AppDefinitionType,
     ) -> GetAppResponseData {
         GetAppResponseData {
             attributes,
@@ -70,8 +70,8 @@ impl<'de> Deserialize<'de> for GetAppResponseData {
             {
                 let mut attributes: Option<crate::datadogV2::model::GetAppResponseDataAttributes> =
                     None;
-                let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::GetAppResponseDataType> = None;
+                let mut id: Option<uuid::Uuid> = None;
+                let mut type_: Option<crate::datadogV2::model::AppDefinitionType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -90,9 +90,11 @@ impl<'de> Deserialize<'de> for GetAppResponseData {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::GetAppResponseDataType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::AppDefinitionType::UnparsedObject(
+                                        _type_,
+                                    ) => {
                                         _unparsed = true;
-                                    },
+                                    }
                                     _ => {}
                                 }
                             }

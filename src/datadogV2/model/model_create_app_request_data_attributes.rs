@@ -6,33 +6,27 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `CreateAppRequestDataAttributes` object.
+/// App definition attributes such as name, description, and components.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreateAppRequestDataAttributes {
-    /// The `attributes` `components`.
+    /// The UI components that make up the app.
     #[serde(rename = "components")]
     pub components: Option<Vec<crate::datadogV2::model::ComponentGrid>>,
-    /// The `attributes` `description`.
+    /// A human-readable description for the app.
     #[serde(rename = "description")]
     pub description: Option<String>,
-    /// The `attributes` `embeddedQueries`.
+    /// An array of queries, such as external actions and state variables, that the app uses.
     #[serde(rename = "embeddedQueries")]
     pub embedded_queries: Option<Vec<crate::datadogV2::model::Query>>,
-    /// The definition of `InputSchema` object.
-    #[serde(rename = "inputSchema")]
-    pub input_schema: Option<crate::datadogV2::model::InputSchema>,
-    /// The `attributes` `name`.
+    /// The name of the app.
     #[serde(rename = "name")]
     pub name: Option<String>,
-    /// The `attributes` `rootInstanceName`.
+    /// The name of the root component of the app. This must be a `grid` component that contains all other components.
     #[serde(rename = "rootInstanceName")]
     pub root_instance_name: Option<String>,
-    /// The `attributes` `scripts`.
-    #[serde(rename = "scripts")]
-    pub scripts: Option<Vec<crate::datadogV2::model::Script>>,
-    /// The `attributes` `tags`.
+    /// A list of tags for the app, which can be used to filter apps.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
     #[serde(flatten)]
@@ -48,10 +42,8 @@ impl CreateAppRequestDataAttributes {
             components: None,
             description: None,
             embedded_queries: None,
-            input_schema: None,
             name: None,
             root_instance_name: None,
-            scripts: None,
             tags: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -73,11 +65,6 @@ impl CreateAppRequestDataAttributes {
         self
     }
 
-    pub fn input_schema(mut self, value: crate::datadogV2::model::InputSchema) -> Self {
-        self.input_schema = Some(value);
-        self
-    }
-
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
@@ -85,11 +72,6 @@ impl CreateAppRequestDataAttributes {
 
     pub fn root_instance_name(mut self, value: String) -> Self {
         self.root_instance_name = Some(value);
-        self
-    }
-
-    pub fn scripts(mut self, value: Vec<crate::datadogV2::model::Script>) -> Self {
-        self.scripts = Some(value);
         self
     }
 
@@ -133,10 +115,8 @@ impl<'de> Deserialize<'de> for CreateAppRequestDataAttributes {
                 let mut components: Option<Vec<crate::datadogV2::model::ComponentGrid>> = None;
                 let mut description: Option<String> = None;
                 let mut embedded_queries: Option<Vec<crate::datadogV2::model::Query>> = None;
-                let mut input_schema: Option<crate::datadogV2::model::InputSchema> = None;
                 let mut name: Option<String> = None;
                 let mut root_instance_name: Option<String> = None;
-                let mut scripts: Option<Vec<crate::datadogV2::model::Script>> = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -166,13 +146,6 @@ impl<'de> Deserialize<'de> for CreateAppRequestDataAttributes {
                             embedded_queries =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "inputSchema" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            input_schema =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "name" => {
                             if v.is_null() {
                                 continue;
@@ -185,12 +158,6 @@ impl<'de> Deserialize<'de> for CreateAppRequestDataAttributes {
                             }
                             root_instance_name =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "scripts" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            scripts = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "tags" => {
                             if v.is_null() {
@@ -210,10 +177,8 @@ impl<'de> Deserialize<'de> for CreateAppRequestDataAttributes {
                     components,
                     description,
                     embedded_queries,
-                    input_schema,
                     name,
                     root_instance_name,
-                    scripts,
                     tags,
                     additional_properties,
                     _unparsed,

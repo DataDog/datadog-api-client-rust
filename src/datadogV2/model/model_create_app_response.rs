@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `CreateAppResponse` object.
+/// The response object after a new app is successfully created, with the app ID.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreateAppResponse {
-    /// The definition of `CreateAppResponseData` object.
+    /// The data object containing the app ID.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::CreateAppResponseData>,
     #[serde(flatten)]

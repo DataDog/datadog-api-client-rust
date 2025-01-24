@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `ListAppsResponseDataItemsRelationships` object.
+/// The app's publication information.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ListAppsResponseDataItemsRelationships {
-    /// The definition of `DeploymentRelationship` object.
+    /// Information pointing to the app's publication status.
     #[serde(rename = "deployment")]
     pub deployment: Option<crate::datadogV2::model::DeploymentRelationship>,
     #[serde(flatten)]

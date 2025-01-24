@@ -6,23 +6,23 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `UpdateAppResponse` object.
+/// The response object after an app is successfully updated.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct UpdateAppResponse {
-    /// The definition of `UpdateAppResponseData` object.
+    /// The data object containing the updated app definition.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::UpdateAppResponseData>,
-    /// The `UpdateAppResponse` `included`.
+    /// Data on the version of the app that was published.
     #[serde(rename = "included")]
-    pub included: Option<Vec<crate::datadogV2::model::DeploymentIncluded>>,
-    /// The definition of `AppMeta` object.
+    pub included: Option<Vec<crate::datadogV2::model::Deployment>>,
+    /// Metadata of an app.
     #[serde(rename = "meta")]
     pub meta: Option<crate::datadogV2::model::AppMeta>,
-    /// The definition of `UpdateAppResponseRelationship` object.
+    /// The app's publication relationship and custom connections.
     #[serde(rename = "relationship")]
-    pub relationship: Option<crate::datadogV2::model::UpdateAppResponseRelationship>,
+    pub relationship: Option<crate::datadogV2::model::AppRelationship>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -47,7 +47,7 @@ impl UpdateAppResponse {
         self
     }
 
-    pub fn included(mut self, value: Vec<crate::datadogV2::model::DeploymentIncluded>) -> Self {
+    pub fn included(mut self, value: Vec<crate::datadogV2::model::Deployment>) -> Self {
         self.included = Some(value);
         self
     }
@@ -57,10 +57,7 @@ impl UpdateAppResponse {
         self
     }
 
-    pub fn relationship(
-        mut self,
-        value: crate::datadogV2::model::UpdateAppResponseRelationship,
-    ) -> Self {
+    pub fn relationship(mut self, value: crate::datadogV2::model::AppRelationship) -> Self {
         self.relationship = Some(value);
         self
     }
@@ -98,11 +95,9 @@ impl<'de> Deserialize<'de> for UpdateAppResponse {
                 M: MapAccess<'a>,
             {
                 let mut data: Option<crate::datadogV2::model::UpdateAppResponseData> = None;
-                let mut included: Option<Vec<crate::datadogV2::model::DeploymentIncluded>> = None;
+                let mut included: Option<Vec<crate::datadogV2::model::Deployment>> = None;
                 let mut meta: Option<crate::datadogV2::model::AppMeta> = None;
-                let mut relationship: Option<
-                    crate::datadogV2::model::UpdateAppResponseRelationship,
-                > = None;
+                let mut relationship: Option<crate::datadogV2::model::AppRelationship> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,

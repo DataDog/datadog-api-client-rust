@@ -6,18 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `ComponentGridProperties` object.
+/// Properties of a grid component.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ComponentGridProperties {
-    /// The `ComponentGridProperties` `backgroundColor`.
+    /// The background color of the grid.
     #[serde(rename = "backgroundColor")]
     pub background_color: Option<String>,
-    /// The `ComponentGridProperties` `children`.
+    /// The child components of the grid.
     #[serde(rename = "children")]
     pub children: Option<Vec<crate::datadogV2::model::Component>>,
-    /// The definition of `ComponentGridPropertiesIsVisible` object.
+    /// Whether the grid component and its children are visible. If a string, it must be a valid JavaScript expression that evaluates to a boolean.
     #[serde(rename = "isVisible")]
     pub is_visible: Option<crate::datadogV2::model::ComponentGridPropertiesIsVisible>,
     #[serde(flatten)]

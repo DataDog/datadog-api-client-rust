@@ -6,24 +6,24 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `ComponentGrid` object.
+/// A grid component. The grid component is the root canvas for an app and contains all other components.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ComponentGrid {
-    /// The `ComponentGrid` `events`.
+    /// Events to listen for on the grid component.
     #[serde(rename = "events")]
     pub events: Option<Vec<crate::datadogV2::model::AppBuilderEvent>>,
-    /// The `ComponentGrid` `id`.
+    /// The ID of the grid component. This property is deprecated; use `name` to identify individual components instead.
     #[serde(rename = "id")]
     pub id: Option<String>,
-    /// The `ComponentGrid` `name`.
+    /// A unique identifier for this grid component. This name is also visible in the app editor.
     #[serde(rename = "name")]
     pub name: String,
-    /// The definition of `ComponentGridProperties` object.
+    /// Properties of a grid component.
     #[serde(rename = "properties")]
     pub properties: crate::datadogV2::model::ComponentGridProperties,
-    /// The definition of `ComponentGridType` object.
+    /// The grid component type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ComponentGridType,
     #[serde(flatten)]

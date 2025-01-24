@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `ComponentProperties` object.
+/// Properties of a UI component. Different component types can have their own additional unique properties. See the [components documentation](<https://docs.datadoghq.com/service_management/app_builder/components/>) for more detail on each component type and its properties.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ComponentProperties {
-    /// The `ComponentProperties` `children`.
+    /// The child components of the UI component.
     #[serde(rename = "children")]
     pub children: Option<Vec<crate::datadogV2::model::Component>>,
-    /// The definition of `ComponentPropertiesIsVisible` object.
+    /// Whether the UI component is visible. If this is a string, it must be a valid JavaScript expression that evaluates to a boolean.
     #[serde(rename = "isVisible")]
     pub is_visible: Option<crate::datadogV2::model::ComponentPropertiesIsVisible>,
     #[serde(flatten)]

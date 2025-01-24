@@ -3,7 +3,7 @@
 // Copyright 2019-Present Datadog, Inc.
 use serde::{Deserialize, Deserializer, Serialize};
 
-/// The definition of `ComponentGridPropertiesIsVisible` object.
+/// Whether the grid component and its children are visible. If a string, it must be a valid JavaScript expression that evaluates to a boolean.
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]

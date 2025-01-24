@@ -6,24 +6,24 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `Component` object.
+/// [Definition of a UI component in the app](<https://docs.datadoghq.com/service_management/app_builder/components/>)
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct Component {
-    /// The `Component` `events`.
+    /// Events to listen for on the UI component.
     #[serde(rename = "events")]
     pub events: Option<Vec<crate::datadogV2::model::AppBuilderEvent>>,
-    /// The `Component` `id`.
+    /// The ID of the UI component. This property is deprecated; use `name` to identify individual components instead.
     #[serde(rename = "id", default, with = "::serde_with::rust::double_option")]
     pub id: Option<Option<String>>,
-    /// The `Component` `name`.
+    /// A unique identifier for this UI component. This name is also visible in the app editor.
     #[serde(rename = "name")]
     pub name: String,
-    /// The definition of `ComponentProperties` object.
+    /// Properties of a UI component. Different component types can have their own additional unique properties. See the [components documentation](<https://docs.datadoghq.com/service_management/app_builder/components/>) for more detail on each component type and its properties.
     #[serde(rename = "properties")]
     pub properties: crate::datadogV2::model::ComponentProperties,
-    /// The definition of `ComponentType` object.
+    /// The UI component type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ComponentType,
     #[serde(flatten)]
