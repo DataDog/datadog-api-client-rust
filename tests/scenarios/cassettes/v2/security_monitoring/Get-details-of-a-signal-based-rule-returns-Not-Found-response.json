@@ -1,0 +1,33 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "application/json"
+          ]
+        },
+        "method": "get",
+        "uri": "https://api.datadoghq.com/api/v2/security/signals/notification_rules/000-000-000"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[\"not_found(Notification rule with id '000-000-000' not found)\"]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 404,
+          "message": "Not Found"
+        }
+      },
+      "recorded_at": "Wed, 22 Jan 2025 09:50:23 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
