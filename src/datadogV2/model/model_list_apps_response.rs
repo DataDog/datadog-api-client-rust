@@ -6,18 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `ListAppsResponse` object.
+/// A paginated list of apps matching the specified filters and sorting.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ListAppsResponse {
-    /// The `ListAppsResponse` `data`.
+    /// An array of app definitions.
     #[serde(rename = "data")]
     pub data: Option<Vec<crate::datadogV2::model::ListAppsResponseDataItems>>,
-    /// The `ListAppsResponse` `included`.
+    /// Data on the version of the app that was published.
     #[serde(rename = "included")]
-    pub included: Option<Vec<crate::datadogV2::model::DeploymentIncluded>>,
-    /// The definition of `ListAppsResponseMeta` object.
+    pub included: Option<Vec<crate::datadogV2::model::Deployment>>,
+    /// Pagination metadata.
     #[serde(rename = "meta")]
     pub meta: Option<crate::datadogV2::model::ListAppsResponseMeta>,
     #[serde(flatten)]
@@ -43,7 +43,7 @@ impl ListAppsResponse {
         self
     }
 
-    pub fn included(mut self, value: Vec<crate::datadogV2::model::DeploymentIncluded>) -> Self {
+    pub fn included(mut self, value: Vec<crate::datadogV2::model::Deployment>) -> Self {
         self.included = Some(value);
         self
     }
@@ -87,7 +87,7 @@ impl<'de> Deserialize<'de> for ListAppsResponse {
             {
                 let mut data: Option<Vec<crate::datadogV2::model::ListAppsResponseDataItems>> =
                     None;
-                let mut included: Option<Vec<crate::datadogV2::model::DeploymentIncluded>> = None;
+                let mut included: Option<Vec<crate::datadogV2::model::Deployment>> = None;
                 let mut meta: Option<crate::datadogV2::model::ListAppsResponseMeta> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,

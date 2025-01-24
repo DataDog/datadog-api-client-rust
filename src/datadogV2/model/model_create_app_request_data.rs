@@ -6,17 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `CreateAppRequestData` object.
+/// The data object containing the app definition.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreateAppRequestData {
-    /// The definition of `CreateAppRequestDataAttributes` object.
+    /// App definition attributes such as name, description, and components.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::CreateAppRequestDataAttributes>,
-    /// The definition of `CreateAppRequestDataType` object.
+    /// The app definition type.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::CreateAppRequestDataType,
+    pub type_: crate::datadogV2::model::AppDefinitionType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -25,7 +25,7 @@ pub struct CreateAppRequestData {
 }
 
 impl CreateAppRequestData {
-    pub fn new(type_: crate::datadogV2::model::CreateAppRequestDataType) -> CreateAppRequestData {
+    pub fn new(type_: crate::datadogV2::model::AppDefinitionType) -> CreateAppRequestData {
         CreateAppRequestData {
             attributes: None,
             type_,
@@ -71,7 +71,7 @@ impl<'de> Deserialize<'de> for CreateAppRequestData {
                 let mut attributes: Option<
                     crate::datadogV2::model::CreateAppRequestDataAttributes,
                 > = None;
-                let mut type_: Option<crate::datadogV2::model::CreateAppRequestDataType> = None;
+                let mut type_: Option<crate::datadogV2::model::AppDefinitionType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -90,9 +90,11 @@ impl<'de> Deserialize<'de> for CreateAppRequestData {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::CreateAppRequestDataType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::AppDefinitionType::UnparsedObject(
+                                        _type_,
+                                    ) => {
                                         _unparsed = true;
-                                    },
+                                    }
                                     _ => {}
                                 }
                             }

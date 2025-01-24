@@ -6,24 +6,24 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `Query` object.
+/// A query used by an app. This can take the form of an external action, a data transformation, or a state variable change.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct Query {
-    /// The `Query` `events`.
+    /// Events to listen for downstream of the query.
     #[serde(rename = "events")]
     pub events: Option<Vec<crate::datadogV2::model::AppBuilderEvent>>,
-    /// The `Query` `id`.
+    /// The ID of the query.
     #[serde(rename = "id")]
-    pub id: String,
-    /// The `Query` `name`.
+    pub id: uuid::Uuid,
+    /// The name of the query. The name must be unique within the app and is visible in the app editor.
     #[serde(rename = "name")]
     pub name: String,
-    /// The `Query` `properties`.
+    /// The properties of the query. The properties vary depending on the query type.
     #[serde(rename = "properties")]
     pub properties: Option<serde_json::Value>,
-    /// The definition of `QueryType` object.
+    /// The query type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::QueryType,
     #[serde(flatten)]
@@ -34,7 +34,7 @@ pub struct Query {
 }
 
 impl Query {
-    pub fn new(id: String, name: String, type_: crate::datadogV2::model::QueryType) -> Query {
+    pub fn new(id: uuid::Uuid, name: String, type_: crate::datadogV2::model::QueryType) -> Query {
         Query {
             events: None,
             id,
@@ -83,7 +83,7 @@ impl<'de> Deserialize<'de> for Query {
                 M: MapAccess<'a>,
             {
                 let mut events: Option<Vec<crate::datadogV2::model::AppBuilderEvent>> = None;
-                let mut id: Option<String> = None;
+                let mut id: Option<uuid::Uuid> = None;
                 let mut name: Option<String> = None;
                 let mut properties: Option<serde_json::Value> = None;
                 let mut type_: Option<crate::datadogV2::model::QueryType> = None;

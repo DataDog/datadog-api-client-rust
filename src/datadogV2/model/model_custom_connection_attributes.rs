@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `CustomConnectionAttributes` object.
+/// The custom connection attributes.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CustomConnectionAttributes {
-    /// The `attributes` `name`.
+    /// The name of the custom connection.
     #[serde(rename = "name")]
     pub name: Option<String>,
-    /// The definition of `CustomConnectionAttributesOnPremRunner` object.
+    /// Information about the Private Action Runner used by the custom connection, if the custom connection is associated with a Private Action Runner.
     #[serde(rename = "onPremRunner")]
     pub on_prem_runner: Option<crate::datadogV2::model::CustomConnectionAttributesOnPremRunner>,
     #[serde(flatten)]

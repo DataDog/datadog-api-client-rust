@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `CreateAppRequest` object.
+/// A request object for creating a new app.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreateAppRequest {
-    /// The definition of `CreateAppRequestData` object.
+    /// The data object containing the app definition.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::CreateAppRequestData>,
     #[serde(flatten)]

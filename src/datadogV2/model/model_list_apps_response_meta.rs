@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `ListAppsResponseMeta` object.
+/// Pagination metadata.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ListAppsResponseMeta {
-    /// The definition of `ListAppsResponseMetaPage` object.
+    /// Information on the total number of apps, to be used for pagination.
     #[serde(rename = "page")]
     pub page: Option<crate::datadogV2::model::ListAppsResponseMetaPage>,
     #[serde(flatten)]

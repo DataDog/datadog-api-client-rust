@@ -6,18 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `CustomConnection` object.
+/// A custom connection used by an app.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CustomConnection {
-    /// The definition of `CustomConnectionAttributes` object.
+    /// The custom connection attributes.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::CustomConnectionAttributes>,
-    /// The `CustomConnection` `id`.
+    /// The ID of the custom connection.
     #[serde(rename = "id")]
-    pub id: Option<String>,
-    /// The definition of `CustomConnectionType` object.
+    pub id: Option<uuid::Uuid>,
+    /// The custom connection type.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::CustomConnectionType>,
     #[serde(flatten)]
@@ -46,7 +46,7 @@ impl CustomConnection {
         self
     }
 
-    pub fn id(mut self, value: String) -> Self {
+    pub fn id(mut self, value: uuid::Uuid) -> Self {
         self.id = Some(value);
         self
     }
@@ -90,7 +90,7 @@ impl<'de> Deserialize<'de> for CustomConnection {
             {
                 let mut attributes: Option<crate::datadogV2::model::CustomConnectionAttributes> =
                     None;
-                let mut id: Option<String> = None;
+                let mut id: Option<uuid::Uuid> = None;
                 let mut type_: Option<crate::datadogV2::model::CustomConnectionType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,

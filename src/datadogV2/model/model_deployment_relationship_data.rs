@@ -6,17 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `DeploymentRelationshipData` object.
+/// Data object containing the deployment ID.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DeploymentRelationshipData {
-    /// The `data` `id`.
+    /// The deployment ID.
     #[serde(rename = "id")]
-    pub id: Option<String>,
-    /// The definition of `DeploymentRelationshipDataType` object.
+    pub id: Option<uuid::Uuid>,
+    /// The deployment type.
     #[serde(rename = "type")]
-    pub type_: Option<crate::datadogV2::model::DeploymentRelationshipDataType>,
+    pub type_: Option<crate::datadogV2::model::AppDeploymentType>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -34,12 +34,12 @@ impl DeploymentRelationshipData {
         }
     }
 
-    pub fn id(mut self, value: String) -> Self {
+    pub fn id(mut self, value: uuid::Uuid) -> Self {
         self.id = Some(value);
         self
     }
 
-    pub fn type_(mut self, value: crate::datadogV2::model::DeploymentRelationshipDataType) -> Self {
+    pub fn type_(mut self, value: crate::datadogV2::model::AppDeploymentType) -> Self {
         self.type_ = Some(value);
         self
     }
@@ -76,9 +76,8 @@ impl<'de> Deserialize<'de> for DeploymentRelationshipData {
             where
                 M: MapAccess<'a>,
             {
-                let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::DeploymentRelationshipDataType> =
-                    None;
+                let mut id: Option<uuid::Uuid> = None;
+                let mut type_: Option<crate::datadogV2::model::AppDeploymentType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -100,9 +99,11 @@ impl<'de> Deserialize<'de> for DeploymentRelationshipData {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::DeploymentRelationshipDataType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::AppDeploymentType::UnparsedObject(
+                                        _type_,
+                                    ) => {
                                         _unparsed = true;
-                                    },
+                                    }
                                     _ => {}
                                 }
                             }

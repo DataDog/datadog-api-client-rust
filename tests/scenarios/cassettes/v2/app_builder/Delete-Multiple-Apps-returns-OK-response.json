@@ -1,0 +1,101 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"components\":[{\"events\":[],\"name\":\"grid0\",\"properties\":{\"children\":[{\"events\":[],\"name\":\"gridCell0\",\"properties\":{\"children\":[{\"events\":[],\"name\":\"calloutValue0\",\"properties\":{\"isDisabled\":false,\"isLoading\":false,\"isVisible\":true,\"label\":\"CPU Usage\",\"size\":\"sm\",\"style\":\"vivid_yellow\",\"unit\":\"kB\",\"value\":\"42\"},\"type\":\"calloutValue\"}],\"isVisible\":\"true\",\"layout\":{\"default\":{\"height\":8,\"width\":2,\"x\":0,\"y\":0}}},\"type\":\"gridCell\"}]},\"type\":\"grid\"}],\"description\":\"This is a simple example app\",\"embeddedQueries\":[],\"name\":\"Example App\",\"rootInstanceName\":\"grid0\"},\"type\":\"appDefinitions\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/app-builder/apps"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":{\"id\":\"7b5a5fec-3026-47a9-acca-e01dc557af0a\",\"type\":\"appDefinitions\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 201,
+          "message": "Created"
+        }
+      },
+      "recorded_at": "Thu, 09 Jan 2025 20:40:38 GMT"
+    },
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":[{\"id\":\"7b5a5fec-3026-47a9-acca-e01dc557af0a\",\"type\":\"appDefinitions\"}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "delete",
+        "uri": "https://api.datadoghq.com/api/v2/app-builder/apps"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":[{\"id\":\"7b5a5fec-3026-47a9-acca-e01dc557af0a\",\"type\":\"appDefinitions\"}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Thu, 09 Jan 2025 20:40:38 GMT"
+    },
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "application/json"
+          ]
+        },
+        "method": "delete",
+        "uri": "https://api.datadoghq.com/api/v2/app-builder/apps/7b5a5fec-3026-47a9-acca-e01dc557af0a"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"title\":\"app not found\",\"detail\":\"app not found\"}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 404,
+          "message": "Not Found"
+        }
+      },
+      "recorded_at": "Thu, 09 Jan 2025 20:40:38 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

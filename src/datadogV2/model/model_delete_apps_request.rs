@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `DeleteAppsRequest` object.
+/// A request object for deleting multiple apps by ID.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DeleteAppsRequest {
-    /// The `DeleteAppsRequest` `data`.
+    /// An array of objects containing the IDs of the apps to delete.
     #[serde(rename = "data")]
     pub data: Option<Vec<crate::datadogV2::model::DeleteAppsRequestDataItems>>,
     #[serde(flatten)]

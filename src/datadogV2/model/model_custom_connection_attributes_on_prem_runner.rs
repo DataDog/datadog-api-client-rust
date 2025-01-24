@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `CustomConnectionAttributesOnPremRunner` object.
+/// Information about the Private Action Runner used by the custom connection, if the custom connection is associated with a Private Action Runner.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CustomConnectionAttributesOnPremRunner {
-    /// The `onPremRunner` `id`.
+    /// The Private Action Runner ID.
     #[serde(rename = "id")]
     pub id: Option<String>,
-    /// The `onPremRunner` `url`.
+    /// The URL of the Private Action Runner.
     #[serde(rename = "url")]
     pub url: Option<String>,
     #[serde(flatten)]

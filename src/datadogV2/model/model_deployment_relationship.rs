@@ -6,17 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `DeploymentRelationship` object.
+/// Information pointing to the app's publication status.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DeploymentRelationship {
-    /// The definition of `DeploymentRelationshipData` object.
+    /// Data object containing the deployment ID.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::DeploymentRelationshipData>,
-    /// The definition of `DeploymentRelationshipMeta` object.
+    /// Metadata object containing the publication creation information.
     #[serde(rename = "meta")]
-    pub meta: Option<crate::datadogV2::model::DeploymentRelationshipMeta>,
+    pub meta: Option<crate::datadogV2::model::DeploymentMetadata>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -39,7 +39,7 @@ impl DeploymentRelationship {
         self
     }
 
-    pub fn meta(mut self, value: crate::datadogV2::model::DeploymentRelationshipMeta) -> Self {
+    pub fn meta(mut self, value: crate::datadogV2::model::DeploymentMetadata) -> Self {
         self.meta = Some(value);
         self
     }
@@ -77,7 +77,7 @@ impl<'de> Deserialize<'de> for DeploymentRelationship {
                 M: MapAccess<'a>,
             {
                 let mut data: Option<crate::datadogV2::model::DeploymentRelationshipData> = None;
-                let mut meta: Option<crate::datadogV2::model::DeploymentRelationshipMeta> = None;
+                let mut meta: Option<crate::datadogV2::model::DeploymentMetadata> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,

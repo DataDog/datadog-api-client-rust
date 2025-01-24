@@ -6,26 +6,26 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `ListAppsResponseDataItems` object.
+/// An app definition object. This contains only basic information about the app such as ID, name, and tags.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ListAppsResponseDataItems {
-    /// The definition of `ListAppsResponseDataItemsAttributes` object.
+    /// Basic information about the app such as name, description, and tags.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::ListAppsResponseDataItemsAttributes,
-    /// The `items` `id`.
+    /// The ID of the app.
     #[serde(rename = "id")]
-    pub id: String,
-    /// The definition of `AppMeta` object.
+    pub id: uuid::Uuid,
+    /// Metadata of an app.
     #[serde(rename = "meta")]
     pub meta: Option<crate::datadogV2::model::AppMeta>,
-    /// The definition of `ListAppsResponseDataItemsRelationships` object.
+    /// The app's publication information.
     #[serde(rename = "relationships")]
     pub relationships: Option<crate::datadogV2::model::ListAppsResponseDataItemsRelationships>,
-    /// The definition of `ListAppsResponseDataItemsType` object.
+    /// The app definition type.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::ListAppsResponseDataItemsType,
+    pub type_: crate::datadogV2::model::AppDefinitionType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -36,8 +36,8 @@ pub struct ListAppsResponseDataItems {
 impl ListAppsResponseDataItems {
     pub fn new(
         attributes: crate::datadogV2::model::ListAppsResponseDataItemsAttributes,
-        id: String,
-        type_: crate::datadogV2::model::ListAppsResponseDataItemsType,
+        id: uuid::Uuid,
+        type_: crate::datadogV2::model::AppDefinitionType,
     ) -> ListAppsResponseDataItems {
         ListAppsResponseDataItems {
             attributes,
@@ -92,13 +92,12 @@ impl<'de> Deserialize<'de> for ListAppsResponseDataItems {
                 let mut attributes: Option<
                     crate::datadogV2::model::ListAppsResponseDataItemsAttributes,
                 > = None;
-                let mut id: Option<String> = None;
+                let mut id: Option<uuid::Uuid> = None;
                 let mut meta: Option<crate::datadogV2::model::AppMeta> = None;
                 let mut relationships: Option<
                     crate::datadogV2::model::ListAppsResponseDataItemsRelationships,
                 > = None;
-                let mut type_: Option<crate::datadogV2::model::ListAppsResponseDataItemsType> =
-                    None;
+                let mut type_: Option<crate::datadogV2::model::AppDefinitionType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -130,9 +129,11 @@ impl<'de> Deserialize<'de> for ListAppsResponseDataItems {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::ListAppsResponseDataItemsType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::AppDefinitionType::UnparsedObject(
+                                        _type_,
+                                    ) => {
                                         _unparsed = true;
-                                    },
+                                    }
                                     _ => {}
                                 }
                             }

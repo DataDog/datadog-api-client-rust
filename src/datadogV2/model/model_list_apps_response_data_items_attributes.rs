@@ -6,24 +6,24 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `ListAppsResponseDataItemsAttributes` object.
+/// Basic information about the app such as name, description, and tags.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ListAppsResponseDataItemsAttributes {
-    /// The `attributes` `description`.
+    /// A human-readable description for the app.
     #[serde(rename = "description")]
     pub description: Option<String>,
-    /// The `attributes` `favorite`.
+    /// Whether the app is marked as a favorite by the current user.
     #[serde(rename = "favorite")]
     pub favorite: Option<bool>,
-    /// The `attributes` `name`.
+    /// The name of the app.
     #[serde(rename = "name")]
     pub name: Option<String>,
-    /// The `attributes` `selfService`.
+    /// Whether the app is enabled for use in the Datadog self-service hub.
     #[serde(rename = "selfService")]
     pub self_service: Option<bool>,
-    /// The `attributes` `tags`.
+    /// A list of tags for the app, which can be used to filter apps.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
     #[serde(flatten)]

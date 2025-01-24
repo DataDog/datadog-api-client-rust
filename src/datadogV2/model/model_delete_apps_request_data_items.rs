@@ -6,17 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `DeleteAppsRequestDataItems` object.
+/// An object containing the ID of an app to delete.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DeleteAppsRequestDataItems {
-    /// The `items` `id`.
+    /// The ID of the app to delete.
     #[serde(rename = "id")]
-    pub id: String,
-    /// The definition of `DeleteAppsRequestDataItemsType` object.
+    pub id: uuid::Uuid,
+    /// The app definition type.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::DeleteAppsRequestDataItemsType,
+    pub type_: crate::datadogV2::model::AppDefinitionType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -26,8 +26,8 @@ pub struct DeleteAppsRequestDataItems {
 
 impl DeleteAppsRequestDataItems {
     pub fn new(
-        id: String,
-        type_: crate::datadogV2::model::DeleteAppsRequestDataItemsType,
+        id: uuid::Uuid,
+        type_: crate::datadogV2::model::AppDefinitionType,
     ) -> DeleteAppsRequestDataItems {
         DeleteAppsRequestDataItems {
             id,
@@ -63,9 +63,8 @@ impl<'de> Deserialize<'de> for DeleteAppsRequestDataItems {
             where
                 M: MapAccess<'a>,
             {
-                let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::DeleteAppsRequestDataItemsType> =
-                    None;
+                let mut id: Option<uuid::Uuid> = None;
+                let mut type_: Option<crate::datadogV2::model::AppDefinitionType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -81,9 +80,11 @@ impl<'de> Deserialize<'de> for DeleteAppsRequestDataItems {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::DeleteAppsRequestDataItemsType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::AppDefinitionType::UnparsedObject(
+                                        _type_,
+                                    ) => {
                                         _unparsed = true;
-                                    },
+                                    }
                                     _ => {}
                                 }
                             }
