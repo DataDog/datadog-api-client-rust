@@ -14,7 +14,7 @@ pub struct ActionConnectionAttributes {
     /// The definition of `ActionConnectionIntegration` object.
     #[serde(rename = "integration")]
     pub integration: crate::datadogV2::model::ActionConnectionIntegration,
-    /// Name of the connection
+    /// Name of the connection.
     #[serde(rename = "name")]
     pub name: String,
     #[serde(flatten)]

@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AWSAssumeRoleUpdate {
-    /// AWS account the connection is created for
+    /// AWS account the connection is created for.
     #[serde(rename = "account_id")]
     pub account_id: Option<String>,
     /// The `AWSAssumeRoleUpdate` `generate_new_external_id`.

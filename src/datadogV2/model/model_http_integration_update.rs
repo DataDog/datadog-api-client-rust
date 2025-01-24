@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct HTTPIntegrationUpdate {
-    /// Base HTTP url for the integration
+    /// Base HTTP url for the integration.
     #[serde(rename = "base_url")]
     pub base_url: Option<String>,
     /// The definition of `HTTPCredentialsUpdate` object.
