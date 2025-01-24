@@ -14,7 +14,7 @@ pub struct ActionConnectionAttributesUpdate {
     /// The definition of `ActionConnectionIntegrationUpdate` object.
     #[serde(rename = "integration")]
     pub integration: Option<crate::datadogV2::model::ActionConnectionIntegrationUpdate>,
-    /// Name of the connection
+    /// Name of the connection.
     #[serde(rename = "name")]
     pub name: Option<String>,
     #[serde(flatten)]

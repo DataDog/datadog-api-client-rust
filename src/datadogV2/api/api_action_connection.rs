@@ -42,14 +42,17 @@ pub enum UpdateActionConnectionError {
     UnknownValue(serde_json::Value),
 }
 
-/// Action connections extend your installed integrations and allow you to take action in your third-party systems
-/// (e.g. AWS, GitLab, and Statuspage) with Datadog’s Workflow Automation and App Builder products.
+/// Action Connections extend your installed integrations and allow you to take action in your third-party systems
+/// (e.g. AWS, GitLab, and OpenAI) with Datadog’s [Workflow Automation](<https://docs.datadoghq.com/service_management/workflows/>)
+/// and [App Builder](<https://docs.datadoghq.com/service_management/app_builder/>) products.
 ///
 /// Datadog’s Integrations automatically provide authentication for Slack, Microsoft Teams, PagerDuty, Opsgenie,
-/// JIRA, GitHub, and Statuspage. You do not need additional connections in order to access these tools within
+/// Jira, GitHub, and Statuspage. You do not need additional connections in order to access these tools within
 /// Workflow Automation and App Builder.
 ///
 /// We offer granular access control for editing and resolving connections.
+///
+/// **Note:** The Action Connection API currently supports AWS and HTTP integrations.
 #[derive(Debug, Clone)]
 pub struct ActionConnectionAPI {
     config: datadog::Configuration,
@@ -114,7 +117,7 @@ impl ActionConnectionAPI {
         Self { config, client }
     }
 
-    /// Create a new Action Connection
+    /// Create a new Action Connection.
     pub async fn create_action_connection(
         &self,
         body: crate::datadogV2::model::CreateActionConnectionRequest,
@@ -136,7 +139,7 @@ impl ActionConnectionAPI {
         }
     }
 
-    /// Create a new Action Connection
+    /// Create a new Action Connection.
     pub async fn create_action_connection_with_http_info(
         &self,
         body: crate::datadogV2::model::CreateActionConnectionRequest,
@@ -268,7 +271,7 @@ impl ActionConnectionAPI {
         }
     }
 
-    /// Delete an existing Action Connection
+    /// Delete an existing Action Connection.
     pub async fn delete_action_connection(
         &self,
         connection_id: String,
@@ -282,7 +285,7 @@ impl ActionConnectionAPI {
         }
     }
 
-    /// Delete an existing Action Connection
+    /// Delete an existing Action Connection.
     pub async fn delete_action_connection_with_http_info(
         &self,
         connection_id: String,
@@ -359,7 +362,7 @@ impl ActionConnectionAPI {
         }
     }
 
-    /// Get an existing Action Connection
+    /// Get an existing Action Connection.
     pub async fn get_action_connection(
         &self,
         connection_id: String,
@@ -384,7 +387,7 @@ impl ActionConnectionAPI {
         }
     }
 
-    /// Get an existing Action Connection
+    /// Get an existing Action Connection.
     pub async fn get_action_connection_with_http_info(
         &self,
         connection_id: String,

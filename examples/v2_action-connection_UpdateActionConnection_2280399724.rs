@@ -1,5 +1,5 @@
-// Update an existing Action Connection returns "Successfully updated an Action
-// Connection." response
+// Update an existing Action Connection returns "Successfully updated Action
+// Connection" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_action_connection::ActionConnectionAPI;
 use datadog_api_client::datadogV2::model::AWSAssumeRoleType;
@@ -22,19 +22,19 @@ async fn main() {
                     AWSIntegrationUpdate::new(AWSIntegrationType::AWS).credentials(
                         AWSCredentialsUpdate::AWSAssumeRoleUpdate(Box::new(
                             AWSAssumeRoleUpdate::new(AWSAssumeRoleType::AWSASSUMEROLE)
-                                .account_id("111222333444".to_string())
-                                .role("my-role".to_string()),
+                                .account_id("123456789123".to_string())
+                                .role("MyRoleUpdated".to_string()),
                         )),
                     ),
                 ),
             ))
-            .name("My AWS Connection".to_string()),
+            .name("Cassette Connection".to_string()),
         ActionConnectionDataType::ACTION_CONNECTION,
     ));
     let configuration = datadog::Configuration::new();
     let api = ActionConnectionAPI::with_config(configuration);
     let resp = api
-        .update_action_connection("connection_id".to_string(), body)
+        .update_action_connection("cb460d51-3c88-4e87-adac-d47131d0423d".to_string(), body)
         .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);

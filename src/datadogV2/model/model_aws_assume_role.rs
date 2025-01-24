@@ -11,16 +11,16 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AWSAssumeRole {
-    /// AWS account the connection is created for
+    /// AWS account the connection is created for.
     #[serde(rename = "account_id")]
     pub account_id: String,
-    /// External ID used to scope which connection can be used to assume the role
+    /// External ID used to scope which connection can be used to assume the role.
     #[serde(rename = "external_id")]
     pub external_id: Option<String>,
-    /// AWS account that will assume the role
+    /// AWS account that will assume the role.
     #[serde(rename = "principal_id")]
     pub principal_id: Option<String>,
-    /// Role to assume
+    /// Role to assume.
     #[serde(rename = "role")]
     pub role: String,
     /// The definition of `AWSAssumeRoleType` object.

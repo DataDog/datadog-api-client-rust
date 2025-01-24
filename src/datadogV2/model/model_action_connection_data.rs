@@ -14,7 +14,7 @@ pub struct ActionConnectionData {
     /// The definition of `ActionConnectionAttributes` object.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::ActionConnectionAttributes,
-    /// The connection identifier
+    /// The connection identifier.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// The definition of `ActionConnectionDataType` object.

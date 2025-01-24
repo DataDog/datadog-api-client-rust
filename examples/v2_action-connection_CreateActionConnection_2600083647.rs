@@ -1,5 +1,5 @@
-// Create a new Action Connection returns "Successfully created an Action
-// Connection." response
+// Create a new Action Connection returns "Successfully created Action Connection"
+// response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_action_connection::ActionConnectionAPI;
 use datadog_api_client::datadogV2::model::AWSAssumeRole;
@@ -19,13 +19,13 @@ async fn main() {
         ActionConnectionAttributes::new(
             ActionConnectionIntegration::AWSIntegration(Box::new(AWSIntegration::new(
                 AWSCredentials::AWSAssumeRole(Box::new(AWSAssumeRole::new(
-                    "111222333444".to_string(),
-                    "my-role".to_string(),
+                    "123456789123".to_string(),
+                    "MyRoleUpdated".to_string(),
                     AWSAssumeRoleType::AWSASSUMEROLE,
                 ))),
                 AWSIntegrationType::AWS,
             ))),
-            "My AWS Connection".to_string(),
+            "Cassette Connection DELETE_ME".to_string(),
         ),
         ActionConnectionDataType::ACTION_CONNECTION,
     ));
