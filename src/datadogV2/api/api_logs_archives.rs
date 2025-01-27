@@ -94,8 +94,6 @@ pub enum UpdateLogsArchiveOrderError {
 ///
 /// See the [Archives Page](<https://app.datadoghq.com/logs/pipelines/archives>)
 /// for a list of the archives currently configured in Datadog.
-///
-/// You need an API and non-scoped application key with Admin rights to interact with these endpoints.
 #[derive(Debug, Clone)]
 pub struct LogsArchivesAPI {
     config: datadog::Configuration,
