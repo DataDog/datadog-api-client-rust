@@ -2296,6 +2296,26 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_update_tenant_based_handle,
     );
     world.function_mappings.insert(
+        "v2.ListWorkflowsWebhookHandles".into(),
+        test_v2_list_workflows_webhook_handles,
+    );
+    world.function_mappings.insert(
+        "v2.CreateWorkflowsWebhookHandle".into(),
+        test_v2_create_workflows_webhook_handle,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteWorkflowsWebhookHandle".into(),
+        test_v2_delete_workflows_webhook_handle,
+    );
+    world.function_mappings.insert(
+        "v2.GetWorkflowsWebhookHandle".into(),
+        test_v2_get_workflows_webhook_handle,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateWorkflowsWebhookHandle".into(),
+        test_v2_update_workflows_webhook_handle,
+    );
+    world.function_mappings.insert(
         "v2.ListOpsgenieServices".into(),
         test_v2_list_opsgenie_services,
     );
@@ -16521,6 +16541,152 @@ fn test_v2_update_tenant_based_handle(
             };
         }
     };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_workflows_webhook_handles(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_microsoft_teams_integration
+        .as_ref()
+        .expect("api instance not found");
+    let name = _parameters
+        .get("name")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_microsoft_teams_integration::ListWorkflowsWebhookHandlesOptionalParams::default();
+    params.name = name;
+    let response = match block_on(api.list_workflows_webhook_handles_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_workflows_webhook_handle(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_microsoft_teams_integration
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_workflows_webhook_handle_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_workflows_webhook_handle(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_microsoft_teams_integration
+        .as_ref()
+        .expect("api instance not found");
+    let handle_id = serde_json::from_value(_parameters.get("handle_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_workflows_webhook_handle_with_http_info(handle_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_workflows_webhook_handle(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_microsoft_teams_integration
+        .as_ref()
+        .expect("api instance not found");
+    let handle_id = serde_json::from_value(_parameters.get("handle_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_workflows_webhook_handle_with_http_info(handle_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_workflows_webhook_handle(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_microsoft_teams_integration
+        .as_ref()
+        .expect("api instance not found");
+    let handle_id = serde_json::from_value(_parameters.get("handle_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.update_workflows_webhook_handle_with_http_info(handle_id, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
