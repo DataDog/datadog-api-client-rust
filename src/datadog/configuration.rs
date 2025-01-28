@@ -142,8 +142,6 @@ impl Default for Configuration {
             ("v2.publish_app".to_owned(), false),
             ("v2.unpublish_app".to_owned(), false),
             ("v2.update_app".to_owned(), false),
-            ("v2.get_active_billing_dimensions".to_owned(), false),
-            ("v2.get_monthly_cost_attribution".to_owned(), false),
             ("v2.cancel_data_deletion_request".to_owned(), false),
             ("v2.create_data_deletion_request".to_owned(), false),
             ("v2.get_data_deletion_requests".to_owned(), false),
