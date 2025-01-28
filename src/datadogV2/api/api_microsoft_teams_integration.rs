@@ -33,6 +33,22 @@ impl ListTenantBasedHandlesOptionalParams {
     }
 }
 
+/// ListWorkflowsWebhookHandlesOptionalParams is a struct for passing parameters to the method [`MicrosoftTeamsIntegrationAPI::list_workflows_webhook_handles`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListWorkflowsWebhookHandlesOptionalParams {
+    /// Your Workflows webhook handle name.
+    pub name: Option<String>,
+}
+
+impl ListWorkflowsWebhookHandlesOptionalParams {
+    /// Your Workflows webhook handle name.
+    pub fn name(mut self, value: String) -> Self {
+        self.name = Some(value);
+        self
+    }
+}
+
 /// CreateTenantBasedHandleError is a struct for typed errors of method [`MicrosoftTeamsIntegrationAPI::create_tenant_based_handle`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -41,10 +57,26 @@ pub enum CreateTenantBasedHandleError {
     UnknownValue(serde_json::Value),
 }
 
+/// CreateWorkflowsWebhookHandleError is a struct for typed errors of method [`MicrosoftTeamsIntegrationAPI::create_workflows_webhook_handle`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum CreateWorkflowsWebhookHandleError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// DeleteTenantBasedHandleError is a struct for typed errors of method [`MicrosoftTeamsIntegrationAPI::delete_tenant_based_handle`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteTenantBasedHandleError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// DeleteWorkflowsWebhookHandleError is a struct for typed errors of method [`MicrosoftTeamsIntegrationAPI::delete_workflows_webhook_handle`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeleteWorkflowsWebhookHandleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -65,6 +97,14 @@ pub enum GetTenantBasedHandleError {
     UnknownValue(serde_json::Value),
 }
 
+/// GetWorkflowsWebhookHandleError is a struct for typed errors of method [`MicrosoftTeamsIntegrationAPI::get_workflows_webhook_handle`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetWorkflowsWebhookHandleError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// ListTenantBasedHandlesError is a struct for typed errors of method [`MicrosoftTeamsIntegrationAPI::list_tenant_based_handles`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -73,10 +113,26 @@ pub enum ListTenantBasedHandlesError {
     UnknownValue(serde_json::Value),
 }
 
+/// ListWorkflowsWebhookHandlesError is a struct for typed errors of method [`MicrosoftTeamsIntegrationAPI::list_workflows_webhook_handles`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListWorkflowsWebhookHandlesError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// UpdateTenantBasedHandleError is a struct for typed errors of method [`MicrosoftTeamsIntegrationAPI::update_tenant_based_handle`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateTenantBasedHandleError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// UpdateWorkflowsWebhookHandleError is a struct for typed errors of method [`MicrosoftTeamsIntegrationAPI::update_workflows_webhook_handle`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum UpdateWorkflowsWebhookHandleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -302,6 +358,166 @@ impl MicrosoftTeamsIntegrationAPI {
         }
     }
 
+    /// Create a Workflows webhook handle in the Datadog Microsoft Teams integration.
+    pub async fn create_workflows_webhook_handle(
+        &self,
+        body: crate::datadogV2::model::MicrosoftTeamsCreateWorkflowsWebhookHandleRequest,
+    ) -> Result<
+        crate::datadogV2::model::MicrosoftTeamsWorkflowsWebhookHandleResponse,
+        datadog::Error<CreateWorkflowsWebhookHandleError>,
+    > {
+        match self
+            .create_workflows_webhook_handle_with_http_info(body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Create a Workflows webhook handle in the Datadog Microsoft Teams integration.
+    pub async fn create_workflows_webhook_handle_with_http_info(
+        &self,
+        body: crate::datadogV2::model::MicrosoftTeamsCreateWorkflowsWebhookHandleRequest,
+    ) -> Result<
+        datadog::ResponseContent<
+            crate::datadogV2::model::MicrosoftTeamsWorkflowsWebhookHandleResponse,
+        >,
+        datadog::Error<CreateWorkflowsWebhookHandleError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.create_workflows_webhook_handle";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/integration/ms-teams/configuration/workflows-webhook-handles",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::MicrosoftTeamsWorkflowsWebhookHandleResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<CreateWorkflowsWebhookHandleError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Delete a tenant-based handle from the Datadog Microsoft Teams integration.
     pub async fn delete_tenant_based_handle(
         &self,
@@ -383,6 +599,98 @@ impl MicrosoftTeamsIntegrationAPI {
             })
         } else {
             let local_entity: Option<DeleteTenantBasedHandleError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Delete a Workflows webhook handle from the Datadog Microsoft Teams integration.
+    pub async fn delete_workflows_webhook_handle(
+        &self,
+        handle_id: String,
+    ) -> Result<(), datadog::Error<DeleteWorkflowsWebhookHandleError>> {
+        match self
+            .delete_workflows_webhook_handle_with_http_info(handle_id)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Delete a Workflows webhook handle from the Datadog Microsoft Teams integration.
+    pub async fn delete_workflows_webhook_handle_with_http_info(
+        &self,
+        handle_id: String,
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteWorkflowsWebhookHandleError>>
+    {
+        let local_configuration = &self.config;
+        let operation_id = "v2.delete_workflows_webhook_handle";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/integration/ms-teams/configuration/workflows-webhook-handles/{handle_id}",
+            local_configuration.get_operation_host(operation_id),
+            handle_id = datadog::urlencode(handle_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<DeleteWorkflowsWebhookHandleError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -624,6 +932,121 @@ impl MicrosoftTeamsIntegrationAPI {
         }
     }
 
+    /// Get the name of a Workflows webhook handle from the Datadog Microsoft Teams integration.
+    pub async fn get_workflows_webhook_handle(
+        &self,
+        handle_id: String,
+    ) -> Result<
+        crate::datadogV2::model::MicrosoftTeamsWorkflowsWebhookHandleResponse,
+        datadog::Error<GetWorkflowsWebhookHandleError>,
+    > {
+        match self
+            .get_workflows_webhook_handle_with_http_info(handle_id)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get the name of a Workflows webhook handle from the Datadog Microsoft Teams integration.
+    pub async fn get_workflows_webhook_handle_with_http_info(
+        &self,
+        handle_id: String,
+    ) -> Result<
+        datadog::ResponseContent<
+            crate::datadogV2::model::MicrosoftTeamsWorkflowsWebhookHandleResponse,
+        >,
+        datadog::Error<GetWorkflowsWebhookHandleError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_workflows_webhook_handle";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/integration/ms-teams/configuration/workflows-webhook-handles/{handle_id}",
+            local_configuration.get_operation_host(operation_id),
+            handle_id = datadog::urlencode(handle_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::MicrosoftTeamsWorkflowsWebhookHandleResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetWorkflowsWebhookHandleError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Get a list of all tenant-based handles from the Datadog Microsoft Teams integration.
     pub async fn list_tenant_based_handles(
         &self,
@@ -736,6 +1159,128 @@ impl MicrosoftTeamsIntegrationAPI {
             };
         } else {
             let local_entity: Option<ListTenantBasedHandlesError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get a list of all Workflows webhook handles from the Datadog Microsoft Teams integration.
+    pub async fn list_workflows_webhook_handles(
+        &self,
+        params: ListWorkflowsWebhookHandlesOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::MicrosoftTeamsWorkflowsWebhookHandlesResponse,
+        datadog::Error<ListWorkflowsWebhookHandlesError>,
+    > {
+        match self
+            .list_workflows_webhook_handles_with_http_info(params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get a list of all Workflows webhook handles from the Datadog Microsoft Teams integration.
+    pub async fn list_workflows_webhook_handles_with_http_info(
+        &self,
+        params: ListWorkflowsWebhookHandlesOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<
+            crate::datadogV2::model::MicrosoftTeamsWorkflowsWebhookHandlesResponse,
+        >,
+        datadog::Error<ListWorkflowsWebhookHandlesError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_workflows_webhook_handles";
+
+        // unbox and build optional parameters
+        let name = params.name;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/integration/ms-teams/configuration/workflows-webhook-handles",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = name {
+            local_req_builder =
+                local_req_builder.query(&[("name", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::MicrosoftTeamsWorkflowsWebhookHandlesResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListWorkflowsWebhookHandlesError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -897,6 +1442,169 @@ impl MicrosoftTeamsIntegrationAPI {
             };
         } else {
             let local_entity: Option<UpdateTenantBasedHandleError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Update a Workflows webhook handle from the Datadog Microsoft Teams integration.
+    pub async fn update_workflows_webhook_handle(
+        &self,
+        handle_id: String,
+        body: crate::datadogV2::model::MicrosoftTeamsUpdateWorkflowsWebhookHandleRequest,
+    ) -> Result<
+        crate::datadogV2::model::MicrosoftTeamsWorkflowsWebhookHandleResponse,
+        datadog::Error<UpdateWorkflowsWebhookHandleError>,
+    > {
+        match self
+            .update_workflows_webhook_handle_with_http_info(handle_id, body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Update a Workflows webhook handle from the Datadog Microsoft Teams integration.
+    pub async fn update_workflows_webhook_handle_with_http_info(
+        &self,
+        handle_id: String,
+        body: crate::datadogV2::model::MicrosoftTeamsUpdateWorkflowsWebhookHandleRequest,
+    ) -> Result<
+        datadog::ResponseContent<
+            crate::datadogV2::model::MicrosoftTeamsWorkflowsWebhookHandleResponse,
+        >,
+        datadog::Error<UpdateWorkflowsWebhookHandleError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.update_workflows_webhook_handle";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/integration/ms-teams/configuration/workflows-webhook-handles/{handle_id}",
+            local_configuration.get_operation_host(operation_id),
+            handle_id = datadog::urlencode(handle_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::MicrosoftTeamsWorkflowsWebhookHandleResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<UpdateWorkflowsWebhookHandleError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
