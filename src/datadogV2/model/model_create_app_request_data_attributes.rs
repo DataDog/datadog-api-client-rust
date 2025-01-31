@@ -17,12 +17,12 @@ pub struct CreateAppRequestDataAttributes {
     /// A human-readable description for the app.
     #[serde(rename = "description")]
     pub description: Option<String>,
-    /// An array of queries, such as external actions and state variables, that the app uses.
-    #[serde(rename = "embeddedQueries")]
-    pub embedded_queries: Option<Vec<crate::datadogV2::model::Query>>,
     /// The name of the app.
     #[serde(rename = "name")]
     pub name: Option<String>,
+    /// An array of queries, such as external actions and state variables, that the app uses.
+    #[serde(rename = "queries")]
+    pub queries: Option<Vec<crate::datadogV2::model::Query>>,
     /// The name of the root component of the app. This must be a `grid` component that contains all other components.
     #[serde(rename = "rootInstanceName")]
     pub root_instance_name: Option<String>,
@@ -41,8 +41,8 @@ impl CreateAppRequestDataAttributes {
         CreateAppRequestDataAttributes {
             components: None,
             description: None,
-            embedded_queries: None,
             name: None,
+            queries: None,
             root_instance_name: None,
             tags: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -60,13 +60,13 @@ impl CreateAppRequestDataAttributes {
         self
     }
 
-    pub fn embedded_queries(mut self, value: Vec<crate::datadogV2::model::Query>) -> Self {
-        self.embedded_queries = Some(value);
+    pub fn name(mut self, value: String) -> Self {
+        self.name = Some(value);
         self
     }
 
-    pub fn name(mut self, value: String) -> Self {
-        self.name = Some(value);
+    pub fn queries(mut self, value: Vec<crate::datadogV2::model::Query>) -> Self {
+        self.queries = Some(value);
         self
     }
 
@@ -114,8 +114,8 @@ impl<'de> Deserialize<'de> for CreateAppRequestDataAttributes {
             {
                 let mut components: Option<Vec<crate::datadogV2::model::ComponentGrid>> = None;
                 let mut description: Option<String> = None;
-                let mut embedded_queries: Option<Vec<crate::datadogV2::model::Query>> = None;
                 let mut name: Option<String> = None;
+                let mut queries: Option<Vec<crate::datadogV2::model::Query>> = None;
                 let mut root_instance_name: Option<String> = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -139,18 +139,17 @@ impl<'de> Deserialize<'de> for CreateAppRequestDataAttributes {
                             description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "embeddedQueries" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            embedded_queries =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "queries" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            queries = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "rootInstanceName" => {
                             if v.is_null() {
@@ -176,8 +175,8 @@ impl<'de> Deserialize<'de> for CreateAppRequestDataAttributes {
                 let content = CreateAppRequestDataAttributes {
                     components,
                     description,
-                    embedded_queries,
                     name,
+                    queries,
                     root_instance_name,
                     tags,
                     additional_properties,

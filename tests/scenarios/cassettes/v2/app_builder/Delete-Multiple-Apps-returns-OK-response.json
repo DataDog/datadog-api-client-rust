@@ -3,7 +3,7 @@
     {
       "request": {
         "body": {
-          "string": "{\"data\":{\"attributes\":{\"components\":[{\"events\":[],\"name\":\"grid0\",\"properties\":{\"children\":[{\"events\":[],\"name\":\"gridCell0\",\"properties\":{\"children\":[{\"events\":[],\"name\":\"calloutValue0\",\"properties\":{\"isDisabled\":false,\"isLoading\":false,\"isVisible\":true,\"label\":\"CPU Usage\",\"size\":\"sm\",\"style\":\"vivid_yellow\",\"unit\":\"kB\",\"value\":\"42\"},\"type\":\"calloutValue\"}],\"isVisible\":\"true\",\"layout\":{\"default\":{\"height\":8,\"width\":2,\"x\":0,\"y\":0}}},\"type\":\"gridCell\"}]},\"type\":\"grid\"}],\"description\":\"This is a simple example app\",\"embeddedQueries\":[],\"name\":\"Example App\",\"rootInstanceName\":\"grid0\"},\"type\":\"appDefinitions\"}}",
+          "string": "{\"data\":{\"attributes\":{\"components\":[{\"events\":[],\"name\":\"grid0\",\"properties\":{\"children\":[{\"events\":[],\"name\":\"gridCell0\",\"properties\":{\"children\":[{\"events\":[],\"name\":\"calloutValue0\",\"properties\":{\"isDisabled\":false,\"isLoading\":false,\"isVisible\":true,\"label\":\"CPU Usage\",\"size\":\"sm\",\"style\":\"vivid_yellow\",\"unit\":\"kB\",\"value\":\"42\"},\"type\":\"calloutValue\"}],\"isVisible\":\"true\",\"layout\":{\"default\":{\"height\":8,\"width\":2,\"x\":0,\"y\":0}}},\"type\":\"gridCell\"}]},\"type\":\"grid\"}],\"description\":\"This is a simple example app\",\"name\":\"Example App\",\"queries\":[],\"rootInstanceName\":\"grid0\"},\"type\":\"appDefinitions\"}}",
           "encoding": null
         },
         "headers": {
@@ -19,7 +19,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"id\":\"7b5a5fec-3026-47a9-acca-e01dc557af0a\",\"type\":\"appDefinitions\"}}",
+          "string": "{\"data\":{\"id\":\"91f80f89-33dc-4311-93fe-b4936275bc74\",\"type\":\"appDefinitions\"}}",
           "encoding": null
         },
         "headers": {
@@ -32,12 +32,12 @@
           "message": "Created"
         }
       },
-      "recorded_at": "Thu, 09 Jan 2025 20:40:38 GMT"
+      "recorded_at": "Thu, 30 Jan 2025 22:30:42 GMT"
     },
     {
       "request": {
         "body": {
-          "string": "{\"data\":[{\"id\":\"7b5a5fec-3026-47a9-acca-e01dc557af0a\",\"type\":\"appDefinitions\"}]}",
+          "string": "{\"data\":[{\"id\":\"91f80f89-33dc-4311-93fe-b4936275bc74\",\"type\":\"appDefinitions\"}]}",
           "encoding": null
         },
         "headers": {
@@ -53,7 +53,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"data\":[{\"id\":\"7b5a5fec-3026-47a9-acca-e01dc557af0a\",\"type\":\"appDefinitions\"}]}",
+          "string": "{\"data\":[{\"id\":\"91f80f89-33dc-4311-93fe-b4936275bc74\",\"type\":\"appDefinitions\"}]}",
           "encoding": null
         },
         "headers": {
@@ -66,7 +66,7 @@
           "message": "OK"
         }
       },
-      "recorded_at": "Thu, 09 Jan 2025 20:40:38 GMT"
+      "recorded_at": "Thu, 30 Jan 2025 22:30:42 GMT"
     },
     {
       "request": {
@@ -77,11 +77,11 @@
           ]
         },
         "method": "delete",
-        "uri": "https://api.datadoghq.com/api/v2/app-builder/apps/7b5a5fec-3026-47a9-acca-e01dc557af0a"
+        "uri": "https://api.datadoghq.com/api/v2/app-builder/apps/91f80f89-33dc-4311-93fe-b4936275bc74"
       },
       "response": {
         "body": {
-          "string": "{\"errors\":[{\"title\":\"app not found\",\"detail\":\"app not found\"}]}",
+          "string": "{\"errors\":[{\"title\":\"app not found\"}]}",
           "encoding": null
         },
         "headers": {
@@ -94,7 +94,7 @@
           "message": "Not Found"
         }
       },
-      "recorded_at": "Thu, 09 Jan 2025 20:40:38 GMT"
+      "recorded_at": "Thu, 30 Jan 2025 22:30:42 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"
