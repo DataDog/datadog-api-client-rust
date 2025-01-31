@@ -57,7 +57,7 @@ async fn main() {
                     "payment_processed feature flag updated".to_string(),
                 )
                 .message("payment_processed feature flag has been enabled".to_string())
-                .tags(vec!["environment:test".to_string()]),
+                .tags(vec!["env:test".to_string()]),
             )
             .type_(EventCreateRequestType::EVENT),
     );

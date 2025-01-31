@@ -17,7 +17,7 @@ pub struct ChangeEventCustomAttributes {
     /// Free form object with information related to the `change` event. Can be arbitrarily nested and contain any valid JSON.
     #[serde(rename = "change_metadata")]
     pub change_metadata: Option<std::collections::BTreeMap<String, serde_json::Value>>,
-    /// Object representing a uniquely identified resource. Only the resource type `feature_flag` is supported.
+    /// Object representing a uniquely identified resource.
     #[serde(rename = "changed_resource")]
     pub changed_resource: crate::datadogV2::model::ChangeEventCustomAttributesChangedResource,
     /// A list of resources impacted by this change. It is recommended to provide an impacted resource to display
