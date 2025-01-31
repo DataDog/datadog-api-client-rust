@@ -13,7 +13,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"errors\":[{\"status\":\"404\",\"title\":\"Not Found\"}]}",
+          "string": "{\"errors\":[{\"title\":\"Generic Error\",\"detail\":\"rpc error: code = Internal desc = no cached result set found for queryID: unknown\"}]}",
           "encoding": null
         },
         "headers": {
@@ -26,7 +26,7 @@
           "message": "Not Found"
         }
       },
-      "recorded_at": "Thu, 19 Dec 2024 16:15:24 GMT"
+      "recorded_at": "Fri, 31 Jan 2025 12:04:52 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"
