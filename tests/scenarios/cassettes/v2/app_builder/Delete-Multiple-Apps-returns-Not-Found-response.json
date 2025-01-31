@@ -19,7 +19,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"errors\":[{\"title\":\"one or more apps not found\",\"detail\":\"one or more apps not found\"}]}",
+          "string": "{\"errors\":[{\"title\":\"one or more apps not found\"}]}",
           "encoding": null
         },
         "headers": {
@@ -32,7 +32,7 @@
           "message": "Not Found"
         }
       },
-      "recorded_at": "Thu, 09 Jan 2025 20:40:38 GMT"
+      "recorded_at": "Thu, 30 Jan 2025 22:30:42 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"
