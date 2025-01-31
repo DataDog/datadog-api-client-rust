@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SLOCorrectionListResponse {
-    /// The list of of SLO corrections objects.
+    /// The list of SLO corrections objects.
     #[serde(rename = "data")]
     pub data: Option<Vec<crate::datadogV1::model::SLOCorrection>>,
     /// Object describing meta attributes of response.
