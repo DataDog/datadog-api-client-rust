@@ -12,6 +12,7 @@ pub enum EntityV3 {
     EntityV3Datastore(Box<crate::datadogV2::model::EntityV3Datastore>),
     EntityV3Queue(Box<crate::datadogV2::model::EntityV3Queue>),
     EntityV3System(Box<crate::datadogV2::model::EntityV3System>),
+    EntityV3API(Box<crate::datadogV2::model::EntityV3API>),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -47,6 +48,13 @@ impl<'de> Deserialize<'de> for EntityV3 {
         {
             if !_v._unparsed {
                 return Ok(EntityV3::EntityV3System(_v));
+            }
+        }
+        if let Ok(_v) =
+            serde_json::from_value::<Box<crate::datadogV2::model::EntityV3API>>(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(EntityV3::EntityV3API(_v));
             }
         }
 
