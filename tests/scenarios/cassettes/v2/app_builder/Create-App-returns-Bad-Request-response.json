@@ -3,7 +3,7 @@
     {
       "request": {
         "body": {
-          "string": "{\"data\":{\"attributes\":{\"description\":\"This is a bad example app\",\"embeddedQueries\":[],\"rootInstanceName\":\"grid0\"},\"type\":\"appDefinitions\"}}",
+          "string": "{\"data\":{\"attributes\":{\"description\":\"This is a bad example app\",\"queries\":[],\"rootInstanceName\":\"grid0\"},\"type\":\"appDefinitions\"}}",
           "encoding": null
         },
         "headers": {
@@ -19,7 +19,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"errors\":[{\"title\":\"missing required field\",\"detail\":\"missing required field\",\"source\":{\"pointer\":\"/data/attributes/name\"}}]}",
+          "string": "{\"errors\":[{\"title\":\"missing required field\",\"source\":{\"pointer\":\"/data/attributes/name\"}}]}",
           "encoding": null
         },
         "headers": {
@@ -32,7 +32,7 @@
           "message": "Bad Request"
         }
       },
-      "recorded_at": "Thu, 09 Jan 2025 20:40:37 GMT"
+      "recorded_at": "Thu, 30 Jan 2025 22:30:41 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"
