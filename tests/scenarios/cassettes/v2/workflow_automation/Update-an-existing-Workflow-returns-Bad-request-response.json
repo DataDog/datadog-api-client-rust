@@ -1,0 +1,97 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"name\":\"Cassette Workflow DELETE\",\"spec\":{\"steps\":[],\"triggers\":[{\"startStepNames\":[],\"workflowTrigger\":{}}]}},\"type\":\"workflows\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/workflows"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":{\"id\":\"d140796c-8c90-4ed9-b162-7842d9008825\",\"type\":\"workflows\",\"attributes\":{\"createdAt\":\"2025-02-03T01:41:53.522621Z\",\"description\":\"\",\"name\":\"Cassette Workflow DELETE\",\"published\":true,\"spec\":{\"triggers\":[{\"workflowTrigger\":{}}]},\"tags\":[],\"updatedAt\":\"2025-02-03T01:41:53.522621Z\"},\"relationships\":{\"creator\":{\"data\":{\"id\":\"3ad549bf-eba0-11e9-a77a-0705486660d0\",\"type\":\"users\"}},\"owner\":{\"data\":{\"id\":\"3ad549bf-eba0-11e9-a77a-0705486660d0\",\"type\":\"users\"}}}}}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 201,
+          "message": "Created"
+        }
+      },
+      "recorded_at": "Mon, 03 Feb 2025 01:41:53 GMT"
+    },
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"description\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"name\":\"Too many characters in description\",\"spec\":{}},\"id\":\"22222222-2222-2222-2222-222222222222\",\"type\":\"workflows\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "patch",
+        "uri": "https://api.datadoghq.com/api/v2/workflows/d140796c-8c90-4ed9-b162-7842d9008825"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"detail\":\"workflow description exceeds size limit of [300] characters\"}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Mon, 03 Feb 2025 01:41:53 GMT"
+    },
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "*/*"
+          ]
+        },
+        "method": "delete",
+        "uri": "https://api.datadoghq.com/api/v2/workflows/d140796c-8c90-4ed9-b162-7842d9008825"
+      },
+      "response": {
+        "body": {
+          "string": "",
+          "encoding": null
+        },
+        "headers": {},
+        "status": {
+          "code": 204,
+          "message": "No Content"
+        }
+      },
+      "recorded_at": "Mon, 03 Feb 2025 01:41:53 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
