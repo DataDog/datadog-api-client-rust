@@ -1,0 +1,63 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"name\":\"Test-Create_workflow_webhook_handle_returns_CREATED_response-1738093012\",\"url\":\"https://fake.url.com\"},\"type\":\"workflows-webhook-handle\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/integration/ms-teams/configuration/workflows-webhook-handles"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":{\"id\":\"264ae337-af6e-4c54-8e90-2612426f270e\",\"type\":\"workflows-webhook-handle\",\"attributes\":{\"name\":\"Test-Create_workflow_webhook_handle_returns_CREATED_response-1738093012\"}}}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 201,
+          "message": "Created"
+        }
+      },
+      "recorded_at": "Tue, 28 Jan 2025 19:36:52 GMT"
+    },
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "*/*"
+          ]
+        },
+        "method": "delete",
+        "uri": "https://api.datadoghq.com/api/v2/integration/ms-teams/configuration/workflows-webhook-handles/264ae337-af6e-4c54-8e90-2612426f270e"
+      },
+      "response": {
+        "body": {
+          "string": "",
+          "encoding": null
+        },
+        "headers": {},
+        "status": {
+          "code": 204,
+          "message": "No Content"
+        }
+      },
+      "recorded_at": "Tue, 28 Jan 2025 19:36:52 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
