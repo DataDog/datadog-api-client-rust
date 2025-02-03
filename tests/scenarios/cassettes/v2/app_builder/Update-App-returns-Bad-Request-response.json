@@ -3,7 +3,7 @@
     {
       "request": {
         "body": {
-          "string": "{\"data\":{\"attributes\":{\"components\":[{\"events\":[],\"name\":\"grid0\",\"properties\":{\"children\":[{\"events\":[],\"name\":\"gridCell0\",\"properties\":{\"children\":[{\"events\":[],\"name\":\"calloutValue0\",\"properties\":{\"isDisabled\":false,\"isLoading\":false,\"isVisible\":true,\"label\":\"CPU Usage\",\"size\":\"sm\",\"style\":\"vivid_yellow\",\"unit\":\"kB\",\"value\":\"42\"},\"type\":\"calloutValue\"}],\"isVisible\":\"true\",\"layout\":{\"default\":{\"height\":8,\"width\":2,\"x\":0,\"y\":0}}},\"type\":\"gridCell\"}]},\"type\":\"grid\"}],\"description\":\"This is a simple example app\",\"embeddedQueries\":[],\"name\":\"Example App\",\"rootInstanceName\":\"grid0\"},\"type\":\"appDefinitions\"}}",
+          "string": "{\"data\":{\"attributes\":{\"components\":[{\"events\":[],\"name\":\"grid0\",\"properties\":{\"children\":[{\"events\":[],\"name\":\"gridCell0\",\"properties\":{\"children\":[{\"events\":[],\"name\":\"calloutValue0\",\"properties\":{\"isDisabled\":false,\"isLoading\":false,\"isVisible\":true,\"label\":\"CPU Usage\",\"size\":\"sm\",\"style\":\"vivid_yellow\",\"unit\":\"kB\",\"value\":\"42\"},\"type\":\"calloutValue\"}],\"isVisible\":\"true\",\"layout\":{\"default\":{\"height\":8,\"width\":2,\"x\":0,\"y\":0}}},\"type\":\"gridCell\"}]},\"type\":\"grid\"}],\"description\":\"This is a simple example app\",\"name\":\"Example App\",\"queries\":[],\"rootInstanceName\":\"grid0\"},\"type\":\"appDefinitions\"}}",
           "encoding": null
         },
         "headers": {
@@ -19,7 +19,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"id\":\"b3f997e6-a9db-4984-a560-23005049c5f3\",\"type\":\"appDefinitions\"}}",
+          "string": "{\"data\":{\"id\":\"3800673b-840c-4c3a-8815-058b4a8ce38e\",\"type\":\"appDefinitions\"}}",
           "encoding": null
         },
         "headers": {
@@ -32,12 +32,12 @@
           "message": "Created"
         }
       },
-      "recorded_at": "Thu, 09 Jan 2025 20:40:40 GMT"
+      "recorded_at": "Thu, 30 Jan 2025 22:30:45 GMT"
     },
     {
       "request": {
         "body": {
-          "string": "{\"data\":{\"attributes\":{\"rootInstanceName\":\"\"},\"id\":\"b3f997e6-a9db-4984-a560-23005049c5f3\",\"type\":\"appDefinitions\"}}",
+          "string": "{\"data\":{\"attributes\":{\"rootInstanceName\":\"\"},\"id\":\"3800673b-840c-4c3a-8815-058b4a8ce38e\",\"type\":\"appDefinitions\"}}",
           "encoding": null
         },
         "headers": {
@@ -49,11 +49,11 @@
           ]
         },
         "method": "patch",
-        "uri": "https://api.datadoghq.com/api/v2/app-builder/apps/b3f997e6-a9db-4984-a560-23005049c5f3"
+        "uri": "https://api.datadoghq.com/api/v2/app-builder/apps/3800673b-840c-4c3a-8815-058b4a8ce38e"
       },
       "response": {
         "body": {
-          "string": "{\"errors\":[{\"title\":\"missing required field\",\"detail\":\"missing required field\",\"source\":{\"pointer\":\"/data/attributes/rootInstanceName\"}}]}",
+          "string": "{\"errors\":[{\"title\":\"missing required field\",\"source\":{\"pointer\":\"/data/attributes/rootInstanceName\"}}]}",
           "encoding": null
         },
         "headers": {
@@ -66,7 +66,7 @@
           "message": "Bad Request"
         }
       },
-      "recorded_at": "Thu, 09 Jan 2025 20:40:40 GMT"
+      "recorded_at": "Thu, 30 Jan 2025 22:30:45 GMT"
     },
     {
       "request": {
@@ -77,11 +77,11 @@
           ]
         },
         "method": "delete",
-        "uri": "https://api.datadoghq.com/api/v2/app-builder/apps/b3f997e6-a9db-4984-a560-23005049c5f3"
+        "uri": "https://api.datadoghq.com/api/v2/app-builder/apps/3800673b-840c-4c3a-8815-058b4a8ce38e"
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"id\":\"b3f997e6-a9db-4984-a560-23005049c5f3\",\"type\":\"appDefinitions\"}}",
+          "string": "{\"data\":{\"id\":\"3800673b-840c-4c3a-8815-058b4a8ce38e\",\"type\":\"appDefinitions\"}}",
           "encoding": null
         },
         "headers": {
@@ -94,7 +94,7 @@
           "message": "OK"
         }
       },
-      "recorded_at": "Thu, 09 Jan 2025 20:40:40 GMT"
+      "recorded_at": "Thu, 30 Jan 2025 22:30:45 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"

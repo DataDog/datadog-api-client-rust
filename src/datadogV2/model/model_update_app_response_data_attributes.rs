@@ -17,15 +17,15 @@ pub struct UpdateAppResponseDataAttributes {
     /// The human-readable description for the app.
     #[serde(rename = "description")]
     pub description: Option<String>,
-    /// An array of queries, such as external actions and state variables, that the app uses.
-    #[serde(rename = "embeddedQueries")]
-    pub embedded_queries: Option<Vec<crate::datadogV2::model::Query>>,
     /// Whether the app is marked as a favorite by the current user.
     #[serde(rename = "favorite")]
     pub favorite: Option<bool>,
     /// The name of the app.
     #[serde(rename = "name")]
     pub name: Option<String>,
+    /// An array of queries, such as external actions and state variables, that the app uses.
+    #[serde(rename = "queries")]
+    pub queries: Option<Vec<crate::datadogV2::model::Query>>,
     /// The name of the root component of the app. This must be a `grid` component that contains all other components.
     #[serde(rename = "rootInstanceName")]
     pub root_instance_name: Option<String>,
@@ -44,9 +44,9 @@ impl UpdateAppResponseDataAttributes {
         UpdateAppResponseDataAttributes {
             components: None,
             description: None,
-            embedded_queries: None,
             favorite: None,
             name: None,
+            queries: None,
             root_instance_name: None,
             tags: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -64,11 +64,6 @@ impl UpdateAppResponseDataAttributes {
         self
     }
 
-    pub fn embedded_queries(mut self, value: Vec<crate::datadogV2::model::Query>) -> Self {
-        self.embedded_queries = Some(value);
-        self
-    }
-
     pub fn favorite(mut self, value: bool) -> Self {
         self.favorite = Some(value);
         self
@@ -76,6 +71,11 @@ impl UpdateAppResponseDataAttributes {
 
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
+        self
+    }
+
+    pub fn queries(mut self, value: Vec<crate::datadogV2::model::Query>) -> Self {
+        self.queries = Some(value);
         self
     }
 
@@ -123,9 +123,9 @@ impl<'de> Deserialize<'de> for UpdateAppResponseDataAttributes {
             {
                 let mut components: Option<Vec<crate::datadogV2::model::ComponentGrid>> = None;
                 let mut description: Option<String> = None;
-                let mut embedded_queries: Option<Vec<crate::datadogV2::model::Query>> = None;
                 let mut favorite: Option<bool> = None;
                 let mut name: Option<String> = None;
+                let mut queries: Option<Vec<crate::datadogV2::model::Query>> = None;
                 let mut root_instance_name: Option<String> = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -149,13 +149,6 @@ impl<'de> Deserialize<'de> for UpdateAppResponseDataAttributes {
                             description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "embeddedQueries" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            embedded_queries =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "favorite" => {
                             if v.is_null() {
                                 continue;
@@ -167,6 +160,12 @@ impl<'de> Deserialize<'de> for UpdateAppResponseDataAttributes {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "queries" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            queries = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "rootInstanceName" => {
                             if v.is_null() {
@@ -192,9 +191,9 @@ impl<'de> Deserialize<'de> for UpdateAppResponseDataAttributes {
                 let content = UpdateAppResponseDataAttributes {
                     components,
                     description,
-                    embedded_queries,
                     favorite,
                     name,
+                    queries,
                     root_instance_name,
                     tags,
                     additional_properties,

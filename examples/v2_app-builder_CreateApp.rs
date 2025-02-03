@@ -38,8 +38,8 @@ async fn main() {
                 )
                 .events(vec![])])
                 .description("This is a simple example app".to_string())
-                .embedded_queries(vec![])
                 .name("Example App".to_string())
+                .queries(vec![])
                 .root_instance_name("grid0".to_string()),
         ),
     );
