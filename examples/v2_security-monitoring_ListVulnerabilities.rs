@@ -8,8 +8,7 @@ use datadog_api_client::datadogV2::model::VulnerabilityTool;
 
 #[tokio::main]
 async fn main() {
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListVulnerabilities", true);
+    let configuration = datadog::Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api
         .list_vulnerabilities(
