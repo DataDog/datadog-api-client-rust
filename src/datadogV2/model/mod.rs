@@ -678,8 +678,6 @@ pub mod model_entity_v3_metadata_contacts_items;
 pub use self::model_entity_v3_metadata_contacts_items::EntityV3MetadataContactsItems;
 pub mod model_entity_v3_metadata_links_items;
 pub use self::model_entity_v3_metadata_links_items::EntityV3MetadataLinksItems;
-pub mod model_entity_v3_metadata_owner;
-pub use self::model_entity_v3_metadata_owner::EntityV3MetadataOwner;
 pub mod model_entity_v3_service_spec;
 pub use self::model_entity_v3_service_spec::EntityV3ServiceSpec;
 pub mod model_entity_v3_datastore;

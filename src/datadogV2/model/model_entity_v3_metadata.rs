@@ -44,7 +44,7 @@ pub struct EntityV3Metadata {
     pub namespace: Option<String>,
     /// The owner of the entity, usually a team.
     #[serde(rename = "owner")]
-    pub owner: Option<crate::datadogV2::model::EntityV3MetadataOwner>,
+    pub owner: Option<String>,
     /// A set of custom tags.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
@@ -126,7 +126,7 @@ impl EntityV3Metadata {
         self
     }
 
-    pub fn owner(mut self, value: crate::datadogV2::model::EntityV3MetadataOwner) -> Self {
+    pub fn owner(mut self, value: String) -> Self {
         self.owner = Some(value);
         self
     }
@@ -170,7 +170,7 @@ impl<'de> Deserialize<'de> for EntityV3Metadata {
                     None;
                 let mut name: Option<String> = None;
                 let mut namespace: Option<String> = None;
-                let mut owner: Option<crate::datadogV2::model::EntityV3MetadataOwner> = None;
+                let mut owner: Option<String> = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut _unparsed = false;
 
