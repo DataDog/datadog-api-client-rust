@@ -14,7 +14,7 @@ pub struct CreateOpenAPIResponseData {
     /// Attributes for `CreateOpenAPI`.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::CreateOpenAPIResponseAttributes>,
-    /// API identifier.
+    /// Test
     #[serde(rename = "id")]
     pub id: Option<uuid::Uuid>,
     #[serde(flatten)]
