@@ -1,5 +1,5 @@
-// Patch a signal-based rule returns "Notification rule successfully patched."
-// response
+// Patch a signal-based notification rule returns "Notification rule successfully
+// patched." response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_security_monitoring::SecurityMonitoringAPI;
 use datadog_api_client::datadogV2::model::NotificationRulesType;

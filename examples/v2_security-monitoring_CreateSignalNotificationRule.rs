@@ -1,5 +1,5 @@
-// Create a new signal-based rule returns "Successfully created the notification
-// rule." response
+// Create a new signal-based notification rule returns "Successfully created the
+// notification rule." response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_security_monitoring::SecurityMonitoringAPI;
 use datadog_api_client::datadogV2::model::CreateNotificationRuleParameters;

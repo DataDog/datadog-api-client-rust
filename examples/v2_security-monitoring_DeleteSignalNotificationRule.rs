@@ -1,4 +1,5 @@
-// Delete a signal-based rule returns "Rule successfully deleted." response
+// Delete a signal-based notification rule returns "Rule successfully deleted."
+// response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_security_monitoring::SecurityMonitoringAPI;
 

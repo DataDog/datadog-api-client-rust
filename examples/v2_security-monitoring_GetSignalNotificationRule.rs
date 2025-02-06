@@ -1,4 +1,5 @@
-// Get details of a signal-based rule returns "Notification rule details." response
+// Get details of a signal-based notification rule returns "Notification rule
+// details." response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_security_monitoring::SecurityMonitoringAPI;
 
