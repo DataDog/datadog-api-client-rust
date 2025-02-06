@@ -9,8 +9,8 @@ use datadog_api_client::datadogV2::model::DORAIncidentRequestData;
 #[tokio::main]
 async fn main() {
     let body = DORAIncidentRequest::new(DORAIncidentRequestData::new(
-        DORAIncidentRequestAttributes::new(1707842944500000000)
-            .finished_at(1707842944600000000)
+        DORAIncidentRequestAttributes::new(17078429445000)
+            .finished_at(17078429446000)
             .git(DORAGitInfo::new(
                 "66adc9350f2cc9b250b69abddab733dd55e1a588".to_string(),
                 "https://github.com/organization/example-repository".to_string(),
