@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SecurityMonitoringRuleCase {
+    /// Action to perform for each rule case.
+    #[serde(rename = "actions")]
+    pub actions: Option<Vec<crate::datadogV2::model::SecurityMonitoringRuleCaseAction>>,
     /// A rule case contains logical operations (`>`,`>=`, `&&`, `||`) to determine if a signal should be generated
     /// based on the event counts in the previously defined queries.
     #[serde(rename = "condition")]
@@ -34,6 +37,7 @@ pub struct SecurityMonitoringRuleCase {
 impl SecurityMonitoringRuleCase {
     pub fn new() -> SecurityMonitoringRuleCase {
         SecurityMonitoringRuleCase {
+            actions: None,
             condition: None,
             name: None,
             notifications: None,
@@ -41,6 +45,14 @@ impl SecurityMonitoringRuleCase {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn actions(
+        mut self,
+        value: Vec<crate::datadogV2::model::SecurityMonitoringRuleCaseAction>,
+    ) -> Self {
+        self.actions = Some(value);
+        self
     }
 
     pub fn condition(mut self, value: String) -> Self {
@@ -98,6 +110,9 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleCase {
             where
                 M: MapAccess<'a>,
             {
+                let mut actions: Option<
+                    Vec<crate::datadogV2::model::SecurityMonitoringRuleCaseAction>,
+                > = None;
                 let mut condition: Option<String> = None;
                 let mut name: Option<String> = None;
                 let mut notifications: Option<Vec<String>> = None;
@@ -111,6 +126,12 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleCase {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "actions" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            actions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "condition" => {
                             if v.is_null() {
                                 continue;
@@ -153,6 +174,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleCase {
                 }
 
                 let content = SecurityMonitoringRuleCase {
+                    actions,
                     condition,
                     name,
                     notifications,
