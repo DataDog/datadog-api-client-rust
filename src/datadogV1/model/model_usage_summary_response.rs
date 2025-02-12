@@ -161,7 +161,7 @@ pub struct UsageSummaryResponse {
     /// Shows the average number of Cloud Security Management Pro containers over all hours in the current month for all organizations.
     #[serde(rename = "cspm_container_avg_sum")]
     pub cspm_container_avg_sum: Option<i64>,
-    /// Shows the sum of the the high-water marks of Cloud Security Management Pro containers over all hours in the current month for all organizations.
+    /// Shows the sum of the high-water marks of Cloud Security Management Pro containers over all hours in the current month for all organizations.
     #[serde(rename = "cspm_container_hwm_sum")]
     pub cspm_container_hwm_sum: Option<i64>,
     /// Shows the 99th percentile of all Cloud Security Management Pro GCP hosts over all hours in the current month for all organizations.
@@ -293,7 +293,7 @@ pub struct UsageSummaryResponse {
     /// Shows the 99th percentile of all Heroku dynos over all hours in the current month for all organizations.
     #[serde(rename = "heroku_host_top99p_sum")]
     pub heroku_host_top99p_sum: Option<i64>,
-    /// Shows sum of the the high-water marks of incident management monthly active users in the current month for all organizations.
+    /// Shows sum of the high-water marks of incident management monthly active users in the current month for all organizations.
     #[serde(rename = "incident_management_monthly_active_users_hwm_sum")]
     pub incident_management_monthly_active_users_hwm_sum: Option<i64>,
     /// Shows the sum of all log events indexed over all hours in the current month for all organizations (To be deprecated on October 1st, 2024).
@@ -312,7 +312,7 @@ pub struct UsageSummaryResponse {
     /// Shows the 99th percentile of all IoT devices over all hours in the current month of all organizations.
     #[serde(rename = "iot_device_top99p_sum")]
     pub iot_device_top99p_sum: Option<i64>,
-    /// Shows the the most recent hour in the current month for all organizations for which all usages were calculated.
+    /// Shows the most recent hour in the current month for all organizations for which all usages were calculated.
     #[serde(rename = "last_updated")]
     pub last_updated: Option<chrono::DateTime<chrono::Utc>>,
     /// Shows the sum of all live logs indexed over all hours in the current month for all organization (To be deprecated on October 1st, 2024).

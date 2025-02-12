@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SyntheticsMobileStepParamsElementUserLocator {
-    /// Whether if the the test should fail if the element cannot be found.
+    /// Whether if the test should fail if the element cannot be found.
     #[serde(rename = "failTestOnCannotLocate")]
     pub fail_test_on_cannot_locate: Option<bool>,
     /// Values of the user locator.

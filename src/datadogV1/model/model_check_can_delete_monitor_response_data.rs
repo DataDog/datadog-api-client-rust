@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CheckCanDeleteMonitorResponseData {
-    /// An array of of Monitor IDs that can be safely deleted.
+    /// An array of Monitor IDs that can be safely deleted.
     #[serde(rename = "ok")]
     pub ok: Option<Vec<i64>>,
     #[serde(flatten)]

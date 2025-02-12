@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CheckCanDeleteSLOResponseData {
-    /// An array of of SLO IDs that can be safely deleted.
+    /// An array of SLO IDs that can be safely deleted.
     #[serde(rename = "ok")]
     pub ok: Option<Vec<String>>,
     #[serde(flatten)]
