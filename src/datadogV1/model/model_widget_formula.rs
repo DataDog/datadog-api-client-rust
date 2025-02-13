@@ -26,6 +26,9 @@ pub struct WidgetFormula {
     /// Options for limiting results returned.
     #[serde(rename = "limit")]
     pub limit: Option<crate::datadogV1::model::WidgetFormulaLimit>,
+    /// Number format options for the widget.
+    #[serde(rename = "number_format")]
+    pub number_format: Option<crate::datadogV1::model::WidgetNumberFormat>,
     /// Styling options for widget formulas.
     #[serde(rename = "style")]
     pub style: Option<crate::datadogV1::model::WidgetFormulaStyle>,
@@ -44,6 +47,7 @@ impl WidgetFormula {
             conditional_formats: None,
             formula,
             limit: None,
+            number_format: None,
             style: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -73,6 +77,11 @@ impl WidgetFormula {
 
     pub fn limit(mut self, value: crate::datadogV1::model::WidgetFormulaLimit) -> Self {
         self.limit = Some(value);
+        self
+    }
+
+    pub fn number_format(mut self, value: crate::datadogV1::model::WidgetNumberFormat) -> Self {
+        self.number_format = Some(value);
         self
     }
 
@@ -116,6 +125,7 @@ impl<'de> Deserialize<'de> for WidgetFormula {
                 > = None;
                 let mut formula: Option<String> = None;
                 let mut limit: Option<crate::datadogV1::model::WidgetFormulaLimit> = None;
+                let mut number_format: Option<crate::datadogV1::model::WidgetNumberFormat> = None;
                 let mut style: Option<crate::datadogV1::model::WidgetFormulaStyle> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -162,6 +172,13 @@ impl<'de> Deserialize<'de> for WidgetFormula {
                             }
                             limit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "number_format" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            number_format =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "style" => {
                             if v.is_null() {
                                 continue;
@@ -183,6 +200,7 @@ impl<'de> Deserialize<'de> for WidgetFormula {
                     conditional_formats,
                     formula,
                     limit,
+                    number_format,
                     style,
                     additional_properties,
                     _unparsed,
