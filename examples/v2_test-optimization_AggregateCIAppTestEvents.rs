@@ -1,6 +1,6 @@
 // Aggregate tests events returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api_ci_visibility_tests::CIVisibilityTestsAPI;
+use datadog_api_client::datadogV2::api_test_optimization::TestOptimizationAPI;
 use datadog_api_client::datadogV2::model::CIAppAggregateSort;
 use datadog_api_client::datadogV2::model::CIAppAggregationFunction;
 use datadog_api_client::datadogV2::model::CIAppCompute;
@@ -30,7 +30,7 @@ async fn main() {
             .total(CIAppGroupByTotal::CIAppGroupByTotalBoolean(false))])
         .options(CIAppQueryOptions::new().timezone("GMT".to_string()));
     let configuration = datadog::Configuration::new();
-    let api = CIVisibilityTestsAPI::with_config(configuration);
+    let api = TestOptimizationAPI::with_config(configuration);
     let resp = api.aggregate_ci_app_test_events(body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);

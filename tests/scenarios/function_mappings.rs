@@ -63,8 +63,7 @@ pub struct ApiInstances {
     pub v2_api_software_catalog: Option<datadogV2::api_software_catalog::SoftwareCatalogAPI>,
     pub v2_api_ci_visibility_pipelines:
         Option<datadogV2::api_ci_visibility_pipelines::CIVisibilityPipelinesAPI>,
-    pub v2_api_ci_visibility_tests:
-        Option<datadogV2::api_ci_visibility_tests::CIVisibilityTestsAPI>,
+    pub v2_api_test_optimization: Option<datadogV2::api_test_optimization::TestOptimizationAPI>,
     pub v2_api_container_images: Option<datadogV2::api_container_images::ContainerImagesAPI>,
     pub v2_api_containers: Option<datadogV2::api_containers::ContainersAPI>,
     pub v2_api_cloud_cost_management:
@@ -542,9 +541,9 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 world.http_client.as_ref().unwrap().clone()
             ));
         }
-        "CIVisibilityTests" => {
-            world.api_instances.v2_api_ci_visibility_tests = Some(
-                datadogV2::api_ci_visibility_tests::CIVisibilityTestsAPI::with_client_and_config(
+        "TestOptimization" => {
+            world.api_instances.v2_api_test_optimization = Some(
+                datadogV2::api_test_optimization::TestOptimizationAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -13023,7 +13022,7 @@ fn test_v2_aggregate_ci_app_test_events(
 ) {
     let api = world
         .api_instances
-        .v2_api_ci_visibility_tests
+        .v2_api_test_optimization
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
@@ -13048,7 +13047,7 @@ fn test_v2_aggregate_ci_app_test_events(
 fn test_v2_list_ci_app_test_events(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_ci_visibility_tests
+        .v2_api_test_optimization
         .as_ref()
         .expect("api instance not found");
     let filter_query = _parameters
@@ -13069,8 +13068,7 @@ fn test_v2_list_ci_app_test_events(world: &mut DatadogWorld, _parameters: &HashM
     let page_limit = _parameters
         .get("page[limit]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let mut params =
-        datadogV2::api_ci_visibility_tests::ListCIAppTestEventsOptionalParams::default();
+    let mut params = datadogV2::api_test_optimization::ListCIAppTestEventsOptionalParams::default();
     params.filter_query = filter_query;
     params.filter_from = filter_from;
     params.filter_to = filter_to;
@@ -13100,7 +13098,7 @@ fn test_v2_list_ci_app_test_events_with_pagination(
 ) {
     let api = world
         .api_instances
-        .v2_api_ci_visibility_tests
+        .v2_api_test_optimization
         .as_ref()
         .expect("api instance not found");
     let filter_query = _parameters
@@ -13121,8 +13119,7 @@ fn test_v2_list_ci_app_test_events_with_pagination(
     let page_limit = _parameters
         .get("page[limit]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let mut params =
-        datadogV2::api_ci_visibility_tests::ListCIAppTestEventsOptionalParams::default();
+    let mut params = datadogV2::api_test_optimization::ListCIAppTestEventsOptionalParams::default();
     params.filter_query = filter_query;
     params.filter_from = filter_from;
     params.filter_to = filter_to;
@@ -13163,14 +13160,14 @@ fn test_v2_search_ci_app_test_events(
 ) {
     let api = world
         .api_instances
-        .v2_api_ci_visibility_tests
+        .v2_api_test_optimization
         .as_ref()
         .expect("api instance not found");
     let body = _parameters
         .get("body")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params =
-        datadogV2::api_ci_visibility_tests::SearchCIAppTestEventsOptionalParams::default();
+        datadogV2::api_test_optimization::SearchCIAppTestEventsOptionalParams::default();
     params.body = body;
     let response = match block_on(api.search_ci_app_test_events_with_http_info(params)) {
         Ok(response) => response,
@@ -13195,14 +13192,14 @@ fn test_v2_search_ci_app_test_events_with_pagination(
 ) {
     let api = world
         .api_instances
-        .v2_api_ci_visibility_tests
+        .v2_api_test_optimization
         .as_ref()
         .expect("api instance not found");
     let body = _parameters
         .get("body")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params =
-        datadogV2::api_ci_visibility_tests::SearchCIAppTestEventsOptionalParams::default();
+        datadogV2::api_test_optimization::SearchCIAppTestEventsOptionalParams::default();
     params.body = body;
     let response = api.search_ci_app_test_events_with_pagination(params);
     let mut result = Vec::new();
