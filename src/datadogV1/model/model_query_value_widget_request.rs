@@ -56,6 +56,9 @@ pub struct QueryValueWidgetRequest {
     /// The log query.
     #[serde(rename = "security_query")]
     pub security_query: Option<crate::datadogV1::model::LogQueryDefinition>,
+    /// Sort object
+    #[serde(rename = "sort")]
+    pub sort: Option<crate::datadogV1::model::ColumnSortObject>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -81,6 +84,7 @@ impl QueryValueWidgetRequest {
             response_format: None,
             rum_query: None,
             security_query: None,
+            sort: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -173,6 +177,11 @@ impl QueryValueWidgetRequest {
         self
     }
 
+    pub fn sort(mut self, value: crate::datadogV1::model::ColumnSortObject) -> Self {
+        self.sort = Some(value);
+        self
+    }
+
     pub fn additional_properties(
         mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
@@ -228,6 +237,7 @@ impl<'de> Deserialize<'de> for QueryValueWidgetRequest {
                 > = None;
                 let mut rum_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
                 let mut security_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
+                let mut sort: Option<crate::datadogV1::model::ColumnSortObject> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -352,6 +362,12 @@ impl<'de> Deserialize<'de> for QueryValueWidgetRequest {
                             security_query =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "sort" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            sort = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -376,6 +392,7 @@ impl<'de> Deserialize<'de> for QueryValueWidgetRequest {
                     response_format,
                     rum_query,
                     security_query,
+                    sort,
                     additional_properties,
                     _unparsed,
                 };
