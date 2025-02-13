@@ -19,6 +19,19 @@ pub struct MetricBulkTagConfigCreateAttributes {
     /// Defaults to false.
     #[serde(rename = "exclude_tags_mode")]
     pub exclude_tags_mode: Option<bool>,
+    /// When provided, all tags that have been actively queried are
+    /// configured (and, therefore, remain queryable) for each metric that
+    /// matches the given prefix.  Minimum value is 1 second, and maximum
+    /// value is 7,776,000 seconds (90 days).
+    #[serde(rename = "include_actively_queried_tags_window")]
+    pub include_actively_queried_tags_window: Option<f64>,
+    /// When set to true, the configuration overrides any existing
+    /// configurations for the given metric with the new set of tags in this
+    /// configuration request. If false, old configurations are kept and
+    /// are merged with the set of tags in this configuration request.
+    /// Defaults to true.
+    #[serde(rename = "override_existing_configurations")]
+    pub override_existing_configurations: Option<bool>,
     /// A list of tag names to apply to the configuration.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
@@ -34,6 +47,8 @@ impl MetricBulkTagConfigCreateAttributes {
         MetricBulkTagConfigCreateAttributes {
             emails: None,
             exclude_tags_mode: None,
+            include_actively_queried_tags_window: None,
+            override_existing_configurations: None,
             tags: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -47,6 +62,16 @@ impl MetricBulkTagConfigCreateAttributes {
 
     pub fn exclude_tags_mode(mut self, value: bool) -> Self {
         self.exclude_tags_mode = Some(value);
+        self
+    }
+
+    pub fn include_actively_queried_tags_window(mut self, value: f64) -> Self {
+        self.include_actively_queried_tags_window = Some(value);
+        self
+    }
+
+    pub fn override_existing_configurations(mut self, value: bool) -> Self {
+        self.override_existing_configurations = Some(value);
         self
     }
 
@@ -89,6 +114,8 @@ impl<'de> Deserialize<'de> for MetricBulkTagConfigCreateAttributes {
             {
                 let mut emails: Option<Vec<String>> = None;
                 let mut exclude_tags_mode: Option<bool> = None;
+                let mut include_actively_queried_tags_window: Option<f64> = None;
+                let mut override_existing_configurations: Option<bool> = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -111,6 +138,20 @@ impl<'de> Deserialize<'de> for MetricBulkTagConfigCreateAttributes {
                             exclude_tags_mode =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "include_actively_queried_tags_window" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            include_actively_queried_tags_window =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "override_existing_configurations" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            override_existing_configurations =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "tags" => {
                             if v.is_null() {
                                 continue;
@@ -128,6 +169,8 @@ impl<'de> Deserialize<'de> for MetricBulkTagConfigCreateAttributes {
                 let content = MetricBulkTagConfigCreateAttributes {
                     emails,
                     exclude_tags_mode,
+                    include_actively_queried_tags_window,
+                    override_existing_configurations,
                     tags,
                     additional_properties,
                     _unparsed,
