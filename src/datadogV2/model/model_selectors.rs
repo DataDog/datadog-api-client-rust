@@ -16,7 +16,7 @@ pub struct Selectors {
     /// The query is composed of one or several key:value pairs, which can be used to filter security issues on tags and attributes.
     #[serde(rename = "query")]
     pub query: Option<String>,
-    /// Security rule types used to filter signals and vulnerabilities generating notifications.
+    /// Security rule types used as filters in security rules.
     #[serde(rename = "rule_types")]
     pub rule_types: Option<Vec<crate::datadogV2::model::RuleTypesItems>>,
     /// The security rules severities to consider.

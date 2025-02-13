@@ -88,12 +88,14 @@ pub struct ListTagConfigurationsOptionalParams {
     /// Filter distributions with additional percentile
     /// aggregations enabled or disabled.
     pub filter_include_percentiles: Option<bool>,
-    /// (Beta) Filter custom metrics that have or have not been queried in the specified window[seconds].
+    /// (Preview) Filter custom metrics that have or have not been queried in the specified window[seconds].
     /// If no window is provided or the window is less than 2 hours, a default of 2 hours will be applied.
     pub filter_queried: Option<bool>,
     /// Filter metrics that have been submitted with the given tags. Supports boolean and wildcard expressions.
     /// Can only be combined with the filter[queried] filter.
     pub filter_tags: Option<String>,
+    /// (Preview) Filter metrics that are used in dashboards, monitors, notebooks, SLOs.
+    pub filter_related_assets: Option<bool>,
     /// The number of seconds of look back (from now) to apply to a filter[tag] or filter[queried] query.
     /// Default value is 3600 (1 hour), maximum value is 2,592,000 (30 days).
     pub window_seconds: Option<i64>,
@@ -130,7 +132,7 @@ impl ListTagConfigurationsOptionalParams {
         self.filter_include_percentiles = Some(value);
         self
     }
-    /// (Beta) Filter custom metrics that have or have not been queried in the specified window[seconds].
+    /// (Preview) Filter custom metrics that have or have not been queried in the specified window[seconds].
     /// If no window is provided or the window is less than 2 hours, a default of 2 hours will be applied.
     pub fn filter_queried(mut self, value: bool) -> Self {
         self.filter_queried = Some(value);
@@ -140,6 +142,11 @@ impl ListTagConfigurationsOptionalParams {
     /// Can only be combined with the filter[queried] filter.
     pub fn filter_tags(mut self, value: String) -> Self {
         self.filter_tags = Some(value);
+        self
+    }
+    /// (Preview) Filter metrics that are used in dashboards, monitors, notebooks, SLOs.
+    pub fn filter_related_assets(mut self, value: bool) -> Self {
+        self.filter_related_assets = Some(value);
         self
     }
     /// The number of seconds of look back (from now) to apply to a filter[tag] or filter[queried] query.
@@ -1545,6 +1552,7 @@ impl MetricsAPI {
         let filter_include_percentiles = params.filter_include_percentiles;
         let filter_queried = params.filter_queried;
         let filter_tags = params.filter_tags;
+        let filter_related_assets = params.filter_related_assets;
         let window_seconds = params.window_seconds;
         let page_size = params.page_size;
         let page_cursor = params.page_cursor;
@@ -1583,6 +1591,10 @@ impl MetricsAPI {
         if let Some(ref local_query_param) = filter_tags {
             local_req_builder =
                 local_req_builder.query(&[("filter[tags]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_related_assets {
+            local_req_builder = local_req_builder
+                .query(&[("filter[related_assets]", &local_query_param.to_string())]);
         };
         if let Some(ref local_query_param) = window_seconds {
             local_req_builder =

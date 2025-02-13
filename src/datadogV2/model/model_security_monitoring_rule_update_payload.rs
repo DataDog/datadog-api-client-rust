@@ -21,6 +21,9 @@ pub struct SecurityMonitoringRuleUpdatePayload {
     /// Additional queries to filter matched events before they are processed. This field is deprecated for log detection, signal correlation, and workload security rules.
     #[serde(rename = "filters")]
     pub filters: Option<Vec<crate::datadogV2::model::SecurityMonitoringFilter>>,
+    /// Additional grouping to perform on top of the existing groups in the query section. Must be a subset of the existing groups.
+    #[serde(rename = "groupSignalsBy")]
+    pub group_signals_by: Option<Vec<String>>,
     /// Whether the notifications include the triggering group-by values in their title.
     #[serde(rename = "hasExtendedTitle")]
     pub has_extended_title: Option<bool>,
@@ -65,6 +68,7 @@ impl SecurityMonitoringRuleUpdatePayload {
             cases: None,
             compliance_signal_options: None,
             filters: None,
+            group_signals_by: None,
             has_extended_title: None,
             is_enabled: None,
             message: None,
@@ -101,6 +105,11 @@ impl SecurityMonitoringRuleUpdatePayload {
         value: Vec<crate::datadogV2::model::SecurityMonitoringFilter>,
     ) -> Self {
         self.filters = Some(value);
+        self
+    }
+
+    pub fn group_signals_by(mut self, value: Vec<String>) -> Self {
+        self.group_signals_by = Some(value);
         self
     }
 
@@ -205,6 +214,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleUpdatePayload {
                 > = None;
                 let mut filters: Option<Vec<crate::datadogV2::model::SecurityMonitoringFilter>> =
                     None;
+                let mut group_signals_by: Option<Vec<String>> = None;
                 let mut has_extended_title: Option<bool> = None;
                 let mut is_enabled: Option<bool> = None;
                 let mut message: Option<String> = None;
@@ -247,6 +257,13 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleUpdatePayload {
                                 continue;
                             }
                             filters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "groupSignalsBy" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            group_signals_by =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "hasExtendedTitle" => {
                             if v.is_null() {
@@ -323,6 +340,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleUpdatePayload {
                     cases,
                     compliance_signal_options,
                     filters,
+                    group_signals_by,
                     has_extended_title,
                     is_enabled,
                     message,

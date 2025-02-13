@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct FastlyService {
-    /// The id of the Fastly service
+    /// The ID of the Fastly service
     #[serde(rename = "id")]
     pub id: String,
     /// A list of tags for the Fastly service.

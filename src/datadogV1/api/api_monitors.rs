@@ -56,7 +56,7 @@ impl GetMonitorOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct ListMonitorsOptionalParams {
     /// When specified, shows additional information about the group states.
-    /// Choose one or more from `all`, `alert`, `warn`, and `no data`.
+    /// Choose one or more from `all`, `alert`, `warn`, and `no data` (`no%20data`).
     pub group_states: Option<String>,
     /// A string to filter monitors by name.
     pub name: Option<String>,
@@ -78,7 +78,7 @@ pub struct ListMonitorsOptionalParams {
 
 impl ListMonitorsOptionalParams {
     /// When specified, shows additional information about the group states.
-    /// Choose one or more from `all`, `alert`, `warn`, and `no data`.
+    /// Choose one or more from `all`, `alert`, `warn`, and `no data` (`no%20data`).
     pub fn group_states(mut self, value: String) -> Self {
         self.group_states = Some(value);
         self

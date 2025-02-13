@@ -20,6 +20,9 @@ pub struct JobDefinition {
     /// Starting time of data analyzed by the job.
     #[serde(rename = "from")]
     pub from: i64,
+    /// Additional grouping to perform on top of the existing groups in the query section. Must be a subset of the existing groups.
+    #[serde(rename = "groupSignalsBy")]
+    pub group_signals_by: Option<Vec<String>>,
     /// Index used to load the data.
     #[serde(rename = "index")]
     pub index: String,
@@ -72,6 +75,7 @@ impl JobDefinition {
             calculated_fields: None,
             cases,
             from,
+            group_signals_by: None,
             index,
             message,
             name,
@@ -92,6 +96,11 @@ impl JobDefinition {
         value: Vec<crate::datadogV2::model::CalculatedField>,
     ) -> Self {
         self.calculated_fields = Some(value);
+        self
+    }
+
+    pub fn group_signals_by(mut self, value: Vec<String>) -> Self {
+        self.group_signals_by = Some(value);
         self
     }
 
@@ -158,6 +167,7 @@ impl<'de> Deserialize<'de> for JobDefinition {
                     Vec<crate::datadogV2::model::SecurityMonitoringRuleCaseCreate>,
                 > = None;
                 let mut from: Option<i64> = None;
+                let mut group_signals_by: Option<Vec<String>> = None;
                 let mut index: Option<String> = None;
                 let mut message: Option<String> = None;
                 let mut name: Option<String> = None;
@@ -192,6 +202,13 @@ impl<'de> Deserialize<'de> for JobDefinition {
                         }
                         "from" => {
                             from = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "groupSignalsBy" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            group_signals_by =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "index" => {
                             index = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -259,6 +276,7 @@ impl<'de> Deserialize<'de> for JobDefinition {
                     calculated_fields,
                     cases,
                     from,
+                    group_signals_by,
                     index,
                     message,
                     name,
