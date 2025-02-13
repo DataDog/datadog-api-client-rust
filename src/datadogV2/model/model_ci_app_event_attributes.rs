@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CIAppEventAttributes {
-    /// JSON object of attributes from CI Visibility test events.
+    /// JSON object of attributes from Test Optimization test events.
     #[serde(rename = "attributes")]
     pub attributes: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// Array of tags associated with your event.

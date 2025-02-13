@@ -1,15 +1,15 @@
 // Get a list of tests events returns "OK" response with pagination
 use chrono::{DateTime, Utc};
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api_ci_visibility_tests::CIVisibilityTestsAPI;
-use datadog_api_client::datadogV2::api_ci_visibility_tests::ListCIAppTestEventsOptionalParams;
+use datadog_api_client::datadogV2::api_test_optimization::ListCIAppTestEventsOptionalParams;
+use datadog_api_client::datadogV2::api_test_optimization::TestOptimizationAPI;
 use futures_util::pin_mut;
 use futures_util::stream::StreamExt;
 
 #[tokio::main]
 async fn main() {
     let configuration = datadog::Configuration::new();
-    let api = CIVisibilityTestsAPI::with_config(configuration);
+    let api = TestOptimizationAPI::with_config(configuration);
     let response = api.list_ci_app_test_events_with_pagination(
         ListCIAppTestEventsOptionalParams::default()
             .filter_from(

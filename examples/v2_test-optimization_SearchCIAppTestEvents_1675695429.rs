@@ -1,7 +1,7 @@
 // Search tests events returns "OK" response with pagination
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api_ci_visibility_tests::CIVisibilityTestsAPI;
-use datadog_api_client::datadogV2::api_ci_visibility_tests::SearchCIAppTestEventsOptionalParams;
+use datadog_api_client::datadogV2::api_test_optimization::SearchCIAppTestEventsOptionalParams;
+use datadog_api_client::datadogV2::api_test_optimization::TestOptimizationAPI;
 use datadog_api_client::datadogV2::model::CIAppQueryPageOptions;
 use datadog_api_client::datadogV2::model::CIAppSort;
 use datadog_api_client::datadogV2::model::CIAppTestEventsRequest;
@@ -21,7 +21,7 @@ async fn main() {
         .page(CIAppQueryPageOptions::new().limit(2))
         .sort(CIAppSort::TIMESTAMP_ASCENDING);
     let configuration = datadog::Configuration::new();
-    let api = CIVisibilityTestsAPI::with_config(configuration);
+    let api = TestOptimizationAPI::with_config(configuration);
     let response = api.search_ci_app_test_events_with_pagination(
         SearchCIAppTestEventsOptionalParams::default().body(body),
     );
