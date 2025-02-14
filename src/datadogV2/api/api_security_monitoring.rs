@@ -3943,6 +3943,14 @@ impl SecurityMonitoringAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_sbom";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_sbom' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
 
         // unbox and build optional parameters
         let filter_repo_digest = params.filter_repo_digest;
