@@ -6,25 +6,25 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum TableWidgetCellDisplayMode {
-    NUMBER,
-    BAR,
-    TREND,
+pub enum WidgetFormulaCellDisplayModeOptionsTrendType {
+    AREA,
+    LINE,
+    BARS,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for TableWidgetCellDisplayMode {
+impl ToString for WidgetFormulaCellDisplayModeOptionsTrendType {
     fn to_string(&self) -> String {
         match self {
-            Self::NUMBER => String::from("number"),
-            Self::BAR => String::from("bar"),
-            Self::TREND => String::from("trend"),
+            Self::AREA => String::from("area"),
+            Self::LINE => String::from("line"),
+            Self::BARS => String::from("bars"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for TableWidgetCellDisplayMode {
+impl Serialize for WidgetFormulaCellDisplayModeOptionsTrendType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -36,16 +36,16 @@ impl Serialize for TableWidgetCellDisplayMode {
     }
 }
 
-impl<'de> Deserialize<'de> for TableWidgetCellDisplayMode {
+impl<'de> Deserialize<'de> for WidgetFormulaCellDisplayModeOptionsTrendType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "number" => Self::NUMBER,
-            "bar" => Self::BAR,
-            "trend" => Self::TREND,
+            "area" => Self::AREA,
+            "line" => Self::LINE,
+            "bars" => Self::BARS,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
