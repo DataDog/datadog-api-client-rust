@@ -7,6 +7,7 @@ pub mod api_agentless_scanning;
 pub mod api_api_management;
 pub mod api_apm_retention_filters;
 pub mod api_app_builder;
+pub mod api_application_security;
 pub mod api_audit;
 pub mod api_authn_mappings;
 pub mod api_aws_integration;
