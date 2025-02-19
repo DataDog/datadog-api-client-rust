@@ -12,6 +12,7 @@ use datadog_api_client::datadogV2::model::EntityV3DatadogPerformance;
 use datadog_api_client::datadogV2::model::EntityV3DatadogPipelines;
 use datadog_api_client::datadogV2::model::EntityV3Integrations;
 use datadog_api_client::datadogV2::model::EntityV3Metadata;
+use datadog_api_client::datadogV2::model::EntityV3MetadataAdditionalOwnersItems;
 use datadog_api_client::datadogV2::model::EntityV3MetadataContactsItems;
 use datadog_api_client::datadogV2::model::EntityV3MetadataLinksItems;
 use datadog_api_client::datadogV2::model::EntityV3Service;
@@ -27,7 +28,9 @@ async fn main() {
             EntityV3APIVersion::V3,
             EntityV3ServiceKind::SERVICE,
             EntityV3Metadata::new("myService".to_string())
-                .additional_owners(vec![])
+                .additional_owners(vec![EntityV3MetadataAdditionalOwnersItems::new(
+                    "".to_string(),
+                )])
                 .contacts(vec![EntityV3MetadataContactsItems::new(
                     "https://slack/".to_string(),
                     "slack".to_string(),
