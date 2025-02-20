@@ -966,6 +966,8 @@ pub mod model_aws_cur_config;
 pub use self::model_aws_cur_config::AwsCURConfig;
 pub mod model_aws_cur_config_attributes;
 pub use self::model_aws_cur_config_attributes::AwsCURConfigAttributes;
+pub mod model_account_filtering_config;
+pub use self::model_account_filtering_config::AccountFilteringConfig;
 pub mod model_aws_cur_config_type;
 pub use self::model_aws_cur_config_type::AwsCURConfigType;
 pub mod model_aws_cur_config_post_request;

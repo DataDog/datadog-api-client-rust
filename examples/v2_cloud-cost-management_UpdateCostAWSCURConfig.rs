@@ -9,7 +9,7 @@ use datadog_api_client::datadogV2::model::AwsCURConfigPatchRequestType;
 #[tokio::main]
 async fn main() {
     let body = AwsCURConfigPatchRequest::new(AwsCURConfigPatchData::new(
-        AwsCURConfigPatchRequestAttributes::new(true),
+        AwsCURConfigPatchRequestAttributes::new().is_enabled(true),
         AwsCURConfigPatchRequestType::AWS_CUR_CONFIG_PATCH_REQUEST,
     ));
     let configuration = datadog::Configuration::new();
