@@ -6,17 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes for AWS CUR config Patch Request.
+/// The account filtering configuration.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct AwsCURConfigPatchRequestAttributes {
-    /// The account filtering configuration.
-    #[serde(rename = "account_filters")]
-    pub account_filters: Option<crate::datadogV2::model::AccountFilteringConfig>,
-    /// Whether or not the Cloud Cost Management account is enabled.
-    #[serde(rename = "is_enabled")]
-    pub is_enabled: Option<bool>,
+pub struct AccountFilteringConfig {
+    /// The AWS account IDs to be excluded from your billing dataset. This field is used when `include_new_accounts` is `true`.
+    #[serde(rename = "excluded_accounts")]
+    pub excluded_accounts: Option<Vec<String>>,
+    /// Whether or not to automatically include new member accounts by default in your billing dataset.
+    #[serde(rename = "include_new_accounts")]
+    pub include_new_accounts: Option<bool>,
+    /// The AWS account IDs to be included in your billing dataset. This field is used when `include_new_accounts` is `false`.
+    #[serde(rename = "included_accounts")]
+    pub included_accounts: Option<Vec<String>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,26 +27,29 @@ pub struct AwsCURConfigPatchRequestAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl AwsCURConfigPatchRequestAttributes {
-    pub fn new() -> AwsCURConfigPatchRequestAttributes {
-        AwsCURConfigPatchRequestAttributes {
-            account_filters: None,
-            is_enabled: None,
+impl AccountFilteringConfig {
+    pub fn new() -> AccountFilteringConfig {
+        AccountFilteringConfig {
+            excluded_accounts: None,
+            include_new_accounts: None,
+            included_accounts: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn account_filters(
-        mut self,
-        value: crate::datadogV2::model::AccountFilteringConfig,
-    ) -> Self {
-        self.account_filters = Some(value);
+    pub fn excluded_accounts(mut self, value: Vec<String>) -> Self {
+        self.excluded_accounts = Some(value);
         self
     }
 
-    pub fn is_enabled(mut self, value: bool) -> Self {
-        self.is_enabled = Some(value);
+    pub fn include_new_accounts(mut self, value: bool) -> Self {
+        self.include_new_accounts = Some(value);
+        self
+    }
+
+    pub fn included_accounts(mut self, value: Vec<String>) -> Self {
+        self.included_accounts = Some(value);
         self
     }
 
@@ -56,20 +62,20 @@ impl AwsCURConfigPatchRequestAttributes {
     }
 }
 
-impl Default for AwsCURConfigPatchRequestAttributes {
+impl Default for AccountFilteringConfig {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for AwsCURConfigPatchRequestAttributes {
+impl<'de> Deserialize<'de> for AccountFilteringConfig {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct AwsCURConfigPatchRequestAttributesVisitor;
-        impl<'a> Visitor<'a> for AwsCURConfigPatchRequestAttributesVisitor {
-            type Value = AwsCURConfigPatchRequestAttributes;
+        struct AccountFilteringConfigVisitor;
+        impl<'a> Visitor<'a> for AccountFilteringConfigVisitor {
+            type Value = AccountFilteringConfig;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -79,9 +85,9 @@ impl<'de> Deserialize<'de> for AwsCURConfigPatchRequestAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut account_filters: Option<crate::datadogV2::model::AccountFilteringConfig> =
-                    None;
-                let mut is_enabled: Option<bool> = None;
+                let mut excluded_accounts: Option<Vec<String>> = None;
+                let mut include_new_accounts: Option<bool> = None;
+                let mut included_accounts: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -90,18 +96,26 @@ impl<'de> Deserialize<'de> for AwsCURConfigPatchRequestAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "account_filters" => {
+                        "excluded_accounts" => {
                             if v.is_null() {
                                 continue;
                             }
-                            account_filters =
+                            excluded_accounts =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "is_enabled" => {
+                        "include_new_accounts" => {
                             if v.is_null() {
                                 continue;
                             }
-                            is_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            include_new_accounts =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "included_accounts" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            included_accounts =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -111,9 +125,10 @@ impl<'de> Deserialize<'de> for AwsCURConfigPatchRequestAttributes {
                     }
                 }
 
-                let content = AwsCURConfigPatchRequestAttributes {
-                    account_filters,
-                    is_enabled,
+                let content = AccountFilteringConfig {
+                    excluded_accounts,
+                    include_new_accounts,
+                    included_accounts,
                     additional_properties,
                     _unparsed,
                 };
@@ -122,6 +137,6 @@ impl<'de> Deserialize<'de> for AwsCURConfigPatchRequestAttributes {
             }
         }
 
-        deserializer.deserialize_any(AwsCURConfigPatchRequestAttributesVisitor)
+        deserializer.deserialize_any(AccountFilteringConfigVisitor)
     }
 }

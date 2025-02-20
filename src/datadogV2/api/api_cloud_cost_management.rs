@@ -1176,7 +1176,7 @@ impl CloudCostManagementAPI {
         }
     }
 
-    /// Update the status of an AWS CUR config (active/archived).
+    /// Update the status (active/archived) and/or account filtering configuration of an AWS CUR config.
     pub async fn update_cost_awscur_config(
         &self,
         cloud_account_id: String,
@@ -1202,7 +1202,7 @@ impl CloudCostManagementAPI {
         }
     }
 
-    /// Update the status of an AWS CUR config (active/archived).
+    /// Update the status (active/archived) and/or account filtering configuration of an AWS CUR config.
     pub async fn update_cost_awscur_config_with_http_info(
         &self,
         cloud_account_id: String,

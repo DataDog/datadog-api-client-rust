@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AwsCURConfigPostRequestAttributes {
+    /// The account filtering configuration.
+    #[serde(rename = "account_filters")]
+    pub account_filters: Option<crate::datadogV2::model::AccountFilteringConfig>,
     /// The AWS account ID.
     #[serde(rename = "account_id")]
     pub account_id: String,
@@ -47,6 +50,7 @@ impl AwsCURConfigPostRequestAttributes {
         report_prefix: String,
     ) -> AwsCURConfigPostRequestAttributes {
         AwsCURConfigPostRequestAttributes {
+            account_filters: None,
             account_id,
             bucket_name,
             bucket_region: None,
@@ -57,6 +61,14 @@ impl AwsCURConfigPostRequestAttributes {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn account_filters(
+        mut self,
+        value: crate::datadogV2::model::AccountFilteringConfig,
+    ) -> Self {
+        self.account_filters = Some(value);
+        self
     }
 
     pub fn bucket_region(mut self, value: String) -> Self {
@@ -100,6 +112,8 @@ impl<'de> Deserialize<'de> for AwsCURConfigPostRequestAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut account_filters: Option<crate::datadogV2::model::AccountFilteringConfig> =
+                    None;
                 let mut account_id: Option<String> = None;
                 let mut bucket_name: Option<String> = None;
                 let mut bucket_region: Option<String> = None;
@@ -115,6 +129,13 @@ impl<'de> Deserialize<'de> for AwsCURConfigPostRequestAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "account_filters" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            account_filters =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "account_id" => {
                             account_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -165,6 +186,7 @@ impl<'de> Deserialize<'de> for AwsCURConfigPostRequestAttributes {
                     report_prefix.ok_or_else(|| M::Error::missing_field("report_prefix"))?;
 
                 let content = AwsCURConfigPostRequestAttributes {
+                    account_filters,
                     account_id,
                     bucket_name,
                     bucket_region,
