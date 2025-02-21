@@ -17,6 +17,10 @@ pub struct WidgetFormula {
     /// Define a display mode for the table cell.
     #[serde(rename = "cell_display_mode")]
     pub cell_display_mode: Option<crate::datadogV1::model::TableWidgetCellDisplayMode>,
+    /// Cell display mode options for the widget formula. (only if `cell_display_mode` is set to `trend`).
+    #[serde(rename = "cell_display_mode_options")]
+    pub cell_display_mode_options:
+        Option<crate::datadogV1::model::WidgetFormulaCellDisplayModeOptions>,
     /// List of conditional formats.
     #[serde(rename = "conditional_formats")]
     pub conditional_formats: Option<Vec<crate::datadogV1::model::WidgetConditionalFormat>>,
@@ -44,6 +48,7 @@ impl WidgetFormula {
         WidgetFormula {
             alias: None,
             cell_display_mode: None,
+            cell_display_mode_options: None,
             conditional_formats: None,
             formula,
             limit: None,
@@ -64,6 +69,14 @@ impl WidgetFormula {
         value: crate::datadogV1::model::TableWidgetCellDisplayMode,
     ) -> Self {
         self.cell_display_mode = Some(value);
+        self
+    }
+
+    pub fn cell_display_mode_options(
+        mut self,
+        value: crate::datadogV1::model::WidgetFormulaCellDisplayModeOptions,
+    ) -> Self {
+        self.cell_display_mode_options = Some(value);
         self
     }
 
@@ -120,6 +133,9 @@ impl<'de> Deserialize<'de> for WidgetFormula {
                 let mut cell_display_mode: Option<
                     crate::datadogV1::model::TableWidgetCellDisplayMode,
                 > = None;
+                let mut cell_display_mode_options: Option<
+                    crate::datadogV1::model::WidgetFormulaCellDisplayModeOptions,
+                > = None;
                 let mut conditional_formats: Option<
                     Vec<crate::datadogV1::model::WidgetConditionalFormat>,
                 > = None;
@@ -155,6 +171,13 @@ impl<'de> Deserialize<'de> for WidgetFormula {
                                     _ => {}
                                 }
                             }
+                        }
+                        "cell_display_mode_options" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cell_display_mode_options =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "conditional_formats" => {
                             if v.is_null() {
@@ -197,6 +220,7 @@ impl<'de> Deserialize<'de> for WidgetFormula {
                 let content = WidgetFormula {
                     alias,
                     cell_display_mode,
+                    cell_display_mode_options,
                     conditional_formats,
                     formula,
                     limit,
