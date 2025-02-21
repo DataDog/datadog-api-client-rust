@@ -15,6 +15,10 @@ pub enum SecurityMonitoringRuleEvaluationWindow {
     THIRTY_MINUTES,
     ONE_HOUR,
     TWO_HOURS,
+    THREE_HOURS,
+    SIX_HOURS,
+    TWELVE_HOURS,
+    ONE_DAY,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -33,6 +37,10 @@ impl Serialize for SecurityMonitoringRuleEvaluationWindow {
             Self::THIRTY_MINUTES => serializer.serialize_i32(1800),
             Self::ONE_HOUR => serializer.serialize_i32(3600),
             Self::TWO_HOURS => serializer.serialize_i32(7200),
+            Self::THREE_HOURS => serializer.serialize_i32(10800),
+            Self::SIX_HOURS => serializer.serialize_i32(21600),
+            Self::TWELVE_HOURS => serializer.serialize_i32(43200),
+            Self::ONE_DAY => serializer.serialize_i32(86400),
         }
     }
 }
@@ -52,6 +60,10 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleEvaluationWindow {
             1800 => Self::THIRTY_MINUTES,
             3600 => Self::ONE_HOUR,
             7200 => Self::TWO_HOURS,
+            10800 => Self::THREE_HOURS,
+            21600 => Self::SIX_HOURS,
+            43200 => Self::TWELVE_HOURS,
+            86400 => Self::ONE_DAY,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::Number(s.into()),
             }),
