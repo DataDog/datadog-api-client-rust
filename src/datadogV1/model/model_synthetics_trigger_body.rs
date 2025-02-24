@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SyntheticsTriggerBody {
-    /// Individual Synthetic test.
+    /// List of Synthetic tests.
     #[serde(rename = "tests")]
     pub tests: Vec<crate::datadogV1::model::SyntheticsTriggerTest>,
     #[serde(flatten)]
