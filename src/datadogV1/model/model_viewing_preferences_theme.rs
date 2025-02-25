@@ -6,25 +6,25 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum DashboardShareType {
-    OPEN,
-    INVITE,
-    EMBED,
+pub enum ViewingPreferencesTheme {
+    SYSTEM,
+    LIGHT,
+    DARK,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for DashboardShareType {
+impl ToString for ViewingPreferencesTheme {
     fn to_string(&self) -> String {
         match self {
-            Self::OPEN => String::from("open"),
-            Self::INVITE => String::from("invite"),
-            Self::EMBED => String::from("embed"),
+            Self::SYSTEM => String::from("system"),
+            Self::LIGHT => String::from("light"),
+            Self::DARK => String::from("dark"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for DashboardShareType {
+impl Serialize for ViewingPreferencesTheme {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -36,16 +36,16 @@ impl Serialize for DashboardShareType {
     }
 }
 
-impl<'de> Deserialize<'de> for DashboardShareType {
+impl<'de> Deserialize<'de> for ViewingPreferencesTheme {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "open" => Self::OPEN,
-            "invite" => Self::INVITE,
-            "embed" => Self::EMBED,
+            "system" => Self::SYSTEM,
+            "light" => Self::LIGHT,
+            "dark" => Self::DARK,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
