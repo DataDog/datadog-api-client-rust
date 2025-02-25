@@ -10,12 +10,13 @@ use datadog_api_client::datadogV1::model::SharedDashboardUpdateRequestGlobalTime
 async fn main() {
     // there is a valid "shared_dashboard" in the system
     let shared_dashboard_token = std::env::var("SHARED_DASHBOARD_TOKEN").unwrap();
-    let body = SharedDashboardUpdateRequest::new(Some(
-        SharedDashboardUpdateRequestGlobalTime::new()
-            .live_span(DashboardGlobalTimeLiveSpan::PAST_FIFTEEN_MINUTES),
-    ))
-    .share_list(Some(vec![]))
-    .share_type(Some(DashboardShareType::OPEN));
+    let body = SharedDashboardUpdateRequest::new()
+        .global_time(Some(
+            SharedDashboardUpdateRequestGlobalTime::new()
+                .live_span(DashboardGlobalTimeLiveSpan::PAST_FIFTEEN_MINUTES),
+        ))
+        .share_list(Some(vec![]))
+        .share_type(Some(DashboardShareType::OPEN));
     let configuration = datadog::Configuration::new();
     let api = DashboardsAPI::with_config(configuration);
     let resp = api
