@@ -23,6 +23,9 @@ pub struct SyntheticsAPITestStep {
     /// Array of values to parse and save as variables from the response.
     #[serde(rename = "extractedValues")]
     pub extracted_values: Option<Vec<crate::datadogV1::model::SyntheticsParsingOptions>>,
+    /// Generate variables using JavaScript.
+    #[serde(rename = "extractedValuesFromScript")]
+    pub extracted_values_from_script: Option<String>,
     /// Determines whether or not to consider the entire test as failed if this step fails.
     /// Can be used only if `allowFailure` is `true`.
     #[serde(rename = "isCritical")]
@@ -58,6 +61,7 @@ impl SyntheticsAPITestStep {
             assertions,
             exit_if_succeed: None,
             extracted_values: None,
+            extracted_values_from_script: None,
             is_critical: None,
             name,
             request,
@@ -83,6 +87,11 @@ impl SyntheticsAPITestStep {
         value: Vec<crate::datadogV1::model::SyntheticsParsingOptions>,
     ) -> Self {
         self.extracted_values = Some(value);
+        self
+    }
+
+    pub fn extracted_values_from_script(mut self, value: String) -> Self {
+        self.extracted_values_from_script = Some(value);
         self
     }
 
@@ -129,6 +138,7 @@ impl<'de> Deserialize<'de> for SyntheticsAPITestStep {
                 let mut extracted_values: Option<
                     Vec<crate::datadogV1::model::SyntheticsParsingOptions>,
                 > = None;
+                let mut extracted_values_from_script: Option<String> = None;
                 let mut is_critical: Option<bool> = None;
                 let mut name: Option<String> = None;
                 let mut request: Option<crate::datadogV1::model::SyntheticsTestRequest> = None;
@@ -165,6 +175,13 @@ impl<'de> Deserialize<'de> for SyntheticsAPITestStep {
                                 continue;
                             }
                             extracted_values =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "extractedValuesFromScript" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            extracted_values_from_script =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "isCritical" => {
@@ -214,6 +231,7 @@ impl<'de> Deserialize<'de> for SyntheticsAPITestStep {
                     assertions,
                     exit_if_succeed,
                     extracted_values,
+                    extracted_values_from_script,
                     is_critical,
                     name,
                     request,

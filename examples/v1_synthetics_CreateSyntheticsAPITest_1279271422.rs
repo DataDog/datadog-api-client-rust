@@ -82,6 +82,9 @@ async fn main() {
                                                 .type_(SyntheticsLocalVariableParsingOptionsType::HTTP_HEADER)
                                         ],
                                     )
+                                    .extracted_values_from_script(
+                                        "dd.variable.set('STATUS_CODE', dd.response.statusCode);".to_string(),
+                                    )
                                     .is_critical(true)
                                     .retry(SyntheticsTestOptionsRetry::new().count(5).interval(1000.0 as f64)),
                             ),
