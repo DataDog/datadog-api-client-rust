@@ -13,13 +13,12 @@ use std::fmt::{self, Formatter};
 pub struct SecurityMonitoringRuleNewValueOptions {
     /// The duration in days after which a learned value is forgotten.
     #[serde(rename = "forgetAfter")]
-    pub forget_after:
-        Option<crate::datadogV2::model::SecurityMonitoringRuleNewValueOptionsForgetAfter>,
+    pub forget_after: Option<i32>,
     /// The duration in days during which values are learned, and after which signals will be generated for values that
     /// weren't learned. If set to 0, a signal will be generated for all new values after the first value is learned.
+    /// The value must be between 0 and 30 (inclusive).
     #[serde(rename = "learningDuration")]
-    pub learning_duration:
-        Option<crate::datadogV2::model::SecurityMonitoringRuleNewValueOptionsLearningDuration>,
+    pub learning_duration: Option<i32>,
     /// The learning method used to determine when signals should be generated for values that weren't learned.
     #[serde(rename = "learningMethod")]
     pub learning_method:
@@ -47,18 +46,12 @@ impl SecurityMonitoringRuleNewValueOptions {
         }
     }
 
-    pub fn forget_after(
-        mut self,
-        value: crate::datadogV2::model::SecurityMonitoringRuleNewValueOptionsForgetAfter,
-    ) -> Self {
+    pub fn forget_after(mut self, value: i32) -> Self {
         self.forget_after = Some(value);
         self
     }
 
-    pub fn learning_duration(
-        mut self,
-        value: crate::datadogV2::model::SecurityMonitoringRuleNewValueOptionsLearningDuration,
-    ) -> Self {
+    pub fn learning_duration(mut self, value: i32) -> Self {
         self.learning_duration = Some(value);
         self
     }
@@ -111,12 +104,8 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleNewValueOptions {
             where
                 M: MapAccess<'a>,
             {
-                let mut forget_after: Option<
-                    crate::datadogV2::model::SecurityMonitoringRuleNewValueOptionsForgetAfter,
-                > = None;
-                let mut learning_duration: Option<
-                    crate::datadogV2::model::SecurityMonitoringRuleNewValueOptionsLearningDuration,
-                > = None;
+                let mut forget_after: Option<i32> = None;
+                let mut learning_duration: Option<i32> = None;
                 let mut learning_method: Option<
                     crate::datadogV2::model::SecurityMonitoringRuleNewValueOptionsLearningMethod,
                 > = None;
@@ -137,14 +126,6 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleNewValueOptions {
                             }
                             forget_after =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _forget_after) = forget_after {
-                                match _forget_after {
-                                    crate::datadogV2::model::SecurityMonitoringRuleNewValueOptionsForgetAfter::UnparsedObject(_forget_after) => {
-                                        _unparsed = true;
-                                    },
-                                    _ => {}
-                                }
-                            }
                         }
                         "learningDuration" => {
                             if v.is_null() {
@@ -152,14 +133,6 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleNewValueOptions {
                             }
                             learning_duration =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _learning_duration) = learning_duration {
-                                match _learning_duration {
-                                    crate::datadogV2::model::SecurityMonitoringRuleNewValueOptionsLearningDuration::UnparsedObject(_learning_duration) => {
-                                        _unparsed = true;
-                                    },
-                                    _ => {}
-                                }
-                            }
                         }
                         "learningMethod" => {
                             if v.is_null() {
