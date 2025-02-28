@@ -34,6 +34,17 @@ def option_wrapper(name, option, nullable):
         name = f"Option<{name}>"
     return name
 
+
+def is_additional_properties_container(schema):
+    if schema.get("type", "object") != "object":
+        return False
+    if "properties" in schema:
+        return False
+    if schema.get("additionalProperties", False) is False:
+        return False
+    return True
+
+
 def type_to_rust(schema, alternative_name=None, render_nullable=False, render_option=True, render_box=False, version=None):
     """Return Rust type name for the type."""
     # special case for additionalProperties: true
@@ -49,7 +60,8 @@ def type_to_rust(schema, alternative_name=None, render_nullable=False, render_op
     if name:
         if "enum" in schema:
             return option_wrapper(name, render_option, render_nullable)
-        if not (schema.get("additionalProperties") and not schema.get("properties")) and schema.get("type", "object") == "object":
+
+        if not is_additional_properties_container(schema) and "items" not in schema:
             name = f"Box<{name}>" if render_box else name
             return option_wrapper(name, render_option, render_nullable)
 
