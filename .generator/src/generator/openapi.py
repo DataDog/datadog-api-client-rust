@@ -11,7 +11,7 @@ from urllib.parse import urlparse
 from yaml import CSafeLoader
 
 from . import formatter
-from .utils import schema_name
+from .utils import schema_name, is_additional_properties_container
 
 
 def load(filename):
@@ -33,16 +33,6 @@ def option_wrapper(name, option, nullable):
     if nullable:
         name = f"Option<{name}>"
     return name
-
-
-def is_additional_properties_container(schema):
-    if schema.get("type", "object") != "object":
-        return False
-    if "properties" in schema:
-        return False
-    if schema.get("additionalProperties", False) is False:
-        return False
-    return True
 
 
 def type_to_rust(schema, alternative_name=None, render_nullable=False, render_option=True, render_box=False, version=None):

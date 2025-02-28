@@ -45,3 +45,13 @@ def schema_name(schema):
 def given_variables(context):
     """Return a list of variables using in given steps."""
     return {key for values in context.get("_given", {}).values() for key in values}
+
+
+def is_additional_properties_container(schema):
+    if schema.get("type", "object") != "object":
+        return False
+    if "properties" in schema:
+        return False
+    if schema.get("additionalProperties", False) is False:
+        return False
+    return True
