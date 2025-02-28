@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MonitorOptionsSchedulingOptionsEvaluationWindow {
-    /// The time of the day at which a one day cumulative evaluation window starts. Must be defined in UTC time in `HH:mm` format.
+    /// The time of the day at which a one day cumulative evaluation window starts.
     #[serde(rename = "day_starts")]
     pub day_starts: Option<String>,
     /// The minute of the hour at which a one hour cumulative evaluation window starts.
@@ -20,6 +20,9 @@ pub struct MonitorOptionsSchedulingOptionsEvaluationWindow {
     /// The day of the month at which a one month cumulative evaluation window starts.
     #[serde(rename = "month_starts")]
     pub month_starts: Option<i32>,
+    /// The timezone of the time of the day of the cumulative evaluation window start.
+    #[serde(rename = "timezone")]
+    pub timezone: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -33,6 +36,7 @@ impl MonitorOptionsSchedulingOptionsEvaluationWindow {
             day_starts: None,
             hour_starts: None,
             month_starts: None,
+            timezone: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -50,6 +54,11 @@ impl MonitorOptionsSchedulingOptionsEvaluationWindow {
 
     pub fn month_starts(mut self, value: i32) -> Self {
         self.month_starts = Some(value);
+        self
+    }
+
+    pub fn timezone(mut self, value: String) -> Self {
+        self.timezone = Some(value);
         self
     }
 
@@ -88,6 +97,7 @@ impl<'de> Deserialize<'de> for MonitorOptionsSchedulingOptionsEvaluationWindow {
                 let mut day_starts: Option<String> = None;
                 let mut hour_starts: Option<i32> = None;
                 let mut month_starts: Option<i32> = None;
+                let mut timezone: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -116,6 +126,12 @@ impl<'de> Deserialize<'de> for MonitorOptionsSchedulingOptionsEvaluationWindow {
                             month_starts =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "timezone" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            timezone = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -128,6 +144,7 @@ impl<'de> Deserialize<'de> for MonitorOptionsSchedulingOptionsEvaluationWindow {
                     day_starts,
                     hour_starts,
                     month_starts,
+                    timezone,
                     additional_properties,
                     _unparsed,
                 };
