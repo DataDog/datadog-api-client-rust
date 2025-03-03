@@ -5,8 +5,7 @@ use datadog_api_client::datadogV2::api_app_builder::ListAppsOptionalParams;
 
 #[tokio::main]
 async fn main() {
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListApps", true);
+    let configuration = datadog::Configuration::new();
     let api = AppBuilderAPI::with_config(configuration);
     let resp = api.list_apps(ListAppsOptionalParams::default()).await;
     if let Ok(value) = resp {
