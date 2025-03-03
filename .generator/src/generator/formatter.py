@@ -5,7 +5,7 @@ import re
 
 import dateutil.parser
 
-from .utils import snake_case, camel_case, untitle_case, schema_name
+from .utils import snake_case, camel_case, untitle_case, schema_name, is_additional_properties_container
 
 PRIMITIVE_TYPES = ["string", "number", "boolean", "integer"]
 
@@ -362,7 +362,7 @@ def _format_oneof(schema, data, name, replace_values, imports, **kwargs):
     if not one_of_schema_name:
         one_of_schema_name = simple_type(one_of_schema, render_option=False).title()
 
-    if not is_primitive(one_of_schema) and one_of_schema.get("type") != "array":
+    if not is_primitive(one_of_schema) and one_of_schema.get("type") != "array" and not is_additional_properties_container(one_of_schema):
         # TODO: revisit possibility of removing all boxes
         parameters = f"Box::new({parameters})"
     if name:

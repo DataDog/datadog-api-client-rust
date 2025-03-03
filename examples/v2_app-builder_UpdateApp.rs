@@ -20,8 +20,7 @@ async fn main() {
             )
             .id(app_data_id.clone()),
     );
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateApp", true);
+    let configuration = datadog::Configuration::new();
     let api = AppBuilderAPI::with_config(configuration);
     let resp = api.update_app(app_data_id.clone(), body).await;
     if let Ok(value) = resp {
