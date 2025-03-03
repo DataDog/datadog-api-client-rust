@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response object that includes the scan options of an AWS account.
+/// Response object that includes a list of AWS scan options.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct AwsScanOptionsResponse {
-    /// Single AWS Scan Options entry.
+pub struct AwsScanOptionsListResponse {
+    /// A list of AWS scan options.
     #[serde(rename = "data")]
-    pub data: Option<crate::datadogV2::model::AwsScanOptionsData>,
+    pub data: Option<Vec<crate::datadogV2::model::AwsScanOptionsData>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,16 +21,16 @@ pub struct AwsScanOptionsResponse {
     pub(crate) _unparsed: bool,
 }
 
-impl AwsScanOptionsResponse {
-    pub fn new() -> AwsScanOptionsResponse {
-        AwsScanOptionsResponse {
+impl AwsScanOptionsListResponse {
+    pub fn new() -> AwsScanOptionsListResponse {
+        AwsScanOptionsListResponse {
             data: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn data(mut self, value: crate::datadogV2::model::AwsScanOptionsData) -> Self {
+    pub fn data(mut self, value: Vec<crate::datadogV2::model::AwsScanOptionsData>) -> Self {
         self.data = Some(value);
         self
     }
@@ -44,20 +44,20 @@ impl AwsScanOptionsResponse {
     }
 }
 
-impl Default for AwsScanOptionsResponse {
+impl Default for AwsScanOptionsListResponse {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for AwsScanOptionsResponse {
+impl<'de> Deserialize<'de> for AwsScanOptionsListResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct AwsScanOptionsResponseVisitor;
-        impl<'a> Visitor<'a> for AwsScanOptionsResponseVisitor {
-            type Value = AwsScanOptionsResponse;
+        struct AwsScanOptionsListResponseVisitor;
+        impl<'a> Visitor<'a> for AwsScanOptionsListResponseVisitor {
+            type Value = AwsScanOptionsListResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -67,7 +67,7 @@ impl<'de> Deserialize<'de> for AwsScanOptionsResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::AwsScanOptionsData> = None;
+                let mut data: Option<Vec<crate::datadogV2::model::AwsScanOptionsData>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -90,7 +90,7 @@ impl<'de> Deserialize<'de> for AwsScanOptionsResponse {
                     }
                 }
 
-                let content = AwsScanOptionsResponse {
+                let content = AwsScanOptionsListResponse {
                     data,
                     additional_properties,
                     _unparsed,
@@ -100,6 +100,6 @@ impl<'de> Deserialize<'de> for AwsScanOptionsResponse {
             }
         }
 
-        deserializer.deserialize_any(AwsScanOptionsResponseVisitor)
+        deserializer.deserialize_any(AwsScanOptionsListResponseVisitor)
     }
 }
