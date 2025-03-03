@@ -21,7 +21,7 @@ pub struct EventCreateRequest {
     #[serde(rename = "alert_type")]
     pub alert_type: Option<crate::datadogV1::model::EventAlertType>,
     /// POSIX timestamp of the event. Must be sent as an integer (that is no quotes).
-    /// Limited to events no older than 18 hours
+    /// Limited to events within the past 18 hours and up to 5 minutes into the future.
     #[serde(rename = "date_happened")]
     pub date_happened: Option<i64>,
     /// A device name.
