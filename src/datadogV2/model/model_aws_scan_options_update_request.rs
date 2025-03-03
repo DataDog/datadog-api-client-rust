@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response object that includes the scan options of an AWS account.
+/// Request object that includes the scan options to update.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct AwsScanOptionsResponse {
-    /// Single AWS Scan Options entry.
+pub struct AwsScanOptionsUpdateRequest {
+    /// Object for the scan options of a single AWS account.
     #[serde(rename = "data")]
-    pub data: Option<crate::datadogV2::model::AwsScanOptionsData>,
+    pub data: crate::datadogV2::model::AwsScanOptionsUpdateData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,18 +21,15 @@ pub struct AwsScanOptionsResponse {
     pub(crate) _unparsed: bool,
 }
 
-impl AwsScanOptionsResponse {
-    pub fn new() -> AwsScanOptionsResponse {
-        AwsScanOptionsResponse {
-            data: None,
+impl AwsScanOptionsUpdateRequest {
+    pub fn new(
+        data: crate::datadogV2::model::AwsScanOptionsUpdateData,
+    ) -> AwsScanOptionsUpdateRequest {
+        AwsScanOptionsUpdateRequest {
+            data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn data(mut self, value: crate::datadogV2::model::AwsScanOptionsData) -> Self {
-        self.data = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -44,20 +41,14 @@ impl AwsScanOptionsResponse {
     }
 }
 
-impl Default for AwsScanOptionsResponse {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<'de> Deserialize<'de> for AwsScanOptionsResponse {
+impl<'de> Deserialize<'de> for AwsScanOptionsUpdateRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct AwsScanOptionsResponseVisitor;
-        impl<'a> Visitor<'a> for AwsScanOptionsResponseVisitor {
-            type Value = AwsScanOptionsResponse;
+        struct AwsScanOptionsUpdateRequestVisitor;
+        impl<'a> Visitor<'a> for AwsScanOptionsUpdateRequestVisitor {
+            type Value = AwsScanOptionsUpdateRequest;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -67,7 +58,7 @@ impl<'de> Deserialize<'de> for AwsScanOptionsResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::AwsScanOptionsData> = None;
+                let mut data: Option<crate::datadogV2::model::AwsScanOptionsUpdateData> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -77,9 +68,6 @@ impl<'de> Deserialize<'de> for AwsScanOptionsResponse {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "data" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -89,8 +77,9 @@ impl<'de> Deserialize<'de> for AwsScanOptionsResponse {
                         }
                     }
                 }
+                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = AwsScanOptionsResponse {
+                let content = AwsScanOptionsUpdateRequest {
                     data,
                     additional_properties,
                     _unparsed,
@@ -100,6 +89,6 @@ impl<'de> Deserialize<'de> for AwsScanOptionsResponse {
             }
         }
 
-        deserializer.deserialize_any(AwsScanOptionsResponseVisitor)
+        deserializer.deserialize_any(AwsScanOptionsUpdateRequestVisitor)
     }
 }

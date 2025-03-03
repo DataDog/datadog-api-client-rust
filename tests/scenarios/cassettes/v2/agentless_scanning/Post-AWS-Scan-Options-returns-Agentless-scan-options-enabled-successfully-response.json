@@ -1,0 +1,67 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"lambda\":false,\"vuln_containers_os\":true,\"vuln_host_os\":true},\"id\":\"000000000003\",\"type\":\"aws_scan_options\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/agentless_scanning/accounts/aws"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":{\"id\":\"000000000003\",\"type\":\"aws_scan_options\",\"attributes\":{\"lambda\":false,\"vuln_containers_os\":true,\"vuln_host_os\":true}}}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 201,
+          "message": "Created"
+        }
+      },
+      "recorded_at": "Sat, 01 Mar 2025 15:19:57 GMT"
+    },
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "*/*"
+          ]
+        },
+        "method": "delete",
+        "uri": "https://api.datadoghq.com/api/v2/agentless_scanning/accounts/aws/000000000003"
+      },
+      "response": {
+        "body": {
+          "string": "",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Sat, 01 Mar 2025 15:19:57 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

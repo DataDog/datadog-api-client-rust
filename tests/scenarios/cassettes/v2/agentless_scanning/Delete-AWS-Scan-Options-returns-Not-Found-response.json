@@ -5,15 +5,15 @@
         "body": "",
         "headers": {
           "Accept": [
-            "application/json"
+            "*/*"
           ]
         },
-        "method": "get",
-        "uri": "https://api.datadoghq.com/api/v2/agentless_scanning/accounts/aws"
+        "method": "delete",
+        "uri": "https://api.datadoghq.com/api/v2/agentless_scanning/accounts/aws/000000000005"
       },
       "response": {
         "body": {
-          "string": "{\"data\":[{\"id\":\"000000000002\",\"type\":\"aws_scan_options\",\"attributes\":{\"lambda\":false,\"sensitive_data\":false,\"vuln_containers_os\":true,\"vuln_host_os\":true}}]}",
+          "string": "{\"errors\":[{\"status\":\"404\",\"detail\":\"no aws scan options found for subscription 000000000005\"}]}",
           "encoding": null
         },
         "headers": {
@@ -22,8 +22,8 @@
           ]
         },
         "status": {
-          "code": 200,
-          "message": "OK"
+          "code": 404,
+          "message": "Not Found"
         }
       },
       "recorded_at": "Sat, 01 Mar 2025 20:02:08 GMT"
