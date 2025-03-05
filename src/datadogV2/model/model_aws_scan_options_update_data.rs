@@ -16,7 +16,7 @@ pub struct AwsScanOptionsUpdateData {
     pub attributes: crate::datadogV2::model::AwsScanOptionsUpdateAttributes,
     /// The ID of the AWS account.
     #[serde(rename = "id")]
-    pub id: Option<String>,
+    pub id: String,
     /// The type of the resource. The value should always be `aws_scan_options`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::AwsScanOptionsType,
@@ -30,20 +30,16 @@ pub struct AwsScanOptionsUpdateData {
 impl AwsScanOptionsUpdateData {
     pub fn new(
         attributes: crate::datadogV2::model::AwsScanOptionsUpdateAttributes,
+        id: String,
         type_: crate::datadogV2::model::AwsScanOptionsType,
     ) -> AwsScanOptionsUpdateData {
         AwsScanOptionsUpdateData {
             attributes,
-            id: None,
+            id,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn id(mut self, value: String) -> Self {
-        self.id = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -89,9 +85,6 @@ impl<'de> Deserialize<'de> for AwsScanOptionsUpdateData {
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "id" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
@@ -115,6 +108,7 @@ impl<'de> Deserialize<'de> for AwsScanOptionsUpdateData {
                     }
                 }
                 let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
+                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = AwsScanOptionsUpdateData {

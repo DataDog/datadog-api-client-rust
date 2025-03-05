@@ -6,20 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Object for the scan options of a single AWS account.
+/// Single AWS on demand task.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct AwsScanOptionsCreateData {
-    /// Attributes for the AWS scan options to create.
+pub struct AwsOnDemandData {
+    /// Attributes for the AWS on demand task.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::AwsScanOptionsCreateAttributes,
-    /// The ID of the AWS account.
+    pub attributes: Option<crate::datadogV2::model::AwsOnDemandAttributes>,
+    /// The UUID of the task.
     #[serde(rename = "id")]
-    pub id: String,
-    /// The type of the resource. The value should always be `aws_scan_options`.
+    pub id: Option<String>,
+    /// The type of the on demand task. The value should always be `aws_resource`.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::AwsScanOptionsType,
+    pub type_: Option<crate::datadogV2::model::AwsOnDemandType>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,19 +27,30 @@ pub struct AwsScanOptionsCreateData {
     pub(crate) _unparsed: bool,
 }
 
-impl AwsScanOptionsCreateData {
-    pub fn new(
-        attributes: crate::datadogV2::model::AwsScanOptionsCreateAttributes,
-        id: String,
-        type_: crate::datadogV2::model::AwsScanOptionsType,
-    ) -> AwsScanOptionsCreateData {
-        AwsScanOptionsCreateData {
-            attributes,
-            id,
-            type_,
+impl AwsOnDemandData {
+    pub fn new() -> AwsOnDemandData {
+        AwsOnDemandData {
+            attributes: None,
+            id: None,
+            type_: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn attributes(mut self, value: crate::datadogV2::model::AwsOnDemandAttributes) -> Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn id(mut self, value: String) -> Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn type_(mut self, value: crate::datadogV2::model::AwsOnDemandType) -> Self {
+        self.type_ = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -51,14 +62,20 @@ impl AwsScanOptionsCreateData {
     }
 }
 
-impl<'de> Deserialize<'de> for AwsScanOptionsCreateData {
+impl Default for AwsOnDemandData {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for AwsOnDemandData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct AwsScanOptionsCreateDataVisitor;
-        impl<'a> Visitor<'a> for AwsScanOptionsCreateDataVisitor {
-            type Value = AwsScanOptionsCreateData;
+        struct AwsOnDemandDataVisitor;
+        impl<'a> Visitor<'a> for AwsOnDemandDataVisitor {
+            type Value = AwsOnDemandData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -68,11 +85,9 @@ impl<'de> Deserialize<'de> for AwsScanOptionsCreateData {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<
-                    crate::datadogV2::model::AwsScanOptionsCreateAttributes,
-                > = None;
+                let mut attributes: Option<crate::datadogV2::model::AwsOnDemandAttributes> = None;
                 let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::AwsScanOptionsType> = None;
+                let mut type_: Option<crate::datadogV2::model::AwsOnDemandType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -82,16 +97,25 @@ impl<'de> Deserialize<'de> for AwsScanOptionsCreateData {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "attributes" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "id" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::AwsScanOptionsType::UnparsedObject(
+                                    crate::datadogV2::model::AwsOnDemandType::UnparsedObject(
                                         _type_,
                                     ) => {
                                         _unparsed = true;
@@ -107,11 +131,8 @@ impl<'de> Deserialize<'de> for AwsScanOptionsCreateData {
                         }
                     }
                 }
-                let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
-                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
-                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = AwsScanOptionsCreateData {
+                let content = AwsOnDemandData {
                     attributes,
                     id,
                     type_,
@@ -123,6 +144,6 @@ impl<'de> Deserialize<'de> for AwsScanOptionsCreateData {
             }
         }
 
-        deserializer.deserialize_any(AwsScanOptionsCreateDataVisitor)
+        deserializer.deserialize_any(AwsOnDemandDataVisitor)
     }
 }
