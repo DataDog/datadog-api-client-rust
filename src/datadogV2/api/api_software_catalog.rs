@@ -303,9 +303,6 @@ impl SoftwareCatalogAPI {
             } else {
                 page_size = params.page_limit.unwrap().clone();
             }
-            if params.page_offset.is_none() {
-                params.page_offset = Some(0);
-            }
             loop {
                 let resp = self.list_catalog_entity(params.clone()).await?;
                 let Some(data) = resp.data else { break };
@@ -319,7 +316,11 @@ impl SoftwareCatalogAPI {
                 if count < page_size as usize {
                     break;
                 }
-                params.page_offset = Some(params.page_offset.unwrap() + 1);
+                if params.page_offset.is_none() {
+                    params.page_offset = Some(page_size.clone());
+                } else {
+                    params.page_offset = Some(params.page_offset.unwrap() + page_size.clone());
+                }
             }
         }
     }
