@@ -6,20 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Object for the scan options of a single AWS account.
+/// Object for a single AWS on demand task.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct AwsScanOptionsCreateData {
-    /// Attributes for the AWS scan options to create.
+pub struct AwsOnDemandCreateData {
+    /// Attributes for the AWS on demand task.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::AwsScanOptionsCreateAttributes,
-    /// The ID of the AWS account.
-    #[serde(rename = "id")]
-    pub id: String,
-    /// The type of the resource. The value should always be `aws_scan_options`.
+    pub attributes: crate::datadogV2::model::AwsOnDemandCreateAttributes,
+    /// The type of the on demand task. The value should always be `aws_resource`.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::AwsScanOptionsType,
+    pub type_: crate::datadogV2::model::AwsOnDemandType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,15 +24,13 @@ pub struct AwsScanOptionsCreateData {
     pub(crate) _unparsed: bool,
 }
 
-impl AwsScanOptionsCreateData {
+impl AwsOnDemandCreateData {
     pub fn new(
-        attributes: crate::datadogV2::model::AwsScanOptionsCreateAttributes,
-        id: String,
-        type_: crate::datadogV2::model::AwsScanOptionsType,
-    ) -> AwsScanOptionsCreateData {
-        AwsScanOptionsCreateData {
+        attributes: crate::datadogV2::model::AwsOnDemandCreateAttributes,
+        type_: crate::datadogV2::model::AwsOnDemandType,
+    ) -> AwsOnDemandCreateData {
+        AwsOnDemandCreateData {
             attributes,
-            id,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -51,14 +46,14 @@ impl AwsScanOptionsCreateData {
     }
 }
 
-impl<'de> Deserialize<'de> for AwsScanOptionsCreateData {
+impl<'de> Deserialize<'de> for AwsOnDemandCreateData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct AwsScanOptionsCreateDataVisitor;
-        impl<'a> Visitor<'a> for AwsScanOptionsCreateDataVisitor {
-            type Value = AwsScanOptionsCreateData;
+        struct AwsOnDemandCreateDataVisitor;
+        impl<'a> Visitor<'a> for AwsOnDemandCreateDataVisitor {
+            type Value = AwsOnDemandCreateData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -68,11 +63,9 @@ impl<'de> Deserialize<'de> for AwsScanOptionsCreateData {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<
-                    crate::datadogV2::model::AwsScanOptionsCreateAttributes,
-                > = None;
-                let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::AwsScanOptionsType> = None;
+                let mut attributes: Option<crate::datadogV2::model::AwsOnDemandCreateAttributes> =
+                    None;
+                let mut type_: Option<crate::datadogV2::model::AwsOnDemandType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -84,14 +77,11 @@ impl<'de> Deserialize<'de> for AwsScanOptionsCreateData {
                         "attributes" => {
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "id" => {
-                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::AwsScanOptionsType::UnparsedObject(
+                                    crate::datadogV2::model::AwsOnDemandType::UnparsedObject(
                                         _type_,
                                     ) => {
                                         _unparsed = true;
@@ -108,12 +98,10 @@ impl<'de> Deserialize<'de> for AwsScanOptionsCreateData {
                     }
                 }
                 let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
-                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = AwsScanOptionsCreateData {
+                let content = AwsOnDemandCreateData {
                     attributes,
-                    id,
                     type_,
                     additional_properties,
                     _unparsed,
@@ -123,6 +111,6 @@ impl<'de> Deserialize<'de> for AwsScanOptionsCreateData {
             }
         }
 
-        deserializer.deserialize_any(AwsScanOptionsCreateDataVisitor)
+        deserializer.deserialize_any(AwsOnDemandCreateDataVisitor)
     }
 }

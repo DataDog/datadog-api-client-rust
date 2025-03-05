@@ -8,16 +8,14 @@ use datadog_api_client::datadogV2::model::AwsScanOptionsUpdateRequest;
 
 #[tokio::main]
 async fn main() {
-    let body = AwsScanOptionsUpdateRequest::new(
-        AwsScanOptionsUpdateData::new(
-            AwsScanOptionsUpdateAttributes::new()
-                .lambda(false)
-                .vuln_containers_os(true)
-                .vuln_host_os(true),
-            AwsScanOptionsType::AWS_SCAN_OPTIONS,
-        )
-        .id("000000000002".to_string()),
-    );
+    let body = AwsScanOptionsUpdateRequest::new(AwsScanOptionsUpdateData::new(
+        AwsScanOptionsUpdateAttributes::new()
+            .lambda(false)
+            .vuln_containers_os(true)
+            .vuln_host_os(true),
+        "000000000002".to_string(),
+        AwsScanOptionsType::AWS_SCAN_OPTIONS,
+    ));
     let configuration = datadog::Configuration::new();
     let api = AgentlessScanningAPI::with_config(configuration);
     let resp = api
