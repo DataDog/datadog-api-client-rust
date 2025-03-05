@@ -39,6 +39,9 @@ pub struct MonitorSearchResult {
     /// The ID of the organization.
     #[serde(rename = "org_id")]
     pub org_id: Option<i64>,
+    /// Quality issues detected with the monitor.
+    #[serde(rename = "quality_issues")]
+    pub quality_issues: Option<Vec<String>>,
     /// The monitor query.
     #[serde(rename = "query")]
     pub query: Option<String>,
@@ -75,6 +78,7 @@ impl MonitorSearchResult {
             name: None,
             notifications: None,
             org_id: None,
+            quality_issues: None,
             query: None,
             scopes: None,
             status: None,
@@ -125,6 +129,11 @@ impl MonitorSearchResult {
 
     pub fn org_id(mut self, value: i64) -> Self {
         self.org_id = Some(value);
+        self
+    }
+
+    pub fn quality_issues(mut self, value: Vec<String>) -> Self {
+        self.quality_issues = Some(value);
         self
     }
 
@@ -195,6 +204,7 @@ impl<'de> Deserialize<'de> for MonitorSearchResult {
                     Vec<crate::datadogV1::model::MonitorSearchResultNotification>,
                 > = None;
                 let mut org_id: Option<i64> = None;
+                let mut quality_issues: Option<Vec<String>> = None;
                 let mut query: Option<String> = None;
                 let mut scopes: Option<Vec<String>> = None;
                 let mut status: Option<crate::datadogV1::model::MonitorOverallStates> = None;
@@ -255,6 +265,13 @@ impl<'de> Deserialize<'de> for MonitorSearchResult {
                                 continue;
                             }
                             org_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "quality_issues" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            quality_issues =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "query" => {
                             if v.is_null() {
@@ -321,6 +338,7 @@ impl<'de> Deserialize<'de> for MonitorSearchResult {
                     name,
                     notifications,
                     org_id,
+                    quality_issues,
                     query,
                     scopes,
                     status,
