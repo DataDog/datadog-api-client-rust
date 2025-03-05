@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"enabled\":true,\"event_type\":\"view\",\"name\":\"Test updating retention filter\",\"query\":\"\",\"sample_rate\":100},\"id\":\"Test-Update_a_RUM_retention_filter_returns_Bad_Request_response-1741206209\",\"type\":\"invalid_type\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "patch",
+        "uri": "https://api.datadoghq.com/api/v2/rum/applications/a33671aa-24fd-4dcd-ba4b-5bbdbafe7690/retention_filters/Test-Update_a_RUM_retention_filter_returns_Bad_Request_response-1741206209"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"status\":\"400\",\"title\":\"Bad Request\",\"detail\":\"got type \\\"invalid_type\\\" expected one of \\\"retention_filters\\\"\"}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Wed, 05 Mar 2025 20:23:29 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
