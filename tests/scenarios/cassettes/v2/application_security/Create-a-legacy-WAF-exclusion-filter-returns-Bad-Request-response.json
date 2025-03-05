@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"description\":\"Exclude false positives on a path\",\"enabled\":true,\"event_query\":\"test:1\"},\"type\":\"exclusion_filter\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/remote_config/products/asm/waf/exclusion_filters"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"title\":\"legacy exclusion filters cannot be created anymore\",\"code\":\"400\"}]}\n",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Tue, 25 Feb 2025 19:11:28 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

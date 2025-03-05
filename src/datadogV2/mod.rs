@@ -8,6 +8,7 @@ pub use self::api::api_agentless_scanning;
 pub use self::api::api_api_management;
 pub use self::api::api_apm_retention_filters;
 pub use self::api::api_app_builder;
+pub use self::api::api_application_security;
 pub use self::api::api_audit;
 pub use self::api::api_authn_mappings;
 pub use self::api::api_aws_integration;
