@@ -14,8 +14,6 @@ pub struct InputSchema {
     /// The `InputSchema` `parameters`.
     #[serde(rename = "parameters")]
     pub parameters: Option<Vec<crate::datadogV2::model::InputSchemaParameters>>,
-    #[serde(flatten)]
-    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -25,7 +23,6 @@ impl InputSchema {
     pub fn new() -> InputSchema {
         InputSchema {
             parameters: None,
-            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -35,14 +32,6 @@ impl InputSchema {
         value: Vec<crate::datadogV2::model::InputSchemaParameters>,
     ) -> Self {
         self.parameters = Some(value);
-        self
-    }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
-        self.additional_properties = value;
         self
     }
 }
@@ -72,10 +61,6 @@ impl<'de> Deserialize<'de> for InputSchema {
             {
                 let mut parameters: Option<Vec<crate::datadogV2::model::InputSchemaParameters>> =
                     None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -87,16 +72,15 @@ impl<'de> Deserialize<'de> for InputSchema {
                             parameters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
-                            if let Ok(value) = serde_json::from_value(v.clone()) {
-                                additional_properties.insert(k, value);
-                            }
+                            return Err(serde::de::Error::custom(
+                                "Additional properties not allowed",
+                            ));
                         }
                     }
                 }
 
                 let content = InputSchema {
                     parameters,
-                    additional_properties,
                     _unparsed,
                 };
 

@@ -20,8 +20,6 @@ pub struct ConnectionEnv {
     /// The definition of `ConnectionEnvEnv` object.
     #[serde(rename = "env")]
     pub env: crate::datadogV2::model::ConnectionEnvEnv,
-    #[serde(flatten)]
-    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -33,7 +31,6 @@ impl ConnectionEnv {
             connection_groups: None,
             connections: None,
             env,
-            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -48,14 +45,6 @@ impl ConnectionEnv {
 
     pub fn connections(mut self, value: Vec<crate::datadogV2::model::Connection>) -> Self {
         self.connections = Some(value);
-        self
-    }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
-        self.additional_properties = value;
         self
     }
 }
@@ -81,10 +70,6 @@ impl<'de> Deserialize<'de> for ConnectionEnv {
                     None;
                 let mut connections: Option<Vec<crate::datadogV2::model::Connection>> = None;
                 let mut env: Option<crate::datadogV2::model::ConnectionEnvEnv> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -117,9 +102,9 @@ impl<'de> Deserialize<'de> for ConnectionEnv {
                             }
                         }
                         &_ => {
-                            if let Ok(value) = serde_json::from_value(v.clone()) {
-                                additional_properties.insert(k, value);
-                            }
+                            return Err(serde::de::Error::custom(
+                                "Additional properties not allowed",
+                            ));
                         }
                     }
                 }
@@ -129,7 +114,6 @@ impl<'de> Deserialize<'de> for ConnectionEnv {
                     connection_groups,
                     connections,
                     env,
-                    additional_properties,
                     _unparsed,
                 };
 

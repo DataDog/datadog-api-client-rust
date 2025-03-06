@@ -17,8 +17,6 @@ pub struct MonitorTriggerWrapper {
     /// A list of steps that run first after a trigger fires.
     #[serde(rename = "startStepNames")]
     pub start_step_names: Option<Vec<String>>,
-    #[serde(flatten)]
-    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -29,21 +27,12 @@ impl MonitorTriggerWrapper {
         MonitorTriggerWrapper {
             monitor_trigger,
             start_step_names: None,
-            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn start_step_names(mut self, value: Vec<String>) -> Self {
         self.start_step_names = Some(value);
-        self
-    }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
-        self.additional_properties = value;
         self
     }
 }
@@ -67,10 +56,6 @@ impl<'de> Deserialize<'de> for MonitorTriggerWrapper {
             {
                 let mut monitor_trigger: Option<crate::datadogV2::model::MonitorTrigger> = None;
                 let mut start_step_names: Option<Vec<String>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -87,9 +72,9 @@ impl<'de> Deserialize<'de> for MonitorTriggerWrapper {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
-                            if let Ok(value) = serde_json::from_value(v.clone()) {
-                                additional_properties.insert(k, value);
-                            }
+                            return Err(serde::de::Error::custom(
+                                "Additional properties not allowed",
+                            ));
                         }
                     }
                 }
@@ -99,7 +84,6 @@ impl<'de> Deserialize<'de> for MonitorTriggerWrapper {
                 let content = MonitorTriggerWrapper {
                     monitor_trigger,
                     start_step_names,
-                    additional_properties,
                     _unparsed,
                 };
 

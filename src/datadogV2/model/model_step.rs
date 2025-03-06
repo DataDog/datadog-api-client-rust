@@ -38,8 +38,6 @@ pub struct Step {
     /// Used to merge multiple branches into a single branch.
     #[serde(rename = "readinessGate")]
     pub readiness_gate: Option<crate::datadogV2::model::ReadinessGate>,
-    #[serde(flatten)]
-    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -57,7 +55,6 @@ impl Step {
             outbound_edges: None,
             parameters: None,
             readiness_gate: None,
-            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -96,14 +93,6 @@ impl Step {
         self.readiness_gate = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
-        self.additional_properties = value;
-        self
-    }
 }
 
 impl<'de> Deserialize<'de> for Step {
@@ -132,10 +121,6 @@ impl<'de> Deserialize<'de> for Step {
                 let mut outbound_edges: Option<Vec<crate::datadogV2::model::OutboundEdge>> = None;
                 let mut parameters: Option<Vec<crate::datadogV2::model::Parameter>> = None;
                 let mut readiness_gate: Option<crate::datadogV2::model::ReadinessGate> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -194,9 +179,9 @@ impl<'de> Deserialize<'de> for Step {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
-                            if let Ok(value) = serde_json::from_value(v.clone()) {
-                                additional_properties.insert(k, value);
-                            }
+                            return Err(serde::de::Error::custom(
+                                "Additional properties not allowed",
+                            ));
                         }
                     }
                 }
@@ -213,7 +198,6 @@ impl<'de> Deserialize<'de> for Step {
                     outbound_edges,
                     parameters,
                     readiness_gate,
-                    additional_properties,
                     _unparsed,
                 };
 

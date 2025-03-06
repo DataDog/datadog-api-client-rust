@@ -17,8 +17,6 @@ pub struct RetryStrategy {
     /// The definition of `RetryStrategyLinear` object.
     #[serde(rename = "linear")]
     pub linear: Option<crate::datadogV2::model::RetryStrategyLinear>,
-    #[serde(flatten)]
-    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -29,21 +27,12 @@ impl RetryStrategy {
         RetryStrategy {
             kind,
             linear: None,
-            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn linear(mut self, value: crate::datadogV2::model::RetryStrategyLinear) -> Self {
         self.linear = Some(value);
-        self
-    }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
-        self.additional_properties = value;
         self
     }
 }
@@ -67,10 +56,6 @@ impl<'de> Deserialize<'de> for RetryStrategy {
             {
                 let mut kind: Option<crate::datadogV2::model::RetryStrategyKind> = None;
                 let mut linear: Option<crate::datadogV2::model::RetryStrategyLinear> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -95,9 +80,9 @@ impl<'de> Deserialize<'de> for RetryStrategy {
                             linear = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
-                            if let Ok(value) = serde_json::from_value(v.clone()) {
-                                additional_properties.insert(k, value);
-                            }
+                            return Err(serde::de::Error::custom(
+                                "Additional properties not allowed",
+                            ));
                         }
                     }
                 }
@@ -106,7 +91,6 @@ impl<'de> Deserialize<'de> for RetryStrategy {
                 let content = RetryStrategy {
                     kind,
                     linear,
-                    additional_properties,
                     _unparsed,
                 };
 

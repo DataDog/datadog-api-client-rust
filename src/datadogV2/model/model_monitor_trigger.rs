@@ -14,8 +14,6 @@ pub struct MonitorTrigger {
     /// Defines a rate limit for a trigger.
     #[serde(rename = "rateLimit")]
     pub rate_limit: Option<crate::datadogV2::model::TriggerRateLimit>,
-    #[serde(flatten)]
-    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -25,21 +23,12 @@ impl MonitorTrigger {
     pub fn new() -> MonitorTrigger {
         MonitorTrigger {
             rate_limit: None,
-            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn rate_limit(mut self, value: crate::datadogV2::model::TriggerRateLimit) -> Self {
         self.rate_limit = Some(value);
-        self
-    }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
-        self.additional_properties = value;
         self
     }
 }
@@ -68,10 +57,6 @@ impl<'de> Deserialize<'de> for MonitorTrigger {
                 M: MapAccess<'a>,
             {
                 let mut rate_limit: Option<crate::datadogV2::model::TriggerRateLimit> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -83,16 +68,15 @@ impl<'de> Deserialize<'de> for MonitorTrigger {
                             rate_limit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
-                            if let Ok(value) = serde_json::from_value(v.clone()) {
-                                additional_properties.insert(k, value);
-                            }
+                            return Err(serde::de::Error::custom(
+                                "Additional properties not allowed",
+                            ));
                         }
                     }
                 }
 
                 let content = MonitorTrigger {
                     rate_limit,
-                    additional_properties,
                     _unparsed,
                 };
 

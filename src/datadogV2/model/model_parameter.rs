@@ -17,8 +17,6 @@ pub struct Parameter {
     /// The `Parameter` `value`.
     #[serde(rename = "value")]
     pub value: serde_json::Value,
-    #[serde(flatten)]
-    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -29,17 +27,8 @@ impl Parameter {
         Parameter {
             name,
             value,
-            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
-        self.additional_properties = value;
-        self
     }
 }
 
@@ -62,10 +51,6 @@ impl<'de> Deserialize<'de> for Parameter {
             {
                 let mut name: Option<String> = None;
                 let mut value: Option<serde_json::Value> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -77,9 +62,9 @@ impl<'de> Deserialize<'de> for Parameter {
                             value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
-                            if let Ok(value) = serde_json::from_value(v.clone()) {
-                                additional_properties.insert(k, value);
-                            }
+                            return Err(serde::de::Error::custom(
+                                "Additional properties not allowed",
+                            ));
                         }
                     }
                 }
@@ -89,7 +74,6 @@ impl<'de> Deserialize<'de> for Parameter {
                 let content = Parameter {
                     name,
                     value,
-                    additional_properties,
                     _unparsed,
                 };
 

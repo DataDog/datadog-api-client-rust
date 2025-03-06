@@ -17,8 +17,6 @@ pub struct CompletionGate {
     /// The definition of `RetryStrategy` object.
     #[serde(rename = "retryStrategy")]
     pub retry_strategy: crate::datadogV2::model::RetryStrategy,
-    #[serde(flatten)]
-    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -32,17 +30,8 @@ impl CompletionGate {
         CompletionGate {
             completion_condition,
             retry_strategy,
-            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
-        self.additional_properties = value;
-        self
     }
 }
 
@@ -66,10 +55,6 @@ impl<'de> Deserialize<'de> for CompletionGate {
                 let mut completion_condition: Option<crate::datadogV2::model::CompletionCondition> =
                     None;
                 let mut retry_strategy: Option<crate::datadogV2::model::RetryStrategy> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -83,9 +68,9 @@ impl<'de> Deserialize<'de> for CompletionGate {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
-                            if let Ok(value) = serde_json::from_value(v.clone()) {
-                                additional_properties.insert(k, value);
-                            }
+                            return Err(serde::de::Error::custom(
+                                "Additional properties not allowed",
+                            ));
                         }
                     }
                 }
@@ -97,7 +82,6 @@ impl<'de> Deserialize<'de> for CompletionGate {
                 let content = CompletionGate {
                     completion_condition,
                     retry_strategy,
-                    additional_properties,
                     _unparsed,
                 };
 

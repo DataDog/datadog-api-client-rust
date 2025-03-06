@@ -20,8 +20,6 @@ pub struct CompletionCondition {
     /// The definition of `CompletionConditionOperator` object.
     #[serde(rename = "operator")]
     pub operator: crate::datadogV2::model::CompletionConditionOperator,
-    #[serde(flatten)]
-    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -36,21 +34,12 @@ impl CompletionCondition {
             operand1,
             operand2: None,
             operator,
-            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn operand2(mut self, value: serde_json::Value) -> Self {
         self.operand2 = Some(value);
-        self
-    }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
-        self.additional_properties = value;
         self
     }
 }
@@ -76,10 +65,6 @@ impl<'de> Deserialize<'de> for CompletionCondition {
                 let mut operand2: Option<serde_json::Value> = None;
                 let mut operator: Option<crate::datadogV2::model::CompletionConditionOperator> =
                     None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -105,9 +90,9 @@ impl<'de> Deserialize<'de> for CompletionCondition {
                             }
                         }
                         &_ => {
-                            if let Ok(value) = serde_json::from_value(v.clone()) {
-                                additional_properties.insert(k, value);
-                            }
+                            return Err(serde::de::Error::custom(
+                                "Additional properties not allowed",
+                            ));
                         }
                     }
                 }
@@ -118,7 +103,6 @@ impl<'de> Deserialize<'de> for CompletionCondition {
                     operand1,
                     operand2,
                     operator,
-                    additional_properties,
                     _unparsed,
                 };
 

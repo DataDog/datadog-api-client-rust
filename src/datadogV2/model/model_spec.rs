@@ -32,8 +32,6 @@ pub struct Spec {
     /// The list of triggers that activate this workflow. At least one trigger is required, and each trigger type may appear at most once.
     #[serde(rename = "triggers")]
     pub triggers: Option<Vec<crate::datadogV2::model::Trigger>>,
-    #[serde(flatten)]
-    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -49,7 +47,6 @@ impl Spec {
             output_schema: None,
             steps: None,
             triggers: None,
-            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -88,14 +85,6 @@ impl Spec {
         self.triggers = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
-        self.additional_properties = value;
-        self
-    }
 }
 
 impl Default for Spec {
@@ -128,10 +117,6 @@ impl<'de> Deserialize<'de> for Spec {
                 let mut output_schema: Option<crate::datadogV2::model::OutputSchema> = None;
                 let mut steps: Option<Vec<crate::datadogV2::model::Step>> = None;
                 let mut triggers: Option<Vec<crate::datadogV2::model::Trigger>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -183,9 +168,9 @@ impl<'de> Deserialize<'de> for Spec {
                             triggers = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
-                            if let Ok(value) = serde_json::from_value(v.clone()) {
-                                additional_properties.insert(k, value);
-                            }
+                            return Err(serde::de::Error::custom(
+                                "Additional properties not allowed",
+                            ));
                         }
                     }
                 }
@@ -198,7 +183,6 @@ impl<'de> Deserialize<'de> for Spec {
                     output_schema,
                     steps,
                     triggers,
-                    additional_properties,
                     _unparsed,
                 };
 

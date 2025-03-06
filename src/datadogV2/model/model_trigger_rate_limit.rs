@@ -17,8 +17,6 @@ pub struct TriggerRateLimit {
     /// The `TriggerRateLimit` `interval`. The expected format is the number of seconds ending with an s. For example, 1 day is 86400s
     #[serde(rename = "interval")]
     pub interval: Option<String>,
-    #[serde(flatten)]
-    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -29,7 +27,6 @@ impl TriggerRateLimit {
         TriggerRateLimit {
             count: None,
             interval: None,
-            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -41,14 +38,6 @@ impl TriggerRateLimit {
 
     pub fn interval(mut self, value: String) -> Self {
         self.interval = Some(value);
-        self
-    }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
-        self.additional_properties = value;
         self
     }
 }
@@ -78,10 +67,6 @@ impl<'de> Deserialize<'de> for TriggerRateLimit {
             {
                 let mut count: Option<i64> = None;
                 let mut interval: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -99,9 +84,9 @@ impl<'de> Deserialize<'de> for TriggerRateLimit {
                             interval = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
-                            if let Ok(value) = serde_json::from_value(v.clone()) {
-                                additional_properties.insert(k, value);
-                            }
+                            return Err(serde::de::Error::custom(
+                                "Additional properties not allowed",
+                            ));
                         }
                     }
                 }
@@ -109,7 +94,6 @@ impl<'de> Deserialize<'de> for TriggerRateLimit {
                 let content = TriggerRateLimit {
                     count,
                     interval,
-                    additional_properties,
                     _unparsed,
                 };
 
