@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct AwsOnDemandCreateAttributes {
     /// The arn of the resource to scan. Agentless supports the scan of EC2 instances, lambda functions, AMI, ECR, RDS and S3 buckets.
     #[serde(rename = "arn")]
-    pub arn: Option<String>,
+    pub arn: String,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -22,17 +22,12 @@ pub struct AwsOnDemandCreateAttributes {
 }
 
 impl AwsOnDemandCreateAttributes {
-    pub fn new() -> AwsOnDemandCreateAttributes {
+    pub fn new(arn: String) -> AwsOnDemandCreateAttributes {
         AwsOnDemandCreateAttributes {
-            arn: None,
+            arn,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn arn(mut self, value: String) -> Self {
-        self.arn = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -41,12 +36,6 @@ impl AwsOnDemandCreateAttributes {
     ) -> Self {
         self.additional_properties = value;
         self
-    }
-}
-
-impl Default for AwsOnDemandCreateAttributes {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
@@ -77,9 +66,6 @@ impl<'de> Deserialize<'de> for AwsOnDemandCreateAttributes {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "arn" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             arn = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -89,6 +75,7 @@ impl<'de> Deserialize<'de> for AwsOnDemandCreateAttributes {
                         }
                     }
                 }
+                let arn = arn.ok_or_else(|| M::Error::missing_field("arn"))?;
 
                 let content = AwsOnDemandCreateAttributes {
                     arn,

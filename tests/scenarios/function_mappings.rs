@@ -1704,8 +1704,8 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_create_aws_on_demand_task,
     );
     world.function_mappings.insert(
-        "v2.RetrieveAwsOnDemandTask".into(),
-        test_v2_retrieve_aws_on_demand_task,
+        "v2.GetAwsOnDemandTask".into(),
+        test_v2_get_aws_on_demand_task,
     );
     world
         .function_mappings
@@ -10863,17 +10863,14 @@ fn test_v2_create_aws_on_demand_task(
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_retrieve_aws_on_demand_task(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
+fn test_v2_get_aws_on_demand_task(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
         .v2_api_agentless_scanning
         .as_ref()
         .expect("api instance not found");
     let task_id = serde_json::from_value(_parameters.get("task_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.retrieve_aws_on_demand_task_with_http_info(task_id)) {
+    let response = match block_on(api.get_aws_on_demand_task_with_http_info(task_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
