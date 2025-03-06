@@ -115,6 +115,8 @@ pub struct ApiInstances {
     pub v2_api_restriction_policies:
         Option<datadogV2::api_restriction_policies::RestrictionPoliciesAPI>,
     pub v2_api_rum: Option<datadogV2::api_rum::RUMAPI>,
+    pub v2_api_rum_retention_filters:
+        Option<datadogV2::api_rum_retention_filters::RumRetentionFiltersAPI>,
     pub v2_api_rum_metrics: Option<datadogV2::api_rum_metrics::RumMetricsAPI>,
     pub v2_api_service_scorecards: Option<datadogV2::api_service_scorecards::ServiceScorecardsAPI>,
     pub v2_api_sensitive_data_scanner:
@@ -753,6 +755,12 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ));
+        }
+        "RumRetentionFilters" => {
+            world.api_instances.v2_api_rum_retention_filters = Some(datadogV2::api_rum_retention_filters::RumRetentionFiltersAPI::with_client_and_config(
+                world.config.clone(),
+                world.http_client.as_ref().unwrap().clone()
+            ));
         }
         "RumMetrics" => {
             world.api_instances.v2_api_rum_metrics = Some(
@@ -3091,6 +3099,29 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.SearchRUMEventsWithPagination".into(),
         test_v2_search_rum_events_with_pagination,
+    );
+    world.function_mappings.insert(
+        "v2.OrderRetentionFilters".into(),
+        test_v2_order_retention_filters,
+    );
+    world.function_mappings.insert(
+        "v2.ListRetentionFilters".into(),
+        test_v2_list_retention_filters,
+    );
+    world.function_mappings.insert(
+        "v2.CreateRetentionFilter".into(),
+        test_v2_create_retention_filter,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteRetentionFilter".into(),
+        test_v2_delete_retention_filter,
+    );
+    world
+        .function_mappings
+        .insert("v2.GetRetentionFilter".into(), test_v2_get_retention_filter);
+    world.function_mappings.insert(
+        "v2.UpdateRetentionFilter".into(),
+        test_v2_update_retention_filter,
     );
     world
         .function_mappings
@@ -23355,6 +23386,162 @@ fn test_v2_search_rum_events_with_pagination(
     });
     world.response.object = serde_json::to_value(result).unwrap();
     world.response.code = 200;
+}
+
+fn test_v2_order_retention_filters(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_rum_retention_filters
+        .as_ref()
+        .expect("api instance not found");
+    let app_id = serde_json::from_value(_parameters.get("app_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.order_retention_filters_with_http_info(app_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_retention_filters(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_rum_retention_filters
+        .as_ref()
+        .expect("api instance not found");
+    let app_id = serde_json::from_value(_parameters.get("app_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.list_retention_filters_with_http_info(app_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_retention_filter(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_rum_retention_filters
+        .as_ref()
+        .expect("api instance not found");
+    let app_id = serde_json::from_value(_parameters.get("app_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_retention_filter_with_http_info(app_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_retention_filter(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_rum_retention_filters
+        .as_ref()
+        .expect("api instance not found");
+    let app_id = serde_json::from_value(_parameters.get("app_id").unwrap().clone()).unwrap();
+    let rf_id = serde_json::from_value(_parameters.get("rf_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_retention_filter_with_http_info(app_id, rf_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_retention_filter(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_rum_retention_filters
+        .as_ref()
+        .expect("api instance not found");
+    let app_id = serde_json::from_value(_parameters.get("app_id").unwrap().clone()).unwrap();
+    let rf_id = serde_json::from_value(_parameters.get("rf_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_retention_filter_with_http_info(app_id, rf_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_retention_filter(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_rum_retention_filters
+        .as_ref()
+        .expect("api instance not found");
+    let app_id = serde_json::from_value(_parameters.get("app_id").unwrap().clone()).unwrap();
+    let rf_id = serde_json::from_value(_parameters.get("rf_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_retention_filter_with_http_info(app_id, rf_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
 }
 
 fn test_v2_list_rum_metrics(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {

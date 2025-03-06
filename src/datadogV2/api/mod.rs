@@ -53,6 +53,7 @@ pub mod api_restriction_policies;
 pub mod api_roles;
 pub mod api_rum;
 pub mod api_rum_metrics;
+pub mod api_rum_retention_filters;
 pub mod api_security_monitoring;
 pub mod api_sensitive_data_scanner;
 pub mod api_service_accounts;
