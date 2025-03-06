@@ -13,16 +13,16 @@ use std::fmt::{self, Formatter};
 pub struct AwsScanOptionsCreateAttributes {
     /// Indicates if scanning of Lambda functions is enabled.
     #[serde(rename = "lambda")]
-    pub lambda: Option<bool>,
+    pub lambda: bool,
     /// Indicates if scanning for sensitive data is enabled.
     #[serde(rename = "sensitive_data")]
-    pub sensitive_data: Option<bool>,
+    pub sensitive_data: bool,
     /// Indicates if scanning for vulnerabilities in containers is enabled.
     #[serde(rename = "vuln_containers_os")]
-    pub vuln_containers_os: Option<bool>,
+    pub vuln_containers_os: bool,
     /// Indicates if scanning for vulnerabilities in hosts is enabled.
     #[serde(rename = "vuln_host_os")]
-    pub vuln_host_os: Option<bool>,
+    pub vuln_host_os: bool,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -31,35 +31,20 @@ pub struct AwsScanOptionsCreateAttributes {
 }
 
 impl AwsScanOptionsCreateAttributes {
-    pub fn new() -> AwsScanOptionsCreateAttributes {
+    pub fn new(
+        lambda: bool,
+        sensitive_data: bool,
+        vuln_containers_os: bool,
+        vuln_host_os: bool,
+    ) -> AwsScanOptionsCreateAttributes {
         AwsScanOptionsCreateAttributes {
-            lambda: None,
-            sensitive_data: None,
-            vuln_containers_os: None,
-            vuln_host_os: None,
+            lambda,
+            sensitive_data,
+            vuln_containers_os,
+            vuln_host_os,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn lambda(mut self, value: bool) -> Self {
-        self.lambda = Some(value);
-        self
-    }
-
-    pub fn sensitive_data(mut self, value: bool) -> Self {
-        self.sensitive_data = Some(value);
-        self
-    }
-
-    pub fn vuln_containers_os(mut self, value: bool) -> Self {
-        self.vuln_containers_os = Some(value);
-        self
-    }
-
-    pub fn vuln_host_os(mut self, value: bool) -> Self {
-        self.vuln_host_os = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -68,12 +53,6 @@ impl AwsScanOptionsCreateAttributes {
     ) -> Self {
         self.additional_properties = value;
         self
-    }
-}
-
-impl Default for AwsScanOptionsCreateAttributes {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
@@ -107,29 +86,17 @@ impl<'de> Deserialize<'de> for AwsScanOptionsCreateAttributes {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "lambda" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             lambda = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "sensitive_data" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             sensitive_data =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "vuln_containers_os" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             vuln_containers_os =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "vuln_host_os" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             vuln_host_os =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -140,6 +107,13 @@ impl<'de> Deserialize<'de> for AwsScanOptionsCreateAttributes {
                         }
                     }
                 }
+                let lambda = lambda.ok_or_else(|| M::Error::missing_field("lambda"))?;
+                let sensitive_data =
+                    sensitive_data.ok_or_else(|| M::Error::missing_field("sensitive_data"))?;
+                let vuln_containers_os = vuln_containers_os
+                    .ok_or_else(|| M::Error::missing_field("vuln_containers_os"))?;
+                let vuln_host_os =
+                    vuln_host_os.ok_or_else(|| M::Error::missing_field("vuln_host_os"))?;
 
                 let content = AwsScanOptionsCreateAttributes {
                     lambda,

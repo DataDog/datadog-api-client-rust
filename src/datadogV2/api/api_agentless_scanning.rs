@@ -34,6 +34,14 @@ pub enum DeleteAwsScanOptionsError {
     UnknownValue(serde_json::Value),
 }
 
+/// GetAwsOnDemandTaskError is a struct for typed errors of method [`AgentlessScanningAPI::get_aws_on_demand_task`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetAwsOnDemandTaskError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// ListAwsOnDemandTasksError is a struct for typed errors of method [`AgentlessScanningAPI::list_aws_on_demand_tasks`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -50,14 +58,6 @@ pub enum ListAwsScanOptionsError {
     UnknownValue(serde_json::Value),
 }
 
-/// RetrieveAwsOnDemandTaskError is a struct for typed errors of method [`AgentlessScanningAPI::retrieve_aws_on_demand_task`]
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum RetrieveAwsOnDemandTaskError {
-    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
-    UnknownValue(serde_json::Value),
-}
-
 /// UpdateAwsScanOptionsError is a struct for typed errors of method [`AgentlessScanningAPI::update_aws_scan_options`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -69,6 +69,7 @@ pub enum UpdateAwsScanOptionsError {
 /// Datadog Agentless Scanning provides visibility into risks and vulnerabilities
 /// within your hosts, running containers, and serverless functions—all without
 /// requiring teams to install Agents on every host or where Agents cannot be installed.
+/// Agentless offers also Sensitive Data Scanning capabilities on your storage.
 /// Go to <https://www.datadoghq.com/blog/agentless-scanning/> to learn more.
 #[derive(Debug, Clone)]
 pub struct AgentlessScanningAPI {
@@ -134,7 +135,7 @@ impl AgentlessScanningAPI {
         Self { config, client }
     }
 
-    /// Trigger the scan of an AWS resource with a high priority.
+    /// Trigger the scan of an AWS resource with a high priority. Agentless scanning must be activated for the AWS account containing the resource to scan.
     pub async fn create_aws_on_demand_task(
         &self,
         body: crate::datadogV2::model::AwsOnDemandCreateRequest,
@@ -156,7 +157,7 @@ impl AgentlessScanningAPI {
         }
     }
 
-    /// Trigger the scan of an AWS resource with a high priority.
+    /// Trigger the scan of an AWS resource with a high priority. Agentless scanning must be activated for the AWS account containing the resource to scan.
     pub async fn create_aws_on_demand_task_with_http_info(
         &self,
         body: crate::datadogV2::model::AwsOnDemandCreateRequest,
@@ -533,6 +534,113 @@ impl AgentlessScanningAPI {
         }
     }
 
+    /// Fetch the data of a specific on demand task.
+    pub async fn get_aws_on_demand_task(
+        &self,
+        task_id: String,
+    ) -> Result<crate::datadogV2::model::AwsOnDemandResponse, datadog::Error<GetAwsOnDemandTaskError>>
+    {
+        match self.get_aws_on_demand_task_with_http_info(task_id).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Fetch the data of a specific on demand task.
+    pub async fn get_aws_on_demand_task_with_http_info(
+        &self,
+        task_id: String,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::AwsOnDemandResponse>,
+        datadog::Error<GetAwsOnDemandTaskError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_aws_on_demand_task";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/agentless_scanning/ondemand/aws/{task_id}",
+            local_configuration.get_operation_host(operation_id),
+            task_id = datadog::urlencode(task_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::AwsOnDemandResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetAwsOnDemandTaskError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Fetches the most recent 1000 AWS on demand tasks.
     pub async fn list_aws_on_demand_tasks(
         &self,
@@ -735,118 +843,6 @@ impl AgentlessScanningAPI {
             };
         } else {
             let local_entity: Option<ListAwsScanOptionsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
-            Err(datadog::Error::ResponseError(local_error))
-        }
-    }
-
-    /// Fetch the data of a specific on demand task.
-    pub async fn retrieve_aws_on_demand_task(
-        &self,
-        task_id: String,
-    ) -> Result<
-        crate::datadogV2::model::AwsOnDemandResponse,
-        datadog::Error<RetrieveAwsOnDemandTaskError>,
-    > {
-        match self
-            .retrieve_aws_on_demand_task_with_http_info(task_id)
-            .await
-        {
-            Ok(response_content) => {
-                if let Some(e) = response_content.entity {
-                    Ok(e)
-                } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
-                }
-            }
-            Err(err) => Err(err),
-        }
-    }
-
-    /// Fetch the data of a specific on demand task.
-    pub async fn retrieve_aws_on_demand_task_with_http_info(
-        &self,
-        task_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AwsOnDemandResponse>,
-        datadog::Error<RetrieveAwsOnDemandTaskError>,
-    > {
-        let local_configuration = &self.config;
-        let operation_id = "v2.retrieve_aws_on_demand_task";
-
-        let local_client = &self.client;
-
-        let local_uri_str = format!(
-            "{}/api/v2/agentless_scanning/ondemand/aws/{task_id}",
-            local_configuration.get_operation_host(operation_id),
-            task_id = datadog::urlencode(task_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
-
-        // build headers
-        let mut headers = HeaderMap::new();
-        headers.insert("Accept", HeaderValue::from_static("application/json"));
-
-        // build user agent
-        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
-            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
-            Err(e) => {
-                log::warn!("Failed to parse user agent header: {e}, falling back to default");
-                headers.insert(
-                    reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
-                )
-            }
-        };
-
-        // build auth
-        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
-        };
-        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
-        };
-
-        local_req_builder = local_req_builder.headers(headers);
-        let local_req = local_req_builder.build()?;
-        log::debug!("request content: {:?}", local_req.body());
-        let local_resp = local_client.execute(local_req).await?;
-
-        let local_status = local_resp.status();
-        let local_content = local_resp.text().await?;
-        log::debug!("response content: {}", local_content);
-
-        if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AwsOnDemandResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
-                Err(e) => return Err(datadog::Error::Serde(e)),
-            };
-        } else {
-            let local_entity: Option<RetrieveAwsOnDemandTaskError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,

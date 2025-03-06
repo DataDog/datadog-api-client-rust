@@ -7,7 +7,7 @@ async fn main() {
     let configuration = datadog::Configuration::new();
     let api = AgentlessScanningAPI::with_config(configuration);
     let resp = api
-        .retrieve_aws_on_demand_task("63d6b4f5-e5d0-4d90-824a-9580f05f026a".to_string())
+        .get_aws_on_demand_task("63d6b4f5-e5d0-4d90-824a-9580f05f026a".to_string())
         .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
