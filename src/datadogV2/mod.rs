@@ -54,6 +54,7 @@ pub use self::api::api_restriction_policies;
 pub use self::api::api_roles;
 pub use self::api::api_rum;
 pub use self::api::api_rum_metrics;
+pub use self::api::api_rum_retention_filters;
 pub use self::api::api_security_monitoring;
 pub use self::api::api_sensitive_data_scanner;
 pub use self::api::api_service_accounts;
