@@ -14,6 +14,9 @@ pub struct SecurityMonitoringStandardRuleQuery {
     /// The aggregation type.
     #[serde(rename = "aggregation")]
     pub aggregation: Option<crate::datadogV2::model::SecurityMonitoringRuleQueryAggregation>,
+    /// Track of logs events.
+    #[serde(rename = "dataSource")]
+    pub data_source: Option<String>,
     /// Field for which the cardinality is measured. Sent as an array.
     #[serde(rename = "distinctFields")]
     pub distinct_fields: Option<Vec<String>>,
@@ -49,6 +52,7 @@ impl SecurityMonitoringStandardRuleQuery {
         #[allow(deprecated)]
         SecurityMonitoringStandardRuleQuery {
             aggregation: None,
+            data_source: None,
             distinct_fields: None,
             group_by_fields: None,
             has_optional_group_by_fields: None,
@@ -67,6 +71,12 @@ impl SecurityMonitoringStandardRuleQuery {
         value: crate::datadogV2::model::SecurityMonitoringRuleQueryAggregation,
     ) -> Self {
         self.aggregation = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn data_source(mut self, value: String) -> Self {
+        self.data_source = Some(value);
         self
     }
 
@@ -147,6 +157,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleQuery {
                 let mut aggregation: Option<
                     crate::datadogV2::model::SecurityMonitoringRuleQueryAggregation,
                 > = None;
+                let mut data_source: Option<String> = None;
                 let mut distinct_fields: Option<Vec<String>> = None;
                 let mut group_by_fields: Option<Vec<String>> = None;
                 let mut has_optional_group_by_fields: Option<bool> = None;
@@ -176,6 +187,13 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleQuery {
                                     _ => {}
                                 }
                             }
+                        }
+                        "dataSource" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            data_source =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "distinctFields" => {
                             if v.is_null() {
@@ -233,6 +251,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleQuery {
                 #[allow(deprecated)]
                 let content = SecurityMonitoringStandardRuleQuery {
                     aggregation,
+                    data_source,
                     distinct_fields,
                     group_by_fields,
                     has_optional_group_by_fields,
