@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RumRetentionFilterMeta {
-    /// The type of RUM events to filter on.
+    /// The source that defines the origin of the retention filter.
     #[serde(rename = "source")]
     pub source: Option<crate::datadogV2::model::RumRetentionFilterSource>,
     #[serde(flatten)]
