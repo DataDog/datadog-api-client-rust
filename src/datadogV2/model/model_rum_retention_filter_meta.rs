@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RumRetentionFilterMeta {
-    /// The type of RUM events to filter on.
+    /// The origin source of the retention filter, which may be created or updated through the Datadog UI, terraform, or other channels such as direct API calls.
     #[serde(rename = "source")]
     pub source: Option<crate::datadogV2::model::RumRetentionFilterSource>,
     #[serde(flatten)]
