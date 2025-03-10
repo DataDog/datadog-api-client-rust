@@ -23,6 +23,9 @@ pub struct LogsArchiveDestinationS3 {
     /// The archive path.
     #[serde(rename = "path")]
     pub path: Option<String>,
+    /// The storage class where the archive will be stored.
+    #[serde(rename = "storage_class")]
+    pub storage_class: Option<crate::datadogV2::model::LogsArchiveStorageClassS3Type>,
     /// Type of the S3 archive destination.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::LogsArchiveDestinationS3Type,
@@ -44,6 +47,7 @@ impl LogsArchiveDestinationS3 {
             encryption: None,
             integration,
             path: None,
+            storage_class: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -57,6 +61,14 @@ impl LogsArchiveDestinationS3 {
 
     pub fn path(mut self, value: String) -> Self {
         self.path = Some(value);
+        self
+    }
+
+    pub fn storage_class(
+        mut self,
+        value: crate::datadogV2::model::LogsArchiveStorageClassS3Type,
+    ) -> Self {
+        self.storage_class = Some(value);
         self
     }
 
@@ -91,6 +103,9 @@ impl<'de> Deserialize<'de> for LogsArchiveDestinationS3 {
                 let mut integration: Option<crate::datadogV2::model::LogsArchiveIntegrationS3> =
                     None;
                 let mut path: Option<String> = None;
+                let mut storage_class: Option<
+                    crate::datadogV2::model::LogsArchiveStorageClassS3Type,
+                > = None;
                 let mut type_: Option<crate::datadogV2::model::LogsArchiveDestinationS3Type> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -118,6 +133,21 @@ impl<'de> Deserialize<'de> for LogsArchiveDestinationS3 {
                                 continue;
                             }
                             path = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "storage_class" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            storage_class =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _storage_class) = storage_class {
+                                match _storage_class {
+                                    crate::datadogV2::model::LogsArchiveStorageClassS3Type::UnparsedObject(_storage_class) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -147,6 +177,7 @@ impl<'de> Deserialize<'de> for LogsArchiveDestinationS3 {
                     encryption,
                     integration,
                     path,
+                    storage_class,
                     type_,
                     additional_properties,
                     _unparsed,
