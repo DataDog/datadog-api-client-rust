@@ -2074,6 +2074,8 @@ pub mod model_logs_archive_encryption_s3_type;
 pub use self::model_logs_archive_encryption_s3_type::LogsArchiveEncryptionS3Type;
 pub mod model_logs_archive_integration_s3;
 pub use self::model_logs_archive_integration_s3::LogsArchiveIntegrationS3;
+pub mod model_logs_archive_storage_class_s3_type;
+pub use self::model_logs_archive_storage_class_s3_type::LogsArchiveStorageClassS3Type;
 pub mod model_logs_archive_destination_s3_type;
 pub use self::model_logs_archive_destination_s3_type::LogsArchiveDestinationS3Type;
 pub mod model_logs_archive_destination;
