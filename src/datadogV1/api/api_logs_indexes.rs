@@ -290,17 +290,9 @@ impl LogsIndexesAPI {
     pub async fn delete_logs_index(
         &self,
         name: String,
-    ) -> Result<crate::datadogV1::model::LogsIndex, datadog::Error<DeleteLogsIndexError>> {
+    ) -> Result<(), datadog::Error<DeleteLogsIndexError>> {
         match self.delete_logs_index_with_http_info(name).await {
-            Ok(response_content) => {
-                if let Some(e) = response_content.entity {
-                    Ok(e)
-                } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
-                }
-            }
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -310,10 +302,7 @@ impl LogsIndexesAPI {
     pub async fn delete_logs_index_with_http_info(
         &self,
         name: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV1::model::LogsIndex>,
-        datadog::Error<DeleteLogsIndexError>,
-    > {
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteLogsIndexError>> {
         let local_configuration = &self.config;
         let operation_id = "v1.delete_logs_index";
 
@@ -329,7 +318,7 @@ impl LogsIndexesAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert("Accept", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -369,16 +358,11 @@ impl LogsIndexesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV1::model::LogsIndex>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
-                Err(e) => return Err(datadog::Error::Serde(e)),
-            };
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
         } else {
             let local_entity: Option<DeleteLogsIndexError> =
                 serde_json::from_str(&local_content).ok();
