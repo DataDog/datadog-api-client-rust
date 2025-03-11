@@ -58,7 +58,7 @@ pub enum UpdateRetentionFilterError {
     UnknownValue(serde_json::Value),
 }
 
-/// Manage retention filters through [Manage Applications](<https://app.datadoghq.com/rum/list>) for your organization.
+/// Manage retention filters through [Manage Applications](<https://app.datadoghq.com/rum/list>) of RUM for your organization.
 #[derive(Debug, Clone)]
 pub struct RumRetentionFiltersAPI {
     config: datadog::Configuration,
@@ -123,7 +123,7 @@ impl RumRetentionFiltersAPI {
         Self { config, client }
     }
 
-    /// Create a RUM retention filter for an application.
+    /// Create a RUM retention filter for a RUM application.
     /// Returns RUM retention filter objects from the request body when the request is successful.
     pub async fn create_retention_filter(
         &self,
@@ -150,7 +150,7 @@ impl RumRetentionFiltersAPI {
         }
     }
 
-    /// Create a RUM retention filter for an application.
+    /// Create a RUM retention filter for a RUM application.
     /// Returns RUM retention filter objects from the request body when the request is successful.
     pub async fn create_retention_filter_with_http_info(
         &self,
@@ -285,7 +285,7 @@ impl RumRetentionFiltersAPI {
         }
     }
 
-    /// Delete a RUM retention filter for an application.
+    /// Delete a RUM retention filter for a RUM application.
     pub async fn delete_retention_filter(
         &self,
         app_id: String,
@@ -300,7 +300,7 @@ impl RumRetentionFiltersAPI {
         }
     }
 
-    /// Delete a RUM retention filter for an application.
+    /// Delete a RUM retention filter for a RUM application.
     pub async fn delete_retention_filter_with_http_info(
         &self,
         app_id: String,
@@ -379,7 +379,7 @@ impl RumRetentionFiltersAPI {
         }
     }
 
-    /// Get a RUM retention filter for an application.
+    /// Get a RUM retention filter for a RUM application.
     pub async fn get_retention_filter(
         &self,
         app_id: String,
@@ -405,7 +405,7 @@ impl RumRetentionFiltersAPI {
         }
     }
 
-    /// Get a RUM retention filter for an application.
+    /// Get a RUM retention filter for a RUM application.
     pub async fn get_retention_filter_with_http_info(
         &self,
         app_id: String,
@@ -494,7 +494,7 @@ impl RumRetentionFiltersAPI {
         }
     }
 
-    /// Get the list of RUM retention filters for an application.
+    /// Get the list of RUM retention filters for a RUM application.
     pub async fn list_retention_filters(
         &self,
         app_id: String,
@@ -516,7 +516,7 @@ impl RumRetentionFiltersAPI {
         }
     }
 
-    /// Get the list of RUM retention filters for an application.
+    /// Get the list of RUM retention filters for a RUM application.
     pub async fn list_retention_filters_with_http_info(
         &self,
         app_id: String,
@@ -603,8 +603,8 @@ impl RumRetentionFiltersAPI {
         }
     }
 
-    /// Order RUM retention filters for an application.
-    /// Returns RUM retention filter objects without attributes and meta from the request body when the request is successful.
+    /// Order RUM retention filters for a RUM application.
+    /// Returns RUM retention filter objects without attributes from the request body when the request is successful.
     pub async fn order_retention_filters(
         &self,
         app_id: String,
@@ -630,8 +630,8 @@ impl RumRetentionFiltersAPI {
         }
     }
 
-    /// Order RUM retention filters for an application.
-    /// Returns RUM retention filter objects without attributes and meta from the request body when the request is successful.
+    /// Order RUM retention filters for a RUM application.
+    /// Returns RUM retention filter objects without attributes from the request body when the request is successful.
     pub async fn order_retention_filters_with_http_info(
         &self,
         app_id: String,
@@ -765,7 +765,7 @@ impl RumRetentionFiltersAPI {
         }
     }
 
-    /// Update a RUM retention filter for an application.
+    /// Update a RUM retention filter for a RUM application.
     /// Returns RUM retention filter objects from the request body when the request is successful.
     pub async fn update_retention_filter(
         &self,
@@ -793,7 +793,7 @@ impl RumRetentionFiltersAPI {
         }
     }
 
-    /// Update a RUM retention filter for an application.
+    /// Update a RUM retention filter for a RUM application.
     /// Returns RUM retention filter objects from the request body when the request is successful.
     pub async fn update_retention_filter_with_http_info(
         &self,
