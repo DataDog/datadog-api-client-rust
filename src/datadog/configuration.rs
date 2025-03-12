@@ -62,26 +62,19 @@ impl Configuration {
 
     pub fn get_operation_host(&self, operation_str: &str) -> String {
         let operation = operation_str.to_string();
-        if let Some(servers) = OPERATION_SERVERS.get(&operation) {
-            let server_index = self
-                .server_operation_index
-                .get(&operation)
-                .cloned()
-                .unwrap_or(0);
-            return servers
-                .get(server_index)
-                .expect(&format!("Server index for operation {operation} not found"))
-                .get_url(
-                    &self
-                        .server_operation_variables
-                        .get(&operation)
-                        .unwrap_or(&HashMap::new()),
-                );
-        }
-        SERVERS
-            .get(self.server_index)
-            .expect("Server index not found.")
-            .get_url(&self.server_variables)
+        let server_index = self
+            .server_operation_index
+            .get(&operation)
+            .unwrap_or(&self.server_index);
+        let server_variables = self
+            .server_operation_variables
+            .get(&operation)
+            .unwrap_or(&self.server_variables);
+        let servers = OPERATION_SERVERS.get(&operation).unwrap_or(&SERVERS);
+        servers
+            .get(*server_index)
+            .expect(&format!("Server index for operation {operation} not found"))
+            .get_url(&server_variables)
     }
 
     pub fn set_unstable_operation_enabled(&mut self, operation: &str, enabled: bool) -> bool {
