@@ -211,6 +211,8 @@ impl DowntimesAPI {
     }
 
     /// Cancel a downtime.
+    ///
+    /// **Note**: Downtimes canceled through the API are no longer active, but are retained for approximately two days before being permanently removed. The downtime may still appear in search results until it is permanently removed.
     pub async fn cancel_downtime(
         &self,
         downtime_id: String,
@@ -222,6 +224,8 @@ impl DowntimesAPI {
     }
 
     /// Cancel a downtime.
+    ///
+    /// **Note**: Downtimes canceled through the API are no longer active, but are retained for approximately two days before being permanently removed. The downtime may still appear in search results until it is permanently removed.
     pub async fn cancel_downtime_with_http_info(
         &self,
         downtime_id: String,
