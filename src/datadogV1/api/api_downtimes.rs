@@ -93,6 +93,8 @@ pub enum UpdateDowntimeError {
 /// you greater control over monitor notifications by allowing you to globally exclude
 /// scopes from alerting. Downtime settings, which can be scheduled with start and
 /// end times, prevent all alerting related to specified Datadog tags.
+///
+/// **Note:** `curl` commands require [url encoding](<https://curl.se/docs/url-syntax.html>).
 #[derive(Debug, Clone)]
 pub struct DowntimesAPI {
     config: datadog::Configuration,

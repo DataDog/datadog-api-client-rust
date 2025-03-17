@@ -56,7 +56,7 @@ impl GetMonitorOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct ListMonitorsOptionalParams {
     /// When specified, shows additional information about the group states.
-    /// Choose one or more from `all`, `alert`, `warn`, and `no data` (`no%20data`).
+    /// Choose one or more from `all`, `alert`, `warn`, and `no data`.
     pub group_states: Option<String>,
     /// A string to filter monitors by name.
     pub name: Option<String>,
@@ -78,7 +78,7 @@ pub struct ListMonitorsOptionalParams {
 
 impl ListMonitorsOptionalParams {
     /// When specified, shows additional information about the group states.
-    /// Choose one or more from `all`, `alert`, `warn`, and `no data` (`no%20data`).
+    /// Choose one or more from `all`, `alert`, `warn`, and `no data`.
     pub fn group_states(mut self, value: String) -> Self {
         self.group_states = Some(value);
         self
@@ -323,6 +323,8 @@ pub enum ValidateMonitorError {
 /// notifies your team when a defined threshold has exceeded.
 ///
 /// For more information, see [Creating Monitors](<https://docs.datadoghq.com/monitors/create/types/>).
+///
+/// **Note:** `curl` commands require [url encoding](<https://curl.se/docs/url-syntax.html>).
 #[derive(Debug, Clone)]
 pub struct MonitorsAPI {
     config: datadog::Configuration,
