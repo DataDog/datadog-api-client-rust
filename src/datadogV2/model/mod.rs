@@ -3674,8 +3674,6 @@ pub mod model_service_definition_v2_dot2_link;
 pub use self::model_service_definition_v2_dot2_link::ServiceDefinitionV2Dot2Link;
 pub mod model_service_definition_v2_dot2_version;
 pub use self::model_service_definition_v2_dot2_version::ServiceDefinitionV2Dot2Version;
-pub mod model_service_definition_v2_dot2_type;
-pub use self::model_service_definition_v2_dot2_type::ServiceDefinitionV2Dot2Type;
 pub mod model_service_definition_schema;
 pub use self::model_service_definition_schema::ServiceDefinitionSchema;
 pub mod model_service_definitions_create_request;

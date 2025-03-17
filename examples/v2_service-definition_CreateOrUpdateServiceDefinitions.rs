@@ -8,7 +8,6 @@ use datadog_api_client::datadogV2::model::ServiceDefinitionV2Dot2Link;
 use datadog_api_client::datadogV2::model::ServiceDefinitionV2Dot2Opsgenie;
 use datadog_api_client::datadogV2::model::ServiceDefinitionV2Dot2OpsgenieRegion;
 use datadog_api_client::datadogV2::model::ServiceDefinitionV2Dot2Pagerduty;
-use datadog_api_client::datadogV2::model::ServiceDefinitionV2Dot2Type;
 use datadog_api_client::datadogV2::model::ServiceDefinitionV2Dot2Version;
 use datadog_api_client::datadogV2::model::ServiceDefinitionsCreateRequest;
 use serde_json::Value;
@@ -66,7 +65,7 @@ async fn main() {
         .tags(vec!["my:tag".to_string(), "service:tag".to_string()])
         .team("my-team".to_string())
         .tier("High".to_string())
-        .type_(ServiceDefinitionV2Dot2Type::WEB),
+        .type_("web".to_string()),
     ));
     let configuration = datadog::Configuration::new();
     let api = ServiceDefinitionAPI::with_config(configuration);
