@@ -17,7 +17,7 @@ pub struct EntityResponseIncludedRelatedOncallAttributes {
         Option<Vec<crate::datadogV2::model::EntityResponseIncludedRelatedOncallEscalationItem>>,
     /// Oncall provider.
     #[serde(rename = "provider")]
-    pub provider: Option<String>,
+    pub provider: String,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -26,10 +26,10 @@ pub struct EntityResponseIncludedRelatedOncallAttributes {
 }
 
 impl EntityResponseIncludedRelatedOncallAttributes {
-    pub fn new() -> EntityResponseIncludedRelatedOncallAttributes {
+    pub fn new(provider: String) -> EntityResponseIncludedRelatedOncallAttributes {
         EntityResponseIncludedRelatedOncallAttributes {
             escalations: None,
-            provider: None,
+            provider,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -43,23 +43,12 @@ impl EntityResponseIncludedRelatedOncallAttributes {
         self
     }
 
-    pub fn provider(mut self, value: String) -> Self {
-        self.provider = Some(value);
-        self
-    }
-
     pub fn additional_properties(
         mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
     ) -> Self {
         self.additional_properties = value;
         self
-    }
-}
-
-impl Default for EntityResponseIncludedRelatedOncallAttributes {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
@@ -100,9 +89,6 @@ impl<'de> Deserialize<'de> for EntityResponseIncludedRelatedOncallAttributes {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "provider" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             provider = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -112,6 +98,7 @@ impl<'de> Deserialize<'de> for EntityResponseIncludedRelatedOncallAttributes {
                         }
                     }
                 }
+                let provider = provider.ok_or_else(|| M::Error::missing_field("provider"))?;
 
                 let content = EntityResponseIncludedRelatedOncallAttributes {
                     escalations,

@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct EntityResponseIncludedSchemaAttributes {
     /// Entity schema v3.
     #[serde(rename = "schema")]
-    pub schema: Option<crate::datadogV2::model::EntityV3>,
+    pub schema: crate::datadogV2::model::EntityV3,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -22,17 +22,14 @@ pub struct EntityResponseIncludedSchemaAttributes {
 }
 
 impl EntityResponseIncludedSchemaAttributes {
-    pub fn new() -> EntityResponseIncludedSchemaAttributes {
+    pub fn new(
+        schema: crate::datadogV2::model::EntityV3,
+    ) -> EntityResponseIncludedSchemaAttributes {
         EntityResponseIncludedSchemaAttributes {
-            schema: None,
+            schema,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn schema(mut self, value: crate::datadogV2::model::EntityV3) -> Self {
-        self.schema = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -41,12 +38,6 @@ impl EntityResponseIncludedSchemaAttributes {
     ) -> Self {
         self.additional_properties = value;
         self
-    }
-}
-
-impl Default for EntityResponseIncludedSchemaAttributes {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
@@ -77,9 +68,6 @@ impl<'de> Deserialize<'de> for EntityResponseIncludedSchemaAttributes {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "schema" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             schema = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _schema) = schema {
                                 match _schema {
@@ -97,6 +85,7 @@ impl<'de> Deserialize<'de> for EntityResponseIncludedSchemaAttributes {
                         }
                     }
                 }
+                let schema = schema.ok_or_else(|| M::Error::missing_field("schema"))?;
 
                 let content = EntityResponseIncludedSchemaAttributes {
                     schema,

@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct EntityResponseIncludedRelatedEntityAttributes {
     /// Entity kind.
     #[serde(rename = "kind")]
-    pub kind: Option<String>,
+    pub kind: String,
     /// Entity name.
     #[serde(rename = "name")]
     pub name: Option<String>,
@@ -31,20 +31,15 @@ pub struct EntityResponseIncludedRelatedEntityAttributes {
 }
 
 impl EntityResponseIncludedRelatedEntityAttributes {
-    pub fn new() -> EntityResponseIncludedRelatedEntityAttributes {
+    pub fn new(kind: String) -> EntityResponseIncludedRelatedEntityAttributes {
         EntityResponseIncludedRelatedEntityAttributes {
-            kind: None,
+            kind,
             name: None,
             namespace: None,
             type_: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn kind(mut self, value: String) -> Self {
-        self.kind = Some(value);
-        self
     }
 
     pub fn name(mut self, value: String) -> Self {
@@ -68,12 +63,6 @@ impl EntityResponseIncludedRelatedEntityAttributes {
     ) -> Self {
         self.additional_properties = value;
         self
-    }
-}
-
-impl Default for EntityResponseIncludedRelatedEntityAttributes {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
@@ -107,9 +96,6 @@ impl<'de> Deserialize<'de> for EntityResponseIncludedRelatedEntityAttributes {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "kind" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             kind = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "name" => {
@@ -137,6 +123,7 @@ impl<'de> Deserialize<'de> for EntityResponseIncludedRelatedEntityAttributes {
                         }
                     }
                 }
+                let kind = kind.ok_or_else(|| M::Error::missing_field("kind"))?;
 
                 let content = EntityResponseIncludedRelatedEntityAttributes {
                     kind,

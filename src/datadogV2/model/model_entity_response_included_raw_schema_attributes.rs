@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct EntityResponseIncludedRawSchemaAttributes {
     /// Schema from user input in base64 encoding.
     #[serde(rename = "rawSchema")]
-    pub raw_schema: Option<String>,
+    pub raw_schema: String,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -22,17 +22,12 @@ pub struct EntityResponseIncludedRawSchemaAttributes {
 }
 
 impl EntityResponseIncludedRawSchemaAttributes {
-    pub fn new() -> EntityResponseIncludedRawSchemaAttributes {
+    pub fn new(raw_schema: String) -> EntityResponseIncludedRawSchemaAttributes {
         EntityResponseIncludedRawSchemaAttributes {
-            raw_schema: None,
+            raw_schema,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn raw_schema(mut self, value: String) -> Self {
-        self.raw_schema = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -41,12 +36,6 @@ impl EntityResponseIncludedRawSchemaAttributes {
     ) -> Self {
         self.additional_properties = value;
         self
-    }
-}
-
-impl Default for EntityResponseIncludedRawSchemaAttributes {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
@@ -77,9 +66,6 @@ impl<'de> Deserialize<'de> for EntityResponseIncludedRawSchemaAttributes {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "rawSchema" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             raw_schema = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -89,6 +75,7 @@ impl<'de> Deserialize<'de> for EntityResponseIncludedRawSchemaAttributes {
                         }
                     }
                 }
+                let raw_schema = raw_schema.ok_or_else(|| M::Error::missing_field("raw_schema"))?;
 
                 let content = EntityResponseIncludedRawSchemaAttributes {
                     raw_schema,
