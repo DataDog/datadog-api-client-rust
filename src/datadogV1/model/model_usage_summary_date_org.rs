@@ -239,6 +239,9 @@ pub struct UsageSummaryDateOrg {
     /// Shows the sum of all ephemeral infrastructure hosts for Pro Plus over all hours in the current date for the given org.
     #[serde(rename = "eph_infra_host_proplus_sum")]
     pub eph_infra_host_proplus_sum: Option<i64>,
+    /// Shows the sum of all Error Tracking APM error events over all hours in the current date for the given org.
+    #[serde(rename = "error_tracking_apm_error_events_sum")]
+    pub error_tracking_apm_error_events_sum: Option<i64>,
     /// Shows the sum of all Error Tracking error events over all hours in the current date for the given org.
     #[serde(rename = "error_tracking_error_events_sum")]
     pub error_tracking_error_events_sum: Option<i64>,
@@ -616,6 +619,7 @@ impl UsageSummaryDateOrg {
             eph_infra_host_opentelemetry_sum: None,
             eph_infra_host_pro_sum: None,
             eph_infra_host_proplus_sum: None,
+            error_tracking_apm_error_events_sum: None,
             error_tracking_error_events_sum: None,
             error_tracking_events_sum: None,
             error_tracking_rum_error_events_sum: None,
@@ -1161,6 +1165,12 @@ impl UsageSummaryDateOrg {
     #[allow(deprecated)]
     pub fn eph_infra_host_proplus_sum(mut self, value: i64) -> Self {
         self.eph_infra_host_proplus_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn error_tracking_apm_error_events_sum(mut self, value: i64) -> Self {
+        self.error_tracking_apm_error_events_sum = Some(value);
         self
     }
 
@@ -1829,6 +1839,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                 let mut eph_infra_host_opentelemetry_sum: Option<i64> = None;
                 let mut eph_infra_host_pro_sum: Option<i64> = None;
                 let mut eph_infra_host_proplus_sum: Option<i64> = None;
+                let mut error_tracking_apm_error_events_sum: Option<i64> = None;
                 let mut error_tracking_error_events_sum: Option<i64> = None;
                 let mut error_tracking_events_sum: Option<i64> = None;
                 let mut error_tracking_rum_error_events_sum: Option<i64> = None;
@@ -2453,6 +2464,13 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                                 continue;
                             }
                             eph_infra_host_proplus_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "error_tracking_apm_error_events_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            error_tracking_apm_error_events_sum =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "error_tracking_error_events_sum" => {
@@ -3187,6 +3205,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                     eph_infra_host_opentelemetry_sum,
                     eph_infra_host_pro_sum,
                     eph_infra_host_proplus_sum,
+                    error_tracking_apm_error_events_sum,
                     error_tracking_error_events_sum,
                     error_tracking_events_sum,
                     error_tracking_rum_error_events_sum,
