@@ -10,6 +10,7 @@ pub enum ContentEncoding {
     IDENTITY,
     GZIP,
     DEFLATE,
+    ZSTD1,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -19,6 +20,7 @@ impl ToString for ContentEncoding {
             Self::IDENTITY => String::from("identity"),
             Self::GZIP => String::from("gzip"),
             Self::DEFLATE => String::from("deflate"),
+            Self::ZSTD1 => String::from("zstd1"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -46,6 +48,7 @@ impl<'de> Deserialize<'de> for ContentEncoding {
             "identity" => Self::IDENTITY,
             "gzip" => Self::GZIP,
             "deflate" => Self::DEFLATE,
+            "zstd1" => Self::ZSTD1,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
