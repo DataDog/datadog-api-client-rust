@@ -29,7 +29,7 @@ async fn main() {
             EntityV3ServiceKind::SERVICE,
             EntityV3Metadata::new("myService".to_string())
                 .additional_owners(vec![EntityV3MetadataAdditionalOwnersItems::new(
-                    "".to_string(),
+                    "fake-team-name".to_string(),
                 )])
                 .contacts(vec![EntityV3MetadataContactsItems::new(
                     "https://slack/".to_string(),

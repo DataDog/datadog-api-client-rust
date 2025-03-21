@@ -25,7 +25,7 @@ pub struct EntityResponseIncludedRelatedIncidentAttributes {
     pub status: Option<String>,
     /// Incident title.
     #[serde(rename = "title")]
-    pub title: Option<String>,
+    pub title: String,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -34,13 +34,13 @@ pub struct EntityResponseIncludedRelatedIncidentAttributes {
 }
 
 impl EntityResponseIncludedRelatedIncidentAttributes {
-    pub fn new() -> EntityResponseIncludedRelatedIncidentAttributes {
+    pub fn new(title: String) -> EntityResponseIncludedRelatedIncidentAttributes {
         EntityResponseIncludedRelatedIncidentAttributes {
             created_at: None,
             html_url: None,
             provider: None,
             status: None,
-            title: None,
+            title,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -66,23 +66,12 @@ impl EntityResponseIncludedRelatedIncidentAttributes {
         self
     }
 
-    pub fn title(mut self, value: String) -> Self {
-        self.title = Some(value);
-        self
-    }
-
     pub fn additional_properties(
         mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
     ) -> Self {
         self.additional_properties = value;
         self
-    }
-}
-
-impl Default for EntityResponseIncludedRelatedIncidentAttributes {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
@@ -141,9 +130,6 @@ impl<'de> Deserialize<'de> for EntityResponseIncludedRelatedIncidentAttributes {
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "title" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -153,6 +139,7 @@ impl<'de> Deserialize<'de> for EntityResponseIncludedRelatedIncidentAttributes {
                         }
                     }
                 }
+                let title = title.ok_or_else(|| M::Error::missing_field("title"))?;
 
                 let content = EntityResponseIncludedRelatedIncidentAttributes {
                     created_at,
