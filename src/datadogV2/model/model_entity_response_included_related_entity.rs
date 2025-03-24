@@ -22,7 +22,7 @@ pub struct EntityResponseIncludedRelatedEntity {
     pub meta: Option<crate::datadogV2::model::EntityResponseIncludedRelatedEntityMeta>,
     /// Related entity.
     #[serde(rename = "type")]
-    pub type_: Option<String>,
+    pub type_: Option<crate::datadogV2::model::EntityResponseIncludedRelatedEntityType>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -63,7 +63,10 @@ impl EntityResponseIncludedRelatedEntity {
         self
     }
 
-    pub fn type_(mut self, value: String) -> Self {
+    pub fn type_(
+        mut self,
+        value: crate::datadogV2::model::EntityResponseIncludedRelatedEntityType,
+    ) -> Self {
         self.type_ = Some(value);
         self
     }
@@ -107,7 +110,9 @@ impl<'de> Deserialize<'de> for EntityResponseIncludedRelatedEntity {
                 let mut meta: Option<
                     crate::datadogV2::model::EntityResponseIncludedRelatedEntityMeta,
                 > = None;
-                let mut type_: Option<String> = None;
+                let mut type_: Option<
+                    crate::datadogV2::model::EntityResponseIncludedRelatedEntityType,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -139,6 +144,14 @@ impl<'de> Deserialize<'de> for EntityResponseIncludedRelatedEntity {
                                 continue;
                             }
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _type_) = type_ {
+                                match _type_ {
+                                    crate::datadogV2::model::EntityResponseIncludedRelatedEntityType::UnparsedObject(_type_) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {

@@ -19,7 +19,7 @@ pub struct EntityResponseIncludedOncall {
     pub id: Option<String>,
     /// Oncall type.
     #[serde(rename = "type")]
-    pub type_: Option<String>,
+    pub type_: Option<crate::datadogV2::model::EntityResponseIncludedOncallType>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -51,7 +51,10 @@ impl EntityResponseIncludedOncall {
         self
     }
 
-    pub fn type_(mut self, value: String) -> Self {
+    pub fn type_(
+        mut self,
+        value: crate::datadogV2::model::EntityResponseIncludedOncallType,
+    ) -> Self {
         self.type_ = Some(value);
         self
     }
@@ -92,7 +95,8 @@ impl<'de> Deserialize<'de> for EntityResponseIncludedOncall {
                     crate::datadogV2::model::EntityResponseIncludedRelatedOncallAttributes,
                 > = None;
                 let mut id: Option<String> = None;
-                let mut type_: Option<String> = None;
+                let mut type_: Option<crate::datadogV2::model::EntityResponseIncludedOncallType> =
+                    None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -118,6 +122,14 @@ impl<'de> Deserialize<'de> for EntityResponseIncludedOncall {
                                 continue;
                             }
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _type_) = type_ {
+                                match _type_ {
+                                    crate::datadogV2::model::EntityResponseIncludedOncallType::UnparsedObject(_type_) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
