@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ChangeEventTriggerWrapper {
-    /// Trigger a workflow VIA a Change Event.
+    /// Trigger a workflow from a Change Event.
     #[serde(rename = "changeEventTrigger")]
     pub change_event_trigger: std::collections::BTreeMap<String, serde_json::Value>,
     /// A list of steps that run first after a trigger fires.

@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SlackTriggerWrapper {
-    /// Trigger a workflow VIA Slack. The workflow must be published.
+    /// Trigger a workflow from Slack. The workflow must be published.
     #[serde(rename = "slackTrigger")]
     pub slack_trigger: std::collections::BTreeMap<String, serde_json::Value>,
     /// A list of steps that run first after a trigger fires.

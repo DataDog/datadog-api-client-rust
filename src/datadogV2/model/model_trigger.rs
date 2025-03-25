@@ -12,13 +12,19 @@ pub enum Trigger {
     AppTriggerWrapper(Box<crate::datadogV2::model::AppTriggerWrapper>),
     CaseTriggerWrapper(Box<crate::datadogV2::model::CaseTriggerWrapper>),
     ChangeEventTriggerWrapper(Box<crate::datadogV2::model::ChangeEventTriggerWrapper>),
+    DatabaseMonitoringTriggerWrapper(
+        Box<crate::datadogV2::model::DatabaseMonitoringTriggerWrapper>,
+    ),
     DashboardTriggerWrapper(Box<crate::datadogV2::model::DashboardTriggerWrapper>),
     GithubWebhookTriggerWrapper(Box<crate::datadogV2::model::GithubWebhookTriggerWrapper>),
     IncidentTriggerWrapper(Box<crate::datadogV2::model::IncidentTriggerWrapper>),
     MonitorTriggerWrapper(Box<crate::datadogV2::model::MonitorTriggerWrapper>),
+    NotebookTriggerWrapper(Box<crate::datadogV2::model::NotebookTriggerWrapper>),
     ScheduleTriggerWrapper(Box<crate::datadogV2::model::ScheduleTriggerWrapper>),
     SecurityTriggerWrapper(Box<crate::datadogV2::model::SecurityTriggerWrapper>),
+    SelfServiceTriggerWrapper(Box<crate::datadogV2::model::SelfServiceTriggerWrapper>),
     SlackTriggerWrapper(Box<crate::datadogV2::model::SlackTriggerWrapper>),
+    SoftwareCatalogTriggerWrapper(Box<crate::datadogV2::model::SoftwareCatalogTriggerWrapper>),
     WorkflowTriggerWrapper(Box<crate::datadogV2::model::WorkflowTriggerWrapper>),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
@@ -59,6 +65,14 @@ impl<'de> Deserialize<'de> for Trigger {
             }
         }
         if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::DatabaseMonitoringTriggerWrapper>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(Trigger::DatabaseMonitoringTriggerWrapper(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
             Box<crate::datadogV2::model::DashboardTriggerWrapper>,
         >(value.clone())
         {
@@ -88,6 +102,13 @@ impl<'de> Deserialize<'de> for Trigger {
                 return Ok(Trigger::MonitorTriggerWrapper(_v));
             }
         }
+        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::NotebookTriggerWrapper>>(
+            value.clone(),
+        ) {
+            if !_v._unparsed {
+                return Ok(Trigger::NotebookTriggerWrapper(_v));
+            }
+        }
         if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ScheduleTriggerWrapper>>(
             value.clone(),
         ) {
@@ -102,11 +123,27 @@ impl<'de> Deserialize<'de> for Trigger {
                 return Ok(Trigger::SecurityTriggerWrapper(_v));
             }
         }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::SelfServiceTriggerWrapper>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(Trigger::SelfServiceTriggerWrapper(_v));
+            }
+        }
         if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::SlackTriggerWrapper>>(
             value.clone(),
         ) {
             if !_v._unparsed {
                 return Ok(Trigger::SlackTriggerWrapper(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::SoftwareCatalogTriggerWrapper>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(Trigger::SoftwareCatalogTriggerWrapper(_v));
             }
         }
         if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::WorkflowTriggerWrapper>>(

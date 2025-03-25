@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct IncidentTriggerWrapper {
-    /// Trigger a workflow VIA an Incident. For automatic triggering a handle must be configured and the workflow must be published.
+    /// Trigger a workflow from an Incident. For automatic triggering a handle must be configured and the workflow must be published.
     #[serde(rename = "incidentTrigger")]
     pub incident_trigger: crate::datadogV2::model::IncidentTrigger,
     /// A list of steps that run first after a trigger fires.

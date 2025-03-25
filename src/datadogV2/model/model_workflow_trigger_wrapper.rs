@@ -14,7 +14,7 @@ pub struct WorkflowTriggerWrapper {
     /// A list of steps that run first after a trigger fires.
     #[serde(rename = "startStepNames")]
     pub start_step_names: Option<Vec<String>>,
-    /// Trigger a workflow VIA the Datadog UI. Only required if no other trigger exists.
+    /// Trigger a workflow from the Datadog UI. Only required if no other trigger exists.
     #[serde(rename = "workflowTrigger")]
     pub workflow_trigger: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(flatten)]

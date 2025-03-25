@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MonitorTriggerWrapper {
-    /// Trigger a workflow VIA a Monitor. For automatic triggering a handle must be configured and the workflow must be published.
+    /// Trigger a workflow from a Monitor. For automatic triggering a handle must be configured and the workflow must be published.
     #[serde(rename = "monitorTrigger")]
     pub monitor_trigger: crate::datadogV2::model::MonitorTrigger,
     /// A list of steps that run first after a trigger fires.

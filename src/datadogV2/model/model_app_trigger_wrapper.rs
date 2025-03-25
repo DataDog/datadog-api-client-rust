@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AppTriggerWrapper {
-    /// Trigger a workflow VIA an App.
+    /// Trigger a workflow from an App.
     #[serde(rename = "appTrigger")]
     pub app_trigger: std::collections::BTreeMap<String, serde_json::Value>,
     /// A list of steps that run first after a trigger fires.

@@ -6,14 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Trigger a workflow from an API request. The workflow must be published.
+/// Schema for a Database Monitoring-based trigger.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct APITrigger {
-    /// Defines a rate limit for a trigger.
-    #[serde(rename = "rateLimit")]
-    pub rate_limit: Option<crate::datadogV2::model::TriggerRateLimit>,
+pub struct DatabaseMonitoringTriggerWrapper {
+    /// Trigger a workflow from Database Monitoring.
+    #[serde(rename = "databaseMonitoringTrigger")]
+    pub database_monitoring_trigger: std::collections::BTreeMap<String, serde_json::Value>,
+    /// A list of steps that run first after a trigger fires.
+    #[serde(rename = "startStepNames")]
+    pub start_step_names: Option<Vec<String>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,17 +24,20 @@ pub struct APITrigger {
     pub(crate) _unparsed: bool,
 }
 
-impl APITrigger {
-    pub fn new() -> APITrigger {
-        APITrigger {
-            rate_limit: None,
+impl DatabaseMonitoringTriggerWrapper {
+    pub fn new(
+        database_monitoring_trigger: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> DatabaseMonitoringTriggerWrapper {
+        DatabaseMonitoringTriggerWrapper {
+            database_monitoring_trigger,
+            start_step_names: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn rate_limit(mut self, value: crate::datadogV2::model::TriggerRateLimit) -> Self {
-        self.rate_limit = Some(value);
+    pub fn start_step_names(mut self, value: Vec<String>) -> Self {
+        self.start_step_names = Some(value);
         self
     }
 
@@ -44,20 +50,14 @@ impl APITrigger {
     }
 }
 
-impl Default for APITrigger {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<'de> Deserialize<'de> for APITrigger {
+impl<'de> Deserialize<'de> for DatabaseMonitoringTriggerWrapper {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct APITriggerVisitor;
-        impl<'a> Visitor<'a> for APITriggerVisitor {
-            type Value = APITrigger;
+        struct DatabaseMonitoringTriggerWrapperVisitor;
+        impl<'a> Visitor<'a> for DatabaseMonitoringTriggerWrapperVisitor {
+            type Value = DatabaseMonitoringTriggerWrapper;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -67,7 +67,10 @@ impl<'de> Deserialize<'de> for APITrigger {
             where
                 M: MapAccess<'a>,
             {
-                let mut rate_limit: Option<crate::datadogV2::model::TriggerRateLimit> = None;
+                let mut database_monitoring_trigger: Option<
+                    std::collections::BTreeMap<String, serde_json::Value>,
+                > = None;
+                let mut start_step_names: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -76,11 +79,16 @@ impl<'de> Deserialize<'de> for APITrigger {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "rateLimit" => {
+                        "databaseMonitoringTrigger" => {
+                            database_monitoring_trigger =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "startStepNames" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rate_limit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            start_step_names =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -89,9 +97,12 @@ impl<'de> Deserialize<'de> for APITrigger {
                         }
                     }
                 }
+                let database_monitoring_trigger = database_monitoring_trigger
+                    .ok_or_else(|| M::Error::missing_field("database_monitoring_trigger"))?;
 
-                let content = APITrigger {
-                    rate_limit,
+                let content = DatabaseMonitoringTriggerWrapper {
+                    database_monitoring_trigger,
+                    start_step_names,
                     additional_properties,
                     _unparsed,
                 };
@@ -100,6 +111,6 @@ impl<'de> Deserialize<'de> for APITrigger {
             }
         }
 
-        deserializer.deserialize_any(APITriggerVisitor)
+        deserializer.deserialize_any(DatabaseMonitoringTriggerWrapperVisitor)
     }
 }
