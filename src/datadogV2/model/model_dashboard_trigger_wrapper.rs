@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DashboardTriggerWrapper {
-    /// Trigger a workflow VIA a Dashboard.
+    /// Trigger a workflow from a Dashboard.
     #[serde(rename = "dashboardTrigger")]
     pub dashboard_trigger: std::collections::BTreeMap<String, serde_json::Value>,
     /// A list of steps that run first after a trigger fires.

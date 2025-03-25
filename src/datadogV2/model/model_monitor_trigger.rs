@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Trigger a workflow VIA a Monitor. For automatic triggering a handle must be configured and the workflow must be published.
+/// Trigger a workflow from a Monitor. For automatic triggering a handle must be configured and the workflow must be published.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]

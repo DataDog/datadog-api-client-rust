@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct APITriggerWrapper {
-    /// Trigger a workflow VIA an API. The workflow must be published.
+    /// Trigger a workflow from an API request. The workflow must be published.
     #[serde(rename = "apiTrigger")]
     pub api_trigger: crate::datadogV2::model::APITrigger,
     /// A list of steps that run first after a trigger fires.

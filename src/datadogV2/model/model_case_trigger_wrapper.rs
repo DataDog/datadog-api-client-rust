@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseTriggerWrapper {
-    /// Trigger a workflow VIA a Case. For automatic triggering a handle must be configured and the workflow must be published.
+    /// Trigger a workflow from a Case. For automatic triggering a handle must be configured and the workflow must be published.
     #[serde(rename = "caseTrigger")]
     pub case_trigger: crate::datadogV2::model::CaseTrigger,
     /// A list of steps that run first after a trigger fires.

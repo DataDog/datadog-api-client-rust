@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SecurityTriggerWrapper {
-    /// Trigger a workflow VIA a Security Signal or Finding. For automatic triggering a handle must be configured and the workflow must be published.
+    /// Trigger a workflow from a Security Signal or Finding. For automatic triggering a handle must be configured and the workflow must be published.
     #[serde(rename = "securityTrigger")]
     pub security_trigger: crate::datadogV2::model::SecurityTrigger,
     /// A list of steps that run first after a trigger fires.

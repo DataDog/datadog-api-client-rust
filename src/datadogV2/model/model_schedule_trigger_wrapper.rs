@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ScheduleTriggerWrapper {
-    /// Trigger a workflow VIA a Schedule. The workflow must be published.
+    /// Trigger a workflow from a Schedule. The workflow must be published.
     #[serde(rename = "scheduleTrigger")]
     pub schedule_trigger: crate::datadogV2::model::ScheduleTrigger,
     /// A list of steps that run first after a trigger fires.
