@@ -25,7 +25,7 @@ async fn main() {
                 ))),
                 AWSIntegrationType::AWS,
             ))),
-            "Cassette Connection DELETE_ME".to_string(),
+            "Cassette Connection exampleactionconnection".to_string(),
         ),
         ActionConnectionDataType::ACTION_CONNECTION,
     ));
