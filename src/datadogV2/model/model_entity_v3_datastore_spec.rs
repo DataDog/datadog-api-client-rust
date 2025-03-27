@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EntityV3DatastoreSpec {
+    /// A list of components the datastore is a part of
+    #[serde(rename = "componentOf")]
+    pub component_of: Option<Vec<String>>,
     /// The lifecycle state of the datastore.
     #[serde(rename = "lifecycle")]
     pub lifecycle: Option<String>,
@@ -28,11 +31,17 @@ pub struct EntityV3DatastoreSpec {
 impl EntityV3DatastoreSpec {
     pub fn new() -> EntityV3DatastoreSpec {
         EntityV3DatastoreSpec {
+            component_of: None,
             lifecycle: None,
             tier: None,
             type_: None,
             _unparsed: false,
         }
+    }
+
+    pub fn component_of(mut self, value: Vec<String>) -> Self {
+        self.component_of = Some(value);
+        self
     }
 
     pub fn lifecycle(mut self, value: String) -> Self {
@@ -74,6 +83,7 @@ impl<'de> Deserialize<'de> for EntityV3DatastoreSpec {
             where
                 M: MapAccess<'a>,
             {
+                let mut component_of: Option<Vec<String>> = None;
                 let mut lifecycle: Option<String> = None;
                 let mut tier: Option<String> = None;
                 let mut type_: Option<String> = None;
@@ -81,6 +91,13 @@ impl<'de> Deserialize<'de> for EntityV3DatastoreSpec {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "componentOf" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            component_of =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "lifecycle" => {
                             if v.is_null() {
                                 continue;
@@ -108,6 +125,7 @@ impl<'de> Deserialize<'de> for EntityV3DatastoreSpec {
                 }
 
                 let content = EntityV3DatastoreSpec {
+                    component_of,
                     lifecycle,
                     tier,
                     type_,
