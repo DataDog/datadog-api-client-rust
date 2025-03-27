@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EntityV3ServiceSpec {
+    /// A list of components the service is a part of
+    #[serde(rename = "componentOf")]
+    pub component_of: Option<Vec<String>>,
     /// A list of components the service depends on.
     #[serde(rename = "dependsOn")]
     pub depends_on: Option<Vec<String>>,
@@ -34,6 +37,7 @@ pub struct EntityV3ServiceSpec {
 impl EntityV3ServiceSpec {
     pub fn new() -> EntityV3ServiceSpec {
         EntityV3ServiceSpec {
+            component_of: None,
             depends_on: None,
             languages: None,
             lifecycle: None,
@@ -41,6 +45,11 @@ impl EntityV3ServiceSpec {
             type_: None,
             _unparsed: false,
         }
+    }
+
+    pub fn component_of(mut self, value: Vec<String>) -> Self {
+        self.component_of = Some(value);
+        self
     }
 
     pub fn depends_on(mut self, value: Vec<String>) -> Self {
@@ -92,6 +101,7 @@ impl<'de> Deserialize<'de> for EntityV3ServiceSpec {
             where
                 M: MapAccess<'a>,
             {
+                let mut component_of: Option<Vec<String>> = None;
                 let mut depends_on: Option<Vec<String>> = None;
                 let mut languages: Option<Vec<String>> = None;
                 let mut lifecycle: Option<String> = None;
@@ -101,6 +111,13 @@ impl<'de> Deserialize<'de> for EntityV3ServiceSpec {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "componentOf" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            component_of =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "dependsOn" => {
                             if v.is_null() {
                                 continue;
@@ -140,6 +157,7 @@ impl<'de> Deserialize<'de> for EntityV3ServiceSpec {
                 }
 
                 let content = EntityV3ServiceSpec {
+                    component_of,
                     depends_on,
                     languages,
                     lifecycle,
