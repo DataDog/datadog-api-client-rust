@@ -103,6 +103,8 @@ pub struct ApiInstances {
     pub v2_api_monitors: Option<datadogV2::api_monitors::MonitorsAPI>,
     pub v2_api_network_device_monitoring:
         Option<datadogV2::api_network_device_monitoring::NetworkDeviceMonitoringAPI>,
+    pub v2_api_cloud_network_monitoring:
+        Option<datadogV2::api_cloud_network_monitoring::CloudNetworkMonitoringAPI>,
     pub v2_api_organizations: Option<datadogV2::api_organizations::OrganizationsAPI>,
     pub v2_api_roles: Option<datadogV2::api_roles::RolesAPI>,
     pub v2_api_security_monitoring:
@@ -698,6 +700,12 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         }
         "NetworkDeviceMonitoring" => {
             world.api_instances.v2_api_network_device_monitoring = Some(datadogV2::api_network_device_monitoring::NetworkDeviceMonitoringAPI::with_client_and_config(
+                world.config.clone(),
+                world.http_client.as_ref().unwrap().clone()
+            ));
+        }
+        "CloudNetworkMonitoring" => {
+            world.api_instances.v2_api_cloud_network_monitoring = Some(datadogV2::api_cloud_network_monitoring::CloudNetworkMonitoringAPI::with_client_and_config(
                 world.config.clone(),
                 world.http_client.as_ref().unwrap().clone()
             ));
@@ -2683,6 +2691,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.UpdateDeviceUserTags".into(),
         test_v2_update_device_user_tags,
+    );
+    world.function_mappings.insert(
+        "v2.GetAggregatedConnections".into(),
+        test_v2_get_aggregated_connections,
     );
     world
         .function_mappings
@@ -19627,6 +19639,55 @@ fn test_v2_update_device_user_tags(world: &mut DatadogWorld, _parameters: &HashM
     let device_id = serde_json::from_value(_parameters.get("device_id").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.update_device_user_tags_with_http_info(device_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_aggregated_connections(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_network_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let from = _parameters
+        .get("from")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let to = _parameters
+        .get("to")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let group_by = _parameters
+        .get("group_by")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let tags = _parameters
+        .get("tags")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let limit = _parameters
+        .get("limit")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_cloud_network_monitoring::GetAggregatedConnectionsOptionalParams::default();
+    params.from = from;
+    params.to = to;
+    params.group_by = group_by;
+    params.tags = tags;
+    params.limit = limit;
+    let response = match block_on(api.get_aggregated_connections_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
