@@ -1,6 +1,7 @@
 // Get a CSM Threats Agent rule returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_csm_threats::CSMThreatsAPI;
+use datadog_api_client::datadogV2::api_csm_threats::GetCSMThreatsAgentRuleOptionalParams;
 
 #[tokio::main]
 async fn main() {
@@ -9,7 +10,10 @@ async fn main() {
     let configuration = datadog::Configuration::new();
     let api = CSMThreatsAPI::with_config(configuration);
     let resp = api
-        .get_csm_threats_agent_rule(agent_rule_data_id.clone())
+        .get_csm_threats_agent_rule(
+            agent_rule_data_id.clone(),
+            GetCSMThreatsAgentRuleOptionalParams::default(),
+        )
         .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);

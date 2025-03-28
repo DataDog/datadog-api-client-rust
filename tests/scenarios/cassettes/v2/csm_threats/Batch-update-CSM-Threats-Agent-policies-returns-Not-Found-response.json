@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"policies\":[{\"delete\":true,\"description\":\"My agent policy\",\"enabled\":true,\"hostTags\":[],\"id\":\"mdh-tah-lj9\",\"name\":\"my_agent_policy\",\"priority\":10}]},\"id\":\"batch_update_req\",\"type\":\"policies\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "patch",
+        "uri": "https://api.datad0g.com/api/v2/remote_config/products/cws/policy"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"title\":\"failed to update policy\"}]}\n",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 404,
+          "message": "Not Found"
+        }
+      },
+      "recorded_at": "Fri, 28 Mar 2025 13:58:50 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"description\":\"My agent policy\",\"enabled\":true,\"hostTags\":[\"bad_tag:\u574f\u6807\u7b7e\"],\"name\":\"my_agent_policy\"},\"type\":\"policy\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datad0g.com/api/v2/remote_config/products/cws/policy"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"title\":\"failed to create policy\"}]}\n",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Thu, 27 Mar 2025 09:35:42 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

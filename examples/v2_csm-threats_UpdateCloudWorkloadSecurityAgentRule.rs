@@ -10,12 +10,17 @@ use datadog_api_client::datadogV2::model::CloudWorkloadSecurityAgentRuleUpdateRe
 async fn main() {
     // there is a valid "agent_rule" in the system
     let agent_rule_data_id = std::env::var("AGENT_RULE_DATA_ID").unwrap();
+
+    // there is a valid "policy_rc" in the system
+    let policy_data_id = std::env::var("POLICY_DATA_ID").unwrap();
     let body = CloudWorkloadSecurityAgentRuleUpdateRequest::new(
         CloudWorkloadSecurityAgentRuleUpdateData::new(
             CloudWorkloadSecurityAgentRuleUpdateAttributes::new()
-                .description("Test Agent rule".to_string())
+                .description("Updated Agent rule".to_string())
                 .enabled(true)
-                .expression(r#"exec.file.name == "sh""#.to_string()),
+                .expression(r#"exec.file.name == "sh""#.to_string())
+                .policy_id(policy_data_id.clone())
+                .product_tags(vec![]),
             CloudWorkloadSecurityAgentRuleType::AGENT_RULE,
         )
         .id(agent_rule_data_id.clone()),
