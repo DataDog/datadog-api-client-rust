@@ -15,7 +15,8 @@ pub struct LogsListRequest {
     #[serde(rename = "filter")]
     pub filter: Option<crate::datadogV2::model::LogsQueryFilter>,
     /// Global query options that are used during the query.
-    /// Note: you should supply either timezone or time offset, but not both. Otherwise, the query will fail.
+    /// Note: These fields are currently deprecated and do not affect the query results.
+    #[deprecated]
     #[serde(rename = "options")]
     pub options: Option<crate::datadogV2::model::LogsQueryOptions>,
     /// Paging attributes for listing logs.
@@ -33,6 +34,7 @@ pub struct LogsListRequest {
 
 impl LogsListRequest {
     pub fn new() -> LogsListRequest {
+        #[allow(deprecated)]
         LogsListRequest {
             filter: None,
             options: None,
@@ -43,21 +45,25 @@ impl LogsListRequest {
         }
     }
 
+    #[allow(deprecated)]
     pub fn filter(mut self, value: crate::datadogV2::model::LogsQueryFilter) -> Self {
         self.filter = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn options(mut self, value: crate::datadogV2::model::LogsQueryOptions) -> Self {
         self.options = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn page(mut self, value: crate::datadogV2::model::LogsListRequestPage) -> Self {
         self.page = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn sort(mut self, value: crate::datadogV2::model::LogsSort) -> Self {
         self.sort = Some(value);
         self
@@ -147,6 +153,7 @@ impl<'de> Deserialize<'de> for LogsListRequest {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = LogsListRequest {
                     filter,
                     options,
