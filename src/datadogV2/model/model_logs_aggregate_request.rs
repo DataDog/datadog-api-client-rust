@@ -21,7 +21,8 @@ pub struct LogsAggregateRequest {
     #[serde(rename = "group_by")]
     pub group_by: Option<Vec<crate::datadogV2::model::LogsGroupBy>>,
     /// Global query options that are used during the query.
-    /// Note: you should supply either timezone or time offset, but not both. Otherwise, the query will fail.
+    /// Note: These fields are currently deprecated and do not affect the query results.
+    #[deprecated]
     #[serde(rename = "options")]
     pub options: Option<crate::datadogV2::model::LogsQueryOptions>,
     /// Paging settings
@@ -36,6 +37,7 @@ pub struct LogsAggregateRequest {
 
 impl LogsAggregateRequest {
     pub fn new() -> LogsAggregateRequest {
+        #[allow(deprecated)]
         LogsAggregateRequest {
             compute: None,
             filter: None,
@@ -47,26 +49,31 @@ impl LogsAggregateRequest {
         }
     }
 
+    #[allow(deprecated)]
     pub fn compute(mut self, value: Vec<crate::datadogV2::model::LogsCompute>) -> Self {
         self.compute = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn filter(mut self, value: crate::datadogV2::model::LogsQueryFilter) -> Self {
         self.filter = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn group_by(mut self, value: Vec<crate::datadogV2::model::LogsGroupBy>) -> Self {
         self.group_by = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn options(mut self, value: crate::datadogV2::model::LogsQueryOptions) -> Self {
         self.options = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn page(mut self, value: crate::datadogV2::model::LogsAggregateRequestPage) -> Self {
         self.page = Some(value);
         self
@@ -155,6 +162,7 @@ impl<'de> Deserialize<'de> for LogsAggregateRequest {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = LogsAggregateRequest {
                     compute,
                     filter,
