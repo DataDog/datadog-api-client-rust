@@ -9,6 +9,10 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum SecurityMonitoringStandardDataSource {
     LOGS,
     AUDIT,
+    APP_SEC_SPANS,
+    SPANS,
+    SECURITY_RUNTIME,
+    NETWORK,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -17,6 +21,10 @@ impl ToString for SecurityMonitoringStandardDataSource {
         match self {
             Self::LOGS => String::from("logs"),
             Self::AUDIT => String::from("audit"),
+            Self::APP_SEC_SPANS => String::from("app_sec_spans"),
+            Self::SPANS => String::from("spans"),
+            Self::SECURITY_RUNTIME => String::from("security_runtime"),
+            Self::NETWORK => String::from("network"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -43,6 +51,10 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardDataSource {
         Ok(match s.as_str() {
             "logs" => Self::LOGS,
             "audit" => Self::AUDIT,
+            "app_sec_spans" => Self::APP_SEC_SPANS,
+            "spans" => Self::SPANS,
+            "security_runtime" => Self::SECURITY_RUNTIME,
+            "network" => Self::NETWORK,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
