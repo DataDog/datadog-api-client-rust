@@ -1,0 +1,33 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "application/json"
+          ]
+        },
+        "method": "get",
+        "uri": "https://api.datadoghq.com/api/v2/network/connections/aggregate?limit=6000"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"status\":\"400\",\"title\":\"Invalid limit\"}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Mon, 31 Mar 2025 18:18:50 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
