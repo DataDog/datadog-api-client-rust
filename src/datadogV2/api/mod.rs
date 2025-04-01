@@ -16,6 +16,7 @@ pub mod api_case_management;
 pub mod api_ci_visibility_pipelines;
 pub mod api_ci_visibility_tests;
 pub mod api_cloud_cost_management;
+pub mod api_cloud_network_monitoring;
 pub mod api_cloudflare_integration;
 pub mod api_confluent_cloud;
 pub mod api_container_images;

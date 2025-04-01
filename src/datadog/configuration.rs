@@ -163,6 +163,7 @@ impl Default for Configuration {
             ("v2.list_aws_namespaces".to_owned(), false),
             ("v2.update_aws_account".to_owned(), false),
             ("v2.list_aws_logs_services".to_owned(), false),
+            ("v2.get_aggregated_connections".to_owned(), false),
             ("v2.cancel_historical_job".to_owned(), false),
             ("v2.convert_job_result_to_signal".to_owned(), false),
             ("v2.delete_historical_job".to_owned(), false),
