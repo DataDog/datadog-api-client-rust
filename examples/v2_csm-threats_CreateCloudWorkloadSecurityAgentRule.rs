@@ -14,8 +14,9 @@ async fn main() {
                 r#"exec.file.name == "sh""#.to_string(),
                 "examplecsmthreat".to_string(),
             )
-            .description("Test Agent rule".to_string())
-            .enabled(true),
+            .description("My Agent rule".to_string())
+            .enabled(true)
+            .filters(vec![]),
             CloudWorkloadSecurityAgentRuleType::AGENT_RULE,
         ),
     );
