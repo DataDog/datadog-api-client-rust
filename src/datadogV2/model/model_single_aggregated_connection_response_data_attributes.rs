@@ -26,7 +26,7 @@ pub struct SingleAggregatedConnectionResponseDataAttributes {
     /// The total number of packets sent by the server over the given period.
     #[serde(rename = "packets_sent_by_server")]
     pub packets_sent_by_server: Option<i64>,
-    /// Measured as TCP smoothed roundtrip time in microseconds (the time between a TCP frame being sent and acknowledged).
+    /// Measured as TCP smoothed round trip time in microseconds (the time between a TCP frame being sent and acknowledged).
     #[serde(rename = "rtt_micro_seconds")]
     pub rtt_micro_seconds: Option<i64>,
     /// The number of TCP connections in a closed state. Measured in connections per second from the client.
