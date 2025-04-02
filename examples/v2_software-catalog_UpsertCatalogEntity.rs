@@ -64,6 +64,7 @@ async fn main() {
         )
         .spec(
             EntityV3ServiceSpec::new()
+                .component_of(vec![])
                 .depends_on(vec![])
                 .languages(vec![]),
         ),
