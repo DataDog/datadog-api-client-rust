@@ -10,6 +10,78 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
+/// DeleteCSMThreatsAgentRuleOptionalParams is a struct for passing parameters to the method [`CSMThreatsAPI::delete_csm_threats_agent_rule`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct DeleteCSMThreatsAgentRuleOptionalParams {
+    /// The ID of the Agent policy
+    pub policy_id: Option<String>,
+}
+
+impl DeleteCSMThreatsAgentRuleOptionalParams {
+    /// The ID of the Agent policy
+    pub fn policy_id(mut self, value: String) -> Self {
+        self.policy_id = Some(value);
+        self
+    }
+}
+
+/// GetCSMThreatsAgentRuleOptionalParams is a struct for passing parameters to the method [`CSMThreatsAPI::get_csm_threats_agent_rule`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetCSMThreatsAgentRuleOptionalParams {
+    /// The ID of the Agent policy
+    pub policy_id: Option<String>,
+}
+
+impl GetCSMThreatsAgentRuleOptionalParams {
+    /// The ID of the Agent policy
+    pub fn policy_id(mut self, value: String) -> Self {
+        self.policy_id = Some(value);
+        self
+    }
+}
+
+/// ListCSMThreatsAgentRulesOptionalParams is a struct for passing parameters to the method [`CSMThreatsAPI::list_csm_threats_agent_rules`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListCSMThreatsAgentRulesOptionalParams {
+    /// The ID of the Agent policy
+    pub policy_id: Option<String>,
+}
+
+impl ListCSMThreatsAgentRulesOptionalParams {
+    /// The ID of the Agent policy
+    pub fn policy_id(mut self, value: String) -> Self {
+        self.policy_id = Some(value);
+        self
+    }
+}
+
+/// UpdateCSMThreatsAgentRuleOptionalParams is a struct for passing parameters to the method [`CSMThreatsAPI::update_csm_threats_agent_rule`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct UpdateCSMThreatsAgentRuleOptionalParams {
+    /// The ID of the Agent policy
+    pub policy_id: Option<String>,
+}
+
+impl UpdateCSMThreatsAgentRuleOptionalParams {
+    /// The ID of the Agent policy
+    pub fn policy_id(mut self, value: String) -> Self {
+        self.policy_id = Some(value);
+        self
+    }
+}
+
+/// CreateCSMThreatsAgentPolicyError is a struct for typed errors of method [`CSMThreatsAPI::create_csm_threats_agent_policy`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum CreateCSMThreatsAgentPolicyError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// CreateCSMThreatsAgentRuleError is a struct for typed errors of method [`CSMThreatsAPI::create_csm_threats_agent_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -22,6 +94,14 @@ pub enum CreateCSMThreatsAgentRuleError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateCloudWorkloadSecurityAgentRuleError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// DeleteCSMThreatsAgentPolicyError is a struct for typed errors of method [`CSMThreatsAPI::delete_csm_threats_agent_policy`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeleteCSMThreatsAgentPolicyError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -58,6 +138,14 @@ pub enum DownloadCloudWorkloadPolicyFileError {
     UnknownValue(serde_json::Value),
 }
 
+/// GetCSMThreatsAgentPolicyError is a struct for typed errors of method [`CSMThreatsAPI::get_csm_threats_agent_policy`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetCSMThreatsAgentPolicyError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// GetCSMThreatsAgentRuleError is a struct for typed errors of method [`CSMThreatsAPI::get_csm_threats_agent_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -74,6 +162,14 @@ pub enum GetCloudWorkloadSecurityAgentRuleError {
     UnknownValue(serde_json::Value),
 }
 
+/// ListCSMThreatsAgentPoliciesError is a struct for typed errors of method [`CSMThreatsAPI::list_csm_threats_agent_policies`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListCSMThreatsAgentPoliciesError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// ListCSMThreatsAgentRulesError is a struct for typed errors of method [`CSMThreatsAPI::list_csm_threats_agent_rules`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -86,6 +182,14 @@ pub enum ListCSMThreatsAgentRulesError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListCloudWorkloadSecurityAgentRulesError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// UpdateCSMThreatsAgentPolicyError is a struct for typed errors of method [`CSMThreatsAPI::update_csm_threats_agent_policy`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum UpdateCSMThreatsAgentPolicyError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -171,7 +275,165 @@ impl CSMThreatsAPI {
         Self { config, client }
     }
 
-    /// Create a new Cloud Security Management Threats Agent rule with the given parameters.
+    /// Create a new Cloud Security Management Threats Agent policy with the given parameters
+    pub async fn create_csm_threats_agent_policy(
+        &self,
+        body: crate::datadogV2::model::CloudWorkloadSecurityAgentPolicyCreateRequest,
+    ) -> Result<
+        crate::datadogV2::model::CloudWorkloadSecurityAgentPolicyResponse,
+        datadog::Error<CreateCSMThreatsAgentPolicyError>,
+    > {
+        match self
+            .create_csm_threats_agent_policy_with_http_info(body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Create a new Cloud Security Management Threats Agent policy with the given parameters
+    pub async fn create_csm_threats_agent_policy_with_http_info(
+        &self,
+        body: crate::datadogV2::model::CloudWorkloadSecurityAgentPolicyCreateRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::CloudWorkloadSecurityAgentPolicyResponse>,
+        datadog::Error<CreateCSMThreatsAgentPolicyError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.create_csm_threats_agent_policy";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/remote_config/products/cws/policy",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::CloudWorkloadSecurityAgentPolicyResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<CreateCSMThreatsAgentPolicyError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Create a new Cloud Security Management Threats Agent rule with the given parameters
     pub async fn create_csm_threats_agent_rule(
         &self,
         body: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateRequest,
@@ -196,7 +458,7 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Create a new Cloud Security Management Threats Agent rule with the given parameters.
+    /// Create a new Cloud Security Management Threats Agent rule with the given parameters
     pub async fn create_csm_threats_agent_rule_with_http_info(
         &self,
         body: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateRequest,
@@ -487,13 +749,13 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Delete a specific Cloud Security Management Threats Agent rule.
-    pub async fn delete_csm_threats_agent_rule(
+    /// Delete a specific Cloud Security Management Threats Agent policy
+    pub async fn delete_csm_threats_agent_policy(
         &self,
-        agent_rule_id: String,
-    ) -> Result<(), datadog::Error<DeleteCSMThreatsAgentRuleError>> {
+        policy_id: String,
+    ) -> Result<(), datadog::Error<DeleteCSMThreatsAgentPolicyError>> {
         match self
-            .delete_csm_threats_agent_rule_with_http_info(agent_rule_id)
+            .delete_csm_threats_agent_policy_with_http_info(policy_id)
             .await
         {
             Ok(_) => Ok(()),
@@ -501,13 +763,110 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Delete a specific Cloud Security Management Threats Agent rule.
+    /// Delete a specific Cloud Security Management Threats Agent policy
+    pub async fn delete_csm_threats_agent_policy_with_http_info(
+        &self,
+        policy_id: String,
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCSMThreatsAgentPolicyError>>
+    {
+        let local_configuration = &self.config;
+        let operation_id = "v2.delete_csm_threats_agent_policy";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/remote_config/products/cws/policy/{policy_id}",
+            local_configuration.get_operation_host(operation_id),
+            policy_id = datadog::urlencode(policy_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<DeleteCSMThreatsAgentPolicyError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Delete a specific Cloud Security Management Threats Agent rule
+    pub async fn delete_csm_threats_agent_rule(
+        &self,
+        agent_rule_id: String,
+        params: DeleteCSMThreatsAgentRuleOptionalParams,
+    ) -> Result<(), datadog::Error<DeleteCSMThreatsAgentRuleError>> {
+        match self
+            .delete_csm_threats_agent_rule_with_http_info(agent_rule_id, params)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Delete a specific Cloud Security Management Threats Agent rule
     pub async fn delete_csm_threats_agent_rule_with_http_info(
         &self,
         agent_rule_id: String,
+        params: DeleteCSMThreatsAgentRuleOptionalParams,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCSMThreatsAgentRuleError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_csm_threats_agent_rule";
+
+        // unbox and build optional parameters
+        let policy_id = params.policy_id;
 
         let local_client = &self.client;
 
@@ -518,6 +877,11 @@ impl CSMThreatsAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = policy_id {
+            local_req_builder =
+                local_req_builder.query(&[("policy_id", &local_query_param.to_string())]);
+        };
 
         // build headers
         let mut headers = HeaderMap::new();
@@ -578,7 +942,7 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Delete a specific Agent rule.
+    /// Delete a specific Agent rule
     pub async fn delete_cloud_workload_security_agent_rule(
         &self,
         agent_rule_id: String,
@@ -592,7 +956,7 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Delete a specific Agent rule.
+    /// Delete a specific Agent rule
     pub async fn delete_cloud_workload_security_agent_rule_with_http_info(
         &self,
         agent_rule_id: String,
@@ -873,16 +1237,16 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Get the details of a specific Cloud Security Management Threats Agent rule.
-    pub async fn get_csm_threats_agent_rule(
+    /// Get the details of a specific Cloud Security Management Threats Agent policy
+    pub async fn get_csm_threats_agent_policy(
         &self,
-        agent_rule_id: String,
+        policy_id: String,
     ) -> Result<
-        crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse,
-        datadog::Error<GetCSMThreatsAgentRuleError>,
+        crate::datadogV2::model::CloudWorkloadSecurityAgentPolicyResponse,
+        datadog::Error<GetCSMThreatsAgentPolicyError>,
     > {
         match self
-            .get_csm_threats_agent_rule_with_http_info(agent_rule_id)
+            .get_csm_threats_agent_policy_with_http_info(policy_id)
             .await
         {
             Ok(response_content) => {
@@ -898,16 +1262,134 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Get the details of a specific Cloud Security Management Threats Agent rule.
+    /// Get the details of a specific Cloud Security Management Threats Agent policy
+    pub async fn get_csm_threats_agent_policy_with_http_info(
+        &self,
+        policy_id: String,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::CloudWorkloadSecurityAgentPolicyResponse>,
+        datadog::Error<GetCSMThreatsAgentPolicyError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_csm_threats_agent_policy";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/remote_config/products/cws/policy/{policy_id}",
+            local_configuration.get_operation_host(operation_id),
+            policy_id = datadog::urlencode(policy_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::CloudWorkloadSecurityAgentPolicyResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetCSMThreatsAgentPolicyError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get the details of a specific Cloud Security Management Threats Agent rule
+    pub async fn get_csm_threats_agent_rule(
+        &self,
+        agent_rule_id: String,
+        params: GetCSMThreatsAgentRuleOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse,
+        datadog::Error<GetCSMThreatsAgentRuleError>,
+    > {
+        match self
+            .get_csm_threats_agent_rule_with_http_info(agent_rule_id, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get the details of a specific Cloud Security Management Threats Agent rule
     pub async fn get_csm_threats_agent_rule_with_http_info(
         &self,
         agent_rule_id: String,
+        params: GetCSMThreatsAgentRuleOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse>,
         datadog::Error<GetCSMThreatsAgentRuleError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_csm_threats_agent_rule";
+
+        // unbox and build optional parameters
+        let policy_id = params.policy_id;
 
         let local_client = &self.client;
 
@@ -918,6 +1400,11 @@ impl CSMThreatsAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = policy_id {
+            local_req_builder =
+                local_req_builder.query(&[("policy_id", &local_query_param.to_string())]);
+        };
 
         // build headers
         let mut headers = HeaderMap::new();
@@ -986,7 +1473,7 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Get the details of a specific Agent rule.
+    /// Get the details of a specific Agent rule
     pub async fn get_cloud_workload_security_agent_rule(
         &self,
         agent_rule_id: String,
@@ -1011,7 +1498,7 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Get the details of a specific Agent rule.
+    /// Get the details of a specific Agent rule
     pub async fn get_cloud_workload_security_agent_rule_with_http_info(
         &self,
         agent_rule_id: String,
@@ -1099,14 +1586,14 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Get the list of Cloud Security Management Threats Agent rules.
-    pub async fn list_csm_threats_agent_rules(
+    /// Get the list of Cloud Security Management Threats Agent policies
+    pub async fn list_csm_threats_agent_policies(
         &self,
     ) -> Result<
-        crate::datadogV2::model::CloudWorkloadSecurityAgentRulesListResponse,
-        datadog::Error<ListCSMThreatsAgentRulesError>,
+        crate::datadogV2::model::CloudWorkloadSecurityAgentPoliciesListResponse,
+        datadog::Error<ListCSMThreatsAgentPoliciesError>,
     > {
-        match self.list_csm_threats_agent_rules_with_http_info().await {
+        match self.list_csm_threats_agent_policies_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
@@ -1120,9 +1607,123 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Get the list of Cloud Security Management Threats Agent rules.
+    /// Get the list of Cloud Security Management Threats Agent policies
+    pub async fn list_csm_threats_agent_policies_with_http_info(
+        &self,
+    ) -> Result<
+        datadog::ResponseContent<
+            crate::datadogV2::model::CloudWorkloadSecurityAgentPoliciesListResponse,
+        >,
+        datadog::Error<ListCSMThreatsAgentPoliciesError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_csm_threats_agent_policies";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/remote_config/products/cws/policy",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::CloudWorkloadSecurityAgentPoliciesListResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListCSMThreatsAgentPoliciesError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get the list of Cloud Security Management Threats Agent rules
+    pub async fn list_csm_threats_agent_rules(
+        &self,
+        params: ListCSMThreatsAgentRulesOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::CloudWorkloadSecurityAgentRulesListResponse,
+        datadog::Error<ListCSMThreatsAgentRulesError>,
+    > {
+        match self
+            .list_csm_threats_agent_rules_with_http_info(params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get the list of Cloud Security Management Threats Agent rules
     pub async fn list_csm_threats_agent_rules_with_http_info(
         &self,
+        params: ListCSMThreatsAgentRulesOptionalParams,
     ) -> Result<
         datadog::ResponseContent<
             crate::datadogV2::model::CloudWorkloadSecurityAgentRulesListResponse,
@@ -1132,6 +1733,9 @@ impl CSMThreatsAPI {
         let local_configuration = &self.config;
         let operation_id = "v2.list_csm_threats_agent_rules";
 
+        // unbox and build optional parameters
+        let policy_id = params.policy_id;
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
@@ -1140,6 +1744,11 @@ impl CSMThreatsAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = policy_id {
+            local_req_builder =
+                local_req_builder.query(&[("policy_id", &local_query_param.to_string())]);
+        };
 
         // build headers
         let mut headers = HeaderMap::new();
@@ -1208,7 +1817,7 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Get the list of Agent rules.
+    /// Get the list of Agent rules
     pub async fn list_cloud_workload_security_agent_rules(
         &self,
     ) -> Result<
@@ -1232,7 +1841,7 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Get the list of Agent rules.
+    /// Get the list of Agent rules
     pub async fn list_cloud_workload_security_agent_rules_with_http_info(
         &self,
     ) -> Result<
@@ -1320,18 +1929,182 @@ impl CSMThreatsAPI {
         }
     }
 
+    /// Update a specific Cloud Security Management Threats Agent policy.
+    /// Returns the Agent policy object when the request is successful.
+    pub async fn update_csm_threats_agent_policy(
+        &self,
+        policy_id: String,
+        body: crate::datadogV2::model::CloudWorkloadSecurityAgentPolicyUpdateRequest,
+    ) -> Result<
+        crate::datadogV2::model::CloudWorkloadSecurityAgentPolicyResponse,
+        datadog::Error<UpdateCSMThreatsAgentPolicyError>,
+    > {
+        match self
+            .update_csm_threats_agent_policy_with_http_info(policy_id, body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Update a specific Cloud Security Management Threats Agent policy.
+    /// Returns the Agent policy object when the request is successful.
+    pub async fn update_csm_threats_agent_policy_with_http_info(
+        &self,
+        policy_id: String,
+        body: crate::datadogV2::model::CloudWorkloadSecurityAgentPolicyUpdateRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::CloudWorkloadSecurityAgentPolicyResponse>,
+        datadog::Error<UpdateCSMThreatsAgentPolicyError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.update_csm_threats_agent_policy";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/remote_config/products/cws/policy/{policy_id}",
+            local_configuration.get_operation_host(operation_id),
+            policy_id = datadog::urlencode(policy_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::CloudWorkloadSecurityAgentPolicyResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<UpdateCSMThreatsAgentPolicyError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Update a specific Cloud Security Management Threats Agent rule.
     /// Returns the Agent rule object when the request is successful.
     pub async fn update_csm_threats_agent_rule(
         &self,
         agent_rule_id: String,
         body: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleUpdateRequest,
+        params: UpdateCSMThreatsAgentRuleOptionalParams,
     ) -> Result<
         crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse,
         datadog::Error<UpdateCSMThreatsAgentRuleError>,
     > {
         match self
-            .update_csm_threats_agent_rule_with_http_info(agent_rule_id, body)
+            .update_csm_threats_agent_rule_with_http_info(agent_rule_id, body, params)
             .await
         {
             Ok(response_content) => {
@@ -1353,12 +2126,16 @@ impl CSMThreatsAPI {
         &self,
         agent_rule_id: String,
         body: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleUpdateRequest,
+        params: UpdateCSMThreatsAgentRuleOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleResponse>,
         datadog::Error<UpdateCSMThreatsAgentRuleError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_csm_threats_agent_rule";
+
+        // unbox and build optional parameters
+        let policy_id = params.policy_id;
 
         let local_client = &self.client;
 
@@ -1369,6 +2146,11 @@ impl CSMThreatsAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = policy_id {
+            local_req_builder =
+                local_req_builder.query(&[("policy_id", &local_query_param.to_string())]);
+        };
 
         // build headers
         let mut headers = HeaderMap::new();

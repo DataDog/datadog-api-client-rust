@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Request object that includes the Agent rule with the attributes to update.
+/// Request object that includes the Agent rule with the attributes to update
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CloudWorkloadSecurityAgentRuleUpdateRequest {
-    /// Object for a single Agent rule.
+    /// Object for a single Agent rule
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleUpdateData,
     #[serde(flatten)]
