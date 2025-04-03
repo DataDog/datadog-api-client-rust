@@ -14,6 +14,9 @@ pub struct SlackIntegrationChannelDisplay {
     /// Show the main body of the alert event.
     #[serde(rename = "message")]
     pub message: Option<bool>,
+    /// Show interactive buttons to mute the alerting monitor.
+    #[serde(rename = "mute_buttons")]
+    pub mute_buttons: Option<bool>,
     /// Show the list of @-handles in the alert event.
     #[serde(rename = "notified")]
     pub notified: Option<bool>,
@@ -34,6 +37,7 @@ impl SlackIntegrationChannelDisplay {
     pub fn new() -> SlackIntegrationChannelDisplay {
         SlackIntegrationChannelDisplay {
             message: None,
+            mute_buttons: None,
             notified: None,
             snapshot: None,
             tags: None,
@@ -44,6 +48,11 @@ impl SlackIntegrationChannelDisplay {
 
     pub fn message(mut self, value: bool) -> Self {
         self.message = Some(value);
+        self
+    }
+
+    pub fn mute_buttons(mut self, value: bool) -> Self {
+        self.mute_buttons = Some(value);
         self
     }
 
@@ -95,6 +104,7 @@ impl<'de> Deserialize<'de> for SlackIntegrationChannelDisplay {
                 M: MapAccess<'a>,
             {
                 let mut message: Option<bool> = None;
+                let mut mute_buttons: Option<bool> = None;
                 let mut notified: Option<bool> = None;
                 let mut snapshot: Option<bool> = None;
                 let mut tags: Option<bool> = None;
@@ -111,6 +121,13 @@ impl<'de> Deserialize<'de> for SlackIntegrationChannelDisplay {
                                 continue;
                             }
                             message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "mute_buttons" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            mute_buttons =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "notified" => {
                             if v.is_null() {
@@ -140,6 +157,7 @@ impl<'de> Deserialize<'de> for SlackIntegrationChannelDisplay {
 
                 let content = SlackIntegrationChannelDisplay {
                     message,
+                    mute_buttons,
                     notified,
                     snapshot,
                     tags,

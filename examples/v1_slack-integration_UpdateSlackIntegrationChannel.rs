@@ -10,6 +10,7 @@ async fn main() {
         .display(
             SlackIntegrationChannelDisplay::new()
                 .message(true)
+                .mute_buttons(false)
                 .notified(true)
                 .snapshot(true)
                 .tags(true),
