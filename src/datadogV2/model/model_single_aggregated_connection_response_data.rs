@@ -6,20 +6,19 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `SingleAggregatedConnectionResponseData` object.
+/// Object describing an aggregated connection.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SingleAggregatedConnectionResponseData {
-    /// The definition of `SingleAggregatedConnectionResponseDataAttributes` object.
+    /// Attributes for an aggregated connection.
     #[serde(rename = "attributes")]
     pub attributes:
         Option<crate::datadogV2::model::SingleAggregatedConnectionResponseDataAttributes>,
-    /// The `SingleAggregatedConnectionResponseData` `id`.
+    /// A unique identifier for the aggregated connection based on the group by values.
     #[serde(rename = "id")]
     pub id: Option<String>,
-    /// Aggregated connection resource type. Allowed enum values: `aggregated_connection`.
-    /// default: `aggregated_connection`
+    /// Aggregated connection resource type.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::SingleAggregatedConnectionResponseDataType>,
     #[serde(flatten)]

@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `SingleAggregatedConnectionResponseDataAttributes` object.
+/// Attributes for an aggregated connection.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -17,7 +17,7 @@ pub struct SingleAggregatedConnectionResponseDataAttributes {
     /// The total number of bytes sent by the server over the given period.
     #[serde(rename = "bytes_sent_by_server")]
     pub bytes_sent_by_server: Option<i64>,
-    /// The `attributes` `group_bys`.
+    /// The key, value pairs for each group by.
     #[serde(rename = "group_bys")]
     pub group_bys: Option<std::collections::BTreeMap<String, Vec<String>>>,
     /// The total number of packets sent by the client over the given period.

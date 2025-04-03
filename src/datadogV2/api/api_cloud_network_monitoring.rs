@@ -10,9 +10,9 @@ use serde::{Deserialize, Serialize};
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetAggregatedConnectionsOptionalParams {
-    /// Unix timestamp (number of seconds since epoch) of the start of the query window. If not provided, the start of the query window is 15 minutes before the "to" timestamp. If neither "from" nor "to" are provided, the query window is [now - 15m, now].
+    /// Unix timestamp (number of seconds since epoch) of the start of the query window. If not provided, the start of the query window is 15 minutes before the `to` timestamp. If neither `from` nor `to` are provided, the query window is `[now - 15m, now]`.
     pub from: Option<i64>,
-    /// Unix timestamp (number of seconds since epoch) of the end of the query window. If not provided, the end of the query window is the current time. If neither "from" nor "to" are provided, the query window is [now - 15m, now].
+    /// Unix timestamp (number of seconds since epoch) of the end of the query window. If not provided, the end of the query window is the current time. If neither `from` nor `to` are provided, the query window is `[now - 15m, now]`.
     pub to: Option<i64>,
     /// Comma-separated list of fields to group connections by.
     pub group_by: Option<String>,
@@ -23,12 +23,12 @@ pub struct GetAggregatedConnectionsOptionalParams {
 }
 
 impl GetAggregatedConnectionsOptionalParams {
-    /// Unix timestamp (number of seconds since epoch) of the start of the query window. If not provided, the start of the query window is 15 minutes before the "to" timestamp. If neither "from" nor "to" are provided, the query window is [now - 15m, now].
+    /// Unix timestamp (number of seconds since epoch) of the start of the query window. If not provided, the start of the query window is 15 minutes before the `to` timestamp. If neither `from` nor `to` are provided, the query window is `[now - 15m, now]`.
     pub fn from(mut self, value: i64) -> Self {
         self.from = Some(value);
         self
     }
-    /// Unix timestamp (number of seconds since epoch) of the end of the query window. If not provided, the end of the query window is the current time. If neither "from" nor "to" are provided, the query window is [now - 15m, now].
+    /// Unix timestamp (number of seconds since epoch) of the end of the query window. If not provided, the end of the query window is the current time. If neither `from` nor `to` are provided, the query window is `[now - 15m, now]`.
     pub fn to(mut self, value: i64) -> Self {
         self.to = Some(value);
         self
@@ -123,7 +123,7 @@ impl CloudNetworkMonitoringAPI {
         Self { config, client }
     }
 
-    /// Get aggregated connections
+    /// Get all aggregated connections.
     pub async fn get_aggregated_connections(
         &self,
         params: GetAggregatedConnectionsOptionalParams,
@@ -145,7 +145,7 @@ impl CloudNetworkMonitoringAPI {
         }
     }
 
-    /// Get aggregated connections
+    /// Get all aggregated connections.
     pub async fn get_aggregated_connections_with_http_info(
         &self,
         params: GetAggregatedConnectionsOptionalParams,

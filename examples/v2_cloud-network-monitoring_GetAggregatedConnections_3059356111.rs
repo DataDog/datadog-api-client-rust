@@ -1,4 +1,4 @@
-// Get all aggregated connections returns "OK" response
+// Get aggregated connections returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_cloud_network_monitoring::CloudNetworkMonitoringAPI;
 use datadog_api_client::datadogV2::api_cloud_network_monitoring::GetAggregatedConnectionsOptionalParams;
