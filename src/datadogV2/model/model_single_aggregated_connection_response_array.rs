@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `SingleAggregatedConnectionResponseArray` object.
+/// List of aggregated connections.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SingleAggregatedConnectionResponseArray {
-    /// The `SingleAggregatedConnectionResponseArray` `data`.
+    /// Array of aggregated connection objects.
     #[serde(rename = "data")]
     pub data: Option<Vec<crate::datadogV2::model::SingleAggregatedConnectionResponseData>>,
     #[serde(flatten)]
