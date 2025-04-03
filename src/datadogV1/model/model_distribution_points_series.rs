@@ -19,7 +19,7 @@ pub struct DistributionPointsSeries {
     pub metric: String,
     /// Points relating to the distribution point metric. All points must be tuples with timestamp and a list of values (cannot be a string). Timestamps should be in POSIX time in seconds.
     #[serde(rename = "points")]
-    pub points: Vec<Vec<crate::datadogV1::model::DistributionPointItem>>,
+    pub points: Vec<Vec<crate::datadogV1::model::DistributionPointItems>>,
     /// A list of tags associated with the distribution point metric.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
@@ -36,7 +36,7 @@ pub struct DistributionPointsSeries {
 impl DistributionPointsSeries {
     pub fn new(
         metric: String,
-        points: Vec<Vec<crate::datadogV1::model::DistributionPointItem>>,
+        points: Vec<Vec<crate::datadogV1::model::DistributionPointItems>>,
     ) -> DistributionPointsSeries {
         DistributionPointsSeries {
             host: None,
@@ -92,7 +92,7 @@ impl<'de> Deserialize<'de> for DistributionPointsSeries {
             {
                 let mut host: Option<String> = None;
                 let mut metric: Option<String> = None;
-                let mut points: Option<Vec<Vec<crate::datadogV1::model::DistributionPointItem>>> =
+                let mut points: Option<Vec<Vec<crate::datadogV1::model::DistributionPointItems>>> =
                     None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut type_: Option<crate::datadogV1::model::DistributionPointsType> = None;

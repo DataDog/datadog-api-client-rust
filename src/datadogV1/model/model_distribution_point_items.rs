@@ -7,26 +7,26 @@ use serde::{Deserialize, Deserializer, Serialize};
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
-pub enum DistributionPointItem {
+pub enum DistributionPointItems {
     DistributionPointTimestamp(f64),
     DistributionPointData(Vec<f64>),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl<'de> Deserialize<'de> for DistributionPointItem {
+impl<'de> Deserialize<'de> for DistributionPointItems {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
         if let Ok(_v) = serde_json::from_value::<f64>(value.clone()) {
-            return Ok(DistributionPointItem::DistributionPointTimestamp(_v));
+            return Ok(DistributionPointItems::DistributionPointTimestamp(_v));
         }
         if let Ok(_v) = serde_json::from_value::<Vec<f64>>(value.clone()) {
-            return Ok(DistributionPointItem::DistributionPointData(_v));
+            return Ok(DistributionPointItems::DistributionPointData(_v));
         }
 
-        return Ok(DistributionPointItem::UnparsedObject(
+        return Ok(DistributionPointItems::UnparsedObject(
             crate::datadog::UnparsedObject { value },
         ));
     }

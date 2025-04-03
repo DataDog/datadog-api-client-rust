@@ -2,7 +2,7 @@
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api_metrics::MetricsAPI;
 use datadog_api_client::datadogV1::api_metrics::SubmitDistributionPointsOptionalParams;
-use datadog_api_client::datadogV1::model::DistributionPointItem;
+use datadog_api_client::datadogV1::model::DistributionPointItems;
 use datadog_api_client::datadogV1::model::DistributionPointsContentEncoding;
 use datadog_api_client::datadogV1::model::DistributionPointsPayload;
 use datadog_api_client::datadogV1::model::DistributionPointsSeries;
@@ -12,8 +12,8 @@ async fn main() {
     let body = DistributionPointsPayload::new(vec![DistributionPointsSeries::new(
         "system.load.1.dist".to_string(),
         vec![vec![
-            DistributionPointItem::DistributionPointTimestamp(1636629071.0 as f64),
-            DistributionPointItem::DistributionPointData(vec![1.0, 2.0]),
+            DistributionPointItems::DistributionPointTimestamp(1636629071.0 as f64),
+            DistributionPointItems::DistributionPointData(vec![1.0, 2.0]),
         ]],
     )]);
     let configuration = datadog::Configuration::new();
