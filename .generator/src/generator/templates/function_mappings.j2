@@ -15,7 +15,7 @@ pub struct ApiInstances {
 {%- for version, apis in all_apis.items() %}
 {%- for name, operations in apis.items() %}
 {%- set fieldName = "api_"+name %}
-{%- set structName = name.replace(" ", "")+"API" %}
+{%- set structName = name.replace(" ", "").replace("-", "")+"API" %}
     pub {{version}}_{{fieldName | snake_case}}: Option<datadog{{ version.upper() }}::{{fieldName | snake_case}}::{{structName}}>,
 {%- endfor %}
 {%- endfor %}
@@ -25,7 +25,7 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
     match api.as_str() {
     {%- for name, versions in get_apis_and_versions(all_apis) %}
     {%- set fieldName = "api_"+name|snake_case %}
-    {%- set structName = name.replace(" ", "")+"API" %}
+    {%- set structName = name.replace(" ", "").replace("-", "")+"API" %}
         "{{name.replace(" ", "")}}" => {
         {%- for version in versions %}
             world.api_instances.{{version}}_{{fieldName}} = Some(datadog{{ version.upper() }}::{{fieldName}}::{{structName}}::with_client_and_config(
