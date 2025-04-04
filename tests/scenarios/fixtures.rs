@@ -300,7 +300,7 @@ fn valid_appkey(world: &mut DatadogWorld) {
 fn instance_of_api(world: &mut DatadogWorld, api: String) {
     let api_name = api.clone().replace("-", "");
     initialize_api_instance(world, api_name);
-    world.api_name = Some(api);
+    world.api_name = Some(api_name);
 }
 
 pub fn given_resource_in_system(
