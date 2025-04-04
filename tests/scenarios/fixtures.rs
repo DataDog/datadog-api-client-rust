@@ -869,7 +869,7 @@ fn build_undo(
                     .to_string()
             };
             api_name.retain(|c| !c.is_whitespace() && c != '-');
-            
+
             if undo.get("operationId").is_none() {
                 return Ok(None);
             }
