@@ -299,8 +299,8 @@ fn valid_appkey(world: &mut DatadogWorld) {
 #[given(expr = "an instance of {string} API")]
 fn instance_of_api(world: &mut DatadogWorld, api: String) {
     let api_name = api.clone().replace("-", "");
-    initialize_api_instance(world, api_name);
-    world.api_name = Some(api_name);
+    initialize_api_instance(world, api_name.clone());
+    world.api_name = Some(api_name.clone());
 }
 
 pub fn given_resource_in_system(
