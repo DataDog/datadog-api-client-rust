@@ -298,8 +298,9 @@ fn valid_appkey(world: &mut DatadogWorld) {
 
 #[given(expr = "an instance of {string} API")]
 fn instance_of_api(world: &mut DatadogWorld, api: String) {
-    initialize_api_instance(world, api.clone());
-    world.api_name = Some(api);
+    let api_name = api.replace("-", "");
+    initialize_api_instance(world, api_name.clone());
+    world.api_name = Some(api_name);
 }
 
 pub fn given_resource_in_system(
@@ -358,7 +359,7 @@ pub fn given_resource_in_system(
                 .as_str()
                 .expect("failed to parse given tag as str")
                 .to_string();
-            api_name.retain(|c| !c.is_whitespace());
+            api_name.retain(|c| !c.is_whitespace() && c != '-');
 
             api_name
         } else {
@@ -867,7 +868,7 @@ fn build_undo(
                     .unwrap()
                     .to_string()
             };
-            api_name.retain(|c| !c.is_whitespace());
+            api_name.retain(|c| !c.is_whitespace() && c != '-');
 
             if undo.get("operationId").is_none() {
                 return Ok(None);

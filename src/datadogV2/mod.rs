@@ -47,6 +47,7 @@ pub use self::api::api_microsoft_teams_integration;
 pub use self::api::api_monitors;
 pub use self::api::api_network_device_monitoring;
 pub use self::api::api_okta_integration;
+pub use self::api::api_on_call;
 pub use self::api::api_opsgenie_integration;
 pub use self::api::api_organizations;
 pub use self::api::api_powerpack;
