@@ -325,6 +325,8 @@ impl RestrictionPoliciesAPI {
     /// #### Supported resources
     /// Restriction policies can be applied to the following resources:
     /// - Dashboards: `dashboard`
+    /// - Integration Accounts: `integration-account`
+    /// - Integration Webhooks: `integration-webhook`
     /// - Notebooks: `notebook`
     /// - Powerpacks: `powerpack`
     /// - Reference Tables: `reference-table`
@@ -343,6 +345,8 @@ impl RestrictionPoliciesAPI {
     /// Resource Type               | Supported Relations
     /// ----------------------------|--------------------------
     /// Dashboards                  | `viewer`, `editor`
+    /// Integration Accounts        | `viewer`, `editor`
+    /// Integration Webhooks        | `viewer`, `editor`
     /// Notebooks                   | `viewer`, `editor`
     /// Powerpacks                  | `viewer`, `editor`
     /// Security Rules              | `viewer`, `editor`
@@ -387,6 +391,8 @@ impl RestrictionPoliciesAPI {
     /// #### Supported resources
     /// Restriction policies can be applied to the following resources:
     /// - Dashboards: `dashboard`
+    /// - Integration Accounts: `integration-account`
+    /// - Integration Webhooks: `integration-webhook`
     /// - Notebooks: `notebook`
     /// - Powerpacks: `powerpack`
     /// - Reference Tables: `reference-table`
@@ -405,6 +411,8 @@ impl RestrictionPoliciesAPI {
     /// Resource Type               | Supported Relations
     /// ----------------------------|--------------------------
     /// Dashboards                  | `viewer`, `editor`
+    /// Integration Accounts        | `viewer`, `editor`
+    /// Integration Webhooks        | `viewer`, `editor`
     /// Notebooks                   | `viewer`, `editor`
     /// Powerpacks                  | `viewer`, `editor`
     /// Security Rules              | `viewer`, `editor`
