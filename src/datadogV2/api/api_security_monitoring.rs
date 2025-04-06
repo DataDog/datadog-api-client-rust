@@ -1201,14 +1201,6 @@ impl SecurityMonitoringAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<CancelHistoricalJobError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.cancel_historical_job";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.cancel_historical_job' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -1412,14 +1404,6 @@ impl SecurityMonitoringAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<ConvertJobResultToSignalError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.convert_job_result_to_signal";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.convert_job_result_to_signal' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -2502,14 +2486,6 @@ impl SecurityMonitoringAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteHistoricalJobError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_historical_job";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.delete_historical_job' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -3685,14 +3661,6 @@ impl SecurityMonitoringAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_historical_job";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.get_historical_job' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -5242,14 +5210,6 @@ impl SecurityMonitoringAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_historical_jobs";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_historical_jobs' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -7151,14 +7111,6 @@ impl SecurityMonitoringAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.run_historical_job";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.run_historical_job' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 

@@ -53,8 +53,7 @@ async fn main() {
             )
             .type_(RunHistoricalJobRequestDataType::HISTORICALDETECTIONSJOBCREATE),
     );
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.RunHistoricalJob", true);
+    let configuration = datadog::Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api.run_historical_job(body).await;
     if let Ok(value) = resp {
