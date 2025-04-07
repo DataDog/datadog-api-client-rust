@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum ApplicationSecurityWafCustomRuleTagsCategory {
     ATTACK_ATTEMPT,
     BUSINESS_LOGIC,
-    SECURITY_RESPONSES,
+    SECURITY_RESPONSE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -18,7 +18,7 @@ impl ToString for ApplicationSecurityWafCustomRuleTagsCategory {
         match self {
             Self::ATTACK_ATTEMPT => String::from("attack_attempt"),
             Self::BUSINESS_LOGIC => String::from("business_logic"),
-            Self::SECURITY_RESPONSES => String::from("security_responses"),
+            Self::SECURITY_RESPONSE => String::from("security_response"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -45,7 +45,7 @@ impl<'de> Deserialize<'de> for ApplicationSecurityWafCustomRuleTagsCategory {
         Ok(match s.as_str() {
             "attack_attempt" => Self::ATTACK_ATTEMPT,
             "business_logic" => Self::BUSINESS_LOGIC,
-            "security_responses" => Self::SECURITY_RESPONSES,
+            "security_response" => Self::SECURITY_RESPONSE,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
