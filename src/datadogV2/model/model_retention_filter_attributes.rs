@@ -45,6 +45,10 @@ pub struct RetentionFilterAttributes {
     /// a value of 1.0 keeps all spans matching the query.
     #[serde(rename = "rate")]
     pub rate: Option<f64>,
+    /// Sample rate to apply to traces containing spans going through this retention filter.
+    /// A value of 1.0 keeps all traces with spans matching the query.
+    #[serde(rename = "trace_rate")]
+    pub trace_rate: Option<f64>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -66,6 +70,7 @@ impl RetentionFilterAttributes {
             modified_by: None,
             name: None,
             rate: None,
+            trace_rate: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -126,6 +131,11 @@ impl RetentionFilterAttributes {
         self
     }
 
+    pub fn trace_rate(mut self, value: f64) -> Self {
+        self.trace_rate = Some(value);
+        self
+    }
+
     pub fn additional_properties(
         mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
@@ -169,6 +179,7 @@ impl<'de> Deserialize<'de> for RetentionFilterAttributes {
                 let mut modified_by: Option<String> = None;
                 let mut name: Option<String> = None;
                 let mut rate: Option<f64> = None;
+                let mut trace_rate: Option<f64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -255,6 +266,12 @@ impl<'de> Deserialize<'de> for RetentionFilterAttributes {
                             }
                             rate = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "trace_rate" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            trace_rate = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -275,6 +292,7 @@ impl<'de> Deserialize<'de> for RetentionFilterAttributes {
                     modified_by,
                     name,
                     rate,
+                    trace_rate,
                     additional_properties,
                     _unparsed,
                 };
