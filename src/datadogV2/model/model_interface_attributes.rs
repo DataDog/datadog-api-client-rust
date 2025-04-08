@@ -20,6 +20,9 @@ pub struct InterfaceAttributes {
     /// The interface index
     #[serde(rename = "index")]
     pub index: Option<i64>,
+    /// The interface IP addresses
+    #[serde(rename = "ip_addresses")]
+    pub ip_addresses: Option<Vec<String>>,
     /// The interface MAC address
     #[serde(rename = "mac_address")]
     pub mac_address: Option<String>,
@@ -42,6 +45,7 @@ impl InterfaceAttributes {
             alias: None,
             description: None,
             index: None,
+            ip_addresses: None,
             mac_address: None,
             name: None,
             status: None,
@@ -62,6 +66,11 @@ impl InterfaceAttributes {
 
     pub fn index(mut self, value: i64) -> Self {
         self.index = Some(value);
+        self
+    }
+
+    pub fn ip_addresses(mut self, value: Vec<String>) -> Self {
+        self.ip_addresses = Some(value);
         self
     }
 
@@ -115,6 +124,7 @@ impl<'de> Deserialize<'de> for InterfaceAttributes {
                 let mut alias: Option<String> = None;
                 let mut description: Option<String> = None;
                 let mut index: Option<i64> = None;
+                let mut ip_addresses: Option<Vec<String>> = None;
                 let mut mac_address: Option<String> = None;
                 let mut name: Option<String> = None;
                 let mut status: Option<crate::datadogV2::model::InterfaceAttributesStatus> = None;
@@ -144,6 +154,13 @@ impl<'de> Deserialize<'de> for InterfaceAttributes {
                                 continue;
                             }
                             index = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "ip_addresses" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ip_addresses =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "mac_address" => {
                             if v.is_null() {
@@ -184,6 +201,7 @@ impl<'de> Deserialize<'de> for InterfaceAttributes {
                     alias,
                     description,
                     index,
+                    ip_addresses,
                     mac_address,
                     name,
                     status,
