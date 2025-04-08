@@ -8,6 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum FormulaAndFunctionSLOQueryType {
     METRIC,
+    MONITOR,
     TIME_SLICE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
@@ -16,6 +17,7 @@ impl ToString for FormulaAndFunctionSLOQueryType {
     fn to_string(&self) -> String {
         match self {
             Self::METRIC => String::from("metric"),
+            Self::MONITOR => String::from("monitor"),
             Self::TIME_SLICE => String::from("time_slice"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
@@ -42,6 +44,7 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionSLOQueryType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "metric" => Self::METRIC,
+            "monitor" => Self::MONITOR,
             "time_slice" => Self::TIME_SLICE,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
