@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum SecurityMonitoringRuleCaseActionType {
     BLOCK_IP,
     BLOCK_USER,
+    USER_BEHAVIOR,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -17,6 +18,7 @@ impl ToString for SecurityMonitoringRuleCaseActionType {
         match self {
             Self::BLOCK_IP => String::from("block_ip"),
             Self::BLOCK_USER => String::from("block_user"),
+            Self::USER_BEHAVIOR => String::from("user_behavior"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -43,6 +45,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleCaseActionType {
         Ok(match s.as_str() {
             "block_ip" => Self::BLOCK_IP,
             "block_user" => Self::BLOCK_USER,
+            "user_behavior" => Self::USER_BEHAVIOR,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
