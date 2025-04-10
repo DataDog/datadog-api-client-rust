@@ -14,6 +14,9 @@ pub struct SecurityMonitoringRuleCaseActionOptions {
     /// Duration of the action in seconds. 0 indicates no expiration.
     #[serde(rename = "duration")]
     pub duration: Option<i64>,
+    /// Used with the case action of type 'user_behavior'. The value specified in this field is applied as a risk tag to all users affected by the rule.
+    #[serde(rename = "userBehaviorName")]
+    pub user_behavior_name: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -25,6 +28,7 @@ impl SecurityMonitoringRuleCaseActionOptions {
     pub fn new() -> SecurityMonitoringRuleCaseActionOptions {
         SecurityMonitoringRuleCaseActionOptions {
             duration: None,
+            user_behavior_name: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -32,6 +36,11 @@ impl SecurityMonitoringRuleCaseActionOptions {
 
     pub fn duration(mut self, value: i64) -> Self {
         self.duration = Some(value);
+        self
+    }
+
+    pub fn user_behavior_name(mut self, value: String) -> Self {
+        self.user_behavior_name = Some(value);
         self
     }
 
@@ -68,6 +77,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleCaseActionOptions {
                 M: MapAccess<'a>,
             {
                 let mut duration: Option<i64> = None;
+                let mut user_behavior_name: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -82,6 +92,13 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleCaseActionOptions {
                             }
                             duration = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "userBehaviorName" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            user_behavior_name =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -92,6 +109,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleCaseActionOptions {
 
                 let content = SecurityMonitoringRuleCaseActionOptions {
                     duration,
+                    user_behavior_name,
                     additional_properties,
                     _unparsed,
                 };

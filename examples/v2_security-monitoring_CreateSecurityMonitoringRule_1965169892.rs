@@ -24,9 +24,19 @@ async fn main() {
             SecurityMonitoringStandardRuleCreatePayload::new(
                 vec![
                     SecurityMonitoringRuleCaseCreate::new(SecurityMonitoringRuleSeverity::INFO)
-                        .actions(vec![SecurityMonitoringRuleCaseAction::new()
-                            .options(SecurityMonitoringRuleCaseActionOptions::new().duration(900))
-                            .type_(SecurityMonitoringRuleCaseActionType::BLOCK_IP)])
+                        .actions(vec![
+                            SecurityMonitoringRuleCaseAction::new()
+                                .options(
+                                    SecurityMonitoringRuleCaseActionOptions::new().duration(900),
+                                )
+                                .type_(SecurityMonitoringRuleCaseActionType::BLOCK_IP),
+                            SecurityMonitoringRuleCaseAction::new()
+                                .options(
+                                    SecurityMonitoringRuleCaseActionOptions::new()
+                                        .user_behavior_name("behavior".to_string()),
+                                )
+                                .type_(SecurityMonitoringRuleCaseActionType::USER_BEHAVIOR),
+                        ])
                         .condition("a > 100000".to_string())
                         .name("".to_string())
                         .notifications(vec![]),
