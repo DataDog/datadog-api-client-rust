@@ -20,7 +20,7 @@ use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
 {%- endif %}
 {%- endfor %}
 
-{%- set structName = name.replace(" ", "")+"API" %}
+{%- set structName = name.replace(" ", "").replace("-", "")+"API" %}
 {% for path, method, operation in operations|sort(attribute="2.operationId", case_sensitive=true) %}
 {%- set httpMethod = method.upper() %}
 {%- set returnType, _ = operation|return_type(version) %}
