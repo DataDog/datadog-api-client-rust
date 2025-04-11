@@ -11,7 +11,7 @@ async fn main() {
     let body =
         IncidentTypeCreateRequest::new(
             IncidentTypeCreateData::new(
-                IncidentTypeAttributes::new("Security Incident".to_string())
+                IncidentTypeAttributes::new("8d4bbb66dccf2456".to_string())
                     .description(
                         "Any incidents that harm (or have the potential to) the confidentiality, integrity, or availability of our data.".to_string(),
                     )
