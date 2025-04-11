@@ -105,6 +105,7 @@ pub struct ApiInstances {
         Option<datadogV2::api_network_device_monitoring::NetworkDeviceMonitoringAPI>,
     pub v2_api_cloud_network_monitoring:
         Option<datadogV2::api_cloud_network_monitoring::CloudNetworkMonitoringAPI>,
+    pub v2_api_on_call: Option<datadogV2::api_on_call::OnCallAPI>,
     pub v2_api_organizations: Option<datadogV2::api_organizations::OrganizationsAPI>,
     pub v2_api_roles: Option<datadogV2::api_roles::RolesAPI>,
     pub v2_api_security_monitoring:
@@ -711,6 +712,13 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 world.config.clone(),
                 world.http_client.as_ref().unwrap().clone()
             ));
+        }
+        "OnCall" => {
+            world.api_instances.v2_api_on_call =
+                Some(datadogV2::api_on_call::OnCallAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ));
         }
         "Roles" => {
             world.api_instances.v2_api_roles =
@@ -2703,6 +2711,21 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.GetAggregatedConnections".into(),
         test_v2_get_aggregated_connections,
+    );
+    world.function_mappings.insert(
+        "v2.CreateOnCallSchedule".into(),
+        test_v2_create_on_call_schedule,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteOnCallSchedule".into(),
+        test_v2_delete_on_call_schedule,
+    );
+    world
+        .function_mappings
+        .insert("v2.GetOnCallSchedule".into(), test_v2_get_on_call_schedule);
+    world.function_mappings.insert(
+        "v2.UpdateOnCallSchedule".into(),
+        test_v2_update_on_call_schedule,
     );
     world
         .function_mappings
@@ -19721,6 +19744,126 @@ fn test_v2_get_aggregated_connections(
             };
         }
     };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_on_call_schedule(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_on_call
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_on_call::CreateOnCallScheduleOptionalParams::default();
+    params.include = include;
+    let response = match block_on(api.create_on_call_schedule_with_http_info(body, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_on_call_schedule(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_on_call
+        .as_ref()
+        .expect("api instance not found");
+    let schedule_id =
+        serde_json::from_value(_parameters.get("schedule_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_on_call_schedule_with_http_info(schedule_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_on_call_schedule(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_on_call
+        .as_ref()
+        .expect("api instance not found");
+    let schedule_id =
+        serde_json::from_value(_parameters.get("schedule_id").unwrap().clone()).unwrap();
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_on_call::GetOnCallScheduleOptionalParams::default();
+    params.include = include;
+    let response = match block_on(api.get_on_call_schedule_with_http_info(schedule_id, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_on_call_schedule(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_on_call
+        .as_ref()
+        .expect("api instance not found");
+    let schedule_id =
+        serde_json::from_value(_parameters.get("schedule_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_on_call::UpdateOnCallScheduleOptionalParams::default();
+    params.include = include;
+    let response =
+        match block_on(api.update_on_call_schedule_with_http_info(schedule_id, body, params)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
