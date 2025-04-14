@@ -19630,7 +19630,13 @@ fn test_v2_get_interfaces(world: &mut DatadogWorld, _parameters: &HashMap<String
         .as_ref()
         .expect("api instance not found");
     let device_id = serde_json::from_value(_parameters.get("device_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.get_interfaces_with_http_info(device_id)) {
+    let get_ip_addresses = _parameters
+        .get("get_ip_addresses")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_network_device_monitoring::GetInterfacesOptionalParams::default();
+    params.get_ip_addresses = get_ip_addresses;
+    let response = match block_on(api.get_interfaces_with_http_info(device_id, params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
