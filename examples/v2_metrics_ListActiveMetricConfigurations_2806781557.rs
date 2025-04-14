@@ -1,4 +1,4 @@
-// List active tags returns "Success" response
+// List active tags and aggregations returns "Success" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_metrics::ListActiveMetricConfigurationsOptionalParams;
 use datadog_api_client::datadogV2::api_metrics::MetricsAPI;
@@ -9,7 +9,7 @@ async fn main() {
     let api = MetricsAPI::with_config(configuration);
     let resp = api
         .list_active_metric_configurations(
-            "metric_name".to_string(),
+            "static_test_metric_donotdelete".to_string(),
             ListActiveMetricConfigurationsOptionalParams::default(),
         )
         .await;
