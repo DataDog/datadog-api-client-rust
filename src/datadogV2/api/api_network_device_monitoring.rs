@@ -10,6 +10,22 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
+/// GetInterfacesOptionalParams is a struct for passing parameters to the method [`NetworkDeviceMonitoringAPI::get_interfaces`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetInterfacesOptionalParams {
+    /// Whether to get the IP addresses of the interfaces.
+    pub get_ip_addresses: Option<bool>,
+}
+
+impl GetInterfacesOptionalParams {
+    /// Whether to get the IP addresses of the interfaces.
+    pub fn get_ip_addresses(mut self, value: bool) -> Self {
+        self.get_ip_addresses = Some(value);
+        self
+    }
+}
+
 /// ListDevicesOptionalParams is a struct for passing parameters to the method [`NetworkDeviceMonitoringAPI::list_devices`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -260,9 +276,10 @@ impl NetworkDeviceMonitoringAPI {
     pub async fn get_interfaces(
         &self,
         device_id: String,
+        params: GetInterfacesOptionalParams,
     ) -> Result<crate::datadogV2::model::GetInterfacesResponse, datadog::Error<GetInterfacesError>>
     {
-        match self.get_interfaces_with_http_info(device_id).await {
+        match self.get_interfaces_with_http_info(device_id, params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
@@ -280,12 +297,16 @@ impl NetworkDeviceMonitoringAPI {
     pub async fn get_interfaces_with_http_info(
         &self,
         device_id: String,
+        params: GetInterfacesOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::GetInterfacesResponse>,
         datadog::Error<GetInterfacesError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_interfaces";
+
+        // unbox and build optional parameters
+        let get_ip_addresses = params.get_ip_addresses;
 
         let local_client = &self.client;
 
@@ -297,6 +318,10 @@ impl NetworkDeviceMonitoringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         local_req_builder = local_req_builder.query(&[("device_id", &device_id.to_string())]);
+        if let Some(ref local_query_param) = get_ip_addresses {
+            local_req_builder =
+                local_req_builder.query(&[("get_ip_addresses", &local_query_param.to_string())]);
+        };
 
         // build headers
         let mut headers = HeaderMap::new();
