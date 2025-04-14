@@ -41,8 +41,8 @@ pub struct RetentionFilterAllAttributes {
     /// The name of the retention filter.
     #[serde(rename = "name")]
     pub name: Option<String>,
-    /// Sample rate to apply to spans going through this retention filter,
-    /// a value of 1.0 keeps all spans matching the query.
+    /// Sample rate to apply to spans going through this retention filter.
+    /// A value of 1.0 keeps all spans matching the query.
     #[serde(rename = "rate")]
     pub rate: Option<f64>,
     /// Sample rate to apply to traces containing spans going through this retention filter.
