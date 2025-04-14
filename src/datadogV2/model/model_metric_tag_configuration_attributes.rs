@@ -11,24 +11,6 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MetricTagConfigurationAttributes {
-    /// A list of queryable aggregation combinations for a count, rate, or gauge metric.
-    /// By default, count and rate metrics require the (time: sum, space: sum) aggregation and
-    /// Gauge metrics require the (time: avg, space: avg) aggregation.
-    /// Additional time & space combinations are also available:
-    ///
-    /// - time: avg, space: avg
-    /// - time: avg, space: max
-    /// - time: avg, space: min
-    /// - time: avg, space: sum
-    /// - time: count, space: sum
-    /// - time: max, space: max
-    /// - time: min, space: min
-    /// - time: sum, space: avg
-    /// - time: sum, space: sum
-    ///
-    /// Can only be applied to non_distribution metrics that have a `metric_type` of `count`, `rate`, or `gauge`.
-    #[serde(rename = "aggregations")]
-    pub aggregations: Option<Vec<crate::datadogV2::model::MetricCustomAggregation>>,
     /// Timestamp when the tag configuration was created.
     #[serde(rename = "created_at")]
     pub created_at: Option<chrono::DateTime<chrono::Utc>>,
@@ -60,7 +42,6 @@ pub struct MetricTagConfigurationAttributes {
 impl MetricTagConfigurationAttributes {
     pub fn new() -> MetricTagConfigurationAttributes {
         MetricTagConfigurationAttributes {
-            aggregations: None,
             created_at: None,
             exclude_tags_mode: None,
             include_percentiles: None,
@@ -70,14 +51,6 @@ impl MetricTagConfigurationAttributes {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn aggregations(
-        mut self,
-        value: Vec<crate::datadogV2::model::MetricCustomAggregation>,
-    ) -> Self {
-        self.aggregations = Some(value);
-        self
     }
 
     pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
@@ -145,9 +118,6 @@ impl<'de> Deserialize<'de> for MetricTagConfigurationAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut aggregations: Option<
-                    Vec<crate::datadogV2::model::MetricCustomAggregation>,
-                > = None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut exclude_tags_mode: Option<bool> = None;
                 let mut include_percentiles: Option<bool> = None;
@@ -164,13 +134,6 @@ impl<'de> Deserialize<'de> for MetricTagConfigurationAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "aggregations" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            aggregations =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "created_at" => {
                             if v.is_null() {
                                 continue;
@@ -228,7 +191,6 @@ impl<'de> Deserialize<'de> for MetricTagConfigurationAttributes {
                 }
 
                 let content = MetricTagConfigurationAttributes {
-                    aggregations,
                     created_at,
                     exclude_tags_mode,
                     include_percentiles,

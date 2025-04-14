@@ -11,24 +11,6 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MetricTagConfigurationUpdateAttributes {
-    /// A list of queryable aggregation combinations for a count, rate, or gauge metric.
-    /// By default, count and rate metrics require the (time: sum, space: sum) aggregation and
-    /// Gauge metrics require the (time: avg, space: avg) aggregation.
-    /// Additional time & space combinations are also available:
-    ///
-    /// - time: avg, space: avg
-    /// - time: avg, space: max
-    /// - time: avg, space: min
-    /// - time: avg, space: sum
-    /// - time: count, space: sum
-    /// - time: max, space: max
-    /// - time: min, space: min
-    /// - time: sum, space: avg
-    /// - time: sum, space: sum
-    ///
-    /// Can only be applied to non_distribution metrics that have a `metric_type` of `count`, `rate`, or `gauge`.
-    #[serde(rename = "aggregations")]
-    pub aggregations: Option<Vec<crate::datadogV2::model::MetricCustomAggregation>>,
     /// When set to true, the configuration will exclude the configured tags and include any other submitted tags.
     /// When set to false, the configuration will include the configured tags and exclude any other submitted tags.
     /// Defaults to false. Requires `tags` property.
@@ -51,21 +33,12 @@ pub struct MetricTagConfigurationUpdateAttributes {
 impl MetricTagConfigurationUpdateAttributes {
     pub fn new() -> MetricTagConfigurationUpdateAttributes {
         MetricTagConfigurationUpdateAttributes {
-            aggregations: None,
             exclude_tags_mode: None,
             include_percentiles: None,
             tags: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn aggregations(
-        mut self,
-        value: Vec<crate::datadogV2::model::MetricCustomAggregation>,
-    ) -> Self {
-        self.aggregations = Some(value);
-        self
     }
 
     pub fn exclude_tags_mode(mut self, value: bool) -> Self {
@@ -115,9 +88,6 @@ impl<'de> Deserialize<'de> for MetricTagConfigurationUpdateAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut aggregations: Option<
-                    Vec<crate::datadogV2::model::MetricCustomAggregation>,
-                > = None;
                 let mut exclude_tags_mode: Option<bool> = None;
                 let mut include_percentiles: Option<bool> = None;
                 let mut tags: Option<Vec<String>> = None;
@@ -129,13 +99,6 @@ impl<'de> Deserialize<'de> for MetricTagConfigurationUpdateAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "aggregations" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            aggregations =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "exclude_tags_mode" => {
                             if v.is_null() {
                                 continue;
@@ -165,7 +128,6 @@ impl<'de> Deserialize<'de> for MetricTagConfigurationUpdateAttributes {
                 }
 
                 let content = MetricTagConfigurationUpdateAttributes {
-                    aggregations,
                     exclude_tags_mode,
                     include_percentiles,
                     tags,
