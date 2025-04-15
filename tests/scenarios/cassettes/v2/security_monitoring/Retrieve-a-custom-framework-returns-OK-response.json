@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"handle\":\"handle-testretrieveacustomframeworkreturnsokresponse1744141484\",\"icon_url\":\"https://example.com/icon-testretrieveacustomframeworkreturnsokresponse1744141484.png\",\"name\":\"Framework-testretrieveacustomframeworkreturnsokresponse1744141484\",\"requirements\":[{\"controls\":[{\"name\":\"Control-testretrieveacustomframeworkreturnsokresponse1744141484\",\"rules_id\":[\"def-000-cea\"]}],\"name\":\"Requirement-testretrieveacustomframeworkreturnsokresponse1744141484\"}],\"version\":\"1.0.testretrieveacustomframeworkreturnsokresponse1744141484\"},\"type\":\"custom_framework\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "*/*"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://frog.datadoghq.com/api/v2/cloud_security_management/custom_frameworks"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"status\":\"400\",\"title\":\"Bad Request\",\"detail\":\"invalid_argument(Invalid rule configuration)\"}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Tue, 08 Apr 2025 19:44:44 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
