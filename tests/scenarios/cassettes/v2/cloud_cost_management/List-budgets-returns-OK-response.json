@@ -1,0 +1,33 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "application/json"
+          ]
+        },
+        "method": "get",
+        "uri": "https://api.datadoghq.com/api/v2/cost/budgets"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":[]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Tue, 15 Apr 2025 13:58:03 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
