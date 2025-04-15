@@ -1,0 +1,35 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"handle\":\"ponse1744226700\",\"icon_url\":\"\",\"name\":\"ponse1744226700\",\"requirements\":[{\"controls\":[{\"name\":\"ponse1744226700\",\"rules_id\":[\"def-000-cea\"]}],\"name\":\"ponse1744226700\"}],\"version\":\"ponse1744226700\"},\"type\":\"custom_framework\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "*/*"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/cloud_security_management/custom_frameworks"
+      },
+      "response": {
+        "body": {
+          "string": "",
+          "encoding": null
+        },
+        "headers": {},
+        "status": {
+          "code": 204,
+          "message": "No Content"
+        }
+      },
+      "recorded_at": "Wed, 09 Apr 2025 19:25:00 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
