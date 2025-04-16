@@ -27,7 +27,7 @@ pub struct ScheduleUpdateRequestDataAttributesLayersItems {
     /// The members assigned to this layer.
     #[serde(rename = "members")]
     pub members: Option<Vec<crate::datadogV2::model::ScheduleUpdateRequestDataAttributesLayersItemsMembersItems>>,
-    /// The name for this layer (for example, “Secondary Coverage”).
+    /// The name for this layer (for example, "Secondary Coverage").
     #[serde(rename = "name")]
     pub name: Option<String>,
     /// Any time restrictions that define when this layer is active.
