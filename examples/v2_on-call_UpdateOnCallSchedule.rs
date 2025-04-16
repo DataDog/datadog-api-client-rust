@@ -29,8 +29,8 @@ async fn main() {
     // there is a valid "user" in the system
     let user_data_id = std::env::var("USER_DATA_ID").unwrap();
 
-    // there is a valid "team" in the system
-    let team_data_id = std::env::var("TEAM_DATA_ID").unwrap();
+    // there is a valid "dd_team" in the system
+    let dd_team_data_id = std::env::var("DD_TEAM_DATA_ID").unwrap();
     let body =
         ScheduleUpdateRequest::new(
             ScheduleUpdateRequestData::new(
@@ -92,7 +92,7 @@ async fn main() {
                     ::new().data(
                         vec![
                             ScheduleUpdateRequestDataRelationshipsTeamsDataItems::new()
-                                .id(team_data_id.clone())
+                                .id(dd_team_data_id.clone())
                                 .type_(ScheduleUpdateRequestDataRelationshipsTeamsDataItemsType::TEAMS)
                         ],
                     ),
