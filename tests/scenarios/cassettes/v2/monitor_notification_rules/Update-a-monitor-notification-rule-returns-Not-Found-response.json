@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"filter\":{\"tags\":[\"test:test-update_a_monitor_notification_rule_returns_not_found_response-1743713885\",\"host:abc\"]},\"name\":\"updated rule\",\"recipients\":[\"slack-test-channel\",\"jira-test\"]},\"id\":\"00000000-0000-1234-0000-000000000000\",\"type\":\"monitor-notification-rule\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "patch",
+        "uri": "https://api.datadoghq.com/api/v2/monitor/notification_rule/00000000-0000-1234-0000-000000000000"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[\"Monitor notification rule not found\"]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 404,
+          "message": "Not Found"
+        }
+      },
+      "recorded_at": "Thu, 03 Apr 2025 20:58:05 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

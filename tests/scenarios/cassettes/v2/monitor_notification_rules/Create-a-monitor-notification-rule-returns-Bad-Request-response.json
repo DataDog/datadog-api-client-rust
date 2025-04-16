@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"filter\":{\"tags\":[\"test:test-create_a_monitor_notification_rule_returns_bad_request_response-1743713882\",\"host:abc\"]},\"name\":\"test rule\",\"recipients\":[\"@slack-test-channel\",\"@jira-test\"]},\"type\":\"monitor-notification-rule\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/monitor/notification_rule"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[\"Invalid recipients: Recipient handle should not start with '@'\"]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Thu, 03 Apr 2025 20:58:02 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
