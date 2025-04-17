@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct ScheduleMemberRelationshipsUser {
     /// Points to the user data associated with this schedule member, including an ID and type.
     #[serde(rename = "data")]
-    pub data: Option<crate::datadogV2::model::ScheduleMemberRelationshipsUserData>,
+    pub data: crate::datadogV2::model::ScheduleMemberRelationshipsUserData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -22,20 +22,14 @@ pub struct ScheduleMemberRelationshipsUser {
 }
 
 impl ScheduleMemberRelationshipsUser {
-    pub fn new() -> ScheduleMemberRelationshipsUser {
+    pub fn new(
+        data: crate::datadogV2::model::ScheduleMemberRelationshipsUserData,
+    ) -> ScheduleMemberRelationshipsUser {
         ScheduleMemberRelationshipsUser {
-            data: None,
+            data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn data(
-        mut self,
-        value: crate::datadogV2::model::ScheduleMemberRelationshipsUserData,
-    ) -> Self {
-        self.data = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -44,12 +38,6 @@ impl ScheduleMemberRelationshipsUser {
     ) -> Self {
         self.additional_properties = value;
         self
-    }
-}
-
-impl Default for ScheduleMemberRelationshipsUser {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
@@ -81,9 +69,6 @@ impl<'de> Deserialize<'de> for ScheduleMemberRelationshipsUser {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "data" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -93,6 +78,7 @@ impl<'de> Deserialize<'de> for ScheduleMemberRelationshipsUser {
                         }
                     }
                 }
+                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
                 let content = ScheduleMemberRelationshipsUser {
                     data,

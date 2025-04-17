@@ -80,9 +80,10 @@ async fn main() {
                         ScheduleCreateRequestDataRelationshipsTeams
                         ::new().data(
                             vec![
-                                ScheduleCreateRequestDataRelationshipsTeamsDataItems::new()
-                                    .id(dd_team_data_id.clone())
-                                    .type_(ScheduleCreateRequestDataRelationshipsTeamsDataItemsType::TEAMS)
+                                ScheduleCreateRequestDataRelationshipsTeamsDataItems::new(
+                                    dd_team_data_id.clone(),
+                                    ScheduleCreateRequestDataRelationshipsTeamsDataItemsType::TEAMS,
+                                )
                             ],
                         ),
                     ),

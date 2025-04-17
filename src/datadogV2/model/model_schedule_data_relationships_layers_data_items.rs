@@ -13,10 +13,10 @@ use std::fmt::{self, Formatter};
 pub struct ScheduleDataRelationshipsLayersDataItems {
     /// The unique identifier of the layer in this relationship.
     #[serde(rename = "id")]
-    pub id: Option<String>,
+    pub id: String,
     /// Layers resource type.
     #[serde(rename = "type")]
-    pub type_: Option<crate::datadogV2::model::ScheduleDataRelationshipsLayersDataItemsType>,
+    pub type_: crate::datadogV2::model::ScheduleDataRelationshipsLayersDataItemsType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -25,26 +25,16 @@ pub struct ScheduleDataRelationshipsLayersDataItems {
 }
 
 impl ScheduleDataRelationshipsLayersDataItems {
-    pub fn new() -> ScheduleDataRelationshipsLayersDataItems {
+    pub fn new(
+        id: String,
+        type_: crate::datadogV2::model::ScheduleDataRelationshipsLayersDataItemsType,
+    ) -> ScheduleDataRelationshipsLayersDataItems {
         ScheduleDataRelationshipsLayersDataItems {
-            id: None,
-            type_: None,
+            id,
+            type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn id(mut self, value: String) -> Self {
-        self.id = Some(value);
-        self
-    }
-
-    pub fn type_(
-        mut self,
-        value: crate::datadogV2::model::ScheduleDataRelationshipsLayersDataItemsType,
-    ) -> Self {
-        self.type_ = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -53,12 +43,6 @@ impl ScheduleDataRelationshipsLayersDataItems {
     ) -> Self {
         self.additional_properties = value;
         self
-    }
-}
-
-impl Default for ScheduleDataRelationshipsLayersDataItems {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
@@ -92,15 +76,9 @@ impl<'de> Deserialize<'de> for ScheduleDataRelationshipsLayersDataItems {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "id" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
@@ -118,6 +96,8 @@ impl<'de> Deserialize<'de> for ScheduleDataRelationshipsLayersDataItems {
                         }
                     }
                 }
+                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
+                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ScheduleDataRelationshipsLayersDataItems {
                     id,

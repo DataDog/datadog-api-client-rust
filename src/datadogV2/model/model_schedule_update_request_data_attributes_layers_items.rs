@@ -14,7 +14,7 @@ use std::fmt::{self, Formatter};
 pub struct ScheduleUpdateRequestDataAttributesLayersItems {
     /// When this updated layer takes effect (ISO 8601 format).
     #[serde(rename = "effective_date")]
-    pub effective_date: Option<chrono::DateTime<chrono::Utc>>,
+    pub effective_date: chrono::DateTime<chrono::Utc>,
     /// When this updated layer should stop being active (ISO 8601 format).
     #[serde(rename = "end_date")]
     pub end_date: Option<chrono::DateTime<chrono::Utc>>,
@@ -23,19 +23,19 @@ pub struct ScheduleUpdateRequestDataAttributesLayersItems {
     pub id: Option<String>,
     /// Specifies how the rotation repeats: number of days, plus optional seconds, up to the given maximums.
     #[serde(rename = "interval")]
-    pub interval: Option<crate::datadogV2::model::ScheduleUpdateRequestDataAttributesLayersItemsInterval>,
+    pub interval: crate::datadogV2::model::ScheduleUpdateRequestDataAttributesLayersItemsInterval,
     /// The members assigned to this layer.
     #[serde(rename = "members")]
-    pub members: Option<Vec<crate::datadogV2::model::ScheduleUpdateRequestDataAttributesLayersItemsMembersItems>>,
+    pub members: Vec<crate::datadogV2::model::ScheduleUpdateRequestDataAttributesLayersItemsMembersItems>,
     /// The name for this layer (for example, "Secondary Coverage").
     #[serde(rename = "name")]
-    pub name: Option<String>,
+    pub name: String,
     /// Any time restrictions that define when this layer is active.
     #[serde(rename = "restrictions")]
     pub restrictions: Option<Vec<crate::datadogV2::model::ScheduleUpdateRequestDataAttributesLayersItemsRestrictionsItems>>,
     /// The date/time at which the rotation begins (ISO 8601 format).
     #[serde(rename = "rotation_start")]
-    pub rotation_start: Option<chrono::DateTime<chrono::Utc>>,
+    pub rotation_start: chrono::DateTime<chrono::Utc>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -44,24 +44,27 @@ pub struct ScheduleUpdateRequestDataAttributesLayersItems {
 }
 
 impl ScheduleUpdateRequestDataAttributesLayersItems {
-    pub fn new() -> ScheduleUpdateRequestDataAttributesLayersItems {
+    pub fn new(
+        effective_date: chrono::DateTime<chrono::Utc>,
+        interval: crate::datadogV2::model::ScheduleUpdateRequestDataAttributesLayersItemsInterval,
+        members: Vec<
+            crate::datadogV2::model::ScheduleUpdateRequestDataAttributesLayersItemsMembersItems,
+        >,
+        name: String,
+        rotation_start: chrono::DateTime<chrono::Utc>,
+    ) -> ScheduleUpdateRequestDataAttributesLayersItems {
         ScheduleUpdateRequestDataAttributesLayersItems {
-            effective_date: None,
+            effective_date,
             end_date: None,
             id: None,
-            interval: None,
-            members: None,
-            name: None,
+            interval,
+            members,
+            name,
             restrictions: None,
-            rotation_start: None,
+            rotation_start,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn effective_date(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
-        self.effective_date = Some(value);
-        self
     }
 
     pub fn end_date(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
@@ -74,39 +77,11 @@ impl ScheduleUpdateRequestDataAttributesLayersItems {
         self
     }
 
-    pub fn interval(
-        mut self,
-        value: crate::datadogV2::model::ScheduleUpdateRequestDataAttributesLayersItemsInterval,
-    ) -> Self {
-        self.interval = Some(value);
-        self
-    }
-
-    pub fn members(
-        mut self,
-        value: Vec<
-            crate::datadogV2::model::ScheduleUpdateRequestDataAttributesLayersItemsMembersItems,
-        >,
-    ) -> Self {
-        self.members = Some(value);
-        self
-    }
-
-    pub fn name(mut self, value: String) -> Self {
-        self.name = Some(value);
-        self
-    }
-
     pub fn restrictions(
         mut self,
         value: Vec<crate::datadogV2::model::ScheduleUpdateRequestDataAttributesLayersItemsRestrictionsItems>,
     ) -> Self {
         self.restrictions = Some(value);
-        self
-    }
-
-    pub fn rotation_start(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
-        self.rotation_start = Some(value);
         self
     }
 
@@ -116,12 +91,6 @@ impl ScheduleUpdateRequestDataAttributesLayersItems {
     ) -> Self {
         self.additional_properties = value;
         self
-    }
-}
-
-impl Default for ScheduleUpdateRequestDataAttributesLayersItems {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
@@ -161,9 +130,6 @@ impl<'de> Deserialize<'de> for ScheduleUpdateRequestDataAttributesLayersItems {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "effective_date" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             effective_date =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -180,21 +146,12 @@ impl<'de> Deserialize<'de> for ScheduleUpdateRequestDataAttributesLayersItems {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "interval" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             interval = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "members" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             members = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "name" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "restrictions" => {
@@ -205,9 +162,6 @@ impl<'de> Deserialize<'de> for ScheduleUpdateRequestDataAttributesLayersItems {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "rotation_start" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             rotation_start =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -218,6 +172,13 @@ impl<'de> Deserialize<'de> for ScheduleUpdateRequestDataAttributesLayersItems {
                         }
                     }
                 }
+                let effective_date =
+                    effective_date.ok_or_else(|| M::Error::missing_field("effective_date"))?;
+                let interval = interval.ok_or_else(|| M::Error::missing_field("interval"))?;
+                let members = members.ok_or_else(|| M::Error::missing_field("members"))?;
+                let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
+                let rotation_start =
+                    rotation_start.ok_or_else(|| M::Error::missing_field("rotation_start"))?;
 
                 let content = ScheduleUpdateRequestDataAttributesLayersItems {
                     effective_date,

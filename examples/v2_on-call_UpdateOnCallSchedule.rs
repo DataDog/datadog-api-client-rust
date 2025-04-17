@@ -36,29 +36,29 @@ async fn main() {
             ScheduleUpdateRequestData::new(
                 ScheduleUpdateRequestDataAttributes::new(
                     vec![
-                        ScheduleUpdateRequestDataAttributesLayersItems::new()
-                            .effective_date(
-                                DateTime::parse_from_rfc3339("2021-11-01T11:11:11+00:00")
-                                    .expect("Failed to parse datetime")
-                                    .with_timezone(&Utc),
-                            )
+                        ScheduleUpdateRequestDataAttributesLayersItems::new(
+                            DateTime::parse_from_rfc3339("2021-11-01T11:11:11+00:00")
+                                .expect("Failed to parse datetime")
+                                .with_timezone(&Utc),
+                            ScheduleUpdateRequestDataAttributesLayersItemsInterval::new().seconds(300),
+                            vec![
+                                ScheduleUpdateRequestDataAttributesLayersItemsMembersItems
+                                ::new().user(
+                                    ScheduleUpdateRequestDataAttributesLayersItemsMembersItemsUser
+                                    ::new().id(user_data_id.clone()),
+                                )
+                            ],
+                            "Layer 1".to_string(),
+                            DateTime::parse_from_rfc3339("2021-11-06T11:11:11+00:00")
+                                .expect("Failed to parse datetime")
+                                .with_timezone(&Utc),
+                        )
                             .end_date(
                                 DateTime::parse_from_rfc3339("2021-11-21T11:11:11+00:00")
                                     .expect("Failed to parse datetime")
                                     .with_timezone(&Utc),
                             )
                             .id(schedule_data_relationships_layers_data_0_id.clone())
-                            .interval(ScheduleUpdateRequestDataAttributesLayersItemsInterval::new().seconds(300))
-                            .members(
-                                vec![
-                                    ScheduleUpdateRequestDataAttributesLayersItemsMembersItems
-                                    ::new().user(
-                                        ScheduleUpdateRequestDataAttributesLayersItemsMembersItemsUser
-                                        ::new().id(user_data_id.clone()),
-                                    )
-                                ],
-                            )
-                            .name("Layer 1".to_string())
                             .restrictions(
                                 vec![
                                     ScheduleUpdateRequestDataAttributesLayersItemsRestrictionsItems::new()
@@ -74,11 +74,6 @@ async fn main() {
                                         .start_time("09:00:00".to_string())
                                 ],
                             )
-                            .rotation_start(
-                                DateTime::parse_from_rfc3339("2021-11-06T11:11:11+00:00")
-                                    .expect("Failed to parse datetime")
-                                    .with_timezone(&Utc),
-                            )
                     ],
                     "Example-On-Call".to_string(),
                     "America/New_York".to_string(),
@@ -91,9 +86,10 @@ async fn main() {
                     ScheduleUpdateRequestDataRelationshipsTeams
                     ::new().data(
                         vec![
-                            ScheduleUpdateRequestDataRelationshipsTeamsDataItems::new()
-                                .id(dd_team_data_id.clone())
-                                .type_(ScheduleUpdateRequestDataRelationshipsTeamsDataItemsType::TEAMS)
+                            ScheduleUpdateRequestDataRelationshipsTeamsDataItems::new(
+                                dd_team_data_id.clone(),
+                                ScheduleUpdateRequestDataRelationshipsTeamsDataItemsType::TEAMS,
+                            )
                         ],
                     ),
                 ),
