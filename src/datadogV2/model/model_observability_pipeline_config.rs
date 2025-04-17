@@ -16,7 +16,7 @@ pub struct ObservabilityPipelineConfig {
     pub destinations: Vec<crate::datadogV2::model::ObservabilityPipelineConfigDestinationItem>,
     /// A list of processors that transform or enrich log data.
     #[serde(rename = "processors")]
-    pub processors: Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorItem>,
+    pub processors: Option<Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorItem>>,
     /// A list of configured data sources for the pipeline.
     #[serde(rename = "sources")]
     pub sources: Vec<crate::datadogV2::model::ObservabilityPipelineConfigSourceItem>,
@@ -30,16 +30,23 @@ pub struct ObservabilityPipelineConfig {
 impl ObservabilityPipelineConfig {
     pub fn new(
         destinations: Vec<crate::datadogV2::model::ObservabilityPipelineConfigDestinationItem>,
-        processors: Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorItem>,
         sources: Vec<crate::datadogV2::model::ObservabilityPipelineConfigSourceItem>,
     ) -> ObservabilityPipelineConfig {
         ObservabilityPipelineConfig {
             destinations,
-            processors,
+            processors: None,
             sources,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn processors(
+        mut self,
+        value: Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorItem>,
+    ) -> Self {
+        self.processors = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -90,6 +97,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfig {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "processors" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             processors = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "sources" => {
@@ -104,7 +114,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfig {
                 }
                 let destinations =
                     destinations.ok_or_else(|| M::Error::missing_field("destinations"))?;
-                let processors = processors.ok_or_else(|| M::Error::missing_field("processors"))?;
                 let sources = sources.ok_or_else(|| M::Error::missing_field("sources"))?;
 
                 let content = ObservabilityPipelineConfig {

@@ -29,7 +29,7 @@ pub struct ObservabilityPipelineQuotaProcessor {
     /// The maximum amount of data or number of events allowed before the quota is enforced. Can be specified in bytes or events.
     #[serde(rename = "limit")]
     pub limit: crate::datadogV2::model::ObservabilityPipelineQuotaProcessorLimit,
-    /// Name for identifying the processor.
+    /// Name of the quota.
     #[serde(rename = "name")]
     pub name: String,
     /// A list of alternate quota rules that apply to specific sets of events, identified by matching field values. Each override can define a custom limit.
