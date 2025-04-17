@@ -19,7 +19,7 @@ pub struct ScheduleUser {
     pub id: Option<String>,
     /// Users resource type.
     #[serde(rename = "type")]
-    pub type_: Option<crate::datadogV2::model::ScheduleUserType>,
+    pub type_: crate::datadogV2::model::ScheduleUserType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -28,11 +28,11 @@ pub struct ScheduleUser {
 }
 
 impl ScheduleUser {
-    pub fn new() -> ScheduleUser {
+    pub fn new(type_: crate::datadogV2::model::ScheduleUserType) -> ScheduleUser {
         ScheduleUser {
             attributes: None,
             id: None,
-            type_: None,
+            type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -48,23 +48,12 @@ impl ScheduleUser {
         self
     }
 
-    pub fn type_(mut self, value: crate::datadogV2::model::ScheduleUserType) -> Self {
-        self.type_ = Some(value);
-        self
-    }
-
     pub fn additional_properties(
         mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
     ) -> Self {
         self.additional_properties = value;
         self
-    }
-}
-
-impl Default for ScheduleUser {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
@@ -109,9 +98,6 @@ impl<'de> Deserialize<'de> for ScheduleUser {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
@@ -131,6 +117,7 @@ impl<'de> Deserialize<'de> for ScheduleUser {
                         }
                     }
                 }
+                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ScheduleUser {
                     attributes,
