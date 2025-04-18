@@ -16,7 +16,7 @@ pub struct EscalationPolicyDataAttributes {
     pub description: Option<String>,
     /// Specifies the name of the escalation policy.
     #[serde(rename = "name")]
-    pub name: String,
+    pub name: Option<String>,
     /// Indicates whether the page is automatically resolved when the policy ends.
     #[serde(rename = "resolve_page_on_policy_end")]
     pub resolve_page_on_policy_end: Option<bool>,
@@ -31,10 +31,10 @@ pub struct EscalationPolicyDataAttributes {
 }
 
 impl EscalationPolicyDataAttributes {
-    pub fn new(name: String) -> EscalationPolicyDataAttributes {
+    pub fn new() -> EscalationPolicyDataAttributes {
         EscalationPolicyDataAttributes {
             description: None,
-            name,
+            name: None,
             resolve_page_on_policy_end: None,
             retries: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -44,6 +44,11 @@ impl EscalationPolicyDataAttributes {
 
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
+        self
+    }
+
+    pub fn name(mut self, value: String) -> Self {
+        self.name = Some(value);
         self
     }
 
@@ -63,6 +68,12 @@ impl EscalationPolicyDataAttributes {
     ) -> Self {
         self.additional_properties = value;
         self
+    }
+}
+
+impl Default for EscalationPolicyDataAttributes {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
@@ -103,6 +114,9 @@ impl<'de> Deserialize<'de> for EscalationPolicyDataAttributes {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "name" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "resolve_page_on_policy_end" => {
@@ -125,7 +139,6 @@ impl<'de> Deserialize<'de> for EscalationPolicyDataAttributes {
                         }
                     }
                 }
-                let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
 
                 let content = EscalationPolicyDataAttributes {
                     description,

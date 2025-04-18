@@ -28,66 +28,65 @@ async fn main() {
     let dd_team_data_id = std::env::var("DD_TEAM_DATA_ID").unwrap();
     let body =
         ScheduleCreateRequest::new(
-            ScheduleCreateRequestData::new(ScheduleCreateRequestDataType::SCHEDULES)
-                .attributes(
-                    ScheduleCreateRequestDataAttributes::new(
-                        vec![
-                            ScheduleCreateRequestDataAttributesLayersItems::new(
-                                DateTime::parse_from_rfc3339("2021-11-01T11:11:11+00:00")
-                                    .expect("Failed to parse datetime")
-                                    .with_timezone(&Utc),
-                                ScheduleCreateRequestDataAttributesLayersItemsInterval::new().days(1),
-                                vec![
-                                    ScheduleCreateRequestDataAttributesLayersItemsMembersItems
-                                    ::new().user(
-                                        ScheduleCreateRequestDataAttributesLayersItemsMembersItemsUser
-                                        ::new().id(user_data_id.clone()),
-                                    )
-                                ],
-                                "Layer 1".to_string(),
-                                DateTime::parse_from_rfc3339("2021-11-06T11:11:11+00:00")
+            ScheduleCreateRequestData::new(
+                ScheduleCreateRequestDataAttributes::new(
+                    vec![
+                        ScheduleCreateRequestDataAttributesLayersItems::new(
+                            DateTime::parse_from_rfc3339("2021-11-01T11:11:11+00:00")
+                                .expect("Failed to parse datetime")
+                                .with_timezone(&Utc),
+                            ScheduleCreateRequestDataAttributesLayersItemsInterval::new().days(1),
+                            vec![
+                                ScheduleCreateRequestDataAttributesLayersItemsMembersItems
+                                ::new().user(
+                                    ScheduleCreateRequestDataAttributesLayersItemsMembersItemsUser
+                                    ::new().id(user_data_id.clone()),
+                                )
+                            ],
+                            "Layer 1".to_string(),
+                            DateTime::parse_from_rfc3339("2021-11-06T11:11:11+00:00")
+                                .expect("Failed to parse datetime")
+                                .with_timezone(&Utc),
+                        )
+                            .end_date(
+                                DateTime::parse_from_rfc3339("2021-11-21T11:11:11+00:00")
                                     .expect("Failed to parse datetime")
                                     .with_timezone(&Utc),
                             )
-                                .end_date(
-                                    DateTime::parse_from_rfc3339("2021-11-21T11:11:11+00:00")
-                                        .expect("Failed to parse datetime")
-                                        .with_timezone(&Utc),
-                                )
-                                .restrictions(
-                                    vec![
-                                        ScheduleCreateRequestDataAttributesLayersItemsRestrictionsItems::new()
-                                            .end_day(
-                                                ScheduleCreateRequestDataAttributesLayersItemsRestrictionsItemsEndDay
-                                                ::FRIDAY,
-                                            )
-                                            .end_time("17:00:00".to_string())
-                                            .start_day(
-                                                ScheduleCreateRequestDataAttributesLayersItemsRestrictionsItemsStartDay
-                                                ::MONDAY,
-                                            )
-                                            .start_time("09:00:00".to_string())
-                                    ],
-                                )
+                            .restrictions(
+                                vec![
+                                    ScheduleCreateRequestDataAttributesLayersItemsRestrictionsItems::new()
+                                        .end_day(
+                                            ScheduleCreateRequestDataAttributesLayersItemsRestrictionsItemsEndDay
+                                            ::FRIDAY,
+                                        )
+                                        .end_time("17:00:00".to_string())
+                                        .start_day(
+                                            ScheduleCreateRequestDataAttributesLayersItemsRestrictionsItemsStartDay
+                                            ::MONDAY,
+                                        )
+                                        .start_time("09:00:00".to_string())
+                                ],
+                            )
+                    ],
+                    "Example-On-Call".to_string(),
+                    "America/New_York".to_string(),
+                ).tags(vec!["tag1".to_string(), "tag2".to_string()]),
+                ScheduleCreateRequestDataType::SCHEDULES,
+            ).relationships(
+                ScheduleCreateRequestDataRelationships
+                ::new().teams(
+                    ScheduleCreateRequestDataRelationshipsTeams
+                    ::new().data(
+                        vec![
+                            ScheduleCreateRequestDataRelationshipsTeamsDataItems::new(
+                                dd_team_data_id.clone(),
+                                ScheduleCreateRequestDataRelationshipsTeamsDataItemsType::TEAMS,
+                            )
                         ],
-                        "Example-On-Call".to_string(),
-                        "America/New_York".to_string(),
-                    ).tags(vec!["tag1".to_string(), "tag2".to_string()]),
-                )
-                .relationships(
-                    ScheduleCreateRequestDataRelationships
-                    ::new().teams(
-                        ScheduleCreateRequestDataRelationshipsTeams
-                        ::new().data(
-                            vec![
-                                ScheduleCreateRequestDataRelationshipsTeamsDataItems::new(
-                                    dd_team_data_id.clone(),
-                                    ScheduleCreateRequestDataRelationshipsTeamsDataItemsType::TEAMS,
-                                )
-                            ],
-                        ),
                     ),
                 ),
+            ),
         );
     let configuration = datadog::Configuration::new();
     let api = OnCallAPI::with_config(configuration);
