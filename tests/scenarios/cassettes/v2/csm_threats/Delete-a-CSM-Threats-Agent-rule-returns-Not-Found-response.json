@@ -9,7 +9,7 @@
           ]
         },
         "method": "delete",
-        "uri": "https://api.datadoghq.com/api/v2/remote_config/products/cws/agent_rules/abc-123-xyz"
+        "uri": "https://api.datadoghq.com/api/v2/remote_config/products/cws/agent_rules/non-existent-rule-id"
       },
       "response": {
         "body": {
@@ -26,7 +26,7 @@
           "message": "Not Found"
         }
       },
-      "recorded_at": "Tue, 23 Apr 2024 17:57:45 GMT"
+      "recorded_at": "Tue, 01 Apr 2025 14:30:52 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"

@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Object for a single Agent rule.
+/// Object for a single Agent rule
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -14,7 +14,7 @@ pub struct CloudWorkloadSecurityAgentRuleCreateData {
     /// Create a new Cloud Workload Security Agent rule.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateAttributes,
-    /// The type of the resource. The value should always be `agent_rule`.
+    /// The type of the resource, must always be `agent_rule`
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleType,
     #[serde(flatten)]
