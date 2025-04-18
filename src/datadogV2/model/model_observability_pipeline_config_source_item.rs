@@ -14,6 +14,15 @@ pub enum ObservabilityPipelineConfigSourceItem {
     ObservabilityPipelineDatadogAgentSource(
         Box<crate::datadogV2::model::ObservabilityPipelineDatadogAgentSource>,
     ),
+    ObservabilityPipelineSplunkTcpSource(
+        Box<crate::datadogV2::model::ObservabilityPipelineSplunkTcpSource>,
+    ),
+    ObservabilityPipelineSplunkHecSource(
+        Box<crate::datadogV2::model::ObservabilityPipelineSplunkHecSource>,
+    ),
+    ObservabilityPipelineAmazonS3Source(
+        Box<crate::datadogV2::model::ObservabilityPipelineAmazonS3Source>,
+    ),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -42,6 +51,36 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigSourceItem {
                     ObservabilityPipelineConfigSourceItem::ObservabilityPipelineDatadogAgentSource(
                         _v,
                     ),
+                );
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineSplunkTcpSource>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(
+                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineSplunkTcpSource(_v),
+                );
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineSplunkHecSource>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(
+                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineSplunkHecSource(_v),
+                );
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineAmazonS3Source>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(
+                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineAmazonS3Source(_v),
                 );
             }
         }
