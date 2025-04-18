@@ -1,4 +1,4 @@
-// Create on call escalation policy returns "Created" response
+// Create on-call escalation policy returns "Created" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_on_call::CreateOnCallEscalationPolicyOptionalParams;
 use datadog_api_client::datadogV2::api_on_call::OnCallAPI;
@@ -52,17 +52,6 @@ async fn main() {
                             ],
                         )
                             .assignment(EscalationPolicyCreateRequestDataAttributesStepsItemsAssignment::DEFAULT)
-                            .escalate_after_seconds(3600),
-                        EscalationPolicyCreateRequestDataAttributesStepsItems::new(
-                            vec![
-                                EscalationPolicyCreateRequestDataAttributesStepsItemsTargetsItems::new()
-                                    .id(dd_team_data_id.clone())
-                                    .type_(
-                                        EscalationPolicyCreateRequestDataAttributesStepsItemsTargetsItemsType::TEAMS,
-                                    )
-                            ],
-                        )
-                            .assignment(EscalationPolicyCreateRequestDataAttributesStepsItemsAssignment::ROUND_ROBIN)
                             .escalate_after_seconds(3600)
                     ],
                 )

@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EscalationPolicyCreateRequestDataAttributesStepsItems {
-    /// Specifies how this escalation step will assign targets (example `default` or `round-robin`).
+    /// Specifies how this escalation step will assign targets (example `default`).
     #[serde(rename = "assignment")]
     pub assignment: Option<
         crate::datadogV2::model::EscalationPolicyCreateRequestDataAttributesStepsItemsAssignment,

@@ -8,7 +8,6 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum EscalationPolicyCreateRequestDataAttributesStepsItemsAssignment {
     DEFAULT,
-    ROUND_ROBIN,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -16,7 +15,6 @@ impl ToString for EscalationPolicyCreateRequestDataAttributesStepsItemsAssignmen
     fn to_string(&self) -> String {
         match self {
             Self::DEFAULT => String::from("default"),
-            Self::ROUND_ROBIN => String::from("round-robin"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -42,7 +40,6 @@ impl<'de> Deserialize<'de> for EscalationPolicyCreateRequestDataAttributesStepsI
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "default" => Self::DEFAULT,
-            "round-robin" => Self::ROUND_ROBIN,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

@@ -22,7 +22,7 @@ pub struct EscalationPolicyData {
     pub relationships: Option<crate::datadogV2::model::EscalationPolicyDataRelationships>,
     /// Indicates that the resource is of type `policies`.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::EscalationPolicyDataType,
+    pub type_: Option<crate::datadogV2::model::EscalationPolicyDataType>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -31,12 +31,12 @@ pub struct EscalationPolicyData {
 }
 
 impl EscalationPolicyData {
-    pub fn new(type_: crate::datadogV2::model::EscalationPolicyDataType) -> EscalationPolicyData {
+    pub fn new() -> EscalationPolicyData {
         EscalationPolicyData {
             attributes: None,
             id: None,
             relationships: None,
-            type_,
+            type_: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -63,12 +63,23 @@ impl EscalationPolicyData {
         self
     }
 
+    pub fn type_(mut self, value: crate::datadogV2::model::EscalationPolicyDataType) -> Self {
+        self.type_ = Some(value);
+        self
+    }
+
     pub fn additional_properties(
         mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
     ) -> Self {
         self.additional_properties = value;
         self
+    }
+}
+
+impl Default for EscalationPolicyData {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
@@ -125,6 +136,9 @@ impl<'de> Deserialize<'de> for EscalationPolicyData {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
@@ -142,7 +156,6 @@ impl<'de> Deserialize<'de> for EscalationPolicyData {
                         }
                     }
                 }
-                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = EscalationPolicyData {
                     attributes,
