@@ -30,6 +30,9 @@ pub struct GCPSTSServiceAccountAttributes {
     /// When enabled, Datadog will activate the Cloud Security Monitoring product for this service account. Note: This requires resource_collection_enabled to be set to true.
     #[serde(rename = "is_cspm_enabled")]
     pub is_cspm_enabled: Option<bool>,
+    /// When enabled, Datadog applies the `X-Goog-User-Project` header, attributing Google Cloud billing and quota usage to the project being monitored rather than the default service account project.
+    #[serde(rename = "is_per_project_quota_enabled")]
+    pub is_per_project_quota_enabled: Option<bool>,
     /// When enabled, Datadog scans for all resource change data in your Google Cloud environment.
     #[serde(rename = "is_resource_change_collection_enabled")]
     pub is_resource_change_collection_enabled: Option<bool>,
@@ -58,6 +61,7 @@ impl GCPSTSServiceAccountAttributes {
             cloud_run_revision_filters: None,
             host_filters: None,
             is_cspm_enabled: None,
+            is_per_project_quota_enabled: None,
             is_resource_change_collection_enabled: None,
             is_security_command_center_enabled: None,
             metric_namespace_configs: None,
@@ -94,6 +98,11 @@ impl GCPSTSServiceAccountAttributes {
 
     pub fn is_cspm_enabled(mut self, value: bool) -> Self {
         self.is_cspm_enabled = Some(value);
+        self
+    }
+
+    pub fn is_per_project_quota_enabled(mut self, value: bool) -> Self {
+        self.is_per_project_quota_enabled = Some(value);
         self
     }
 
@@ -158,6 +167,7 @@ impl<'de> Deserialize<'de> for GCPSTSServiceAccountAttributes {
                 let mut cloud_run_revision_filters: Option<Vec<String>> = None;
                 let mut host_filters: Option<Vec<String>> = None;
                 let mut is_cspm_enabled: Option<bool> = None;
+                let mut is_per_project_quota_enabled: Option<bool> = None;
                 let mut is_resource_change_collection_enabled: Option<bool> = None;
                 let mut is_security_command_center_enabled: Option<bool> = None;
                 let mut metric_namespace_configs: Option<
@@ -213,6 +223,13 @@ impl<'de> Deserialize<'de> for GCPSTSServiceAccountAttributes {
                             is_cspm_enabled =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "is_per_project_quota_enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            is_per_project_quota_enabled =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "is_resource_change_collection_enabled" => {
                             if v.is_null() {
                                 continue;
@@ -256,6 +273,7 @@ impl<'de> Deserialize<'de> for GCPSTSServiceAccountAttributes {
                     cloud_run_revision_filters,
                     host_filters,
                     is_cspm_enabled,
+                    is_per_project_quota_enabled,
                     is_resource_change_collection_enabled,
                     is_security_command_center_enabled,
                     metric_namespace_configs,
