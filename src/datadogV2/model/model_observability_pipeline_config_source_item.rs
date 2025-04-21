@@ -14,6 +14,12 @@ pub enum ObservabilityPipelineConfigSourceItem {
     ObservabilityPipelineDatadogAgentSource(
         Box<crate::datadogV2::model::ObservabilityPipelineDatadogAgentSource>,
     ),
+    ObservabilityPipelineFluentSource(
+        Box<crate::datadogV2::model::ObservabilityPipelineFluentSource>,
+    ),
+    ObservabilityPipelineHttpServerSource(
+        Box<crate::datadogV2::model::ObservabilityPipelineHttpServerSource>,
+    ),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -40,6 +46,28 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigSourceItem {
             if !_v._unparsed {
                 return Ok(
                     ObservabilityPipelineConfigSourceItem::ObservabilityPipelineDatadogAgentSource(
+                        _v,
+                    ),
+                );
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineFluentSource>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(
+                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineFluentSource(_v),
+                );
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineHttpServerSource>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(
+                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineHttpServerSource(
                         _v,
                     ),
                 );

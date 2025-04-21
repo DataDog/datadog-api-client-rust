@@ -6,20 +6,26 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The `datadog_agent` source collects logs from the Datadog Agent.
+/// The `http_server` source collects logs over HTTP POST from external services.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ObservabilityPipelineDatadogAgentSource {
-    /// The unique identifier for this component. Used to reference this component in other parts of the pipeline (e.g., as input to downstream components).
+pub struct ObservabilityPipelineHttpServerSource {
+    /// HTTP authentication method.
+    #[serde(rename = "auth_strategy")]
+    pub auth_strategy: crate::datadogV2::model::ObservabilityPipelineHttpServerSourceAuthStrategy,
+    /// The decoding format used to interpret incoming logs.
+    #[serde(rename = "decoding")]
+    pub decoding: crate::datadogV2::model::ObservabilityPipelineDecoding,
+    /// Unique ID for the HTTP server source.
     #[serde(rename = "id")]
     pub id: String,
     /// Configuration for enabling TLS encryption between the pipeline component and external services.
     #[serde(rename = "tls")]
     pub tls: Option<crate::datadogV2::model::ObservabilityPipelineTls>,
-    /// The source type. The value should always be `datadog_agent`.
+    /// The source type. The value should always be `http_server`.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::ObservabilityPipelineDatadogAgentSourceType,
+    pub type_: crate::datadogV2::model::ObservabilityPipelineHttpServerSourceType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,12 +33,16 @@ pub struct ObservabilityPipelineDatadogAgentSource {
     pub(crate) _unparsed: bool,
 }
 
-impl ObservabilityPipelineDatadogAgentSource {
+impl ObservabilityPipelineHttpServerSource {
     pub fn new(
+        auth_strategy: crate::datadogV2::model::ObservabilityPipelineHttpServerSourceAuthStrategy,
+        decoding: crate::datadogV2::model::ObservabilityPipelineDecoding,
         id: String,
-        type_: crate::datadogV2::model::ObservabilityPipelineDatadogAgentSourceType,
-    ) -> ObservabilityPipelineDatadogAgentSource {
-        ObservabilityPipelineDatadogAgentSource {
+        type_: crate::datadogV2::model::ObservabilityPipelineHttpServerSourceType,
+    ) -> ObservabilityPipelineHttpServerSource {
+        ObservabilityPipelineHttpServerSource {
+            auth_strategy,
+            decoding,
             id,
             tls: None,
             type_,
@@ -55,14 +65,14 @@ impl ObservabilityPipelineDatadogAgentSource {
     }
 }
 
-impl<'de> Deserialize<'de> for ObservabilityPipelineDatadogAgentSource {
+impl<'de> Deserialize<'de> for ObservabilityPipelineHttpServerSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ObservabilityPipelineDatadogAgentSourceVisitor;
-        impl<'a> Visitor<'a> for ObservabilityPipelineDatadogAgentSourceVisitor {
-            type Value = ObservabilityPipelineDatadogAgentSource;
+        struct ObservabilityPipelineHttpServerSourceVisitor;
+        impl<'a> Visitor<'a> for ObservabilityPipelineHttpServerSourceVisitor {
+            type Value = ObservabilityPipelineHttpServerSource;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -72,10 +82,15 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDatadogAgentSource {
             where
                 M: MapAccess<'a>,
             {
+                let mut auth_strategy: Option<
+                    crate::datadogV2::model::ObservabilityPipelineHttpServerSourceAuthStrategy,
+                > = None;
+                let mut decoding: Option<crate::datadogV2::model::ObservabilityPipelineDecoding> =
+                    None;
                 let mut id: Option<String> = None;
                 let mut tls: Option<crate::datadogV2::model::ObservabilityPipelineTls> = None;
                 let mut type_: Option<
-                    crate::datadogV2::model::ObservabilityPipelineDatadogAgentSourceType,
+                    crate::datadogV2::model::ObservabilityPipelineHttpServerSourceType,
                 > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -85,6 +100,29 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDatadogAgentSource {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "auth_strategy" => {
+                            auth_strategy =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _auth_strategy) = auth_strategy {
+                                match _auth_strategy {
+                                    crate::datadogV2::model::ObservabilityPipelineHttpServerSourceAuthStrategy::UnparsedObject(_auth_strategy) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "decoding" => {
+                            decoding = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _decoding) = decoding {
+                                match _decoding {
+                                    crate::datadogV2::model::ObservabilityPipelineDecoding::UnparsedObject(_decoding) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -98,7 +136,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDatadogAgentSource {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::ObservabilityPipelineDatadogAgentSourceType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::ObservabilityPipelineHttpServerSourceType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -112,10 +150,15 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDatadogAgentSource {
                         }
                     }
                 }
+                let auth_strategy =
+                    auth_strategy.ok_or_else(|| M::Error::missing_field("auth_strategy"))?;
+                let decoding = decoding.ok_or_else(|| M::Error::missing_field("decoding"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = ObservabilityPipelineDatadogAgentSource {
+                let content = ObservabilityPipelineHttpServerSource {
+                    auth_strategy,
+                    decoding,
                     id,
                     tls,
                     type_,
@@ -127,6 +170,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDatadogAgentSource {
             }
         }
 
-        deserializer.deserialize_any(ObservabilityPipelineDatadogAgentSourceVisitor)
+        deserializer.deserialize_any(ObservabilityPipelineHttpServerSourceVisitor)
     }
 }

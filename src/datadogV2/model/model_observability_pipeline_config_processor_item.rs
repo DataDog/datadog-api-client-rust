@@ -26,6 +26,12 @@ pub enum ObservabilityPipelineConfigProcessorItem {
     ObservabilityPipelineRenameFieldsProcessor(
         Box<crate::datadogV2::model::ObservabilityPipelineRenameFieldsProcessor>,
     ),
+    ObservabilityPipelineSampleProcessor(
+        Box<crate::datadogV2::model::ObservabilityPipelineSampleProcessor>,
+    ),
+    ObservabilityPipelineParseGrokProcessor(
+        Box<crate::datadogV2::model::ObservabilityPipelineParseGrokProcessor>,
+    ),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -89,6 +95,26 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigProcessorItem {
         {
             if !_v._unparsed {
                 return Ok(ObservabilityPipelineConfigProcessorItem::ObservabilityPipelineRenameFieldsProcessor(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineSampleProcessor>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(
+                    ObservabilityPipelineConfigProcessorItem::ObservabilityPipelineSampleProcessor(
+                        _v,
+                    ),
+                );
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineParseGrokProcessor>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigProcessorItem::ObservabilityPipelineParseGrokProcessor(_v));
             }
         }
 

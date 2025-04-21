@@ -6,20 +6,29 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The `datadog_agent` source collects logs from the Datadog Agent.
+/// The `sample` processor allows probabilistic sampling of logs at a fixed rate.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ObservabilityPipelineDatadogAgentSource {
-    /// The unique identifier for this component. Used to reference this component in other parts of the pipeline (e.g., as input to downstream components).
+pub struct ObservabilityPipelineSampleProcessor {
+    /// The unique identifier for this component. Used to reference this component in other parts of the pipeline (for example, as the `input` to downstream components).
     #[serde(rename = "id")]
     pub id: String,
-    /// Configuration for enabling TLS encryption between the pipeline component and external services.
-    #[serde(rename = "tls")]
-    pub tls: Option<crate::datadogV2::model::ObservabilityPipelineTls>,
-    /// The source type. The value should always be `datadog_agent`.
+    /// A Datadog search query used to determine which logs this processor targets.
+    #[serde(rename = "include")]
+    pub include: String,
+    /// A list of component IDs whose output is used as the `input` for this component.
+    #[serde(rename = "inputs")]
+    pub inputs: Vec<String>,
+    /// The percentage of logs to sample.
+    #[serde(rename = "percentage")]
+    pub percentage: Option<f64>,
+    /// Number of events to sample (1 in N).
+    #[serde(rename = "rate")]
+    pub rate: Option<i64>,
+    /// The processor type. The value should always be `sample`.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::ObservabilityPipelineDatadogAgentSourceType,
+    pub type_: crate::datadogV2::model::ObservabilityPipelineSampleProcessorType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,22 +36,32 @@ pub struct ObservabilityPipelineDatadogAgentSource {
     pub(crate) _unparsed: bool,
 }
 
-impl ObservabilityPipelineDatadogAgentSource {
+impl ObservabilityPipelineSampleProcessor {
     pub fn new(
         id: String,
-        type_: crate::datadogV2::model::ObservabilityPipelineDatadogAgentSourceType,
-    ) -> ObservabilityPipelineDatadogAgentSource {
-        ObservabilityPipelineDatadogAgentSource {
+        include: String,
+        inputs: Vec<String>,
+        type_: crate::datadogV2::model::ObservabilityPipelineSampleProcessorType,
+    ) -> ObservabilityPipelineSampleProcessor {
+        ObservabilityPipelineSampleProcessor {
             id,
-            tls: None,
+            include,
+            inputs,
+            percentage: None,
+            rate: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn tls(mut self, value: crate::datadogV2::model::ObservabilityPipelineTls) -> Self {
-        self.tls = Some(value);
+    pub fn percentage(mut self, value: f64) -> Self {
+        self.percentage = Some(value);
+        self
+    }
+
+    pub fn rate(mut self, value: i64) -> Self {
+        self.rate = Some(value);
         self
     }
 
@@ -55,14 +74,14 @@ impl ObservabilityPipelineDatadogAgentSource {
     }
 }
 
-impl<'de> Deserialize<'de> for ObservabilityPipelineDatadogAgentSource {
+impl<'de> Deserialize<'de> for ObservabilityPipelineSampleProcessor {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ObservabilityPipelineDatadogAgentSourceVisitor;
-        impl<'a> Visitor<'a> for ObservabilityPipelineDatadogAgentSourceVisitor {
-            type Value = ObservabilityPipelineDatadogAgentSource;
+        struct ObservabilityPipelineSampleProcessorVisitor;
+        impl<'a> Visitor<'a> for ObservabilityPipelineSampleProcessorVisitor {
+            type Value = ObservabilityPipelineSampleProcessor;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -73,9 +92,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDatadogAgentSource {
                 M: MapAccess<'a>,
             {
                 let mut id: Option<String> = None;
-                let mut tls: Option<crate::datadogV2::model::ObservabilityPipelineTls> = None;
+                let mut include: Option<String> = None;
+                let mut inputs: Option<Vec<String>> = None;
+                let mut percentage: Option<f64> = None;
+                let mut rate: Option<i64> = None;
                 let mut type_: Option<
-                    crate::datadogV2::model::ObservabilityPipelineDatadogAgentSourceType,
+                    crate::datadogV2::model::ObservabilityPipelineSampleProcessorType,
                 > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -88,17 +110,29 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDatadogAgentSource {
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "tls" => {
+                        "include" => {
+                            include = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "inputs" => {
+                            inputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "percentage" => {
                             if v.is_null() {
                                 continue;
                             }
-                            tls = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rate" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rate = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::ObservabilityPipelineDatadogAgentSourceType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::ObservabilityPipelineSampleProcessorType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -113,11 +147,16 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDatadogAgentSource {
                     }
                 }
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
+                let include = include.ok_or_else(|| M::Error::missing_field("include"))?;
+                let inputs = inputs.ok_or_else(|| M::Error::missing_field("inputs"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = ObservabilityPipelineDatadogAgentSource {
+                let content = ObservabilityPipelineSampleProcessor {
                     id,
-                    tls,
+                    include,
+                    inputs,
+                    percentage,
+                    rate,
                     type_,
                     additional_properties,
                     _unparsed,
@@ -127,6 +166,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDatadogAgentSource {
             }
         }
 
-        deserializer.deserialize_any(ObservabilityPipelineDatadogAgentSourceVisitor)
+        deserializer.deserialize_any(ObservabilityPipelineSampleProcessorVisitor)
     }
 }
