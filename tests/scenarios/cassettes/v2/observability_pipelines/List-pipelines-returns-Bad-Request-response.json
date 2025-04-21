@@ -5,15 +5,15 @@
         "body": "",
         "headers": {
           "Accept": [
-            "*/*"
+            "application/json"
           ]
         },
-        "method": "delete",
-        "uri": "https://api.datadoghq.com/api/v2/remote_config/products/obs_pipelines/pipelines/3fa85f64-5717-4562-b3fc-2c963f66afa6"
+        "method": "get",
+        "uri": "https://api.datadoghq.com/api/v2/remote_config/products/obs_pipelines/pipelines?page%5Bsize%5D=0"
       },
       "response": {
         "body": {
-          "string": "{\"errors\":[{\"title\":\"Resource Not Found\"}]}\n",
+          "string": "{\"errors\":[{\"title\":\"page[size] must be a number between 1 and 50\"}]}\n",
           "encoding": null
         },
         "headers": {
@@ -22,11 +22,11 @@
           ]
         },
         "status": {
-          "code": 404,
-          "message": "Not Found"
+          "code": 400,
+          "message": "Bad Request"
         }
       },
-      "recorded_at": "Mon, 21 Apr 2025 12:54:47 GMT"
+      "recorded_at": "Mon, 21 Apr 2025 12:54:52 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"
