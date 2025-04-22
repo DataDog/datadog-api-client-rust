@@ -14,6 +14,15 @@ pub enum ObservabilityPipelineConfigSourceItem {
     ObservabilityPipelineDatadogAgentSource(
         Box<crate::datadogV2::model::ObservabilityPipelineDatadogAgentSource>,
     ),
+    ObservabilityPipelineSumoLogicSource(
+        Box<crate::datadogV2::model::ObservabilityPipelineSumoLogicSource>,
+    ),
+    ObservabilityPipelineRsyslogSource(
+        Box<crate::datadogV2::model::ObservabilityPipelineRsyslogSource>,
+    ),
+    ObservabilityPipelineSyslogNgSource(
+        Box<crate::datadogV2::model::ObservabilityPipelineSyslogNgSource>,
+    ),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -42,6 +51,36 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigSourceItem {
                     ObservabilityPipelineConfigSourceItem::ObservabilityPipelineDatadogAgentSource(
                         _v,
                     ),
+                );
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineSumoLogicSource>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(
+                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineSumoLogicSource(_v),
+                );
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineRsyslogSource>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(
+                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineRsyslogSource(_v),
+                );
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineSyslogNgSource>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(
+                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineSyslogNgSource(_v),
                 );
             }
         }
