@@ -1,4 +1,4 @@
-// Create on call escalation policy returns "Created" response
+// Create on-call escalation policy returns "Created" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_on_call::CreateOnCallEscalationPolicyOptionalParams;
 use datadog_api_client::datadogV2::api_on_call::OnCallAPI;

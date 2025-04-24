@@ -1,4 +1,4 @@
-// Get on call escalation policy returns "OK" response
+// Get on-call escalation policy returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_on_call::GetOnCallEscalationPolicyOptionalParams;
 use datadog_api_client::datadogV2::api_on_call::OnCallAPI;
