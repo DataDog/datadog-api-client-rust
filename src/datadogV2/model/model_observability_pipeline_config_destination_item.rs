@@ -11,6 +11,15 @@ pub enum ObservabilityPipelineConfigDestinationItem {
     ObservabilityPipelineDatadogLogsDestination(
         Box<crate::datadogV2::model::ObservabilityPipelineDatadogLogsDestination>,
     ),
+    ObservabilityPipelineGoogleChronicleDestination(
+        Box<crate::datadogV2::model::ObservabilityPipelineGoogleChronicleDestination>,
+    ),
+    ObservabilityPipelineNewRelicDestination(
+        Box<crate::datadogV2::model::ObservabilityPipelineNewRelicDestination>,
+    ),
+    ObservabilityPipelineSentinelOneDestination(
+        Box<crate::datadogV2::model::ObservabilityPipelineSentinelOneDestination>,
+    ),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -26,6 +35,30 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigDestinationItem {
         {
             if !_v._unparsed {
                 return Ok(ObservabilityPipelineConfigDestinationItem::ObservabilityPipelineDatadogLogsDestination(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineGoogleChronicleDestination>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigDestinationItem::ObservabilityPipelineGoogleChronicleDestination(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineNewRelicDestination>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigDestinationItem::ObservabilityPipelineNewRelicDestination(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineSentinelOneDestination>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigDestinationItem::ObservabilityPipelineSentinelOneDestination(_v));
             }
         }
 

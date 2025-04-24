@@ -14,6 +14,18 @@ pub enum ObservabilityPipelineConfigSourceItem {
     ObservabilityPipelineDatadogAgentSource(
         Box<crate::datadogV2::model::ObservabilityPipelineDatadogAgentSource>,
     ),
+    ObservabilityPipelineAmazonDataFirehoseSource(
+        Box<crate::datadogV2::model::ObservabilityPipelineAmazonDataFirehoseSource>,
+    ),
+    ObservabilityPipelineGooglePubSubSource(
+        Box<crate::datadogV2::model::ObservabilityPipelineGooglePubSubSource>,
+    ),
+    ObservabilityPipelineHttpClientSource(
+        Box<crate::datadogV2::model::ObservabilityPipelineHttpClientSource>,
+    ),
+    ObservabilityPipelineLogstashSource(
+        Box<crate::datadogV2::model::ObservabilityPipelineLogstashSource>,
+    ),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -42,6 +54,48 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigSourceItem {
                     ObservabilityPipelineConfigSourceItem::ObservabilityPipelineDatadogAgentSource(
                         _v,
                     ),
+                );
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineAmazonDataFirehoseSource>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigSourceItem::ObservabilityPipelineAmazonDataFirehoseSource(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineGooglePubSubSource>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(
+                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineGooglePubSubSource(
+                        _v,
+                    ),
+                );
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineHttpClientSource>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(
+                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineHttpClientSource(
+                        _v,
+                    ),
+                );
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineLogstashSource>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(
+                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineLogstashSource(_v),
                 );
             }
         }
