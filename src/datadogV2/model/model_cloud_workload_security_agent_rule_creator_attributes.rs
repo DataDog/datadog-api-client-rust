@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The attributes of the user who created the Agent rule.
+/// The attributes of the user who created the Agent rule
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CloudWorkloadSecurityAgentRuleCreatorAttributes {
-    /// The handle of the user.
+    /// The handle of the user
     #[serde(rename = "handle")]
     pub handle: Option<String>,
-    /// The name of the user.
+    /// The name of the user
     #[serde(rename = "name", default, with = "::serde_with::rust::double_option")]
     pub name: Option<Option<String>>,
     #[serde(flatten)]

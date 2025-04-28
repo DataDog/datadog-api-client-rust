@@ -6,64 +6,67 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A Cloud Workload Security Agent rule returned by the API.
+/// A Cloud Workload Security Agent rule returned by the API
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CloudWorkloadSecurityAgentRuleAttributes {
-    /// The array of actions the rule can perform if triggered.
+    /// The array of actions the rule can perform if triggered
     #[serde(
         rename = "actions",
         default,
         with = "::serde_with::rust::double_option"
     )]
     pub actions: Option<Option<Vec<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleAction>>>,
-    /// The version of the agent.
+    /// The version of the Agent
     #[serde(rename = "agentConstraint")]
     pub agent_constraint: Option<String>,
-    /// The category of the Agent rule.
+    /// The category of the Agent rule
     #[serde(rename = "category")]
     pub category: Option<String>,
-    /// The ID of the user who created the rule.
+    /// The ID of the user who created the rule
     #[serde(rename = "creationAuthorUuId")]
     pub creation_author_uu_id: Option<String>,
-    /// When the Agent rule was created, timestamp in milliseconds.
+    /// When the Agent rule was created, timestamp in milliseconds
     #[serde(rename = "creationDate")]
     pub creation_date: Option<i64>,
-    /// The attributes of the user who created the Agent rule.
+    /// The attributes of the user who created the Agent rule
     #[serde(rename = "creator")]
     pub creator: Option<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleCreatorAttributes>,
-    /// Whether the rule is included by default.
+    /// Whether the rule is included by default
     #[serde(rename = "defaultRule")]
     pub default_rule: Option<bool>,
-    /// The description of the Agent rule.
+    /// The description of the Agent rule
     #[serde(rename = "description")]
     pub description: Option<String>,
-    /// Whether the Agent rule is enabled.
+    /// Whether the Agent rule is enabled
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
-    /// The SECL expression of the Agent rule.
+    /// The SECL expression of the Agent rule
     #[serde(rename = "expression")]
     pub expression: Option<String>,
-    /// The platforms the Agent rule is supported on.
+    /// The platforms the Agent rule is supported on
     #[serde(rename = "filters")]
     pub filters: Option<Vec<String>>,
-    /// The name of the Agent rule.
+    /// The name of the Agent rule
     #[serde(rename = "name")]
     pub name: Option<String>,
-    /// The ID of the user who updated the rule.
+    /// The list of product tags associated with the rule
+    #[serde(rename = "product_tags")]
+    pub product_tags: Option<Vec<String>>,
+    /// The ID of the user who updated the rule
     #[serde(rename = "updateAuthorUuId")]
     pub update_author_uu_id: Option<String>,
-    /// Timestamp in milliseconds when the Agent rule was last updated.
+    /// Timestamp in milliseconds when the Agent rule was last updated
     #[serde(rename = "updateDate")]
     pub update_date: Option<i64>,
-    /// When the Agent rule was last updated, timestamp in milliseconds.
+    /// When the Agent rule was last updated, timestamp in milliseconds
     #[serde(rename = "updatedAt")]
     pub updated_at: Option<i64>,
-    /// The attributes of the user who last updated the Agent rule.
+    /// The attributes of the user who last updated the Agent rule
     #[serde(rename = "updater")]
     pub updater: Option<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleUpdaterAttributes>,
-    /// The version of the Agent rule.
+    /// The version of the Agent rule
     #[serde(rename = "version")]
     pub version: Option<i64>,
     #[serde(flatten)]
@@ -88,6 +91,7 @@ impl CloudWorkloadSecurityAgentRuleAttributes {
             expression: None,
             filters: None,
             name: None,
+            product_tags: None,
             update_author_uu_id: None,
             update_date: None,
             updated_at: None,
@@ -161,6 +165,11 @@ impl CloudWorkloadSecurityAgentRuleAttributes {
 
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
+        self
+    }
+
+    pub fn product_tags(mut self, value: Vec<String>) -> Self {
+        self.product_tags = Some(value);
         self
     }
 
@@ -240,6 +249,7 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleAttributes {
                 let mut expression: Option<String> = None;
                 let mut filters: Option<Vec<String>> = None;
                 let mut name: Option<String> = None;
+                let mut product_tags: Option<Vec<String>> = None;
                 let mut update_author_uu_id: Option<String> = None;
                 let mut update_date: Option<i64> = None;
                 let mut updated_at: Option<i64> = None;
@@ -329,6 +339,13 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleAttributes {
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "product_tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            product_tags =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "updateAuthorUuId" => {
                             if v.is_null() {
                                 continue;
@@ -382,6 +399,7 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleAttributes {
                     expression,
                     filters,
                     name,
+                    product_tags,
                     update_author_uu_id,
                     update_date,
                     updated_at,
