@@ -14,7 +14,7 @@ pub struct ObservabilityPipelineDatadogAgentSource {
     /// The unique identifier for this component. Used to reference this component in other parts of the pipeline (e.g., as input to downstream components).
     #[serde(rename = "id")]
     pub id: String,
-    /// Configuration for enabling TLS encryption.
+    /// Configuration for enabling TLS encryption between the pipeline component and external services.
     #[serde(rename = "tls")]
     pub tls: Option<crate::datadogV2::model::ObservabilityPipelineTls>,
     /// The source type. The value should always be `datadog_agent`.

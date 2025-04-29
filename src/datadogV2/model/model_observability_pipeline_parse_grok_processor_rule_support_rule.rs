@@ -6,14 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Top-level schema representing a pipeline.
+/// The Grok helper rule referenced in the parsing rules.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ObservabilityPipelineCreateRequest {
-    /// Contains the pipeline’s ID, type, and configuration attributes.
-    #[serde(rename = "data")]
-    pub data: crate::datadogV2::model::ObservabilityPipelineCreateRequestData,
+pub struct ObservabilityPipelineParseGrokProcessorRuleSupportRule {
+    /// The name of the Grok helper rule.
+    #[serde(rename = "name")]
+    pub name: String,
+    /// The definition of the Grok helper rule.
+    #[serde(rename = "rule")]
+    pub rule: String,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,12 +24,14 @@ pub struct ObservabilityPipelineCreateRequest {
     pub(crate) _unparsed: bool,
 }
 
-impl ObservabilityPipelineCreateRequest {
+impl ObservabilityPipelineParseGrokProcessorRuleSupportRule {
     pub fn new(
-        data: crate::datadogV2::model::ObservabilityPipelineCreateRequestData,
-    ) -> ObservabilityPipelineCreateRequest {
-        ObservabilityPipelineCreateRequest {
-            data,
+        name: String,
+        rule: String,
+    ) -> ObservabilityPipelineParseGrokProcessorRuleSupportRule {
+        ObservabilityPipelineParseGrokProcessorRuleSupportRule {
+            name,
+            rule,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -41,14 +46,14 @@ impl ObservabilityPipelineCreateRequest {
     }
 }
 
-impl<'de> Deserialize<'de> for ObservabilityPipelineCreateRequest {
+impl<'de> Deserialize<'de> for ObservabilityPipelineParseGrokProcessorRuleSupportRule {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ObservabilityPipelineCreateRequestVisitor;
-        impl<'a> Visitor<'a> for ObservabilityPipelineCreateRequestVisitor {
-            type Value = ObservabilityPipelineCreateRequest;
+        struct ObservabilityPipelineParseGrokProcessorRuleSupportRuleVisitor;
+        impl<'a> Visitor<'a> for ObservabilityPipelineParseGrokProcessorRuleSupportRuleVisitor {
+            type Value = ObservabilityPipelineParseGrokProcessorRuleSupportRule;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -58,9 +63,8 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineCreateRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<
-                    crate::datadogV2::model::ObservabilityPipelineCreateRequestData,
-                > = None;
+                let mut name: Option<String> = None;
+                let mut rule: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -69,8 +73,11 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineCreateRequest {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "data" => {
-                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "name" => {
+                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rule" => {
+                            rule = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -79,10 +86,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineCreateRequest {
                         }
                     }
                 }
-                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
+                let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
+                let rule = rule.ok_or_else(|| M::Error::missing_field("rule"))?;
 
-                let content = ObservabilityPipelineCreateRequest {
-                    data,
+                let content = ObservabilityPipelineParseGrokProcessorRuleSupportRule {
+                    name,
+                    rule,
                     additional_properties,
                     _unparsed,
                 };
@@ -91,6 +100,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineCreateRequest {
             }
         }
 
-        deserializer.deserialize_any(ObservabilityPipelineCreateRequestVisitor)
+        deserializer.deserialize_any(ObservabilityPipelineParseGrokProcessorRuleSupportRuleVisitor)
     }
 }

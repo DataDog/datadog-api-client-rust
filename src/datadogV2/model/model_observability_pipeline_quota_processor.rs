@@ -29,9 +29,17 @@ pub struct ObservabilityPipelineQuotaProcessor {
     /// The maximum amount of data or number of events allowed before the quota is enforced. Can be specified in bytes or events.
     #[serde(rename = "limit")]
     pub limit: crate::datadogV2::model::ObservabilityPipelineQuotaProcessorLimit,
-    /// Name for identifying the processor.
+    /// Name of the quota.
     #[serde(rename = "name")]
     pub name: String,
+    /// The action to take when the quota is exceeded. Options:
+    /// - `drop`: Drop the event.
+    /// - `no_action`: Let the event pass through.
+    /// - `overflow_routing`: Route to an overflow destination.
+    ///
+    #[serde(rename = "overflow_action")]
+    pub overflow_action:
+        Option<crate::datadogV2::model::ObservabilityPipelineQuotaProcessorOverflowAction>,
     /// A list of alternate quota rules that apply to specific sets of events, identified by matching field values. Each override can define a custom limit.
     #[serde(rename = "overrides")]
     pub overrides:
@@ -67,6 +75,7 @@ impl ObservabilityPipelineQuotaProcessor {
             inputs,
             limit,
             name,
+            overflow_action: None,
             overrides: None,
             partition_fields: None,
             type_,
@@ -77,6 +86,14 @@ impl ObservabilityPipelineQuotaProcessor {
 
     pub fn ignore_when_missing_partitions(mut self, value: bool) -> Self {
         self.ignore_when_missing_partitions = Some(value);
+        self
+    }
+
+    pub fn overflow_action(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineQuotaProcessorOverflowAction,
+    ) -> Self {
+        self.overflow_action = Some(value);
         self
     }
 
@@ -128,6 +145,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineQuotaProcessor {
                     crate::datadogV2::model::ObservabilityPipelineQuotaProcessorLimit,
                 > = None;
                 let mut name: Option<String> = None;
+                let mut overflow_action: Option<
+                    crate::datadogV2::model::ObservabilityPipelineQuotaProcessorOverflowAction,
+                > = None;
                 let mut overrides: Option<
                     Vec<crate::datadogV2::model::ObservabilityPipelineQuotaProcessorOverride>,
                 > = None;
@@ -168,6 +188,21 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineQuotaProcessor {
                         }
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "overflow_action" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            overflow_action =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _overflow_action) = overflow_action {
+                                match _overflow_action {
+                                    crate::datadogV2::model::ObservabilityPipelineQuotaProcessorOverflowAction::UnparsedObject(_overflow_action) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "overrides" => {
                             if v.is_null() {
@@ -217,6 +252,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineQuotaProcessor {
                     inputs,
                     limit,
                     name,
+                    overflow_action,
                     overrides,
                     partition_fields,
                     type_,

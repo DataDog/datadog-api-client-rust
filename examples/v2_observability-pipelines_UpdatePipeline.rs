@@ -36,6 +36,17 @@ async fn main() {
                             )
                         ],
                         vec![
+                            ObservabilityPipelineConfigSourceItem::ObservabilityPipelineDatadogAgentSource(
+                                Box::new(
+                                    ObservabilityPipelineDatadogAgentSource::new(
+                                        "datadog-agent-source".to_string(),
+                                        ObservabilityPipelineDatadogAgentSourceType::DATADOG_AGENT,
+                                    ),
+                                ),
+                            )
+                        ],
+                    ).processors(
+                        vec![
                             ObservabilityPipelineConfigProcessorItem::ObservabilityPipelineFilterProcessor(
                                 Box::new(
                                     ObservabilityPipelineFilterProcessor::new(
@@ -43,16 +54,6 @@ async fn main() {
                                         "service:my-service".to_string(),
                                         vec!["datadog-agent-source".to_string()],
                                         ObservabilityPipelineFilterProcessorType::FILTER,
-                                    ),
-                                ),
-                            )
-                        ],
-                        vec![
-                            ObservabilityPipelineConfigSourceItem::ObservabilityPipelineDatadogAgentSource(
-                                Box::new(
-                                    ObservabilityPipelineDatadogAgentSource::new(
-                                        "datadog-agent-source".to_string(),
-                                        ObservabilityPipelineDatadogAgentSourceType::DATADOG_AGENT,
                                     ),
                                 ),
                             )
