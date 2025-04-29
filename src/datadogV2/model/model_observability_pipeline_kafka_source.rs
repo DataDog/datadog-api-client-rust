@@ -24,7 +24,7 @@ pub struct ObservabilityPipelineKafkaSource {
     /// Specifies the SASL mechanism for authenticating with a Kafka cluster.
     #[serde(rename = "sasl")]
     pub sasl: Option<crate::datadogV2::model::ObservabilityPipelineKafkaSourceSasl>,
-    /// Configuration for enabling TLS encryption.
+    /// Configuration for enabling TLS encryption between the pipeline component and external services.
     #[serde(rename = "tls")]
     pub tls: Option<crate::datadogV2::model::ObservabilityPipelineTls>,
     /// A list of Kafka topic names to subscribe to. The source ingests messages from each topic specified.

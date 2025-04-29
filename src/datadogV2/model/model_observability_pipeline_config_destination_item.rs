@@ -11,6 +11,44 @@ pub enum ObservabilityPipelineConfigDestinationItem {
     ObservabilityPipelineDatadogLogsDestination(
         Box<crate::datadogV2::model::ObservabilityPipelineDatadogLogsDestination>,
     ),
+    ObservabilityPipelineAmazonS3Destination(
+        Box<crate::datadogV2::model::ObservabilityPipelineAmazonS3Destination>,
+    ),
+    ObservabilityPipelineGoogleCloudStorageDestination(
+        Box<crate::datadogV2::model::ObservabilityPipelineGoogleCloudStorageDestination>,
+    ),
+    ObservabilityPipelineSplunkHecDestination(
+        Box<crate::datadogV2::model::ObservabilityPipelineSplunkHecDestination>,
+    ),
+    ObservabilityPipelineSumoLogicDestination(
+        Box<crate::datadogV2::model::ObservabilityPipelineSumoLogicDestination>,
+    ),
+    ObservabilityPipelineElasticsearchDestination(
+        Box<crate::datadogV2::model::ObservabilityPipelineElasticsearchDestination>,
+    ),
+    ObservabilityPipelineRsyslogDestination(
+        Box<crate::datadogV2::model::ObservabilityPipelineRsyslogDestination>,
+    ),
+    ObservabilityPipelineSyslogNgDestination(
+        Box<crate::datadogV2::model::ObservabilityPipelineSyslogNgDestination>,
+    ),
+    AzureStorageDestination(Box<crate::datadogV2::model::AzureStorageDestination>),
+    MicrosoftSentinelDestination(Box<crate::datadogV2::model::MicrosoftSentinelDestination>),
+    ObservabilityPipelineGoogleChronicleDestination(
+        Box<crate::datadogV2::model::ObservabilityPipelineGoogleChronicleDestination>,
+    ),
+    ObservabilityPipelineNewRelicDestination(
+        Box<crate::datadogV2::model::ObservabilityPipelineNewRelicDestination>,
+    ),
+    ObservabilityPipelineSentinelOneDestination(
+        Box<crate::datadogV2::model::ObservabilityPipelineSentinelOneDestination>,
+    ),
+    ObservabilityPipelineOpenSearchDestination(
+        Box<crate::datadogV2::model::ObservabilityPipelineOpenSearchDestination>,
+    ),
+    ObservabilityPipelineAmazonOpenSearchDestination(
+        Box<crate::datadogV2::model::ObservabilityPipelineAmazonOpenSearchDestination>,
+    ),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -26,6 +64,120 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigDestinationItem {
         {
             if !_v._unparsed {
                 return Ok(ObservabilityPipelineConfigDestinationItem::ObservabilityPipelineDatadogLogsDestination(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineAmazonS3Destination>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigDestinationItem::ObservabilityPipelineAmazonS3Destination(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineGoogleCloudStorageDestination>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigDestinationItem::ObservabilityPipelineGoogleCloudStorageDestination(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineSplunkHecDestination>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigDestinationItem::ObservabilityPipelineSplunkHecDestination(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineSumoLogicDestination>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigDestinationItem::ObservabilityPipelineSumoLogicDestination(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineElasticsearchDestination>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigDestinationItem::ObservabilityPipelineElasticsearchDestination(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineRsyslogDestination>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigDestinationItem::ObservabilityPipelineRsyslogDestination(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineSyslogNgDestination>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigDestinationItem::ObservabilityPipelineSyslogNgDestination(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::AzureStorageDestination>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigDestinationItem::AzureStorageDestination(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::MicrosoftSentinelDestination>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(
+                    ObservabilityPipelineConfigDestinationItem::MicrosoftSentinelDestination(_v),
+                );
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineGoogleChronicleDestination>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigDestinationItem::ObservabilityPipelineGoogleChronicleDestination(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineNewRelicDestination>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigDestinationItem::ObservabilityPipelineNewRelicDestination(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineSentinelOneDestination>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigDestinationItem::ObservabilityPipelineSentinelOneDestination(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineOpenSearchDestination>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigDestinationItem::ObservabilityPipelineOpenSearchDestination(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineAmazonOpenSearchDestination>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigDestinationItem::ObservabilityPipelineAmazonOpenSearchDestination(_v));
             }
         }
 

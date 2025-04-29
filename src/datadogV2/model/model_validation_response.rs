@@ -6,17 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Contains the pipeline’s ID, type, and configuration attributes.
+/// Response containing validation errors.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ObservabilityPipelineCreateRequestData {
-    /// Defines the pipeline’s name and its components (sources, processors, and destinations).
-    #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::ObservabilityPipelineDataAttributes,
-    /// The resource type identifier. For pipeline resources, this should always be set to `pipelines`.
-    #[serde(rename = "type")]
-    pub type_: String,
+pub struct ValidationResponse {
+    /// The `ValidationResponse` `errors`.
+    #[serde(rename = "errors")]
+    pub errors: Option<Vec<crate::datadogV2::model::ValidationError>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,17 +21,18 @@ pub struct ObservabilityPipelineCreateRequestData {
     pub(crate) _unparsed: bool,
 }
 
-impl ObservabilityPipelineCreateRequestData {
-    pub fn new(
-        attributes: crate::datadogV2::model::ObservabilityPipelineDataAttributes,
-        type_: String,
-    ) -> ObservabilityPipelineCreateRequestData {
-        ObservabilityPipelineCreateRequestData {
-            attributes,
-            type_,
+impl ValidationResponse {
+    pub fn new() -> ValidationResponse {
+        ValidationResponse {
+            errors: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn errors(mut self, value: Vec<crate::datadogV2::model::ValidationError>) -> Self {
+        self.errors = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -46,14 +44,20 @@ impl ObservabilityPipelineCreateRequestData {
     }
 }
 
-impl<'de> Deserialize<'de> for ObservabilityPipelineCreateRequestData {
+impl Default for ValidationResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for ValidationResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ObservabilityPipelineCreateRequestDataVisitor;
-        impl<'a> Visitor<'a> for ObservabilityPipelineCreateRequestDataVisitor {
-            type Value = ObservabilityPipelineCreateRequestData;
+        struct ValidationResponseVisitor;
+        impl<'a> Visitor<'a> for ValidationResponseVisitor {
+            type Value = ValidationResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -63,10 +67,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineCreateRequestData {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<
-                    crate::datadogV2::model::ObservabilityPipelineDataAttributes,
-                > = None;
-                let mut type_: Option<String> = None;
+                let mut errors: Option<Vec<crate::datadogV2::model::ValidationError>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -75,11 +76,11 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineCreateRequestData {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "attributes" => {
-                            attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "type" => {
-                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "errors" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            errors = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -88,12 +89,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineCreateRequestData {
                         }
                     }
                 }
-                let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
-                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = ObservabilityPipelineCreateRequestData {
-                    attributes,
-                    type_,
+                let content = ValidationResponse {
+                    errors,
                     additional_properties,
                     _unparsed,
                 };
@@ -102,6 +100,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineCreateRequestData {
             }
         }
 
-        deserializer.deserialize_any(ObservabilityPipelineCreateRequestDataVisitor)
+        deserializer.deserialize_any(ValidationResponseVisitor)
     }
 }

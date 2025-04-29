@@ -5,8 +5,6 @@ use datadog_api_client::datadogV2::model::ObservabilityPipelineConfig;
 use datadog_api_client::datadogV2::model::ObservabilityPipelineConfigDestinationItem;
 use datadog_api_client::datadogV2::model::ObservabilityPipelineConfigProcessorItem;
 use datadog_api_client::datadogV2::model::ObservabilityPipelineConfigSourceItem;
-use datadog_api_client::datadogV2::model::ObservabilityPipelineCreateRequest;
-use datadog_api_client::datadogV2::model::ObservabilityPipelineCreateRequestData;
 use datadog_api_client::datadogV2::model::ObservabilityPipelineDataAttributes;
 use datadog_api_client::datadogV2::model::ObservabilityPipelineDatadogAgentSource;
 use datadog_api_client::datadogV2::model::ObservabilityPipelineDatadogAgentSourceType;
@@ -14,12 +12,14 @@ use datadog_api_client::datadogV2::model::ObservabilityPipelineDatadogLogsDestin
 use datadog_api_client::datadogV2::model::ObservabilityPipelineDatadogLogsDestinationType;
 use datadog_api_client::datadogV2::model::ObservabilityPipelineFilterProcessor;
 use datadog_api_client::datadogV2::model::ObservabilityPipelineFilterProcessorType;
+use datadog_api_client::datadogV2::model::ObservabilityPipelineSpec;
+use datadog_api_client::datadogV2::model::ObservabilityPipelineSpecData;
 
 #[tokio::main]
 async fn main() {
     let body =
-        ObservabilityPipelineCreateRequest::new(
-            ObservabilityPipelineCreateRequestData::new(
+        ObservabilityPipelineSpec::new(
+            ObservabilityPipelineSpecData::new(
                 ObservabilityPipelineDataAttributes::new(
                     ObservabilityPipelineConfig::new(
                         vec![
@@ -34,6 +34,17 @@ async fn main() {
                             )
                         ],
                         vec![
+                            ObservabilityPipelineConfigSourceItem::ObservabilityPipelineDatadogAgentSource(
+                                Box::new(
+                                    ObservabilityPipelineDatadogAgentSource::new(
+                                        "datadog-agent-source".to_string(),
+                                        ObservabilityPipelineDatadogAgentSourceType::DATADOG_AGENT,
+                                    ),
+                                ),
+                            )
+                        ],
+                    ).processors(
+                        vec![
                             ObservabilityPipelineConfigProcessorItem::ObservabilityPipelineFilterProcessor(
                                 Box::new(
                                     ObservabilityPipelineFilterProcessor::new(
@@ -41,16 +52,6 @@ async fn main() {
                                         "service:my-service".to_string(),
                                         vec!["datadog-agent-source".to_string()],
                                         ObservabilityPipelineFilterProcessorType::FILTER,
-                                    ),
-                                ),
-                            )
-                        ],
-                        vec![
-                            ObservabilityPipelineConfigSourceItem::ObservabilityPipelineDatadogAgentSource(
-                                Box::new(
-                                    ObservabilityPipelineDatadogAgentSource::new(
-                                        "datadog-agent-source".to_string(),
-                                        ObservabilityPipelineDatadogAgentSourceType::DATADOG_AGENT,
                                     ),
                                 ),
                             )
