@@ -1,0 +1,95 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"handle\":\"create-framework-new\",\"icon_url\":\"test-url\",\"name\":\"name\",\"requirements\":[{\"controls\":[{\"name\":\"control\",\"rules_id\":[\"def-000-be9\"]}],\"name\":\"requirement\"}],\"version\":\"10\"},\"type\":\"custom_framework\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/cloud_security_management/custom_frameworks"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":{\"id\":\"create-framework-new-10\",\"type\":\"custom_framework\",\"attributes\":{\"handle\":\"create-framework-new\",\"version\":\"10\"}}}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Mon, 28 Apr 2025 15:24:37 GMT"
+    },
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "application/json"
+          ]
+        },
+        "method": "delete",
+        "uri": "https://api.datadoghq.com/api/v2/cloud_security_management/custom_frameworks/create-framework-new/10"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":{\"id\":\"create-framework-new-10\",\"type\":\"custom_framework\",\"attributes\":{\"description\":\"\",\"handle\":\"create-framework-new\",\"icon_url\":\"test-url\",\"name\":\"name\",\"version\":\"10\"}}}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Mon, 28 Apr 2025 15:24:37 GMT"
+    },
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "application/json"
+          ]
+        },
+        "method": "delete",
+        "uri": "https://api.datadoghq.com/api/v2/cloud_security_management/custom_frameworks/create-framework-new/10"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"status\":\"400\",\"title\":\"Bad Request\"}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Mon, 28 Apr 2025 15:24:37 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
