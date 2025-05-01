@@ -15,7 +15,7 @@
           ]
         },
         "method": "put",
-        "uri": "https://api.datadoghq.com/api/v2/cloud_security_management/custom_frameworks/create-framework-new/10"
+        "uri": "https://api.datadoghq.com/api/v2/cloud_security_management/custom_frameworks/UpdateacustomframeworkreturnsBadRequestresponse/10"
       },
       "response": {
         "body": {
@@ -32,7 +32,7 @@
           "message": "Bad Request"
         }
       },
-      "recorded_at": "Tue, 22 Apr 2025 20:18:00 GMT"
+      "recorded_at": "Thu, 01 May 2025 15:27:22 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"

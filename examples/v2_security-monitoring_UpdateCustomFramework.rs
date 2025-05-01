@@ -12,7 +12,7 @@ use datadog_api_client::datadogV2::model::UpdateCustomFrameworkRequest;
 async fn main() {
     let body = UpdateCustomFrameworkRequest::new(CustomFrameworkData::new(
         CustomFrameworkDataAttributes::new(
-            "create-framework-new".to_string(),
+            "".to_string(),
             "name".to_string(),
             vec![CustomFrameworkRequirement::new(
                 vec![CustomFrameworkControl::new(
@@ -29,7 +29,7 @@ async fn main() {
     let configuration = datadog::Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api
-        .update_custom_framework("create-framework-new".to_string(), "10".to_string(), body)
+        .update_custom_framework("".to_string(), "10".to_string(), body)
         .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);

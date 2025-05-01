@@ -7,7 +7,7 @@ async fn main() {
     let configuration = datadog::Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api
-        .delete_custom_framework("create-framework-new".to_string(), "10".to_string())
+        .delete_custom_framework("".to_string(), "10".to_string())
         .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
