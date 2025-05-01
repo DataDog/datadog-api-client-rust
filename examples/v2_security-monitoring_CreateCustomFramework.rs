@@ -12,7 +12,7 @@ use datadog_api_client::datadogV2::model::CustomFrameworkType;
 async fn main() {
     let body = CreateCustomFrameworkRequest::new(CustomFrameworkData::new(
         CustomFrameworkDataAttributes::new(
-            "create-framework-new".to_string(),
+            "".to_string(),
             "name".to_string(),
             vec![CustomFrameworkRequirement::new(
                 vec![CustomFrameworkControl::new(

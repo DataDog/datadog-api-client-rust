@@ -3,7 +3,7 @@
     {
       "request": {
         "body": {
-          "string": "{\"data\":{\"attributes\":{\"handle\":\"create-framework-new\",\"icon_url\":\"test-url\",\"name\":\"name\",\"requirements\":[{\"controls\":[{\"name\":\"control\",\"rules_id\":[\"def-000-be9\"]}],\"name\":\"requirement\"}],\"version\":\"10\"},\"type\":\"custom_framework\"}}",
+          "string": "{\"data\":{\"attributes\":{\"handle\":\"DeleteacustomframeworkreturnsOKresponse\",\"icon_url\":\"test-url\",\"name\":\"name\",\"requirements\":[{\"controls\":[{\"name\":\"control\",\"rules_id\":[\"def-000-be9\"]}],\"name\":\"requirement\"}],\"version\":\"10\"},\"type\":\"custom_framework\"}}",
           "encoding": null
         },
         "headers": {
@@ -19,7 +19,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"id\":\"create-framework-new-10\",\"type\":\"custom_framework\",\"attributes\":{\"handle\":\"create-framework-new\",\"version\":\"10\"}}}",
+          "string": "{\"data\":{\"id\":\"DeleteacustomframeworkreturnsOKresponse-10\",\"type\":\"custom_framework\",\"attributes\":{\"handle\":\"DeleteacustomframeworkreturnsOKresponse\",\"version\":\"10\"}}}",
           "encoding": null
         },
         "headers": {
@@ -32,7 +32,7 @@
           "message": "OK"
         }
       },
-      "recorded_at": "Mon, 28 Apr 2025 15:24:37 GMT"
+      "recorded_at": "Thu, 01 May 2025 15:27:06 GMT"
     },
     {
       "request": {
@@ -43,11 +43,11 @@
           ]
         },
         "method": "delete",
-        "uri": "https://api.datadoghq.com/api/v2/cloud_security_management/custom_frameworks/create-framework-new/10"
+        "uri": "https://api.datadoghq.com/api/v2/cloud_security_management/custom_frameworks/DeleteacustomframeworkreturnsOKresponse/10"
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"id\":\"create-framework-new-10\",\"type\":\"custom_framework\",\"attributes\":{\"description\":\"\",\"handle\":\"create-framework-new\",\"icon_url\":\"test-url\",\"name\":\"name\",\"version\":\"10\"}}}",
+          "string": "{\"data\":{\"id\":\"DeleteacustomframeworkreturnsOKresponse-10\",\"type\":\"custom_framework\",\"attributes\":{\"description\":\"\",\"handle\":\"DeleteacustomframeworkreturnsOKresponse\",\"icon_url\":\"test-url\",\"name\":\"name\",\"version\":\"10\"}}}",
           "encoding": null
         },
         "headers": {
@@ -60,7 +60,7 @@
           "message": "OK"
         }
       },
-      "recorded_at": "Mon, 28 Apr 2025 15:24:37 GMT"
+      "recorded_at": "Thu, 01 May 2025 15:27:06 GMT"
     },
     {
       "request": {
@@ -71,7 +71,7 @@
           ]
         },
         "method": "delete",
-        "uri": "https://api.datadoghq.com/api/v2/cloud_security_management/custom_frameworks/create-framework-new/10"
+        "uri": "https://api.datadoghq.com/api/v2/cloud_security_management/custom_frameworks/DeleteacustomframeworkreturnsOKresponse/10"
       },
       "response": {
         "body": {
@@ -88,7 +88,7 @@
           "message": "Bad Request"
         }
       },
-      "recorded_at": "Mon, 28 Apr 2025 15:24:37 GMT"
+      "recorded_at": "Thu, 01 May 2025 15:27:06 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"
