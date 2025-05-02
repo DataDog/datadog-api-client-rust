@@ -10,9 +10,8 @@ use serde::{Deserialize, Deserializer, Serialize};
 pub enum EscalationPolicyIncluded {
     TeamReference(Box<crate::datadogV2::model::TeamReference>),
     EscalationPolicyStep(Box<crate::datadogV2::model::EscalationPolicyStep>),
-    UserTarget(Box<crate::datadogV2::model::UserTarget>),
-    ScheduleTarget(Box<crate::datadogV2::model::ScheduleTarget>),
-    TeamTarget(Box<crate::datadogV2::model::TeamTarget>),
+    EscalationPolicyUser(Box<crate::datadogV2::model::EscalationPolicyUser>),
+    ScheduleData(Box<crate::datadogV2::model::ScheduleData>),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -36,25 +35,18 @@ impl<'de> Deserialize<'de> for EscalationPolicyIncluded {
                 return Ok(EscalationPolicyIncluded::EscalationPolicyStep(_v));
             }
         }
-        if let Ok(_v) =
-            serde_json::from_value::<Box<crate::datadogV2::model::UserTarget>>(value.clone())
-        {
+        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::EscalationPolicyUser>>(
+            value.clone(),
+        ) {
             if !_v._unparsed {
-                return Ok(EscalationPolicyIncluded::UserTarget(_v));
+                return Ok(EscalationPolicyIncluded::EscalationPolicyUser(_v));
             }
         }
         if let Ok(_v) =
-            serde_json::from_value::<Box<crate::datadogV2::model::ScheduleTarget>>(value.clone())
+            serde_json::from_value::<Box<crate::datadogV2::model::ScheduleData>>(value.clone())
         {
             if !_v._unparsed {
-                return Ok(EscalationPolicyIncluded::ScheduleTarget(_v));
-            }
-        }
-        if let Ok(_v) =
-            serde_json::from_value::<Box<crate::datadogV2::model::TeamTarget>>(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(EscalationPolicyIncluded::TeamTarget(_v));
+                return Ok(EscalationPolicyIncluded::ScheduleData(_v));
             }
         }
 
