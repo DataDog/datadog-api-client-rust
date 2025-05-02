@@ -6,11 +6,11 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Provides basic user information for a schedule, including a name and email address.
+/// Provides basic user information for an escalation policy, including a name and email address.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ScheduleUserAttributes {
+pub struct EscalationPolicyUserAttributes {
     /// The user's email address.
     #[serde(rename = "email")]
     pub email: Option<String>,
@@ -27,9 +27,9 @@ pub struct ScheduleUserAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl ScheduleUserAttributes {
-    pub fn new() -> ScheduleUserAttributes {
-        ScheduleUserAttributes {
+impl EscalationPolicyUserAttributes {
+    pub fn new() -> EscalationPolicyUserAttributes {
+        EscalationPolicyUserAttributes {
             email: None,
             name: None,
             status: None,
@@ -62,20 +62,20 @@ impl ScheduleUserAttributes {
     }
 }
 
-impl Default for ScheduleUserAttributes {
+impl Default for EscalationPolicyUserAttributes {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for ScheduleUserAttributes {
+impl<'de> Deserialize<'de> for EscalationPolicyUserAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ScheduleUserAttributesVisitor;
-        impl<'a> Visitor<'a> for ScheduleUserAttributesVisitor {
-            type Value = ScheduleUserAttributes;
+        struct EscalationPolicyUserAttributesVisitor;
+        impl<'a> Visitor<'a> for EscalationPolicyUserAttributesVisitor {
+            type Value = EscalationPolicyUserAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -130,7 +130,7 @@ impl<'de> Deserialize<'de> for ScheduleUserAttributes {
                     }
                 }
 
-                let content = ScheduleUserAttributes {
+                let content = EscalationPolicyUserAttributes {
                     email,
                     name,
                     status,
@@ -142,6 +142,6 @@ impl<'de> Deserialize<'de> for ScheduleUserAttributes {
             }
         }
 
-        deserializer.deserialize_any(ScheduleUserAttributesVisitor)
+        deserializer.deserialize_any(EscalationPolicyUserAttributesVisitor)
     }
 }
