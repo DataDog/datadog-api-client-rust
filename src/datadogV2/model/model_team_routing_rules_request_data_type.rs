@@ -6,25 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum EscalationPolicyCreateRequestDataAttributesStepsItemsTargetsItemsType {
-    USERS,
-    SCHEDULES,
-    TEAMS,
+pub enum TeamRoutingRulesRequestDataType {
+    TEAM_ROUTING_RULES,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for EscalationPolicyCreateRequestDataAttributesStepsItemsTargetsItemsType {
+impl ToString for TeamRoutingRulesRequestDataType {
     fn to_string(&self) -> String {
         match self {
-            Self::USERS => String::from("users"),
-            Self::SCHEDULES => String::from("schedules"),
-            Self::TEAMS => String::from("teams"),
+            Self::TEAM_ROUTING_RULES => String::from("team_routing_rules"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for EscalationPolicyCreateRequestDataAttributesStepsItemsTargetsItemsType {
+impl Serialize for TeamRoutingRulesRequestDataType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -36,18 +32,14 @@ impl Serialize for EscalationPolicyCreateRequestDataAttributesStepsItemsTargetsI
     }
 }
 
-impl<'de> Deserialize<'de>
-    for EscalationPolicyCreateRequestDataAttributesStepsItemsTargetsItemsType
-{
+impl<'de> Deserialize<'de> for TeamRoutingRulesRequestDataType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "users" => Self::USERS,
-            "schedules" => Self::SCHEDULES,
-            "teams" => Self::TEAMS,
+            "team_routing_rules" => Self::TEAM_ROUTING_RULES,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

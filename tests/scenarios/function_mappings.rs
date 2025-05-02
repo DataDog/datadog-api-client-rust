@@ -2990,6 +2990,14 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.UpdateOnCallSchedule".into(),
         test_v2_update_on_call_schedule,
     );
+    world.function_mappings.insert(
+        "v2.GetOnCallTeamRoutingRules".into(),
+        test_v2_get_on_call_team_routing_rules,
+    );
+    world.function_mappings.insert(
+        "v2.SetOnCallTeamRoutingRules".into(),
+        test_v2_set_on_call_team_routing_rules,
+    );
     world
         .function_mappings
         .insert("v2.ListOrgConfigs".into(), test_v2_list_org_configs);
@@ -22320,6 +22328,75 @@ fn test_v2_update_on_call_schedule(world: &mut DatadogWorld, _parameters: &HashM
     params.include = include;
     let response =
         match block_on(api.update_on_call_schedule_with_http_info(schedule_id, body, params)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_on_call_team_routing_rules(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_on_call
+        .as_ref()
+        .expect("api instance not found");
+    let team_id = serde_json::from_value(_parameters.get("team_id").unwrap().clone()).unwrap();
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_on_call::GetOnCallTeamRoutingRulesOptionalParams::default();
+    params.include = include;
+    let response =
+        match block_on(api.get_on_call_team_routing_rules_with_http_info(team_id, params)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_set_on_call_team_routing_rules(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_on_call
+        .as_ref()
+        .expect("api instance not found");
+    let team_id = serde_json::from_value(_parameters.get("team_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_on_call::SetOnCallTeamRoutingRulesOptionalParams::default();
+    params.include = include;
+    let response =
+        match block_on(api.set_on_call_team_routing_rules_with_http_info(team_id, body, params)) {
             Ok(response) => response,
             Err(error) => {
                 return match error {

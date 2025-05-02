@@ -6,23 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum EscalationPolicyUpdateRequestDataAttributesStepsItemsAssignment {
-    DEFAULT,
-    ROUND_ROBIN,
+pub enum TeamRoutingRulesDataRelationshipsRulesDataItemsType {
+    TEAM_ROUTING_RULES,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for EscalationPolicyUpdateRequestDataAttributesStepsItemsAssignment {
+impl ToString for TeamRoutingRulesDataRelationshipsRulesDataItemsType {
     fn to_string(&self) -> String {
         match self {
-            Self::DEFAULT => String::from("default"),
-            Self::ROUND_ROBIN => String::from("round-robin"),
+            Self::TEAM_ROUTING_RULES => String::from("team_routing_rules"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for EscalationPolicyUpdateRequestDataAttributesStepsItemsAssignment {
+impl Serialize for TeamRoutingRulesDataRelationshipsRulesDataItemsType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -34,15 +32,14 @@ impl Serialize for EscalationPolicyUpdateRequestDataAttributesStepsItemsAssignme
     }
 }
 
-impl<'de> Deserialize<'de> for EscalationPolicyUpdateRequestDataAttributesStepsItemsAssignment {
+impl<'de> Deserialize<'de> for TeamRoutingRulesDataRelationshipsRulesDataItemsType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "default" => Self::DEFAULT,
-            "round-robin" => Self::ROUND_ROBIN,
+            "team_routing_rules" => Self::TEAM_ROUTING_RULES,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
