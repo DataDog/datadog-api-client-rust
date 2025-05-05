@@ -6,27 +6,27 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Defines a single escalation target within a step for an escalation policy update request. Contains `id` and `type`.
+/// Defines a single escalation target within a step for an escalation policy creation request. Contains `id` and `type`.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct EscalationPolicyUpdateRequestDataAttributesStepsItemsTargetsItems {
+pub struct EscalationPolicyStepTarget {
     /// Specifies the unique identifier for this target.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Specifies the type of escalation target (example `users`, `schedules`, or `teams`).
     #[serde(rename = "type")]
-    pub type_: Option<crate::datadogV2::model::EscalationPolicyUpdateRequestDataAttributesStepsItemsTargetsItemsType>,
+    pub type_: Option<crate::datadogV2::model::EscalationPolicyStepTargetType>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool
+    pub(crate) _unparsed: bool,
 }
 
-impl EscalationPolicyUpdateRequestDataAttributesStepsItemsTargetsItems {
-    pub fn new() -> EscalationPolicyUpdateRequestDataAttributesStepsItemsTargetsItems {
-        EscalationPolicyUpdateRequestDataAttributesStepsItemsTargetsItems {
+impl EscalationPolicyStepTarget {
+    pub fn new() -> EscalationPolicyStepTarget {
+        EscalationPolicyStepTarget {
             id: None,
             type_: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -39,10 +39,7 @@ impl EscalationPolicyUpdateRequestDataAttributesStepsItemsTargetsItems {
         self
     }
 
-    pub fn type_(
-        mut self,
-        value: crate::datadogV2::model::EscalationPolicyUpdateRequestDataAttributesStepsItemsTargetsItemsType,
-    ) -> Self {
+    pub fn type_(mut self, value: crate::datadogV2::model::EscalationPolicyStepTargetType) -> Self {
         self.type_ = Some(value);
         self
     }
@@ -56,20 +53,20 @@ impl EscalationPolicyUpdateRequestDataAttributesStepsItemsTargetsItems {
     }
 }
 
-impl Default for EscalationPolicyUpdateRequestDataAttributesStepsItemsTargetsItems {
+impl Default for EscalationPolicyStepTarget {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for EscalationPolicyUpdateRequestDataAttributesStepsItemsTargetsItems {
+impl<'de> Deserialize<'de> for EscalationPolicyStepTarget {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct EscalationPolicyUpdateRequestDataAttributesStepsItemsTargetsItemsVisitor;
-        impl<'a> Visitor<'a> for EscalationPolicyUpdateRequestDataAttributesStepsItemsTargetsItemsVisitor {
-            type Value = EscalationPolicyUpdateRequestDataAttributesStepsItemsTargetsItems;
+        struct EscalationPolicyStepTargetVisitor;
+        impl<'a> Visitor<'a> for EscalationPolicyStepTargetVisitor {
+            type Value = EscalationPolicyStepTarget;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -80,7 +77,8 @@ impl<'de> Deserialize<'de> for EscalationPolicyUpdateRequestDataAttributesStepsI
                 M: MapAccess<'a>,
             {
                 let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::EscalationPolicyUpdateRequestDataAttributesStepsItemsTargetsItemsType> = None;
+                let mut type_: Option<crate::datadogV2::model::EscalationPolicyStepTargetType> =
+                    None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -102,7 +100,7 @@ impl<'de> Deserialize<'de> for EscalationPolicyUpdateRequestDataAttributesStepsI
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::EscalationPolicyUpdateRequestDataAttributesStepsItemsTargetsItemsType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::EscalationPolicyStepTargetType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -117,7 +115,7 @@ impl<'de> Deserialize<'de> for EscalationPolicyUpdateRequestDataAttributesStepsI
                     }
                 }
 
-                let content = EscalationPolicyUpdateRequestDataAttributesStepsItemsTargetsItems {
+                let content = EscalationPolicyStepTarget {
                     id,
                     type_,
                     additional_properties,
@@ -128,8 +126,6 @@ impl<'de> Deserialize<'de> for EscalationPolicyUpdateRequestDataAttributesStepsI
             }
         }
 
-        deserializer.deserialize_any(
-            EscalationPolicyUpdateRequestDataAttributesStepsItemsTargetsItemsVisitor,
-        )
+        deserializer.deserialize_any(EscalationPolicyStepTargetVisitor)
     }
 }

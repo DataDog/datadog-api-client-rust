@@ -6,45 +6,35 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Defines a single escalation target within a step for an escalation policy creation request. Contains `id` and `type`.
+/// Represents the policy data reference, containing the policy's ID and resource type.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct EscalationPolicyCreateRequestDataAttributesStepsItemsTargetsItems {
-    /// Specifies the unique identifier for this target.
+pub struct RoutingRuleRelationshipsPolicyData {
+    /// Specifies the unique identifier of the policy.
     #[serde(rename = "id")]
-    pub id: Option<String>,
-    /// Specifies the type of escalation target (example `users`, `schedules`, or `teams`).
+    pub id: String,
+    /// Indicates that the resource is of type 'policies'.
     #[serde(rename = "type")]
-    pub type_: Option<crate::datadogV2::model::EscalationPolicyCreateRequestDataAttributesStepsItemsTargetsItemsType>,
+    pub type_: crate::datadogV2::model::RoutingRuleRelationshipsPolicyDataType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool
+    pub(crate) _unparsed: bool,
 }
 
-impl EscalationPolicyCreateRequestDataAttributesStepsItemsTargetsItems {
-    pub fn new() -> EscalationPolicyCreateRequestDataAttributesStepsItemsTargetsItems {
-        EscalationPolicyCreateRequestDataAttributesStepsItemsTargetsItems {
-            id: None,
-            type_: None,
+impl RoutingRuleRelationshipsPolicyData {
+    pub fn new(
+        id: String,
+        type_: crate::datadogV2::model::RoutingRuleRelationshipsPolicyDataType,
+    ) -> RoutingRuleRelationshipsPolicyData {
+        RoutingRuleRelationshipsPolicyData {
+            id,
+            type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn id(mut self, value: String) -> Self {
-        self.id = Some(value);
-        self
-    }
-
-    pub fn type_(
-        mut self,
-        value: crate::datadogV2::model::EscalationPolicyCreateRequestDataAttributesStepsItemsTargetsItemsType,
-    ) -> Self {
-        self.type_ = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -56,20 +46,14 @@ impl EscalationPolicyCreateRequestDataAttributesStepsItemsTargetsItems {
     }
 }
 
-impl Default for EscalationPolicyCreateRequestDataAttributesStepsItemsTargetsItems {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<'de> Deserialize<'de> for EscalationPolicyCreateRequestDataAttributesStepsItemsTargetsItems {
+impl<'de> Deserialize<'de> for RoutingRuleRelationshipsPolicyData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct EscalationPolicyCreateRequestDataAttributesStepsItemsTargetsItemsVisitor;
-        impl<'a> Visitor<'a> for EscalationPolicyCreateRequestDataAttributesStepsItemsTargetsItemsVisitor {
-            type Value = EscalationPolicyCreateRequestDataAttributesStepsItemsTargetsItems;
+        struct RoutingRuleRelationshipsPolicyDataVisitor;
+        impl<'a> Visitor<'a> for RoutingRuleRelationshipsPolicyDataVisitor {
+            type Value = RoutingRuleRelationshipsPolicyData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -80,7 +64,9 @@ impl<'de> Deserialize<'de> for EscalationPolicyCreateRequestDataAttributesStepsI
                 M: MapAccess<'a>,
             {
                 let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::EscalationPolicyCreateRequestDataAttributesStepsItemsTargetsItemsType> = None;
+                let mut type_: Option<
+                    crate::datadogV2::model::RoutingRuleRelationshipsPolicyDataType,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -90,19 +76,13 @@ impl<'de> Deserialize<'de> for EscalationPolicyCreateRequestDataAttributesStepsI
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "id" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::EscalationPolicyCreateRequestDataAttributesStepsItemsTargetsItemsType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::RoutingRuleRelationshipsPolicyDataType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -116,8 +96,10 @@ impl<'de> Deserialize<'de> for EscalationPolicyCreateRequestDataAttributesStepsI
                         }
                     }
                 }
+                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
+                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = EscalationPolicyCreateRequestDataAttributesStepsItemsTargetsItems {
+                let content = RoutingRuleRelationshipsPolicyData {
                     id,
                     type_,
                     additional_properties,
@@ -128,8 +110,6 @@ impl<'de> Deserialize<'de> for EscalationPolicyCreateRequestDataAttributesStepsI
             }
         }
 
-        deserializer.deserialize_any(
-            EscalationPolicyCreateRequestDataAttributesStepsItemsTargetsItemsVisitor,
-        )
+        deserializer.deserialize_any(RoutingRuleRelationshipsPolicyDataVisitor)
     }
 }

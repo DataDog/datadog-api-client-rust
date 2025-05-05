@@ -74,6 +74,38 @@ impl GetOnCallScheduleOptionalParams {
     }
 }
 
+/// GetOnCallTeamRoutingRulesOptionalParams is a struct for passing parameters to the method [`OnCallAPI::get_on_call_team_routing_rules`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetOnCallTeamRoutingRulesOptionalParams {
+    /// Comma-separated list of included relationships to be returned. Allowed values: `rules`, `rules.policy`.
+    pub include: Option<String>,
+}
+
+impl GetOnCallTeamRoutingRulesOptionalParams {
+    /// Comma-separated list of included relationships to be returned. Allowed values: `rules`, `rules.policy`.
+    pub fn include(mut self, value: String) -> Self {
+        self.include = Some(value);
+        self
+    }
+}
+
+/// SetOnCallTeamRoutingRulesOptionalParams is a struct for passing parameters to the method [`OnCallAPI::set_on_call_team_routing_rules`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct SetOnCallTeamRoutingRulesOptionalParams {
+    /// Comma-separated list of included relationships to be returned. Allowed values: `rules`, `rules.policy`.
+    pub include: Option<String>,
+}
+
+impl SetOnCallTeamRoutingRulesOptionalParams {
+    /// Comma-separated list of included relationships to be returned. Allowed values: `rules`, `rules.policy`.
+    pub fn include(mut self, value: String) -> Self {
+        self.include = Some(value);
+        self
+    }
+}
+
 /// UpdateOnCallEscalationPolicyOptionalParams is a struct for passing parameters to the method [`OnCallAPI::update_on_call_escalation_policy`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -150,6 +182,22 @@ pub enum GetOnCallEscalationPolicyError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetOnCallScheduleError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetOnCallTeamRoutingRulesError is a struct for typed errors of method [`OnCallAPI::get_on_call_team_routing_rules`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetOnCallTeamRoutingRulesError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// SetOnCallTeamRoutingRulesError is a struct for typed errors of method [`OnCallAPI::set_on_call_team_routing_rules`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum SetOnCallTeamRoutingRulesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -975,6 +1023,296 @@ impl OnCallAPI {
             };
         } else {
             let local_entity: Option<GetOnCallScheduleError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get a team's on-call routing rules
+    pub async fn get_on_call_team_routing_rules(
+        &self,
+        team_id: String,
+        params: GetOnCallTeamRoutingRulesOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::TeamRoutingRules,
+        datadog::Error<GetOnCallTeamRoutingRulesError>,
+    > {
+        match self
+            .get_on_call_team_routing_rules_with_http_info(team_id, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get a team's on-call routing rules
+    pub async fn get_on_call_team_routing_rules_with_http_info(
+        &self,
+        team_id: String,
+        params: GetOnCallTeamRoutingRulesOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::TeamRoutingRules>,
+        datadog::Error<GetOnCallTeamRoutingRulesError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_on_call_team_routing_rules";
+
+        // unbox and build optional parameters
+        let include = params.include;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/on-call/teams/{team_id}/routing-rules",
+            local_configuration.get_operation_host(operation_id),
+            team_id = datadog::urlencode(team_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = include {
+            local_req_builder =
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::TeamRoutingRules>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetOnCallTeamRoutingRulesError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Set a team's on-call routing rules
+    pub async fn set_on_call_team_routing_rules(
+        &self,
+        team_id: String,
+        body: crate::datadogV2::model::TeamRoutingRulesRequest,
+        params: SetOnCallTeamRoutingRulesOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::TeamRoutingRules,
+        datadog::Error<SetOnCallTeamRoutingRulesError>,
+    > {
+        match self
+            .set_on_call_team_routing_rules_with_http_info(team_id, body, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Set a team's on-call routing rules
+    pub async fn set_on_call_team_routing_rules_with_http_info(
+        &self,
+        team_id: String,
+        body: crate::datadogV2::model::TeamRoutingRulesRequest,
+        params: SetOnCallTeamRoutingRulesOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::TeamRoutingRules>,
+        datadog::Error<SetOnCallTeamRoutingRulesError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.set_on_call_team_routing_rules";
+
+        // unbox and build optional parameters
+        let include = params.include;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/on-call/teams/{team_id}/routing-rules",
+            local_configuration.get_operation_host(operation_id),
+            team_id = datadog::urlencode(team_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = include {
+            local_req_builder =
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::TeamRoutingRules>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<SetOnCallTeamRoutingRulesError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,

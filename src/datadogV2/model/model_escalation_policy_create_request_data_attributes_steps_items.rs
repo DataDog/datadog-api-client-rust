@@ -13,17 +13,13 @@ use std::fmt::{self, Formatter};
 pub struct EscalationPolicyCreateRequestDataAttributesStepsItems {
     /// Specifies how this escalation step will assign targets (example `default` or `round-robin`).
     #[serde(rename = "assignment")]
-    pub assignment: Option<
-        crate::datadogV2::model::EscalationPolicyCreateRequestDataAttributesStepsItemsAssignment,
-    >,
+    pub assignment: Option<crate::datadogV2::model::EscalationPolicyStepAttributesAssignment>,
     /// Defines how many seconds to wait before escalating to the next step.
     #[serde(rename = "escalate_after_seconds")]
     pub escalate_after_seconds: Option<i64>,
     /// Specifies the collection of escalation targets for this step.
     #[serde(rename = "targets")]
-    pub targets: Vec<
-        crate::datadogV2::model::EscalationPolicyCreateRequestDataAttributesStepsItemsTargetsItems,
-    >,
+    pub targets: Vec<crate::datadogV2::model::EscalationPolicyStepTarget>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -33,7 +29,7 @@ pub struct EscalationPolicyCreateRequestDataAttributesStepsItems {
 
 impl EscalationPolicyCreateRequestDataAttributesStepsItems {
     pub fn new(
-        targets: Vec<crate::datadogV2::model::EscalationPolicyCreateRequestDataAttributesStepsItemsTargetsItems>,
+        targets: Vec<crate::datadogV2::model::EscalationPolicyStepTarget>,
     ) -> EscalationPolicyCreateRequestDataAttributesStepsItems {
         EscalationPolicyCreateRequestDataAttributesStepsItems {
             assignment: None,
@@ -46,7 +42,7 @@ impl EscalationPolicyCreateRequestDataAttributesStepsItems {
 
     pub fn assignment(
         mut self,
-        value: crate::datadogV2::model::EscalationPolicyCreateRequestDataAttributesStepsItemsAssignment,
+        value: crate::datadogV2::model::EscalationPolicyStepAttributesAssignment,
     ) -> Self {
         self.assignment = Some(value);
         self
@@ -83,9 +79,12 @@ impl<'de> Deserialize<'de> for EscalationPolicyCreateRequestDataAttributesStepsI
             where
                 M: MapAccess<'a>,
             {
-                let mut assignment: Option<crate::datadogV2::model::EscalationPolicyCreateRequestDataAttributesStepsItemsAssignment> = None;
+                let mut assignment: Option<
+                    crate::datadogV2::model::EscalationPolicyStepAttributesAssignment,
+                > = None;
                 let mut escalate_after_seconds: Option<i64> = None;
-                let mut targets: Option<Vec<crate::datadogV2::model::EscalationPolicyCreateRequestDataAttributesStepsItemsTargetsItems>> = None;
+                let mut targets: Option<Vec<crate::datadogV2::model::EscalationPolicyStepTarget>> =
+                    None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -101,7 +100,7 @@ impl<'de> Deserialize<'de> for EscalationPolicyCreateRequestDataAttributesStepsI
                             assignment = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _assignment) = assignment {
                                 match _assignment {
-                                    crate::datadogV2::model::EscalationPolicyCreateRequestDataAttributesStepsItemsAssignment::UnparsedObject(_assignment) => {
+                                    crate::datadogV2::model::EscalationPolicyStepAttributesAssignment::UnparsedObject(_assignment) => {
                                         _unparsed = true;
                                     },
                                     _ => {}

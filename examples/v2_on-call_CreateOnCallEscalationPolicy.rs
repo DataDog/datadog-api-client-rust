@@ -6,14 +6,14 @@ use datadog_api_client::datadogV2::model::EscalationPolicyCreateRequest;
 use datadog_api_client::datadogV2::model::EscalationPolicyCreateRequestData;
 use datadog_api_client::datadogV2::model::EscalationPolicyCreateRequestDataAttributes;
 use datadog_api_client::datadogV2::model::EscalationPolicyCreateRequestDataAttributesStepsItems;
-use datadog_api_client::datadogV2::model::EscalationPolicyCreateRequestDataAttributesStepsItemsAssignment;
-use datadog_api_client::datadogV2::model::EscalationPolicyCreateRequestDataAttributesStepsItemsTargetsItems;
-use datadog_api_client::datadogV2::model::EscalationPolicyCreateRequestDataAttributesStepsItemsTargetsItemsType;
 use datadog_api_client::datadogV2::model::EscalationPolicyCreateRequestDataRelationships;
 use datadog_api_client::datadogV2::model::EscalationPolicyCreateRequestDataRelationshipsTeams;
 use datadog_api_client::datadogV2::model::EscalationPolicyCreateRequestDataRelationshipsTeamsDataItems;
 use datadog_api_client::datadogV2::model::EscalationPolicyCreateRequestDataRelationshipsTeamsDataItemsType;
 use datadog_api_client::datadogV2::model::EscalationPolicyCreateRequestDataType;
+use datadog_api_client::datadogV2::model::EscalationPolicyStepAttributesAssignment;
+use datadog_api_client::datadogV2::model::EscalationPolicyStepTarget;
+use datadog_api_client::datadogV2::model::EscalationPolicyStepTargetType;
 
 #[tokio::main]
 async fn main() {
@@ -25,66 +25,47 @@ async fn main() {
 
     // there is a valid "dd_team" in the system
     let dd_team_data_id = std::env::var("DD_TEAM_DATA_ID").unwrap();
-    let body =
-        EscalationPolicyCreateRequest::new(
-            EscalationPolicyCreateRequestData::new(
-                EscalationPolicyCreateRequestDataAttributes::new(
-                    "Example-On-Call".to_string(),
-                    vec![
-                        EscalationPolicyCreateRequestDataAttributesStepsItems::new(
-                            vec![
-                                EscalationPolicyCreateRequestDataAttributesStepsItemsTargetsItems::new()
-                                    .id(user_data_id.clone())
-                                    .type_(
-                                        EscalationPolicyCreateRequestDataAttributesStepsItemsTargetsItemsType::USERS,
-                                    ),
-                                EscalationPolicyCreateRequestDataAttributesStepsItemsTargetsItems::new()
-                                    .id(schedule_data_id.clone())
-                                    .type_(
-                                        EscalationPolicyCreateRequestDataAttributesStepsItemsTargetsItemsType
-                                        ::SCHEDULES,
-                                    ),
-                                EscalationPolicyCreateRequestDataAttributesStepsItemsTargetsItems::new()
-                                    .id(dd_team_data_id.clone())
-                                    .type_(
-                                        EscalationPolicyCreateRequestDataAttributesStepsItemsTargetsItemsType::TEAMS,
-                                    )
-                            ],
-                        )
-                            .assignment(EscalationPolicyCreateRequestDataAttributesStepsItemsAssignment::DEFAULT)
-                            .escalate_after_seconds(3600),
-                        EscalationPolicyCreateRequestDataAttributesStepsItems::new(
-                            vec![
-                                EscalationPolicyCreateRequestDataAttributesStepsItemsTargetsItems::new()
-                                    .id(dd_team_data_id.clone())
-                                    .type_(
-                                        EscalationPolicyCreateRequestDataAttributesStepsItemsTargetsItemsType::TEAMS,
-                                    )
-                            ],
-                        )
-                            .assignment(EscalationPolicyCreateRequestDataAttributesStepsItemsAssignment::ROUND_ROBIN)
-                            .escalate_after_seconds(3600)
-                    ],
-                )
-                    .description("Escalation Policy 1 description".to_string())
-                    .resolve_page_on_policy_end(true)
-                    .retries(2),
-                EscalationPolicyCreateRequestDataType::POLICIES,
-            ).relationships(
-                EscalationPolicyCreateRequestDataRelationships
-                ::new().teams(
-                    EscalationPolicyCreateRequestDataRelationshipsTeams
-                    ::new().data(
-                        vec![
-                            EscalationPolicyCreateRequestDataRelationshipsTeamsDataItems::new(
-                                dd_team_data_id.clone(),
-                                EscalationPolicyCreateRequestDataRelationshipsTeamsDataItemsType::TEAMS,
-                            )
-                        ],
-                    ),
+    let body = EscalationPolicyCreateRequest::new(
+        EscalationPolicyCreateRequestData::new(
+            EscalationPolicyCreateRequestDataAttributes::new(
+                "Example-On-Call".to_string(),
+                vec![
+                    EscalationPolicyCreateRequestDataAttributesStepsItems::new(vec![
+                        EscalationPolicyStepTarget::new()
+                            .id(user_data_id.clone())
+                            .type_(EscalationPolicyStepTargetType::USERS),
+                        EscalationPolicyStepTarget::new()
+                            .id(schedule_data_id.clone())
+                            .type_(EscalationPolicyStepTargetType::SCHEDULES),
+                        EscalationPolicyStepTarget::new()
+                            .id(dd_team_data_id.clone())
+                            .type_(EscalationPolicyStepTargetType::TEAMS),
+                    ])
+                    .assignment(EscalationPolicyStepAttributesAssignment::DEFAULT)
+                    .escalate_after_seconds(3600),
+                    EscalationPolicyCreateRequestDataAttributesStepsItems::new(vec![
+                        EscalationPolicyStepTarget::new()
+                            .id(dd_team_data_id.clone())
+                            .type_(EscalationPolicyStepTargetType::TEAMS),
+                    ])
+                    .assignment(EscalationPolicyStepAttributesAssignment::ROUND_ROBIN)
+                    .escalate_after_seconds(3600),
+                ],
+            )
+            .description("Escalation Policy 1 description".to_string())
+            .resolve_page_on_policy_end(true)
+            .retries(2),
+            EscalationPolicyCreateRequestDataType::POLICIES,
+        )
+        .relationships(EscalationPolicyCreateRequestDataRelationships::new().teams(
+            EscalationPolicyCreateRequestDataRelationshipsTeams::new().data(vec![
+                EscalationPolicyCreateRequestDataRelationshipsTeamsDataItems::new(
+                    dd_team_data_id.clone(),
+                    EscalationPolicyCreateRequestDataRelationshipsTeamsDataItemsType::TEAMS,
                 ),
-            ),
-        );
+            ]),
+        )),
+    );
     let configuration = datadog::Configuration::new();
     let api = OnCallAPI::with_config(configuration);
     let resp = api
