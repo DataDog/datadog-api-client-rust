@@ -2016,6 +2016,14 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.UpdateCustomFramework".into(),
         test_v2_update_custom_framework,
     );
+    world.function_mappings.insert(
+        "v2.GetResourceEvaluationFilters".into(),
+        test_v2_get_resource_evaluation_filters,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateResourceEvaluationFilters".into(),
+        test_v2_update_resource_evaluation_filters,
+    );
     world
         .function_mappings
         .insert("v2.ListFindings".into(), test_v2_list_findings);
@@ -13747,6 +13755,71 @@ fn test_v2_update_custom_framework(world: &mut DatadogWorld, _parameters: &HashM
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.update_custom_framework_with_http_info(handle, version, body))
     {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_resource_evaluation_filters(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let cloud_provider = _parameters
+        .get("cloud_provider")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let account_id = _parameters
+        .get("account_id")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_security_monitoring::GetResourceEvaluationFiltersOptionalParams::default();
+    params.cloud_provider = cloud_provider;
+    params.account_id = account_id;
+    let response = match block_on(api.get_resource_evaluation_filters_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_resource_evaluation_filters(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_resource_evaluation_filters_with_http_info(body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
