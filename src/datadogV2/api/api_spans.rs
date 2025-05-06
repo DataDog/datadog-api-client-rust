@@ -76,6 +76,7 @@ pub enum AggregateSpansError {
 #[serde(untagged)]
 pub enum ListSpansError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -84,6 +85,7 @@ pub enum ListSpansError {
 #[serde(untagged)]
 pub enum ListSpansGetError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 

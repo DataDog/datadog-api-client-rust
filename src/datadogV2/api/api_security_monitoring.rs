@@ -894,6 +894,7 @@ pub enum GetCustomFrameworkError {
 #[serde(untagged)]
 pub enum GetFindingError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -991,6 +992,7 @@ pub enum GetVulnerabilityNotificationRulesError {
 #[serde(untagged)]
 pub enum ListFindingsError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -1057,6 +1059,7 @@ pub enum ListVulnerableAssetsError {
 #[serde(untagged)]
 pub enum MuteFindingsError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
