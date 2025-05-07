@@ -2,10 +2,12 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog;
+use async_stream::try_stream;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
 };
+use futures_core::stream::Stream;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
@@ -30,10 +32,10 @@ impl GetInterfacesOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListDevicesOptionalParams {
-    /// The page number to fetch.
-    pub page_number: Option<i64>,
-    /// The number of devices to return per page.
+    /// Size for a given page. The maximum allowed value is 100.
     pub page_size: Option<i64>,
+    /// Specific page number to return.
+    pub page_number: Option<i64>,
     /// The field to sort the devices by.
     pub sort: Option<String>,
     /// Filter devices by tag.
@@ -41,14 +43,14 @@ pub struct ListDevicesOptionalParams {
 }
 
 impl ListDevicesOptionalParams {
-    /// The page number to fetch.
-    pub fn page_number(mut self, value: i64) -> Self {
-        self.page_number = Some(value);
-        self
-    }
-    /// The number of devices to return per page.
+    /// Size for a given page. The maximum allowed value is 100.
     pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
+        self
+    }
+    /// Specific page number to return.
+    pub fn page_number(mut self, value: i64) -> Self {
+        self.page_number = Some(value);
         self
     }
     /// The field to sort the devices by.
@@ -515,6 +517,40 @@ impl NetworkDeviceMonitoringAPI {
         }
     }
 
+    pub fn list_devices_with_pagination(
+        &self,
+        mut params: ListDevicesOptionalParams,
+    ) -> impl Stream<
+        Item = Result<crate::datadogV2::model::DevicesListData, datadog::Error<ListDevicesError>>,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 10;
+            if params.page_size.is_none() {
+                params.page_size = Some(page_size);
+            } else {
+                page_size = params.page_size.unwrap().clone();
+            }
+            if params.page_number.is_none() {
+                params.page_number = Some(0);
+            }
+            loop {
+                let resp = self.list_devices(params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                params.page_number = Some(params.page_number.unwrap() + 1);
+            }
+        }
+    }
+
     /// Get the list of devices.
     pub async fn list_devices_with_http_info(
         &self,
@@ -527,8 +563,8 @@ impl NetworkDeviceMonitoringAPI {
         let operation_id = "v2.list_devices";
 
         // unbox and build optional parameters
-        let page_number = params.page_number;
         let page_size = params.page_size;
+        let page_number = params.page_number;
         let sort = params.sort;
         let filter_tag = params.filter_tag;
 
@@ -541,13 +577,13 @@ impl NetworkDeviceMonitoringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_query_param) = page_number {
-            local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
-        };
         if let Some(ref local_query_param) = page_size {
             local_req_builder =
                 local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_number {
+            local_req_builder =
+                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
         };
         if let Some(ref local_query_param) = sort {
             local_req_builder =

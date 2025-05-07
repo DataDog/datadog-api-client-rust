@@ -2941,6 +2941,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.ListDevices".into(), test_v2_list_devices);
+    world.function_mappings.insert(
+        "v2.ListDevicesWithPagination".into(),
+        test_v2_list_devices_with_pagination,
+    );
     world
         .function_mappings
         .insert("v2.GetDevice".into(), test_v2_get_device);
@@ -21902,11 +21906,11 @@ fn test_v2_list_devices(world: &mut DatadogWorld, _parameters: &HashMap<String, 
         .v2_api_network_device_monitoring
         .as_ref()
         .expect("api instance not found");
-    let page_number = _parameters
-        .get("page[number]")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let page_size = _parameters
         .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_number = _parameters
+        .get("page[number]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let sort = _parameters
         .get("sort")
@@ -21915,8 +21919,8 @@ fn test_v2_list_devices(world: &mut DatadogWorld, _parameters: &HashMap<String, 
         .get("filter[tag]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_network_device_monitoring::ListDevicesOptionalParams::default();
-    params.page_number = page_number;
     params.page_size = page_size;
+    params.page_number = page_number;
     params.sort = sort;
     params.filter_tag = filter_tag;
     let response = match block_on(api.list_devices_with_http_info(params)) {
@@ -21935,6 +21939,59 @@ fn test_v2_list_devices(world: &mut DatadogWorld, _parameters: &HashMap<String, 
     };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
+}
+fn test_v2_list_devices_with_pagination(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_network_device_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_tag = _parameters
+        .get("filter[tag]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_network_device_monitoring::ListDevicesOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    params.sort = sort;
+    params.filter_tag = filter_tag;
+    let response = api.list_devices_with_pagination(params);
+    let mut result = Vec::new();
+
+    block_on(async {
+        pin_mut!(response);
+
+        while let Some(resp) = response.next().await {
+            match resp {
+                Ok(response) => {
+                    result.push(response);
+                }
+                Err(error) => {
+                    return match error {
+                        Error::ResponseError(e) => {
+                            if let Some(entity) = e.entity {
+                                world.response.object = serde_json::to_value(entity).unwrap();
+                            }
+                        }
+                        _ => panic!("error parsing response: {}", error),
+                    };
+                }
+            }
+        }
+    });
+    world.response.object = serde_json::to_value(result).unwrap();
+    world.response.code = 200;
 }
 
 fn test_v2_get_device(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
