@@ -20,7 +20,7 @@ pub struct EstimateMetricsOutputSeriesOptionalParams {
     pub filter_groups: Option<String>,
     /// The number of hours of look back (from now) to estimate cardinality with. If unspecified, it defaults to 0 hours.
     pub filter_hours_ago: Option<i32>,
-    /// The number of aggregations that a `count`, `rate`, or `gauge` metric is configured to use. Max number of aggregation combos is 9.
+    /// This argument has no effect as all time and space combinations are now available with no impact on customer bills.
     pub filter_num_aggregations: Option<i32>,
     /// A boolean, for distribution metrics only, to estimate cardinality if the metric includes additional percentile aggregators.
     pub filter_pct: Option<bool>,
@@ -39,7 +39,7 @@ impl EstimateMetricsOutputSeriesOptionalParams {
         self.filter_hours_ago = Some(value);
         self
     }
-    /// The number of aggregations that a `count`, `rate`, or `gauge` metric is configured to use. Max number of aggregation combos is 9.
+    /// This argument has no effect as all time and space combinations are now available with no impact on customer bills.
     pub fn filter_num_aggregations(mut self, value: i32) -> Self {
         self.filter_num_aggregations = Some(value);
         self
@@ -310,7 +310,7 @@ pub enum UpdateTagConfigurationError {
 
 /// The metrics endpoint allows you to:
 ///
-/// - Post metrics data so it can be graphed on Datadog’s dashboards
+/// - Post metrics data so it can be graphed on Datadog dashboards
 /// - Query metrics from any time period (timeseries and scalar)
 /// - Modify tag configurations for metrics
 /// - View tags and volumes for metrics
@@ -980,7 +980,7 @@ impl MetricsAPI {
         }
     }
 
-    /// Returns the estimated cardinality for a metric with a given tag, percentile and number of aggregations configuration using Metrics without Limits&trade;.
+    /// Returns the estimated cardinality for a metric with a given tag and percentile configuration using Metrics without Limits&trade;.
     pub async fn estimate_metrics_output_series(
         &self,
         metric_name: String,
@@ -1006,7 +1006,7 @@ impl MetricsAPI {
         }
     }
 
-    /// Returns the estimated cardinality for a metric with a given tag, percentile and number of aggregations configuration using Metrics without Limits&trade;.
+    /// Returns the estimated cardinality for a metric with a given tag and percentile configuration using Metrics without Limits&trade;.
     pub async fn estimate_metrics_output_series_with_http_info(
         &self,
         metric_name: String,

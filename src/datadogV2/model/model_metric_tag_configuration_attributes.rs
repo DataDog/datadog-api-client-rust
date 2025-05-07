@@ -27,6 +27,7 @@ pub struct MetricTagConfigurationAttributes {
     /// - time: sum, space: sum
     ///
     /// Can only be applied to non_distribution metrics that have a `metric_type` of `count`, `rate`, or `gauge`.
+    #[deprecated]
     #[serde(rename = "aggregations")]
     pub aggregations: Option<Vec<crate::datadogV2::model::MetricCustomAggregation>>,
     /// Timestamp when the tag configuration was created.
@@ -59,6 +60,7 @@ pub struct MetricTagConfigurationAttributes {
 
 impl MetricTagConfigurationAttributes {
     pub fn new() -> MetricTagConfigurationAttributes {
+        #[allow(deprecated)]
         MetricTagConfigurationAttributes {
             aggregations: None,
             created_at: None,
@@ -72,6 +74,7 @@ impl MetricTagConfigurationAttributes {
         }
     }
 
+    #[allow(deprecated)]
     pub fn aggregations(
         mut self,
         value: Vec<crate::datadogV2::model::MetricCustomAggregation>,
@@ -80,21 +83,25 @@ impl MetricTagConfigurationAttributes {
         self
     }
 
+    #[allow(deprecated)]
     pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn exclude_tags_mode(mut self, value: bool) -> Self {
         self.exclude_tags_mode = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn include_percentiles(mut self, value: bool) -> Self {
         self.include_percentiles = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn metric_type(
         mut self,
         value: crate::datadogV2::model::MetricTagConfigurationMetricTypes,
@@ -103,11 +110,13 @@ impl MetricTagConfigurationAttributes {
         self
     }
 
+    #[allow(deprecated)]
     pub fn modified_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.modified_at = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
@@ -227,6 +236,7 @@ impl<'de> Deserialize<'de> for MetricTagConfigurationAttributes {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = MetricTagConfigurationAttributes {
                     aggregations,
                     created_at,

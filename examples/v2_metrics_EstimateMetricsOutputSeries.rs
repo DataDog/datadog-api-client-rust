@@ -11,8 +11,7 @@ async fn main() {
         .estimate_metrics_output_series(
             "system.cpu.idle".to_string(),
             EstimateMetricsOutputSeriesOptionalParams::default()
-                .filter_groups("app,host".to_string())
-                .filter_num_aggregations(4),
+                .filter_groups("app,host".to_string()),
         )
         .await;
     if let Ok(value) = resp {

@@ -27,6 +27,7 @@ pub struct MetricTagConfigurationCreateAttributes {
     /// - time: sum, space: sum
     ///
     /// Can only be applied to non_distribution metrics that have a `metric_type` of `count`, `rate`, or `gauge`.
+    #[deprecated]
     #[serde(rename = "aggregations")]
     pub aggregations: Option<Vec<crate::datadogV2::model::MetricCustomAggregation>>,
     /// When set to true, the configuration will exclude the configured tags and include any other submitted tags.
@@ -56,6 +57,7 @@ impl MetricTagConfigurationCreateAttributes {
         metric_type: crate::datadogV2::model::MetricTagConfigurationMetricTypes,
         tags: Vec<String>,
     ) -> MetricTagConfigurationCreateAttributes {
+        #[allow(deprecated)]
         MetricTagConfigurationCreateAttributes {
             aggregations: None,
             exclude_tags_mode: None,
@@ -67,6 +69,7 @@ impl MetricTagConfigurationCreateAttributes {
         }
     }
 
+    #[allow(deprecated)]
     pub fn aggregations(
         mut self,
         value: Vec<crate::datadogV2::model::MetricCustomAggregation>,
@@ -75,11 +78,13 @@ impl MetricTagConfigurationCreateAttributes {
         self
     }
 
+    #[allow(deprecated)]
     pub fn exclude_tags_mode(mut self, value: bool) -> Self {
         self.exclude_tags_mode = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn include_percentiles(mut self, value: bool) -> Self {
         self.include_percentiles = Some(value);
         self
@@ -175,6 +180,7 @@ impl<'de> Deserialize<'de> for MetricTagConfigurationCreateAttributes {
                     metric_type.ok_or_else(|| M::Error::missing_field("metric_type"))?;
                 let tags = tags.ok_or_else(|| M::Error::missing_field("tags"))?;
 
+                #[allow(deprecated)]
                 let content = MetricTagConfigurationCreateAttributes {
                     aggregations,
                     exclude_tags_mode,
