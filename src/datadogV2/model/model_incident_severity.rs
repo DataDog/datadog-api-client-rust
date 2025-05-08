@@ -8,6 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum IncidentSeverity {
     UNKNOWN,
+    SEV_0,
     SEV_1,
     SEV_2,
     SEV_3,
@@ -20,6 +21,7 @@ impl ToString for IncidentSeverity {
     fn to_string(&self) -> String {
         match self {
             Self::UNKNOWN => String::from("UNKNOWN"),
+            Self::SEV_0 => String::from("SEV-0"),
             Self::SEV_1 => String::from("SEV-1"),
             Self::SEV_2 => String::from("SEV-2"),
             Self::SEV_3 => String::from("SEV-3"),
@@ -50,6 +52,7 @@ impl<'de> Deserialize<'de> for IncidentSeverity {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "UNKNOWN" => Self::UNKNOWN,
+            "SEV-0" => Self::SEV_0,
             "SEV-1" => Self::SEV_1,
             "SEV-2" => Self::SEV_2,
             "SEV-3" => Self::SEV_3,
