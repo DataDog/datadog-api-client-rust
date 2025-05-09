@@ -3144,8 +3144,28 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_update_csm_threats_agent_rule,
     );
     world.function_mappings.insert(
+        "v2.ListCSMThreatsAgentPolicies".into(),
+        test_v2_list_csm_threats_agent_policies,
+    );
+    world.function_mappings.insert(
+        "v2.CreateCSMThreatsAgentPolicy".into(),
+        test_v2_create_csm_threats_agent_policy,
+    );
+    world.function_mappings.insert(
         "v2.DownloadCSMThreatsPolicy".into(),
         test_v2_download_csm_threats_policy,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteCSMThreatsAgentPolicy".into(),
+        test_v2_delete_csm_threats_agent_policy,
+    );
+    world.function_mappings.insert(
+        "v2.GetCSMThreatsAgentPolicy".into(),
+        test_v2_get_csm_threats_agent_policy,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateCSMThreatsAgentPolicy".into(),
+        test_v2_update_csm_threats_agent_policy,
     );
     world.function_mappings.insert(
         "v2.DownloadCloudWorkloadPolicyFile".into(),
@@ -23557,7 +23577,12 @@ fn test_v2_list_csm_threats_agent_rules(
         .v2_api_csm_threats
         .as_ref()
         .expect("api instance not found");
-    let response = match block_on(api.list_csm_threats_agent_rules_with_http_info()) {
+    let policy_id = _parameters
+        .get("policy_id")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_csm_threats::ListCSMThreatsAgentRulesOptionalParams::default();
+    params.policy_id = policy_id;
+    let response = match block_on(api.list_csm_threats_agent_rules_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -23614,20 +23639,26 @@ fn test_v2_delete_csm_threats_agent_rule(
         .expect("api instance not found");
     let agent_rule_id =
         serde_json::from_value(_parameters.get("agent_rule_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.delete_csm_threats_agent_rule_with_http_info(agent_rule_id)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
+    let policy_id = _parameters
+        .get("policy_id")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_csm_threats::DeleteCSMThreatsAgentRuleOptionalParams::default();
+    params.policy_id = policy_id;
+    let response =
+        match block_on(api.delete_csm_threats_agent_rule_with_http_info(agent_rule_id, params)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
                     }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
@@ -23643,20 +23674,26 @@ fn test_v2_get_csm_threats_agent_rule(
         .expect("api instance not found");
     let agent_rule_id =
         serde_json::from_value(_parameters.get("agent_rule_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.get_csm_threats_agent_rule_with_http_info(agent_rule_id)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
+    let policy_id = _parameters
+        .get("policy_id")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_csm_threats::GetCSMThreatsAgentRuleOptionalParams::default();
+    params.policy_id = policy_id;
+    let response =
+        match block_on(api.get_csm_threats_agent_rule_with_http_info(agent_rule_id, params)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
                     }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
@@ -23673,21 +23710,84 @@ fn test_v2_update_csm_threats_agent_rule(
     let agent_rule_id =
         serde_json::from_value(_parameters.get("agent_rule_id").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response =
-        match block_on(api.update_csm_threats_agent_rule_with_http_info(agent_rule_id, body)) {
-            Ok(response) => response,
-            Err(error) => {
-                return match error {
-                    Error::ResponseError(e) => {
-                        world.response.code = e.status.as_u16();
-                        if let Some(entity) = e.entity {
-                            world.response.object = serde_json::to_value(entity).unwrap();
-                        }
+    let policy_id = _parameters
+        .get("policy_id")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_csm_threats::UpdateCSMThreatsAgentRuleOptionalParams::default();
+    params.policy_id = policy_id;
+    let response = match block_on(api.update_csm_threats_agent_rule_with_http_info(
+        agent_rule_id,
+        body,
+        params,
+    )) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
                     }
-                    _ => panic!("error parsing response: {error}"),
-                };
-            }
-        };
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_csm_threats_agent_policies(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_csm_threats
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_csm_threats_agent_policies_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_csm_threats_agent_policy(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_csm_threats
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_csm_threats_agent_policy_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
@@ -23715,6 +23815,92 @@ fn test_v2_download_csm_threats_policy(
             };
         }
     };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_csm_threats_agent_policy(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_csm_threats
+        .as_ref()
+        .expect("api instance not found");
+    let policy_id = serde_json::from_value(_parameters.get("policy_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_csm_threats_agent_policy_with_http_info(policy_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_csm_threats_agent_policy(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_csm_threats
+        .as_ref()
+        .expect("api instance not found");
+    let policy_id = serde_json::from_value(_parameters.get("policy_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_csm_threats_agent_policy_with_http_info(policy_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_csm_threats_agent_policy(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_csm_threats
+        .as_ref()
+        .expect("api instance not found");
+    let policy_id = serde_json::from_value(_parameters.get("policy_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.update_csm_threats_agent_policy_with_http_info(policy_id, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }

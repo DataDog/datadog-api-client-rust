@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CloudWorkloadSecurityAgentRuleKill {
-    /// Supported signals for the kill system call.
+    /// Supported signals for the kill system call
     #[serde(rename = "signal")]
     pub signal: Option<String>,
     #[serde(flatten)]
