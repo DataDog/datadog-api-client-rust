@@ -13,13 +13,13 @@ use std::fmt::{self, Formatter};
 pub struct CustomFrameworkWithoutRequirements {
     /// Framework Description
     #[serde(rename = "description")]
-    pub description: String,
+    pub description: Option<String>,
     /// Framework Handle
     #[serde(rename = "handle")]
     pub handle: String,
     /// Framework Icon URL
     #[serde(rename = "icon_url")]
-    pub icon_url: String,
+    pub icon_url: Option<String>,
     /// Framework Name
     #[serde(rename = "name")]
     pub name: String,
@@ -35,21 +35,29 @@ pub struct CustomFrameworkWithoutRequirements {
 
 impl CustomFrameworkWithoutRequirements {
     pub fn new(
-        description: String,
         handle: String,
-        icon_url: String,
         name: String,
         version: String,
     ) -> CustomFrameworkWithoutRequirements {
         CustomFrameworkWithoutRequirements {
-            description,
+            description: None,
             handle,
-            icon_url,
+            icon_url: None,
             name,
             version,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
+        self
+    }
+
+    pub fn icon_url(mut self, value: String) -> Self {
+        self.icon_url = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -92,6 +100,9 @@ impl<'de> Deserialize<'de> for CustomFrameworkWithoutRequirements {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -99,6 +110,9 @@ impl<'de> Deserialize<'de> for CustomFrameworkWithoutRequirements {
                             handle = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "icon_url" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             icon_url = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "name" => {
@@ -114,10 +128,7 @@ impl<'de> Deserialize<'de> for CustomFrameworkWithoutRequirements {
                         }
                     }
                 }
-                let description =
-                    description.ok_or_else(|| M::Error::missing_field("description"))?;
                 let handle = handle.ok_or_else(|| M::Error::missing_field("handle"))?;
-                let icon_url = icon_url.ok_or_else(|| M::Error::missing_field("icon_url"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let version = version.ok_or_else(|| M::Error::missing_field("version"))?;
 
