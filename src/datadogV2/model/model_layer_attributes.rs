@@ -25,7 +25,7 @@ pub struct LayerAttributes {
     pub name: Option<String>,
     /// An optional list of time restrictions for when this layer is in effect.
     #[serde(rename = "restrictions")]
-    pub restrictions: Option<Vec<crate::datadogV2::model::LayerAttributesRestrictionsItems>>,
+    pub restrictions: Option<Vec<crate::datadogV2::model::TimeRestriction>>,
     /// The date/time when the rotation starts (ISO 8601).
     #[serde(rename = "rotation_start")]
     pub rotation_start: Option<chrono::DateTime<chrono::Utc>>,
@@ -70,10 +70,7 @@ impl LayerAttributes {
         self
     }
 
-    pub fn restrictions(
-        mut self,
-        value: Vec<crate::datadogV2::model::LayerAttributesRestrictionsItems>,
-    ) -> Self {
+    pub fn restrictions(mut self, value: Vec<crate::datadogV2::model::TimeRestriction>) -> Self {
         self.restrictions = Some(value);
         self
     }
@@ -119,9 +116,7 @@ impl<'de> Deserialize<'de> for LayerAttributes {
                 let mut end_date: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut interval: Option<crate::datadogV2::model::LayerAttributesInterval> = None;
                 let mut name: Option<String> = None;
-                let mut restrictions: Option<
-                    Vec<crate::datadogV2::model::LayerAttributesRestrictionsItems>,
-                > = None;
+                let mut restrictions: Option<Vec<crate::datadogV2::model::TimeRestriction>> = None;
                 let mut rotation_start: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,

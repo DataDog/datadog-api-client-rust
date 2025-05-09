@@ -22,13 +22,14 @@ pub struct ScheduleCreateRequestDataAttributesLayersItems {
     pub interval: crate::datadogV2::model::ScheduleCreateRequestDataAttributesLayersItemsInterval,
     /// A list of members who participate in this layer's rotation.
     #[serde(rename = "members")]
-    pub members: Vec<crate::datadogV2::model::ScheduleCreateRequestDataAttributesLayersItemsMembersItems>,
+    pub members:
+        Vec<crate::datadogV2::model::ScheduleCreateRequestDataAttributesLayersItemsMembersItems>,
     /// The name of this layer.
     #[serde(rename = "name")]
     pub name: String,
     /// Zero or more time-based restrictions (for example, only weekdays, during business hours).
     #[serde(rename = "restrictions")]
-    pub restrictions: Option<Vec<crate::datadogV2::model::ScheduleCreateRequestDataAttributesLayersItemsRestrictionsItems>>,
+    pub restrictions: Option<Vec<crate::datadogV2::model::TimeRestriction>>,
     /// The date/time when the rotation for this layer starts (in ISO 8601).
     #[serde(rename = "rotation_start")]
     pub rotation_start: chrono::DateTime<chrono::Utc>,
@@ -36,7 +37,7 @@ pub struct ScheduleCreateRequestDataAttributesLayersItems {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool
+    pub(crate) _unparsed: bool,
 }
 
 impl ScheduleCreateRequestDataAttributesLayersItems {
@@ -67,10 +68,7 @@ impl ScheduleCreateRequestDataAttributesLayersItems {
         self
     }
 
-    pub fn restrictions(
-        mut self,
-        value: Vec<crate::datadogV2::model::ScheduleCreateRequestDataAttributesLayersItemsRestrictionsItems>,
-    ) -> Self {
+    pub fn restrictions(mut self, value: Vec<crate::datadogV2::model::TimeRestriction>) -> Self {
         self.restrictions = Some(value);
         self
     }
@@ -108,7 +106,7 @@ impl<'de> Deserialize<'de> for ScheduleCreateRequestDataAttributesLayersItems {
                 > = None;
                 let mut members: Option<Vec<crate::datadogV2::model::ScheduleCreateRequestDataAttributesLayersItemsMembersItems>> = None;
                 let mut name: Option<String> = None;
-                let mut restrictions: Option<Vec<crate::datadogV2::model::ScheduleCreateRequestDataAttributesLayersItemsRestrictionsItems>> = None;
+                let mut restrictions: Option<Vec<crate::datadogV2::model::TimeRestriction>> = None;
                 let mut rotation_start: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
