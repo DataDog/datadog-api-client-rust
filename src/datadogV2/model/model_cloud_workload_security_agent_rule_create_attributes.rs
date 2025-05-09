@@ -14,18 +14,24 @@ pub struct CloudWorkloadSecurityAgentRuleCreateAttributes {
     /// The description of the Agent rule.
     #[serde(rename = "description")]
     pub description: Option<String>,
-    /// Whether the Agent rule is enabled.
+    /// Whether the Agent rule is enabled
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
     /// The SECL expression of the Agent rule.
     #[serde(rename = "expression")]
     pub expression: String,
-    /// The platforms the Agent rule is supported on.
+    /// The platforms the Agent rule is supported on
     #[serde(rename = "filters")]
     pub filters: Option<Vec<String>>,
     /// The name of the Agent rule.
     #[serde(rename = "name")]
     pub name: String,
+    /// The ID of the policy where the Agent rule is saved
+    #[serde(rename = "policy_id")]
+    pub policy_id: Option<String>,
+    /// The list of product tags associated with the rule
+    #[serde(rename = "product_tags")]
+    pub product_tags: Option<Vec<String>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -41,6 +47,8 @@ impl CloudWorkloadSecurityAgentRuleCreateAttributes {
             expression,
             filters: None,
             name,
+            policy_id: None,
+            product_tags: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -58,6 +66,16 @@ impl CloudWorkloadSecurityAgentRuleCreateAttributes {
 
     pub fn filters(mut self, value: Vec<String>) -> Self {
         self.filters = Some(value);
+        self
+    }
+
+    pub fn policy_id(mut self, value: String) -> Self {
+        self.policy_id = Some(value);
+        self
+    }
+
+    pub fn product_tags(mut self, value: Vec<String>) -> Self {
+        self.product_tags = Some(value);
         self
     }
 
@@ -92,6 +110,8 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleCreateAttributes {
                 let mut expression: Option<String> = None;
                 let mut filters: Option<Vec<String>> = None;
                 let mut name: Option<String> = None;
+                let mut policy_id: Option<String> = None;
+                let mut product_tags: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -125,6 +145,19 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleCreateAttributes {
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "policy_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            policy_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "product_tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            product_tags =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -141,6 +174,8 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleCreateAttributes {
                     expression,
                     filters,
                     name,
+                    policy_id,
+                    product_tags,
                     additional_properties,
                     _unparsed,
                 };

@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"description\":\"My agent policy\",\"enabled\":true,\"hostTags\":[],\"hostTagsLists\":[],\"name\":\"test\"},\"type\":\"policy\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/remote_config/products/cws/policy"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"title\":\"failed to create policy\"}]}\n",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Tue, 15 Apr 2025 09:10:06 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

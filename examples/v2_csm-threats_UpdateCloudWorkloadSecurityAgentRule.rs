@@ -13,8 +13,7 @@ async fn main() {
     let body = CloudWorkloadSecurityAgentRuleUpdateRequest::new(
         CloudWorkloadSecurityAgentRuleUpdateData::new(
             CloudWorkloadSecurityAgentRuleUpdateAttributes::new()
-                .description("Test Agent rule".to_string())
-                .enabled(true)
+                .description("Updated Agent rule".to_string())
                 .expression(r#"exec.file.name == "sh""#.to_string()),
             CloudWorkloadSecurityAgentRuleType::AGENT_RULE,
         )
