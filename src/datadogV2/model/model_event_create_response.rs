@@ -14,6 +14,9 @@ pub struct EventCreateResponse {
     /// JSON object containing all events attributes and their associated values.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::EventCreateResponseAttributes>,
+    /// A numerical ID compatible with the V1 endpoint. This field is not populated in response from the V2 endpoint. To retrieve this ID, refer to the event attributes in the Event Explorer.
+    #[serde(rename = "id")]
+    pub id: Option<String>,
     /// Event type
     #[serde(rename = "type")]
     pub type_: Option<String>,
@@ -28,6 +31,7 @@ impl EventCreateResponse {
     pub fn new() -> EventCreateResponse {
         EventCreateResponse {
             attributes: None,
+            id: None,
             type_: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -39,6 +43,11 @@ impl EventCreateResponse {
         value: crate::datadogV2::model::EventCreateResponseAttributes,
     ) -> Self {
         self.attributes = Some(value);
+        self
+    }
+
+    pub fn id(mut self, value: String) -> Self {
+        self.id = Some(value);
         self
     }
 
@@ -81,6 +90,7 @@ impl<'de> Deserialize<'de> for EventCreateResponse {
             {
                 let mut attributes: Option<crate::datadogV2::model::EventCreateResponseAttributes> =
                     None;
+                let mut id: Option<String> = None;
                 let mut type_: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -95,6 +105,12 @@ impl<'de> Deserialize<'de> for EventCreateResponse {
                                 continue;
                             }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             if v.is_null() {
@@ -112,6 +128,7 @@ impl<'de> Deserialize<'de> for EventCreateResponse {
 
                 let content = EventCreateResponse {
                     attributes,
+                    id,
                     type_,
                     additional_properties,
                     _unparsed,

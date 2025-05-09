@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// JSON object of event system attributes.
+/// Links attributes.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct EventCreateResponseAttributesAttributesEvt {
-    /// A unique identifier for the event. You can use this ID to query or reference the event in the V2 endpoint.
-    #[serde(rename = "uid")]
-    pub uid: Option<String>,
+pub struct EventCreateResponsePayloadLinks {
+    /// The URL of the event. This link is only functional when using the `app` subdomain.
+    #[serde(rename = "self")]
+    pub self_: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,17 +21,17 @@ pub struct EventCreateResponseAttributesAttributesEvt {
     pub(crate) _unparsed: bool,
 }
 
-impl EventCreateResponseAttributesAttributesEvt {
-    pub fn new() -> EventCreateResponseAttributesAttributesEvt {
-        EventCreateResponseAttributesAttributesEvt {
-            uid: None,
+impl EventCreateResponsePayloadLinks {
+    pub fn new() -> EventCreateResponsePayloadLinks {
+        EventCreateResponsePayloadLinks {
+            self_: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn uid(mut self, value: String) -> Self {
-        self.uid = Some(value);
+    pub fn self_(mut self, value: String) -> Self {
+        self.self_ = Some(value);
         self
     }
 
@@ -44,20 +44,20 @@ impl EventCreateResponseAttributesAttributesEvt {
     }
 }
 
-impl Default for EventCreateResponseAttributesAttributesEvt {
+impl Default for EventCreateResponsePayloadLinks {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for EventCreateResponseAttributesAttributesEvt {
+impl<'de> Deserialize<'de> for EventCreateResponsePayloadLinks {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct EventCreateResponseAttributesAttributesEvtVisitor;
-        impl<'a> Visitor<'a> for EventCreateResponseAttributesAttributesEvtVisitor {
-            type Value = EventCreateResponseAttributesAttributesEvt;
+        struct EventCreateResponsePayloadLinksVisitor;
+        impl<'a> Visitor<'a> for EventCreateResponsePayloadLinksVisitor {
+            type Value = EventCreateResponsePayloadLinks;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -67,7 +67,7 @@ impl<'de> Deserialize<'de> for EventCreateResponseAttributesAttributesEvt {
             where
                 M: MapAccess<'a>,
             {
-                let mut uid: Option<String> = None;
+                let mut self_: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -76,11 +76,11 @@ impl<'de> Deserialize<'de> for EventCreateResponseAttributesAttributesEvt {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "uid" => {
+                        "self" => {
                             if v.is_null() {
                                 continue;
                             }
-                            uid = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            self_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -90,8 +90,8 @@ impl<'de> Deserialize<'de> for EventCreateResponseAttributesAttributesEvt {
                     }
                 }
 
-                let content = EventCreateResponseAttributesAttributesEvt {
-                    uid,
+                let content = EventCreateResponsePayloadLinks {
+                    self_,
                     additional_properties,
                     _unparsed,
                 };
@@ -100,6 +100,6 @@ impl<'de> Deserialize<'de> for EventCreateResponseAttributesAttributesEvt {
             }
         }
 
-        deserializer.deserialize_any(EventCreateResponseAttributesAttributesEvtVisitor)
+        deserializer.deserialize_any(EventCreateResponsePayloadLinksVisitor)
     }
 }
