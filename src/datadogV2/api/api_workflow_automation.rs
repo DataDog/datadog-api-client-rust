@@ -46,6 +46,7 @@ pub enum CancelWorkflowInstanceError {
 #[serde(untagged)]
 pub enum CreateWorkflowError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -61,6 +62,7 @@ pub enum CreateWorkflowInstanceError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteWorkflowError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -70,6 +72,7 @@ pub enum DeleteWorkflowError {
 #[serde(untagged)]
 pub enum GetWorkflowError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -94,6 +97,7 @@ pub enum ListWorkflowInstancesError {
 #[serde(untagged)]
 pub enum UpdateWorkflowError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
