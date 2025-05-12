@@ -15,6 +15,7 @@ use std::io::Write;
 #[serde(untagged)]
 pub enum CreateActionConnectionError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -22,6 +23,7 @@ pub enum CreateActionConnectionError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteActionConnectionError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -31,6 +33,7 @@ pub enum DeleteActionConnectionError {
 #[serde(untagged)]
 pub enum GetActionConnectionError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -39,6 +42,7 @@ pub enum GetActionConnectionError {
 #[serde(untagged)]
 pub enum UpdateActionConnectionError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 

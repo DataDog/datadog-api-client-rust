@@ -1210,10 +1210,7 @@ impl UsageMeteringAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1386,10 +1383,7 @@ impl UsageMeteringAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1518,10 +1512,7 @@ impl UsageMeteringAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1650,10 +1641,7 @@ impl UsageMeteringAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1788,10 +1776,7 @@ impl UsageMeteringAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1974,10 +1959,7 @@ impl UsageMeteringAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2093,10 +2075,7 @@ impl UsageMeteringAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2212,10 +2191,7 @@ impl UsageMeteringAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2344,10 +2320,7 @@ impl UsageMeteringAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2476,10 +2449,7 @@ impl UsageMeteringAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2606,10 +2576,7 @@ impl UsageMeteringAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2735,10 +2702,7 @@ impl UsageMeteringAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2861,10 +2825,7 @@ impl UsageMeteringAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2993,10 +2954,7 @@ impl UsageMeteringAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3120,10 +3078,7 @@ impl UsageMeteringAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3248,10 +3203,7 @@ impl UsageMeteringAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3375,10 +3327,7 @@ impl UsageMeteringAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3507,10 +3456,7 @@ impl UsageMeteringAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3639,10 +3585,7 @@ impl UsageMeteringAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3765,10 +3708,7 @@ impl UsageMeteringAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3891,10 +3831,7 @@ impl UsageMeteringAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4025,10 +3962,7 @@ impl UsageMeteringAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4157,10 +4091,7 @@ impl UsageMeteringAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4289,10 +4220,7 @@ impl UsageMeteringAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4421,10 +4349,7 @@ impl UsageMeteringAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4553,10 +4478,7 @@ impl UsageMeteringAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4685,10 +4607,7 @@ impl UsageMeteringAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4822,10 +4741,7 @@ impl UsageMeteringAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4952,10 +4868,7 @@ impl UsageMeteringAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5078,10 +4991,7 @@ impl UsageMeteringAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5202,10 +5112,7 @@ impl UsageMeteringAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5342,10 +5249,7 @@ impl UsageMeteringAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5474,10 +5378,7 @@ impl UsageMeteringAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5606,10 +5507,7 @@ impl UsageMeteringAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5738,10 +5636,7 @@ impl UsageMeteringAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5870,10 +5765,7 @@ impl UsageMeteringAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -6014,10 +5906,7 @@ impl UsageMeteringAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {

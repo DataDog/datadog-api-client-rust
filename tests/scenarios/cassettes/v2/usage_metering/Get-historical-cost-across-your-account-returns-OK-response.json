@@ -5,7 +5,7 @@
         "body": "",
         "headers": {
           "Accept": [
-            "application/json;datetime-format=rfc3339"
+            "application/json;datetime-format=rfc3339, application/json"
           ]
         },
         "method": "get",
