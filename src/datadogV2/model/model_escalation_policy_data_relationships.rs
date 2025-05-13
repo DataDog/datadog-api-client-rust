@@ -14,9 +14,9 @@ pub struct EscalationPolicyDataRelationships {
     /// Defines the relationship to a collection of steps within an escalation policy. Contains an array of step data references.
     #[serde(rename = "steps")]
     pub steps: crate::datadogV2::model::EscalationPolicyDataRelationshipsSteps,
-    /// Defines the relationship to a collection of teams within an escalation policy. Contains an array of team data references.
+    /// Associates teams with this schedule in a data structure.
     #[serde(rename = "teams")]
-    pub teams: Option<crate::datadogV2::model::EscalationPolicyDataRelationshipsTeams>,
+    pub teams: Option<crate::datadogV2::model::DataRelationshipsTeams>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -36,10 +36,7 @@ impl EscalationPolicyDataRelationships {
         }
     }
 
-    pub fn teams(
-        mut self,
-        value: crate::datadogV2::model::EscalationPolicyDataRelationshipsTeams,
-    ) -> Self {
+    pub fn teams(mut self, value: crate::datadogV2::model::DataRelationshipsTeams) -> Self {
         self.teams = Some(value);
         self
     }
@@ -73,9 +70,7 @@ impl<'de> Deserialize<'de> for EscalationPolicyDataRelationships {
                 let mut steps: Option<
                     crate::datadogV2::model::EscalationPolicyDataRelationshipsSteps,
                 > = None;
-                let mut teams: Option<
-                    crate::datadogV2::model::EscalationPolicyDataRelationshipsTeams,
-                > = None;
+                let mut teams: Option<crate::datadogV2::model::DataRelationshipsTeams> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,

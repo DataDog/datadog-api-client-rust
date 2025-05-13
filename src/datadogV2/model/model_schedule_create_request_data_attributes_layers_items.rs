@@ -17,13 +17,12 @@ pub struct ScheduleCreateRequestDataAttributesLayersItems {
     /// The date/time after which this layer no longer applies (in ISO 8601).
     #[serde(rename = "end_date")]
     pub end_date: Option<chrono::DateTime<chrono::Utc>>,
-    /// Defines how frequently the rotation repeats, using days and/or seconds (up to certain limits).
+    /// Defines how often the rotation repeats, using a combination of days and optional seconds.
     #[serde(rename = "interval")]
-    pub interval: crate::datadogV2::model::ScheduleCreateRequestDataAttributesLayersItemsInterval,
+    pub interval: crate::datadogV2::model::LayerAttributesInterval,
     /// A list of members who participate in this layer's rotation.
     #[serde(rename = "members")]
-    pub members:
-        Vec<crate::datadogV2::model::ScheduleCreateRequestDataAttributesLayersItemsMembersItems>,
+    pub members: Vec<crate::datadogV2::model::ScheduleRequestDataAttributesLayersItemsMembersItems>,
     /// The name of this layer.
     #[serde(rename = "name")]
     pub name: String,
@@ -43,10 +42,8 @@ pub struct ScheduleCreateRequestDataAttributesLayersItems {
 impl ScheduleCreateRequestDataAttributesLayersItems {
     pub fn new(
         effective_date: chrono::DateTime<chrono::Utc>,
-        interval: crate::datadogV2::model::ScheduleCreateRequestDataAttributesLayersItemsInterval,
-        members: Vec<
-            crate::datadogV2::model::ScheduleCreateRequestDataAttributesLayersItemsMembersItems,
-        >,
+        interval: crate::datadogV2::model::LayerAttributesInterval,
+        members: Vec<crate::datadogV2::model::ScheduleRequestDataAttributesLayersItemsMembersItems>,
         name: String,
         rotation_start: chrono::DateTime<chrono::Utc>,
     ) -> ScheduleCreateRequestDataAttributesLayersItems {
@@ -101,10 +98,8 @@ impl<'de> Deserialize<'de> for ScheduleCreateRequestDataAttributesLayersItems {
             {
                 let mut effective_date: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut end_date: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut interval: Option<
-                    crate::datadogV2::model::ScheduleCreateRequestDataAttributesLayersItemsInterval,
-                > = None;
-                let mut members: Option<Vec<crate::datadogV2::model::ScheduleCreateRequestDataAttributesLayersItemsMembersItems>> = None;
+                let mut interval: Option<crate::datadogV2::model::LayerAttributesInterval> = None;
+                let mut members: Option<Vec<crate::datadogV2::model::ScheduleRequestDataAttributesLayersItemsMembersItems>> = None;
                 let mut name: Option<String> = None;
                 let mut restrictions: Option<Vec<crate::datadogV2::model::TimeRestriction>> = None;
                 let mut rotation_start: Option<chrono::DateTime<chrono::Utc>> = None;

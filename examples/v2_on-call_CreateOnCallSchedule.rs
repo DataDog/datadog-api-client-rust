@@ -3,18 +3,18 @@ use chrono::{DateTime, Utc};
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_on_call::CreateOnCallScheduleOptionalParams;
 use datadog_api_client::datadogV2::api_on_call::OnCallAPI;
+use datadog_api_client::datadogV2::model::DataRelationshipsTeams;
+use datadog_api_client::datadogV2::model::DataRelationshipsTeamsDataItems;
+use datadog_api_client::datadogV2::model::DataRelationshipsTeamsDataItemsType;
+use datadog_api_client::datadogV2::model::LayerAttributesInterval;
 use datadog_api_client::datadogV2::model::ScheduleCreateRequest;
 use datadog_api_client::datadogV2::model::ScheduleCreateRequestData;
 use datadog_api_client::datadogV2::model::ScheduleCreateRequestDataAttributes;
 use datadog_api_client::datadogV2::model::ScheduleCreateRequestDataAttributesLayersItems;
-use datadog_api_client::datadogV2::model::ScheduleCreateRequestDataAttributesLayersItemsInterval;
-use datadog_api_client::datadogV2::model::ScheduleCreateRequestDataAttributesLayersItemsMembersItems;
-use datadog_api_client::datadogV2::model::ScheduleCreateRequestDataAttributesLayersItemsMembersItemsUser;
 use datadog_api_client::datadogV2::model::ScheduleCreateRequestDataRelationships;
-use datadog_api_client::datadogV2::model::ScheduleCreateRequestDataRelationshipsTeams;
-use datadog_api_client::datadogV2::model::ScheduleCreateRequestDataRelationshipsTeamsDataItems;
-use datadog_api_client::datadogV2::model::ScheduleCreateRequestDataRelationshipsTeamsDataItemsType;
 use datadog_api_client::datadogV2::model::ScheduleCreateRequestDataType;
+use datadog_api_client::datadogV2::model::ScheduleRequestDataAttributesLayersItemsMembersItems;
+use datadog_api_client::datadogV2::model::ScheduleRequestDataAttributesLayersItemsMembersItemsUser;
 use datadog_api_client::datadogV2::model::TimeRestriction;
 use datadog_api_client::datadogV2::model::Weekday;
 
@@ -32,10 +32,10 @@ async fn main() {
                     DateTime::parse_from_rfc3339("2021-11-01T11:11:11+00:00")
                         .expect("Failed to parse datetime")
                         .with_timezone(&Utc),
-                    ScheduleCreateRequestDataAttributesLayersItemsInterval::new().days(1),
+                    LayerAttributesInterval::new().days(1),
                     vec![
-                        ScheduleCreateRequestDataAttributesLayersItemsMembersItems::new().user(
-                            ScheduleCreateRequestDataAttributesLayersItemsMembersItemsUser::new()
+                        ScheduleRequestDataAttributesLayersItemsMembersItems::new().user(
+                            ScheduleRequestDataAttributesLayersItemsMembersItemsUser::new()
                                 .id(user_data_id.clone()),
                         ),
                     ],
@@ -61,12 +61,10 @@ async fn main() {
             ScheduleCreateRequestDataType::SCHEDULES,
         )
         .relationships(ScheduleCreateRequestDataRelationships::new().teams(
-            ScheduleCreateRequestDataRelationshipsTeams::new().data(vec![
-                ScheduleCreateRequestDataRelationshipsTeamsDataItems::new(
-                    dd_team_data_id.clone(),
-                    ScheduleCreateRequestDataRelationshipsTeamsDataItemsType::TEAMS,
-                ),
-            ]),
+            DataRelationshipsTeams::new().data(vec![DataRelationshipsTeamsDataItems::new(
+                dd_team_data_id.clone(),
+                DataRelationshipsTeamsDataItemsType::TEAMS,
+            )]),
         )),
     );
     let configuration = datadog::Configuration::new();

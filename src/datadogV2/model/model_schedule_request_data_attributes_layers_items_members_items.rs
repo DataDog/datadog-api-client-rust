@@ -6,14 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Identifies the user who is assigned to this member object. Only `id` is required.
+/// Defines a single member within a schedule layer, including the reference to the underlying user.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ScheduleUpdateRequestDataAttributesLayersItemsMembersItemsUser {
-    /// The user's ID.
-    #[serde(rename = "id")]
-    pub id: Option<String>,
+pub struct ScheduleRequestDataAttributesLayersItemsMembersItems {
+    /// Identifies the user participating in this layer as a single object with an `id`.
+    #[serde(rename = "user")]
+    pub user:
+        Option<crate::datadogV2::model::ScheduleRequestDataAttributesLayersItemsMembersItemsUser>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,17 +22,20 @@ pub struct ScheduleUpdateRequestDataAttributesLayersItemsMembersItemsUser {
     pub(crate) _unparsed: bool,
 }
 
-impl ScheduleUpdateRequestDataAttributesLayersItemsMembersItemsUser {
-    pub fn new() -> ScheduleUpdateRequestDataAttributesLayersItemsMembersItemsUser {
-        ScheduleUpdateRequestDataAttributesLayersItemsMembersItemsUser {
-            id: None,
+impl ScheduleRequestDataAttributesLayersItemsMembersItems {
+    pub fn new() -> ScheduleRequestDataAttributesLayersItemsMembersItems {
+        ScheduleRequestDataAttributesLayersItemsMembersItems {
+            user: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn id(mut self, value: String) -> Self {
-        self.id = Some(value);
+    pub fn user(
+        mut self,
+        value: crate::datadogV2::model::ScheduleRequestDataAttributesLayersItemsMembersItemsUser,
+    ) -> Self {
+        self.user = Some(value);
         self
     }
 
@@ -44,20 +48,20 @@ impl ScheduleUpdateRequestDataAttributesLayersItemsMembersItemsUser {
     }
 }
 
-impl Default for ScheduleUpdateRequestDataAttributesLayersItemsMembersItemsUser {
+impl Default for ScheduleRequestDataAttributesLayersItemsMembersItems {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for ScheduleUpdateRequestDataAttributesLayersItemsMembersItemsUser {
+impl<'de> Deserialize<'de> for ScheduleRequestDataAttributesLayersItemsMembersItems {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ScheduleUpdateRequestDataAttributesLayersItemsMembersItemsUserVisitor;
-        impl<'a> Visitor<'a> for ScheduleUpdateRequestDataAttributesLayersItemsMembersItemsUserVisitor {
-            type Value = ScheduleUpdateRequestDataAttributesLayersItemsMembersItemsUser;
+        struct ScheduleRequestDataAttributesLayersItemsMembersItemsVisitor;
+        impl<'a> Visitor<'a> for ScheduleRequestDataAttributesLayersItemsMembersItemsVisitor {
+            type Value = ScheduleRequestDataAttributesLayersItemsMembersItems;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -67,7 +71,7 @@ impl<'de> Deserialize<'de> for ScheduleUpdateRequestDataAttributesLayersItemsMem
             where
                 M: MapAccess<'a>,
             {
-                let mut id: Option<String> = None;
+                let mut user: Option<crate::datadogV2::model::ScheduleRequestDataAttributesLayersItemsMembersItemsUser> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -76,11 +80,11 @@ impl<'de> Deserialize<'de> for ScheduleUpdateRequestDataAttributesLayersItemsMem
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "id" => {
+                        "user" => {
                             if v.is_null() {
                                 continue;
                             }
-                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            user = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -90,8 +94,8 @@ impl<'de> Deserialize<'de> for ScheduleUpdateRequestDataAttributesLayersItemsMem
                     }
                 }
 
-                let content = ScheduleUpdateRequestDataAttributesLayersItemsMembersItemsUser {
-                    id,
+                let content = ScheduleRequestDataAttributesLayersItemsMembersItems {
+                    user,
                     additional_properties,
                     _unparsed,
                 };
@@ -100,7 +104,6 @@ impl<'de> Deserialize<'de> for ScheduleUpdateRequestDataAttributesLayersItemsMem
             }
         }
 
-        deserializer
-            .deserialize_any(ScheduleUpdateRequestDataAttributesLayersItemsMembersItemsUserVisitor)
+        deserializer.deserialize_any(ScheduleRequestDataAttributesLayersItemsMembersItemsVisitor)
     }
 }

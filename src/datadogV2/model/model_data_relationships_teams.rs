@@ -6,16 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Defines the relationship to teams within an escalation policy creation request, referencing the teams to be associated with the policy.
+/// Associates teams with this schedule in a data structure.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct EscalationPolicyCreateRequestDataRelationshipsTeams {
-    /// An array of team references for the new escalation policy.
+pub struct DataRelationshipsTeams {
+    /// An array of team references for this schedule.
     #[serde(rename = "data")]
-    pub data: Option<
-        Vec<crate::datadogV2::model::EscalationPolicyCreateRequestDataRelationshipsTeamsDataItems>,
-    >,
+    pub data: Option<Vec<crate::datadogV2::model::DataRelationshipsTeamsDataItems>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -23,9 +21,9 @@ pub struct EscalationPolicyCreateRequestDataRelationshipsTeams {
     pub(crate) _unparsed: bool,
 }
 
-impl EscalationPolicyCreateRequestDataRelationshipsTeams {
-    pub fn new() -> EscalationPolicyCreateRequestDataRelationshipsTeams {
-        EscalationPolicyCreateRequestDataRelationshipsTeams {
+impl DataRelationshipsTeams {
+    pub fn new() -> DataRelationshipsTeams {
+        DataRelationshipsTeams {
             data: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -34,9 +32,7 @@ impl EscalationPolicyCreateRequestDataRelationshipsTeams {
 
     pub fn data(
         mut self,
-        value: Vec<
-            crate::datadogV2::model::EscalationPolicyCreateRequestDataRelationshipsTeamsDataItems,
-        >,
+        value: Vec<crate::datadogV2::model::DataRelationshipsTeamsDataItems>,
     ) -> Self {
         self.data = Some(value);
         self
@@ -51,20 +47,20 @@ impl EscalationPolicyCreateRequestDataRelationshipsTeams {
     }
 }
 
-impl Default for EscalationPolicyCreateRequestDataRelationshipsTeams {
+impl Default for DataRelationshipsTeams {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for EscalationPolicyCreateRequestDataRelationshipsTeams {
+impl<'de> Deserialize<'de> for DataRelationshipsTeams {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct EscalationPolicyCreateRequestDataRelationshipsTeamsVisitor;
-        impl<'a> Visitor<'a> for EscalationPolicyCreateRequestDataRelationshipsTeamsVisitor {
-            type Value = EscalationPolicyCreateRequestDataRelationshipsTeams;
+        struct DataRelationshipsTeamsVisitor;
+        impl<'a> Visitor<'a> for DataRelationshipsTeamsVisitor {
+            type Value = DataRelationshipsTeams;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -74,7 +70,9 @@ impl<'de> Deserialize<'de> for EscalationPolicyCreateRequestDataRelationshipsTea
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<Vec<crate::datadogV2::model::EscalationPolicyCreateRequestDataRelationshipsTeamsDataItems>> = None;
+                let mut data: Option<
+                    Vec<crate::datadogV2::model::DataRelationshipsTeamsDataItems>,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -97,7 +95,7 @@ impl<'de> Deserialize<'de> for EscalationPolicyCreateRequestDataRelationshipsTea
                     }
                 }
 
-                let content = EscalationPolicyCreateRequestDataRelationshipsTeams {
+                let content = DataRelationshipsTeams {
                     data,
                     additional_properties,
                     _unparsed,
@@ -107,6 +105,6 @@ impl<'de> Deserialize<'de> for EscalationPolicyCreateRequestDataRelationshipsTea
             }
         }
 
-        deserializer.deserialize_any(EscalationPolicyCreateRequestDataRelationshipsTeamsVisitor)
+        deserializer.deserialize_any(DataRelationshipsTeamsVisitor)
     }
 }

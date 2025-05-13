@@ -2,6 +2,9 @@
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_on_call::OnCallAPI;
 use datadog_api_client::datadogV2::api_on_call::UpdateOnCallEscalationPolicyOptionalParams;
+use datadog_api_client::datadogV2::model::DataRelationshipsTeams;
+use datadog_api_client::datadogV2::model::DataRelationshipsTeamsDataItems;
+use datadog_api_client::datadogV2::model::DataRelationshipsTeamsDataItemsType;
 use datadog_api_client::datadogV2::model::EscalationPolicyStepAttributesAssignment;
 use datadog_api_client::datadogV2::model::EscalationPolicyStepTarget;
 use datadog_api_client::datadogV2::model::EscalationPolicyStepTargetType;
@@ -10,9 +13,6 @@ use datadog_api_client::datadogV2::model::EscalationPolicyUpdateRequestData;
 use datadog_api_client::datadogV2::model::EscalationPolicyUpdateRequestDataAttributes;
 use datadog_api_client::datadogV2::model::EscalationPolicyUpdateRequestDataAttributesStepsItems;
 use datadog_api_client::datadogV2::model::EscalationPolicyUpdateRequestDataRelationships;
-use datadog_api_client::datadogV2::model::EscalationPolicyUpdateRequestDataRelationshipsTeams;
-use datadog_api_client::datadogV2::model::EscalationPolicyUpdateRequestDataRelationshipsTeamsDataItems;
-use datadog_api_client::datadogV2::model::EscalationPolicyUpdateRequestDataRelationshipsTeamsDataItemsType;
 use datadog_api_client::datadogV2::model::EscalationPolicyUpdateRequestDataType;
 
 #[tokio::main]
@@ -49,12 +49,10 @@ async fn main() {
             EscalationPolicyUpdateRequestDataType::POLICIES,
         )
         .relationships(EscalationPolicyUpdateRequestDataRelationships::new().teams(
-            EscalationPolicyUpdateRequestDataRelationshipsTeams::new().data(vec![
-                EscalationPolicyUpdateRequestDataRelationshipsTeamsDataItems::new(
-                    dd_team_data_id.clone(),
-                    EscalationPolicyUpdateRequestDataRelationshipsTeamsDataItemsType::TEAMS,
-                ),
-            ]),
+            DataRelationshipsTeams::new().data(vec![DataRelationshipsTeamsDataItems::new(
+                dd_team_data_id.clone(),
+                DataRelationshipsTeamsDataItemsType::TEAMS,
+            )]),
         )),
     );
     let configuration = datadog::Configuration::new();
