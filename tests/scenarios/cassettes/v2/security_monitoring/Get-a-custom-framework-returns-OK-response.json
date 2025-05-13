@@ -32,7 +32,7 @@
           "message": "OK"
         }
       },
-      "recorded_at": "Sun, 27 Apr 2025 22:14:16 GMT"
+      "recorded_at": "Tue, 13 May 2025 17:29:58 GMT"
     },
     {
       "request": {
@@ -47,7 +47,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"id\":\"create-framework-new-10\",\"type\":\"custom_framework\",\"attributes\":{\"description\":\"\",\"handle\":\"create-framework-new\",\"icon_url\":\"test-url\",\"name\":\"name\",\"requirements\":[{\"name\":\"requirement\",\"controls\":[{\"name\":\"control\",\"rules_id\":[\"def-000-be9\"]}]}],\"version\":\"10\"}}}",
+          "string": "{\"data\":{\"id\":\"create-framework-new-10\",\"type\":\"custom_framework\",\"attributes\":{\"handle\":\"create-framework-new\",\"icon_url\":\"test-url\",\"name\":\"name\",\"requirements\":[{\"name\":\"requirement\",\"controls\":[{\"name\":\"control\",\"rules_id\":[\"def-000-be9\"]}]}],\"version\":\"10\"}}}",
           "encoding": null
         },
         "headers": {
@@ -60,7 +60,7 @@
           "message": "OK"
         }
       },
-      "recorded_at": "Sun, 27 Apr 2025 22:14:16 GMT"
+      "recorded_at": "Tue, 13 May 2025 17:29:58 GMT"
     },
     {
       "request": {
@@ -88,7 +88,7 @@
           "message": "OK"
         }
       },
-      "recorded_at": "Sun, 27 Apr 2025 22:14:16 GMT"
+      "recorded_at": "Tue, 13 May 2025 17:29:58 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"
