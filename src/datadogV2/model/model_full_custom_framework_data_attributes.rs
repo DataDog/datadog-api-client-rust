@@ -11,15 +11,12 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct FullCustomFrameworkDataAttributes {
-    /// Framework Description
-    #[serde(rename = "description")]
-    pub description: String,
     /// Framework Handle
     #[serde(rename = "handle")]
     pub handle: String,
     /// Framework Icon URL
     #[serde(rename = "icon_url")]
-    pub icon_url: String,
+    pub icon_url: Option<String>,
     /// Framework Name
     #[serde(rename = "name")]
     pub name: String,
@@ -38,23 +35,25 @@ pub struct FullCustomFrameworkDataAttributes {
 
 impl FullCustomFrameworkDataAttributes {
     pub fn new(
-        description: String,
         handle: String,
-        icon_url: String,
         name: String,
         requirements: Vec<crate::datadogV2::model::CustomFrameworkRequirement>,
         version: String,
     ) -> FullCustomFrameworkDataAttributes {
         FullCustomFrameworkDataAttributes {
-            description,
             handle,
-            icon_url,
+            icon_url: None,
             name,
             requirements,
             version,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn icon_url(mut self, value: String) -> Self {
+        self.icon_url = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -83,7 +82,6 @@ impl<'de> Deserialize<'de> for FullCustomFrameworkDataAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut description: Option<String> = None;
                 let mut handle: Option<String> = None;
                 let mut icon_url: Option<String> = None;
                 let mut name: Option<String> = None;
@@ -99,14 +97,13 @@ impl<'de> Deserialize<'de> for FullCustomFrameworkDataAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "description" => {
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "handle" => {
                             handle = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "icon_url" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             icon_url = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "name" => {
@@ -126,17 +123,13 @@ impl<'de> Deserialize<'de> for FullCustomFrameworkDataAttributes {
                         }
                     }
                 }
-                let description =
-                    description.ok_or_else(|| M::Error::missing_field("description"))?;
                 let handle = handle.ok_or_else(|| M::Error::missing_field("handle"))?;
-                let icon_url = icon_url.ok_or_else(|| M::Error::missing_field("icon_url"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let requirements =
                     requirements.ok_or_else(|| M::Error::missing_field("requirements"))?;
                 let version = version.ok_or_else(|| M::Error::missing_field("version"))?;
 
                 let content = FullCustomFrameworkDataAttributes {
-                    description,
                     handle,
                     icon_url,
                     name,
