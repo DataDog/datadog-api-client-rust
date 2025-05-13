@@ -11,9 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ScheduleCreateRequestDataRelationships {
-    /// Associates the new schedule with one or more teams.
+    /// Associates teams with this schedule in a data structure.
     #[serde(rename = "teams")]
-    pub teams: Option<crate::datadogV2::model::ScheduleCreateRequestDataRelationshipsTeams>,
+    pub teams: Option<crate::datadogV2::model::DataRelationshipsTeams>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -30,10 +30,7 @@ impl ScheduleCreateRequestDataRelationships {
         }
     }
 
-    pub fn teams(
-        mut self,
-        value: crate::datadogV2::model::ScheduleCreateRequestDataRelationshipsTeams,
-    ) -> Self {
+    pub fn teams(mut self, value: crate::datadogV2::model::DataRelationshipsTeams) -> Self {
         self.teams = Some(value);
         self
     }
@@ -70,9 +67,7 @@ impl<'de> Deserialize<'de> for ScheduleCreateRequestDataRelationships {
             where
                 M: MapAccess<'a>,
             {
-                let mut teams: Option<
-                    crate::datadogV2::model::ScheduleCreateRequestDataRelationshipsTeams,
-                > = None;
+                let mut teams: Option<crate::datadogV2::model::DataRelationshipsTeams> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,

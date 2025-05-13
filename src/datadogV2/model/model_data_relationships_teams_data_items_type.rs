@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum EscalationPolicyUpdateRequestDataRelationshipsTeamsDataItemsType {
+pub enum DataRelationshipsTeamsDataItemsType {
     TEAMS,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for EscalationPolicyUpdateRequestDataRelationshipsTeamsDataItemsType {
+impl ToString for DataRelationshipsTeamsDataItemsType {
     fn to_string(&self) -> String {
         match self {
             Self::TEAMS => String::from("teams"),
@@ -20,7 +20,7 @@ impl ToString for EscalationPolicyUpdateRequestDataRelationshipsTeamsDataItemsTy
     }
 }
 
-impl Serialize for EscalationPolicyUpdateRequestDataRelationshipsTeamsDataItemsType {
+impl Serialize for DataRelationshipsTeamsDataItemsType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -32,7 +32,7 @@ impl Serialize for EscalationPolicyUpdateRequestDataRelationshipsTeamsDataItemsT
     }
 }
 
-impl<'de> Deserialize<'de> for EscalationPolicyUpdateRequestDataRelationshipsTeamsDataItemsType {
+impl<'de> Deserialize<'de> for DataRelationshipsTeamsDataItemsType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,

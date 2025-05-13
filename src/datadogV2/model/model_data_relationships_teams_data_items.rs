@@ -6,18 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Holds the relationship data linking this schedule to a particular team,
-/// identified by `id` and `type`.
+/// Relates a team to this schedule, identified by `id` and `type` (must be `teams`).
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ScheduleCreateRequestDataRelationshipsTeamsDataItems {
-    /// A unique identifier for the team.
+pub struct DataRelationshipsTeamsDataItems {
+    /// The unique identifier of the team in this relationship.
     #[serde(rename = "id")]
     pub id: String,
     /// Teams resource type.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::ScheduleCreateRequestDataRelationshipsTeamsDataItemsType,
+    pub type_: crate::datadogV2::model::DataRelationshipsTeamsDataItemsType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -25,12 +24,12 @@ pub struct ScheduleCreateRequestDataRelationshipsTeamsDataItems {
     pub(crate) _unparsed: bool,
 }
 
-impl ScheduleCreateRequestDataRelationshipsTeamsDataItems {
+impl DataRelationshipsTeamsDataItems {
     pub fn new(
         id: String,
-        type_: crate::datadogV2::model::ScheduleCreateRequestDataRelationshipsTeamsDataItemsType,
-    ) -> ScheduleCreateRequestDataRelationshipsTeamsDataItems {
-        ScheduleCreateRequestDataRelationshipsTeamsDataItems {
+        type_: crate::datadogV2::model::DataRelationshipsTeamsDataItemsType,
+    ) -> DataRelationshipsTeamsDataItems {
+        DataRelationshipsTeamsDataItems {
             id,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
@@ -47,14 +46,14 @@ impl ScheduleCreateRequestDataRelationshipsTeamsDataItems {
     }
 }
 
-impl<'de> Deserialize<'de> for ScheduleCreateRequestDataRelationshipsTeamsDataItems {
+impl<'de> Deserialize<'de> for DataRelationshipsTeamsDataItems {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ScheduleCreateRequestDataRelationshipsTeamsDataItemsVisitor;
-        impl<'a> Visitor<'a> for ScheduleCreateRequestDataRelationshipsTeamsDataItemsVisitor {
-            type Value = ScheduleCreateRequestDataRelationshipsTeamsDataItems;
+        struct DataRelationshipsTeamsDataItemsVisitor;
+        impl<'a> Visitor<'a> for DataRelationshipsTeamsDataItemsVisitor {
+            type Value = DataRelationshipsTeamsDataItems;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -65,7 +64,9 @@ impl<'de> Deserialize<'de> for ScheduleCreateRequestDataRelationshipsTeamsDataIt
                 M: MapAccess<'a>,
             {
                 let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::ScheduleCreateRequestDataRelationshipsTeamsDataItemsType> = None;
+                let mut type_: Option<
+                    crate::datadogV2::model::DataRelationshipsTeamsDataItemsType,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -81,7 +82,7 @@ impl<'de> Deserialize<'de> for ScheduleCreateRequestDataRelationshipsTeamsDataIt
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::ScheduleCreateRequestDataRelationshipsTeamsDataItemsType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::DataRelationshipsTeamsDataItemsType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -98,7 +99,7 @@ impl<'de> Deserialize<'de> for ScheduleCreateRequestDataRelationshipsTeamsDataIt
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = ScheduleCreateRequestDataRelationshipsTeamsDataItems {
+                let content = DataRelationshipsTeamsDataItems {
                     id,
                     type_,
                     additional_properties,
@@ -109,6 +110,6 @@ impl<'de> Deserialize<'de> for ScheduleCreateRequestDataRelationshipsTeamsDataIt
             }
         }
 
-        deserializer.deserialize_any(ScheduleCreateRequestDataRelationshipsTeamsDataItemsVisitor)
+        deserializer.deserialize_any(DataRelationshipsTeamsDataItemsVisitor)
     }
 }

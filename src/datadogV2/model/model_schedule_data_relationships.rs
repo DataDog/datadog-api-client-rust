@@ -16,7 +16,7 @@ pub struct ScheduleDataRelationships {
     pub layers: Option<crate::datadogV2::model::ScheduleDataRelationshipsLayers>,
     /// Associates teams with this schedule in a data structure.
     #[serde(rename = "teams")]
-    pub teams: Option<crate::datadogV2::model::ScheduleDataRelationshipsTeams>,
+    pub teams: Option<crate::datadogV2::model::DataRelationshipsTeams>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -42,7 +42,7 @@ impl ScheduleDataRelationships {
         self
     }
 
-    pub fn teams(mut self, value: crate::datadogV2::model::ScheduleDataRelationshipsTeams) -> Self {
+    pub fn teams(mut self, value: crate::datadogV2::model::DataRelationshipsTeams) -> Self {
         self.teams = Some(value);
         self
     }
@@ -81,8 +81,7 @@ impl<'de> Deserialize<'de> for ScheduleDataRelationships {
             {
                 let mut layers: Option<crate::datadogV2::model::ScheduleDataRelationshipsLayers> =
                     None;
-                let mut teams: Option<crate::datadogV2::model::ScheduleDataRelationshipsTeams> =
-                    None;
+                let mut teams: Option<crate::datadogV2::model::DataRelationshipsTeams> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,

@@ -6,17 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Defines how frequently the rotation repeats, using days and/or seconds (up to certain limits).
+/// Identifies the user participating in this layer as a single object with an `id`.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ScheduleCreateRequestDataAttributesLayersItemsInterval {
-    /// The number of full days in each rotation period.
-    #[serde(rename = "days")]
-    pub days: Option<i32>,
-    /// Extra seconds that may be added to extend the rotation beyond whole days.
-    #[serde(rename = "seconds")]
-    pub seconds: Option<i64>,
+pub struct ScheduleRequestDataAttributesLayersItemsMembersItemsUser {
+    /// The user's ID.
+    #[serde(rename = "id")]
+    pub id: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,23 +21,17 @@ pub struct ScheduleCreateRequestDataAttributesLayersItemsInterval {
     pub(crate) _unparsed: bool,
 }
 
-impl ScheduleCreateRequestDataAttributesLayersItemsInterval {
-    pub fn new() -> ScheduleCreateRequestDataAttributesLayersItemsInterval {
-        ScheduleCreateRequestDataAttributesLayersItemsInterval {
-            days: None,
-            seconds: None,
+impl ScheduleRequestDataAttributesLayersItemsMembersItemsUser {
+    pub fn new() -> ScheduleRequestDataAttributesLayersItemsMembersItemsUser {
+        ScheduleRequestDataAttributesLayersItemsMembersItemsUser {
+            id: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn days(mut self, value: i32) -> Self {
-        self.days = Some(value);
-        self
-    }
-
-    pub fn seconds(mut self, value: i64) -> Self {
-        self.seconds = Some(value);
+    pub fn id(mut self, value: String) -> Self {
+        self.id = Some(value);
         self
     }
 
@@ -53,20 +44,20 @@ impl ScheduleCreateRequestDataAttributesLayersItemsInterval {
     }
 }
 
-impl Default for ScheduleCreateRequestDataAttributesLayersItemsInterval {
+impl Default for ScheduleRequestDataAttributesLayersItemsMembersItemsUser {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for ScheduleCreateRequestDataAttributesLayersItemsInterval {
+impl<'de> Deserialize<'de> for ScheduleRequestDataAttributesLayersItemsMembersItemsUser {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ScheduleCreateRequestDataAttributesLayersItemsIntervalVisitor;
-        impl<'a> Visitor<'a> for ScheduleCreateRequestDataAttributesLayersItemsIntervalVisitor {
-            type Value = ScheduleCreateRequestDataAttributesLayersItemsInterval;
+        struct ScheduleRequestDataAttributesLayersItemsMembersItemsUserVisitor;
+        impl<'a> Visitor<'a> for ScheduleRequestDataAttributesLayersItemsMembersItemsUserVisitor {
+            type Value = ScheduleRequestDataAttributesLayersItemsMembersItemsUser;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -76,8 +67,7 @@ impl<'de> Deserialize<'de> for ScheduleCreateRequestDataAttributesLayersItemsInt
             where
                 M: MapAccess<'a>,
             {
-                let mut days: Option<i32> = None;
-                let mut seconds: Option<i64> = None;
+                let mut id: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -86,17 +76,11 @@ impl<'de> Deserialize<'de> for ScheduleCreateRequestDataAttributesLayersItemsInt
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "days" => {
+                        "id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            days = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "seconds" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            seconds = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -106,9 +90,8 @@ impl<'de> Deserialize<'de> for ScheduleCreateRequestDataAttributesLayersItemsInt
                     }
                 }
 
-                let content = ScheduleCreateRequestDataAttributesLayersItemsInterval {
-                    days,
-                    seconds,
+                let content = ScheduleRequestDataAttributesLayersItemsMembersItemsUser {
+                    id,
                     additional_properties,
                     _unparsed,
                 };
@@ -117,6 +100,7 @@ impl<'de> Deserialize<'de> for ScheduleCreateRequestDataAttributesLayersItemsInt
             }
         }
 
-        deserializer.deserialize_any(ScheduleCreateRequestDataAttributesLayersItemsIntervalVisitor)
+        deserializer
+            .deserialize_any(ScheduleRequestDataAttributesLayersItemsMembersItemsUserVisitor)
     }
 }
