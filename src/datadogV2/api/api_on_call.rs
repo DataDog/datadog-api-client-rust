@@ -90,6 +90,29 @@ impl GetOnCallTeamRoutingRulesOptionalParams {
     }
 }
 
+/// GetScheduleOnCallUserOptionalParams is a struct for passing parameters to the method [`OnCallAPI::get_schedule_on_call_user`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetScheduleOnCallUserOptionalParams {
+    /// Specifies related resources to include in the response as a comma-separated list. Allowed value: `user`.
+    pub include: Option<String>,
+    /// Retrieves the on-call user at the given timestamp (ISO-8601). Defaults to the current time if omitted."
+    pub filter_at_ts: Option<String>,
+}
+
+impl GetScheduleOnCallUserOptionalParams {
+    /// Specifies related resources to include in the response as a comma-separated list. Allowed value: `user`.
+    pub fn include(mut self, value: String) -> Self {
+        self.include = Some(value);
+        self
+    }
+    /// Retrieves the on-call user at the given timestamp (ISO-8601). Defaults to the current time if omitted."
+    pub fn filter_at_ts(mut self, value: String) -> Self {
+        self.filter_at_ts = Some(value);
+        self
+    }
+}
+
 /// SetOnCallTeamRoutingRulesOptionalParams is a struct for passing parameters to the method [`OnCallAPI::set_on_call_team_routing_rules`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -190,6 +213,14 @@ pub enum GetOnCallScheduleError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetOnCallTeamRoutingRulesError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetScheduleOnCallUserError is a struct for typed errors of method [`OnCallAPI::get_schedule_on_call_user`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetScheduleOnCallUserError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -1144,6 +1175,128 @@ impl OnCallAPI {
             };
         } else {
             let local_entity: Option<GetOnCallTeamRoutingRulesError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Retrieves the user who is on-call for the specified schedule at a given time.
+    pub async fn get_schedule_on_call_user(
+        &self,
+        schedule_id: String,
+        params: GetScheduleOnCallUserOptionalParams,
+    ) -> Result<crate::datadogV2::model::Shift, datadog::Error<GetScheduleOnCallUserError>> {
+        match self
+            .get_schedule_on_call_user_with_http_info(schedule_id, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Retrieves the user who is on-call for the specified schedule at a given time.
+    pub async fn get_schedule_on_call_user_with_http_info(
+        &self,
+        schedule_id: String,
+        params: GetScheduleOnCallUserOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::Shift>,
+        datadog::Error<GetScheduleOnCallUserError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_schedule_on_call_user";
+
+        // unbox and build optional parameters
+        let include = params.include;
+        let filter_at_ts = params.filter_at_ts;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/on-call/schedules/{schedule_id}/on-call",
+            local_configuration.get_operation_host(operation_id),
+            schedule_id = datadog::urlencode(schedule_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = include {
+            local_req_builder =
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_at_ts {
+            local_req_builder =
+                local_req_builder.query(&[("filter[at_ts]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::Shift>(&local_content) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetScheduleOnCallUserError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
