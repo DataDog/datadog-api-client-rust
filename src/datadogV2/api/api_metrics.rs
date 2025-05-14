@@ -20,7 +20,7 @@ pub struct EstimateMetricsOutputSeriesOptionalParams {
     pub filter_groups: Option<String>,
     /// The number of hours of look back (from now) to estimate cardinality with. If unspecified, it defaults to 0 hours.
     pub filter_hours_ago: Option<i32>,
-    /// The number of aggregations that a `count`, `rate`, or `gauge` metric is configured to use. Max number of aggregation combos is 9.
+    /// Deprecated. Number of aggregations has no impact on volume.
     pub filter_num_aggregations: Option<i32>,
     /// A boolean, for distribution metrics only, to estimate cardinality if the metric includes additional percentile aggregators.
     pub filter_pct: Option<bool>,
@@ -39,7 +39,7 @@ impl EstimateMetricsOutputSeriesOptionalParams {
         self.filter_hours_ago = Some(value);
         self
     }
-    /// The number of aggregations that a `count`, `rate`, or `gauge` metric is configured to use. Max number of aggregation combos is 9.
+    /// Deprecated. Number of aggregations has no impact on volume.
     pub fn filter_num_aggregations(mut self, value: i32) -> Self {
         self.filter_num_aggregations = Some(value);
         self
@@ -557,10 +557,10 @@ impl MetricsAPI {
     }
 
     /// Create and define a list of queryable tag keys for an existing count/gauge/rate/distribution metric.
-    /// Optionally, include percentile aggregations on any distribution metric or configure custom aggregations
-    /// on any count, rate, or gauge metric. By setting `exclude_tags_mode` to true the behavior is changed
-    /// from an allow-list to a deny-list, and tags in the defined list will not be queryable.
-    /// Can only be used with application keys of users with the `Manage Tags for Metrics` permission.
+    /// Optionally, include percentile aggregations on any distribution metric. By setting `exclude_tags_mode`
+    /// to true, the behavior is changed from an allow-list to a deny-list, and tags in the defined list are
+    /// not queryable. Can only be used with application keys of users with the `Manage Tags for Metrics`
+    /// permission.
     pub async fn create_tag_configuration(
         &self,
         metric_name: String,
@@ -587,10 +587,10 @@ impl MetricsAPI {
     }
 
     /// Create and define a list of queryable tag keys for an existing count/gauge/rate/distribution metric.
-    /// Optionally, include percentile aggregations on any distribution metric or configure custom aggregations
-    /// on any count, rate, or gauge metric. By setting `exclude_tags_mode` to true the behavior is changed
-    /// from an allow-list to a deny-list, and tags in the defined list will not be queryable.
-    /// Can only be used with application keys of users with the `Manage Tags for Metrics` permission.
+    /// Optionally, include percentile aggregations on any distribution metric. By setting `exclude_tags_mode`
+    /// to true, the behavior is changed from an allow-list to a deny-list, and tags in the defined list are
+    /// not queryable. Can only be used with application keys of users with the `Manage Tags for Metrics`
+    /// permission.
     pub async fn create_tag_configuration_with_http_info(
         &self,
         metric_name: String,
