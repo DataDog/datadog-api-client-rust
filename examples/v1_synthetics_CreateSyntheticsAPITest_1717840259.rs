@@ -11,6 +11,7 @@ use datadog_api_client::datadogV1::model::SyntheticsAPITestType;
 use datadog_api_client::datadogV1::model::SyntheticsAssertion;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionOperator;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionTarget;
+use datadog_api_client::datadogV1::model::SyntheticsAssertionTargetValue;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionType;
 use datadog_api_client::datadogV1::model::SyntheticsBasicAuth;
 use datadog_api_client::datadogV1::model::SyntheticsBasicAuthDigest;
@@ -29,7 +30,6 @@ use datadog_api_client::datadogV1::model::SyntheticsBasicAuthWebType;
 use datadog_api_client::datadogV1::model::SyntheticsTestDetailsSubType;
 use datadog_api_client::datadogV1::model::SyntheticsTestOptions;
 use datadog_api_client::datadogV1::model::SyntheticsTestRequest;
-use serde_json::Value;
 
 #[tokio::main]
 async fn main() {
@@ -39,7 +39,7 @@ async fn main() {
                 vec![SyntheticsAssertion::SyntheticsAssertionTarget(Box::new(
                     SyntheticsAssertionTarget::new(
                         SyntheticsAssertionOperator::IS,
-                        Value::from(200),
+                        SyntheticsAssertionTargetValue::SyntheticsAssertionTargetValueNumber(200),
                         SyntheticsAssertionType::STATUS_CODE,
                     ),
                 ))],
@@ -56,7 +56,7 @@ async fn main() {
                 vec![SyntheticsAssertion::SyntheticsAssertionTarget(Box::new(
                     SyntheticsAssertionTarget::new(
                         SyntheticsAssertionOperator::IS,
-                        Value::from(200),
+                        SyntheticsAssertionTargetValue::SyntheticsAssertionTargetValueNumber(200),
                         SyntheticsAssertionType::STATUS_CODE,
                     ),
                 ))],
@@ -74,7 +74,7 @@ async fn main() {
                 vec![SyntheticsAssertion::SyntheticsAssertionTarget(Box::new(
                     SyntheticsAssertionTarget::new(
                         SyntheticsAssertionOperator::IS,
-                        Value::from(200),
+                        SyntheticsAssertionTargetValue::SyntheticsAssertionTargetValueNumber(200),
                         SyntheticsAssertionType::STATUS_CODE,
                     ),
                 ))],
@@ -95,7 +95,7 @@ async fn main() {
                 vec![SyntheticsAssertion::SyntheticsAssertionTarget(Box::new(
                     SyntheticsAssertionTarget::new(
                         SyntheticsAssertionOperator::IS,
-                        Value::from(200),
+                        SyntheticsAssertionTargetValue::SyntheticsAssertionTargetValueNumber(200),
                         SyntheticsAssertionType::STATUS_CODE,
                     ),
                 ))],
@@ -112,7 +112,7 @@ async fn main() {
                 vec![SyntheticsAssertion::SyntheticsAssertionTarget(Box::new(
                     SyntheticsAssertionTarget::new(
                         SyntheticsAssertionOperator::IS,
-                        Value::from(200),
+                        SyntheticsAssertionTargetValue::SyntheticsAssertionTargetValueNumber(200),
                         SyntheticsAssertionType::STATUS_CODE,
                     ),
                 ))],
@@ -133,7 +133,7 @@ async fn main() {
                 vec![SyntheticsAssertion::SyntheticsAssertionTarget(Box::new(
                     SyntheticsAssertionTarget::new(
                         SyntheticsAssertionOperator::IS,
-                        Value::from(200),
+                        SyntheticsAssertionTargetValue::SyntheticsAssertionTargetValueNumber(200),
                         SyntheticsAssertionType::STATUS_CODE,
                     ),
                 ))],
@@ -156,7 +156,7 @@ async fn main() {
                 vec![SyntheticsAssertion::SyntheticsAssertionTarget(Box::new(
                     SyntheticsAssertionTarget::new(
                         SyntheticsAssertionOperator::IS,
-                        Value::from(200),
+                        SyntheticsAssertionTargetValue::SyntheticsAssertionTargetValueNumber(200),
                         SyntheticsAssertionType::STATUS_CODE,
                     ),
                 ))],

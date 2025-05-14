@@ -1342,6 +1342,8 @@ pub mod model_synthetics_assertion_target;
 pub use self::model_synthetics_assertion_target::SyntheticsAssertionTarget;
 pub mod model_synthetics_assertion_operator;
 pub use self::model_synthetics_assertion_operator::SyntheticsAssertionOperator;
+pub mod model_synthetics_assertion_target_value;
+pub use self::model_synthetics_assertion_target_value::SyntheticsAssertionTargetValue;
 pub mod model_synthetics_assertion_timings_scope;
 pub use self::model_synthetics_assertion_timings_scope::SyntheticsAssertionTimingsScope;
 pub mod model_synthetics_assertion_type;

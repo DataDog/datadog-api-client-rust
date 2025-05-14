@@ -17,9 +17,9 @@ pub struct SyntheticsAssertionTarget {
     /// The associated assertion property.
     #[serde(rename = "property")]
     pub property: Option<String>,
-    /// Value used by the operator.
+    /// Value used by the operator in assertions. Can be either a number or string.
     #[serde(rename = "target")]
-    pub target: serde_json::Value,
+    pub target: crate::datadogV1::model::SyntheticsAssertionTargetValue,
     /// Timings scope for response time assertions.
     #[serde(rename = "timingsScope")]
     pub timings_scope: Option<crate::datadogV1::model::SyntheticsAssertionTimingsScope>,
@@ -36,7 +36,7 @@ pub struct SyntheticsAssertionTarget {
 impl SyntheticsAssertionTarget {
     pub fn new(
         operator: crate::datadogV1::model::SyntheticsAssertionOperator,
-        target: serde_json::Value,
+        target: crate::datadogV1::model::SyntheticsAssertionTargetValue,
         type_: crate::datadogV1::model::SyntheticsAssertionType,
     ) -> SyntheticsAssertionTarget {
         SyntheticsAssertionTarget {
@@ -92,7 +92,8 @@ impl<'de> Deserialize<'de> for SyntheticsAssertionTarget {
                 let mut operator: Option<crate::datadogV1::model::SyntheticsAssertionOperator> =
                     None;
                 let mut property: Option<String> = None;
-                let mut target: Option<serde_json::Value> = None;
+                let mut target: Option<crate::datadogV1::model::SyntheticsAssertionTargetValue> =
+                    None;
                 let mut timings_scope: Option<
                     crate::datadogV1::model::SyntheticsAssertionTimingsScope,
                 > = None;
@@ -124,6 +125,14 @@ impl<'de> Deserialize<'de> for SyntheticsAssertionTarget {
                         }
                         "target" => {
                             target = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _target) = target {
+                                match _target {
+                                    crate::datadogV1::model::SyntheticsAssertionTargetValue::UnparsedObject(_target) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "timingsScope" => {
                             if v.is_null() {
