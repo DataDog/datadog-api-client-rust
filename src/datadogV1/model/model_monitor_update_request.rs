@@ -24,6 +24,11 @@ pub struct MonitorUpdateRequest {
         with = "::serde_with::rust::double_option"
     )]
     pub deleted: Option<Option<chrono::DateTime<chrono::Utc>>>,
+    /// Whether a monitor is in draft or published state. Draft monitors do not notify recipients. Draft monitors are currently in
+    /// preview and the field is only processed for enabled customers. This accepts the values `draft`
+    /// and `published`. Defaults to published.
+    #[serde(rename = "draft_status")]
+    pub draft_status: Option<crate::datadogV1::model::MonitorDraftStatus>,
     /// ID of this monitor.
     #[serde(rename = "id")]
     pub id: Option<i64>,
@@ -84,6 +89,7 @@ impl MonitorUpdateRequest {
             created: None,
             creator: None,
             deleted: None,
+            draft_status: None,
             id: None,
             message: None,
             modified: None,
@@ -114,6 +120,11 @@ impl MonitorUpdateRequest {
 
     pub fn deleted(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.deleted = Some(value);
+        self
+    }
+
+    pub fn draft_status(mut self, value: crate::datadogV1::model::MonitorDraftStatus) -> Self {
+        self.draft_status = Some(value);
         self
     }
 
@@ -217,6 +228,7 @@ impl<'de> Deserialize<'de> for MonitorUpdateRequest {
                 let mut created: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut creator: Option<crate::datadogV1::model::Creator> = None;
                 let mut deleted: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
+                let mut draft_status: Option<crate::datadogV1::model::MonitorDraftStatus> = None;
                 let mut id: Option<i64> = None;
                 let mut message: Option<String> = None;
                 let mut modified: Option<chrono::DateTime<chrono::Utc>> = None;
@@ -252,6 +264,23 @@ impl<'de> Deserialize<'de> for MonitorUpdateRequest {
                         }
                         "deleted" => {
                             deleted = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "draft_status" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            draft_status =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _draft_status) = draft_status {
+                                match _draft_status {
+                                    crate::datadogV1::model::MonitorDraftStatus::UnparsedObject(
+                                        _draft_status,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
                         }
                         "id" => {
                             if v.is_null() {
@@ -357,6 +386,7 @@ impl<'de> Deserialize<'de> for MonitorUpdateRequest {
                     created,
                     creator,
                     deleted,
+                    draft_status,
                     id,
                     message,
                     modified,

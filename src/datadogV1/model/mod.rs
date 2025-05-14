@@ -922,6 +922,8 @@ pub mod model_metric_metadata;
 pub use self::model_metric_metadata::MetricMetadata;
 pub mod model_monitor;
 pub use self::model_monitor::Monitor;
+pub mod model_monitor_draft_status;
+pub use self::model_monitor_draft_status::MonitorDraftStatus;
 pub mod model_matching_downtime;
 pub use self::model_matching_downtime::MatchingDowntime;
 pub mod model_monitor_options;
