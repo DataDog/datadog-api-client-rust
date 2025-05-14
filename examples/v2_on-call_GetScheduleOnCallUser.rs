@@ -1,4 +1,4 @@
-// Get the schedule of an on-call user returns "OK" response
+// Get the schedule on-call user returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_on_call::GetScheduleOnCallUserOptionalParams;
 use datadog_api_client::datadogV2::api_on_call::OnCallAPI;
