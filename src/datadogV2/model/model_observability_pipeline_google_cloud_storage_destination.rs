@@ -32,9 +32,9 @@ pub struct ObservabilityPipelineGoogleCloudStorageDestination {
     /// Optional prefix for object keys within the GCS bucket.
     #[serde(rename = "key_prefix")]
     pub key_prefix: Option<String>,
-    /// Custom metadata key-value pairs added to each object.
+    /// Custom metadata to attach to each object uploaded to the GCS bucket.
     #[serde(rename = "metadata")]
-    pub metadata: Vec<crate::datadogV2::model::ObservabilityPipelineMetadataEntry>,
+    pub metadata: Option<Vec<crate::datadogV2::model::ObservabilityPipelineMetadataEntry>>,
     /// Storage class used for objects stored in GCS.
     #[serde(rename = "storage_class")]
     pub storage_class:
@@ -56,7 +56,6 @@ impl ObservabilityPipelineGoogleCloudStorageDestination {
         bucket: String,
         id: String,
         inputs: Vec<String>,
-        metadata: Vec<crate::datadogV2::model::ObservabilityPipelineMetadataEntry>,
         storage_class: crate::datadogV2::model::ObservabilityPipelineGoogleCloudStorageDestinationStorageClass,
         type_: crate::datadogV2::model::ObservabilityPipelineGoogleCloudStorageDestinationType,
     ) -> ObservabilityPipelineGoogleCloudStorageDestination {
@@ -67,7 +66,7 @@ impl ObservabilityPipelineGoogleCloudStorageDestination {
             id,
             inputs,
             key_prefix: None,
-            metadata,
+            metadata: None,
             storage_class,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
@@ -77,6 +76,14 @@ impl ObservabilityPipelineGoogleCloudStorageDestination {
 
     pub fn key_prefix(mut self, value: String) -> Self {
         self.key_prefix = Some(value);
+        self
+    }
+
+    pub fn metadata(
+        mut self,
+        value: Vec<crate::datadogV2::model::ObservabilityPipelineMetadataEntry>,
+    ) -> Self {
+        self.metadata = Some(value);
         self
     }
 
@@ -159,6 +166,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGoogleCloudStorageDestinatio
                             key_prefix = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "metadata" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "storage_class" => {
@@ -196,7 +206,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGoogleCloudStorageDestinatio
                 let bucket = bucket.ok_or_else(|| M::Error::missing_field("bucket"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let inputs = inputs.ok_or_else(|| M::Error::missing_field("inputs"))?;
-                let metadata = metadata.ok_or_else(|| M::Error::missing_field("metadata"))?;
                 let storage_class =
                     storage_class.ok_or_else(|| M::Error::missing_field("storage_class"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
