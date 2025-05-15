@@ -29,6 +29,36 @@ impl GetFindingOptionalParams {
     }
 }
 
+/// GetResourceEvaluationFiltersOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::get_resource_evaluation_filters`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetResourceEvaluationFiltersOptionalParams {
+    /// Filter resource filters by cloud provider (e.g. aws, gcp, azure).
+    pub cloud_provider: Option<String>,
+    /// Filter resource filters by cloud provider account ID. This parameter is only valid when provider is specified.
+    pub account_id: Option<String>,
+    /// Skip cache for resource filters.
+    pub skip_cache: Option<bool>,
+}
+
+impl GetResourceEvaluationFiltersOptionalParams {
+    /// Filter resource filters by cloud provider (e.g. aws, gcp, azure).
+    pub fn cloud_provider(mut self, value: String) -> Self {
+        self.cloud_provider = Some(value);
+        self
+    }
+    /// Filter resource filters by cloud provider account ID. This parameter is only valid when provider is specified.
+    pub fn account_id(mut self, value: String) -> Self {
+        self.account_id = Some(value);
+        self
+    }
+    /// Skip cache for resource filters.
+    pub fn skip_cache(mut self, value: bool) -> Self {
+        self.skip_cache = Some(value);
+        self
+    }
+}
+
 /// GetRuleVersionHistoryOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::get_rule_version_history`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -905,6 +935,14 @@ pub enum GetHistoricalJobError {
     UnknownValue(serde_json::Value),
 }
 
+/// GetResourceEvaluationFiltersError is a struct for typed errors of method [`SecurityMonitoringAPI::get_resource_evaluation_filters`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetResourceEvaluationFiltersError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// GetRuleVersionHistoryError is a struct for typed errors of method [`SecurityMonitoringAPI::get_rule_version_history`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1114,6 +1152,14 @@ pub enum TestSecurityMonitoringRuleError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateCustomFrameworkError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// UpdateResourceEvaluationFiltersError is a struct for typed errors of method [`SecurityMonitoringAPI::update_resource_evaluation_filters`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum UpdateResourceEvaluationFiltersError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -4176,6 +4222,136 @@ impl SecurityMonitoringAPI {
             };
         } else {
             let local_entity: Option<GetHistoricalJobError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// List resource filters.
+    pub async fn get_resource_evaluation_filters(
+        &self,
+        params: GetResourceEvaluationFiltersOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::GetResourceEvaluationFiltersResponse,
+        datadog::Error<GetResourceEvaluationFiltersError>,
+    > {
+        match self
+            .get_resource_evaluation_filters_with_http_info(params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// List resource filters.
+    pub async fn get_resource_evaluation_filters_with_http_info(
+        &self,
+        params: GetResourceEvaluationFiltersOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::GetResourceEvaluationFiltersResponse>,
+        datadog::Error<GetResourceEvaluationFiltersError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_resource_evaluation_filters";
+
+        // unbox and build optional parameters
+        let cloud_provider = params.cloud_provider;
+        let account_id = params.account_id;
+        let skip_cache = params.skip_cache;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/cloud_security_management/resource_filters",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = cloud_provider {
+            local_req_builder =
+                local_req_builder.query(&[("cloud_provider", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = account_id {
+            local_req_builder =
+                local_req_builder.query(&[("account_id", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = skip_cache {
+            local_req_builder =
+                local_req_builder.query(&[("skip_cache", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::GetResourceEvaluationFiltersResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetResourceEvaluationFiltersError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -8375,6 +8551,164 @@ impl SecurityMonitoringAPI {
             };
         } else {
             let local_entity: Option<UpdateCustomFrameworkError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Update resource filters.
+    pub async fn update_resource_evaluation_filters(
+        &self,
+        body: crate::datadogV2::model::UpdateResourceEvaluationFiltersRequest,
+    ) -> Result<
+        crate::datadogV2::model::UpdateResourceEvaluationFiltersResponse,
+        datadog::Error<UpdateResourceEvaluationFiltersError>,
+    > {
+        match self
+            .update_resource_evaluation_filters_with_http_info(body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Update resource filters.
+    pub async fn update_resource_evaluation_filters_with_http_info(
+        &self,
+        body: crate::datadogV2::model::UpdateResourceEvaluationFiltersRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::UpdateResourceEvaluationFiltersResponse>,
+        datadog::Error<UpdateResourceEvaluationFiltersError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.update_resource_evaluation_filters";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/cloud_security_management/resource_filters",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::UpdateResourceEvaluationFiltersResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<UpdateResourceEvaluationFiltersError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
