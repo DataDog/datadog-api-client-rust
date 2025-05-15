@@ -19,7 +19,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"errors\":[{\"title\":\"failed to create policy\"}]}\n",
+          "string": "{\"errors\":[\"input_validation_error(Field 'tags' is invalid: cannot have both the new and the legacy field populated)\"]}",
           "encoding": null
         },
         "headers": {
@@ -32,7 +32,7 @@
           "message": "Bad Request"
         }
       },
-      "recorded_at": "Tue, 15 Apr 2025 09:10:06 GMT"
+      "recorded_at": "Thu, 15 May 2025 11:49:04 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"
