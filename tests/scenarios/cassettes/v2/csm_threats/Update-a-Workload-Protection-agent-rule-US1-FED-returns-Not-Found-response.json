@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"description\":\"My Agent rule\",\"enabled\":true,\"expression\":\"exec.file.name == \\\"sh\\\"\"},\"id\":\"invalid-agent-rule-id\",\"type\":\"agent_rule\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "patch",
+        "uri": "https://api.datadoghq.com/api/v2/security_monitoring/cloud_workload_security/agent_rules/non-existent-rule-id"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[\"Not found\"]}\n",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 404,
+          "message": "Not Found"
+        }
+      },
+      "recorded_at": "Thu, 15 May 2025 14:34:51 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
