@@ -11,9 +11,15 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CloudWorkloadSecurityAgentRuleCreateAttributes {
+    /// The blocking policies that the rule belongs to
+    #[serde(rename = "blocking")]
+    pub blocking: Option<Vec<String>>,
     /// The description of the Agent rule.
     #[serde(rename = "description")]
     pub description: Option<String>,
+    /// The disabled policies that the rule belongs to
+    #[serde(rename = "disabled")]
+    pub disabled: Option<Vec<String>>,
     /// Whether the Agent rule is enabled
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
@@ -23,6 +29,9 @@ pub struct CloudWorkloadSecurityAgentRuleCreateAttributes {
     /// The platforms the Agent rule is supported on
     #[serde(rename = "filters")]
     pub filters: Option<Vec<String>>,
+    /// The monitoring policies that the rule belongs to
+    #[serde(rename = "monitoring")]
+    pub monitoring: Option<Vec<String>>,
     /// The name of the Agent rule.
     #[serde(rename = "name")]
     pub name: String,
@@ -42,10 +51,13 @@ pub struct CloudWorkloadSecurityAgentRuleCreateAttributes {
 impl CloudWorkloadSecurityAgentRuleCreateAttributes {
     pub fn new(expression: String, name: String) -> CloudWorkloadSecurityAgentRuleCreateAttributes {
         CloudWorkloadSecurityAgentRuleCreateAttributes {
+            blocking: None,
             description: None,
+            disabled: None,
             enabled: None,
             expression,
             filters: None,
+            monitoring: None,
             name,
             policy_id: None,
             product_tags: None,
@@ -54,8 +66,18 @@ impl CloudWorkloadSecurityAgentRuleCreateAttributes {
         }
     }
 
+    pub fn blocking(mut self, value: Vec<String>) -> Self {
+        self.blocking = Some(value);
+        self
+    }
+
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
+        self
+    }
+
+    pub fn disabled(mut self, value: Vec<String>) -> Self {
+        self.disabled = Some(value);
         self
     }
 
@@ -66,6 +88,11 @@ impl CloudWorkloadSecurityAgentRuleCreateAttributes {
 
     pub fn filters(mut self, value: Vec<String>) -> Self {
         self.filters = Some(value);
+        self
+    }
+
+    pub fn monitoring(mut self, value: Vec<String>) -> Self {
+        self.monitoring = Some(value);
         self
     }
 
@@ -105,10 +132,13 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleCreateAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut blocking: Option<Vec<String>> = None;
                 let mut description: Option<String> = None;
+                let mut disabled: Option<Vec<String>> = None;
                 let mut enabled: Option<bool> = None;
                 let mut expression: Option<String> = None;
                 let mut filters: Option<Vec<String>> = None;
+                let mut monitoring: Option<Vec<String>> = None;
                 let mut name: Option<String> = None;
                 let mut policy_id: Option<String> = None;
                 let mut product_tags: Option<Vec<String>> = None;
@@ -120,12 +150,24 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleCreateAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "blocking" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            blocking = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "description" => {
                             if v.is_null() {
                                 continue;
                             }
                             description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "disabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            disabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "enabled" => {
                             if v.is_null() {
@@ -141,6 +183,12 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleCreateAttributes {
                                 continue;
                             }
                             filters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "monitoring" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            monitoring = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -169,10 +217,13 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleCreateAttributes {
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
 
                 let content = CloudWorkloadSecurityAgentRuleCreateAttributes {
+                    blocking,
                     description,
+                    disabled,
                     enabled,
                     expression,
                     filters,
+                    monitoring,
                     name,
                     policy_id,
                     product_tags,

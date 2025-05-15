@@ -11,15 +11,24 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CloudWorkloadSecurityAgentRuleUpdateAttributes {
+    /// The blocking policies that the rule belongs to
+    #[serde(rename = "blocking")]
+    pub blocking: Option<Vec<String>>,
     /// The description of the Agent rule
     #[serde(rename = "description")]
     pub description: Option<String>,
+    /// The disabled policies that the rule belongs to
+    #[serde(rename = "disabled")]
+    pub disabled: Option<Vec<String>>,
     /// Whether the Agent rule is enabled
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
     /// The SECL expression of the Agent rule
     #[serde(rename = "expression")]
     pub expression: Option<String>,
+    /// The monitoring policies that the rule belongs to
+    #[serde(rename = "monitoring")]
+    pub monitoring: Option<Vec<String>>,
     /// The ID of the policy where the Agent rule is saved
     #[serde(rename = "policy_id")]
     pub policy_id: Option<String>,
@@ -36,9 +45,12 @@ pub struct CloudWorkloadSecurityAgentRuleUpdateAttributes {
 impl CloudWorkloadSecurityAgentRuleUpdateAttributes {
     pub fn new() -> CloudWorkloadSecurityAgentRuleUpdateAttributes {
         CloudWorkloadSecurityAgentRuleUpdateAttributes {
+            blocking: None,
             description: None,
+            disabled: None,
             enabled: None,
             expression: None,
+            monitoring: None,
             policy_id: None,
             product_tags: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -46,8 +58,18 @@ impl CloudWorkloadSecurityAgentRuleUpdateAttributes {
         }
     }
 
+    pub fn blocking(mut self, value: Vec<String>) -> Self {
+        self.blocking = Some(value);
+        self
+    }
+
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
+        self
+    }
+
+    pub fn disabled(mut self, value: Vec<String>) -> Self {
+        self.disabled = Some(value);
         self
     }
 
@@ -58,6 +80,11 @@ impl CloudWorkloadSecurityAgentRuleUpdateAttributes {
 
     pub fn expression(mut self, value: String) -> Self {
         self.expression = Some(value);
+        self
+    }
+
+    pub fn monitoring(mut self, value: Vec<String>) -> Self {
+        self.monitoring = Some(value);
         self
     }
 
@@ -103,9 +130,12 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleUpdateAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut blocking: Option<Vec<String>> = None;
                 let mut description: Option<String> = None;
+                let mut disabled: Option<Vec<String>> = None;
                 let mut enabled: Option<bool> = None;
                 let mut expression: Option<String> = None;
+                let mut monitoring: Option<Vec<String>> = None;
                 let mut policy_id: Option<String> = None;
                 let mut product_tags: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -116,12 +146,24 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleUpdateAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "blocking" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            blocking = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "description" => {
                             if v.is_null() {
                                 continue;
                             }
                             description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "disabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            disabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "enabled" => {
                             if v.is_null() {
@@ -134,6 +176,12 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleUpdateAttributes {
                                 continue;
                             }
                             expression = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "monitoring" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            monitoring = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "policy_id" => {
                             if v.is_null() {
@@ -157,9 +205,12 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleUpdateAttributes {
                 }
 
                 let content = CloudWorkloadSecurityAgentRuleUpdateAttributes {
+                    blocking,
                     description,
+                    disabled,
                     enabled,
                     expression,
+                    monitoring,
                     policy_id,
                     product_tags,
                     additional_properties,
