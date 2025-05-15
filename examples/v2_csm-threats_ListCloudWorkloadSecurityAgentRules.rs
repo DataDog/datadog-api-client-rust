@@ -1,4 +1,4 @@
-// Get all Cloud Workload Security Agent rules returns "OK" response
+// Get all Workload Protection agent rules (US1-FED) returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_csm_threats::CSMThreatsAPI;
 
