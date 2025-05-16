@@ -98,6 +98,8 @@ pub struct ListFindingsOptionalParams {
     pub filter_status: Option<crate::datadogV2::model::FindingStatus>,
     /// Return findings that match the selected vulnerability types (repeatable).
     pub filter_vulnerability_type: Option<Vec<crate::datadogV2::model::FindingVulnerabilityType>>,
+    /// Return additional fields for some findings.
+    pub detailed_findings: Option<bool>,
 }
 
 impl ListFindingsOptionalParams {
@@ -167,6 +169,11 @@ impl ListFindingsOptionalParams {
         value: Vec<crate::datadogV2::model::FindingVulnerabilityType>,
     ) -> Self {
         self.filter_vulnerability_type = Some(value);
+        self
+    }
+    /// Return additional fields for some findings.
+    pub fn detailed_findings(mut self, value: bool) -> Self {
+        self.detailed_findings = Some(value);
         self
     }
 }
@@ -5364,6 +5371,16 @@ impl SecurityMonitoringAPI {
     ///
     /// Query parameters must be only among the documented ones and with values of correct types. Duplicated query parameters (e.g. `filter[status]=low&filter[status]=info`) are not allowed.
     ///
+    /// ### Additional Extension
+    ///
+    /// Additional extension fields are available for some findings.
+    ///
+    /// The data is available by including the query parameter `?detailed_findings=true` in the request.
+    ///
+    /// The following fields are available for findings:
+    /// - `description`: The description and remediation steps for this finding.
+    /// - `datadog_link`: The Datadog relative link for this finding.
+    ///
     /// ### Response
     ///
     /// The response includes an array of finding objects, pagination metadata, and a count of items that match the query.
@@ -5449,6 +5466,16 @@ impl SecurityMonitoringAPI {
     ///
     /// Query parameters must be only among the documented ones and with values of correct types. Duplicated query parameters (e.g. `filter[status]=low&filter[status]=info`) are not allowed.
     ///
+    /// ### Additional Extension
+    ///
+    /// Additional extension fields are available for some findings.
+    ///
+    /// The data is available by including the query parameter `?detailed_findings=true` in the request.
+    ///
+    /// The following fields are available for findings:
+    /// - `description`: The description and remediation steps for this finding.
+    /// - `datadog_link`: The Datadog relative link for this finding.
+    ///
     /// ### Response
     ///
     /// The response includes an array of finding objects, pagination metadata, and a count of items that match the query.
@@ -5492,6 +5519,7 @@ impl SecurityMonitoringAPI {
         let filter_evaluation = params.filter_evaluation;
         let filter_status = params.filter_status;
         let filter_vulnerability_type = params.filter_vulnerability_type;
+        let detailed_findings = params.detailed_findings;
 
         let local_client = &self.client;
 
@@ -5559,6 +5587,10 @@ impl SecurityMonitoringAPI {
                 local_req_builder =
                     local_req_builder.query(&[("filter[vulnerability_type]", &param.to_string())]);
             }
+        };
+        if let Some(ref local_query_param) = detailed_findings {
+            local_req_builder =
+                local_req_builder.query(&[("detailed_findings", &local_query_param.to_string())]);
         };
 
         // build headers
