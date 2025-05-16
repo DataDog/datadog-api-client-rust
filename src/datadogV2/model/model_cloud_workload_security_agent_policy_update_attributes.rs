@@ -11,6 +11,13 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CloudWorkloadSecurityAgentPolicyUpdateAttributes {
+    /// The array of actions the rule can perform if triggered
+    #[serde(
+        rename = "actions",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub actions: Option<Option<Vec<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleAction>>>,
     /// The description of the policy
     #[serde(rename = "description")]
     pub description: Option<String>,
@@ -36,6 +43,7 @@ pub struct CloudWorkloadSecurityAgentPolicyUpdateAttributes {
 impl CloudWorkloadSecurityAgentPolicyUpdateAttributes {
     pub fn new() -> CloudWorkloadSecurityAgentPolicyUpdateAttributes {
         CloudWorkloadSecurityAgentPolicyUpdateAttributes {
+            actions: None,
             description: None,
             enabled: None,
             host_tags: None,
@@ -44,6 +52,14 @@ impl CloudWorkloadSecurityAgentPolicyUpdateAttributes {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn actions(
+        mut self,
+        value: Option<Vec<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleAction>>,
+    ) -> Self {
+        self.actions = Some(value);
+        self
     }
 
     pub fn description(mut self, value: String) -> Self {
@@ -103,6 +119,9 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentPolicyUpdateAttributes 
             where
                 M: MapAccess<'a>,
             {
+                let mut actions: Option<
+                    Option<Vec<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleAction>>,
+                > = None;
                 let mut description: Option<String> = None;
                 let mut enabled: Option<bool> = None;
                 let mut host_tags: Option<Vec<String>> = None;
@@ -116,6 +135,9 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentPolicyUpdateAttributes 
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "actions" => {
+                            actions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "description" => {
                             if v.is_null() {
                                 continue;
@@ -157,6 +179,7 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentPolicyUpdateAttributes 
                 }
 
                 let content = CloudWorkloadSecurityAgentPolicyUpdateAttributes {
+                    actions,
                     description,
                     enabled,
                     host_tags,

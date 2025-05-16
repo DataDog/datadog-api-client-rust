@@ -21,6 +21,9 @@ pub struct CloudWorkloadSecurityAgentRuleAttributes {
     /// The version of the Agent
     #[serde(rename = "agentConstraint")]
     pub agent_constraint: Option<String>,
+    /// The blocking policies that the rule belongs to
+    #[serde(rename = "blocking")]
+    pub blocking: Option<Vec<String>>,
     /// The category of the Agent rule
     #[serde(rename = "category")]
     pub category: Option<String>,
@@ -39,6 +42,9 @@ pub struct CloudWorkloadSecurityAgentRuleAttributes {
     /// The description of the Agent rule
     #[serde(rename = "description")]
     pub description: Option<String>,
+    /// The disabled policies that the rule belongs to
+    #[serde(rename = "disabled")]
+    pub disabled: Option<Vec<String>>,
     /// Whether the Agent rule is enabled
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
@@ -48,6 +54,9 @@ pub struct CloudWorkloadSecurityAgentRuleAttributes {
     /// The platforms the Agent rule is supported on
     #[serde(rename = "filters")]
     pub filters: Option<Vec<String>>,
+    /// The monitoring policies that the rule belongs to
+    #[serde(rename = "monitoring")]
+    pub monitoring: Option<Vec<String>>,
     /// The name of the Agent rule
     #[serde(rename = "name")]
     pub name: Option<String>,
@@ -81,15 +90,18 @@ impl CloudWorkloadSecurityAgentRuleAttributes {
         CloudWorkloadSecurityAgentRuleAttributes {
             actions: None,
             agent_constraint: None,
+            blocking: None,
             category: None,
             creation_author_uu_id: None,
             creation_date: None,
             creator: None,
             default_rule: None,
             description: None,
+            disabled: None,
             enabled: None,
             expression: None,
             filters: None,
+            monitoring: None,
             name: None,
             product_tags: None,
             update_author_uu_id: None,
@@ -112,6 +124,11 @@ impl CloudWorkloadSecurityAgentRuleAttributes {
 
     pub fn agent_constraint(mut self, value: String) -> Self {
         self.agent_constraint = Some(value);
+        self
+    }
+
+    pub fn blocking(mut self, value: Vec<String>) -> Self {
+        self.blocking = Some(value);
         self
     }
 
@@ -148,6 +165,11 @@ impl CloudWorkloadSecurityAgentRuleAttributes {
         self
     }
 
+    pub fn disabled(mut self, value: Vec<String>) -> Self {
+        self.disabled = Some(value);
+        self
+    }
+
     pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
         self
@@ -160,6 +182,11 @@ impl CloudWorkloadSecurityAgentRuleAttributes {
 
     pub fn filters(mut self, value: Vec<String>) -> Self {
         self.filters = Some(value);
+        self
+    }
+
+    pub fn monitoring(mut self, value: Vec<String>) -> Self {
+        self.monitoring = Some(value);
         self
     }
 
@@ -237,6 +264,7 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleAttributes {
                     Option<Vec<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleAction>>,
                 > = None;
                 let mut agent_constraint: Option<String> = None;
+                let mut blocking: Option<Vec<String>> = None;
                 let mut category: Option<String> = None;
                 let mut creation_author_uu_id: Option<String> = None;
                 let mut creation_date: Option<i64> = None;
@@ -245,9 +273,11 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleAttributes {
                 > = None;
                 let mut default_rule: Option<bool> = None;
                 let mut description: Option<String> = None;
+                let mut disabled: Option<Vec<String>> = None;
                 let mut enabled: Option<bool> = None;
                 let mut expression: Option<String> = None;
                 let mut filters: Option<Vec<String>> = None;
+                let mut monitoring: Option<Vec<String>> = None;
                 let mut name: Option<String> = None;
                 let mut product_tags: Option<Vec<String>> = None;
                 let mut update_author_uu_id: Option<String> = None;
@@ -274,6 +304,12 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleAttributes {
                             }
                             agent_constraint =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "blocking" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            blocking = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "category" => {
                             if v.is_null() {
@@ -315,6 +351,12 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleAttributes {
                             description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "disabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            disabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "enabled" => {
                             if v.is_null() {
                                 continue;
@@ -332,6 +374,12 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleAttributes {
                                 continue;
                             }
                             filters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "monitoring" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            monitoring = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "name" => {
                             if v.is_null() {
@@ -389,15 +437,18 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleAttributes {
                 let content = CloudWorkloadSecurityAgentRuleAttributes {
                     actions,
                     agent_constraint,
+                    blocking,
                     category,
                     creation_author_uu_id,
                     creation_date,
                     creator,
                     default_rule,
                     description,
+                    disabled,
                     enabled,
                     expression,
                     filters,
+                    monitoring,
                     name,
                     product_tags,
                     update_author_uu_id,
