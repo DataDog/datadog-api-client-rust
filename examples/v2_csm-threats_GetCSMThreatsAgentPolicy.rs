@@ -1,4 +1,4 @@
-// Get a CSM Threats Agent policy returns "OK" response
+// Get a Workload Protection policy returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_csm_threats::CSMThreatsAPI;
 

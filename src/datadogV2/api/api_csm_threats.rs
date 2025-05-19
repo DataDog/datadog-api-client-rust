@@ -210,7 +210,9 @@ pub enum UpdateCloudWorkloadSecurityAgentRuleError {
     UnknownValue(serde_json::Value),
 }
 
-/// Cloud Security Management Threats (CSM Threats) monitors file, network, and process activity across your environment to detect real-time threats to your infrastructure. See [Cloud Security Management Threats](<https://docs.datadoghq.com/security/threats/>) for more information on setting up CSM Threats.
+/// Workload Protection monitors file, network, and process activity across your environment to detect real-time threats to your infrastructure. See [Workload Protection](<https://docs.datadoghq.com/security/workload_protection/>) for more information on setting up Workload Protection.
+///
+/// **Note**: These endpoints are split based on whether you are using the US1-FED site or not. Please reference the specific resource for the site you are using.
 #[derive(Debug, Clone)]
 pub struct CSMThreatsAPI {
     config: datadog::Configuration,
@@ -275,7 +277,9 @@ impl CSMThreatsAPI {
         Self { config, client }
     }
 
-    /// Create a new Cloud Security Management Threats Agent policy with the given parameters
+    /// Create a new Workload Protection policy with the given parameters.
+    ///
+    /// **Note**: This endpoint is not available for the Government (US1-FED) site. Please reference the (US1-FED) specific resource below.
     pub async fn create_csm_threats_agent_policy(
         &self,
         body: crate::datadogV2::model::CloudWorkloadSecurityAgentPolicyCreateRequest,
@@ -300,7 +304,9 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Create a new Cloud Security Management Threats Agent policy with the given parameters
+    /// Create a new Workload Protection policy with the given parameters.
+    ///
+    /// **Note**: This endpoint is not available for the Government (US1-FED) site. Please reference the (US1-FED) specific resource below.
     pub async fn create_csm_threats_agent_policy_with_http_info(
         &self,
         body: crate::datadogV2::model::CloudWorkloadSecurityAgentPolicyCreateRequest,
@@ -433,7 +439,9 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Create a new Cloud Security Management Threats Agent rule with the given parameters
+    /// Create a new Workload Protection agent rule with the given parameters.
+    ///
+    /// **Note**: This endpoint is not available for the Government (US1-FED) site. Please reference the (US1-FED) specific resource below.
     pub async fn create_csm_threats_agent_rule(
         &self,
         body: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateRequest,
@@ -458,7 +466,9 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Create a new Cloud Security Management Threats Agent rule with the given parameters
+    /// Create a new Workload Protection agent rule with the given parameters.
+    ///
+    /// **Note**: This endpoint is not available for the Government (US1-FED) site. Please reference the (US1-FED) specific resource below.
     pub async fn create_csm_threats_agent_rule_with_http_info(
         &self,
         body: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateRequest,
@@ -591,7 +601,9 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Create a new Agent rule with the given parameters.
+    /// Create a new agent rule with the given parameters.
+    ///
+    /// **Note**: This endpoint should only be used for the Government (US1-FED) site.
     pub async fn create_cloud_workload_security_agent_rule(
         &self,
         body: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateRequest,
@@ -616,7 +628,9 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Create a new Agent rule with the given parameters.
+    /// Create a new agent rule with the given parameters.
+    ///
+    /// **Note**: This endpoint should only be used for the Government (US1-FED) site.
     pub async fn create_cloud_workload_security_agent_rule_with_http_info(
         &self,
         body: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateRequest,
@@ -749,7 +763,9 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Delete a specific Cloud Security Management Threats Agent policy
+    /// Delete a specific Workload Protection policy.
+    ///
+    /// **Note**: This endpoint is not available for the Government (US1-FED) site. Please reference the (US1-FED) specific resource below.
     pub async fn delete_csm_threats_agent_policy(
         &self,
         policy_id: String,
@@ -763,7 +779,9 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Delete a specific Cloud Security Management Threats Agent policy
+    /// Delete a specific Workload Protection policy.
+    ///
+    /// **Note**: This endpoint is not available for the Government (US1-FED) site. Please reference the (US1-FED) specific resource below.
     pub async fn delete_csm_threats_agent_policy_with_http_info(
         &self,
         policy_id: String,
@@ -841,7 +859,9 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Delete a specific Cloud Security Management Threats Agent rule
+    /// Delete a specific Workload Protection agent rule.
+    ///
+    /// **Note**: This endpoint is not available for the Government (US1-FED) site. Please reference the (US1-FED) specific resource below.
     pub async fn delete_csm_threats_agent_rule(
         &self,
         agent_rule_id: String,
@@ -856,7 +876,9 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Delete a specific Cloud Security Management Threats Agent rule
+    /// Delete a specific Workload Protection agent rule.
+    ///
+    /// **Note**: This endpoint is not available for the Government (US1-FED) site. Please reference the (US1-FED) specific resource below.
     pub async fn delete_csm_threats_agent_rule_with_http_info(
         &self,
         agent_rule_id: String,
@@ -942,7 +964,9 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Delete a specific Agent rule
+    /// Delete a specific agent rule.
+    ///
+    /// **Note**: This endpoint should only be used for the Government (US1-FED) site.
     pub async fn delete_cloud_workload_security_agent_rule(
         &self,
         agent_rule_id: String,
@@ -956,7 +980,9 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Delete a specific Agent rule
+    /// Delete a specific agent rule.
+    ///
+    /// **Note**: This endpoint should only be used for the Government (US1-FED) site.
     pub async fn delete_cloud_workload_security_agent_rule_with_http_info(
         &self,
         agent_rule_id: String,
@@ -1036,9 +1062,11 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// The download endpoint generates a CSM Threats policy file from your currently active
-    /// CSM Threats rules, and downloads them as a `.policy` file. This file can then be deployed to
-    /// your Agents to update the policy running in your environment.
+    /// The download endpoint generates a Workload Protection policy file from your currently active
+    /// Workload Protection agent rules, and downloads them as a `.policy` file. This file can then be deployed to
+    /// your agents to update the policy running in your environment.
+    ///
+    /// **Note**: This endpoint is not available for the Government (US1-FED) site. Please reference the (US1-FED) specific resource below.
     pub async fn download_csm_threats_policy(
         &self,
     ) -> Result<Vec<u8>, datadog::Error<DownloadCSMThreatsPolicyError>> {
@@ -1056,9 +1084,11 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// The download endpoint generates a CSM Threats policy file from your currently active
-    /// CSM Threats rules, and downloads them as a `.policy` file. This file can then be deployed to
-    /// your Agents to update the policy running in your environment.
+    /// The download endpoint generates a Workload Protection policy file from your currently active
+    /// Workload Protection agent rules, and downloads them as a `.policy` file. This file can then be deployed to
+    /// your agents to update the policy running in your environment.
+    ///
+    /// **Note**: This endpoint is not available for the Government (US1-FED) site. Please reference the (US1-FED) specific resource below.
     pub async fn download_csm_threats_policy_with_http_info(
         &self,
     ) -> Result<datadog::ResponseContent<Vec<u8>>, datadog::Error<DownloadCSMThreatsPolicyError>>
@@ -1134,9 +1164,11 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// The download endpoint generates a Cloud Workload Security policy file from your currently active
-    /// Cloud Workload Security rules, and downloads them as a .policy file. This file can then be deployed to
-    /// your Agents to update the policy running in your environment.
+    /// The download endpoint generates a Workload Protection policy file from your currently active
+    /// Workload Protection agent rules, and downloads them as a `.policy` file. This file can then be deployed to
+    /// your agents to update the policy running in your environment.
+    ///
+    /// **Note**: This endpoint should only be used for the Government (US1-FED) site.
     pub async fn download_cloud_workload_policy_file(
         &self,
     ) -> Result<Vec<u8>, datadog::Error<DownloadCloudWorkloadPolicyFileError>> {
@@ -1157,9 +1189,11 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// The download endpoint generates a Cloud Workload Security policy file from your currently active
-    /// Cloud Workload Security rules, and downloads them as a .policy file. This file can then be deployed to
-    /// your Agents to update the policy running in your environment.
+    /// The download endpoint generates a Workload Protection policy file from your currently active
+    /// Workload Protection agent rules, and downloads them as a `.policy` file. This file can then be deployed to
+    /// your agents to update the policy running in your environment.
+    ///
+    /// **Note**: This endpoint should only be used for the Government (US1-FED) site.
     pub async fn download_cloud_workload_policy_file_with_http_info(
         &self,
     ) -> Result<
@@ -1237,7 +1271,9 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Get the details of a specific Cloud Security Management Threats Agent policy
+    /// Get the details of a specific Workload Protection policy.
+    ///
+    /// **Note**: This endpoint is not available for the Government (US1-FED) site. Please reference the (US1-FED) specific resource below.
     pub async fn get_csm_threats_agent_policy(
         &self,
         policy_id: String,
@@ -1262,7 +1298,9 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Get the details of a specific Cloud Security Management Threats Agent policy
+    /// Get the details of a specific Workload Protection policy.
+    ///
+    /// **Note**: This endpoint is not available for the Government (US1-FED) site. Please reference the (US1-FED) specific resource below.
     pub async fn get_csm_threats_agent_policy_with_http_info(
         &self,
         policy_id: String,
@@ -1350,7 +1388,9 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Get the details of a specific Cloud Security Management Threats Agent rule
+    /// Get the details of a specific Workload Protection agent rule.
+    ///
+    /// **Note**: This endpoint is not available for the Government (US1-FED) site. Please reference the (US1-FED) specific resource below.
     pub async fn get_csm_threats_agent_rule(
         &self,
         agent_rule_id: String,
@@ -1376,7 +1416,9 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Get the details of a specific Cloud Security Management Threats Agent rule
+    /// Get the details of a specific Workload Protection agent rule.
+    ///
+    /// **Note**: This endpoint is not available for the Government (US1-FED) site. Please reference the (US1-FED) specific resource below.
     pub async fn get_csm_threats_agent_rule_with_http_info(
         &self,
         agent_rule_id: String,
@@ -1473,7 +1515,9 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Get the details of a specific Agent rule
+    /// Get the details of a specific agent rule.
+    ///
+    /// **Note**: This endpoint should only be used for the Government (US1-FED) site.
     pub async fn get_cloud_workload_security_agent_rule(
         &self,
         agent_rule_id: String,
@@ -1498,7 +1542,9 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Get the details of a specific Agent rule
+    /// Get the details of a specific agent rule.
+    ///
+    /// **Note**: This endpoint should only be used for the Government (US1-FED) site.
     pub async fn get_cloud_workload_security_agent_rule_with_http_info(
         &self,
         agent_rule_id: String,
@@ -1586,7 +1632,9 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Get the list of Cloud Security Management Threats Agent policies
+    /// Get the list of Workload Protection policies.
+    ///
+    /// **Note**: This endpoint is not available for the Government (US1-FED) site. Please reference the (US1-FED) specific resource below.
     pub async fn list_csm_threats_agent_policies(
         &self,
     ) -> Result<
@@ -1607,7 +1655,9 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Get the list of Cloud Security Management Threats Agent policies
+    /// Get the list of Workload Protection policies.
+    ///
+    /// **Note**: This endpoint is not available for the Government (US1-FED) site. Please reference the (US1-FED) specific resource below.
     pub async fn list_csm_threats_agent_policies_with_http_info(
         &self,
     ) -> Result<
@@ -1695,7 +1745,9 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Get the list of Cloud Security Management Threats Agent rules
+    /// Get the list of Workload Protection agent rules.
+    ///
+    /// **Note**: This endpoint is not available for the Government (US1-FED) site. Please reference the (US1-FED) specific resource below.
     pub async fn list_csm_threats_agent_rules(
         &self,
         params: ListCSMThreatsAgentRulesOptionalParams,
@@ -1720,7 +1772,9 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Get the list of Cloud Security Management Threats Agent rules
+    /// Get the list of Workload Protection agent rules.
+    ///
+    /// **Note**: This endpoint is not available for the Government (US1-FED) site. Please reference the (US1-FED) specific resource below.
     pub async fn list_csm_threats_agent_rules_with_http_info(
         &self,
         params: ListCSMThreatsAgentRulesOptionalParams,
@@ -1817,7 +1871,9 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Get the list of Agent rules
+    /// Get the list of agent rules.
+    ///
+    /// **Note**: This endpoint should only be used for the Government (US1-FED) site.
     pub async fn list_cloud_workload_security_agent_rules(
         &self,
     ) -> Result<
@@ -1841,7 +1897,9 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Get the list of Agent rules
+    /// Get the list of agent rules.
+    ///
+    /// **Note**: This endpoint should only be used for the Government (US1-FED) site.
     pub async fn list_cloud_workload_security_agent_rules_with_http_info(
         &self,
     ) -> Result<
@@ -1929,8 +1987,10 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Update a specific Cloud Security Management Threats Agent policy.
-    /// Returns the Agent policy object when the request is successful.
+    /// Update a specific Workload Protection policy.
+    /// Returns the policy object when the request is successful.
+    ///
+    /// **Note**: This endpoint is not available for the Government (US1-FED) site. Please reference the (US1-FED) specific resource below.
     pub async fn update_csm_threats_agent_policy(
         &self,
         policy_id: String,
@@ -1956,8 +2016,10 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Update a specific Cloud Security Management Threats Agent policy.
-    /// Returns the Agent policy object when the request is successful.
+    /// Update a specific Workload Protection policy.
+    /// Returns the policy object when the request is successful.
+    ///
+    /// **Note**: This endpoint is not available for the Government (US1-FED) site. Please reference the (US1-FED) specific resource below.
     pub async fn update_csm_threats_agent_policy_with_http_info(
         &self,
         policy_id: String,
@@ -2092,8 +2154,10 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Update a specific Cloud Security Management Threats Agent rule.
-    /// Returns the Agent rule object when the request is successful.
+    /// Update a specific Workload Protection Agent rule.
+    /// Returns the agent rule object when the request is successful.
+    ///
+    /// **Note**: This endpoint is not available for the Government (US1-FED) site. Please reference the (US1-FED) specific resource below.
     pub async fn update_csm_threats_agent_rule(
         &self,
         agent_rule_id: String,
@@ -2120,8 +2184,10 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Update a specific Cloud Security Management Threats Agent rule.
-    /// Returns the Agent rule object when the request is successful.
+    /// Update a specific Workload Protection Agent rule.
+    /// Returns the agent rule object when the request is successful.
+    ///
+    /// **Note**: This endpoint is not available for the Government (US1-FED) site. Please reference the (US1-FED) specific resource below.
     pub async fn update_csm_threats_agent_rule_with_http_info(
         &self,
         agent_rule_id: String,
@@ -2265,8 +2331,10 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Update a specific Agent rule.
-    /// Returns the Agent rule object when the request is successful.
+    /// Update a specific agent rule.
+    /// Returns the agent rule object when the request is successful.
+    ///
+    /// **Note**: This endpoint should only be used for the Government (US1-FED) site.
     pub async fn update_cloud_workload_security_agent_rule(
         &self,
         agent_rule_id: String,
@@ -2292,8 +2360,10 @@ impl CSMThreatsAPI {
         }
     }
 
-    /// Update a specific Agent rule.
-    /// Returns the Agent rule object when the request is successful.
+    /// Update a specific agent rule.
+    /// Returns the agent rule object when the request is successful.
+    ///
+    /// **Note**: This endpoint should only be used for the Government (US1-FED) site.
     pub async fn update_cloud_workload_security_agent_rule_with_http_info(
         &self,
         agent_rule_id: String,
