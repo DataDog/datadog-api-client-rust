@@ -11,6 +11,12 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct FindingAttributes {
+    /// The Datadog relative link for this finding.
+    #[serde(rename = "datadog_link")]
+    pub datadog_link: Option<String>,
+    /// The description and remediation steps for this finding.
+    #[serde(rename = "description")]
+    pub description: Option<String>,
     /// The evaluation of the finding.
     #[serde(rename = "evaluation")]
     pub evaluation: Option<crate::datadogV2::model::FindingEvaluation>,
@@ -51,6 +57,8 @@ pub struct FindingAttributes {
 impl FindingAttributes {
     pub fn new() -> FindingAttributes {
         FindingAttributes {
+            datadog_link: None,
+            description: None,
             evaluation: None,
             evaluation_changed_at: None,
             mute: None,
@@ -64,6 +72,16 @@ impl FindingAttributes {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn datadog_link(mut self, value: String) -> Self {
+        self.datadog_link = Some(value);
+        self
+    }
+
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
+        self
     }
 
     pub fn evaluation(mut self, value: crate::datadogV2::model::FindingEvaluation) -> Self {
@@ -151,6 +169,8 @@ impl<'de> Deserialize<'de> for FindingAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut datadog_link: Option<String> = None;
+                let mut description: Option<String> = None;
                 let mut evaluation: Option<crate::datadogV2::model::FindingEvaluation> = None;
                 let mut evaluation_changed_at: Option<i64> = None;
                 let mut mute: Option<crate::datadogV2::model::FindingMute> = None;
@@ -171,6 +191,20 @@ impl<'de> Deserialize<'de> for FindingAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "datadog_link" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            datadog_link =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            description =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "evaluation" => {
                             if v.is_null() {
                                 continue;
@@ -272,6 +306,8 @@ impl<'de> Deserialize<'de> for FindingAttributes {
                 }
 
                 let content = FindingAttributes {
+                    datadog_link,
+                    description,
                     evaluation,
                     evaluation_changed_at,
                     mute,
