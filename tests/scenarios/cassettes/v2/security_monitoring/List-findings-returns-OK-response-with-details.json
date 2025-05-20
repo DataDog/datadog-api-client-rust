@@ -1,0 +1,33 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "application/json"
+          ]
+        },
+        "method": "get",
+        "uri": "https://api.datadoghq.com/api/v2/posture_management/findings?detailed_findings=true"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":[],\"meta\":{\"page\":{\"total_filtered_count\":0},\"snapshot_timestamp\":1747743085077}}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Tue, 20 May 2025 12:11:24 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

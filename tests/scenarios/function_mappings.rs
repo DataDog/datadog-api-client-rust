@@ -13860,6 +13860,9 @@ fn test_v2_list_findings(world: &mut DatadogWorld, _parameters: &HashMap<String,
     let filter_vulnerability_type = _parameters
         .get("filter[vulnerability_type]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let detailed_findings = _parameters
+        .get("detailed_findings")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_security_monitoring::ListFindingsOptionalParams::default();
     params.page_limit = page_limit;
     params.snapshot_timestamp = snapshot_timestamp;
@@ -13874,6 +13877,7 @@ fn test_v2_list_findings(world: &mut DatadogWorld, _parameters: &HashMap<String,
     params.filter_evaluation = filter_evaluation;
     params.filter_status = filter_status;
     params.filter_vulnerability_type = filter_vulnerability_type;
+    params.detailed_findings = detailed_findings;
     let response = match block_on(api.list_findings_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -13939,6 +13943,9 @@ fn test_v2_list_findings_with_pagination(
     let filter_vulnerability_type = _parameters
         .get("filter[vulnerability_type]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let detailed_findings = _parameters
+        .get("detailed_findings")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_security_monitoring::ListFindingsOptionalParams::default();
     params.page_limit = page_limit;
     params.snapshot_timestamp = snapshot_timestamp;
@@ -13953,6 +13960,7 @@ fn test_v2_list_findings_with_pagination(
     params.filter_evaluation = filter_evaluation;
     params.filter_status = filter_status;
     params.filter_vulnerability_type = filter_vulnerability_type;
+    params.detailed_findings = detailed_findings;
     let response = api.list_findings_with_pagination(params);
     let mut result = Vec::new();
 
