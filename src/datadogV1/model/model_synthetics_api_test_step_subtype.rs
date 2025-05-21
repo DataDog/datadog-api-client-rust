@@ -9,6 +9,12 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum SyntheticsAPITestStepSubtype {
     HTTP,
     GRPC,
+    SSL,
+    DNS,
+    TCP,
+    UDP,
+    ICMP,
+    WEBSOCKET,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -17,6 +23,12 @@ impl ToString for SyntheticsAPITestStepSubtype {
         match self {
             Self::HTTP => String::from("http"),
             Self::GRPC => String::from("grpc"),
+            Self::SSL => String::from("ssl"),
+            Self::DNS => String::from("dns"),
+            Self::TCP => String::from("tcp"),
+            Self::UDP => String::from("udp"),
+            Self::ICMP => String::from("icmp"),
+            Self::WEBSOCKET => String::from("websocket"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -43,6 +55,12 @@ impl<'de> Deserialize<'de> for SyntheticsAPITestStepSubtype {
         Ok(match s.as_str() {
             "http" => Self::HTTP,
             "grpc" => Self::GRPC,
+            "ssl" => Self::SSL,
+            "dns" => Self::DNS,
+            "tcp" => Self::TCP,
+            "udp" => Self::UDP,
+            "icmp" => Self::ICMP,
+            "websocket" => Self::WEBSOCKET,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
