@@ -14,6 +14,9 @@ use datadog_api_client::datadogV1::model::SyntheticsAssertion;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionOperator;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionTarget;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionType;
+use datadog_api_client::datadogV1::model::SyntheticsBasicAuth;
+use datadog_api_client::datadogV1::model::SyntheticsBasicAuthWeb;
+use datadog_api_client::datadogV1::model::SyntheticsBasicAuthWebType;
 use datadog_api_client::datadogV1::model::SyntheticsConfigVariable;
 use datadog_api_client::datadogV1::model::SyntheticsConfigVariableType;
 use datadog_api_client::datadogV1::model::SyntheticsGlobalVariableParserType;
@@ -124,6 +127,173 @@ async fn main() {
                                 )
                                     .allow_failure(false)
                                     .extracted_values(vec![])
+                                    .is_critical(true)
+                                    .retry(SyntheticsTestOptionsRetry::new().count(0).interval(300.0 as f64)),
+                            ),
+                        ),
+                        SyntheticsAPIStep::SyntheticsAPITestStep(
+                            Box::new(
+                                SyntheticsAPITestStep::new(
+                                    vec![
+                                        SyntheticsAssertion::SyntheticsAssertionTarget(
+                                            Box::new(
+                                                SyntheticsAssertionTarget::new(
+                                                    SyntheticsAssertionOperator::IS_IN_MORE_DAYS_THAN,
+                                                    Value::from(10),
+                                                    SyntheticsAssertionType::CERTIFICATE,
+                                                ),
+                                            ),
+                                        )
+                                    ],
+                                    "SSL step".to_string(),
+                                    SyntheticsTestRequest::new()
+                                        .host("example.org".to_string())
+                                        .port(SyntheticsTestRequestPort::SyntheticsTestRequestNumericalPort(443)),
+                                    SyntheticsAPITestStepSubtype::SSL,
+                                )
+                                    .allow_failure(false)
+                                    .is_critical(true)
+                                    .retry(SyntheticsTestOptionsRetry::new().count(0).interval(300.0 as f64)),
+                            ),
+                        ),
+                        SyntheticsAPIStep::SyntheticsAPITestStep(
+                            Box::new(
+                                SyntheticsAPITestStep::new(
+                                    vec![
+                                        SyntheticsAssertion::SyntheticsAssertionTarget(
+                                            Box::new(
+                                                SyntheticsAssertionTarget::new(
+                                                    SyntheticsAssertionOperator::LESS_THAN,
+                                                    Value::from(1000),
+                                                    SyntheticsAssertionType::RESPONSE_TIME,
+                                                ),
+                                            ),
+                                        )
+                                    ],
+                                    "DNS step".to_string(),
+                                    SyntheticsTestRequest::new()
+                                        .dns_server("8.8.8.8".to_string())
+                                        .dns_server_port("53".to_string())
+                                        .host("troisdizaines.com".to_string()),
+                                    SyntheticsAPITestStepSubtype::DNS,
+                                )
+                                    .allow_failure(false)
+                                    .is_critical(true)
+                                    .retry(SyntheticsTestOptionsRetry::new().count(0).interval(300.0 as f64)),
+                            ),
+                        ),
+                        SyntheticsAPIStep::SyntheticsAPITestStep(
+                            Box::new(
+                                SyntheticsAPITestStep::new(
+                                    vec![
+                                        SyntheticsAssertion::SyntheticsAssertionTarget(
+                                            Box::new(
+                                                SyntheticsAssertionTarget::new(
+                                                    SyntheticsAssertionOperator::LESS_THAN,
+                                                    Value::from(1000),
+                                                    SyntheticsAssertionType::RESPONSE_TIME,
+                                                ),
+                                            ),
+                                        )
+                                    ],
+                                    "TCP step".to_string(),
+                                    SyntheticsTestRequest::new()
+                                        .host("34.95.79.70".to_string())
+                                        .port(SyntheticsTestRequestPort::SyntheticsTestRequestNumericalPort(80))
+                                        .should_track_hops(true)
+                                        .timeout(32.0 as f64),
+                                    SyntheticsAPITestStepSubtype::TCP,
+                                )
+                                    .allow_failure(false)
+                                    .is_critical(true)
+                                    .retry(SyntheticsTestOptionsRetry::new().count(0).interval(300.0 as f64)),
+                            ),
+                        ),
+                        SyntheticsAPIStep::SyntheticsAPITestStep(
+                            Box::new(
+                                SyntheticsAPITestStep::new(
+                                    vec![
+                                        SyntheticsAssertion::SyntheticsAssertionTarget(
+                                            Box::new(
+                                                SyntheticsAssertionTarget::new(
+                                                    SyntheticsAssertionOperator::IS,
+                                                    Value::from(0),
+                                                    SyntheticsAssertionType::PACKET_LOSS_PERCENTAGE,
+                                                ),
+                                            ),
+                                        )
+                                    ],
+                                    "ICMP step".to_string(),
+                                    SyntheticsTestRequest::new()
+                                        .host("34.95.79.70".to_string())
+                                        .number_of_packets(4)
+                                        .should_track_hops(true)
+                                        .timeout(38.0 as f64),
+                                    SyntheticsAPITestStepSubtype::ICMP,
+                                )
+                                    .allow_failure(false)
+                                    .is_critical(true)
+                                    .retry(SyntheticsTestOptionsRetry::new().count(0).interval(300.0 as f64)),
+                            ),
+                        ),
+                        SyntheticsAPIStep::SyntheticsAPITestStep(
+                            Box::new(
+                                SyntheticsAPITestStep::new(
+                                    vec![
+                                        SyntheticsAssertion::SyntheticsAssertionTarget(
+                                            Box::new(
+                                                SyntheticsAssertionTarget::new(
+                                                    SyntheticsAssertionOperator::LESS_THAN,
+                                                    Value::from(1000),
+                                                    SyntheticsAssertionType::RESPONSE_TIME,
+                                                ),
+                                            ),
+                                        )
+                                    ],
+                                    "Websocket step".to_string(),
+                                    SyntheticsTestRequest::new()
+                                        .basic_auth(
+                                            SyntheticsBasicAuth::SyntheticsBasicAuthWeb(
+                                                Box::new(
+                                                    SyntheticsBasicAuthWeb::new(
+                                                        "password".to_string(),
+                                                        "user".to_string(),
+                                                    ).type_(SyntheticsBasicAuthWebType::WEB),
+                                                ),
+                                            ),
+                                        )
+                                        .headers(BTreeMap::from([("f".to_string(), "g".to_string())]))
+                                        .message("My message".to_string())
+                                        .url("ws://34.95.79.70/web-socket".to_string()),
+                                    SyntheticsAPITestStepSubtype::WEBSOCKET,
+                                )
+                                    .allow_failure(false)
+                                    .is_critical(true)
+                                    .retry(SyntheticsTestOptionsRetry::new().count(0).interval(300.0 as f64)),
+                            ),
+                        ),
+                        SyntheticsAPIStep::SyntheticsAPITestStep(
+                            Box::new(
+                                SyntheticsAPITestStep::new(
+                                    vec![
+                                        SyntheticsAssertion::SyntheticsAssertionTarget(
+                                            Box::new(
+                                                SyntheticsAssertionTarget::new(
+                                                    SyntheticsAssertionOperator::LESS_THAN,
+                                                    Value::from(1000),
+                                                    SyntheticsAssertionType::RESPONSE_TIME,
+                                                ),
+                                            ),
+                                        )
+                                    ],
+                                    "UDP step".to_string(),
+                                    SyntheticsTestRequest::new()
+                                        .host("8.8.8.8".to_string())
+                                        .message("A image.google.com".to_string())
+                                        .port(SyntheticsTestRequestPort::SyntheticsTestRequestNumericalPort(53)),
+                                    SyntheticsAPITestStepSubtype::UDP,
+                                )
+                                    .allow_failure(false)
                                     .is_critical(true)
                                     .retry(SyntheticsTestOptionsRetry::new().count(0).interval(300.0 as f64)),
                             ),
