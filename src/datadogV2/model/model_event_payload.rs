@@ -11,15 +11,18 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EventPayload {
-    /// An arbitrary string to use for aggregation when correlating events. Limited to 100 characters.
+    /// An arbitrary string to use for aggregation when correlating events. If you specify a key, events are deduplicated to alerts based on this key. Limited to 100 characters.
     #[serde(rename = "aggregation_key")]
     pub aggregation_key: Option<String>,
-    /// JSON object for custom attributes. Schema are different per each event category.
+    /// JSON object for custom attributes. Schema is different per event category.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::EventPayloadAttributes,
-    /// Event category to identify the type of event. Only the value `change` is supported. Support for other categories are coming. please reach out to datadog support if you're interested.
+    /// Event category to identify the type of event.
     #[serde(rename = "category")]
     pub category: crate::datadogV2::model::EventCategory,
+    /// Integration IDs sourced from integration manifests. Currently, only `custom-events` is supported.
+    #[serde(rename = "integration_id")]
+    pub integration_id: Option<crate::datadogV2::model::EventPayloadIntegrationId>,
     /// The body of the event. Limited to 4000 characters.
     #[serde(rename = "message")]
     pub message: Option<String>,
@@ -52,6 +55,7 @@ impl EventPayload {
             aggregation_key: None,
             attributes,
             category,
+            integration_id: None,
             message: None,
             tags: None,
             timestamp: None,
@@ -63,6 +67,14 @@ impl EventPayload {
 
     pub fn aggregation_key(mut self, value: String) -> Self {
         self.aggregation_key = Some(value);
+        self
+    }
+
+    pub fn integration_id(
+        mut self,
+        value: crate::datadogV2::model::EventPayloadIntegrationId,
+    ) -> Self {
+        self.integration_id = Some(value);
         self
     }
 
@@ -110,6 +122,8 @@ impl<'de> Deserialize<'de> for EventPayload {
                 let mut aggregation_key: Option<String> = None;
                 let mut attributes: Option<crate::datadogV2::model::EventPayloadAttributes> = None;
                 let mut category: Option<crate::datadogV2::model::EventCategory> = None;
+                let mut integration_id: Option<crate::datadogV2::model::EventPayloadIntegrationId> =
+                    None;
                 let mut message: Option<String> = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut timestamp: Option<String> = None;
@@ -153,6 +167,21 @@ impl<'de> Deserialize<'de> for EventPayload {
                                 }
                             }
                         }
+                        "integration_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            integration_id =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _integration_id) = integration_id {
+                                match _integration_id {
+                                    crate::datadogV2::model::EventPayloadIntegrationId::UnparsedObject(_integration_id) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
                         "message" => {
                             if v.is_null() {
                                 continue;
@@ -189,6 +218,7 @@ impl<'de> Deserialize<'de> for EventPayload {
                     aggregation_key,
                     attributes,
                     category,
+                    integration_id,
                     message,
                     tags,
                     timestamp,

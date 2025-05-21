@@ -14,6 +14,9 @@ pub struct EventCreateResponsePayload {
     /// Object containing an event response.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::EventCreateResponse>,
+    /// Links attributes.
+    #[serde(rename = "links")]
+    pub links: Option<crate::datadogV2::model::EventCreateResponsePayloadLinks>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -25,6 +28,7 @@ impl EventCreateResponsePayload {
     pub fn new() -> EventCreateResponsePayload {
         EventCreateResponsePayload {
             data: None,
+            links: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -32,6 +36,14 @@ impl EventCreateResponsePayload {
 
     pub fn data(mut self, value: crate::datadogV2::model::EventCreateResponse) -> Self {
         self.data = Some(value);
+        self
+    }
+
+    pub fn links(
+        mut self,
+        value: crate::datadogV2::model::EventCreateResponsePayloadLinks,
+    ) -> Self {
+        self.links = Some(value);
         self
     }
 
@@ -68,6 +80,8 @@ impl<'de> Deserialize<'de> for EventCreateResponsePayload {
                 M: MapAccess<'a>,
             {
                 let mut data: Option<crate::datadogV2::model::EventCreateResponse> = None;
+                let mut links: Option<crate::datadogV2::model::EventCreateResponsePayloadLinks> =
+                    None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -82,6 +96,12 @@ impl<'de> Deserialize<'de> for EventCreateResponsePayload {
                             }
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "links" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            links = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -92,6 +112,7 @@ impl<'de> Deserialize<'de> for EventCreateResponsePayload {
 
                 let content = EventCreateResponsePayload {
                     data,
+                    links,
                     additional_properties,
                     _unparsed,
                 };

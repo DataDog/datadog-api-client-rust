@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct EventCreateRequestPayload {
     /// Object representing an event creation request.
     #[serde(rename = "data")]
-    pub data: Option<crate::datadogV2::model::EventCreateRequest>,
+    pub data: crate::datadogV2::model::EventCreateRequest,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -22,17 +22,12 @@ pub struct EventCreateRequestPayload {
 }
 
 impl EventCreateRequestPayload {
-    pub fn new() -> EventCreateRequestPayload {
+    pub fn new(data: crate::datadogV2::model::EventCreateRequest) -> EventCreateRequestPayload {
         EventCreateRequestPayload {
-            data: None,
+            data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn data(mut self, value: crate::datadogV2::model::EventCreateRequest) -> Self {
-        self.data = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -41,12 +36,6 @@ impl EventCreateRequestPayload {
     ) -> Self {
         self.additional_properties = value;
         self
-    }
-}
-
-impl Default for EventCreateRequestPayload {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
@@ -77,9 +66,6 @@ impl<'de> Deserialize<'de> for EventCreateRequestPayload {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "data" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -89,6 +75,7 @@ impl<'de> Deserialize<'de> for EventCreateRequestPayload {
                         }
                     }
                 }
+                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
                 let content = EventCreateRequestPayload {
                     data,
