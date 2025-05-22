@@ -20,7 +20,7 @@ pub struct DORAIncidentRequestAttributes {
     /// Git info for DORA Metrics events.
     #[serde(rename = "git")]
     pub git: Option<crate::datadogV2::model::DORAGitInfo>,
-    /// Incident ID. Required to update a previously sent incident.
+    /// Incident ID. Must have at least 16 characters. Required to update a previously sent incident.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Incident name.
