@@ -7,6 +7,7 @@ use datadog_api_client::datadogV1::model::SyntheticsAPITestType;
 use datadog_api_client::datadogV1::model::SyntheticsAssertion;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionOperator;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionTarget;
+use datadog_api_client::datadogV1::model::SyntheticsAssertionTargetValue;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionType;
 use datadog_api_client::datadogV1::model::SyntheticsBrowserTestRumSettings;
 use datadog_api_client::datadogV1::model::SyntheticsTestCiOptions;
@@ -21,7 +22,6 @@ use datadog_api_client::datadogV1::model::SyntheticsTestOptionsScheduling;
 use datadog_api_client::datadogV1::model::SyntheticsTestOptionsSchedulingTimeframe;
 use datadog_api_client::datadogV1::model::SyntheticsTestPauseStatus;
 use datadog_api_client::datadogV1::model::SyntheticsTestRequest;
-use serde_json::Value;
 
 #[tokio::main]
 async fn main() {
@@ -30,7 +30,9 @@ async fn main() {
             .assertions(vec![SyntheticsAssertion::SyntheticsAssertionTarget(
                 Box::new(SyntheticsAssertionTarget::new(
                     SyntheticsAssertionOperator::LESS_THAN,
-                    Value::from(1000),
+                    SyntheticsAssertionTargetValue::SyntheticsAssertionTargetValueNumber(
+                        1000.0 as f64,
+                    ),
                     SyntheticsAssertionType::RESPONSE_TIME,
                 )),
             )])

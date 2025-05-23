@@ -8,13 +8,13 @@ use datadog_api_client::datadogV1::model::SyntheticsAPITestType;
 use datadog_api_client::datadogV1::model::SyntheticsAssertion;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionOperator;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionTarget;
+use datadog_api_client::datadogV1::model::SyntheticsAssertionTargetValue;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionType;
 use datadog_api_client::datadogV1::model::SyntheticsTestDetailsSubType;
 use datadog_api_client::datadogV1::model::SyntheticsTestOptions;
 use datadog_api_client::datadogV1::model::SyntheticsTestOptionsRetry;
 use datadog_api_client::datadogV1::model::SyntheticsTestRequest;
 use datadog_api_client::datadogV1::model::SyntheticsTestRequestPort;
-use serde_json::Value;
 
 #[tokio::main]
 async fn main() {
@@ -24,14 +24,18 @@ async fn main() {
                 SyntheticsAssertion::SyntheticsAssertionTarget(Box::new(
                     SyntheticsAssertionTarget::new(
                         SyntheticsAssertionOperator::IS,
-                        Value::from("message"),
+                        SyntheticsAssertionTargetValue::SyntheticsAssertionTargetValueString(
+                            "message".to_string(),
+                        ),
                         SyntheticsAssertionType::RECEIVED_MESSAGE,
                     ),
                 )),
                 SyntheticsAssertion::SyntheticsAssertionTarget(Box::new(
                     SyntheticsAssertionTarget::new(
                         SyntheticsAssertionOperator::LESS_THAN,
-                        Value::from(2000),
+                        SyntheticsAssertionTargetValue::SyntheticsAssertionTargetValueNumber(
+                            2000.0 as f64,
+                        ),
                         SyntheticsAssertionType::RESPONSE_TIME,
                     ),
                 )),

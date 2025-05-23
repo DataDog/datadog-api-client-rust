@@ -14,9 +14,9 @@ pub struct SyntheticsAssertionBodyHashTarget {
     /// Assertion operator to apply.
     #[serde(rename = "operator")]
     pub operator: crate::datadogV1::model::SyntheticsAssertionBodyHashOperator,
-    /// Value used by the operator.
+    /// Value used by the operator in assertions. Can be either a number or string.
     #[serde(rename = "target")]
-    pub target: serde_json::Value,
+    pub target: crate::datadogV1::model::SyntheticsAssertionTargetValue,
     /// Type of the assertion.
     #[serde(rename = "type")]
     pub type_: crate::datadogV1::model::SyntheticsAssertionBodyHashType,
@@ -30,7 +30,7 @@ pub struct SyntheticsAssertionBodyHashTarget {
 impl SyntheticsAssertionBodyHashTarget {
     pub fn new(
         operator: crate::datadogV1::model::SyntheticsAssertionBodyHashOperator,
-        target: serde_json::Value,
+        target: crate::datadogV1::model::SyntheticsAssertionTargetValue,
         type_: crate::datadogV1::model::SyntheticsAssertionBodyHashType,
     ) -> SyntheticsAssertionBodyHashTarget {
         SyntheticsAssertionBodyHashTarget {
@@ -71,7 +71,8 @@ impl<'de> Deserialize<'de> for SyntheticsAssertionBodyHashTarget {
                 let mut operator: Option<
                     crate::datadogV1::model::SyntheticsAssertionBodyHashOperator,
                 > = None;
-                let mut target: Option<serde_json::Value> = None;
+                let mut target: Option<crate::datadogV1::model::SyntheticsAssertionTargetValue> =
+                    None;
                 let mut type_: Option<crate::datadogV1::model::SyntheticsAssertionBodyHashType> =
                     None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -95,6 +96,14 @@ impl<'de> Deserialize<'de> for SyntheticsAssertionBodyHashTarget {
                         }
                         "target" => {
                             target = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _target) = target {
+                                match _target {
+                                    crate::datadogV1::model::SyntheticsAssertionTargetValue::UnparsedObject(_target) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);

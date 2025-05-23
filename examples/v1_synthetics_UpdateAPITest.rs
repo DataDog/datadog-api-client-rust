@@ -14,6 +14,7 @@ use datadog_api_client::datadogV1::model::SyntheticsAssertionJSONSchemaTarget;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionJSONSchemaTargetTarget;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionOperator;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionTarget;
+use datadog_api_client::datadogV1::model::SyntheticsAssertionTargetValue;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionType;
 use datadog_api_client::datadogV1::model::SyntheticsConfigVariable;
 use datadog_api_client::datadogV1::model::SyntheticsConfigVariableType;
@@ -24,7 +25,6 @@ use datadog_api_client::datadogV1::model::SyntheticsTestPauseStatus;
 use datadog_api_client::datadogV1::model::SyntheticsTestRequest;
 use datadog_api_client::datadogV1::model::SyntheticsTestRequestCertificate;
 use datadog_api_client::datadogV1::model::SyntheticsTestRequestCertificateItem;
-use serde_json::Value;
 use std::collections::BTreeMap;
 
 #[tokio::main]
@@ -40,7 +40,9 @@ async fn main() {
                             Box::new(
                                 SyntheticsAssertionTarget::new(
                                     SyntheticsAssertionOperator::IS,
-                                    Value::from("text/html"),
+                                    SyntheticsAssertionTargetValue::SyntheticsAssertionTargetValueString(
+                                        "text/html".to_string(),
+                                    ),
                                     SyntheticsAssertionType::HEADER,
                                 ).property("{{ PROPERTY }}".to_string()),
                             ),
@@ -49,7 +51,9 @@ async fn main() {
                             Box::new(
                                 SyntheticsAssertionTarget::new(
                                     SyntheticsAssertionOperator::LESS_THAN,
-                                    Value::from(2000),
+                                    SyntheticsAssertionTargetValue::SyntheticsAssertionTargetValueNumber(
+                                        2000.0 as f64,
+                                    ),
                                     SyntheticsAssertionType::RESPONSE_TIME,
                                 ),
                             ),
@@ -63,7 +67,11 @@ async fn main() {
                                     SyntheticsAssertionJSONPathTargetTarget::new()
                                         .json_path("topKey".to_string())
                                         .operator("isNot".to_string())
-                                        .target_value(Value::from("0")),
+                                        .target_value(
+                                            SyntheticsAssertionTargetValue::SyntheticsAssertionTargetValueString(
+                                                "0".to_string(),
+                                            ),
+                                        ),
                                 ),
                             ),
                         ),

@@ -8,13 +8,13 @@ use datadog_api_client::datadogV1::model::SyntheticsAPITestType;
 use datadog_api_client::datadogV1::model::SyntheticsAssertion;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionOperator;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionTarget;
+use datadog_api_client::datadogV1::model::SyntheticsAssertionTargetValue;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionType;
 use datadog_api_client::datadogV1::model::SyntheticsTestDetailsSubType;
 use datadog_api_client::datadogV1::model::SyntheticsTestOptions;
 use datadog_api_client::datadogV1::model::SyntheticsTestOptionsMonitorOptions;
 use datadog_api_client::datadogV1::model::SyntheticsTestRequest;
 use datadog_api_client::datadogV1::model::SyntheticsTestRequestPort;
-use serde_json::Value;
 use std::collections::BTreeMap;
 
 #[tokio::main]
@@ -25,21 +25,27 @@ async fn main() {
                 SyntheticsAssertion::SyntheticsAssertionTarget(Box::new(
                     SyntheticsAssertionTarget::new(
                         SyntheticsAssertionOperator::IS,
-                        Value::from(1),
+                        SyntheticsAssertionTargetValue::SyntheticsAssertionTargetValueNumber(
+                            1.0 as f64,
+                        ),
                         SyntheticsAssertionType::GRPC_HEALTHCHECK_STATUS,
                     ),
                 )),
                 SyntheticsAssertion::SyntheticsAssertionTarget(Box::new(
                     SyntheticsAssertionTarget::new(
                         SyntheticsAssertionOperator::IS,
-                        Value::from("proto target"),
+                        SyntheticsAssertionTargetValue::SyntheticsAssertionTargetValueString(
+                            "proto target".to_string(),
+                        ),
                         SyntheticsAssertionType::GRPC_PROTO,
                     ),
                 )),
                 SyntheticsAssertion::SyntheticsAssertionTarget(Box::new(
                     SyntheticsAssertionTarget::new(
                         SyntheticsAssertionOperator::IS,
-                        Value::from("123"),
+                        SyntheticsAssertionTargetValue::SyntheticsAssertionTargetValueString(
+                            "123".to_string(),
+                        ),
                         SyntheticsAssertionType::GRPC_METADATA,
                     )
                     .property("property".to_string()),
