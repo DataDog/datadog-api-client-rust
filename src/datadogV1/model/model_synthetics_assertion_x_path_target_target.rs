@@ -14,9 +14,9 @@ pub struct SyntheticsAssertionXPathTargetTarget {
     /// The specific operator to use on the path.
     #[serde(rename = "operator")]
     pub operator: Option<String>,
-    /// The path target value to compare to.
+    /// Value used by the operator in assertions. Can be either a number or string.
     #[serde(rename = "targetValue")]
-    pub target_value: Option<serde_json::Value>,
+    pub target_value: Option<crate::datadogV1::model::SyntheticsAssertionTargetValue>,
     /// The X path to assert.
     #[serde(rename = "xPath")]
     pub x_path: Option<String>,
@@ -43,7 +43,10 @@ impl SyntheticsAssertionXPathTargetTarget {
         self
     }
 
-    pub fn target_value(mut self, value: serde_json::Value) -> Self {
+    pub fn target_value(
+        mut self,
+        value: crate::datadogV1::model::SyntheticsAssertionTargetValue,
+    ) -> Self {
         self.target_value = Some(value);
         self
     }
@@ -86,7 +89,9 @@ impl<'de> Deserialize<'de> for SyntheticsAssertionXPathTargetTarget {
                 M: MapAccess<'a>,
             {
                 let mut operator: Option<String> = None;
-                let mut target_value: Option<serde_json::Value> = None;
+                let mut target_value: Option<
+                    crate::datadogV1::model::SyntheticsAssertionTargetValue,
+                > = None;
                 let mut x_path: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -108,6 +113,14 @@ impl<'de> Deserialize<'de> for SyntheticsAssertionXPathTargetTarget {
                             }
                             target_value =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _target_value) = target_value {
+                                match _target_value {
+                                    crate::datadogV1::model::SyntheticsAssertionTargetValue::UnparsedObject(_target_value) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "xPath" => {
                             if v.is_null() {

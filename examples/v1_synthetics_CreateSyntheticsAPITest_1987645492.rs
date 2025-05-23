@@ -19,6 +19,7 @@ use datadog_api_client::datadogV1::model::SyntheticsAssertionJavascript;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionJavascriptType;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionOperator;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionTarget;
+use datadog_api_client::datadogV1::model::SyntheticsAssertionTargetValue;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionTimingsScope;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionType;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionXPathOperator;
@@ -38,7 +39,6 @@ use datadog_api_client::datadogV1::model::SyntheticsTestRequest;
 use datadog_api_client::datadogV1::model::SyntheticsTestRequestCertificate;
 use datadog_api_client::datadogV1::model::SyntheticsTestRequestCertificateItem;
 use datadog_api_client::datadogV1::model::SyntheticsTestRequestProxy;
-use serde_json::Value;
 use std::collections::BTreeMap;
 
 #[tokio::main]
@@ -52,7 +52,9 @@ async fn main() {
                             Box::new(
                                 SyntheticsAssertionTarget::new(
                                     SyntheticsAssertionOperator::IS,
-                                    Value::from("text/html"),
+                                    SyntheticsAssertionTargetValue::SyntheticsAssertionTargetValueString(
+                                        "text/html".to_string(),
+                                    ),
                                     SyntheticsAssertionType::HEADER,
                                 ).property("{{ PROPERTY }}".to_string()),
                             ),
@@ -61,7 +63,9 @@ async fn main() {
                             Box::new(
                                 SyntheticsAssertionTarget::new(
                                     SyntheticsAssertionOperator::LESS_THAN,
-                                    Value::from(2000),
+                                    SyntheticsAssertionTargetValue::SyntheticsAssertionTargetValueNumber(
+                                        2000.0 as f64,
+                                    ),
                                     SyntheticsAssertionType::RESPONSE_TIME,
                                 ).timings_scope(SyntheticsAssertionTimingsScope::WITHOUT_DNS),
                             ),
@@ -75,7 +79,11 @@ async fn main() {
                                     SyntheticsAssertionJSONPathTargetTarget::new()
                                         .json_path("topKey".to_string())
                                         .operator("isNot".to_string())
-                                        .target_value(Value::from("0")),
+                                        .target_value(
+                                            SyntheticsAssertionTargetValue::SyntheticsAssertionTargetValueString(
+                                                "0".to_string(),
+                                            ),
+                                        ),
                                 ),
                             ),
                         ),
@@ -89,7 +97,11 @@ async fn main() {
                                         .elements_operator("atLeastOneElementMatches".to_string())
                                         .json_path("topKey".to_string())
                                         .operator("isNot".to_string())
-                                        .target_value(Value::from("0")),
+                                        .target_value(
+                                            SyntheticsAssertionTargetValue::SyntheticsAssertionTargetValueString(
+                                                "0".to_string(),
+                                            ),
+                                        ),
                                 ),
                             ),
                         ),
@@ -115,7 +127,11 @@ async fn main() {
                                 ).target(
                                     SyntheticsAssertionXPathTargetTarget::new()
                                         .operator("contains".to_string())
-                                        .target_value(Value::from("0"))
+                                        .target_value(
+                                            SyntheticsAssertionTargetValue::SyntheticsAssertionTargetValueString(
+                                                "0".to_string(),
+                                            ),
+                                        )
                                         .x_path("target-xpath".to_string()),
                                 ),
                             ),
@@ -124,7 +140,9 @@ async fn main() {
                             Box::new(
                                 SyntheticsAssertionBodyHashTarget::new(
                                     SyntheticsAssertionBodyHashOperator::MD5,
-                                    Value::from("a"),
+                                    SyntheticsAssertionTargetValue::SyntheticsAssertionTargetValueString(
+                                        "a".to_string(),
+                                    ),
                                     SyntheticsAssertionBodyHashType::BODY_HASH,
                                 ),
                             ),

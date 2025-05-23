@@ -13,6 +13,7 @@ use datadog_api_client::datadogV1::model::SyntheticsAPIWaitStepSubtype;
 use datadog_api_client::datadogV1::model::SyntheticsAssertion;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionOperator;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionTarget;
+use datadog_api_client::datadogV1::model::SyntheticsAssertionTargetValue;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionType;
 use datadog_api_client::datadogV1::model::SyntheticsConfigVariable;
 use datadog_api_client::datadogV1::model::SyntheticsConfigVariableType;
@@ -27,7 +28,6 @@ use datadog_api_client::datadogV1::model::SyntheticsTestOptionsRetry;
 use datadog_api_client::datadogV1::model::SyntheticsTestRequest;
 use datadog_api_client::datadogV1::model::SyntheticsTestRequestPort;
 use datadog_api_client::datadogV1::model::SyntheticsVariableParser;
-use serde_json::Value;
 use std::collections::BTreeMap;
 
 #[tokio::main]
@@ -52,7 +52,10 @@ async fn main() {
                                             Box::new(
                                                 SyntheticsAssertionTarget::new(
                                                     SyntheticsAssertionOperator::IS,
-                                                    Value::from(200),
+                                                    SyntheticsAssertionTargetValue
+                                                    ::SyntheticsAssertionTargetValueNumber(
+                                                        200.0 as f64,
+                                                    ),
                                                     SyntheticsAssertionType::STATUS_CODE,
                                                 ),
                                             ),
@@ -102,7 +105,10 @@ async fn main() {
                                             Box::new(
                                                 SyntheticsAssertionTarget::new(
                                                     SyntheticsAssertionOperator::LESS_THAN,
-                                                    Value::from(1000),
+                                                    SyntheticsAssertionTargetValue
+                                                    ::SyntheticsAssertionTargetValueNumber(
+                                                        1000.0 as f64,
+                                                    ),
                                                     SyntheticsAssertionType::RESPONSE_TIME,
                                                 ),
                                             ),

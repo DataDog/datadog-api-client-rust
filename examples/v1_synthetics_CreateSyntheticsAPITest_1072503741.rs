@@ -7,12 +7,12 @@ use datadog_api_client::datadogV1::model::SyntheticsAPITestType;
 use datadog_api_client::datadogV1::model::SyntheticsAssertion;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionOperator;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionTarget;
+use datadog_api_client::datadogV1::model::SyntheticsAssertionTargetValue;
 use datadog_api_client::datadogV1::model::SyntheticsAssertionType;
 use datadog_api_client::datadogV1::model::SyntheticsTestDetailsSubType;
 use datadog_api_client::datadogV1::model::SyntheticsTestOptions;
 use datadog_api_client::datadogV1::model::SyntheticsTestRequest;
 use datadog_api_client::datadogV1::model::SyntheticsTestRequestPort;
-use serde_json::Value;
 
 #[tokio::main]
 async fn main() {
@@ -21,7 +21,9 @@ async fn main() {
             .assertions(vec![SyntheticsAssertion::SyntheticsAssertionTarget(
                 Box::new(SyntheticsAssertionTarget::new(
                     SyntheticsAssertionOperator::IS_IN_MORE_DAYS_THAN,
-                    Value::from(10),
+                    SyntheticsAssertionTargetValue::SyntheticsAssertionTargetValueNumber(
+                        10.0 as f64,
+                    ),
                     SyntheticsAssertionType::CERTIFICATE,
                 )),
             )])
