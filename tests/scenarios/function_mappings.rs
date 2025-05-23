@@ -1967,6 +1967,14 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_delete_catalog_entity,
     );
     world.function_mappings.insert(
+        "v2.ListCatalogRelation".into(),
+        test_v2_list_catalog_relation,
+    );
+    world.function_mappings.insert(
+        "v2.ListCatalogRelationWithPagination".into(),
+        test_v2_list_catalog_relation_with_pagination,
+    );
+    world.function_mappings.insert(
         "v2.CreateCIAppPipelineEvent".into(),
         test_v2_create_ci_app_pipeline_event,
     );
@@ -13255,6 +13263,116 @@ fn test_v2_delete_catalog_entity(world: &mut DatadogWorld, _parameters: &HashMap
     };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_catalog_relation(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_software_catalog
+        .as_ref()
+        .expect("api instance not found");
+    let page_offset = _parameters
+        .get("page[offset]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_type = _parameters
+        .get("filter[type]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_from_ref = _parameters
+        .get("filter[from_ref]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_to_ref = _parameters
+        .get("filter[to_ref]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_software_catalog::ListCatalogRelationOptionalParams::default();
+    params.page_offset = page_offset;
+    params.page_limit = page_limit;
+    params.filter_type = filter_type;
+    params.filter_from_ref = filter_from_ref;
+    params.filter_to_ref = filter_to_ref;
+    params.include = include;
+    let response = match block_on(api.list_catalog_relation_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+fn test_v2_list_catalog_relation_with_pagination(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_software_catalog
+        .as_ref()
+        .expect("api instance not found");
+    let page_offset = _parameters
+        .get("page[offset]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_type = _parameters
+        .get("filter[type]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_from_ref = _parameters
+        .get("filter[from_ref]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_to_ref = _parameters
+        .get("filter[to_ref]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_software_catalog::ListCatalogRelationOptionalParams::default();
+    params.page_offset = page_offset;
+    params.page_limit = page_limit;
+    params.filter_type = filter_type;
+    params.filter_from_ref = filter_from_ref;
+    params.filter_to_ref = filter_to_ref;
+    params.include = include;
+    let response = api.list_catalog_relation_with_pagination(params);
+    let mut result = Vec::new();
+
+    block_on(async {
+        pin_mut!(response);
+
+        while let Some(resp) = response.next().await {
+            match resp {
+                Ok(response) => {
+                    result.push(response);
+                }
+                Err(error) => {
+                    return match error {
+                        Error::ResponseError(e) => {
+                            if let Some(entity) = e.entity {
+                                world.response.object = serde_json::to_value(entity).unwrap();
+                            }
+                        }
+                        _ => panic!("error parsing response: {}", error),
+                    };
+                }
+            }
+        }
+    });
+    world.response.object = serde_json::to_value(result).unwrap();
+    world.response.code = 200;
 }
 
 fn test_v2_create_ci_app_pipeline_event(
