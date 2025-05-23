@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ScheduleData {
-    /// Provides core properties of a schedule object, such as its name, time zone, and tags.
+    /// Provides core properties of a schedule object such as its name and time zone.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::ScheduleDataAttributes>,
     /// The schedule's unique identifier.

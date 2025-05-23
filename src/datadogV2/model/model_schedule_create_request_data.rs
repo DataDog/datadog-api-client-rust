@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ScheduleCreateRequestData {
-    /// Describes the main attributes for creating a new schedule, including name, layers, time zone, and tags.
+    /// Describes the main attributes for creating a new schedule, including name, layers, and time zone.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::ScheduleCreateRequestDataAttributes,
     /// Gathers relationship objects for the schedule creation request, including the teams to associate.

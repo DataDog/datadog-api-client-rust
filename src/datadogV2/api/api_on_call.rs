@@ -315,7 +315,7 @@ impl OnCallAPI {
         Self { config, client }
     }
 
-    /// Create a new on-call escalation policy
+    /// Create a new On-Call escalation policy
     pub async fn create_on_call_escalation_policy(
         &self,
         body: crate::datadogV2::model::EscalationPolicyCreateRequest,
@@ -341,7 +341,7 @@ impl OnCallAPI {
         }
     }
 
-    /// Create a new on-call escalation policy
+    /// Create a new On-Call escalation policy
     pub async fn create_on_call_escalation_policy_with_http_info(
         &self,
         body: crate::datadogV2::model::EscalationPolicyCreateRequest,
@@ -481,7 +481,7 @@ impl OnCallAPI {
         }
     }
 
-    /// Create a new on-call schedule
+    /// Create a new On-Call schedule
     pub async fn create_on_call_schedule(
         &self,
         body: crate::datadogV2::model::ScheduleCreateRequest,
@@ -504,7 +504,7 @@ impl OnCallAPI {
         }
     }
 
-    /// Create a new on-call schedule
+    /// Create a new On-Call schedule
     pub async fn create_on_call_schedule_with_http_info(
         &self,
         body: crate::datadogV2::model::ScheduleCreateRequest,
@@ -643,7 +643,7 @@ impl OnCallAPI {
         }
     }
 
-    /// Delete an on-call escalation policy
+    /// Delete an On-Call escalation policy
     pub async fn delete_on_call_escalation_policy(
         &self,
         policy_id: String,
@@ -657,7 +657,7 @@ impl OnCallAPI {
         }
     }
 
-    /// Delete an on-call escalation policy
+    /// Delete an On-Call escalation policy
     pub async fn delete_on_call_escalation_policy_with_http_info(
         &self,
         policy_id: String,
@@ -735,7 +735,7 @@ impl OnCallAPI {
         }
     }
 
-    /// Delete an on-call schedule
+    /// Delete an On-Call schedule
     pub async fn delete_on_call_schedule(
         &self,
         schedule_id: String,
@@ -749,7 +749,7 @@ impl OnCallAPI {
         }
     }
 
-    /// Delete an on-call schedule
+    /// Delete an On-Call schedule
     pub async fn delete_on_call_schedule_with_http_info(
         &self,
         schedule_id: String,
@@ -826,7 +826,7 @@ impl OnCallAPI {
         }
     }
 
-    /// Get an on-call escalation policy
+    /// Get an On-Call escalation policy
     pub async fn get_on_call_escalation_policy(
         &self,
         policy_id: String,
@@ -852,7 +852,7 @@ impl OnCallAPI {
         }
     }
 
-    /// Get an on-call escalation policy
+    /// Get an On-Call escalation policy
     pub async fn get_on_call_escalation_policy_with_http_info(
         &self,
         policy_id: String,
@@ -947,7 +947,7 @@ impl OnCallAPI {
         }
     }
 
-    /// Get an on-call schedule
+    /// Get an On-Call schedule
     pub async fn get_on_call_schedule(
         &self,
         schedule_id: String,
@@ -970,7 +970,7 @@ impl OnCallAPI {
         }
     }
 
-    /// Get an on-call schedule
+    /// Get an On-Call schedule
     pub async fn get_on_call_schedule_with_http_info(
         &self,
         schedule_id: String,
@@ -1064,7 +1064,7 @@ impl OnCallAPI {
         }
     }
 
-    /// Get a team's on-call routing rules
+    /// Get a team's On-Call routing rules
     pub async fn get_on_call_team_routing_rules(
         &self,
         team_id: String,
@@ -1090,7 +1090,7 @@ impl OnCallAPI {
         }
     }
 
-    /// Get a team's on-call routing rules
+    /// Get a team's On-Call routing rules
     pub async fn get_on_call_team_routing_rules_with_http_info(
         &self,
         team_id: String,
@@ -1307,7 +1307,7 @@ impl OnCallAPI {
         }
     }
 
-    /// Set a team's on-call routing rules
+    /// Set a team's On-Call routing rules
     pub async fn set_on_call_team_routing_rules(
         &self,
         team_id: String,
@@ -1334,7 +1334,7 @@ impl OnCallAPI {
         }
     }
 
-    /// Set a team's on-call routing rules
+    /// Set a team's On-Call routing rules
     pub async fn set_on_call_team_routing_rules_with_http_info(
         &self,
         team_id: String,
@@ -1476,7 +1476,7 @@ impl OnCallAPI {
         }
     }
 
-    /// Update an on-call escalation policy
+    /// Update an On-Call escalation policy
     pub async fn update_on_call_escalation_policy(
         &self,
         policy_id: String,
@@ -1503,7 +1503,7 @@ impl OnCallAPI {
         }
     }
 
-    /// Update an on-call escalation policy
+    /// Update an On-Call escalation policy
     pub async fn update_on_call_escalation_policy_with_http_info(
         &self,
         policy_id: String,
@@ -1645,7 +1645,7 @@ impl OnCallAPI {
         }
     }
 
-    /// Update a new on-call schedule
+    /// Update a new On-Call schedule
     pub async fn update_on_call_schedule(
         &self,
         schedule_id: String,
@@ -1669,7 +1669,7 @@ impl OnCallAPI {
         }
     }
 
-    /// Update a new on-call schedule
+    /// Update a new On-Call schedule
     pub async fn update_on_call_schedule_with_http_info(
         &self,
         schedule_id: String,

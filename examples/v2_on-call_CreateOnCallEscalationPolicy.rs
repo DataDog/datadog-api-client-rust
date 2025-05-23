@@ -1,4 +1,4 @@
-// Create on-call escalation policy returns "Created" response
+// Create On-Call escalation policy returns "Created" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_on_call::CreateOnCallEscalationPolicyOptionalParams;
 use datadog_api_client::datadogV2::api_on_call::OnCallAPI;
@@ -52,7 +52,6 @@ async fn main() {
                     .escalate_after_seconds(3600),
                 ],
             )
-            .description("Escalation Policy 1 description".to_string())
             .resolve_page_on_policy_end(true)
             .retries(2),
             EscalationPolicyCreateRequestDataType::POLICIES,
@@ -69,7 +68,8 @@ async fn main() {
     let resp = api
         .create_on_call_escalation_policy(
             body,
-            CreateOnCallEscalationPolicyOptionalParams::default(),
+            CreateOnCallEscalationPolicyOptionalParams::default()
+                .include("steps.targets".to_string()),
         )
         .await;
     if let Ok(value) = resp {

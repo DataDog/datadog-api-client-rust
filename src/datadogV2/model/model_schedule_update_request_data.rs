@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Contains all data needed to update an existing schedule, including its attributes (such as name, layers, or tags) and any relationships to teams.
+/// Contains all data needed to update an existing schedule, including its attributes (such as name and time zone) and any relationships to teams.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ScheduleUpdateRequestData {
-    /// Defines the updatable attributes for a schedule, such as name, time zone, tags, and layers.
+    /// Defines the updatable attributes for a schedule, such as name, time zone, and layers.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::ScheduleUpdateRequestDataAttributes,
     /// The ID of the schedule to be updated.

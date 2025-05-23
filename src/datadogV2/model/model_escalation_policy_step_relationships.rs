@@ -11,9 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EscalationPolicyStepRelationships {
-    /// Represents an escalation target, which can be a team, user, or schedule.
+    /// A list of escalation targets for a step
     #[serde(rename = "targets")]
-    pub targets: Option<crate::datadogV2::model::EscalationTarget>,
+    pub targets: Option<crate::datadogV2::model::EscalationTargets>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -30,7 +30,7 @@ impl EscalationPolicyStepRelationships {
         }
     }
 
-    pub fn targets(mut self, value: crate::datadogV2::model::EscalationTarget) -> Self {
+    pub fn targets(mut self, value: crate::datadogV2::model::EscalationTargets) -> Self {
         self.targets = Some(value);
         self
     }
@@ -67,7 +67,7 @@ impl<'de> Deserialize<'de> for EscalationPolicyStepRelationships {
             where
                 M: MapAccess<'a>,
             {
-                let mut targets: Option<crate::datadogV2::model::EscalationTarget> = None;
+                let mut targets: Option<crate::datadogV2::model::EscalationTargets> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -81,16 +81,6 @@ impl<'de> Deserialize<'de> for EscalationPolicyStepRelationships {
                                 continue;
                             }
                             targets = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _targets) = targets {
-                                match _targets {
-                                    crate::datadogV2::model::EscalationTarget::UnparsedObject(
-                                        _targets,
-                                    ) => {
-                                        _unparsed = true;
-                                    }
-                                    _ => {}
-                                }
-                            }
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {

@@ -6,20 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Describes the main attributes for creating a new schedule, including name, layers, time zone, and tags.
+/// Describes the main attributes for creating a new schedule, including name, layers, and time zone.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ScheduleCreateRequestDataAttributes {
-    /// The layers of on-call coverage that define rotation intervals and restrictions.
+    /// The layers of On-Call coverage that define rotation intervals and restrictions.
     #[serde(rename = "layers")]
     pub layers: Vec<crate::datadogV2::model::ScheduleCreateRequestDataAttributesLayersItems>,
     /// A human-readable name for the new schedule.
     #[serde(rename = "name")]
     pub name: String,
-    /// A list of tags for categorizing or filtering the schedule.
-    #[serde(rename = "tags")]
-    pub tags: Option<Vec<String>>,
     /// The time zone in which the schedule is defined.
     #[serde(rename = "time_zone")]
     pub time_zone: String,
@@ -39,16 +36,10 @@ impl ScheduleCreateRequestDataAttributes {
         ScheduleCreateRequestDataAttributes {
             layers,
             name,
-            tags: None,
             time_zone,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn tags(mut self, value: Vec<String>) -> Self {
-        self.tags = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -81,7 +72,6 @@ impl<'de> Deserialize<'de> for ScheduleCreateRequestDataAttributes {
                     Vec<crate::datadogV2::model::ScheduleCreateRequestDataAttributesLayersItems>,
                 > = None;
                 let mut name: Option<String> = None;
-                let mut tags: Option<Vec<String>> = None;
                 let mut time_zone: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -96,12 +86,6 @@ impl<'de> Deserialize<'de> for ScheduleCreateRequestDataAttributes {
                         }
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "tags" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "time_zone" => {
                             time_zone = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -120,7 +104,6 @@ impl<'de> Deserialize<'de> for ScheduleCreateRequestDataAttributes {
                 let content = ScheduleCreateRequestDataAttributes {
                     layers,
                     name,
-                    tags,
                     time_zone,
                     additional_properties,
                     _unparsed,

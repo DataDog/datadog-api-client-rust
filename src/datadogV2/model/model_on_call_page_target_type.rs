@@ -6,21 +6,25 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum TeamReferenceRelationshipsOncallUsersDataItemsType {
-    USERS,
+pub enum OnCallPageTargetType {
+    TEAM_ID,
+    TEAM_HANDLE,
+    USER_ID,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for TeamReferenceRelationshipsOncallUsersDataItemsType {
+impl ToString for OnCallPageTargetType {
     fn to_string(&self) -> String {
         match self {
-            Self::USERS => String::from("users"),
+            Self::TEAM_ID => String::from("team_id"),
+            Self::TEAM_HANDLE => String::from("team_handle"),
+            Self::USER_ID => String::from("user_id"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for TeamReferenceRelationshipsOncallUsersDataItemsType {
+impl Serialize for OnCallPageTargetType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -32,14 +36,16 @@ impl Serialize for TeamReferenceRelationshipsOncallUsersDataItemsType {
     }
 }
 
-impl<'de> Deserialize<'de> for TeamReferenceRelationshipsOncallUsersDataItemsType {
+impl<'de> Deserialize<'de> for OnCallPageTargetType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "users" => Self::USERS,
+            "team_id" => Self::TEAM_ID,
+            "team_handle" => Self::TEAM_HANDLE,
+            "user_id" => Self::USER_ID,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

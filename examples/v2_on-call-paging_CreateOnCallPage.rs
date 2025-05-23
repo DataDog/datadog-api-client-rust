@@ -6,6 +6,7 @@ use datadog_api_client::datadogV2::model::CreatePageRequestData;
 use datadog_api_client::datadogV2::model::CreatePageRequestDataAttributes;
 use datadog_api_client::datadogV2::model::CreatePageRequestDataAttributesTarget;
 use datadog_api_client::datadogV2::model::CreatePageRequestDataType;
+use datadog_api_client::datadogV2::model::OnCallPageTargetType;
 use datadog_api_client::datadogV2::model::PageUrgency;
 
 #[tokio::main]
@@ -15,7 +16,7 @@ async fn main() {
             CreatePageRequestDataAttributes::new(
                 CreatePageRequestDataAttributesTarget::new()
                     .identifier("my-team".to_string())
-                    .type_("team_handle".to_string()),
+                    .type_(OnCallPageTargetType::TEAM_HANDLE),
                 "Page title".to_string(),
                 PageUrgency::LOW,
             )

@@ -6,14 +6,11 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Defines the main attributes of an escalation policy, such as its description, name, and behavior on policy end.
+/// Defines the main attributes of an escalation policy, such as its name and behavior on policy end.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EscalationPolicyDataAttributes {
-    /// Provides a detailed text description of the escalation policy.
-    #[serde(rename = "description")]
-    pub description: Option<String>,
     /// Specifies the name of the escalation policy.
     #[serde(rename = "name")]
     pub name: String,
@@ -33,18 +30,12 @@ pub struct EscalationPolicyDataAttributes {
 impl EscalationPolicyDataAttributes {
     pub fn new(name: String) -> EscalationPolicyDataAttributes {
         EscalationPolicyDataAttributes {
-            description: None,
             name,
             resolve_page_on_policy_end: None,
             retries: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn description(mut self, value: String) -> Self {
-        self.description = Some(value);
-        self
     }
 
     pub fn resolve_page_on_policy_end(mut self, value: bool) -> Self {
@@ -83,7 +74,6 @@ impl<'de> Deserialize<'de> for EscalationPolicyDataAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut description: Option<String> = None;
                 let mut name: Option<String> = None;
                 let mut resolve_page_on_policy_end: Option<bool> = None;
                 let mut retries: Option<i64> = None;
@@ -95,13 +85,6 @@ impl<'de> Deserialize<'de> for EscalationPolicyDataAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "description" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -128,7 +111,6 @@ impl<'de> Deserialize<'de> for EscalationPolicyDataAttributes {
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
 
                 let content = EscalationPolicyDataAttributes {
-                    description,
                     name,
                     resolve_page_on_policy_end,
                     retries,

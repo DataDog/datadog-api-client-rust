@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EscalationPolicyData {
-    /// Defines the main attributes of an escalation policy, such as its description, name, and behavior on policy end.
+    /// Defines the main attributes of an escalation policy, such as its name and behavior on policy end.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::EscalationPolicyDataAttributes>,
     /// Specifies the unique identifier of the escalation policy.

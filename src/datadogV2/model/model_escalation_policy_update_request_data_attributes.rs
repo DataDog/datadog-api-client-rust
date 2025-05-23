@@ -11,9 +11,6 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EscalationPolicyUpdateRequestDataAttributes {
-    /// Provides a detailed text description of the escalation policy.
-    #[serde(rename = "description")]
-    pub description: Option<String>,
     /// Specifies the name of the escalation policy.
     #[serde(rename = "name")]
     pub name: String,
@@ -39,7 +36,6 @@ impl EscalationPolicyUpdateRequestDataAttributes {
         steps: Vec<crate::datadogV2::model::EscalationPolicyUpdateRequestDataAttributesStepsItems>,
     ) -> EscalationPolicyUpdateRequestDataAttributes {
         EscalationPolicyUpdateRequestDataAttributes {
-            description: None,
             name,
             resolve_page_on_policy_end: None,
             retries: None,
@@ -47,11 +43,6 @@ impl EscalationPolicyUpdateRequestDataAttributes {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn description(mut self, value: String) -> Self {
-        self.description = Some(value);
-        self
     }
 
     pub fn resolve_page_on_policy_end(mut self, value: bool) -> Self {
@@ -90,7 +81,6 @@ impl<'de> Deserialize<'de> for EscalationPolicyUpdateRequestDataAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut description: Option<String> = None;
                 let mut name: Option<String> = None;
                 let mut resolve_page_on_policy_end: Option<bool> = None;
                 let mut retries: Option<i64> = None;
@@ -103,13 +93,6 @@ impl<'de> Deserialize<'de> for EscalationPolicyUpdateRequestDataAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "description" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -140,7 +123,6 @@ impl<'de> Deserialize<'de> for EscalationPolicyUpdateRequestDataAttributes {
                 let steps = steps.ok_or_else(|| M::Error::missing_field("steps"))?;
 
                 let content = EscalationPolicyUpdateRequestDataAttributes {
-                    description,
                     name,
                     resolve_page_on_policy_end,
                     retries,
