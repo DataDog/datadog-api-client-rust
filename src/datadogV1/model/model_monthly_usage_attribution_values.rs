@@ -341,6 +341,12 @@ pub struct MonthlyUsageAttributionValues {
     /// The online archive usage by tag(s).
     #[serde(rename = "online_archive_usage")]
     pub online_archive_usage: Option<f64>,
+    /// The percentage of Product Analytics session usage by tag(s).
+    #[serde(rename = "product_analytics_session_percentage")]
+    pub product_analytics_session_percentage: Option<f64>,
+    /// The total Product Analytics session usage by tag(s).
+    #[serde(rename = "product_analytics_session_usage")]
+    pub product_analytics_session_usage: Option<f64>,
     /// The percentage of profiled container usage by tag(s).
     #[serde(rename = "profiled_container_percentage")]
     pub profiled_container_percentage: Option<f64>,
@@ -545,6 +551,8 @@ impl MonthlyUsageAttributionValues {
             obs_pipelines_vcpu_usage: None,
             online_archive_percentage: None,
             online_archive_usage: None,
+            product_analytics_session_percentage: None,
+            product_analytics_session_usage: None,
             profiled_container_percentage: None,
             profiled_container_usage: None,
             profiled_fargate_percentage: None,
@@ -1128,6 +1136,16 @@ impl MonthlyUsageAttributionValues {
         self
     }
 
+    pub fn product_analytics_session_percentage(mut self, value: f64) -> Self {
+        self.product_analytics_session_percentage = Some(value);
+        self
+    }
+
+    pub fn product_analytics_session_usage(mut self, value: f64) -> Self {
+        self.product_analytics_session_usage = Some(value);
+        self
+    }
+
     pub fn profiled_container_percentage(mut self, value: f64) -> Self {
         self.profiled_container_percentage = Some(value);
         self
@@ -1410,6 +1428,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                 let mut obs_pipelines_vcpu_usage: Option<f64> = None;
                 let mut online_archive_percentage: Option<f64> = None;
                 let mut online_archive_usage: Option<f64> = None;
+                let mut product_analytics_session_percentage: Option<f64> = None;
+                let mut product_analytics_session_usage: Option<f64> = None;
                 let mut profiled_container_percentage: Option<f64> = None;
                 let mut profiled_container_usage: Option<f64> = None;
                 let mut profiled_fargate_percentage: Option<f64> = None;
@@ -2215,6 +2235,20 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                             online_archive_usage =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "product_analytics_session_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            product_analytics_session_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "product_analytics_session_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            product_analytics_session_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "profiled_container_percentage" => {
                             if v.is_null() {
                                 continue;
@@ -2529,6 +2563,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                     obs_pipelines_vcpu_usage,
                     online_archive_percentage,
                     online_archive_usage,
+                    product_analytics_session_percentage,
+                    product_analytics_session_usage,
                     profiled_container_percentage,
                     profiled_container_usage,
                     profiled_fargate_percentage,
