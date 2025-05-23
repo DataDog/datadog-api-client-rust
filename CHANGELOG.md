@@ -1,5 +1,25 @@
 # CHANGELOG
 
+## 0.11.0/2025-05-23
+
+### Added
+* Adding endpoints to manage Resource Evaluation Filters [#658](https://github.com/DataDog/datadog-api-client-rust/pull/658)
+* Add Sev0 as a supported incident severity [#654](https://github.com/DataDog/datadog-api-client-rust/pull/654)
+* Share timerestriction object [#650](https://github.com/DataDog/datadog-api-client-rust/pull/650)
+* add On-Call Paging spec [#644](https://github.com/DataDog/datadog-api-client-rust/pull/644)
+* Add pagination method for NDM ListDevices. [#638](https://github.com/DataDog/datadog-api-client-rust/pull/638)
+* Add a new endpoint for listing Software Catalog relations  [#628](https://github.com/DataDog/datadog-api-client-rust/pull/628)
+* Complete Observability Pipelines API [#625](https://github.com/DataDog/datadog-api-client-rust/pull/625)
+* Add On-Call Team Rules [#624](https://github.com/DataDog/datadog-api-client-rust/pull/624)
+* datadog_integration_gcp_sts Add Support for IsPerProjectQuotaEnabled for GCP STS Service Accounts  [#616](https://github.com/DataDog/datadog-api-client-rust/pull/616)
+
+### Fixed
+* Fix incorrect pattern for url [#651](https://github.com/DataDog/datadog-api-client-rust/pull/651)
+* Make metadata optional for GCS destination [#641](https://github.com/DataDog/datadog-api-client-rust/pull/641)
+* Remove isReadOnly default when creating dashboards [#640](https://github.com/DataDog/datadog-api-client-rust/pull/640)
+* Make assertion target be int or string [#637](https://github.com/DataDog/datadog-api-client-rust/pull/637)
+* Update On-Call Escalation policies endpoints schemas and description [#620](https://github.com/DataDog/datadog-api-client-rust/pull/620)
+
 ## 0.10.1 / 2025-04-14
 
 ### Fixed
