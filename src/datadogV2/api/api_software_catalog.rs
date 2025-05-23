@@ -91,6 +91,57 @@ impl ListCatalogEntityOptionalParams {
     }
 }
 
+/// ListCatalogRelationOptionalParams is a struct for passing parameters to the method [`SoftwareCatalogAPI::list_catalog_relation`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListCatalogRelationOptionalParams {
+    /// Specific offset to use as the beginning of the returned page.
+    pub page_offset: Option<i64>,
+    /// Maximum number of relations in the response.
+    pub page_limit: Option<i64>,
+    /// Filter relations by type.
+    pub filter_type: Option<crate::datadogV2::model::RelationType>,
+    /// Filter relations by the reference of the first entity in the relation.
+    pub filter_from_ref: Option<String>,
+    /// Filter relations by the reference of the second entity in the relation.
+    pub filter_to_ref: Option<String>,
+    /// Include relationship data.
+    pub include: Option<crate::datadogV2::model::RelationIncludeType>,
+}
+
+impl ListCatalogRelationOptionalParams {
+    /// Specific offset to use as the beginning of the returned page.
+    pub fn page_offset(mut self, value: i64) -> Self {
+        self.page_offset = Some(value);
+        self
+    }
+    /// Maximum number of relations in the response.
+    pub fn page_limit(mut self, value: i64) -> Self {
+        self.page_limit = Some(value);
+        self
+    }
+    /// Filter relations by type.
+    pub fn filter_type(mut self, value: crate::datadogV2::model::RelationType) -> Self {
+        self.filter_type = Some(value);
+        self
+    }
+    /// Filter relations by the reference of the first entity in the relation.
+    pub fn filter_from_ref(mut self, value: String) -> Self {
+        self.filter_from_ref = Some(value);
+        self
+    }
+    /// Filter relations by the reference of the second entity in the relation.
+    pub fn filter_to_ref(mut self, value: String) -> Self {
+        self.filter_to_ref = Some(value);
+        self
+    }
+    /// Include relationship data.
+    pub fn include(mut self, value: crate::datadogV2::model::RelationIncludeType) -> Self {
+        self.include = Some(value);
+        self
+    }
+}
+
 /// DeleteCatalogEntityError is a struct for typed errors of method [`SoftwareCatalogAPI::delete_catalog_entity`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -103,6 +154,14 @@ pub enum DeleteCatalogEntityError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListCatalogEntityError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListCatalogRelationError is a struct for typed errors of method [`SoftwareCatalogAPI::list_catalog_relation`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListCatalogRelationError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -454,6 +513,185 @@ impl SoftwareCatalogAPI {
             };
         } else {
             let local_entity: Option<ListCatalogEntityError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get a list of entity relations from Software Catalog.
+    pub async fn list_catalog_relation(
+        &self,
+        params: ListCatalogRelationOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::ListRelationCatalogResponse,
+        datadog::Error<ListCatalogRelationError>,
+    > {
+        match self.list_catalog_relation_with_http_info(params).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    pub fn list_catalog_relation_with_pagination(
+        &self,
+        mut params: ListCatalogRelationOptionalParams,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV2::model::RelationResponse,
+            datadog::Error<ListCatalogRelationError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 100;
+            if params.page_limit.is_none() {
+                params.page_limit = Some(page_size);
+            } else {
+                page_size = params.page_limit.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_catalog_relation(params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                if params.page_offset.is_none() {
+                    params.page_offset = Some(page_size.clone());
+                } else {
+                    params.page_offset = Some(params.page_offset.unwrap() + page_size.clone());
+                }
+            }
+        }
+    }
+
+    /// Get a list of entity relations from Software Catalog.
+    pub async fn list_catalog_relation_with_http_info(
+        &self,
+        params: ListCatalogRelationOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::ListRelationCatalogResponse>,
+        datadog::Error<ListCatalogRelationError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_catalog_relation";
+
+        // unbox and build optional parameters
+        let page_offset = params.page_offset;
+        let page_limit = params.page_limit;
+        let filter_type = params.filter_type;
+        let filter_from_ref = params.filter_from_ref;
+        let filter_to_ref = params.filter_to_ref;
+        let include = params.include;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/catalog/relation",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = page_offset {
+            local_req_builder =
+                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_limit {
+            local_req_builder =
+                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_type {
+            local_req_builder =
+                local_req_builder.query(&[("filter[type]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_from_ref {
+            local_req_builder =
+                local_req_builder.query(&[("filter[from_ref]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_to_ref {
+            local_req_builder =
+                local_req_builder.query(&[("filter[to_ref]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = include {
+            local_req_builder =
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::ListRelationCatalogResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListCatalogRelationError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
