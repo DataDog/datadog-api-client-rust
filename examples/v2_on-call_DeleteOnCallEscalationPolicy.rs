@@ -1,4 +1,4 @@
-// Delete on-call escalation policy returns "No Content" response
+// Delete On-Call escalation policy returns "No Content" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_on_call::OnCallAPI;
 

@@ -1,4 +1,4 @@
-// Get on-call escalation policy returns "OK" response
+// Get On-Call escalation policy returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_on_call::GetOnCallEscalationPolicyOptionalParams;
 use datadog_api_client::datadogV2::api_on_call::OnCallAPI;
@@ -12,7 +12,7 @@ async fn main() {
     let resp = api
         .get_on_call_escalation_policy(
             escalation_policy_data_id.clone(),
-            GetOnCallEscalationPolicyOptionalParams::default(),
+            GetOnCallEscalationPolicyOptionalParams::default().include("steps.targets".to_string()),
         )
         .await;
     if let Ok(value) = resp {

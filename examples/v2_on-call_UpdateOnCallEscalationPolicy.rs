@@ -1,4 +1,4 @@
-// Update on-call escalation policy returns "OK" response
+// Update On-Call escalation policy returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_on_call::OnCallAPI;
 use datadog_api_client::datadogV2::api_on_call::UpdateOnCallEscalationPolicyOptionalParams;
@@ -42,7 +42,6 @@ async fn main() {
                     .id(escalation_policy_data_relationships_steps_data_0_id.clone()),
                 ],
             )
-            .description("Example-On-Call".to_string())
             .resolve_page_on_policy_end(false)
             .retries(0),
             escalation_policy_data_id.clone(),

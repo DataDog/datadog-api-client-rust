@@ -1,4 +1,4 @@
-// Update on-call schedule returns "OK" response
+// Update On-Call schedule returns "OK" response
 use chrono::{DateTime, Utc};
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_on_call::OnCallAPI;
@@ -62,12 +62,7 @@ async fn main() {
                     .start_time("09:00:00".to_string())])],
                 "Example-On-Call".to_string(),
                 "America/New_York".to_string(),
-            )
-            .tags(vec![
-                "tag1".to_string(),
-                "tag2".to_string(),
-                "tag3".to_string(),
-            ]),
+            ),
             schedule_data_id.clone(),
             ScheduleUpdateRequestDataType::SCHEDULES,
         )

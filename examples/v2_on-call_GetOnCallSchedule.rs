@@ -1,4 +1,4 @@
-// Get on-call schedule returns "OK" response
+// Get On-Call schedule returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_on_call::GetOnCallScheduleOptionalParams;
 use datadog_api_client::datadogV2::api_on_call::OnCallAPI;
