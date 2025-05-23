@@ -29,7 +29,7 @@ async fn main() {
         .uniqueness(RumMetricUniqueness::new(
             RumMetricUniquenessWhen::WHEN_MATCH,
         )),
-        "rum.sessions.webui.count".to_string(),
+        "examplerummetric".to_string(),
         RumMetricType::RUM_METRICS,
     ));
     let configuration = datadog::Configuration::new();

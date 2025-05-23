@@ -3,7 +3,7 @@
     {
       "request": {
         "body": {
-          "string": "{\"data\":{\"attributes\":{\"compute\":{\"aggregation_type\":\"distribution\",\"include_percentiles\":true,\"path\":\"@duration\"},\"event_type\":\"session\",\"filter\":{\"query\":\"@service:web-ui\"},\"group_by\":[{\"path\":\"@browser.name\",\"tag_name\":\"browser_name\"}],\"uniqueness\":{\"when\":\"match\"}},\"id\":\"rum.sessions.webui.count\",\"type\":\"rum_metrics\"}}",
+          "string": "{\"data\":{\"attributes\":{\"compute\":{\"aggregation_type\":\"distribution\",\"include_percentiles\":true,\"path\":\"@duration\"},\"event_type\":\"session\",\"filter\":{\"query\":\"@service:web-ui\"},\"group_by\":[{\"path\":\"@browser.name\",\"tag_name\":\"browser_name\"}],\"uniqueness\":{\"when\":\"match\"}},\"id\":\"testcreatearumbasedmetricreturnscreatedresponse1747896106\",\"type\":\"rum_metrics\"}}",
           "encoding": null
         },
         "headers": {
@@ -19,7 +19,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"id\":\"rum.sessions.webui.count\",\"type\":\"rum_metrics\",\"attributes\":{\"compute\":{\"aggregation_type\":\"distribution\",\"include_percentiles\":true,\"path\":\"@duration\"},\"event_type\":\"session\",\"filter\":{\"query\":\"@service:web-ui\"},\"group_by\":[{\"path\":\"@browser.name\",\"tag_name\":\"browser_name\"}],\"uniqueness\":{\"when\":\"match\"}}}}",
+          "string": "{\"data\":{\"id\":\"testcreatearumbasedmetricreturnscreatedresponse1747896106\",\"type\":\"rum_metrics\",\"attributes\":{\"compute\":{\"aggregation_type\":\"distribution\",\"include_percentiles\":true,\"path\":\"@duration\"},\"event_type\":\"session\",\"filter\":{\"query\":\"@service:web-ui\"},\"group_by\":[{\"path\":\"@browser.name\",\"tag_name\":\"browser_name\"}],\"uniqueness\":{\"when\":\"match\"}}}}",
           "encoding": null
         },
         "headers": {
@@ -32,7 +32,7 @@
           "message": "Created"
         }
       },
-      "recorded_at": "Thu, 28 Nov 2024 15:31:19 GMT"
+      "recorded_at": "Thu, 22 May 2025 06:41:46 GMT"
     },
     {
       "request": {
@@ -43,7 +43,7 @@
           ]
         },
         "method": "delete",
-        "uri": "https://api.datadoghq.com/api/v2/rum/config/metrics/rum.sessions.webui.count"
+        "uri": "https://api.datadoghq.com/api/v2/rum/config/metrics/testcreatearumbasedmetricreturnscreatedresponse1747896106"
       },
       "response": {
         "body": {
@@ -56,7 +56,7 @@
           "message": "No Content"
         }
       },
-      "recorded_at": "Thu, 28 Nov 2024 15:31:19 GMT"
+      "recorded_at": "Thu, 22 May 2025 06:41:46 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"
