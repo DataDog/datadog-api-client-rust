@@ -14,7 +14,7 @@ pub struct HistoricalJobQuery {
     /// The aggregation type.
     #[serde(rename = "aggregation")]
     pub aggregation: Option<crate::datadogV2::model::SecurityMonitoringRuleQueryAggregation>,
-    /// Source of events, either logs or audit trail.
+    /// Source of events, either logs, audit trail, or Datadog events.
     #[serde(rename = "dataSource")]
     pub data_source: Option<crate::datadogV2::model::SecurityMonitoringStandardDataSource>,
     /// Field for which the cardinality is measured. Sent as an array.
