@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Defines the updatable attributes for a schedule, such as name, time zone, tags, and layers.
+/// Defines the updatable attributes for a schedule, such as name, time zone, and layers.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -17,9 +17,6 @@ pub struct ScheduleUpdateRequestDataAttributes {
     /// A short name for the schedule.
     #[serde(rename = "name")]
     pub name: String,
-    /// A list of tags that you can associate with this schedule.
-    #[serde(rename = "tags")]
-    pub tags: Option<Vec<String>>,
     /// The time zone used when interpreting rotation times.
     #[serde(rename = "time_zone")]
     pub time_zone: String,
@@ -39,16 +36,10 @@ impl ScheduleUpdateRequestDataAttributes {
         ScheduleUpdateRequestDataAttributes {
             layers,
             name,
-            tags: None,
             time_zone,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn tags(mut self, value: Vec<String>) -> Self {
-        self.tags = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -81,7 +72,6 @@ impl<'de> Deserialize<'de> for ScheduleUpdateRequestDataAttributes {
                     Vec<crate::datadogV2::model::ScheduleUpdateRequestDataAttributesLayersItems>,
                 > = None;
                 let mut name: Option<String> = None;
-                let mut tags: Option<Vec<String>> = None;
                 let mut time_zone: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -96,12 +86,6 @@ impl<'de> Deserialize<'de> for ScheduleUpdateRequestDataAttributes {
                         }
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "tags" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "time_zone" => {
                             time_zone = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -120,7 +104,6 @@ impl<'de> Deserialize<'de> for ScheduleUpdateRequestDataAttributes {
                 let content = ScheduleUpdateRequestDataAttributes {
                     layers,
                     name,
-                    tags,
                     time_zone,
                     additional_properties,
                     _unparsed,

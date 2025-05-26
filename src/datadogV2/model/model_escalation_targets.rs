@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Collects the key relationship fields for a team reference, specifically on-call users.
+/// A list of escalation targets for a step
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct TeamReferenceRelationships {
-    /// Defines which users are on-call within a team, stored as an array of references.
-    #[serde(rename = "oncall_users")]
-    pub oncall_users: Option<crate::datadogV2::model::TeamReferenceRelationshipsOncallUsers>,
+pub struct EscalationTargets {
+    /// The `EscalationTargets` `data`.
+    #[serde(rename = "data")]
+    pub data: Option<Vec<crate::datadogV2::model::EscalationTarget>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,20 +21,17 @@ pub struct TeamReferenceRelationships {
     pub(crate) _unparsed: bool,
 }
 
-impl TeamReferenceRelationships {
-    pub fn new() -> TeamReferenceRelationships {
-        TeamReferenceRelationships {
-            oncall_users: None,
+impl EscalationTargets {
+    pub fn new() -> EscalationTargets {
+        EscalationTargets {
+            data: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn oncall_users(
-        mut self,
-        value: crate::datadogV2::model::TeamReferenceRelationshipsOncallUsers,
-    ) -> Self {
-        self.oncall_users = Some(value);
+    pub fn data(mut self, value: Vec<crate::datadogV2::model::EscalationTarget>) -> Self {
+        self.data = Some(value);
         self
     }
 
@@ -47,20 +44,20 @@ impl TeamReferenceRelationships {
     }
 }
 
-impl Default for TeamReferenceRelationships {
+impl Default for EscalationTargets {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for TeamReferenceRelationships {
+impl<'de> Deserialize<'de> for EscalationTargets {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct TeamReferenceRelationshipsVisitor;
-        impl<'a> Visitor<'a> for TeamReferenceRelationshipsVisitor {
-            type Value = TeamReferenceRelationships;
+        struct EscalationTargetsVisitor;
+        impl<'a> Visitor<'a> for EscalationTargetsVisitor {
+            type Value = EscalationTargets;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -70,9 +67,7 @@ impl<'de> Deserialize<'de> for TeamReferenceRelationships {
             where
                 M: MapAccess<'a>,
             {
-                let mut oncall_users: Option<
-                    crate::datadogV2::model::TeamReferenceRelationshipsOncallUsers,
-                > = None;
+                let mut data: Option<Vec<crate::datadogV2::model::EscalationTarget>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -81,12 +76,11 @@ impl<'de> Deserialize<'de> for TeamReferenceRelationships {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "oncall_users" => {
+                        "data" => {
                             if v.is_null() {
                                 continue;
                             }
-                            oncall_users =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -96,8 +90,8 @@ impl<'de> Deserialize<'de> for TeamReferenceRelationships {
                     }
                 }
 
-                let content = TeamReferenceRelationships {
-                    oncall_users,
+                let content = EscalationTargets {
+                    data,
                     additional_properties,
                     _unparsed,
                 };
@@ -106,6 +100,6 @@ impl<'de> Deserialize<'de> for TeamReferenceRelationships {
             }
         }
 
-        deserializer.deserialize_any(TeamReferenceRelationshipsVisitor)
+        deserializer.deserialize_any(EscalationTargetsVisitor)
     }
 }

@@ -1,4 +1,4 @@
-// Set on-call team routing rules returns "OK" response
+// Set On-Call team routing rules returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_on_call::OnCallAPI;
 use datadog_api_client::datadogV2::api_on_call::SetOnCallTeamRoutingRulesOptionalParams;

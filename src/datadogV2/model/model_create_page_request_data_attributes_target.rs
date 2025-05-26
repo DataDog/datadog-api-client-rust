@@ -11,12 +11,12 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreatePageRequestDataAttributesTarget {
-    /// A unique ID for the target (for example, team handle or user UUID).
+    /// Identifier for the target (for example, team handle or user ID).
     #[serde(rename = "identifier")]
     pub identifier: Option<String>,
-    /// The kind of target, `team_uuid` | `team_handle` | `user_uuid`.
+    /// The kind of target, `team_id` | `team_handle` | `user_id`.
     #[serde(rename = "type")]
-    pub type_: Option<String>,
+    pub type_: Option<crate::datadogV2::model::OnCallPageTargetType>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -39,7 +39,7 @@ impl CreatePageRequestDataAttributesTarget {
         self
     }
 
-    pub fn type_(mut self, value: String) -> Self {
+    pub fn type_(mut self, value: crate::datadogV2::model::OnCallPageTargetType) -> Self {
         self.type_ = Some(value);
         self
     }
@@ -77,7 +77,7 @@ impl<'de> Deserialize<'de> for CreatePageRequestDataAttributesTarget {
                 M: MapAccess<'a>,
             {
                 let mut identifier: Option<String> = None;
-                let mut type_: Option<String> = None;
+                let mut type_: Option<crate::datadogV2::model::OnCallPageTargetType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -97,6 +97,14 @@ impl<'de> Deserialize<'de> for CreatePageRequestDataAttributesTarget {
                                 continue;
                             }
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _type_) = type_ {
+                                match _type_ {
+                                    crate::datadogV2::model::OnCallPageTargetType::UnparsedObject(_type_) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
