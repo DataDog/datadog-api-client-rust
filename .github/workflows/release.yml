@@ -41,16 +41,16 @@ jobs:
           GH_TOKEN: ${{ steps.get_token.outputs.token }}
         shell: bash
         run: |
-          CHANGED_PACKAGE_JSON_FILES=$(git diff --diff-filter=MACR --name-only $BASE_SHA...$HEAD_SHA \
-            | grep -E 'package\.json$' \
+          CHANGED_CARGO_TOML_FILES=$(git diff --diff-filter=MACR --name-only $BASE_SHA...$HEAD_SHA \
+            | grep -E 'Cargo\.toml$' \
             | xargs dirname \
             | sort \
             | uniq)
 
           declare -A versions
-          for package in $CHANGED_PACKAGE_JSON_FILES; do
-            base_version=$(git show $BASE_SHA:$package/Cargo.toml | grep "version" | head -n 1 | sed 's/.*"\(.*\)".*/\1/')
-            head_version=$(git show $HEAD_SHA:$package/Cargo.toml | grep "version" | head -n 1 | sed 's/.*"\(.*\)".*/\1/')
+          for package in $CHANGED_CARGO_TOML_FILES; do
+            base_version=$(git show $BASE_SHA:$package/Cargo.toml | grep "version =" | head -n 1 | sed 's/.*"\(.*\)".*/\1/')
+            head_version=$(git show $HEAD_SHA:$package/Cargo.toml | grep "version =" | head -n 1 | sed 's/.*"\(.*\)".*/\1/')
 
             if [ "$base_version" != "$head_version" ]; then
               versions[$package]=$head_version
