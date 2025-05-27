@@ -10,13 +10,13 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct SlackAction {
+pub struct SendSlackMessageAction {
     /// The channel ID.
     #[serde(rename = "channel")]
     pub channel: String,
-    /// Must be set to "send_slack_message".
+    /// Indicates that the action is a send Slack message action.
     #[serde(rename = "type")]
-    pub type_: String,
+    pub type_: crate::datadogV2::model::SendSlackMessageActionType,
     /// The workspace ID.
     #[serde(rename = "workspace")]
     pub workspace: String,
@@ -27,9 +27,13 @@ pub struct SlackAction {
     pub(crate) _unparsed: bool,
 }
 
-impl SlackAction {
-    pub fn new(channel: String, type_: String, workspace: String) -> SlackAction {
-        SlackAction {
+impl SendSlackMessageAction {
+    pub fn new(
+        channel: String,
+        type_: crate::datadogV2::model::SendSlackMessageActionType,
+        workspace: String,
+    ) -> SendSlackMessageAction {
+        SendSlackMessageAction {
             channel,
             type_,
             workspace,
@@ -47,14 +51,14 @@ impl SlackAction {
     }
 }
 
-impl<'de> Deserialize<'de> for SlackAction {
+impl<'de> Deserialize<'de> for SendSlackMessageAction {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct SlackActionVisitor;
-        impl<'a> Visitor<'a> for SlackActionVisitor {
-            type Value = SlackAction;
+        struct SendSlackMessageActionVisitor;
+        impl<'a> Visitor<'a> for SendSlackMessageActionVisitor {
+            type Value = SendSlackMessageAction;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -65,7 +69,7 @@ impl<'de> Deserialize<'de> for SlackAction {
                 M: MapAccess<'a>,
             {
                 let mut channel: Option<String> = None;
-                let mut type_: Option<String> = None;
+                let mut type_: Option<crate::datadogV2::model::SendSlackMessageActionType> = None;
                 let mut workspace: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -80,6 +84,14 @@ impl<'de> Deserialize<'de> for SlackAction {
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _type_) = type_ {
+                                match _type_ {
+                                    crate::datadogV2::model::SendSlackMessageActionType::UnparsedObject(_type_) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "workspace" => {
                             workspace = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -95,7 +107,7 @@ impl<'de> Deserialize<'de> for SlackAction {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
                 let workspace = workspace.ok_or_else(|| M::Error::missing_field("workspace"))?;
 
-                let content = SlackAction {
+                let content = SendSlackMessageAction {
                     channel,
                     type_,
                     workspace,
@@ -107,6 +119,6 @@ impl<'de> Deserialize<'de> for SlackAction {
             }
         }
 
-        deserializer.deserialize_any(SlackActionVisitor)
+        deserializer.deserialize_any(SendSlackMessageActionVisitor)
     }
 }
