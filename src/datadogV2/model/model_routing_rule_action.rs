@@ -8,8 +8,8 @@ use serde::{Deserialize, Deserializer, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum RoutingRuleAction {
-    SlackAction(Box<crate::datadogV2::model::SlackAction>),
-    TeamsAction(Box<crate::datadogV2::model::TeamsAction>),
+    SendSlackMessageAction(Box<crate::datadogV2::model::SendSlackMessageAction>),
+    SendTeamsMessageAction(Box<crate::datadogV2::model::SendTeamsMessageAction>),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -19,18 +19,18 @@ impl<'de> Deserialize<'de> for RoutingRuleAction {
         D: Deserializer<'de>,
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
-        if let Ok(_v) =
-            serde_json::from_value::<Box<crate::datadogV2::model::SlackAction>>(value.clone())
-        {
+        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::SendSlackMessageAction>>(
+            value.clone(),
+        ) {
             if !_v._unparsed {
-                return Ok(RoutingRuleAction::SlackAction(_v));
+                return Ok(RoutingRuleAction::SendSlackMessageAction(_v));
             }
         }
-        if let Ok(_v) =
-            serde_json::from_value::<Box<crate::datadogV2::model::TeamsAction>>(value.clone())
-        {
+        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::SendTeamsMessageAction>>(
+            value.clone(),
+        ) {
             if !_v._unparsed {
-                return Ok(RoutingRuleAction::TeamsAction(_v));
+                return Ok(RoutingRuleAction::SendTeamsMessageAction(_v));
             }
         }
 

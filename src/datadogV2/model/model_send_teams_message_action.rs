@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct TeamsAction {
+pub struct SendTeamsMessageAction {
     /// The channel ID.
     #[serde(rename = "channel")]
     pub channel: String,
@@ -20,9 +20,9 @@ pub struct TeamsAction {
     /// The tenant ID.
     #[serde(rename = "tenant")]
     pub tenant: String,
-    /// Must be set to "send_teams_message".
+    /// Indicates that the action is a send Microsoft Teams message action.
     #[serde(rename = "type")]
-    pub type_: String,
+    pub type_: crate::datadogV2::model::SendTeamsMessageActionType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -30,9 +30,14 @@ pub struct TeamsAction {
     pub(crate) _unparsed: bool,
 }
 
-impl TeamsAction {
-    pub fn new(channel: String, team: String, tenant: String, type_: String) -> TeamsAction {
-        TeamsAction {
+impl SendTeamsMessageAction {
+    pub fn new(
+        channel: String,
+        team: String,
+        tenant: String,
+        type_: crate::datadogV2::model::SendTeamsMessageActionType,
+    ) -> SendTeamsMessageAction {
+        SendTeamsMessageAction {
             channel,
             team,
             tenant,
@@ -51,14 +56,14 @@ impl TeamsAction {
     }
 }
 
-impl<'de> Deserialize<'de> for TeamsAction {
+impl<'de> Deserialize<'de> for SendTeamsMessageAction {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct TeamsActionVisitor;
-        impl<'a> Visitor<'a> for TeamsActionVisitor {
-            type Value = TeamsAction;
+        struct SendTeamsMessageActionVisitor;
+        impl<'a> Visitor<'a> for SendTeamsMessageActionVisitor {
+            type Value = SendTeamsMessageAction;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -71,7 +76,7 @@ impl<'de> Deserialize<'de> for TeamsAction {
                 let mut channel: Option<String> = None;
                 let mut team: Option<String> = None;
                 let mut tenant: Option<String> = None;
-                let mut type_: Option<String> = None;
+                let mut type_: Option<crate::datadogV2::model::SendTeamsMessageActionType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -91,6 +96,14 @@ impl<'de> Deserialize<'de> for TeamsAction {
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _type_) = type_ {
+                                match _type_ {
+                                    crate::datadogV2::model::SendTeamsMessageActionType::UnparsedObject(_type_) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -104,7 +117,7 @@ impl<'de> Deserialize<'de> for TeamsAction {
                 let tenant = tenant.ok_or_else(|| M::Error::missing_field("tenant"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = TeamsAction {
+                let content = SendTeamsMessageAction {
                     channel,
                     team,
                     tenant,
@@ -117,6 +130,6 @@ impl<'de> Deserialize<'de> for TeamsAction {
             }
         }
 
-        deserializer.deserialize_any(TeamsActionVisitor)
+        deserializer.deserialize_any(SendTeamsMessageActionVisitor)
     }
 }
