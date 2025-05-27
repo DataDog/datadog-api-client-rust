@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ScheduleUpdateRequest {
-    /// Contains all data needed to update an existing schedule, including its attributes (such as name, layers, or tags) and any relationships to teams.
+    /// Contains all data needed to update an existing schedule, including its attributes (such as name and time zone) and any relationships to teams.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::ScheduleUpdateRequestData,
     #[serde(flatten)]

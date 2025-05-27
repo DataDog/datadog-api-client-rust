@@ -1,9 +1,10 @@
-// Set on-call team routing rules returns "OK" response
+// Set On-Call team routing rules returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_on_call::OnCallAPI;
 use datadog_api_client::datadogV2::api_on_call::SetOnCallTeamRoutingRulesOptionalParams;
 use datadog_api_client::datadogV2::model::RoutingRuleAction;
-use datadog_api_client::datadogV2::model::SlackAction;
+use datadog_api_client::datadogV2::model::SendSlackMessageAction;
+use datadog_api_client::datadogV2::model::SendSlackMessageActionType;
 use datadog_api_client::datadogV2::model::TeamRoutingRulesRequest;
 use datadog_api_client::datadogV2::model::TeamRoutingRulesRequestData;
 use datadog_api_client::datadogV2::model::TeamRoutingRulesRequestDataAttributes;
@@ -27,11 +28,11 @@ async fn main() {
                             TeamRoutingRulesRequestRule::new()
                                 .actions(
                                     vec![
-                                        RoutingRuleAction::SlackAction(
+                                        RoutingRuleAction::SendSlackMessageAction(
                                             Box::new(
-                                                SlackAction::new(
+                                                SendSlackMessageAction::new(
                                                     "channel".to_string(),
-                                                    "send_slack_message".to_string(),
+                                                    SendSlackMessageActionType::SEND_SLACK_MESSAGE,
                                                     "workspace".to_string(),
                                                 ),
                                             ),
@@ -55,8 +56,7 @@ async fn main() {
                                         ],
                                         "Europe/Paris".to_string(),
                                     ),
-                                )
-                                .urgency(Urgency::HIGH),
+                                ),
                             TeamRoutingRulesRequestRule::new()
                                 .policy_id(escalation_policy_data_id.clone())
                                 .query("".to_string())
@@ -70,7 +70,7 @@ async fn main() {
         .set_on_call_team_routing_rules(
             dd_team_data_id.clone(),
             body,
-            SetOnCallTeamRoutingRulesOptionalParams::default(),
+            SetOnCallTeamRoutingRulesOptionalParams::default().include("rules".to_string()),
         )
         .await;
     if let Ok(value) = resp {
