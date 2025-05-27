@@ -37,7 +37,6 @@ async fn main() {
                         "11111111-1111-1111-1111-111111111111".to_string(),
                         "INTEGRATION_DATADOG".to_string(),
                     )])])
-                .handle("my-handle".to_string())
                 .input_schema(InputSchema::new().parameters(vec![
                                     InputSchemaParameters::new(
                                         "input".to_string(),
