@@ -1,5 +1,24 @@
 # CHANGELOG
 
+## 0.11.0/2025-05-28
+
+### Fixed
+* add `include` parameter to On-Call team rules test [#675](https://github.com/DataDog/datadog-api-client-rust/pull/675)
+* fix On-Call spec [#667](https://github.com/DataDog/datadog-api-client-rust/pull/667)
+* Fix incorrect pattern for url [#651](https://github.com/DataDog/datadog-api-client-rust/pull/651)
+* Make metadata optional for GCS destination [#641](https://github.com/DataDog/datadog-api-client-rust/pull/641)
+* Remove isReadOnly default when creating dashboards [#640](https://github.com/DataDog/datadog-api-client-rust/pull/640)
+* Make assertion target be int or string [#637](https://github.com/DataDog/datadog-api-client-rust/pull/637)
+
+### Added
+* Add support for Datadog Events as a data source for rules [#670](https://github.com/DataDog/datadog-api-client-rust/pull/670)
+* Add public APIs to search DORA events [#668](https://github.com/DataDog/datadog-api-client-rust/pull/668)
+* Adding endpoints to manage Resource Evaluation Filters [#658](https://github.com/DataDog/datadog-api-client-rust/pull/658)
+* Add Sev0 as a supported incident severity [#654](https://github.com/DataDog/datadog-api-client-rust/pull/654)
+* Share timerestriction object [#650](https://github.com/DataDog/datadog-api-client-rust/pull/650)
+* add On-Call Paging spec [#644](https://github.com/DataDog/datadog-api-client-rust/pull/644)
+* Add pagination method for NDM ListDevices. [#638](https://github.com/DataDog/datadog-api-client-rust/pull/638)
+
 ## 0.10.1 / 2025-04-14
 
 ### Fixed
