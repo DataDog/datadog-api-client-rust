@@ -27,6 +27,9 @@ pub struct SensitiveDataScannerRuleAttributes {
     /// Whether or not the rule is enabled.
     #[serde(rename = "is_enabled")]
     pub is_enabled: Option<bool>,
+    /// List of labels.
+    #[serde(rename = "labels")]
+    pub labels: Option<Vec<String>>,
     /// Name of the rule.
     #[serde(rename = "name")]
     pub name: Option<String>,
@@ -60,6 +63,7 @@ impl SensitiveDataScannerRuleAttributes {
             excluded_namespaces: None,
             included_keyword_configuration: None,
             is_enabled: None,
+            labels: None,
             name: None,
             namespaces: None,
             pattern: None,
@@ -91,6 +95,11 @@ impl SensitiveDataScannerRuleAttributes {
 
     pub fn is_enabled(mut self, value: bool) -> Self {
         self.is_enabled = Some(value);
+        self
+    }
+
+    pub fn labels(mut self, value: Vec<String>) -> Self {
+        self.labels = Some(value);
         self
     }
 
@@ -165,6 +174,7 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerRuleAttributes {
                     crate::datadogV2::model::SensitiveDataScannerIncludedKeywordConfiguration,
                 > = None;
                 let mut is_enabled: Option<bool> = None;
+                let mut labels: Option<Vec<String>> = None;
                 let mut name: Option<String> = None;
                 let mut namespaces: Option<Vec<String>> = None;
                 let mut pattern: Option<String> = None;
@@ -207,6 +217,12 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerRuleAttributes {
                                 continue;
                             }
                             is_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "labels" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            labels = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "name" => {
                             if v.is_null() {
@@ -258,6 +274,7 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerRuleAttributes {
                     excluded_namespaces,
                     included_keyword_configuration,
                     is_enabled,
+                    labels,
                     name,
                     namespaces,
                     pattern,
