@@ -25,9 +25,15 @@ pub struct SensitiveDataScannerMeta {
     #[deprecated]
     #[serde(rename = "has_multi_pass_enabled")]
     pub has_multi_pass_enabled: Option<bool>,
+    /// Whether or not the sampling rate for products can be set to a float point number (as opposed to an integer).
+    #[serde(rename = "is_float_sampling_rate_enabled")]
+    pub is_float_sampling_rate_enabled: Option<bool>,
     /// Whether or not the org is compliant to the payment card industry standard.
     #[serde(rename = "is_pci_compliant")]
     pub is_pci_compliant: Option<bool>,
+    /// Global minimum sampling rate allowed for all product within the org.
+    #[serde(rename = "min_sampling_rate")]
+    pub min_sampling_rate: Option<f64>,
     /// Version of the API.
     #[serde(rename = "version")]
     pub version: Option<i64>,
@@ -46,7 +52,9 @@ impl SensitiveDataScannerMeta {
             group_count_limit: None,
             has_highlight_enabled: None,
             has_multi_pass_enabled: None,
+            is_float_sampling_rate_enabled: None,
             is_pci_compliant: None,
+            min_sampling_rate: None,
             version: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -78,8 +86,20 @@ impl SensitiveDataScannerMeta {
     }
 
     #[allow(deprecated)]
+    pub fn is_float_sampling_rate_enabled(mut self, value: bool) -> Self {
+        self.is_float_sampling_rate_enabled = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn is_pci_compliant(mut self, value: bool) -> Self {
         self.is_pci_compliant = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn min_sampling_rate(mut self, value: f64) -> Self {
+        self.min_sampling_rate = Some(value);
         self
     }
 
@@ -125,7 +145,9 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerMeta {
                 let mut group_count_limit: Option<i64> = None;
                 let mut has_highlight_enabled: Option<bool> = None;
                 let mut has_multi_pass_enabled: Option<bool> = None;
+                let mut is_float_sampling_rate_enabled: Option<bool> = None;
                 let mut is_pci_compliant: Option<bool> = None;
+                let mut min_sampling_rate: Option<f64> = None;
                 let mut version: Option<i64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -163,11 +185,25 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerMeta {
                             has_multi_pass_enabled =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "is_float_sampling_rate_enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            is_float_sampling_rate_enabled =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "is_pci_compliant" => {
                             if v.is_null() {
                                 continue;
                             }
                             is_pci_compliant =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "min_sampling_rate" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            min_sampling_rate =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "version" => {
@@ -190,7 +226,9 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerMeta {
                     group_count_limit,
                     has_highlight_enabled,
                     has_multi_pass_enabled,
+                    is_float_sampling_rate_enabled,
                     is_pci_compliant,
+                    min_sampling_rate,
                     version,
                     additional_properties,
                     _unparsed,
