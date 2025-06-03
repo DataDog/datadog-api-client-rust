@@ -12,18 +12,23 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SLOHistoryMetricsSeriesMetadata {
     /// Query aggregator function.
+    #[deprecated]
     #[serde(rename = "aggr")]
     pub aggr: Option<String>,
     /// Query expression.
+    #[deprecated]
     #[serde(rename = "expression")]
     pub expression: Option<String>,
     /// Query metric used.
+    #[deprecated]
     #[serde(rename = "metric")]
     pub metric: Option<String>,
     /// Query index from original combined query.
+    #[deprecated]
     #[serde(rename = "query_index")]
     pub query_index: Option<i64>,
     /// Query scope.
+    #[deprecated]
     #[serde(rename = "scope")]
     pub scope: Option<String>,
     /// An array of metric units that contains up to two unit objects.
@@ -41,6 +46,7 @@ pub struct SLOHistoryMetricsSeriesMetadata {
 
 impl SLOHistoryMetricsSeriesMetadata {
     pub fn new() -> SLOHistoryMetricsSeriesMetadata {
+        #[allow(deprecated)]
         SLOHistoryMetricsSeriesMetadata {
             aggr: None,
             expression: None,
@@ -53,31 +59,37 @@ impl SLOHistoryMetricsSeriesMetadata {
         }
     }
 
+    #[allow(deprecated)]
     pub fn aggr(mut self, value: String) -> Self {
         self.aggr = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn expression(mut self, value: String) -> Self {
         self.expression = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn metric(mut self, value: String) -> Self {
         self.metric = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn query_index(mut self, value: i64) -> Self {
         self.query_index = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn scope(mut self, value: String) -> Self {
         self.scope = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn unit(
         mut self,
         value: Option<Vec<Option<crate::datadogV1::model::SLOHistoryMetricsSeriesMetadataUnit>>>,
@@ -178,6 +190,7 @@ impl<'de> Deserialize<'de> for SLOHistoryMetricsSeriesMetadata {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = SLOHistoryMetricsSeriesMetadata {
                     aggr,
                     expression,
