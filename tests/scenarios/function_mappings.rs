@@ -3037,6 +3037,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_get_schedule_on_call_user,
     );
     world.function_mappings.insert(
+        "v2.GetTeamOnCallUsers".into(),
+        test_v2_get_team_on_call_users,
+    );
+    world.function_mappings.insert(
         "v2.GetOnCallTeamRoutingRules".into(),
         test_v2_get_on_call_team_routing_rules,
     );
@@ -22781,6 +22785,36 @@ fn test_v2_get_schedule_on_call_user(
     params.filter_at_ts = filter_at_ts;
     let response = match block_on(api.get_schedule_on_call_user_with_http_info(schedule_id, params))
     {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_team_on_call_users(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_on_call
+        .as_ref()
+        .expect("api instance not found");
+    let team_id = serde_json::from_value(_parameters.get("team_id").unwrap().clone()).unwrap();
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_on_call::GetTeamOnCallUsersOptionalParams::default();
+    params.include = include;
+    let response = match block_on(api.get_team_on_call_users_with_http_info(team_id, params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
