@@ -3,7 +3,7 @@
     {
       "request": {
         "body": {
-          "string": "{\"data\":{\"attributes\":{\"name\":\"Test-Update_workflow_webhook_handle_returns_OK_response-1738093013\",\"url\":\"https://prod-100.westus.logic.azure.com:443/workflows/abcd1234\"},\"type\":\"workflows-webhook-handle\"}}",
+          "string": "{\"data\":{\"attributes\":{\"name\":\"Test-Update_workflow_webhook_handle_returns_OK_response-1748457951\",\"url\":\"https://prod-100.westus.logic.azure.com:443/workflows/abcd1234\"},\"type\":\"workflows-webhook-handle\"}}",
           "encoding": null
         },
         "headers": {
@@ -19,7 +19,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"id\":\"756d04a2-e0b5-439a-9be0-8772b62ba02c\",\"type\":\"workflows-webhook-handle\",\"attributes\":{\"name\":\"Test-Update_workflow_webhook_handle_returns_OK_response-1738093013\"}}}",
+          "string": "{\"data\":{\"id\":\"5c6eadf5-0758-416a-ab9e-f69aa76d69f1\",\"type\":\"workflows-webhook-handle\",\"attributes\":{\"name\":\"Test-Update_workflow_webhook_handle_returns_OK_response-1748457951\"}}}",
           "encoding": null
         },
         "headers": {
@@ -32,12 +32,12 @@
           "message": "Created"
         }
       },
-      "recorded_at": "Tue, 28 Jan 2025 19:36:53 GMT"
+      "recorded_at": "Wed, 28 May 2025 18:45:51 GMT"
     },
     {
       "request": {
         "body": {
-          "string": "{\"data\":{\"attributes\":{\"name\":\"Test-Update_workflow_webhook_handle_returns_OK_response-1738093013--updated\"},\"type\":\"workflows-webhook-handle\"}}",
+          "string": "{\"data\":{\"attributes\":{\"name\":\"Test-Update_workflow_webhook_handle_returns_OK_response-1748457951--updated\"},\"type\":\"workflows-webhook-handle\"}}",
           "encoding": null
         },
         "headers": {
@@ -49,11 +49,11 @@
           ]
         },
         "method": "patch",
-        "uri": "https://api.datadoghq.com/api/v2/integration/ms-teams/configuration/workflows-webhook-handles/756d04a2-e0b5-439a-9be0-8772b62ba02c"
+        "uri": "https://api.datadoghq.com/api/v2/integration/ms-teams/configuration/workflows-webhook-handles/5c6eadf5-0758-416a-ab9e-f69aa76d69f1"
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"id\":\"756d04a2-e0b5-439a-9be0-8772b62ba02c\",\"type\":\"workflows-webhook-handle\",\"attributes\":{\"name\":\"Test-Update_workflow_webhook_handle_returns_OK_response-1738093013--updated\"}}}",
+          "string": "{\"data\":{\"id\":\"5c6eadf5-0758-416a-ab9e-f69aa76d69f1\",\"type\":\"workflows-webhook-handle\",\"attributes\":{\"name\":\"Test-Update_workflow_webhook_handle_returns_OK_response-1748457951--updated\"}}}",
           "encoding": null
         },
         "headers": {
@@ -66,7 +66,7 @@
           "message": "OK"
         }
       },
-      "recorded_at": "Tue, 28 Jan 2025 19:36:53 GMT"
+      "recorded_at": "Wed, 28 May 2025 18:45:51 GMT"
     },
     {
       "request": {
@@ -77,7 +77,7 @@
           ]
         },
         "method": "delete",
-        "uri": "https://api.datadoghq.com/api/v2/integration/ms-teams/configuration/workflows-webhook-handles/756d04a2-e0b5-439a-9be0-8772b62ba02c"
+        "uri": "https://api.datadoghq.com/api/v2/integration/ms-teams/configuration/workflows-webhook-handles/5c6eadf5-0758-416a-ab9e-f69aa76d69f1"
       },
       "response": {
         "body": {
@@ -90,7 +90,7 @@
           "message": "No Content"
         }
       },
-      "recorded_at": "Tue, 28 Jan 2025 19:36:53 GMT"
+      "recorded_at": "Wed, 28 May 2025 18:45:51 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"
