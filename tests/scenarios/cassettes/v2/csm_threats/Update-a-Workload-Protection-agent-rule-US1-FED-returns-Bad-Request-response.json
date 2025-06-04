@@ -3,7 +3,7 @@
     {
       "request": {
         "body": {
-          "string": "{\"data\":{\"attributes\":{\"description\":\"My Agent rule\",\"enabled\":true,\"expression\":\"exec.file.name == \\\"sh\\\"\",\"name\":\"testupdateaworkloadprotectionagentruleus1fedreturnsbadrequestresponse1747319690\"},\"type\":\"agent_rule\"}}",
+          "string": "{\"data\":{\"attributes\":{\"description\":\"My Agent rule\",\"enabled\":true,\"expression\":\"exec.file.name == \\\"sh\\\"\",\"name\":\"testupdateaworkloadprotectionagentruleus1fedreturnsbadrequestresponse1748342045\"},\"type\":\"agent_rule\"}}",
           "encoding": null
         },
         "headers": {
@@ -19,7 +19,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"id\":\"qny-a5d-mul\",\"attributes\":{\"version\":1,\"name\":\"testupdateaworkloadprotectionagentruleus1fedreturnsbadrequestresponse1747319690\",\"description\":\"My Agent rule\",\"expression\":\"exec.file.name == \\\"sh\\\"\",\"category\":\"Process Activity\",\"defaultRule\":false,\"enabled\":true,\"creationAuthorUuId\":\"3ad549bf-eba0-11e9-a77a-0705486660d0\",\"creationDate\":1747319690855,\"updateAuthorUuId\":\"3ad549bf-eba0-11e9-a77a-0705486660d0\",\"updateDate\":1747319690855,\"filters\":[\"os == \\\"linux\\\"\"],\"actions\":[],\"agentConstraint\":\"\",\"creator\":{\"name\":\"frog\",\"handle\":\"frog@datadoghq.com\"},\"updater\":{\"name\":\"frog\",\"handle\":\"frog@datadoghq.com\"}},\"type\":\"agent_rule\"}}\n",
+          "string": "{\"data\":{\"id\":\"q58-cpj-dtw\",\"attributes\":{\"version\":1,\"name\":\"testupdateaworkloadprotectionagentruleus1fedreturnsbadrequestresponse1748342045\",\"description\":\"My Agent rule\",\"expression\":\"exec.file.name == \\\"sh\\\"\",\"category\":\"Process Activity\",\"defaultRule\":false,\"enabled\":true,\"creationAuthorUuId\":\"3ad549bf-eba0-11e9-a77a-0705486660d0\",\"creationDate\":1748342046325,\"updateAuthorUuId\":\"3ad549bf-eba0-11e9-a77a-0705486660d0\",\"updateDate\":1748342046325,\"filters\":[\"os == \\\"linux\\\"\"],\"actions\":[],\"agentConstraint\":\"\",\"creator\":{\"name\":\"frog\",\"handle\":\"frog@datadoghq.com\"},\"updater\":{\"name\":\"frog\",\"handle\":\"frog@datadoghq.com\"}},\"type\":\"agent_rule\"}}\n",
           "encoding": null
         },
         "headers": {
@@ -32,12 +32,12 @@
           "message": "OK"
         }
       },
-      "recorded_at": "Thu, 15 May 2025 14:34:50 GMT"
+      "recorded_at": "Tue, 27 May 2025 10:34:05 GMT"
     },
     {
       "request": {
         "body": {
-          "string": "{\"data\":{\"attributes\":{\"description\":\"My Agent rule\",\"enabled\":true,\"expression\":\"exec.file.name\"},\"id\":\"qny-a5d-mul\",\"type\":\"agent_rule\"}}",
+          "string": "{\"data\":{\"attributes\":{\"description\":\"My Agent rule\",\"enabled\":true,\"expression\":\"exec.file.name\"},\"id\":\"q58-cpj-dtw\",\"type\":\"agent_rule\"}}",
           "encoding": null
         },
         "headers": {
@@ -49,11 +49,11 @@
           ]
         },
         "method": "patch",
-        "uri": "https://api.datadoghq.com/api/v2/security_monitoring/cloud_workload_security/agent_rules/qny-a5d-mul"
+        "uri": "https://api.datadoghq.com/api/v2/security_monitoring/cloud_workload_security/agent_rules/q58-cpj-dtw"
       },
       "response": {
         "body": {
-          "string": "{\"errors\":[\"input_validation_error(Field 'expression' is invalid: rule `testupdateaworkloadprotectionagentruleus1fedreturnsbadrequestresponse1747319690` error: rule syntax error: bool expected: 1:1: exec.file.name\\n^)\"]}\n",
+          "string": "{\"errors\":[\"input_validation_error(Field 'expression' is invalid: rule `testupdateaworkloadprotectionagentruleus1fedreturnsbadrequestresponse1748342045` error: rule syntax error: bool expected: 1:1: exec.file.name\\n^)\"]}\n",
           "encoding": null
         },
         "headers": {
@@ -66,7 +66,7 @@
           "message": "Bad Request"
         }
       },
-      "recorded_at": "Thu, 15 May 2025 14:34:50 GMT"
+      "recorded_at": "Tue, 27 May 2025 10:34:05 GMT"
     },
     {
       "request": {
@@ -77,7 +77,7 @@
           ]
         },
         "method": "delete",
-        "uri": "https://api.datadoghq.com/api/v2/security_monitoring/cloud_workload_security/agent_rules/qny-a5d-mul"
+        "uri": "https://api.datadoghq.com/api/v2/security_monitoring/cloud_workload_security/agent_rules/q58-cpj-dtw"
       },
       "response": {
         "body": {
@@ -90,7 +90,7 @@
           "message": "No Content"
         }
       },
-      "recorded_at": "Thu, 15 May 2025 14:34:50 GMT"
+      "recorded_at": "Tue, 27 May 2025 10:34:05 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"
