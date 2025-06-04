@@ -12,7 +12,7 @@ async fn main() {
         MicrosoftTeamsWorkflowsWebhookHandleRequestData::new(
             MicrosoftTeamsWorkflowsWebhookHandleRequestAttributes::new(
                 "Example-Microsoft-Teams-Integration".to_string(),
-                "https://fake.url.com".to_string(),
+                "https://example.logic.azure.com/workflows/123".to_string(),
             ),
             MicrosoftTeamsWorkflowsWebhookHandleType::WORKFLOWS_WEBHOOK_HANDLE,
         ),
