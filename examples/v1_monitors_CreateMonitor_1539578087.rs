@@ -2,6 +2,7 @@
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api_monitors::MonitorsAPI;
 use datadog_api_client::datadogV1::model::Monitor;
+use datadog_api_client::datadogV1::model::MonitorDraftStatus;
 use datadog_api_client::datadogV1::model::MonitorOptions;
 use datadog_api_client::datadogV1::model::MonitorOptionsCustomSchedule;
 use datadog_api_client::datadogV1::model::MonitorOptionsCustomScheduleRecurrence;
@@ -16,6 +17,7 @@ async fn main() {
         "avg(current_1mo):avg:system.load.5{*} > 0.5".to_string(),
         MonitorType::QUERY_ALERT,
     )
+    .draft_status(MonitorDraftStatus::PUBLISHED)
     .message("some message Notify: @hipchat-channel".to_string())
     .name("Example-Monitor".to_string())
     .options(

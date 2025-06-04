@@ -24,6 +24,15 @@ pub struct Monitor {
         with = "::serde_with::rust::double_option"
     )]
     pub deleted: Option<Option<chrono::DateTime<chrono::Utc>>>,
+    /// Indicates whether the monitor is in a draft or published state.
+    ///
+    /// `draft`: The monitor appears as Draft and does not send notifications.
+    /// `published`: The monitor is active and evaluates conditions and notify as configured.
+    ///
+    /// This field is in preview. The draft value is only available to customers with the feature enabled.
+    ///
+    #[serde(rename = "draft_status")]
+    pub draft_status: Option<crate::datadogV1::model::MonitorDraftStatus>,
     /// ID of this monitor.
     #[serde(rename = "id")]
     pub id: Option<i64>,
@@ -87,6 +96,7 @@ impl Monitor {
             created: None,
             creator: None,
             deleted: None,
+            draft_status: None,
             id: None,
             matching_downtimes: None,
             message: None,
@@ -118,6 +128,11 @@ impl Monitor {
 
     pub fn deleted(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.deleted = Some(value);
+        self
+    }
+
+    pub fn draft_status(mut self, value: crate::datadogV1::model::MonitorDraftStatus) -> Self {
+        self.draft_status = Some(value);
         self
     }
 
@@ -213,6 +228,7 @@ impl<'de> Deserialize<'de> for Monitor {
                 let mut created: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut creator: Option<crate::datadogV1::model::Creator> = None;
                 let mut deleted: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
+                let mut draft_status: Option<crate::datadogV1::model::MonitorDraftStatus> = None;
                 let mut id: Option<i64> = None;
                 let mut matching_downtimes: Option<Vec<crate::datadogV1::model::MatchingDowntime>> =
                     None;
@@ -250,6 +266,23 @@ impl<'de> Deserialize<'de> for Monitor {
                         }
                         "deleted" => {
                             deleted = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "draft_status" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            draft_status =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _draft_status) = draft_status {
+                                match _draft_status {
+                                    crate::datadogV1::model::MonitorDraftStatus::UnparsedObject(
+                                        _draft_status,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
                         }
                         "id" => {
                             if v.is_null() {
@@ -358,6 +391,7 @@ impl<'de> Deserialize<'de> for Monitor {
                     created,
                     creator,
                     deleted,
+                    draft_status,
                     id,
                     matching_downtimes,
                     message,

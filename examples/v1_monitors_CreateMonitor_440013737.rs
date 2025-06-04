@@ -2,6 +2,7 @@
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api_monitors::MonitorsAPI;
 use datadog_api_client::datadogV1::model::Monitor;
+use datadog_api_client::datadogV1::model::MonitorDraftStatus;
 use datadog_api_client::datadogV1::model::MonitorOptions;
 use datadog_api_client::datadogV1::model::MonitorThresholds;
 use datadog_api_client::datadogV1::model::MonitorType;
@@ -13,6 +14,7 @@ async fn main() {
             r#"error-tracking-rum("service:foo AND @error.source:source").rollup("count").by("@issue.id").last("1h") >= 1"#.to_string(),
             MonitorType::ERROR_TRACKING_ALERT,
         )
+            .draft_status(MonitorDraftStatus::DRAFT)
             .message("some message".to_string())
             .name("Example-Monitor".to_string())
             .options(MonitorOptions::new().thresholds(MonitorThresholds::new().critical(1.0 as f64)))
