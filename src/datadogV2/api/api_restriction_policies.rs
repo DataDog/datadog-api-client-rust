@@ -341,6 +341,7 @@ impl RestrictionPoliciesAPI {
     /// - App Builder Apps: `app-builder-app`
     /// - Connections: `connection`
     /// - Connection Groups: `connection-group`
+    /// - RUM Applications: `rum-application`
     ///
     /// #### Supported relations for resources
     /// Resource Type               | Supported Relations
@@ -362,6 +363,7 @@ impl RestrictionPoliciesAPI {
     /// App Builder Apps            | `viewer`, `editor`
     /// Connections                 | `viewer`, `resolver`, `editor`
     /// Connection Groups           | `viewer`, `editor`
+    /// RUM Application             | `viewer`, `editor`
     pub async fn update_restriction_policy(
         &self,
         resource_id: String,
@@ -409,6 +411,7 @@ impl RestrictionPoliciesAPI {
     /// - App Builder Apps: `app-builder-app`
     /// - Connections: `connection`
     /// - Connection Groups: `connection-group`
+    /// - RUM Applications: `rum-application`
     ///
     /// #### Supported relations for resources
     /// Resource Type               | Supported Relations
@@ -430,6 +433,7 @@ impl RestrictionPoliciesAPI {
     /// App Builder Apps            | `viewer`, `editor`
     /// Connections                 | `viewer`, `resolver`, `editor`
     /// Connection Groups           | `viewer`, `editor`
+    /// RUM Application             | `viewer`, `editor`
     pub async fn update_restriction_policy_with_http_info(
         &self,
         resource_id: String,
