@@ -3,7 +3,7 @@
     {
       "request": {
         "body": {
-          "string": "{\"data\":{\"attributes\":{\"description\":\"My agent policy\",\"enabled\":true,\"hostTags\":[\"env:staging\"],\"name\":\"testcreateaworkloadprotectionagentruleus1fedreturnsokresponse1747319655\"},\"type\":\"policy\"}}",
+          "string": "{\"data\":{\"attributes\":{\"description\":\"My agent policy\",\"enabled\":true,\"hostTags\":[\"env:staging\"],\"name\":\"testcreateaworkloadprotectionagentruleus1fedreturnsokresponse1748342075\"},\"type\":\"policy\"}}",
           "encoding": null
         },
         "headers": {
@@ -19,7 +19,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"id\":\"b9a-gus-q1b\",\"type\":\"policy\",\"attributes\":{\"blockingRulesCount\":0,\"datadogManaged\":false,\"description\":\"My agent policy\",\"disabledRulesCount\":1,\"enabled\":true,\"hostTags\":[\"env:staging\"],\"monitoringRulesCount\":225,\"name\":\"testcreateaworkloadprotectionagentruleus1fedreturnsokresponse1747319655\",\"policyVersion\":\"1\",\"priority\":1000000070,\"ruleCount\":226,\"updateDate\":1747319655148,\"updater\":{\"name\":\"frog\",\"handle\":\"frog@datadoghq.com\"}}}}",
+          "string": "{\"data\":{\"id\":\"ies-ggj-tnt\",\"type\":\"policy\",\"attributes\":{\"blockingRulesCount\":0,\"datadogManaged\":false,\"description\":\"My agent policy\",\"disabledRulesCount\":1,\"enabled\":true,\"hostTags\":[\"env:staging\"],\"monitoringRulesCount\":225,\"name\":\"testcreateaworkloadprotectionagentruleus1fedreturnsokresponse1748342075\",\"policyVersion\":\"1\",\"priority\":1000000011,\"ruleCount\":226,\"updateDate\":1748342076310,\"updater\":{\"name\":\"frog\",\"handle\":\"frog@datadoghq.com\"}}}}",
           "encoding": null
         },
         "headers": {
@@ -32,12 +32,12 @@
           "message": "OK"
         }
       },
-      "recorded_at": "Thu, 15 May 2025 14:34:15 GMT"
+      "recorded_at": "Tue, 27 May 2025 10:34:35 GMT"
     },
     {
       "request": {
         "body": {
-          "string": "{\"data\":{\"attributes\":{\"description\":\"My Agent rule\",\"enabled\":true,\"expression\":\"exec.file.name == \\\"sh\\\"\",\"filters\":[],\"name\":\"testcreateaworkloadprotectionagentruleus1fedreturnsokresponse1747319655\"},\"type\":\"agent_rule\"}}",
+          "string": "{\"data\":{\"attributes\":{\"description\":\"My Agent rule\",\"enabled\":true,\"expression\":\"exec.file.name == \\\"sh\\\"\",\"filters\":[],\"name\":\"testcreateaworkloadprotectionagentruleus1fedreturnsokresponse1748342075\"},\"type\":\"agent_rule\"}}",
           "encoding": null
         },
         "headers": {
@@ -53,7 +53,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"id\":\"wjj-lvq-owq\",\"attributes\":{\"version\":1,\"name\":\"testcreateaworkloadprotectionagentruleus1fedreturnsokresponse1747319655\",\"description\":\"My Agent rule\",\"expression\":\"exec.file.name == \\\"sh\\\"\",\"category\":\"Process Activity\",\"defaultRule\":false,\"enabled\":true,\"creationAuthorUuId\":\"3ad549bf-eba0-11e9-a77a-0705486660d0\",\"creationDate\":1747319655964,\"updateAuthorUuId\":\"3ad549bf-eba0-11e9-a77a-0705486660d0\",\"updateDate\":1747319655964,\"filters\":[],\"actions\":[],\"agentConstraint\":\"\",\"creator\":{\"name\":\"frog\",\"handle\":\"frog@datadoghq.com\"},\"updater\":{\"name\":\"frog\",\"handle\":\"frog@datadoghq.com\"}},\"type\":\"agent_rule\"}}\n",
+          "string": "{\"data\":{\"id\":\"xxe-f2q-be6\",\"attributes\":{\"version\":1,\"name\":\"testcreateaworkloadprotectionagentruleus1fedreturnsokresponse1748342075\",\"description\":\"My Agent rule\",\"expression\":\"exec.file.name == \\\"sh\\\"\",\"category\":\"Process Activity\",\"defaultRule\":false,\"enabled\":true,\"creationAuthorUuId\":\"3ad549bf-eba0-11e9-a77a-0705486660d0\",\"creationDate\":1748342076855,\"updateAuthorUuId\":\"3ad549bf-eba0-11e9-a77a-0705486660d0\",\"updateDate\":1748342076855,\"filters\":[],\"actions\":[],\"agentConstraint\":\"\",\"creator\":{\"name\":\"frog\",\"handle\":\"frog@datadoghq.com\"},\"updater\":{\"name\":\"frog\",\"handle\":\"frog@datadoghq.com\"}},\"type\":\"agent_rule\"}}\n",
           "encoding": null
         },
         "headers": {
@@ -66,7 +66,7 @@
           "message": "OK"
         }
       },
-      "recorded_at": "Thu, 15 May 2025 14:34:15 GMT"
+      "recorded_at": "Tue, 27 May 2025 10:34:35 GMT"
     },
     {
       "request": {
@@ -77,7 +77,7 @@
           ]
         },
         "method": "delete",
-        "uri": "https://api.datadoghq.com/api/v2/security_monitoring/cloud_workload_security/agent_rules/wjj-lvq-owq"
+        "uri": "https://api.datadoghq.com/api/v2/security_monitoring/cloud_workload_security/agent_rules/xxe-f2q-be6"
       },
       "response": {
         "body": {
@@ -90,7 +90,7 @@
           "message": "No Content"
         }
       },
-      "recorded_at": "Thu, 15 May 2025 14:34:15 GMT"
+      "recorded_at": "Tue, 27 May 2025 10:34:35 GMT"
     },
     {
       "request": {
@@ -101,7 +101,7 @@
           ]
         },
         "method": "delete",
-        "uri": "https://api.datadoghq.com/api/v2/remote_config/products/cws/policy/b9a-gus-q1b"
+        "uri": "https://api.datadoghq.com/api/v2/remote_config/products/cws/policy/ies-ggj-tnt"
       },
       "response": {
         "body": {
@@ -118,7 +118,7 @@
           "message": "No Content"
         }
       },
-      "recorded_at": "Thu, 15 May 2025 14:34:15 GMT"
+      "recorded_at": "Tue, 27 May 2025 10:34:35 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"

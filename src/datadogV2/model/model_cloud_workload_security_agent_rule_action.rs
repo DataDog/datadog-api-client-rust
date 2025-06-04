@@ -17,6 +17,12 @@ pub struct CloudWorkloadSecurityAgentRuleAction {
     /// Kill system call applied on the container matching the rule
     #[serde(rename = "kill")]
     pub kill: Option<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleKill>,
+    /// The metadata action applied on the scope matching the rule
+    #[serde(rename = "metadata")]
+    pub metadata: Option<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleActionMetadata>,
+    /// The set action applied on the scope matching the rule
+    #[serde(rename = "set")]
+    pub set: Option<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleActionSet>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -29,6 +35,8 @@ impl CloudWorkloadSecurityAgentRuleAction {
         CloudWorkloadSecurityAgentRuleAction {
             filter: None,
             kill: None,
+            metadata: None,
+            set: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -44,6 +52,22 @@ impl CloudWorkloadSecurityAgentRuleAction {
         value: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleKill,
     ) -> Self {
         self.kill = Some(value);
+        self
+    }
+
+    pub fn metadata(
+        mut self,
+        value: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleActionMetadata,
+    ) -> Self {
+        self.metadata = Some(value);
+        self
+    }
+
+    pub fn set(
+        mut self,
+        value: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleActionSet,
+    ) -> Self {
+        self.set = Some(value);
         self
     }
 
@@ -82,6 +106,12 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleAction {
                 let mut filter: Option<String> = None;
                 let mut kill: Option<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleKill> =
                     None;
+                let mut metadata: Option<
+                    crate::datadogV2::model::CloudWorkloadSecurityAgentRuleActionMetadata,
+                > = None;
+                let mut set: Option<
+                    crate::datadogV2::model::CloudWorkloadSecurityAgentRuleActionSet,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -102,6 +132,18 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleAction {
                             }
                             kill = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "metadata" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "set" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            set = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -113,6 +155,8 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleAction {
                 let content = CloudWorkloadSecurityAgentRuleAction {
                     filter,
                     kill,
+                    metadata,
+                    set,
                     additional_properties,
                     _unparsed,
                 };
