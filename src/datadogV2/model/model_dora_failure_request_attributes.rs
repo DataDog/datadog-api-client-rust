@@ -6,33 +6,33 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes to create a DORA incident event.
+/// Attributes to create a DORA failure event.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct DORAIncidentRequestAttributes {
-    /// Environment name that was impacted by the incident.
+pub struct DORAFailureRequestAttributes {
+    /// Environment name that was impacted by the failure.
     #[serde(rename = "env")]
     pub env: Option<String>,
-    /// Unix timestamp when the incident finished. It must be in nanoseconds, milliseconds, or seconds, and it should not be older than 1 hour.
+    /// Unix timestamp when the failure finished. It must be in nanoseconds, milliseconds, or seconds, and it should not be older than 1 hour.
     #[serde(rename = "finished_at")]
     pub finished_at: Option<i64>,
     /// Git info for DORA Metrics events.
     #[serde(rename = "git")]
     pub git: Option<crate::datadogV2::model::DORAGitInfo>,
-    /// Incident ID. Must have at least 16 characters. Required to update a previously sent incident.
+    /// Failure ID. Must have at least 16 characters. Required to update a previously sent failure.
     #[serde(rename = "id")]
     pub id: Option<String>,
-    /// Incident name.
+    /// Failure name.
     #[serde(rename = "name")]
     pub name: Option<String>,
-    /// Service names impacted by the incident. If possible, use names registered in the Service Catalog. Required when the team field is not provided.
+    /// Service names impacted by the failure. If possible, use names registered in the Service Catalog. Required when the team field is not provided.
     #[serde(rename = "services")]
     pub services: Option<Vec<String>>,
-    /// Incident severity.
+    /// Failure severity.
     #[serde(rename = "severity")]
     pub severity: Option<String>,
-    /// Unix timestamp when the incident started. It must be in nanoseconds, milliseconds, or seconds.
+    /// Unix timestamp when the failure started. It must be in nanoseconds, milliseconds, or seconds.
     #[serde(rename = "started_at")]
     pub started_at: i64,
     /// Name of the team owning the services impacted. If possible, use team handles registered in Datadog. Required when the services field is not provided.
@@ -48,9 +48,9 @@ pub struct DORAIncidentRequestAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl DORAIncidentRequestAttributes {
-    pub fn new(started_at: i64) -> DORAIncidentRequestAttributes {
-        DORAIncidentRequestAttributes {
+impl DORAFailureRequestAttributes {
+    pub fn new(started_at: i64) -> DORAFailureRequestAttributes {
+        DORAFailureRequestAttributes {
             env: None,
             finished_at: None,
             git: None,
@@ -120,14 +120,14 @@ impl DORAIncidentRequestAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for DORAIncidentRequestAttributes {
+impl<'de> Deserialize<'de> for DORAFailureRequestAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct DORAIncidentRequestAttributesVisitor;
-        impl<'a> Visitor<'a> for DORAIncidentRequestAttributesVisitor {
-            type Value = DORAIncidentRequestAttributes;
+        struct DORAFailureRequestAttributesVisitor;
+        impl<'a> Visitor<'a> for DORAFailureRequestAttributesVisitor {
+            type Value = DORAFailureRequestAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -222,7 +222,7 @@ impl<'de> Deserialize<'de> for DORAIncidentRequestAttributes {
                 }
                 let started_at = started_at.ok_or_else(|| M::Error::missing_field("started_at"))?;
 
-                let content = DORAIncidentRequestAttributes {
+                let content = DORAFailureRequestAttributes {
                     env,
                     finished_at,
                     git,
@@ -241,6 +241,6 @@ impl<'de> Deserialize<'de> for DORAIncidentRequestAttributes {
             }
         }
 
-        deserializer.deserialize_any(DORAIncidentRequestAttributesVisitor)
+        deserializer.deserialize_any(DORAFailureRequestAttributesVisitor)
     }
 }

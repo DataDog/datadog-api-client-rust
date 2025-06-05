@@ -143,8 +143,6 @@ impl Default for Configuration {
             ("v2.cancel_data_deletion_request".to_owned(), false),
             ("v2.create_data_deletion_request".to_owned(), false),
             ("v2.get_data_deletion_requests".to_owned(), false),
-            ("v2.create_dora_deployment".to_owned(), false),
-            ("v2.create_dora_incident".to_owned(), false),
             ("v2.create_incident".to_owned(), false),
             ("v2.create_incident_integration".to_owned(), false),
             ("v2.create_incident_todo".to_owned(), false),
