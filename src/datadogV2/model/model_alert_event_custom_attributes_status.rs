@@ -6,23 +6,25 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum EventCategory {
-    CHANGE,
-    ALERT,
+pub enum AlertEventCustomAttributesStatus {
+    WARN,
+    ERROR,
+    OK,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for EventCategory {
+impl ToString for AlertEventCustomAttributesStatus {
     fn to_string(&self) -> String {
         match self {
-            Self::CHANGE => String::from("change"),
-            Self::ALERT => String::from("alert"),
+            Self::WARN => String::from("warn"),
+            Self::ERROR => String::from("error"),
+            Self::OK => String::from("ok"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for EventCategory {
+impl Serialize for AlertEventCustomAttributesStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -34,15 +36,16 @@ impl Serialize for EventCategory {
     }
 }
 
-impl<'de> Deserialize<'de> for EventCategory {
+impl<'de> Deserialize<'de> for AlertEventCustomAttributesStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "change" => Self::CHANGE,
-            "alert" => Self::ALERT,
+            "warn" => Self::WARN,
+            "error" => Self::ERROR,
+            "ok" => Self::OK,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

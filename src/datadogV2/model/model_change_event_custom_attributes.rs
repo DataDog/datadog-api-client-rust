@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ChangeEventCustomAttributes {
-    /// Object representing the entity which made the change. Optional field but if provided should include `type` and `name`.
+    /// Object representing the entity that made the change. Optional field but if provided should include `type` and `name`.
     #[serde(rename = "author")]
     pub author: Option<crate::datadogV2::model::ChangeEventCustomAttributesAuthor>,
     /// Free form object with information related to the `change` event. Can be arbitrarily nested and contain any valid JSON.
@@ -21,7 +21,7 @@ pub struct ChangeEventCustomAttributes {
     #[serde(rename = "changed_resource")]
     pub changed_resource: crate::datadogV2::model::ChangeEventCustomAttributesChangedResource,
     /// A list of resources impacted by this change. It is recommended to provide an impacted resource to display
-    /// the change event at the right location. Only resources of type `service` are supported.
+    /// the change event at the right location. Only resources of type `service` are supported. Maximum of 100 impacted resources allowed.
     #[serde(rename = "impacted_resources")]
     pub impacted_resources:
         Option<Vec<crate::datadogV2::model::ChangeEventCustomAttributesImpactedResourcesItems>>,
@@ -31,8 +31,6 @@ pub struct ChangeEventCustomAttributes {
     /// Free form object to track previous value of the changed resource.
     #[serde(rename = "prev_value")]
     pub prev_value: Option<std::collections::BTreeMap<String, serde_json::Value>>,
-    #[serde(flatten)]
-    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -49,7 +47,6 @@ impl ChangeEventCustomAttributes {
             impacted_resources: None,
             new_value: None,
             prev_value: None,
-            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -93,14 +90,6 @@ impl ChangeEventCustomAttributes {
         self.prev_value = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
-        self.additional_properties = value;
-        self
-    }
 }
 
 impl<'de> Deserialize<'de> for ChangeEventCustomAttributes {
@@ -135,10 +124,6 @@ impl<'de> Deserialize<'de> for ChangeEventCustomAttributes {
                     None;
                 let mut prev_value: Option<std::collections::BTreeMap<String, serde_json::Value>> =
                     None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -180,9 +165,9 @@ impl<'de> Deserialize<'de> for ChangeEventCustomAttributes {
                             prev_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
-                            if let Ok(value) = serde_json::from_value(v.clone()) {
-                                additional_properties.insert(k, value);
-                            }
+                            return Err(serde::de::Error::custom(
+                                "Additional properties not allowed",
+                            ));
                         }
                     }
                 }
@@ -196,7 +181,6 @@ impl<'de> Deserialize<'de> for ChangeEventCustomAttributes {
                     impacted_resources,
                     new_value,
                     prev_value,
-                    additional_properties,
                     _unparsed,
                 };
 

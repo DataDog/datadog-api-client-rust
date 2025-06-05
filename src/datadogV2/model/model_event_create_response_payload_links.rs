@@ -6,17 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Object representing an event creation request.
+/// Links attributes.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct EventCreateRequest {
-    /// Event attributes.
-    #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::EventPayload,
-    /// Entity type.
-    #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::EventCreateRequestType,
+pub struct EventCreateResponsePayloadLinks {
+    /// The URL of the event. This link is only functional when using the default subdomain.
+    #[serde(rename = "self")]
+    pub self_: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,17 +21,18 @@ pub struct EventCreateRequest {
     pub(crate) _unparsed: bool,
 }
 
-impl EventCreateRequest {
-    pub fn new(
-        attributes: crate::datadogV2::model::EventPayload,
-        type_: crate::datadogV2::model::EventCreateRequestType,
-    ) -> EventCreateRequest {
-        EventCreateRequest {
-            attributes,
-            type_,
+impl EventCreateResponsePayloadLinks {
+    pub fn new() -> EventCreateResponsePayloadLinks {
+        EventCreateResponsePayloadLinks {
+            self_: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn self_(mut self, value: String) -> Self {
+        self.self_ = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -46,14 +44,20 @@ impl EventCreateRequest {
     }
 }
 
-impl<'de> Deserialize<'de> for EventCreateRequest {
+impl Default for EventCreateResponsePayloadLinks {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for EventCreateResponsePayloadLinks {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct EventCreateRequestVisitor;
-        impl<'a> Visitor<'a> for EventCreateRequestVisitor {
-            type Value = EventCreateRequest;
+        struct EventCreateResponsePayloadLinksVisitor;
+        impl<'a> Visitor<'a> for EventCreateResponsePayloadLinksVisitor {
+            type Value = EventCreateResponsePayloadLinks;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -63,8 +67,7 @@ impl<'de> Deserialize<'de> for EventCreateRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::EventPayload> = None;
-                let mut type_: Option<crate::datadogV2::model::EventCreateRequestType> = None;
+                let mut self_: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -73,19 +76,11 @@ impl<'de> Deserialize<'de> for EventCreateRequest {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "attributes" => {
-                            attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "type" => {
-                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _type_) = type_ {
-                                match _type_ {
-                                    crate::datadogV2::model::EventCreateRequestType::UnparsedObject(_type_) => {
-                                        _unparsed = true;
-                                    },
-                                    _ => {}
-                                }
+                        "self" => {
+                            if v.is_null() {
+                                continue;
                             }
+                            self_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -94,12 +89,9 @@ impl<'de> Deserialize<'de> for EventCreateRequest {
                         }
                     }
                 }
-                let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
-                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = EventCreateRequest {
-                    attributes,
-                    type_,
+                let content = EventCreateResponsePayloadLinks {
+                    self_,
                     additional_properties,
                     _unparsed,
                 };
@@ -108,6 +100,6 @@ impl<'de> Deserialize<'de> for EventCreateRequest {
             }
         }
 
-        deserializer.deserialize_any(EventCreateRequestVisitor)
+        deserializer.deserialize_any(EventCreateResponsePayloadLinksVisitor)
     }
 }
