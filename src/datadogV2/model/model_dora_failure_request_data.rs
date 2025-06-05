@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Request to create a DORA incident event.
+/// The JSON:API data.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct DORAIncidentRequest {
-    /// The JSON:API data.
-    #[serde(rename = "data")]
-    pub data: crate::datadogV2::model::DORAIncidentRequestData,
+pub struct DORAFailureRequestData {
+    /// Attributes to create a DORA failure event.
+    #[serde(rename = "attributes")]
+    pub attributes: crate::datadogV2::model::DORAFailureRequestAttributes,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,10 +21,12 @@ pub struct DORAIncidentRequest {
     pub(crate) _unparsed: bool,
 }
 
-impl DORAIncidentRequest {
-    pub fn new(data: crate::datadogV2::model::DORAIncidentRequestData) -> DORAIncidentRequest {
-        DORAIncidentRequest {
-            data,
+impl DORAFailureRequestData {
+    pub fn new(
+        attributes: crate::datadogV2::model::DORAFailureRequestAttributes,
+    ) -> DORAFailureRequestData {
+        DORAFailureRequestData {
+            attributes,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -39,14 +41,14 @@ impl DORAIncidentRequest {
     }
 }
 
-impl<'de> Deserialize<'de> for DORAIncidentRequest {
+impl<'de> Deserialize<'de> for DORAFailureRequestData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct DORAIncidentRequestVisitor;
-        impl<'a> Visitor<'a> for DORAIncidentRequestVisitor {
-            type Value = DORAIncidentRequest;
+        struct DORAFailureRequestDataVisitor;
+        impl<'a> Visitor<'a> for DORAFailureRequestDataVisitor {
+            type Value = DORAFailureRequestData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -56,7 +58,8 @@ impl<'de> Deserialize<'de> for DORAIncidentRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::DORAIncidentRequestData> = None;
+                let mut attributes: Option<crate::datadogV2::model::DORAFailureRequestAttributes> =
+                    None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -65,8 +68,8 @@ impl<'de> Deserialize<'de> for DORAIncidentRequest {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "data" => {
-                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "attributes" => {
+                            attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -75,10 +78,10 @@ impl<'de> Deserialize<'de> for DORAIncidentRequest {
                         }
                     }
                 }
-                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
+                let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
 
-                let content = DORAIncidentRequest {
-                    data,
+                let content = DORAFailureRequestData {
+                    attributes,
                     additional_properties,
                     _unparsed,
                 };
@@ -87,6 +90,6 @@ impl<'de> Deserialize<'de> for DORAIncidentRequest {
             }
         }
 
-        deserializer.deserialize_any(DORAIncidentRequestVisitor)
+        deserializer.deserialize_any(DORAFailureRequestDataVisitor)
     }
 }

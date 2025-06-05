@@ -1,4 +1,5 @@
-// Send an incident event for DORA Metrics returns "OK" response
+// Send a failure event for DORA Metrics returns "OK - but delayed due to
+// incident" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_dora_metrics::DORAMetricsAPI;
 use datadog_api_client::datadogV2::model::DORAFailureRequest;
@@ -24,7 +25,7 @@ async fn main() {
     ));
     let configuration = datadog::Configuration::new();
     let api = DORAMetricsAPI::with_config(configuration);
-    let resp = api.create_dora_incident(body).await;
+    let resp = api.create_dora_failure(body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

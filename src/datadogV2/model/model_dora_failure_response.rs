@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The JSON:API data.
+/// Response after receiving a DORA failure event.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct DORAIncidentRequestData {
-    /// Attributes to create a DORA incident event.
-    #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::DORAIncidentRequestAttributes,
+pub struct DORAFailureResponse {
+    /// Response after receiving a DORA failure event.
+    #[serde(rename = "data")]
+    pub data: crate::datadogV2::model::DORAFailureResponseData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,12 +21,10 @@ pub struct DORAIncidentRequestData {
     pub(crate) _unparsed: bool,
 }
 
-impl DORAIncidentRequestData {
-    pub fn new(
-        attributes: crate::datadogV2::model::DORAIncidentRequestAttributes,
-    ) -> DORAIncidentRequestData {
-        DORAIncidentRequestData {
-            attributes,
+impl DORAFailureResponse {
+    pub fn new(data: crate::datadogV2::model::DORAFailureResponseData) -> DORAFailureResponse {
+        DORAFailureResponse {
+            data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -41,14 +39,14 @@ impl DORAIncidentRequestData {
     }
 }
 
-impl<'de> Deserialize<'de> for DORAIncidentRequestData {
+impl<'de> Deserialize<'de> for DORAFailureResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct DORAIncidentRequestDataVisitor;
-        impl<'a> Visitor<'a> for DORAIncidentRequestDataVisitor {
-            type Value = DORAIncidentRequestData;
+        struct DORAFailureResponseVisitor;
+        impl<'a> Visitor<'a> for DORAFailureResponseVisitor {
+            type Value = DORAFailureResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -58,8 +56,7 @@ impl<'de> Deserialize<'de> for DORAIncidentRequestData {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::DORAIncidentRequestAttributes> =
-                    None;
+                let mut data: Option<crate::datadogV2::model::DORAFailureResponseData> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -68,8 +65,8 @@ impl<'de> Deserialize<'de> for DORAIncidentRequestData {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "attributes" => {
-                            attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "data" => {
+                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -78,10 +75,10 @@ impl<'de> Deserialize<'de> for DORAIncidentRequestData {
                         }
                     }
                 }
-                let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
+                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = DORAIncidentRequestData {
-                    attributes,
+                let content = DORAFailureResponse {
+                    data,
                     additional_properties,
                     _unparsed,
                 };
@@ -90,6 +87,6 @@ impl<'de> Deserialize<'de> for DORAIncidentRequestData {
             }
         }
 
-        deserializer.deserialize_any(DORAIncidentRequestDataVisitor)
+        deserializer.deserialize_any(DORAFailureResponseVisitor)
     }
 }

@@ -6,21 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum DORAIncidentType {
-    DORA_INCIDENT,
+pub enum DORAFailureType {
+    DORA_FAILURE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for DORAIncidentType {
+impl ToString for DORAFailureType {
     fn to_string(&self) -> String {
         match self {
-            Self::DORA_INCIDENT => String::from("dora_incident"),
+            Self::DORA_FAILURE => String::from("dora_failure"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for DORAIncidentType {
+impl Serialize for DORAFailureType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -32,14 +32,14 @@ impl Serialize for DORAIncidentType {
     }
 }
 
-impl<'de> Deserialize<'de> for DORAIncidentType {
+impl<'de> Deserialize<'de> for DORAFailureType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "dora_incident" => Self::DORA_INCIDENT,
+            "dora_failure" => Self::DORA_FAILURE,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
