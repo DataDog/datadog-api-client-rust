@@ -11,12 +11,21 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct FindingAttributes {
+    /// The Datadog relative link for this finding.
+    #[serde(rename = "datadog_link")]
+    pub datadog_link: Option<String>,
+    /// The description and remediation steps for this finding.
+    #[serde(rename = "description")]
+    pub description: Option<String>,
     /// The evaluation of the finding.
     #[serde(rename = "evaluation")]
     pub evaluation: Option<crate::datadogV2::model::FindingEvaluation>,
     /// The date on which the evaluation for this finding changed (Unix ms).
     #[serde(rename = "evaluation_changed_at")]
     pub evaluation_changed_at: Option<i64>,
+    /// The cloud-based ID for the resource related to the finding.
+    #[serde(rename = "external_id")]
+    pub external_id: Option<String>,
     /// Information about the mute status of this finding.
     #[serde(rename = "mute")]
     pub mute: Option<crate::datadogV2::model::FindingMute>,
@@ -51,8 +60,11 @@ pub struct FindingAttributes {
 impl FindingAttributes {
     pub fn new() -> FindingAttributes {
         FindingAttributes {
+            datadog_link: None,
+            description: None,
             evaluation: None,
             evaluation_changed_at: None,
+            external_id: None,
             mute: None,
             resource: None,
             resource_discovery_date: None,
@@ -66,6 +78,16 @@ impl FindingAttributes {
         }
     }
 
+    pub fn datadog_link(mut self, value: String) -> Self {
+        self.datadog_link = Some(value);
+        self
+    }
+
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
+        self
+    }
+
     pub fn evaluation(mut self, value: crate::datadogV2::model::FindingEvaluation) -> Self {
         self.evaluation = Some(value);
         self
@@ -73,6 +95,11 @@ impl FindingAttributes {
 
     pub fn evaluation_changed_at(mut self, value: i64) -> Self {
         self.evaluation_changed_at = Some(value);
+        self
+    }
+
+    pub fn external_id(mut self, value: String) -> Self {
+        self.external_id = Some(value);
         self
     }
 
@@ -151,8 +178,11 @@ impl<'de> Deserialize<'de> for FindingAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut datadog_link: Option<String> = None;
+                let mut description: Option<String> = None;
                 let mut evaluation: Option<crate::datadogV2::model::FindingEvaluation> = None;
                 let mut evaluation_changed_at: Option<i64> = None;
+                let mut external_id: Option<String> = None;
                 let mut mute: Option<crate::datadogV2::model::FindingMute> = None;
                 let mut resource: Option<String> = None;
                 let mut resource_discovery_date: Option<i64> = None;
@@ -171,6 +201,20 @@ impl<'de> Deserialize<'de> for FindingAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "datadog_link" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            datadog_link =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            description =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "evaluation" => {
                             if v.is_null() {
                                 continue;
@@ -192,6 +236,13 @@ impl<'de> Deserialize<'de> for FindingAttributes {
                                 continue;
                             }
                             evaluation_changed_at =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "external_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            external_id =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "mute" => {
@@ -272,8 +323,11 @@ impl<'de> Deserialize<'de> for FindingAttributes {
                 }
 
                 let content = FindingAttributes {
+                    datadog_link,
+                    description,
                     evaluation,
                     evaluation_changed_at,
+                    external_id,
                     mute,
                     resource,
                     resource_discovery_date,
