@@ -14,7 +14,7 @@ pub struct EventCreateResponse {
     /// JSON object containing all events attributes and their associated values.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::EventCreateResponseAttributes>,
-    /// Event type
+    /// Event type.
     #[serde(rename = "type")]
     pub type_: Option<String>,
     #[serde(flatten)]

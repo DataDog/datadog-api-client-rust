@@ -11,9 +11,13 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EventCreateResponseAttributesAttributesEvt {
-    /// Event id
+    /// (Deprecated) Event id. Use `uid` instead.
+    #[deprecated]
     #[serde(rename = "id")]
     pub id: Option<String>,
+    /// A unique identifier for the event. You can use this id to query or reference the event.
+    #[serde(rename = "uid")]
+    pub uid: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -23,15 +27,24 @@ pub struct EventCreateResponseAttributesAttributesEvt {
 
 impl EventCreateResponseAttributesAttributesEvt {
     pub fn new() -> EventCreateResponseAttributesAttributesEvt {
+        #[allow(deprecated)]
         EventCreateResponseAttributesAttributesEvt {
             id: None,
+            uid: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
+    #[allow(deprecated)]
     pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn uid(mut self, value: String) -> Self {
+        self.uid = Some(value);
         self
     }
 
@@ -68,6 +81,7 @@ impl<'de> Deserialize<'de> for EventCreateResponseAttributesAttributesEvt {
                 M: MapAccess<'a>,
             {
                 let mut id: Option<String> = None;
+                let mut uid: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -82,6 +96,12 @@ impl<'de> Deserialize<'de> for EventCreateResponseAttributesAttributesEvt {
                             }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "uid" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            uid = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -90,8 +110,10 @@ impl<'de> Deserialize<'de> for EventCreateResponseAttributesAttributesEvt {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = EventCreateResponseAttributesAttributesEvt {
                     id,
+                    uid,
                     additional_properties,
                     _unparsed,
                 };
