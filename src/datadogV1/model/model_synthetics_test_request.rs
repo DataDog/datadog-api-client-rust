@@ -32,6 +32,9 @@ pub struct SyntheticsTestRequest {
     /// By default, the client certificate is applied on the domain of the starting URL for browser tests. If you want your client certificate to be applied on other domains instead, add them in `certificateDomains`.
     #[serde(rename = "certificateDomains")]
     pub certificate_domains: Option<Vec<String>>,
+    /// Check for certificate revocation.
+    #[serde(rename = "checkCertificateRevocation")]
+    pub check_certificate_revocation: Option<bool>,
     /// A protobuf JSON descriptor that needs to be gzipped first then base64 encoded.
     #[serde(rename = "compressedJsonDescriptor")]
     pub compressed_json_descriptor: Option<String>,
@@ -59,6 +62,9 @@ pub struct SyntheticsTestRequest {
     /// HTTP version to use for a Synthetic test.
     #[serde(rename = "httpVersion")]
     pub http_version: Option<crate::datadogV1::model::SyntheticsTestOptionsHTTPVersion>,
+    /// Whether the message is base64 encoded.
+    #[serde(rename = "isMessageBase64Encoded")]
+    pub is_message_base64_encoded: Option<bool>,
     /// Message to send for UDP or WebSocket tests.
     #[serde(rename = "message")]
     pub message: Option<String>,
@@ -120,6 +126,7 @@ impl SyntheticsTestRequest {
             call_type: None,
             certificate: None,
             certificate_domains: None,
+            check_certificate_revocation: None,
             compressed_json_descriptor: None,
             compressed_proto_file: None,
             dns_server: None,
@@ -129,6 +136,7 @@ impl SyntheticsTestRequest {
             headers: None,
             host: None,
             http_version: None,
+            is_message_base64_encoded: None,
             message: None,
             metadata: None,
             method: None,
@@ -189,6 +197,11 @@ impl SyntheticsTestRequest {
         self
     }
 
+    pub fn check_certificate_revocation(mut self, value: bool) -> Self {
+        self.check_certificate_revocation = Some(value);
+        self
+    }
+
     pub fn compressed_json_descriptor(mut self, value: String) -> Self {
         self.compressed_json_descriptor = Some(value);
         self
@@ -237,6 +250,11 @@ impl SyntheticsTestRequest {
         value: crate::datadogV1::model::SyntheticsTestOptionsHTTPVersion,
     ) -> Self {
         self.http_version = Some(value);
+        self
+    }
+
+    pub fn is_message_base64_encoded(mut self, value: bool) -> Self {
+        self.is_message_base64_encoded = Some(value);
         self
     }
 
@@ -352,6 +370,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                     crate::datadogV1::model::SyntheticsTestRequestCertificate,
                 > = None;
                 let mut certificate_domains: Option<Vec<String>> = None;
+                let mut check_certificate_revocation: Option<bool> = None;
                 let mut compressed_json_descriptor: Option<String> = None;
                 let mut compressed_proto_file: Option<String> = None;
                 let mut dns_server: Option<String> = None;
@@ -364,6 +383,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                 let mut http_version: Option<
                     crate::datadogV1::model::SyntheticsTestOptionsHTTPVersion,
                 > = None;
+                let mut is_message_base64_encoded: Option<bool> = None;
                 let mut message: Option<String> = None;
                 let mut metadata: Option<std::collections::BTreeMap<String, String>> = None;
                 let mut method: Option<String> = None;
@@ -455,6 +475,13 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                             certificate_domains =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "checkCertificateRevocation" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            check_certificate_revocation =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "compressedJsonDescriptor" => {
                             if v.is_null() {
                                 continue;
@@ -521,6 +548,13 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                                     _ => {}
                                 }
                             }
+                        }
+                        "isMessageBase64Encoded" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            is_message_base64_encoded =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "message" => {
                             if v.is_null() {
@@ -634,6 +668,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                     call_type,
                     certificate,
                     certificate_domains,
+                    check_certificate_revocation,
                     compressed_json_descriptor,
                     compressed_proto_file,
                     dns_server,
@@ -643,6 +678,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                     headers,
                     host,
                     http_version,
+                    is_message_base64_encoded,
                     message,
                     metadata,
                     method,
