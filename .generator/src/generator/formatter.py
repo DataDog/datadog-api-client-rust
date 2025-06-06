@@ -409,7 +409,8 @@ def format_data_with_schema(
             def format_string(x):
                 if isinstance(x, bool):
                     raise TypeError(f"{x} is not supported type {schema}")
-                if x and ("`" in x or '"' in x or "\n" in x):
+                # temporary hack
+                if ("`" in x or '"' in x or "\n" in x) and x:
                     return f"r#\"{x}\"#.to_string()", set()
                 if x:
                     return f'"{x}".to_string()', set()
