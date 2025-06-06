@@ -1966,6 +1966,19 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.DeleteCatalogEntity".into(),
         test_v2_delete_catalog_entity,
     );
+    world
+        .function_mappings
+        .insert("v2.ListCatalogKind".into(), test_v2_list_catalog_kind);
+    world.function_mappings.insert(
+        "v2.ListCatalogKindWithPagination".into(),
+        test_v2_list_catalog_kind_with_pagination,
+    );
+    world
+        .function_mappings
+        .insert("v2.UpsertCatalogKind".into(), test_v2_upsert_catalog_kind);
+    world
+        .function_mappings
+        .insert("v2.DeleteCatalogKind".into(), test_v2_delete_catalog_kind);
     world.function_mappings.insert(
         "v2.ListCatalogRelation".into(),
         test_v2_list_catalog_relation,
@@ -13268,6 +13281,150 @@ fn test_v2_delete_catalog_entity(world: &mut DatadogWorld, _parameters: &HashMap
         .expect("api instance not found");
     let entity_id = serde_json::from_value(_parameters.get("entity_id").unwrap().clone()).unwrap();
     let response = match block_on(api.delete_catalog_entity_with_http_info(entity_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_catalog_kind(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_software_catalog
+        .as_ref()
+        .expect("api instance not found");
+    let page_offset = _parameters
+        .get("page[offset]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_id = _parameters
+        .get("filter[id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_name = _parameters
+        .get("filter[name]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_software_catalog::ListCatalogKindOptionalParams::default();
+    params.page_offset = page_offset;
+    params.page_limit = page_limit;
+    params.filter_id = filter_id;
+    params.filter_name = filter_name;
+    let response = match block_on(api.list_catalog_kind_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+fn test_v2_list_catalog_kind_with_pagination(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_software_catalog
+        .as_ref()
+        .expect("api instance not found");
+    let page_offset = _parameters
+        .get("page[offset]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_id = _parameters
+        .get("filter[id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_name = _parameters
+        .get("filter[name]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_software_catalog::ListCatalogKindOptionalParams::default();
+    params.page_offset = page_offset;
+    params.page_limit = page_limit;
+    params.filter_id = filter_id;
+    params.filter_name = filter_name;
+    let response = api.list_catalog_kind_with_pagination(params);
+    let mut result = Vec::new();
+
+    block_on(async {
+        pin_mut!(response);
+
+        while let Some(resp) = response.next().await {
+            match resp {
+                Ok(response) => {
+                    result.push(response);
+                }
+                Err(error) => {
+                    return match error {
+                        Error::ResponseError(e) => {
+                            if let Some(entity) = e.entity {
+                                world.response.object = serde_json::to_value(entity).unwrap();
+                            }
+                        }
+                        _ => panic!("error parsing response: {}", error),
+                    };
+                }
+            }
+        }
+    });
+    world.response.object = serde_json::to_value(result).unwrap();
+    world.response.code = 200;
+}
+
+fn test_v2_upsert_catalog_kind(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_software_catalog
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.upsert_catalog_kind_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_catalog_kind(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_software_catalog
+        .as_ref()
+        .expect("api instance not found");
+    let kind_id = serde_json::from_value(_parameters.get("kind_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_catalog_kind_with_http_info(kind_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
