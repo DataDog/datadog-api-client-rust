@@ -3018,6 +3018,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_get_aggregated_connections,
     );
     world.function_mappings.insert(
+        "v2.ListOnCallEscalationPolicies".into(),
+        test_v2_list_on_call_escalation_policies,
+    );
+    world.function_mappings.insert(
         "v2.CreateOnCallEscalationPolicy".into(),
         test_v2_create_on_call_escalation_policy,
     );
@@ -3032,6 +3036,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.UpdateOnCallEscalationPolicy".into(),
         test_v2_update_on_call_escalation_policy,
+    );
+    world.function_mappings.insert(
+        "v2.ListOnCallSchedules".into(),
+        test_v2_list_on_call_schedules,
     );
     world.function_mappings.insert(
         "v2.CreateOnCallSchedule".into(),
@@ -3051,6 +3059,18 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.GetScheduleOnCallUser".into(),
         test_v2_get_schedule_on_call_user,
+    );
+    world.function_mappings.insert(
+        "v2.ListOnCallScheduleOverrides".into(),
+        test_v2_list_on_call_schedule_overrides,
+    );
+    world.function_mappings.insert(
+        "v2.CreateOnCallScheduleOverride".into(),
+        test_v2_create_on_call_schedule_override,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteOnCallScheduleOverride".into(),
+        test_v2_delete_on_call_schedule_override,
     );
     world.function_mappings.insert(
         "v2.GetTeamOnCallUsers".into(),
@@ -22704,6 +22724,42 @@ fn test_v2_get_aggregated_connections(
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_list_on_call_escalation_policies(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_on_call
+        .as_ref()
+        .expect("api instance not found");
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_on_call::ListOnCallEscalationPoliciesOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    let response = match block_on(api.list_on_call_escalation_policies_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_create_on_call_escalation_policy(
     world: &mut DatadogWorld,
     _parameters: &HashMap<String, Value>,
@@ -22819,6 +22875,39 @@ fn test_v2_update_on_call_escalation_policy(
     let response = match block_on(
         api.update_on_call_escalation_policy_with_http_info(policy_id, body, params),
     ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_on_call_schedules(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_on_call
+        .as_ref()
+        .expect("api instance not found");
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_on_call::ListOnCallSchedulesOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    let response = match block_on(api.list_on_call_schedules_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -22978,6 +23067,117 @@ fn test_v2_get_schedule_on_call_user(
     params.filter_at_ts = filter_at_ts;
     let response = match block_on(api.get_schedule_on_call_user_with_http_info(schedule_id, params))
     {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_on_call_schedule_overrides(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_on_call
+        .as_ref()
+        .expect("api instance not found");
+    let schedule_id =
+        serde_json::from_value(_parameters.get("schedule_id").unwrap().clone()).unwrap();
+    let filter_start =
+        serde_json::from_value(_parameters.get("filter[start]").unwrap().clone()).unwrap();
+    let filter_end =
+        serde_json::from_value(_parameters.get("filter[end]").unwrap().clone()).unwrap();
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_on_call::ListOnCallScheduleOverridesOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    let response = match block_on(api.list_on_call_schedule_overrides_with_http_info(
+        schedule_id,
+        filter_start,
+        filter_end,
+        params,
+    )) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_on_call_schedule_override(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_on_call
+        .as_ref()
+        .expect("api instance not found");
+    let schedule_id =
+        serde_json::from_value(_parameters.get("schedule_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.create_on_call_schedule_override_with_http_info(schedule_id, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_on_call_schedule_override(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_on_call
+        .as_ref()
+        .expect("api instance not found");
+    let schedule_id =
+        serde_json::from_value(_parameters.get("schedule_id").unwrap().clone()).unwrap();
+    let override_id =
+        serde_json::from_value(_parameters.get("override_id").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.delete_on_call_schedule_override_with_http_info(schedule_id, override_id),
+    ) {
         Ok(response) => response,
         Err(error) => {
             return match error {

@@ -6,17 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Root object representing a team's on-call responder configuration.
+/// Response with a list of escalation policies.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct TeamOnCallResponders {
-    /// Defines the main on-call responder object for a team, including relationships.
+pub struct EscalationPoliciesResponse {
+    /// A list of escalation policies.
     #[serde(rename = "data")]
-    pub data: Option<crate::datadogV2::model::TeamOnCallRespondersData>,
-    /// The `TeamOnCallResponders` `included`.
+    pub data: Option<Vec<crate::datadogV2::model::EscalationPolicyData>>,
+    /// Provides any included related resources, such as steps or targets, returned with the policy.
     #[serde(rename = "included")]
-    pub included: Option<Vec<crate::datadogV2::model::TeamOnCallRespondersIncluded>>,
+    pub included: Option<Vec<crate::datadogV2::model::EscalationPolicyIncluded>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,9 +24,9 @@ pub struct TeamOnCallResponders {
     pub(crate) _unparsed: bool,
 }
 
-impl TeamOnCallResponders {
-    pub fn new() -> TeamOnCallResponders {
-        TeamOnCallResponders {
+impl EscalationPoliciesResponse {
+    pub fn new() -> EscalationPoliciesResponse {
+        EscalationPoliciesResponse {
             data: None,
             included: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -34,14 +34,14 @@ impl TeamOnCallResponders {
         }
     }
 
-    pub fn data(mut self, value: crate::datadogV2::model::TeamOnCallRespondersData) -> Self {
+    pub fn data(mut self, value: Vec<crate::datadogV2::model::EscalationPolicyData>) -> Self {
         self.data = Some(value);
         self
     }
 
     pub fn included(
         mut self,
-        value: Vec<crate::datadogV2::model::TeamOnCallRespondersIncluded>,
+        value: Vec<crate::datadogV2::model::EscalationPolicyIncluded>,
     ) -> Self {
         self.included = Some(value);
         self
@@ -56,20 +56,20 @@ impl TeamOnCallResponders {
     }
 }
 
-impl Default for TeamOnCallResponders {
+impl Default for EscalationPoliciesResponse {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for TeamOnCallResponders {
+impl<'de> Deserialize<'de> for EscalationPoliciesResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct TeamOnCallRespondersVisitor;
-        impl<'a> Visitor<'a> for TeamOnCallRespondersVisitor {
-            type Value = TeamOnCallResponders;
+        struct EscalationPoliciesResponseVisitor;
+        impl<'a> Visitor<'a> for EscalationPoliciesResponseVisitor {
+            type Value = EscalationPoliciesResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -79,10 +79,9 @@ impl<'de> Deserialize<'de> for TeamOnCallResponders {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::TeamOnCallRespondersData> = None;
-                let mut included: Option<
-                    Vec<crate::datadogV2::model::TeamOnCallRespondersIncluded>,
-                > = None;
+                let mut data: Option<Vec<crate::datadogV2::model::EscalationPolicyData>> = None;
+                let mut included: Option<Vec<crate::datadogV2::model::EscalationPolicyIncluded>> =
+                    None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -111,7 +110,7 @@ impl<'de> Deserialize<'de> for TeamOnCallResponders {
                     }
                 }
 
-                let content = TeamOnCallResponders {
+                let content = EscalationPoliciesResponse {
                     data,
                     included,
                     additional_properties,
@@ -122,6 +121,6 @@ impl<'de> Deserialize<'de> for TeamOnCallResponders {
             }
         }
 
-        deserializer.deserialize_any(TeamOnCallRespondersVisitor)
+        deserializer.deserialize_any(EscalationPoliciesResponseVisitor)
     }
 }

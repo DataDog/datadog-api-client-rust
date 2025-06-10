@@ -6,20 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Defines the main on-call responder object for a team, including relationships.
+/// The definition of `OverrideCreateData` object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct TeamOnCallRespondersData {
-    /// Unique identifier of the on-call responder configuration.
-    #[serde(rename = "id")]
-    pub id: Option<String>,
-    /// Relationship objects linked to a team's on-call responder configuration, including escalations and responders.
+pub struct OverrideCreateData {
+    /// The definition of `OverrideCreateDataAttributes` object.
+    #[serde(rename = "attributes")]
+    pub attributes: crate::datadogV2::model::OverrideCreateDataAttributes,
+    /// The definition of `OverrideCreateDataRelationships` object.
     #[serde(rename = "relationships")]
-    pub relationships: Option<crate::datadogV2::model::TeamOnCallRespondersDataRelationships>,
-    /// Represents the resource type for a group of users assigned to handle on-call duties within a team.
+    pub relationships: Option<crate::datadogV2::model::OverrideCreateDataRelationships>,
+    /// The definition of `OverrideCreateDataType` object.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::TeamOnCallRespondersDataType,
+    pub type_: crate::datadogV2::model::OverrideCreateDataType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,12 +27,13 @@ pub struct TeamOnCallRespondersData {
     pub(crate) _unparsed: bool,
 }
 
-impl TeamOnCallRespondersData {
+impl OverrideCreateData {
     pub fn new(
-        type_: crate::datadogV2::model::TeamOnCallRespondersDataType,
-    ) -> TeamOnCallRespondersData {
-        TeamOnCallRespondersData {
-            id: None,
+        attributes: crate::datadogV2::model::OverrideCreateDataAttributes,
+        type_: crate::datadogV2::model::OverrideCreateDataType,
+    ) -> OverrideCreateData {
+        OverrideCreateData {
+            attributes,
             relationships: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
@@ -40,14 +41,9 @@ impl TeamOnCallRespondersData {
         }
     }
 
-    pub fn id(mut self, value: String) -> Self {
-        self.id = Some(value);
-        self
-    }
-
     pub fn relationships(
         mut self,
-        value: crate::datadogV2::model::TeamOnCallRespondersDataRelationships,
+        value: crate::datadogV2::model::OverrideCreateDataRelationships,
     ) -> Self {
         self.relationships = Some(value);
         self
@@ -62,14 +58,14 @@ impl TeamOnCallRespondersData {
     }
 }
 
-impl<'de> Deserialize<'de> for TeamOnCallRespondersData {
+impl<'de> Deserialize<'de> for OverrideCreateData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct TeamOnCallRespondersDataVisitor;
-        impl<'a> Visitor<'a> for TeamOnCallRespondersDataVisitor {
-            type Value = TeamOnCallRespondersData;
+        struct OverrideCreateDataVisitor;
+        impl<'a> Visitor<'a> for OverrideCreateDataVisitor {
+            type Value = OverrideCreateData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -79,11 +75,12 @@ impl<'de> Deserialize<'de> for TeamOnCallRespondersData {
             where
                 M: MapAccess<'a>,
             {
-                let mut id: Option<String> = None;
+                let mut attributes: Option<crate::datadogV2::model::OverrideCreateDataAttributes> =
+                    None;
                 let mut relationships: Option<
-                    crate::datadogV2::model::TeamOnCallRespondersDataRelationships,
+                    crate::datadogV2::model::OverrideCreateDataRelationships,
                 > = None;
-                let mut type_: Option<crate::datadogV2::model::TeamOnCallRespondersDataType> = None;
+                let mut type_: Option<crate::datadogV2::model::OverrideCreateDataType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -92,11 +89,8 @@ impl<'de> Deserialize<'de> for TeamOnCallRespondersData {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "id" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "attributes" => {
+                            attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "relationships" => {
                             if v.is_null() {
@@ -109,7 +103,7 @@ impl<'de> Deserialize<'de> for TeamOnCallRespondersData {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::TeamOnCallRespondersDataType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::OverrideCreateDataType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -123,10 +117,11 @@ impl<'de> Deserialize<'de> for TeamOnCallRespondersData {
                         }
                     }
                 }
+                let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = TeamOnCallRespondersData {
-                    id,
+                let content = OverrideCreateData {
+                    attributes,
                     relationships,
                     type_,
                     additional_properties,
@@ -137,6 +132,6 @@ impl<'de> Deserialize<'de> for TeamOnCallRespondersData {
             }
         }
 
-        deserializer.deserialize_any(TeamOnCallRespondersDataVisitor)
+        deserializer.deserialize_any(OverrideCreateDataVisitor)
     }
 }
