@@ -6,17 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Root object representing a team's on-call responder configuration.
+/// The definition of `OnCallUserRelationship` object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct TeamOnCallResponders {
-    /// Defines the main on-call responder object for a team, including relationships.
+pub struct OnCallUserRelationship {
+    /// The definition of `OnCallUserRelationshipData` object.
     #[serde(rename = "data")]
-    pub data: Option<crate::datadogV2::model::TeamOnCallRespondersData>,
-    /// The `TeamOnCallResponders` `included`.
-    #[serde(rename = "included")]
-    pub included: Option<Vec<crate::datadogV2::model::TeamOnCallRespondersIncluded>>,
+    pub data: Option<crate::datadogV2::model::OnCallUserRelationshipData>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,26 +21,17 @@ pub struct TeamOnCallResponders {
     pub(crate) _unparsed: bool,
 }
 
-impl TeamOnCallResponders {
-    pub fn new() -> TeamOnCallResponders {
-        TeamOnCallResponders {
+impl OnCallUserRelationship {
+    pub fn new() -> OnCallUserRelationship {
+        OnCallUserRelationship {
             data: None,
-            included: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn data(mut self, value: crate::datadogV2::model::TeamOnCallRespondersData) -> Self {
+    pub fn data(mut self, value: crate::datadogV2::model::OnCallUserRelationshipData) -> Self {
         self.data = Some(value);
-        self
-    }
-
-    pub fn included(
-        mut self,
-        value: Vec<crate::datadogV2::model::TeamOnCallRespondersIncluded>,
-    ) -> Self {
-        self.included = Some(value);
         self
     }
 
@@ -56,20 +44,20 @@ impl TeamOnCallResponders {
     }
 }
 
-impl Default for TeamOnCallResponders {
+impl Default for OnCallUserRelationship {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for TeamOnCallResponders {
+impl<'de> Deserialize<'de> for OnCallUserRelationship {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct TeamOnCallRespondersVisitor;
-        impl<'a> Visitor<'a> for TeamOnCallRespondersVisitor {
-            type Value = TeamOnCallResponders;
+        struct OnCallUserRelationshipVisitor;
+        impl<'a> Visitor<'a> for OnCallUserRelationshipVisitor {
+            type Value = OnCallUserRelationship;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -79,10 +67,7 @@ impl<'de> Deserialize<'de> for TeamOnCallResponders {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::TeamOnCallRespondersData> = None;
-                let mut included: Option<
-                    Vec<crate::datadogV2::model::TeamOnCallRespondersIncluded>,
-                > = None;
+                let mut data: Option<crate::datadogV2::model::OnCallUserRelationshipData> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -97,12 +82,6 @@ impl<'de> Deserialize<'de> for TeamOnCallResponders {
                             }
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "included" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            included = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -111,9 +90,8 @@ impl<'de> Deserialize<'de> for TeamOnCallResponders {
                     }
                 }
 
-                let content = TeamOnCallResponders {
+                let content = OnCallUserRelationship {
                     data,
-                    included,
                     additional_properties,
                     _unparsed,
                 };
@@ -122,6 +100,6 @@ impl<'de> Deserialize<'de> for TeamOnCallResponders {
             }
         }
 
-        deserializer.deserialize_any(TeamOnCallRespondersVisitor)
+        deserializer.deserialize_any(OnCallUserRelationshipVisitor)
     }
 }

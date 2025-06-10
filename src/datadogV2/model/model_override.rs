@@ -6,20 +6,23 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Defines the main on-call responder object for a team, including relationships.
+/// The definition of `Override` object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct TeamOnCallRespondersData {
-    /// Unique identifier of the on-call responder configuration.
+pub struct Override {
+    /// The definition of `OverrideAttributes` object.
+    #[serde(rename = "attributes")]
+    pub attributes: Option<crate::datadogV2::model::OverrideAttributes>,
+    /// The ID of the override.
     #[serde(rename = "id")]
     pub id: Option<String>,
-    /// Relationship objects linked to a team's on-call responder configuration, including escalations and responders.
+    /// The definition of `OverrideRelationships` object.
     #[serde(rename = "relationships")]
-    pub relationships: Option<crate::datadogV2::model::TeamOnCallRespondersDataRelationships>,
-    /// Represents the resource type for a group of users assigned to handle on-call duties within a team.
+    pub relationships: Option<crate::datadogV2::model::OverrideRelationships>,
+    /// The definition of `OverrideType` object.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::TeamOnCallRespondersDataType,
+    pub type_: Option<crate::datadogV2::model::OverrideType>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,17 +30,21 @@ pub struct TeamOnCallRespondersData {
     pub(crate) _unparsed: bool,
 }
 
-impl TeamOnCallRespondersData {
-    pub fn new(
-        type_: crate::datadogV2::model::TeamOnCallRespondersDataType,
-    ) -> TeamOnCallRespondersData {
-        TeamOnCallRespondersData {
+impl Override {
+    pub fn new() -> Override {
+        Override {
+            attributes: None,
             id: None,
             relationships: None,
-            type_,
+            type_: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn attributes(mut self, value: crate::datadogV2::model::OverrideAttributes) -> Self {
+        self.attributes = Some(value);
+        self
     }
 
     pub fn id(mut self, value: String) -> Self {
@@ -45,11 +52,13 @@ impl TeamOnCallRespondersData {
         self
     }
 
-    pub fn relationships(
-        mut self,
-        value: crate::datadogV2::model::TeamOnCallRespondersDataRelationships,
-    ) -> Self {
+    pub fn relationships(mut self, value: crate::datadogV2::model::OverrideRelationships) -> Self {
         self.relationships = Some(value);
+        self
+    }
+
+    pub fn type_(mut self, value: crate::datadogV2::model::OverrideType) -> Self {
+        self.type_ = Some(value);
         self
     }
 
@@ -62,14 +71,20 @@ impl TeamOnCallRespondersData {
     }
 }
 
-impl<'de> Deserialize<'de> for TeamOnCallRespondersData {
+impl Default for Override {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for Override {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct TeamOnCallRespondersDataVisitor;
-        impl<'a> Visitor<'a> for TeamOnCallRespondersDataVisitor {
-            type Value = TeamOnCallRespondersData;
+        struct OverrideVisitor;
+        impl<'a> Visitor<'a> for OverrideVisitor {
+            type Value = Override;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -79,11 +94,11 @@ impl<'de> Deserialize<'de> for TeamOnCallRespondersData {
             where
                 M: MapAccess<'a>,
             {
+                let mut attributes: Option<crate::datadogV2::model::OverrideAttributes> = None;
                 let mut id: Option<String> = None;
-                let mut relationships: Option<
-                    crate::datadogV2::model::TeamOnCallRespondersDataRelationships,
-                > = None;
-                let mut type_: Option<crate::datadogV2::model::TeamOnCallRespondersDataType> = None;
+                let mut relationships: Option<crate::datadogV2::model::OverrideRelationships> =
+                    None;
+                let mut type_: Option<crate::datadogV2::model::OverrideType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -92,6 +107,12 @@ impl<'de> Deserialize<'de> for TeamOnCallRespondersData {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "attributes" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "id" => {
                             if v.is_null() {
                                 continue;
@@ -106,12 +127,17 @@ impl<'de> Deserialize<'de> for TeamOnCallRespondersData {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::TeamOnCallRespondersDataType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::OverrideType::UnparsedObject(
+                                        _type_,
+                                    ) => {
                                         _unparsed = true;
-                                    },
+                                    }
                                     _ => {}
                                 }
                             }
@@ -123,9 +149,9 @@ impl<'de> Deserialize<'de> for TeamOnCallRespondersData {
                         }
                     }
                 }
-                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = TeamOnCallRespondersData {
+                let content = Override {
+                    attributes,
                     id,
                     relationships,
                     type_,
@@ -137,6 +163,6 @@ impl<'de> Deserialize<'de> for TeamOnCallRespondersData {
             }
         }
 
-        deserializer.deserialize_any(TeamOnCallRespondersDataVisitor)
+        deserializer.deserialize_any(OverrideVisitor)
     }
 }

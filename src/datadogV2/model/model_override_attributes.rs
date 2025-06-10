@@ -6,17 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Root object representing a team's on-call responder configuration.
+/// The definition of `OverrideAttributes` object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct TeamOnCallResponders {
-    /// Defines the main on-call responder object for a team, including relationships.
-    #[serde(rename = "data")]
-    pub data: Option<crate::datadogV2::model::TeamOnCallRespondersData>,
-    /// The `TeamOnCallResponders` `included`.
-    #[serde(rename = "included")]
-    pub included: Option<Vec<crate::datadogV2::model::TeamOnCallRespondersIncluded>>,
+pub struct OverrideAttributes {
+    /// The end time of the override.
+    #[serde(rename = "end")]
+    pub end: Option<chrono::DateTime<chrono::Utc>>,
+    /// The start time of the override.
+    #[serde(rename = "start")]
+    pub start: Option<chrono::DateTime<chrono::Utc>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,26 +24,23 @@ pub struct TeamOnCallResponders {
     pub(crate) _unparsed: bool,
 }
 
-impl TeamOnCallResponders {
-    pub fn new() -> TeamOnCallResponders {
-        TeamOnCallResponders {
-            data: None,
-            included: None,
+impl OverrideAttributes {
+    pub fn new() -> OverrideAttributes {
+        OverrideAttributes {
+            end: None,
+            start: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn data(mut self, value: crate::datadogV2::model::TeamOnCallRespondersData) -> Self {
-        self.data = Some(value);
+    pub fn end(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
+        self.end = Some(value);
         self
     }
 
-    pub fn included(
-        mut self,
-        value: Vec<crate::datadogV2::model::TeamOnCallRespondersIncluded>,
-    ) -> Self {
-        self.included = Some(value);
+    pub fn start(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
+        self.start = Some(value);
         self
     }
 
@@ -56,20 +53,20 @@ impl TeamOnCallResponders {
     }
 }
 
-impl Default for TeamOnCallResponders {
+impl Default for OverrideAttributes {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for TeamOnCallResponders {
+impl<'de> Deserialize<'de> for OverrideAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct TeamOnCallRespondersVisitor;
-        impl<'a> Visitor<'a> for TeamOnCallRespondersVisitor {
-            type Value = TeamOnCallResponders;
+        struct OverrideAttributesVisitor;
+        impl<'a> Visitor<'a> for OverrideAttributesVisitor {
+            type Value = OverrideAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -79,10 +76,8 @@ impl<'de> Deserialize<'de> for TeamOnCallResponders {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::TeamOnCallRespondersData> = None;
-                let mut included: Option<
-                    Vec<crate::datadogV2::model::TeamOnCallRespondersIncluded>,
-                > = None;
+                let mut end: Option<chrono::DateTime<chrono::Utc>> = None;
+                let mut start: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -91,17 +86,17 @@ impl<'de> Deserialize<'de> for TeamOnCallResponders {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "data" => {
+                        "end" => {
                             if v.is_null() {
                                 continue;
                             }
-                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            end = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "included" => {
+                        "start" => {
                             if v.is_null() {
                                 continue;
                             }
-                            included = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            start = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -111,9 +106,9 @@ impl<'de> Deserialize<'de> for TeamOnCallResponders {
                     }
                 }
 
-                let content = TeamOnCallResponders {
-                    data,
-                    included,
+                let content = OverrideAttributes {
+                    end,
+                    start,
                     additional_properties,
                     _unparsed,
                 };
@@ -122,6 +117,6 @@ impl<'de> Deserialize<'de> for TeamOnCallResponders {
             }
         }
 
-        deserializer.deserialize_any(TeamOnCallRespondersVisitor)
+        deserializer.deserialize_any(OverrideAttributesVisitor)
     }
 }
