@@ -11,6 +11,13 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DORAFailureRequestAttributes {
+    /// A list of user-defined tags. The tags must follow the `key:value` pattern. Up to 100 may be added per event.
+    #[serde(
+        rename = "custom_tags",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub custom_tags: Option<Option<Vec<String>>>,
     /// Environment name that was impacted by the failure.
     #[serde(rename = "env")]
     pub env: Option<String>,
@@ -51,6 +58,7 @@ pub struct DORAFailureRequestAttributes {
 impl DORAFailureRequestAttributes {
     pub fn new(started_at: i64) -> DORAFailureRequestAttributes {
         DORAFailureRequestAttributes {
+            custom_tags: None,
             env: None,
             finished_at: None,
             git: None,
@@ -64,6 +72,11 @@ impl DORAFailureRequestAttributes {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn custom_tags(mut self, value: Option<Vec<String>>) -> Self {
+        self.custom_tags = Some(value);
+        self
     }
 
     pub fn env(mut self, value: String) -> Self {
@@ -137,6 +150,7 @@ impl<'de> Deserialize<'de> for DORAFailureRequestAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut custom_tags: Option<Option<Vec<String>>> = None;
                 let mut env: Option<String> = None;
                 let mut finished_at: Option<i64> = None;
                 let mut git: Option<crate::datadogV2::model::DORAGitInfo> = None;
@@ -155,6 +169,10 @@ impl<'de> Deserialize<'de> for DORAFailureRequestAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "custom_tags" => {
+                            custom_tags =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "env" => {
                             if v.is_null() {
                                 continue;
@@ -223,6 +241,7 @@ impl<'de> Deserialize<'de> for DORAFailureRequestAttributes {
                 let started_at = started_at.ok_or_else(|| M::Error::missing_field("started_at"))?;
 
                 let content = DORAFailureRequestAttributes {
+                    custom_tags,
                     env,
                     finished_at,
                     git,
