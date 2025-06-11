@@ -11,10 +11,10 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EventCreateResponse {
-    /// JSON object containing all events attributes and their associated values.
+    /// JSON object containing event attributes and their associated values.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::EventCreateResponseAttributes>,
-    /// Event type
+    /// Entity type.
     #[serde(rename = "type")]
     pub type_: Option<String>,
     #[serde(flatten)]
