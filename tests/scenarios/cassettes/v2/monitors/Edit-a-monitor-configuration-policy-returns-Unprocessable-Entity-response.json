@@ -3,7 +3,7 @@
     {
       "request": {
         "body": {
-          "string": "{\"data\":{\"attributes\":{\"policy\":{\"tag_key\":\"testeditamonitorconfigurationpolicyreturnsunprocessableentityresponse1682627701\",\"tag_key_required\":false,\"valid_tag_values\":[\"prod\",\"staging\"]},\"policy_type\":\"tag\"},\"type\":\"monitor-config-policy\"}}",
+          "string": "{\"data\":{\"attributes\":{\"policy\":{\"tag_key\":\"testeditamonitorconfigurationpolicyreturnsunprocessableentityresponse1748486178\",\"tag_key_required\":false,\"valid_tag_values\":[\"prod\",\"staging\"]},\"policy_type\":\"tag\"},\"type\":\"monitor-config-policy\"}}",
           "encoding": null
         },
         "headers": {
@@ -19,7 +19,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"type\":\"monitor-config-policy\",\"attributes\":{\"policy\":{\"tag_key\":\"testeditamonitorconfigurationpolicyreturnsunprocessableentityresponse1682627701\",\"tag_key_required\":false,\"valid_tag_values\":[\"prod\",\"staging\"]},\"policy_type\":\"tag\"},\"id\":\"fc38f7f0-e53a-11ed-947f-da7ad0900002\"}}\n",
+          "string": "{\"data\":{\"type\":\"monitor-config-policy\",\"attributes\":{\"policy\":{\"tag_key\":\"testeditamonitorconfigurationpolicyreturnsunprocessableentityresponse1748486178\",\"valid_tag_values\":[\"prod\",\"staging\"],\"tag_key_required\":false},\"policy_type\":\"tag\"},\"id\":\"f2f83512-b2c2-4dc4-a8db-c785cd818d6f\"}}\n",
           "encoding": null
         },
         "headers": {
@@ -32,12 +32,12 @@
           "message": "OK"
         }
       },
-      "recorded_at": "Thu, 27 Apr 2023 20:35:01 GMT"
+      "recorded_at": "Thu, 29 May 2025 02:36:18 GMT"
     },
     {
       "request": {
         "body": {
-          "string": "{\"data\":{\"attributes\":{\"policy\":{\"tag_key\":\"testeditamonitorconfigurationpolicyreturnsunprocessableentityresponse1682627701\",\"tag_key_required\":false,\"valid_tag_values\":[\"prod\",\"staging\"]},\"policy_type\":\"tag\"},\"id\":\"00000000-0000-1234-0000-000000000000\",\"type\":\"monitor-config-policy\"}}",
+          "string": "{\"data\":{\"attributes\":{\"policy\":{\"tag_key\":\"testeditamonitorconfigurationpolicyreturnsunprocessableentityresponse1748486178\",\"tag_key_required\":false,\"valid_tag_values\":[\"prod\",\"staging\"]},\"policy_type\":\"tag\"},\"id\":\"00000000-0000-1234-0000-000000000000\",\"type\":\"monitor-config-policy\"}}",
           "encoding": null
         },
         "headers": {
@@ -49,7 +49,7 @@
           ]
         },
         "method": "patch",
-        "uri": "https://api.datadoghq.com/api/v2/monitor/policy/fc38f7f0-e53a-11ed-947f-da7ad0900002"
+        "uri": "https://api.datadoghq.com/api/v2/monitor/policy/f2f83512-b2c2-4dc4-a8db-c785cd818d6f"
       },
       "response": {
         "body": {
@@ -66,7 +66,7 @@
           "message": "Unprocessable Entity"
         }
       },
-      "recorded_at": "Thu, 27 Apr 2023 20:35:01 GMT"
+      "recorded_at": "Thu, 29 May 2025 02:36:18 GMT"
     },
     {
       "request": {
@@ -77,7 +77,7 @@
           ]
         },
         "method": "delete",
-        "uri": "https://api.datadoghq.com/api/v2/monitor/policy/fc38f7f0-e53a-11ed-947f-da7ad0900002"
+        "uri": "https://api.datadoghq.com/api/v2/monitor/policy/f2f83512-b2c2-4dc4-a8db-c785cd818d6f"
       },
       "response": {
         "body": {
@@ -94,7 +94,7 @@
           "message": "No Content"
         }
       },
-      "recorded_at": "Thu, 27 Apr 2023 20:35:01 GMT"
+      "recorded_at": "Thu, 29 May 2025 02:36:18 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"

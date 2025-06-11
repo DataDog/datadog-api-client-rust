@@ -3,7 +3,7 @@
     {
       "request": {
         "body": {
-          "string": "{\"data\":{\"attributes\":{\"filter\":{\"tags\":[\"test:test-create_a_monitor_notification_rule_returns_bad_request_response-1744280983\",\"host:abc\"]},\"name\":\"test rule\",\"recipients\":[\"@slack-test-channel\",\"@jira-test\"]},\"type\":\"monitor-notification-rule\"}}",
+          "string": "{\"data\":{\"attributes\":{\"filter\":{\"tags\":[\"test:test-create_a_monitor_notification_rule_returns_bad_request_response-1748486175\",\"host:abc\"]},\"name\":\"test rule\",\"recipients\":[\"@slack-test-channel\",\"@jira-test\"]},\"type\":\"monitor-notification-rule\"}}",
           "encoding": null
         },
         "headers": {
@@ -32,7 +32,7 @@
           "message": "Bad Request"
         }
       },
-      "recorded_at": "Thu, 10 Apr 2025 10:29:43 GMT"
+      "recorded_at": "Thu, 29 May 2025 02:36:15 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"
