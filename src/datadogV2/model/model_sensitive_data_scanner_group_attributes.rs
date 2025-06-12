@@ -26,6 +26,9 @@ pub struct SensitiveDataScannerGroupAttributes {
     /// List of products the scanning group applies.
     #[serde(rename = "product_list")]
     pub product_list: Option<Vec<crate::datadogV2::model::SensitiveDataScannerProduct>>,
+    /// List of sampling rates per product type.
+    #[serde(rename = "samplings")]
+    pub samplings: Option<Vec<crate::datadogV2::model::SensitiveDataScannerSamplings>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -41,6 +44,7 @@ impl SensitiveDataScannerGroupAttributes {
             is_enabled: None,
             name: None,
             product_list: None,
+            samplings: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -71,6 +75,14 @@ impl SensitiveDataScannerGroupAttributes {
         value: Vec<crate::datadogV2::model::SensitiveDataScannerProduct>,
     ) -> Self {
         self.product_list = Some(value);
+        self
+    }
+
+    pub fn samplings(
+        mut self,
+        value: Vec<crate::datadogV2::model::SensitiveDataScannerSamplings>,
+    ) -> Self {
+        self.samplings = Some(value);
         self
     }
 
@@ -113,6 +125,9 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerGroupAttributes {
                 let mut product_list: Option<
                     Vec<crate::datadogV2::model::SensitiveDataScannerProduct>,
                 > = None;
+                let mut samplings: Option<
+                    Vec<crate::datadogV2::model::SensitiveDataScannerSamplings>,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -153,6 +168,12 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerGroupAttributes {
                             product_list =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "samplings" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            samplings = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -167,6 +188,7 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerGroupAttributes {
                     is_enabled,
                     name,
                     product_list,
+                    samplings,
                     additional_properties,
                     _unparsed,
                 };
