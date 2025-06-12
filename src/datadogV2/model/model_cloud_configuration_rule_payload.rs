@@ -19,6 +19,12 @@ pub struct CloudConfigurationRulePayload {
     #[serde(rename = "complianceSignalOptions")]
     pub compliance_signal_options:
         crate::datadogV2::model::CloudConfigurationRuleComplianceSignalOptions,
+    /// Custom/Overridden message for generated signals (used in case of Default rule update).
+    #[serde(rename = "customMessage")]
+    pub custom_message: Option<String>,
+    /// Custom/Overridden name of the rule (used in case of Default rule update).
+    #[serde(rename = "customName")]
+    pub custom_name: Option<String>,
     /// Additional queries to filter matched events before they are processed.
     #[serde(rename = "filters")]
     pub filters: Option<Vec<crate::datadogV2::model::SecurityMonitoringFilter>>,
@@ -59,6 +65,8 @@ impl CloudConfigurationRulePayload {
         CloudConfigurationRulePayload {
             cases,
             compliance_signal_options,
+            custom_message: None,
+            custom_name: None,
             filters: None,
             is_enabled,
             message,
@@ -69,6 +77,16 @@ impl CloudConfigurationRulePayload {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn custom_message(mut self, value: String) -> Self {
+        self.custom_message = Some(value);
+        self
+    }
+
+    pub fn custom_name(mut self, value: String) -> Self {
+        self.custom_name = Some(value);
+        self
     }
 
     pub fn filters(
@@ -121,6 +139,8 @@ impl<'de> Deserialize<'de> for CloudConfigurationRulePayload {
                 let mut compliance_signal_options: Option<
                     crate::datadogV2::model::CloudConfigurationRuleComplianceSignalOptions,
                 > = None;
+                let mut custom_message: Option<String> = None;
+                let mut custom_name: Option<String> = None;
                 let mut filters: Option<Vec<crate::datadogV2::model::SecurityMonitoringFilter>> =
                     None;
                 let mut is_enabled: Option<bool> = None;
@@ -143,6 +163,20 @@ impl<'de> Deserialize<'de> for CloudConfigurationRulePayload {
                         }
                         "complianceSignalOptions" => {
                             compliance_signal_options =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "customMessage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            custom_message =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "customName" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            custom_name =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "filters" => {
@@ -201,6 +235,8 @@ impl<'de> Deserialize<'de> for CloudConfigurationRulePayload {
                 let content = CloudConfigurationRulePayload {
                     cases,
                     compliance_signal_options,
+                    custom_message,
+                    custom_name,
                     filters,
                     is_enabled,
                     message,
