@@ -14,6 +14,9 @@ pub struct CloudWorkloadSecurityAgentRuleAction {
     /// SECL expression used to target the container to apply the action on
     #[serde(rename = "filter")]
     pub filter: Option<String>,
+    /// An empty object indicating the hash action
+    #[serde(rename = "hash")]
+    pub hash: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// Kill system call applied on the container matching the rule
     #[serde(rename = "kill")]
     pub kill: Option<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleKill>,
@@ -34,6 +37,7 @@ impl CloudWorkloadSecurityAgentRuleAction {
     pub fn new() -> CloudWorkloadSecurityAgentRuleAction {
         CloudWorkloadSecurityAgentRuleAction {
             filter: None,
+            hash: None,
             kill: None,
             metadata: None,
             set: None,
@@ -44,6 +48,11 @@ impl CloudWorkloadSecurityAgentRuleAction {
 
     pub fn filter(mut self, value: String) -> Self {
         self.filter = Some(value);
+        self
+    }
+
+    pub fn hash(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
+        self.hash = Some(value);
         self
     }
 
@@ -104,6 +113,7 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleAction {
                 M: MapAccess<'a>,
             {
                 let mut filter: Option<String> = None;
+                let mut hash: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
                 let mut kill: Option<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleKill> =
                     None;
                 let mut metadata: Option<
@@ -125,6 +135,12 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleAction {
                                 continue;
                             }
                             filter = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "hash" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            hash = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "kill" => {
                             if v.is_null() {
@@ -154,6 +170,7 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleAction {
 
                 let content = CloudWorkloadSecurityAgentRuleAction {
                     filter,
+                    hash,
                     kill,
                     metadata,
                     set,
