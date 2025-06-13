@@ -1,0 +1,33 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "application/json"
+          ]
+        },
+        "method": "put",
+        "uri": "https://api.datadoghq.com/api/v2/actions/app_key_registrations/not_valid_app_key_id"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"status\":\"400\",\"title\":\"Invalid Parameter\",\"detail\":\"invalid parameter \\\"appKeyId\\\" in \\\"path\\\"; expected type \\\"uuid\\\"\"}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Fri, 13 Jun 2025 17:55:00 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
