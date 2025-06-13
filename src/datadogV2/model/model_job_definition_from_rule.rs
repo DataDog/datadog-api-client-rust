@@ -11,9 +11,6 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct JobDefinitionFromRule {
-    /// Index of the rule case applied by the job.
-    #[serde(rename = "caseIndex")]
-    pub case_index: i32,
     /// Starting time of data analyzed by the job.
     #[serde(rename = "from")]
     pub from: i64,
@@ -37,15 +34,8 @@ pub struct JobDefinitionFromRule {
 }
 
 impl JobDefinitionFromRule {
-    pub fn new(
-        case_index: i32,
-        from: i64,
-        id: String,
-        index: String,
-        to: i64,
-    ) -> JobDefinitionFromRule {
+    pub fn new(from: i64, id: String, index: String, to: i64) -> JobDefinitionFromRule {
         JobDefinitionFromRule {
-            case_index,
             from,
             id,
             index,
@@ -87,7 +77,6 @@ impl<'de> Deserialize<'de> for JobDefinitionFromRule {
             where
                 M: MapAccess<'a>,
             {
-                let mut case_index: Option<i32> = None;
                 let mut from: Option<i64> = None;
                 let mut id: Option<String> = None;
                 let mut index: Option<String> = None;
@@ -101,9 +90,6 @@ impl<'de> Deserialize<'de> for JobDefinitionFromRule {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "caseIndex" => {
-                            case_index = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "from" => {
                             from = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -130,14 +116,12 @@ impl<'de> Deserialize<'de> for JobDefinitionFromRule {
                         }
                     }
                 }
-                let case_index = case_index.ok_or_else(|| M::Error::missing_field("case_index"))?;
                 let from = from.ok_or_else(|| M::Error::missing_field("from"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let index = index.ok_or_else(|| M::Error::missing_field("index"))?;
                 let to = to.ok_or_else(|| M::Error::missing_field("to"))?;
 
                 let content = JobDefinitionFromRule {
-                    case_index,
                     from,
                     id,
                     index,
