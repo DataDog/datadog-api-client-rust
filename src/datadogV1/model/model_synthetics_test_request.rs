@@ -47,12 +47,15 @@ pub struct SyntheticsTestRequest {
     /// DNS server port to use for DNS tests.
     #[serde(rename = "dnsServerPort")]
     pub dns_server_port: Option<String>,
-    /// Files to be used as part of the request in the test.
+    /// Files to be used as part of the request in the test. Only valid if `bodyType` is `multipart/form-data`.
     #[serde(rename = "files")]
     pub files: Option<Vec<crate::datadogV1::model::SyntheticsTestRequestBodyFile>>,
     /// Specifies whether or not the request follows redirects.
     #[serde(rename = "follow_redirects")]
     pub follow_redirects: Option<bool>,
+    /// Form to be used as part of the request in the test. Only valid if `bodyType` is `multipart/form-data`.
+    #[serde(rename = "form")]
+    pub form: Option<std::collections::BTreeMap<String, String>>,
     /// Headers to include when performing the test.
     #[serde(rename = "headers")]
     pub headers: Option<std::collections::BTreeMap<String, String>>,
@@ -133,6 +136,7 @@ impl SyntheticsTestRequest {
             dns_server_port: None,
             files: None,
             follow_redirects: None,
+            form: None,
             headers: None,
             host: None,
             http_version: None,
@@ -232,6 +236,11 @@ impl SyntheticsTestRequest {
 
     pub fn follow_redirects(mut self, value: bool) -> Self {
         self.follow_redirects = Some(value);
+        self
+    }
+
+    pub fn form(mut self, value: std::collections::BTreeMap<String, String>) -> Self {
+        self.form = Some(value);
         self
     }
 
@@ -378,6 +387,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                 let mut files: Option<Vec<crate::datadogV1::model::SyntheticsTestRequestBodyFile>> =
                     None;
                 let mut follow_redirects: Option<bool> = None;
+                let mut form: Option<std::collections::BTreeMap<String, String>> = None;
                 let mut headers: Option<std::collections::BTreeMap<String, String>> = None;
                 let mut host: Option<String> = None;
                 let mut http_version: Option<
@@ -521,6 +531,12 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                             }
                             follow_redirects =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "form" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            form = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "headers" => {
                             if v.is_null() {
@@ -675,6 +691,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                     dns_server_port,
                     files,
                     follow_redirects,
+                    form,
                     headers,
                     host,
                     http_version,
