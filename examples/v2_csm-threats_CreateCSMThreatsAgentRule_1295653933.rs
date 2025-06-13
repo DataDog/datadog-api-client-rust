@@ -7,6 +7,7 @@ use datadog_api_client::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateAt
 use datadog_api_client::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateData;
 use datadog_api_client::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateRequest;
 use datadog_api_client::datadogV2::model::CloudWorkloadSecurityAgentRuleType;
+use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -18,12 +19,15 @@ async fn main() {
                 r#"exec.file.name == "sh""#.to_string(),
                 "examplecsmthreat".to_string(),
             )
-            .actions(Some(vec![CloudWorkloadSecurityAgentRuleAction::new().set(
-                CloudWorkloadSecurityAgentRuleActionSet::new()
-                    .name("test_set".to_string())
-                    .scope("process".to_string())
-                    .value("test_value".to_string()),
-            )]))
+            .actions(Some(vec![
+                CloudWorkloadSecurityAgentRuleAction::new().set(
+                    CloudWorkloadSecurityAgentRuleActionSet::new()
+                        .name("test_set".to_string())
+                        .scope("process".to_string())
+                        .value("test_value".to_string()),
+                ),
+                CloudWorkloadSecurityAgentRuleAction::new().hash(BTreeMap::from([])),
+            ]))
             .description("My Agent rule with set action".to_string())
             .enabled(true)
             .filters(vec![])
