@@ -1,5 +1,26 @@
 # CHANGELOG
 
+## 0.12.0/2025-06-16
+
+### Changed
+* Add billing read permission [#702](https://github.com/DataDog/datadog-api-client-rust/pull/702)
+* Update DORA endpoints [#682](https://github.com/DataDog/datadog-api-client-rust/pull/682)
+
+### Added
+* Add `form` field for `multipart/form-data` HTTP API tests [#698](https://github.com/DataDog/datadog-api-client-rust/pull/698)
+* Add new endpoint to upsert/list/delete custom kinds [#692](https://github.com/DataDog/datadog-api-client-rust/pull/692)
+* Add spec for team on-call endpoint [#690](https://github.com/DataDog/datadog-api-client-rust/pull/690)
+* Add support for Datadog Events as a data source for rules [#670](https://github.com/DataDog/datadog-api-client-rust/pull/670)
+* Add public APIs to search DORA events [#668](https://github.com/DataDog/datadog-api-client-rust/pull/668)
+* Add support for all subtypes in multistep steps [#665](https://github.com/DataDog/datadog-api-client-rust/pull/665)
+* Added new optional field definition to include more detail in findings for '/api/v2/posture_management/findings'  [#663](https://github.com/DataDog/datadog-api-client-rust/pull/663)
+* Exposing set action on Terraform V2 [#662](https://github.com/DataDog/datadog-api-client-rust/pull/662)
+* Add monitor draft status field [#661](https://github.com/DataDog/datadog-api-client-rust/pull/661)
+
+### Fixed
+* add `include` parameter to On-Call team rules test [#675](https://github.com/DataDog/datadog-api-client-rust/pull/675)
+* fix On-Call spec [#667](https://github.com/DataDog/datadog-api-client-rust/pull/667)
+
 ## 0.11.0/2025-05-28
 
 ### Fixed
