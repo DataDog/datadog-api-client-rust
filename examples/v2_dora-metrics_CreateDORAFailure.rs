@@ -11,6 +11,10 @@ use datadog_api_client::datadogV2::model::DORAGitInfo;
 async fn main() {
     let body = DORAFailureRequest::new(DORAFailureRequestData::new(
         DORAFailureRequestAttributes::new(1693491974000000000)
+            .custom_tags(Some(vec![
+                "language:java".to_string(),
+                "department:engineering".to_string(),
+            ]))
             .env("staging".to_string())
             .finished_at(1693491984000000000)
             .git(DORAGitInfo::new(
