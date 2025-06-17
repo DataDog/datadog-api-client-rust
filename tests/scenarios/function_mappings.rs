@@ -3544,6 +3544,19 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         .insert("v2.CreateTeam".into(), test_v2_create_team);
     world
         .function_mappings
+        .insert("v2.ListMemberTeams".into(), test_v2_list_member_teams);
+    world.function_mappings.insert(
+        "v2.ListMemberTeamsWithPagination".into(),
+        test_v2_list_member_teams_with_pagination,
+    );
+    world
+        .function_mappings
+        .insert("v2.AddMemberTeam".into(), test_v2_add_member_team);
+    world
+        .function_mappings
+        .insert("v2.RemoveMemberTeam".into(), test_v2_remove_member_team);
+    world
+        .function_mappings
         .insert("v2.DeleteTeam".into(), test_v2_delete_team);
     world
         .function_mappings
@@ -27277,6 +27290,152 @@ fn test_v2_create_team(world: &mut DatadogWorld, _parameters: &HashMap<String, V
             };
         }
     };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_member_teams(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_teams
+        .as_ref()
+        .expect("api instance not found");
+    let super_team_id =
+        serde_json::from_value(_parameters.get("super_team_id").unwrap().clone()).unwrap();
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let fields_team = _parameters
+        .get("fields[team]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_teams::ListMemberTeamsOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    params.fields_team = fields_team;
+    let response = match block_on(api.list_member_teams_with_http_info(super_team_id, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+fn test_v2_list_member_teams_with_pagination(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_teams
+        .as_ref()
+        .expect("api instance not found");
+    let super_team_id =
+        serde_json::from_value(_parameters.get("super_team_id").unwrap().clone()).unwrap();
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let fields_team = _parameters
+        .get("fields[team]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_teams::ListMemberTeamsOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    params.fields_team = fields_team;
+    let response = api.list_member_teams_with_pagination(super_team_id, params);
+    let mut result = Vec::new();
+
+    block_on(async {
+        pin_mut!(response);
+
+        while let Some(resp) = response.next().await {
+            match resp {
+                Ok(response) => {
+                    result.push(response);
+                }
+                Err(error) => {
+                    return match error {
+                        Error::ResponseError(e) => {
+                            if let Some(entity) = e.entity {
+                                world.response.object = serde_json::to_value(entity).unwrap();
+                            }
+                        }
+                        _ => panic!("error parsing response: {}", error),
+                    };
+                }
+            }
+        }
+    });
+    world.response.object = serde_json::to_value(result).unwrap();
+    world.response.code = 200;
+}
+
+fn test_v2_add_member_team(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_teams
+        .as_ref()
+        .expect("api instance not found");
+    let super_team_id =
+        serde_json::from_value(_parameters.get("super_team_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.add_member_team_with_http_info(super_team_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_remove_member_team(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_teams
+        .as_ref()
+        .expect("api instance not found");
+    let super_team_id =
+        serde_json::from_value(_parameters.get("super_team_id").unwrap().clone()).unwrap();
+    let member_team_id =
+        serde_json::from_value(_parameters.get("member_team_id").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.remove_member_team_with_http_info(super_team_id, member_team_id)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
