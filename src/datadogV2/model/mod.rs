@@ -4332,6 +4332,8 @@ pub mod model_sensitive_data_scanner_filter;
 pub use self::model_sensitive_data_scanner_filter::SensitiveDataScannerFilter;
 pub mod model_sensitive_data_scanner_product;
 pub use self::model_sensitive_data_scanner_product::SensitiveDataScannerProduct;
+pub mod model_sensitive_data_scanner_samplings;
+pub use self::model_sensitive_data_scanner_samplings::SensitiveDataScannerSamplings;
 pub mod model_sensitive_data_scanner_group_relationships;
 pub use self::model_sensitive_data_scanner_group_relationships::SensitiveDataScannerGroupRelationships;
 pub mod model_sensitive_data_scanner_configuration_data;
