@@ -3,7 +3,7 @@
     {
       "request": {
         "body": {
-          "string": "{\"data\":{\"attributes\":{\"description\":\"My agent policy\",\"enabled\":true,\"hostTags\":[\"env:staging\"],\"name\":\"testdeleteaworkloadprotectionagentrulereturnsokresponse1748341502\"},\"type\":\"policy\"}}",
+          "string": "{\"data\":{\"attributes\":{\"description\":\"My agent policy\",\"enabled\":true,\"hostTags\":[\"env:staging\"],\"name\":\"testdeleteaworkloadprotectionagentrulereturnsokresponse1749827803\"},\"type\":\"policy\"}}",
           "encoding": null
         },
         "headers": {
@@ -19,7 +19,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"id\":\"ney-zeu-tex\",\"type\":\"policy\",\"attributes\":{\"blockingRulesCount\":0,\"datadogManaged\":false,\"description\":\"My agent policy\",\"disabledRulesCount\":1,\"enabled\":true,\"hostTags\":[\"env:staging\"],\"monitoringRulesCount\":225,\"name\":\"testdeleteaworkloadprotectionagentrulereturnsokresponse1748341502\",\"policyVersion\":\"1\",\"priority\":1000000011,\"ruleCount\":226,\"updateDate\":1748341502642,\"updater\":{\"name\":\"frog\",\"handle\":\"frog@datadoghq.com\"}}}}",
+          "string": "{\"data\":{\"id\":\"tn0-tjy-vwh\",\"type\":\"policy\",\"attributes\":{\"blockingRulesCount\":0,\"datadogManaged\":false,\"description\":\"My agent policy\",\"disabledRulesCount\":1,\"enabled\":true,\"hostTags\":[\"env:staging\"],\"monitoringRulesCount\":225,\"name\":\"testdeleteaworkloadprotectionagentrulereturnsokresponse1749827803\",\"policyVersion\":\"1\",\"priority\":1000000013,\"ruleCount\":226,\"updateDate\":1749827803539,\"updater\":{\"name\":\"frog\",\"handle\":\"frog@datadoghq.com\"}}}}",
           "encoding": null
         },
         "headers": {
@@ -32,12 +32,12 @@
           "message": "OK"
         }
       },
-      "recorded_at": "Tue, 27 May 2025 10:25:02 GMT"
+      "recorded_at": "Fri, 13 Jun 2025 15:16:43 GMT"
     },
     {
       "request": {
         "body": {
-          "string": "{\"data\":{\"attributes\":{\"actions\":[{\"set\":{\"name\":\"test_set\",\"scope\":\"process\",\"value\":\"test_value\"}}],\"description\":\"My Agent rule\",\"enabled\":true,\"expression\":\"exec.file.name == \\\"sh\\\"\",\"name\":\"testdeleteaworkloadprotectionagentrulereturnsokresponse1748341502\",\"policy_id\":\"ney-zeu-tex\",\"product_tags\":[\"security:attack\",\"technique:T1059\"]},\"type\":\"agent_rule\"}}",
+          "string": "{\"data\":{\"attributes\":{\"actions\":[{\"set\":{\"name\":\"test_set\",\"scope\":\"process\",\"value\":\"test_value\"}},{\"hash\":{}}],\"description\":\"My Agent rule\",\"enabled\":true,\"expression\":\"exec.file.name == \\\"sh\\\"\",\"name\":\"testdeleteaworkloadprotectionagentrulereturnsokresponse1749827803\",\"policy_id\":\"tn0-tjy-vwh\",\"product_tags\":[\"security:attack\",\"technique:T1059\"]},\"type\":\"agent_rule\"}}",
           "encoding": null
         },
         "headers": {
@@ -53,7 +53,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"id\":\"gys-bzk-zs4\",\"type\":\"agent_rule\",\"attributes\":{\"actions\":[{\"set\":{\"name\":\"test_set\",\"value\":\"test_value\",\"scope\":\"process\"},\"disabled\":false}],\"category\":\"Process Activity\",\"creationDate\":1748341503254,\"creator\":{\"name\":\"frog\",\"handle\":\"frog@datadoghq.com\"},\"defaultRule\":false,\"description\":\"My Agent rule\",\"enabled\":true,\"expression\":\"exec.file.name == \\\"sh\\\"\",\"filters\":[\"os == \\\"linux\\\"\"],\"monitoring\":[\"ney-zeu-tex\"],\"name\":\"testdeleteaworkloadprotectionagentrulereturnsokresponse1748341502\",\"product_tags\":[\"security:attack\",\"technique:T1059\"],\"updateDate\":1748341503254,\"updater\":{\"name\":\"frog\",\"handle\":\"frog@datadoghq.com\"}}}}",
+          "string": "{\"data\":{\"id\":\"hm0-n7p-hq7\",\"type\":\"agent_rule\",\"attributes\":{\"actions\":[{\"set\":{\"name\":\"test_set\",\"value\":\"test_value\",\"scope\":\"process\"},\"disabled\":false},{\"hash\":{},\"disabled\":false}],\"category\":\"Process Activity\",\"creationDate\":1749827804150,\"creator\":{\"name\":\"frog\",\"handle\":\"frog@datadoghq.com\"},\"defaultRule\":false,\"description\":\"My Agent rule\",\"enabled\":true,\"expression\":\"exec.file.name == \\\"sh\\\"\",\"filters\":[\"os == \\\"linux\\\"\"],\"monitoring\":[\"tn0-tjy-vwh\"],\"name\":\"testdeleteaworkloadprotectionagentrulereturnsokresponse1749827803\",\"product_tags\":[\"security:attack\",\"technique:T1059\"],\"updateDate\":1749827804150,\"updater\":{\"name\":\"frog\",\"handle\":\"frog@datadoghq.com\"}}}}",
           "encoding": null
         },
         "headers": {
@@ -66,7 +66,7 @@
           "message": "OK"
         }
       },
-      "recorded_at": "Tue, 27 May 2025 10:25:02 GMT"
+      "recorded_at": "Fri, 13 Jun 2025 15:16:43 GMT"
     },
     {
       "request": {
@@ -77,7 +77,7 @@
           ]
         },
         "method": "delete",
-        "uri": "https://api.datadoghq.com/api/v2/remote_config/products/cws/agent_rules/gys-bzk-zs4?policy_id=ney-zeu-tex"
+        "uri": "https://api.datadoghq.com/api/v2/remote_config/products/cws/agent_rules/hm0-n7p-hq7?policy_id=tn0-tjy-vwh"
       },
       "response": {
         "body": {
@@ -94,7 +94,7 @@
           "message": "No Content"
         }
       },
-      "recorded_at": "Tue, 27 May 2025 10:25:02 GMT"
+      "recorded_at": "Fri, 13 Jun 2025 15:16:43 GMT"
     },
     {
       "request": {
@@ -105,7 +105,7 @@
           ]
         },
         "method": "delete",
-        "uri": "https://api.datadoghq.com/api/v2/remote_config/products/cws/agent_rules/gys-bzk-zs4"
+        "uri": "https://api.datadoghq.com/api/v2/remote_config/products/cws/agent_rules/hm0-n7p-hq7"
       },
       "response": {
         "body": {
@@ -122,7 +122,7 @@
           "message": "Not Found"
         }
       },
-      "recorded_at": "Tue, 27 May 2025 10:25:02 GMT"
+      "recorded_at": "Fri, 13 Jun 2025 15:16:43 GMT"
     },
     {
       "request": {
@@ -133,7 +133,7 @@
           ]
         },
         "method": "delete",
-        "uri": "https://api.datadoghq.com/api/v2/remote_config/products/cws/policy/ney-zeu-tex"
+        "uri": "https://api.datadoghq.com/api/v2/remote_config/products/cws/policy/tn0-tjy-vwh"
       },
       "response": {
         "body": {
@@ -150,7 +150,7 @@
           "message": "No Content"
         }
       },
-      "recorded_at": "Tue, 27 May 2025 10:25:02 GMT"
+      "recorded_at": "Fri, 13 Jun 2025 15:16:43 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"
