@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SecurityMonitoringThirdPartyRuleCase {
+    /// Severity of the Security Signal.
+    #[serde(rename = "customStatus")]
+    pub custom_status: Option<crate::datadogV2::model::SecurityMonitoringRuleSeverity>,
     /// Name of the case.
     #[serde(rename = "name")]
     pub name: Option<String>,
@@ -33,6 +36,7 @@ pub struct SecurityMonitoringThirdPartyRuleCase {
 impl SecurityMonitoringThirdPartyRuleCase {
     pub fn new() -> SecurityMonitoringThirdPartyRuleCase {
         SecurityMonitoringThirdPartyRuleCase {
+            custom_status: None,
             name: None,
             notifications: None,
             query: None,
@@ -40,6 +44,14 @@ impl SecurityMonitoringThirdPartyRuleCase {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn custom_status(
+        mut self,
+        value: crate::datadogV2::model::SecurityMonitoringRuleSeverity,
+    ) -> Self {
+        self.custom_status = Some(value);
+        self
     }
 
     pub fn name(mut self, value: String) -> Self {
@@ -97,6 +109,9 @@ impl<'de> Deserialize<'de> for SecurityMonitoringThirdPartyRuleCase {
             where
                 M: MapAccess<'a>,
             {
+                let mut custom_status: Option<
+                    crate::datadogV2::model::SecurityMonitoringRuleSeverity,
+                > = None;
                 let mut name: Option<String> = None;
                 let mut notifications: Option<Vec<String>> = None;
                 let mut query: Option<String> = None;
@@ -110,6 +125,21 @@ impl<'de> Deserialize<'de> for SecurityMonitoringThirdPartyRuleCase {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "customStatus" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            custom_status =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _custom_status) = custom_status {
+                                match _custom_status {
+                                    crate::datadogV2::model::SecurityMonitoringRuleSeverity::UnparsedObject(_custom_status) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
                         "name" => {
                             if v.is_null() {
                                 continue;
@@ -152,6 +182,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringThirdPartyRuleCase {
                 }
 
                 let content = SecurityMonitoringThirdPartyRuleCase {
+                    custom_status,
                     name,
                     notifications,
                     query,

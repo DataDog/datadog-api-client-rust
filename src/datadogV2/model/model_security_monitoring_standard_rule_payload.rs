@@ -14,6 +14,12 @@ pub struct SecurityMonitoringStandardRulePayload {
     /// Cases for generating signals.
     #[serde(rename = "cases")]
     pub cases: Vec<crate::datadogV2::model::SecurityMonitoringRuleCaseCreate>,
+    /// Custom/Overridden message for generated signals (used in case of Default rule update).
+    #[serde(rename = "customMessage")]
+    pub custom_message: Option<String>,
+    /// Custom/Overridden name of the rule (used in case of Default rule update).
+    #[serde(rename = "customName")]
+    pub custom_name: Option<String>,
     /// Additional queries to filter matched events before they are processed. This field is deprecated for log detection, signal correlation, and workload security rules.
     #[serde(rename = "filters")]
     pub filters: Option<Vec<crate::datadogV2::model::SecurityMonitoringFilter>>,
@@ -69,6 +75,8 @@ impl SecurityMonitoringStandardRulePayload {
     ) -> SecurityMonitoringStandardRulePayload {
         SecurityMonitoringStandardRulePayload {
             cases,
+            custom_message: None,
+            custom_name: None,
             filters: None,
             group_signals_by: None,
             has_extended_title: None,
@@ -84,6 +92,16 @@ impl SecurityMonitoringStandardRulePayload {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn custom_message(mut self, value: String) -> Self {
+        self.custom_message = Some(value);
+        self
+    }
+
+    pub fn custom_name(mut self, value: String) -> Self {
+        self.custom_name = Some(value);
+        self
     }
 
     pub fn filters(
@@ -162,6 +180,8 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRulePayload {
                 let mut cases: Option<
                     Vec<crate::datadogV2::model::SecurityMonitoringRuleCaseCreate>,
                 > = None;
+                let mut custom_message: Option<String> = None;
+                let mut custom_name: Option<String> = None;
                 let mut filters: Option<Vec<crate::datadogV2::model::SecurityMonitoringFilter>> =
                     None;
                 let mut group_signals_by: Option<Vec<String>> = None;
@@ -193,6 +213,20 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRulePayload {
                     match k.as_str() {
                         "cases" => {
                             cases = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "customMessage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            custom_message =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "customName" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            custom_name =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "filters" => {
                             if v.is_null() {
@@ -279,6 +313,8 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRulePayload {
 
                 let content = SecurityMonitoringStandardRulePayload {
                     cases,
+                    custom_message,
+                    custom_name,
                     filters,
                     group_signals_by,
                     has_extended_title,

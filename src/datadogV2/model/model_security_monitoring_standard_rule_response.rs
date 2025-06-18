@@ -24,6 +24,12 @@ pub struct SecurityMonitoringStandardRuleResponse {
     /// User ID of the user who created the rule.
     #[serde(rename = "creationAuthorId")]
     pub creation_author_id: Option<i64>,
+    /// Custom/Overridden message for generated signals (used in case of Default rule update).
+    #[serde(rename = "customMessage")]
+    pub custom_message: Option<String>,
+    /// Custom/Overridden name of the rule (used in case of Default rule update).
+    #[serde(rename = "customName")]
+    pub custom_name: Option<String>,
     /// Default Tags for default rules (included in tags)
     #[serde(rename = "defaultTags")]
     pub default_tags: Option<Vec<String>>,
@@ -99,6 +105,8 @@ impl SecurityMonitoringStandardRuleResponse {
             compliance_signal_options: None,
             created_at: None,
             creation_author_id: None,
+            custom_message: None,
+            custom_name: None,
             default_tags: None,
             deprecation_date: None,
             filters: None,
@@ -147,6 +155,16 @@ impl SecurityMonitoringStandardRuleResponse {
 
     pub fn creation_author_id(mut self, value: i64) -> Self {
         self.creation_author_id = Some(value);
+        self
+    }
+
+    pub fn custom_message(mut self, value: String) -> Self {
+        self.custom_message = Some(value);
+        self
+    }
+
+    pub fn custom_name(mut self, value: String) -> Self {
+        self.custom_name = Some(value);
         self
     }
 
@@ -304,6 +322,8 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleResponse {
                 > = None;
                 let mut created_at: Option<i64> = None;
                 let mut creation_author_id: Option<i64> = None;
+                let mut custom_message: Option<String> = None;
+                let mut custom_name: Option<String> = None;
                 let mut default_tags: Option<Vec<String>> = None;
                 let mut deprecation_date: Option<i64> = None;
                 let mut filters: Option<Vec<crate::datadogV2::model::SecurityMonitoringFilter>> =
@@ -365,6 +385,20 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleResponse {
                                 continue;
                             }
                             creation_author_id =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "customMessage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            custom_message =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "customName" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            custom_name =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "defaultTags" => {
@@ -515,6 +549,8 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleResponse {
                     compliance_signal_options,
                     created_at,
                     creation_author_id,
+                    custom_message,
+                    custom_name,
                     default_tags,
                     deprecation_date,
                     filters,
