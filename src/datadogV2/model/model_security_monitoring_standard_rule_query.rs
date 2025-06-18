@@ -14,6 +14,9 @@ pub struct SecurityMonitoringStandardRuleQuery {
     /// The aggregation type.
     #[serde(rename = "aggregation")]
     pub aggregation: Option<crate::datadogV2::model::SecurityMonitoringRuleQueryAggregation>,
+    /// Query extension to append to the logs query.
+    #[serde(rename = "customQueryExtension")]
+    pub custom_query_extension: Option<String>,
     /// Source of events, either logs, audit trail, or Datadog events.
     #[serde(rename = "dataSource")]
     pub data_source: Option<crate::datadogV2::model::SecurityMonitoringStandardDataSource>,
@@ -52,6 +55,7 @@ impl SecurityMonitoringStandardRuleQuery {
         #[allow(deprecated)]
         SecurityMonitoringStandardRuleQuery {
             aggregation: None,
+            custom_query_extension: None,
             data_source: None,
             distinct_fields: None,
             group_by_fields: None,
@@ -71,6 +75,12 @@ impl SecurityMonitoringStandardRuleQuery {
         value: crate::datadogV2::model::SecurityMonitoringRuleQueryAggregation,
     ) -> Self {
         self.aggregation = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn custom_query_extension(mut self, value: String) -> Self {
+        self.custom_query_extension = Some(value);
         self
     }
 
@@ -160,6 +170,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleQuery {
                 let mut aggregation: Option<
                     crate::datadogV2::model::SecurityMonitoringRuleQueryAggregation,
                 > = None;
+                let mut custom_query_extension: Option<String> = None;
                 let mut data_source: Option<
                     crate::datadogV2::model::SecurityMonitoringStandardDataSource,
                 > = None;
@@ -192,6 +203,13 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleQuery {
                                     _ => {}
                                 }
                             }
+                        }
+                        "customQueryExtension" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            custom_query_extension =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "dataSource" => {
                             if v.is_null() {
@@ -264,6 +282,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleQuery {
                 #[allow(deprecated)]
                 let content = SecurityMonitoringStandardRuleQuery {
                     aggregation,
+                    custom_query_extension,
                     data_source,
                     distinct_fields,
                     group_by_fields,
