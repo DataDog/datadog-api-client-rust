@@ -6,19 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Object representing the entity which made the change. Optional field but if provided should include `type` and `name`.
+/// The entity that made the change. Optional, if provided it must include `type` and `name`.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ChangeEventCustomAttributesAuthor {
-    /// Author's name. Limited to 128 characters.
+    /// The name of the user or system that made the change. Limited to 128 characters.
     #[serde(rename = "name")]
     pub name: String,
     /// Author's type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ChangeEventCustomAttributesAuthorType,
-    #[serde(flatten)]
-    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -32,17 +30,8 @@ impl ChangeEventCustomAttributesAuthor {
         ChangeEventCustomAttributesAuthor {
             name,
             type_,
-            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
-        self.additional_properties = value;
-        self
     }
 }
 
@@ -67,10 +56,6 @@ impl<'de> Deserialize<'de> for ChangeEventCustomAttributesAuthor {
                 let mut type_: Option<
                     crate::datadogV2::model::ChangeEventCustomAttributesAuthorType,
                 > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -90,9 +75,9 @@ impl<'de> Deserialize<'de> for ChangeEventCustomAttributesAuthor {
                             }
                         }
                         &_ => {
-                            if let Ok(value) = serde_json::from_value(v.clone()) {
-                                additional_properties.insert(k, value);
-                            }
+                            return Err(serde::de::Error::custom(
+                                "Additional properties not allowed",
+                            ));
                         }
                     }
                 }
@@ -102,7 +87,6 @@ impl<'de> Deserialize<'de> for ChangeEventCustomAttributesAuthor {
                 let content = ChangeEventCustomAttributesAuthor {
                     name,
                     type_,
-                    additional_properties,
                     _unparsed,
                 };
 

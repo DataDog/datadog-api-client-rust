@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Object containing an event response.
+/// Event object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EventCreateResponse {
-    /// JSON object containing all events attributes and their associated values.
+    /// Event attributes.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::EventCreateResponseAttributes>,
-    /// Event type
+    /// Entity type.
     #[serde(rename = "type")]
     pub type_: Option<String>,
     #[serde(flatten)]

@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// JSON object for category-specific attributes.
+/// Links to the event.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct EventCreateResponseAttributesAttributes {
-    /// JSON object of event system attributes.
-    #[serde(rename = "evt")]
-    pub evt: Option<crate::datadogV2::model::EventCreateResponseAttributesAttributesEvt>,
+pub struct EventCreateResponsePayloadLinks {
+    /// The URL of the event. This link is only functional when using the default subdomain.
+    #[serde(rename = "self")]
+    pub self_: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,20 +21,17 @@ pub struct EventCreateResponseAttributesAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl EventCreateResponseAttributesAttributes {
-    pub fn new() -> EventCreateResponseAttributesAttributes {
-        EventCreateResponseAttributesAttributes {
-            evt: None,
+impl EventCreateResponsePayloadLinks {
+    pub fn new() -> EventCreateResponsePayloadLinks {
+        EventCreateResponsePayloadLinks {
+            self_: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn evt(
-        mut self,
-        value: crate::datadogV2::model::EventCreateResponseAttributesAttributesEvt,
-    ) -> Self {
-        self.evt = Some(value);
+    pub fn self_(mut self, value: String) -> Self {
+        self.self_ = Some(value);
         self
     }
 
@@ -47,20 +44,20 @@ impl EventCreateResponseAttributesAttributes {
     }
 }
 
-impl Default for EventCreateResponseAttributesAttributes {
+impl Default for EventCreateResponsePayloadLinks {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for EventCreateResponseAttributesAttributes {
+impl<'de> Deserialize<'de> for EventCreateResponsePayloadLinks {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct EventCreateResponseAttributesAttributesVisitor;
-        impl<'a> Visitor<'a> for EventCreateResponseAttributesAttributesVisitor {
-            type Value = EventCreateResponseAttributesAttributes;
+        struct EventCreateResponsePayloadLinksVisitor;
+        impl<'a> Visitor<'a> for EventCreateResponsePayloadLinksVisitor {
+            type Value = EventCreateResponsePayloadLinks;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -70,9 +67,7 @@ impl<'de> Deserialize<'de> for EventCreateResponseAttributesAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut evt: Option<
-                    crate::datadogV2::model::EventCreateResponseAttributesAttributesEvt,
-                > = None;
+                let mut self_: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -81,11 +76,11 @@ impl<'de> Deserialize<'de> for EventCreateResponseAttributesAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "evt" => {
+                        "self" => {
                             if v.is_null() {
                                 continue;
                             }
-                            evt = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            self_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -95,8 +90,8 @@ impl<'de> Deserialize<'de> for EventCreateResponseAttributesAttributes {
                     }
                 }
 
-                let content = EventCreateResponseAttributesAttributes {
-                    evt,
+                let content = EventCreateResponsePayloadLinks {
+                    self_,
                     additional_properties,
                     _unparsed,
                 };
@@ -105,6 +100,6 @@ impl<'de> Deserialize<'de> for EventCreateResponseAttributesAttributes {
             }
         }
 
-        deserializer.deserialize_any(EventCreateResponseAttributesAttributesVisitor)
+        deserializer.deserialize_any(EventCreateResponsePayloadLinksVisitor)
     }
 }
