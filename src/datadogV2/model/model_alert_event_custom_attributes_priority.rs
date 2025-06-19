@@ -6,23 +6,29 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum EventCategory {
-    CHANGE,
-    ALERT,
+pub enum AlertEventCustomAttributesPriority {
+    PRIORITY_ONE,
+    PRIORITY_TWO,
+    PRIORITY_THREE,
+    PRIORITY_FOUR,
+    PRIORITY_FIVE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for EventCategory {
+impl ToString for AlertEventCustomAttributesPriority {
     fn to_string(&self) -> String {
         match self {
-            Self::CHANGE => String::from("change"),
-            Self::ALERT => String::from("alert"),
+            Self::PRIORITY_ONE => String::from("1"),
+            Self::PRIORITY_TWO => String::from("2"),
+            Self::PRIORITY_THREE => String::from("3"),
+            Self::PRIORITY_FOUR => String::from("4"),
+            Self::PRIORITY_FIVE => String::from("5"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for EventCategory {
+impl Serialize for AlertEventCustomAttributesPriority {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -34,15 +40,18 @@ impl Serialize for EventCategory {
     }
 }
 
-impl<'de> Deserialize<'de> for EventCategory {
+impl<'de> Deserialize<'de> for AlertEventCustomAttributesPriority {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "change" => Self::CHANGE,
-            "alert" => Self::ALERT,
+            "1" => Self::PRIORITY_ONE,
+            "2" => Self::PRIORITY_TWO,
+            "3" => Self::PRIORITY_THREE,
+            "4" => Self::PRIORITY_FOUR,
+            "5" => Self::PRIORITY_FIVE,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
