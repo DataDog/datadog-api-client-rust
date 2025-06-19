@@ -7,6 +7,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SecurityMonitoringRuleTypeCreate {
+    API_SECURITY,
     APPLICATION_SECURITY,
     LOG_DETECTION,
     WORKLOAD_SECURITY,
@@ -16,6 +17,7 @@ pub enum SecurityMonitoringRuleTypeCreate {
 impl ToString for SecurityMonitoringRuleTypeCreate {
     fn to_string(&self) -> String {
         match self {
+            Self::API_SECURITY => String::from("api_security"),
             Self::APPLICATION_SECURITY => String::from("application_security"),
             Self::LOG_DETECTION => String::from("log_detection"),
             Self::WORKLOAD_SECURITY => String::from("workload_security"),
@@ -43,6 +45,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleTypeCreate {
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
+            "api_security" => Self::API_SECURITY,
             "application_security" => Self::APPLICATION_SECURITY,
             "log_detection" => Self::LOG_DETECTION,
             "workload_security" => Self::WORKLOAD_SECURITY,
