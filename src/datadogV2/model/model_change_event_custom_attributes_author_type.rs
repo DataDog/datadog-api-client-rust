@@ -9,6 +9,8 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum ChangeEventCustomAttributesAuthorType {
     USER,
     SYSTEM,
+    API,
+    AUTOMATION,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -17,6 +19,8 @@ impl ToString for ChangeEventCustomAttributesAuthorType {
         match self {
             Self::USER => String::from("user"),
             Self::SYSTEM => String::from("system"),
+            Self::API => String::from("api"),
+            Self::AUTOMATION => String::from("automation"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -43,6 +47,8 @@ impl<'de> Deserialize<'de> for ChangeEventCustomAttributesAuthorType {
         Ok(match s.as_str() {
             "user" => Self::USER,
             "system" => Self::SYSTEM,
+            "api" => Self::API,
+            "automation" => Self::AUTOMATION,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
