@@ -39,8 +39,10 @@ async fn main() {
             vec![],
             SyntheticsTestRequest::new()
                 .basic_auth(SyntheticsBasicAuth::SyntheticsBasicAuthWeb(Box::new(
-                    SyntheticsBasicAuthWeb::new("PaSSw0RD!".to_string(), "my_username".to_string())
-                        .type_(SyntheticsBasicAuthWebType::WEB),
+                    SyntheticsBasicAuthWeb::new()
+                        .password("PaSSw0RD!".to_string())
+                        .type_(SyntheticsBasicAuthWebType::WEB)
+                        .username("my_username".to_string()),
                 )))
                 .body_type(SyntheticsTestRequestBodyType::TEXT_PLAIN)
                 .call_type(SyntheticsTestCallType::UNARY)

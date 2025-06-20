@@ -277,10 +277,10 @@ async fn main() {
                                         .basic_auth(
                                             SyntheticsBasicAuth::SyntheticsBasicAuthWeb(
                                                 Box::new(
-                                                    SyntheticsBasicAuthWeb::new(
-                                                        "password".to_string(),
-                                                        "user".to_string(),
-                                                    ).type_(SyntheticsBasicAuthWebType::WEB),
+                                                    SyntheticsBasicAuthWeb::new()
+                                                        .password("password".to_string())
+                                                        .type_(SyntheticsBasicAuthWebType::WEB)
+                                                        .username("user".to_string()),
                                                 ),
                                             ),
                                         )
