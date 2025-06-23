@@ -1,5 +1,26 @@
 # CHANGELOG
 
+## 0.14.0/2025-06-23
+
+### Fixed
+* Fix basic auth requirements [#731](https://github.com/DataDog/datadog-api-client-rust/pull/731)
+* Add support for the api_security detection rule type [#726](https://github.com/DataDog/datadog-api-client-rust/pull/726)
+
+### Added
+* Microsoft Sentinel Public API support [#729](https://github.com/DataDog/datadog-api-client-rust/pull/729)
+* Add the AP2 datacenter. [#727](https://github.com/DataDog/datadog-api-client-rust/pull/727)
+* Add custom fields to Rule update/validate API public documentation. [#718](https://github.com/DataDog/datadog-api-client-rust/pull/718)
+* Add hash field to actions in CWS agent rules [#715](https://github.com/DataDog/datadog-api-client-rust/pull/715)
+* Add `form` field for `multipart/form-data` HTTP API tests [#698](https://github.com/DataDog/datadog-api-client-rust/pull/698)
+* SDCD-1142: adding `custom_tags` optional attribute to DORA API spec [#697](https://github.com/DataDog/datadog-api-client-rust/pull/697)
+* Add sampling fields to SDS spec [#693](https://github.com/DataDog/datadog-api-client-rust/pull/693)
+* Add new endpoint to upsert/list/delete custom kinds [#692](https://github.com/DataDog/datadog-api-client-rust/pull/692)
+* Add spec for team on-call endpoint [#690](https://github.com/DataDog/datadog-api-client-rust/pull/690)
+
+### Changed
+* Update events intake specs for v2 Events post endpoint [#707](https://github.com/DataDog/datadog-api-client-rust/pull/707)
+* Add billing read permission [#702](https://github.com/DataDog/datadog-api-client-rust/pull/702)
+
 ## 0.13.0/2025-06-23
 
 ### Fixed
