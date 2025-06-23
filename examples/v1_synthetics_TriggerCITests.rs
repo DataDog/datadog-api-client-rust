@@ -18,8 +18,10 @@ async fn main() {
     let body =
         SyntheticsCITestBody::new().tests(vec![SyntheticsCITest::new("aaa-aaa-aaa".to_string())
             .basic_auth(SyntheticsBasicAuth::SyntheticsBasicAuthWeb(Box::new(
-                SyntheticsBasicAuthWeb::new("PaSSw0RD!".to_string(), "my_username".to_string())
-                    .type_(SyntheticsBasicAuthWebType::WEB),
+                SyntheticsBasicAuthWeb::new()
+                    .password("PaSSw0RD!".to_string())
+                    .type_(SyntheticsBasicAuthWebType::WEB)
+                    .username("my_username".to_string()),
             )))
             .device_ids(vec!["chrome.laptop_large".to_string()])
             .locations(vec!["aws:eu-west-3".to_string()])
