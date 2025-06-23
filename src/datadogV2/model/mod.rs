@@ -2,6 +2,24 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
+pub mod model_list_app_key_registrations_response;
+pub use self::model_list_app_key_registrations_response::ListAppKeyRegistrationsResponse;
+pub mod model_app_key_registration_data;
+pub use self::model_app_key_registration_data::AppKeyRegistrationData;
+pub mod model_app_key_registration_data_type;
+pub use self::model_app_key_registration_data_type::AppKeyRegistrationDataType;
+pub mod model_list_app_key_registrations_response_meta;
+pub use self::model_list_app_key_registrations_response_meta::ListAppKeyRegistrationsResponseMeta;
+pub mod model_jsonapi_error_response;
+pub use self::model_jsonapi_error_response::JSONAPIErrorResponse;
+pub mod model_jsonapi_error_item;
+pub use self::model_jsonapi_error_item::JSONAPIErrorItem;
+pub mod model_jsonapi_error_item_source;
+pub use self::model_jsonapi_error_item_source::JSONAPIErrorItemSource;
+pub mod model_get_app_key_registration_response;
+pub use self::model_get_app_key_registration_response::GetAppKeyRegistrationResponse;
+pub mod model_register_app_key_response;
+pub use self::model_register_app_key_response::RegisterAppKeyResponse;
 pub mod model_create_action_connection_request;
 pub use self::model_create_action_connection_request::CreateActionConnectionRequest;
 pub mod model_action_connection_data;
@@ -44,12 +62,6 @@ pub mod model_action_connection_data_type;
 pub use self::model_action_connection_data_type::ActionConnectionDataType;
 pub mod model_create_action_connection_response;
 pub use self::model_create_action_connection_response::CreateActionConnectionResponse;
-pub mod model_jsonapi_error_response;
-pub use self::model_jsonapi_error_response::JSONAPIErrorResponse;
-pub mod model_jsonapi_error_item;
-pub use self::model_jsonapi_error_item::JSONAPIErrorItem;
-pub mod model_jsonapi_error_item_source;
-pub use self::model_jsonapi_error_item_source::JSONAPIErrorItemSource;
 pub mod model_get_action_connection_response;
 pub use self::model_get_action_connection_response::GetActionConnectionResponse;
 pub mod model_update_action_connection_request;
