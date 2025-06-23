@@ -11,22 +11,19 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EventPayload {
-    /// A string used for aggregation when [correlating](<https://docs.datadoghq.com/service_management/events/correlation/>) events. If you specify a key, events are deduplicated to alerts based on this key. Limited to 100 characters.
+    /// An arbitrary string to use for aggregation when correlating events. Limited to 100 characters.
     #[serde(rename = "aggregation_key")]
     pub aggregation_key: Option<String>,
-    /// JSON object for category-specific attributes. Schema is different per event category.
+    /// JSON object for custom attributes. Schema are different per each event category.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::EventPayloadAttributes,
-    /// Event category identifying the type of event.
+    /// Event category to identify the type of event. Only the value `change` is supported. Support for other categories are coming. please reach out to datadog support if you're interested.
     #[serde(rename = "category")]
     pub category: crate::datadogV2::model::EventCategory,
-    /// Integration ID sourced from integration manifests.
-    #[serde(rename = "integration_id")]
-    pub integration_id: Option<crate::datadogV2::model::EventPayloadIntegrationId>,
-    /// Free formed text associated with the event. It's suggested to use `data.attributes.attributes.custom` for well-structured attributes. Limited to 4000 characters.
+    /// The body of the event. Limited to 4000 characters.
     #[serde(rename = "message")]
     pub message: Option<String>,
-    /// A list of tags associated with the event. Maximum of 100 tags allowed.
+    /// A list of tags to apply to the event.
     /// Refer to [Tags docs](<https://docs.datadoghq.com/getting_started/tagging/>).
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
@@ -35,9 +32,11 @@ pub struct EventPayload {
     /// Defaults to the timestamp of receipt. Limited to values no older than 18 hours.
     #[serde(rename = "timestamp")]
     pub timestamp: Option<String>,
-    /// The title of the event. Limited to 500 characters.
+    /// The event title. Limited to 500 characters.
     #[serde(rename = "title")]
     pub title: String,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -53,25 +52,17 @@ impl EventPayload {
             aggregation_key: None,
             attributes,
             category,
-            integration_id: None,
             message: None,
             tags: None,
             timestamp: None,
             title,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn aggregation_key(mut self, value: String) -> Self {
         self.aggregation_key = Some(value);
-        self
-    }
-
-    pub fn integration_id(
-        mut self,
-        value: crate::datadogV2::model::EventPayloadIntegrationId,
-    ) -> Self {
-        self.integration_id = Some(value);
         self
     }
 
@@ -87,6 +78,14 @@ impl EventPayload {
 
     pub fn timestamp(mut self, value: String) -> Self {
         self.timestamp = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
         self
     }
 }
@@ -111,12 +110,14 @@ impl<'de> Deserialize<'de> for EventPayload {
                 let mut aggregation_key: Option<String> = None;
                 let mut attributes: Option<crate::datadogV2::model::EventPayloadAttributes> = None;
                 let mut category: Option<crate::datadogV2::model::EventCategory> = None;
-                let mut integration_id: Option<crate::datadogV2::model::EventPayloadIntegrationId> =
-                    None;
                 let mut message: Option<String> = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut timestamp: Option<String> = None;
                 let mut title: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -152,21 +153,6 @@ impl<'de> Deserialize<'de> for EventPayload {
                                 }
                             }
                         }
-                        "integration_id" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            integration_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _integration_id) = integration_id {
-                                match _integration_id {
-                                    crate::datadogV2::model::EventPayloadIntegrationId::UnparsedObject(_integration_id) => {
-                                        _unparsed = true;
-                                    },
-                                    _ => {}
-                                }
-                            }
-                        }
                         "message" => {
                             if v.is_null() {
                                 continue;
@@ -189,9 +175,9 @@ impl<'de> Deserialize<'de> for EventPayload {
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
                         }
                     }
                 }
@@ -203,11 +189,11 @@ impl<'de> Deserialize<'de> for EventPayload {
                     aggregation_key,
                     attributes,
                     category,
-                    integration_id,
                     message,
                     tags,
                     timestamp,
                     title,
+                    additional_properties,
                     _unparsed,
                 };
 

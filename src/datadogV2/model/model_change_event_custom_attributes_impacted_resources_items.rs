@@ -6,17 +6,19 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Object representing a uniquely identified resource.
+/// Object representing a uniquely identified resource. Only the resource type `service` is supported.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ChangeEventCustomAttributesImpactedResourcesItems {
-    /// The name of the impacted resource. Limited to 128 characters.
+    /// Resource's name.
     #[serde(rename = "name")]
     pub name: String,
-    /// The type of the impacted resource.
+    /// Resource's type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ChangeEventCustomAttributesImpactedResourcesItemsType,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -30,8 +32,17 @@ impl ChangeEventCustomAttributesImpactedResourcesItems {
         ChangeEventCustomAttributesImpactedResourcesItems {
             name,
             type_,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
     }
 }
 
@@ -56,6 +67,10 @@ impl<'de> Deserialize<'de> for ChangeEventCustomAttributesImpactedResourcesItems
                 let mut type_: Option<
                     crate::datadogV2::model::ChangeEventCustomAttributesImpactedResourcesItemsType,
                 > = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -75,9 +90,9 @@ impl<'de> Deserialize<'de> for ChangeEventCustomAttributesImpactedResourcesItems
                             }
                         }
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
                         }
                     }
                 }
@@ -87,6 +102,7 @@ impl<'de> Deserialize<'de> for ChangeEventCustomAttributesImpactedResourcesItems
                 let content = ChangeEventCustomAttributesImpactedResourcesItems {
                     name,
                     type_,
+                    additional_properties,
                     _unparsed,
                 };
 
