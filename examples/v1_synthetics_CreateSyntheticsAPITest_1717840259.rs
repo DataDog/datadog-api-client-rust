@@ -48,7 +48,9 @@ async fn main() {
                 "request is sent".to_string(),
                 SyntheticsTestRequest::new()
                     .basic_auth(SyntheticsBasicAuth::SyntheticsBasicAuthWeb(Box::new(
-                        SyntheticsBasicAuthWeb::new("password".to_string(), "username".to_string()),
+                        SyntheticsBasicAuthWeb::new()
+                            .password("password".to_string())
+                            .username("username".to_string()),
                     )))
                     .method("GET".to_string())
                     .url("https://httpbin.org/status/200".to_string()),
@@ -67,8 +69,10 @@ async fn main() {
                 "request is sent".to_string(),
                 SyntheticsTestRequest::new()
                     .basic_auth(SyntheticsBasicAuth::SyntheticsBasicAuthWeb(Box::new(
-                        SyntheticsBasicAuthWeb::new("password".to_string(), "username".to_string())
-                            .type_(SyntheticsBasicAuthWebType::WEB),
+                        SyntheticsBasicAuthWeb::new()
+                            .password("password".to_string())
+                            .type_(SyntheticsBasicAuthWebType::WEB)
+                            .username("username".to_string()),
                     )))
                     .method("GET".to_string())
                     .url("https://httpbin.org/status/200".to_string()),

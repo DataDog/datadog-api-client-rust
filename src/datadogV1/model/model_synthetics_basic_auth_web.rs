@@ -13,13 +13,13 @@ use std::fmt::{self, Formatter};
 pub struct SyntheticsBasicAuthWeb {
     /// Password to use for the basic authentication.
     #[serde(rename = "password")]
-    pub password: String,
+    pub password: Option<String>,
     /// The type of basic authentication to use when performing the test.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV1::model::SyntheticsBasicAuthWebType>,
     /// Username to use for the basic authentication.
     #[serde(rename = "username")]
-    pub username: String,
+    pub username: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -28,18 +28,28 @@ pub struct SyntheticsBasicAuthWeb {
 }
 
 impl SyntheticsBasicAuthWeb {
-    pub fn new(password: String, username: String) -> SyntheticsBasicAuthWeb {
+    pub fn new() -> SyntheticsBasicAuthWeb {
         SyntheticsBasicAuthWeb {
-            password,
+            password: None,
             type_: None,
-            username,
+            username: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
+    pub fn password(mut self, value: String) -> Self {
+        self.password = Some(value);
+        self
+    }
+
     pub fn type_(mut self, value: crate::datadogV1::model::SyntheticsBasicAuthWebType) -> Self {
         self.type_ = Some(value);
+        self
+    }
+
+    pub fn username(mut self, value: String) -> Self {
+        self.username = Some(value);
         self
     }
 
@@ -49,6 +59,12 @@ impl SyntheticsBasicAuthWeb {
     ) -> Self {
         self.additional_properties = value;
         self
+    }
+}
+
+impl Default for SyntheticsBasicAuthWeb {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
@@ -81,6 +97,9 @@ impl<'de> Deserialize<'de> for SyntheticsBasicAuthWeb {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "password" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             password = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
@@ -98,6 +117,9 @@ impl<'de> Deserialize<'de> for SyntheticsBasicAuthWeb {
                             }
                         }
                         "username" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             username = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -107,8 +129,6 @@ impl<'de> Deserialize<'de> for SyntheticsBasicAuthWeb {
                         }
                     }
                 }
-                let password = password.ok_or_else(|| M::Error::missing_field("password"))?;
-                let username = username.ok_or_else(|| M::Error::missing_field("username"))?;
 
                 let content = SyntheticsBasicAuthWeb {
                     password,
