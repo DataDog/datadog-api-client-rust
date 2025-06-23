@@ -8,7 +8,6 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum EventCategory {
     CHANGE,
-    ALERT,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -16,7 +15,6 @@ impl ToString for EventCategory {
     fn to_string(&self) -> String {
         match self {
             Self::CHANGE => String::from("change"),
-            Self::ALERT => String::from("alert"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -42,7 +40,6 @@ impl<'de> Deserialize<'de> for EventCategory {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "change" => Self::CHANGE,
-            "alert" => Self::ALERT,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

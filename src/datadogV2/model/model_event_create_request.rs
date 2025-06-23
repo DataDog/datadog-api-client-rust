@@ -6,17 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// An event object.
+/// Object representing an event creation request.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EventCreateRequest {
     /// Event attributes.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::EventPayload,
+    pub attributes: Option<crate::datadogV2::model::EventPayload>,
     /// Entity type.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::EventCreateRequestType,
+    pub type_: Option<crate::datadogV2::model::EventCreateRequestType>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -25,16 +25,23 @@ pub struct EventCreateRequest {
 }
 
 impl EventCreateRequest {
-    pub fn new(
-        attributes: crate::datadogV2::model::EventPayload,
-        type_: crate::datadogV2::model::EventCreateRequestType,
-    ) -> EventCreateRequest {
+    pub fn new() -> EventCreateRequest {
         EventCreateRequest {
-            attributes,
-            type_,
+            attributes: None,
+            type_: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn attributes(mut self, value: crate::datadogV2::model::EventPayload) -> Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn type_(mut self, value: crate::datadogV2::model::EventCreateRequestType) -> Self {
+        self.type_ = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -43,6 +50,12 @@ impl EventCreateRequest {
     ) -> Self {
         self.additional_properties = value;
         self
+    }
+}
+
+impl Default for EventCreateRequest {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
@@ -74,9 +87,15 @@ impl<'de> Deserialize<'de> for EventCreateRequest {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "attributes" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
@@ -94,8 +113,6 @@ impl<'de> Deserialize<'de> for EventCreateRequest {
                         }
                     }
                 }
-                let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
-                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = EventCreateRequest {
                     attributes,

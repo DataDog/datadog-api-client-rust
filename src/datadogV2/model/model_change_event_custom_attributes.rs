@@ -6,31 +6,33 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Change event attributes.
+/// Object representing custom change event attributes.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ChangeEventCustomAttributes {
-    /// The entity that made the change. Optional, if provided it must include `type` and `name`.
+    /// Object representing the entity which made the change. Optional field but if provided should include `type` and `name`.
     #[serde(rename = "author")]
     pub author: Option<crate::datadogV2::model::ChangeEventCustomAttributesAuthor>,
-    /// Free form JSON object with information related to the `change` event. Supports up to 100 properties per object and a maximum nesting depth of 10 levels.
+    /// Free form object with information related to the `change` event. Can be arbitrarily nested and contain any valid JSON.
     #[serde(rename = "change_metadata")]
     pub change_metadata: Option<std::collections::BTreeMap<String, serde_json::Value>>,
-    /// A uniquely identified resource.
+    /// Object representing a uniquely identified resource.
     #[serde(rename = "changed_resource")]
     pub changed_resource: crate::datadogV2::model::ChangeEventCustomAttributesChangedResource,
     /// A list of resources impacted by this change. It is recommended to provide an impacted resource to display
-    /// the change event at the correct location. Only resources of type `service` are supported. Maximum of 100 impacted resources allowed.
+    /// the change event at the right location. Only resources of type `service` are supported.
     #[serde(rename = "impacted_resources")]
     pub impacted_resources:
         Option<Vec<crate::datadogV2::model::ChangeEventCustomAttributesImpactedResourcesItems>>,
-    /// Free form JSON object representing the new state of the changed resource.
+    /// Free form object to track new value of the changed resource.
     #[serde(rename = "new_value")]
     pub new_value: Option<std::collections::BTreeMap<String, serde_json::Value>>,
-    /// Free form JSON object representing the previous state of the changed resource.
+    /// Free form object to track previous value of the changed resource.
     #[serde(rename = "prev_value")]
     pub prev_value: Option<std::collections::BTreeMap<String, serde_json::Value>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -47,6 +49,7 @@ impl ChangeEventCustomAttributes {
             impacted_resources: None,
             new_value: None,
             prev_value: None,
+            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -90,6 +93,14 @@ impl ChangeEventCustomAttributes {
         self.prev_value = Some(value);
         self
     }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
 }
 
 impl<'de> Deserialize<'de> for ChangeEventCustomAttributes {
@@ -124,6 +135,10 @@ impl<'de> Deserialize<'de> for ChangeEventCustomAttributes {
                     None;
                 let mut prev_value: Option<std::collections::BTreeMap<String, serde_json::Value>> =
                     None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -165,9 +180,9 @@ impl<'de> Deserialize<'de> for ChangeEventCustomAttributes {
                             prev_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
                         }
                     }
                 }
@@ -181,6 +196,7 @@ impl<'de> Deserialize<'de> for ChangeEventCustomAttributes {
                     impacted_resources,
                     new_value,
                     prev_value,
+                    additional_properties,
                     _unparsed,
                 };
 
