@@ -17,6 +17,9 @@ pub enum CustomDestinationForwardDestination {
     CustomDestinationForwardDestinationElasticsearch(
         Box<crate::datadogV2::model::CustomDestinationForwardDestinationElasticsearch>,
     ),
+    CustomDestinationForwardDestinationMicrosoftSentinel(
+        Box<crate::datadogV2::model::CustomDestinationForwardDestinationMicrosoftSentinel>,
+    ),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -56,6 +59,14 @@ impl<'de> Deserialize<'de> for CustomDestinationForwardDestination {
         {
             if !_v._unparsed {
                 return Ok(CustomDestinationForwardDestination::CustomDestinationForwardDestinationElasticsearch(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::CustomDestinationForwardDestinationMicrosoftSentinel>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(CustomDestinationForwardDestination::CustomDestinationForwardDestinationMicrosoftSentinel(_v));
             }
         }
 
