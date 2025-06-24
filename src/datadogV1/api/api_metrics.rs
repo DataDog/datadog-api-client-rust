@@ -316,6 +316,9 @@ impl MetricsAPI {
     }
 
     /// Get the list of actively reporting metrics from a given time until now.
+    /// The tag service resets daily at midnight UTC. This endpoint returns only
+    /// metrics that have reported since the last reset, even if the `from`
+    /// parameter specifies an earlier time.
     pub async fn list_active_metrics(
         &self,
         from: i64,
@@ -337,6 +340,9 @@ impl MetricsAPI {
     }
 
     /// Get the list of actively reporting metrics from a given time until now.
+    /// The tag service resets daily at midnight UTC. This endpoint returns only
+    /// metrics that have reported since the last reset, even if the `from`
+    /// parameter specifies an earlier time.
     pub async fn list_active_metrics_with_http_info(
         &self,
         from: i64,
