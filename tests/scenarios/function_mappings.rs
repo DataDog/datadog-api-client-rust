@@ -2992,6 +2992,34 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.UpdateMonitorConfigPolicy".into(),
         test_v2_update_monitor_config_policy,
     );
+    world.function_mappings.insert(
+        "v2.ListMonitorUserTemplates".into(),
+        test_v2_list_monitor_user_templates,
+    );
+    world.function_mappings.insert(
+        "v2.CreateMonitorUserTemplate".into(),
+        test_v2_create_monitor_user_template,
+    );
+    world.function_mappings.insert(
+        "v2.ValidateMonitorUserTemplate".into(),
+        test_v2_validate_monitor_user_template,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteMonitorUserTemplate".into(),
+        test_v2_delete_monitor_user_template,
+    );
+    world.function_mappings.insert(
+        "v2.GetMonitorUserTemplate".into(),
+        test_v2_get_monitor_user_template,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateMonitorUserTemplate".into(),
+        test_v2_update_monitor_user_template,
+    );
+    world.function_mappings.insert(
+        "v2.ValidateExistingMonitorUserTemplate".into(),
+        test_v2_validate_existing_monitor_user_template,
+    );
     world
         .function_mappings
         .insert("v2.ListDevices".into(), test_v2_list_devices);
@@ -22450,6 +22478,216 @@ fn test_v2_update_monitor_config_policy(
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.update_monitor_config_policy_with_http_info(policy_id, body))
     {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_monitor_user_templates(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_monitors
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_monitor_user_templates_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_monitor_user_template(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_monitors
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_monitor_user_template_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_validate_monitor_user_template(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_monitors
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.validate_monitor_user_template_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_monitor_user_template(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_monitors
+        .as_ref()
+        .expect("api instance not found");
+    let template_id =
+        serde_json::from_value(_parameters.get("template_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_monitor_user_template_with_http_info(template_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_monitor_user_template(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_monitors
+        .as_ref()
+        .expect("api instance not found");
+    let template_id =
+        serde_json::from_value(_parameters.get("template_id").unwrap().clone()).unwrap();
+    let with_all_versions = _parameters
+        .get("with_all_versions")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_monitors::GetMonitorUserTemplateOptionalParams::default();
+    params.with_all_versions = with_all_versions;
+    let response = match block_on(api.get_monitor_user_template_with_http_info(template_id, params))
+    {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_monitor_user_template(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_monitors
+        .as_ref()
+        .expect("api instance not found");
+    let template_id =
+        serde_json::from_value(_parameters.get("template_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.update_monitor_user_template_with_http_info(template_id, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_validate_existing_monitor_user_template(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_monitors
+        .as_ref()
+        .expect("api instance not found");
+    let template_id =
+        serde_json::from_value(_parameters.get("template_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.validate_existing_monitor_user_template_with_http_info(template_id, body),
+    ) {
         Ok(response) => response,
         Err(error) => {
             return match error {

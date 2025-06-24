@@ -3,7 +3,7 @@
     {
       "request": {
         "body": {
-          "string": "{\"data\":{\"attributes\":{\"policy\":{\"tag_key\":\"testgetamonitorconfigurationpolicyreturnsokresponse1682627702\",\"tag_key_required\":false,\"valid_tag_values\":[\"prod\",\"staging\"]},\"policy_type\":\"tag\"},\"type\":\"monitor-config-policy\"}}",
+          "string": "{\"data\":{\"attributes\":{\"policy\":{\"tag_key\":\"testgetamonitorconfigurationpolicyreturnsokresponse1748486178\",\"tag_key_required\":false,\"valid_tag_values\":[\"prod\",\"staging\"]},\"policy_type\":\"tag\"},\"type\":\"monitor-config-policy\"}}",
           "encoding": null
         },
         "headers": {
@@ -19,7 +19,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"type\":\"monitor-config-policy\",\"attributes\":{\"policy_type\":\"tag\",\"policy\":{\"tag_key\":\"testgetamonitorconfigurationpolicyreturnsokresponse1682627702\",\"valid_tag_values\":[\"prod\",\"staging\"],\"tag_key_required\":false}},\"id\":\"fcd6f8ec-e53a-11ed-8b5f-da7ad0900002\"}}\n",
+          "string": "{\"data\":{\"type\":\"monitor-config-policy\",\"attributes\":{\"policy\":{\"valid_tag_values\":[\"prod\",\"staging\"],\"tag_key_required\":false,\"tag_key\":\"testgetamonitorconfigurationpolicyreturnsokresponse1748486178\"},\"policy_type\":\"tag\"},\"id\":\"7916e37f-b0fe-4f9d-bf9e-37ee3e7a5460\"}}\n",
           "encoding": null
         },
         "headers": {
@@ -32,7 +32,7 @@
           "message": "OK"
         }
       },
-      "recorded_at": "Thu, 27 Apr 2023 20:35:02 GMT"
+      "recorded_at": "Thu, 29 May 2025 02:36:18 GMT"
     },
     {
       "request": {
@@ -43,11 +43,11 @@
           ]
         },
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v2/monitor/policy/fcd6f8ec-e53a-11ed-8b5f-da7ad0900002"
+        "uri": "https://api.datadoghq.com/api/v2/monitor/policy/7916e37f-b0fe-4f9d-bf9e-37ee3e7a5460"
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"type\":\"monitor-config-policy\",\"attributes\":{\"policy_type\":\"tag\",\"policy\":{\"tag_key_required\":false,\"tag_key\":\"testgetamonitorconfigurationpolicyreturnsokresponse1682627702\",\"valid_tag_values\":[\"prod\",\"staging\"]}},\"id\":\"fcd6f8ec-e53a-11ed-8b5f-da7ad0900002\"}}\n",
+          "string": "{\"data\":{\"type\":\"monitor-config-policy\",\"attributes\":{\"policy_type\":\"tag\",\"policy\":{\"tag_key_required\":false,\"tag_key\":\"testgetamonitorconfigurationpolicyreturnsokresponse1748486178\",\"valid_tag_values\":[\"prod\",\"staging\"]}},\"id\":\"7916e37f-b0fe-4f9d-bf9e-37ee3e7a5460\"}}\n",
           "encoding": null
         },
         "headers": {
@@ -60,7 +60,7 @@
           "message": "OK"
         }
       },
-      "recorded_at": "Thu, 27 Apr 2023 20:35:02 GMT"
+      "recorded_at": "Thu, 29 May 2025 02:36:18 GMT"
     },
     {
       "request": {
@@ -71,7 +71,7 @@
           ]
         },
         "method": "delete",
-        "uri": "https://api.datadoghq.com/api/v2/monitor/policy/fcd6f8ec-e53a-11ed-8b5f-da7ad0900002"
+        "uri": "https://api.datadoghq.com/api/v2/monitor/policy/7916e37f-b0fe-4f9d-bf9e-37ee3e7a5460"
       },
       "response": {
         "body": {
@@ -88,7 +88,7 @@
           "message": "No Content"
         }
       },
-      "recorded_at": "Thu, 27 Apr 2023 20:35:02 GMT"
+      "recorded_at": "Thu, 29 May 2025 02:36:18 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"
