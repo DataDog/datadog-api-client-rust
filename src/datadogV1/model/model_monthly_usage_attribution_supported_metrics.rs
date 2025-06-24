@@ -133,6 +133,8 @@ pub enum MonthlyUsageAttributionSupportedMetrics {
     LOGS_INDEXED_3DAY_PERCENTAGE,
     LOGS_INDEXED_1DAY_USAGE,
     LOGS_INDEXED_1DAY_PERCENTAGE,
+    PRODUCT_ANALYTICS_SESSION_USAGE,
+    PRODUCT_ANALYTICS_SESSION_PERCENTAGE,
     RUM_REPLAY_SESSIONS_USAGE,
     RUM_REPLAY_SESSIONS_PERCENTAGE,
     RUM_BROWSER_MOBILE_SESSIONS_USAGE,
@@ -322,6 +324,12 @@ impl ToString for MonthlyUsageAttributionSupportedMetrics {
             Self::LOGS_INDEXED_3DAY_PERCENTAGE => String::from("logs_indexed_3day_percentage"),
             Self::LOGS_INDEXED_1DAY_USAGE => String::from("logs_indexed_1day_usage"),
             Self::LOGS_INDEXED_1DAY_PERCENTAGE => String::from("logs_indexed_1day_percentage"),
+            Self::PRODUCT_ANALYTICS_SESSION_USAGE => {
+                String::from("product_analytics_session_usage")
+            }
+            Self::PRODUCT_ANALYTICS_SESSION_PERCENTAGE => {
+                String::from("product_analytics_session_percentage")
+            }
             Self::RUM_REPLAY_SESSIONS_USAGE => String::from("rum_replay_sessions_usage"),
             Self::RUM_REPLAY_SESSIONS_PERCENTAGE => String::from("rum_replay_sessions_percentage"),
             Self::RUM_BROWSER_MOBILE_SESSIONS_USAGE => {
@@ -509,6 +517,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionSupportedMetrics {
             "logs_indexed_3day_percentage" => Self::LOGS_INDEXED_3DAY_PERCENTAGE,
             "logs_indexed_1day_usage" => Self::LOGS_INDEXED_1DAY_USAGE,
             "logs_indexed_1day_percentage" => Self::LOGS_INDEXED_1DAY_PERCENTAGE,
+            "product_analytics_session_usage" => Self::PRODUCT_ANALYTICS_SESSION_USAGE,
+            "product_analytics_session_percentage" => Self::PRODUCT_ANALYTICS_SESSION_PERCENTAGE,
             "rum_replay_sessions_usage" => Self::RUM_REPLAY_SESSIONS_USAGE,
             "rum_replay_sessions_percentage" => Self::RUM_REPLAY_SESSIONS_PERCENTAGE,
             "rum_browser_mobile_sessions_usage" => Self::RUM_BROWSER_MOBILE_SESSIONS_USAGE,

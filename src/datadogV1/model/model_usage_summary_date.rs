@@ -17,7 +17,7 @@ pub struct UsageSummaryDate {
     /// Shows the 99th percentile of all Azure app services using APM over all hours in the current date all organizations.
     #[serde(rename = "apm_azure_app_service_host_top99p")]
     pub apm_azure_app_service_host_top99p: Option<i64>,
-    /// Shows the 99th percentile of all APM DevSecOps hosts over all hours in the current date for the given org.
+    /// Shows the 99th percentile of all APM DevSecOps hosts over all hours in the current date for all organizations.
     #[serde(rename = "apm_devsecops_host_top99p")]
     pub apm_devsecops_host_top99p: Option<i64>,
     /// Shows the average of all APM ECS Fargate tasks over all hours in the current date for all organizations.
@@ -68,43 +68,43 @@ pub struct UsageSummaryDate {
     #[deprecated]
     #[serde(rename = "browser_rum_units_sum")]
     pub browser_rum_units_sum: Option<i64>,
-    /// Shows the sum of all CI pipeline indexed spans over all hours in the current month for all organizations.
+    /// Shows the sum of all CI pipeline indexed spans over all hours in the current date for all organizations.
     #[serde(rename = "ci_pipeline_indexed_spans_sum")]
     pub ci_pipeline_indexed_spans_sum: Option<i64>,
-    /// Shows the sum of all CI test indexed spans over all hours in the current month for all organizations.
+    /// Shows the sum of all CI test indexed spans over all hours in the current date for all organizations.
     #[serde(rename = "ci_test_indexed_spans_sum")]
     pub ci_test_indexed_spans_sum: Option<i64>,
-    /// Shows the high-water mark of all CI visibility intelligent test runner committers over all hours in the current month for all organizations.
+    /// Shows the high-water mark of all CI visibility intelligent test runner committers over all hours in the current date for all organizations.
     #[serde(rename = "ci_visibility_itr_committers_hwm")]
     pub ci_visibility_itr_committers_hwm: Option<i64>,
-    /// Shows the high-water mark of all CI visibility pipeline committers over all hours in the current month for all organizations.
+    /// Shows the high-water mark of all CI visibility pipeline committers over all hours in the current date for all organizations.
     #[serde(rename = "ci_visibility_pipeline_committers_hwm")]
     pub ci_visibility_pipeline_committers_hwm: Option<i64>,
-    /// Shows the high-water mark of all CI visibility test committers over all hours in the current month for all organizations.
+    /// Shows the high-water mark of all CI visibility test committers over all hours in the current date for all organizations.
     #[serde(rename = "ci_visibility_test_committers_hwm")]
     pub ci_visibility_test_committers_hwm: Option<i64>,
-    /// Host count average of Cloud Cost Management for AWS for the given date and given organization.
+    /// Host count average for Cloud Cost Management for AWS for the given date for all organizations.
     #[serde(rename = "cloud_cost_management_aws_host_count_avg")]
     pub cloud_cost_management_aws_host_count_avg: Option<i64>,
-    /// Host count average of Cloud Cost Management for Azure for the given date and given organization.
+    /// Host count average for Cloud Cost Management for Azure for the given date for all organizations.
     #[serde(rename = "cloud_cost_management_azure_host_count_avg")]
     pub cloud_cost_management_azure_host_count_avg: Option<i64>,
-    /// Host count average of Cloud Cost Management for GCP for the given date and given organization.
+    /// Host count average for Cloud Cost Management for GCP for the given date for all organizations.
     #[serde(rename = "cloud_cost_management_gcp_host_count_avg")]
     pub cloud_cost_management_gcp_host_count_avg: Option<i64>,
-    /// Host count average of Cloud Cost Management for all cloud providers for the given date and given organization.
+    /// Host count average for Cloud Cost Management for all cloud providers for the given date for all organizations.
     #[serde(rename = "cloud_cost_management_host_count_avg")]
     pub cloud_cost_management_host_count_avg: Option<i64>,
-    /// Shows the sum of all Cloud Security Information and Event Management events over all hours in the current date for the given org.
+    /// Shows the sum of all Cloud Security Information and Event Management events over all hours in the current date for all organizations.
     #[serde(rename = "cloud_siem_events_sum")]
     pub cloud_siem_events_sum: Option<i64>,
-    /// Shows the high-water mark of all Static Analysis committers over all hours in the current date for the given org.
+    /// Shows the high-water mark of all Static Analysis committers over all hours in the current date for all organizations.
     #[serde(rename = "code_analysis_sa_committers_hwm")]
     pub code_analysis_sa_committers_hwm: Option<i64>,
-    /// Shows the high-water mark of all static Software Composition Analysis committers over all hours in the current date for the given org.
+    /// Shows the high-water mark of all static Software Composition Analysis committers over all hours in the current date for all organizations.
     #[serde(rename = "code_analysis_sca_committers_hwm")]
     pub code_analysis_sca_committers_hwm: Option<i64>,
-    /// Shows the 99th percentile of all Code Security hosts over all hours in the current date for the given org.
+    /// Shows the 99th percentile of all Code Security hosts over all hours in the current date for all organizations.
     #[serde(rename = "code_security_host_top99p")]
     pub code_security_host_top99p: Option<i64>,
     /// Shows the average of all distinct containers over all hours in the current date for all organizations.
@@ -116,34 +116,34 @@ pub struct UsageSummaryDate {
     /// Shows the high-water mark of all distinct containers over all hours in the current date for all organizations.
     #[serde(rename = "container_hwm")]
     pub container_hwm: Option<i64>,
-    /// Shows the sum of all Cloud Security Management Enterprise compliance containers over all hours in the current date for the given org.
+    /// Shows the sum of all Cloud Security Management Enterprise compliance containers over all hours in the current date for all organizations.
     #[serde(rename = "csm_container_enterprise_compliance_count_sum")]
     pub csm_container_enterprise_compliance_count_sum: Option<i64>,
-    /// Shows the sum of all Cloud Security Management Enterprise Cloud Workload Security containers over all hours in the current date for the given org.
+    /// Shows the sum of all Cloud Security Management Enterprise Cloud Workload Security containers over all hours in the current date for all organizations.
     #[serde(rename = "csm_container_enterprise_cws_count_sum")]
     pub csm_container_enterprise_cws_count_sum: Option<i64>,
-    /// Shows the sum of all Cloud Security Management Enterprise containers over all hours in the current date for the given org.
+    /// Shows the sum of all Cloud Security Management Enterprise containers over all hours in the current date for all organizations.
     #[serde(rename = "csm_container_enterprise_total_count_sum")]
     pub csm_container_enterprise_total_count_sum: Option<i64>,
-    /// Shows the 99th percentile of all Cloud Security Management Enterprise Azure app services hosts over all hours in the current date for the given org.
+    /// Shows the 99th percentile of all Cloud Security Management Enterprise Azure app services hosts over all hours in the current date for all organizations.
     #[serde(rename = "csm_host_enterprise_aas_host_count_top99p")]
     pub csm_host_enterprise_aas_host_count_top99p: Option<i64>,
-    /// Shows the 99th percentile of all Cloud Security Management Enterprise AWS hosts over all hours in the current date for the given org.
+    /// Shows the 99th percentile of all Cloud Security Management Enterprise AWS hosts over all hours on the current date for all organizations.
     #[serde(rename = "csm_host_enterprise_aws_host_count_top99p")]
     pub csm_host_enterprise_aws_host_count_top99p: Option<i64>,
-    /// Shows the 99th percentile of all Cloud Security Management Enterprise Azure hosts over all hours in the current date for the given org.
+    /// Shows the 99th percentile of all Cloud Security Management Enterprise Azure hosts over all hours on the current date for all organizations.
     #[serde(rename = "csm_host_enterprise_azure_host_count_top99p")]
     pub csm_host_enterprise_azure_host_count_top99p: Option<i64>,
-    /// Shows the 99th percentile of all Cloud Security Management Enterprise compliance hosts over all hours in the current date for the given org.
+    /// Shows the 99th percentile of all Cloud Security Management Enterprise compliance hosts over all hours on the current date for all organizations.
     #[serde(rename = "csm_host_enterprise_compliance_host_count_top99p")]
     pub csm_host_enterprise_compliance_host_count_top99p: Option<i64>,
-    /// Shows the 99th percentile of all Cloud Security Management Enterprise Cloud Workload Security hosts over all hours in the current date for the given org.
+    /// Shows the 99th percentile of all Cloud Security Management Enterprise Cloud Workload Security hosts over all hours on the current date for all organizations.
     #[serde(rename = "csm_host_enterprise_cws_host_count_top99p")]
     pub csm_host_enterprise_cws_host_count_top99p: Option<i64>,
-    /// Shows the 99th percentile of all Cloud Security Management Enterprise GCP hosts over all hours in the current date for the given org.
+    /// Shows the 99th percentile of all Cloud Security Management Enterprise GCP hosts over all hours in the current date for all organizations.
     #[serde(rename = "csm_host_enterprise_gcp_host_count_top99p")]
     pub csm_host_enterprise_gcp_host_count_top99p: Option<i64>,
-    /// Shows the 99th percentile of all Cloud Security Management Enterprise hosts over all hours in the current date for the given org.
+    /// Shows the 99th percentile of all Cloud Security Management Enterprise hosts over all hours in the current date for all organizations.
     #[serde(rename = "csm_host_enterprise_total_host_count_top99p")]
     pub csm_host_enterprise_total_host_count_top99p: Option<i64>,
     /// Shows the 99th percentile of all Cloud Security Management Pro Azure app services hosts over all hours in the current date for all organizations.
@@ -179,7 +179,7 @@ pub struct UsageSummaryDate {
     /// Shows the 99th percentile of all Cloud Workload Security hosts over all hours in the current date for all organizations.
     #[serde(rename = "cws_host_top99p")]
     pub cws_host_top99p: Option<i64>,
-    /// Shows the sum of all Data Jobs Monitoring hosts over all hours in the current date for the given org.
+    /// Shows the sum of all Data Jobs Monitoring hosts over all hours in the current date for all organizations.
     #[serde(rename = "data_jobs_monitoring_host_hr_sum")]
     pub data_jobs_monitoring_host_hr_sum: Option<i64>,
     /// The date for the usage.
@@ -191,55 +191,55 @@ pub struct UsageSummaryDate {
     /// Shows the average of all normalized Database Monitoring queries over all hours in the current date for all organizations.
     #[serde(rename = "dbm_queries_count_avg")]
     pub dbm_queries_count_avg: Option<i64>,
-    /// Shows the sum of all ephemeral infrastructure hosts with the Datadog Agent over all hours in the current date for the given org.
+    /// Shows the sum of all ephemeral infrastructure hosts with the Datadog Agent over all hours in the current date for all organizations.
     #[serde(rename = "eph_infra_host_agent_sum")]
     pub eph_infra_host_agent_sum: Option<i64>,
-    /// Shows the sum of all ephemeral infrastructure hosts on Alibaba over all hours in the current date for the given org.
+    /// Shows the sum of all ephemeral infrastructure hosts on Alibaba over all hours in the current date for all organizations.
     #[serde(rename = "eph_infra_host_alibaba_sum")]
     pub eph_infra_host_alibaba_sum: Option<i64>,
-    /// Shows the sum of all ephemeral infrastructure hosts on AWS over all hours in the current date for the given org.
+    /// Shows the sum of all ephemeral infrastructure hosts on AWS over all hours in the current date for all organizations.
     #[serde(rename = "eph_infra_host_aws_sum")]
     pub eph_infra_host_aws_sum: Option<i64>,
-    /// Shows the sum of all ephemeral infrastructure hosts on Azure over all hours in the current date for the given org.
+    /// Shows the sum of all ephemeral infrastructure hosts on Azure over all hours in the current date for all organizations.
     #[serde(rename = "eph_infra_host_azure_sum")]
     pub eph_infra_host_azure_sum: Option<i64>,
-    /// Shows the sum of all ephemeral infrastructure hosts for Enterprise over all hours in the current date for the given org.
+    /// Shows the sum of all ephemeral infrastructure hosts for Enterprise over all hours in the current date for all organizations.
     #[serde(rename = "eph_infra_host_ent_sum")]
     pub eph_infra_host_ent_sum: Option<i64>,
-    /// Shows the sum of all ephemeral infrastructure hosts on GCP over all hours in the current date for the given org.
+    /// Shows the sum of all ephemeral infrastructure hosts on GCP over all hours in the current date for all organizations.
     #[serde(rename = "eph_infra_host_gcp_sum")]
     pub eph_infra_host_gcp_sum: Option<i64>,
-    /// Shows the sum of all ephemeral infrastructure hosts on Heroku over all hours in the current date for the given org.
+    /// Shows the sum of all ephemeral infrastructure hosts on Heroku over all hours in the current date for all organizations.
     #[serde(rename = "eph_infra_host_heroku_sum")]
     pub eph_infra_host_heroku_sum: Option<i64>,
-    /// Shows the sum of all ephemeral infrastructure hosts with only Azure App Services over all hours in the current date for the given org.
+    /// Shows the sum of all ephemeral infrastructure hosts with only Azure App Services over all hours in the current date for all organizations.
     #[serde(rename = "eph_infra_host_only_aas_sum")]
     pub eph_infra_host_only_aas_sum: Option<i64>,
-    /// Shows the sum of all ephemeral infrastructure hosts with only vSphere over all hours in the current date for the given org.
+    /// Shows the sum of all ephemeral infrastructure hosts with only vSphere over all hours in the current date for all organizations.
     #[serde(rename = "eph_infra_host_only_vsphere_sum")]
     pub eph_infra_host_only_vsphere_sum: Option<i64>,
-    /// Shows the sum of all ephemeral APM hosts reported by the Datadog exporter for the OpenTelemetry Collector over all hours in the current date for the given org.
+    /// Shows the sum of all ephemeral APM hosts reported by the Datadog exporter for the OpenTelemetry Collector over all hours in the current date for all organizations.
     #[serde(rename = "eph_infra_host_opentelemetry_apm_sum")]
     pub eph_infra_host_opentelemetry_apm_sum: Option<i64>,
-    /// Shows the sum of all ephemeral hosts reported by the Datadog exporter for the OpenTelemetry Collector over all hours in the current date for the given org.
+    /// Shows the sum of all ephemeral hosts reported by the Datadog exporter for the OpenTelemetry Collector over all hours in the current date for all organizations.
     #[serde(rename = "eph_infra_host_opentelemetry_sum")]
     pub eph_infra_host_opentelemetry_sum: Option<i64>,
-    /// Shows the sum of all ephemeral infrastructure hosts for Pro over all hours in the current date for the given org.
+    /// Shows the sum of all ephemeral infrastructure hosts for Pro over all hours in the current date for all organizations.
     #[serde(rename = "eph_infra_host_pro_sum")]
     pub eph_infra_host_pro_sum: Option<i64>,
-    /// Shows the sum of all ephemeral infrastructure hosts for Pro Plus over all hours in the current date for the given org.
+    /// Shows the sum of all ephemeral infrastructure hosts for Pro Plus over all hours in the current date for all organizations.
     #[serde(rename = "eph_infra_host_proplus_sum")]
     pub eph_infra_host_proplus_sum: Option<i64>,
-    /// Shows the sum of all Error Tracking APM error events over all hours in the current date for the given org.
+    /// Shows the sum of all Error Tracking APM error events over all hours in the current date for all organizations.
     #[serde(rename = "error_tracking_apm_error_events_sum")]
     pub error_tracking_apm_error_events_sum: Option<i64>,
-    /// Shows the sum of all Error Tracking error events over all hours in the current date for the given org.
+    /// Shows the sum of all Error Tracking error events over all hours in the current date for all organizations.
     #[serde(rename = "error_tracking_error_events_sum")]
     pub error_tracking_error_events_sum: Option<i64>,
-    /// Shows the sum of all Error Tracking events over all hours in the current date for the given org.
+    /// Shows the sum of all Error Tracking events over all hours in the current date for all organizations.
     #[serde(rename = "error_tracking_events_sum")]
     pub error_tracking_events_sum: Option<i64>,
-    /// Shows the sum of all Error Tracking RUM error events over all hours in the current date for the given org.
+    /// Shows the sum of all Error Tracking RUM error events over all hours in the current date for all organizations.
     #[serde(rename = "error_tracking_rum_error_events_sum")]
     pub error_tracking_rum_error_events_sum: Option<i64>,
     /// The average number of Profiling Fargate tasks over all hours in the current date for all organizations.
@@ -254,28 +254,28 @@ pub struct UsageSummaryDate {
     /// Shows the average of all Fargate tasks over all hours in the current date for all organizations.
     #[serde(rename = "fargate_tasks_count_hwm")]
     pub fargate_tasks_count_hwm: Option<i64>,
-    /// Shows the average number of Flex Logs Compute Large Instances over all hours in the current date for the given org.
+    /// Shows the average number of Flex Logs Compute Large Instances over all hours in the current date for all organizations.
     #[serde(rename = "flex_logs_compute_large_avg")]
     pub flex_logs_compute_large_avg: Option<i64>,
-    /// Shows the average number of Flex Logs Compute Medium Instances over all hours in the current date for the given org.
+    /// Shows the average number of Flex Logs Compute Medium Instances over all hours in the current date for all organizations.
     #[serde(rename = "flex_logs_compute_medium_avg")]
     pub flex_logs_compute_medium_avg: Option<i64>,
-    /// Shows the average number of Flex Logs Compute Small Instances over all hours in the current date for the given org.
+    /// Shows the average number of Flex Logs Compute Small Instances over all hours in the current date for all organizations.
     #[serde(rename = "flex_logs_compute_small_avg")]
     pub flex_logs_compute_small_avg: Option<i64>,
-    /// Shows the average number of Flex Logs Compute Extra Small Instances over all hours in the current date for the given org.
+    /// Shows the average number of Flex Logs Compute Extra Small Instances over all hours in the current date for all organizations.
     #[serde(rename = "flex_logs_compute_xsmall_avg")]
     pub flex_logs_compute_xsmall_avg: Option<i64>,
-    /// Shows the average number of Flex Logs Starter Instances over all hours in the current date for the given org.
+    /// Shows the average number of Flex Logs Starter Instances over all hours in the current date for all organizations.
     #[serde(rename = "flex_logs_starter_avg")]
     pub flex_logs_starter_avg: Option<i64>,
-    /// Shows the average number of Flex Logs Starter Storage Index Instances over all hours in the current date for the given org.
+    /// Shows the average number of Flex Logs Starter Storage Index Instances over all hours in the current date for all organizations.
     #[serde(rename = "flex_logs_starter_storage_index_avg")]
     pub flex_logs_starter_storage_index_avg: Option<i64>,
-    /// Shows the average number of Flex Logs Starter Storage Retention Adjustment Instances over all hours in the current date for the given org.
+    /// Shows the average number of Flex Logs Starter Storage Retention Adjustment Instances over all hours in the current date for all organizations.
     #[serde(rename = "flex_logs_starter_storage_retention_adjustment_avg")]
     pub flex_logs_starter_storage_retention_adjustment_avg: Option<i64>,
-    /// Shows the average of all Flex Stored Logs over all hours in the current date for the given org.
+    /// Shows the average of all Flex Stored Logs over all hours in the current date for all organizations.
     #[serde(rename = "flex_stored_logs_avg")]
     pub flex_stored_logs_avg: Option<i64>,
     /// Shows the sum of all log bytes forwarded over all hours in the current date for all organizations.
@@ -337,7 +337,7 @@ pub struct UsageSummaryDate {
     #[deprecated]
     #[serde(rename = "mobile_rum_units_sum")]
     pub mobile_rum_units_sum: Option<i64>,
-    /// Shows the sum of all Network Device Monitoring NetFlow events over all hours in the current date for the given org.
+    /// Shows the sum of all Network Device Monitoring NetFlow events over all hours in the current date for all organizations.
     #[serde(rename = "ndm_netflow_events_sum")]
     pub ndm_netflow_events_sum: Option<i64>,
     /// Shows the sum of all Network flows indexed over all hours in the current date for all organizations (To be deprecated on October 1st, 2024).
@@ -347,13 +347,13 @@ pub struct UsageSummaryDate {
     /// Shows the 99th percentile of all distinct Cloud Network Monitoring hosts (formerly known as Network hosts) over all hours in the current date for all organizations.
     #[serde(rename = "npm_host_top99p")]
     pub npm_host_top99p: Option<i64>,
-    /// Sum of all observability pipelines bytes processed over all hours in the current date for the given org.
+    /// Sum of all observability pipelines bytes processed over all hours in the current date for all organizations.
     #[serde(rename = "observability_pipelines_bytes_processed_sum")]
     pub observability_pipelines_bytes_processed_sum: Option<i64>,
-    /// Shows the sum of all Oracle Cloud Infrastructure hosts over all hours in the current date for the given org.
+    /// Shows the sum of all Oracle Cloud Infrastructure hosts over all hours in the current date for all organizations.
     #[serde(rename = "oci_host_sum")]
     pub oci_host_sum: Option<i64>,
-    /// Shows the 99th percentile of all Oracle Cloud Infrastructure hosts over all hours in the current date for the given org.
+    /// Shows the 99th percentile of all Oracle Cloud Infrastructure hosts over all hours in the current date for all organizations.
     #[serde(rename = "oci_host_top99p")]
     pub oci_host_top99p: Option<i64>,
     /// Sum of all online archived events over all hours in the current date for all organizations.
@@ -368,13 +368,16 @@ pub struct UsageSummaryDate {
     /// Organizations associated with a user.
     #[serde(rename = "orgs")]
     pub orgs: Option<Vec<crate::datadogV1::model::UsageSummaryDateOrg>>,
+    /// Sum of all product analytics sessions over all hours in the current date for all organizations.
+    #[serde(rename = "product_analytics_sum")]
+    pub product_analytics_sum: Option<i64>,
     /// Shows the 99th percentile of all profiled Azure app services over all hours in the current date for all organizations.
     #[serde(rename = "profiling_aas_count_top99p")]
     pub profiling_aas_count_top99p: Option<i64>,
     /// Shows the 99th percentile of all profiled hosts over all hours within the current date for all organizations.
     #[serde(rename = "profiling_host_top99p")]
     pub profiling_host_top99p: Option<i64>,
-    /// Shows the sum of all mobile sessions and all browser lite and legacy sessions over all hours in the current month for all organizations (To be deprecated on October 1st, 2024).
+    /// Shows the sum of all mobile sessions and all browser lite and legacy sessions over all hours in the current date for all organizations (To be deprecated on October 1st, 2024).
     #[serde(rename = "rum_browser_and_mobile_session_count")]
     pub rum_browser_and_mobile_session_count: Option<i64>,
     /// Shows the sum of all browser RUM legacy sessions over all hours in the current date for all organizations (To be introduced on October 1st, 2024).
@@ -451,10 +454,10 @@ pub struct UsageSummaryDate {
     #[deprecated]
     #[serde(rename = "rum_units_sum")]
     pub rum_units_sum: Option<i64>,
-    /// Shows the average of all Software Composition Analysis Fargate tasks over all hours in the current date for the given org.
+    /// Shows the average of all Software Composition Analysis Fargate tasks over all hours in the current date for all organizations.
     #[serde(rename = "sca_fargate_count_avg")]
     pub sca_fargate_count_avg: Option<i64>,
-    /// Shows the sum of the high-water marks of all Software Composition Analysis Fargate tasks over all hours in the current date for the given org.
+    /// Shows the sum of the high-water marks of all Software Composition Analysis Fargate tasks over all hours in the current date for all organizations.
     #[serde(rename = "sca_fargate_count_hwm")]
     pub sca_fargate_count_hwm: Option<i64>,
     /// Sum of all APM bytes scanned with sensitive data scanner over all hours in the current date for all organizations.
@@ -463,25 +466,25 @@ pub struct UsageSummaryDate {
     /// Sum of all event stream events bytes scanned with sensitive data scanner over all hours in the current date for all organizations.
     #[serde(rename = "sds_events_scanned_bytes_sum")]
     pub sds_events_scanned_bytes_sum: Option<i64>,
-    /// Shows the sum of all bytes scanned of logs usage by the Sensitive Data Scanner over all hours in the current month for all organizations.
+    /// Shows the sum of all bytes scanned by the Sensitive Data Scanner for logs usage across all organizations over all hours on the current date.
     #[serde(rename = "sds_logs_scanned_bytes_sum")]
     pub sds_logs_scanned_bytes_sum: Option<i64>,
     /// Sum of all RUM bytes scanned with sensitive data scanner over all hours in the current date for all organizations.
     #[serde(rename = "sds_rum_scanned_bytes_sum")]
     pub sds_rum_scanned_bytes_sum: Option<i64>,
-    /// Shows the sum of all bytes scanned across all usage types by the Sensitive Data Scanner over all hours in the current month for all organizations.
+    /// Shows the sum of all bytes scanned by the Sensitive Data Scanner across all usage types over all hours of the current date for all organizations.
     #[serde(rename = "sds_total_scanned_bytes_sum")]
     pub sds_total_scanned_bytes_sum: Option<i64>,
-    /// Shows the average of the number of Serverless Apps for Azure for the given date and given org.
+    /// Shows the average number of Serverless Apps for Azure for the given date for all organizations.
     #[serde(rename = "serverless_apps_azure_count_avg")]
     pub serverless_apps_azure_count_avg: Option<i64>,
-    /// Shows the average of the number of Serverless Apps for Google Cloud for the given date and given org.
+    /// Shows the average number of Serverless Apps for Google Cloud for the given date for all organizations.
     #[serde(rename = "serverless_apps_google_count_avg")]
     pub serverless_apps_google_count_avg: Option<i64>,
-    /// Shows the average of the number of Serverless Apps for Azure and Google Cloud for the given date and given org.
+    /// Shows the average number of Serverless Apps for Azure and Google Cloud for the given date for all organizations.
     #[serde(rename = "serverless_apps_total_count_avg")]
     pub serverless_apps_total_count_avg: Option<i64>,
-    /// Shows the sum of all log events analyzed by Cloud SIEM over all hours in the current date for the given org.
+    /// Shows the sum of all log events analyzed by Cloud SIEM over all hours in the current date for all organizations.
     #[serde(rename = "siem_analyzed_logs_add_on_count_sum")]
     pub siem_analyzed_logs_add_on_count_sum: Option<i64>,
     /// Shows the sum of all Synthetic browser tests over all hours in the current date for all organizations.
@@ -502,13 +505,13 @@ pub struct UsageSummaryDate {
     /// Shows the sum of all ingested APM span bytes over all hours in the current date for all organizations.
     #[serde(rename = "twol_ingested_events_bytes_sum")]
     pub twol_ingested_events_bytes_sum: Option<i64>,
-    /// Shows the 99th percentile of all universal service management hosts over all hours in the current date for the given org.
+    /// Shows the 99th percentile of all universal service management hosts over all hours on the current date for all organizations.
     #[serde(rename = "universal_service_monitoring_host_top99p")]
     pub universal_service_monitoring_host_top99p: Option<i64>,
     /// Shows the 99th percentile of all vSphere hosts over all hours in the current date for all organizations.
     #[serde(rename = "vsphere_host_top99p")]
     pub vsphere_host_top99p: Option<i64>,
-    /// Shows the 99th percentile of all Application Vulnerability Management hosts over all hours in the current date for the given org.
+    /// Shows the 99th percentile of all Application Vulnerability Management hosts over all hours on the current date for all organizations.
     #[serde(rename = "vuln_management_host_count_top99p")]
     pub vuln_management_host_count_top99p: Option<i64>,
     /// Sum of all workflows executed over all hours in the current date for all organizations.
@@ -640,6 +643,7 @@ impl UsageSummaryDate {
             opentelemetry_apm_host_top99p: None,
             opentelemetry_host_top99p: None,
             orgs: None,
+            product_analytics_sum: None,
             profiling_aas_count_top99p: None,
             profiling_host_top99p: None,
             rum_browser_and_mobile_session_count: None,
@@ -1384,6 +1388,12 @@ impl UsageSummaryDate {
     }
 
     #[allow(deprecated)]
+    pub fn product_analytics_sum(mut self, value: i64) -> Self {
+        self.product_analytics_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn profiling_aas_count_top99p(mut self, value: i64) -> Self {
         self.profiling_aas_count_top99p = Some(value);
         self
@@ -1818,6 +1828,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                 let mut opentelemetry_apm_host_top99p: Option<i64> = None;
                 let mut opentelemetry_host_top99p: Option<i64> = None;
                 let mut orgs: Option<Vec<crate::datadogV1::model::UsageSummaryDateOrg>> = None;
+                let mut product_analytics_sum: Option<i64> = None;
                 let mut profiling_aas_count_top99p: Option<i64> = None;
                 let mut profiling_host_top99p: Option<i64> = None;
                 let mut rum_browser_and_mobile_session_count: Option<i64> = None;
@@ -2677,6 +2688,13 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                             }
                             orgs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "product_analytics_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            product_analytics_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "profiling_aas_count_top99p" => {
                             if v.is_null() {
                                 continue;
@@ -3138,6 +3156,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                     opentelemetry_apm_host_top99p,
                     opentelemetry_host_top99p,
                     orgs,
+                    product_analytics_sum,
                     profiling_aas_count_top99p,
                     profiling_host_top99p,
                     rum_browser_and_mobile_session_count,

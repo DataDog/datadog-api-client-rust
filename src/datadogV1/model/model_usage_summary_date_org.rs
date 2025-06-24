@@ -381,6 +381,9 @@ pub struct UsageSummaryDateOrg {
     /// Shows the 99th percentile of all hosts reported by the Datadog exporter for the OpenTelemetry Collector over all hours in the current date for the given org.
     #[serde(rename = "opentelemetry_host_top99p")]
     pub opentelemetry_host_top99p: Option<i64>,
+    /// Shows the sum of all product analytics sessions over all hours in the current date for the given org.
+    #[serde(rename = "product_analytics_sum")]
+    pub product_analytics_sum: Option<i64>,
     /// Shows the 99th percentile of all profiled Azure app services over all hours in the current date for all organizations.
     #[serde(rename = "profiling_aas_count_top99p")]
     pub profiling_aas_count_top99p: Option<i64>,
@@ -663,6 +666,7 @@ impl UsageSummaryDateOrg {
             online_archive_events_count_sum: None,
             opentelemetry_apm_host_top99p: None,
             opentelemetry_host_top99p: None,
+            product_analytics_sum: None,
             profiling_aas_count_top99p: None,
             profiling_host_top99p: None,
             public_id: None,
@@ -1433,6 +1437,12 @@ impl UsageSummaryDateOrg {
     }
 
     #[allow(deprecated)]
+    pub fn product_analytics_sum(mut self, value: i64) -> Self {
+        self.product_analytics_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn profiling_aas_count_top99p(mut self, value: i64) -> Self {
         self.profiling_aas_count_top99p = Some(value);
         self
@@ -1883,6 +1893,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                 let mut online_archive_events_count_sum: Option<i64> = None;
                 let mut opentelemetry_apm_host_top99p: Option<i64> = None;
                 let mut opentelemetry_host_top99p: Option<i64> = None;
+                let mut product_analytics_sum: Option<i64> = None;
                 let mut profiling_aas_count_top99p: Option<i64> = None;
                 let mut profiling_host_top99p: Option<i64> = None;
                 let mut public_id: Option<String> = None;
@@ -2772,6 +2783,13 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                             opentelemetry_host_top99p =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "product_analytics_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            product_analytics_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "profiling_aas_count_top99p" => {
                             if v.is_null() {
                                 continue;
@@ -3249,6 +3267,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                     online_archive_events_count_sum,
                     opentelemetry_apm_host_top99p,
                     opentelemetry_host_top99p,
+                    product_analytics_sum,
                     profiling_aas_count_top99p,
                     profiling_host_top99p,
                     public_id,

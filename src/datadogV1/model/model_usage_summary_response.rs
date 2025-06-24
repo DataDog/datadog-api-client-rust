@@ -388,6 +388,9 @@ pub struct UsageSummaryResponse {
     /// Shows the 99th percentile of all hosts reported by the Datadog exporter for the OpenTelemetry Collector over all hours in the current month for all organizations.
     #[serde(rename = "opentelemetry_host_top99p_sum")]
     pub opentelemetry_host_top99p_sum: Option<i64>,
+    /// Sum of all product analytics sessions for all hours in the current month for all organizations.
+    #[serde(rename = "product_analytics_agg_sum")]
+    pub product_analytics_agg_sum: Option<i64>,
     /// Shows the 99th percentile of all profiled Azure app services over all hours in the current month for all organizations.
     #[serde(rename = "profiling_aas_count_top99p_sum")]
     pub profiling_aas_count_top99p_sum: Option<i64>,
@@ -682,6 +685,7 @@ impl UsageSummaryResponse {
             online_archive_events_count_agg_sum: None,
             opentelemetry_apm_host_top99p_sum: None,
             opentelemetry_host_top99p_sum: None,
+            product_analytics_agg_sum: None,
             profiling_aas_count_top99p_sum: None,
             profiling_container_agent_count_avg: None,
             profiling_host_count_top99p_sum: None,
@@ -1467,6 +1471,12 @@ impl UsageSummaryResponse {
     }
 
     #[allow(deprecated)]
+    pub fn product_analytics_agg_sum(mut self, value: i64) -> Self {
+        self.product_analytics_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn profiling_aas_count_top99p_sum(mut self, value: i64) -> Self {
         self.profiling_aas_count_top99p_sum = Some(value);
         self
@@ -1941,6 +1951,7 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                 let mut online_archive_events_count_agg_sum: Option<i64> = None;
                 let mut opentelemetry_apm_host_top99p_sum: Option<i64> = None;
                 let mut opentelemetry_host_top99p_sum: Option<i64> = None;
+                let mut product_analytics_agg_sum: Option<i64> = None;
                 let mut profiling_aas_count_top99p_sum: Option<i64> = None;
                 let mut profiling_container_agent_count_avg: Option<i64> = None;
                 let mut profiling_host_count_top99p_sum: Option<i64> = None;
@@ -2850,6 +2861,13 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                             opentelemetry_host_top99p_sum =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "product_analytics_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            product_analytics_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "profiling_aas_count_top99p_sum" => {
                             if v.is_null() {
                                 continue;
@@ -3350,6 +3368,7 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                     online_archive_events_count_agg_sum,
                     opentelemetry_apm_host_top99p_sum,
                     opentelemetry_host_top99p_sum,
+                    product_analytics_agg_sum,
                     profiling_aas_count_top99p_sum,
                     profiling_container_agent_count_avg,
                     profiling_host_count_top99p_sum,

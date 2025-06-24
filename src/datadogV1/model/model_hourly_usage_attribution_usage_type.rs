@@ -68,6 +68,7 @@ pub enum HourlyUsageAttributionUsageType {
     PROFILED_CONTAINER_USAGE,
     PROFILED_FARGATE_USAGE,
     PROFILED_HOST_USAGE,
+    PRODUCT_ANALYTICS_SESSION_USAGE,
     RUM_BROWSER_MOBILE_SESSIONS_USAGE,
     RUM_REPLAY_SESSIONS_USAGE,
     SCA_FARGATE_USAGE,
@@ -160,6 +161,9 @@ impl ToString for HourlyUsageAttributionUsageType {
             Self::PROFILED_CONTAINER_USAGE => String::from("profiled_container_usage"),
             Self::PROFILED_FARGATE_USAGE => String::from("profiled_fargate_usage"),
             Self::PROFILED_HOST_USAGE => String::from("profiled_host_usage"),
+            Self::PRODUCT_ANALYTICS_SESSION_USAGE => {
+                String::from("product_analytics_session_usage")
+            }
             Self::RUM_BROWSER_MOBILE_SESSIONS_USAGE => {
                 String::from("rum_browser_mobile_sessions_usage")
             }
@@ -268,6 +272,7 @@ impl<'de> Deserialize<'de> for HourlyUsageAttributionUsageType {
             "profiled_container_usage" => Self::PROFILED_CONTAINER_USAGE,
             "profiled_fargate_usage" => Self::PROFILED_FARGATE_USAGE,
             "profiled_host_usage" => Self::PROFILED_HOST_USAGE,
+            "product_analytics_session_usage" => Self::PRODUCT_ANALYTICS_SESSION_USAGE,
             "rum_browser_mobile_sessions_usage" => Self::RUM_BROWSER_MOBILE_SESSIONS_USAGE,
             "rum_replay_sessions_usage" => Self::RUM_REPLAY_SESSIONS_USAGE,
             "sca_fargate_usage" => Self::SCA_FARGATE_USAGE,
