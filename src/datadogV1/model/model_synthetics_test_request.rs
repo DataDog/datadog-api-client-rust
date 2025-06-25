@@ -46,7 +46,7 @@ pub struct SyntheticsTestRequest {
     pub dns_server: Option<String>,
     /// DNS server port to use for DNS tests.
     #[serde(rename = "dnsServerPort")]
-    pub dns_server_port: Option<String>,
+    pub dns_server_port: Option<crate::datadogV1::model::SyntheticsTestRequestDNSServerPort>,
     /// Files to be used as part of the request in the test. Only valid if `bodyType` is `multipart/form-data`.
     #[serde(rename = "files")]
     pub files: Option<Vec<crate::datadogV1::model::SyntheticsTestRequestBodyFile>>,
@@ -221,7 +221,10 @@ impl SyntheticsTestRequest {
         self
     }
 
-    pub fn dns_server_port(mut self, value: String) -> Self {
+    pub fn dns_server_port(
+        mut self,
+        value: crate::datadogV1::model::SyntheticsTestRequestDNSServerPort,
+    ) -> Self {
         self.dns_server_port = Some(value);
         self
     }
@@ -383,7 +386,9 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                 let mut compressed_json_descriptor: Option<String> = None;
                 let mut compressed_proto_file: Option<String> = None;
                 let mut dns_server: Option<String> = None;
-                let mut dns_server_port: Option<String> = None;
+                let mut dns_server_port: Option<
+                    crate::datadogV1::model::SyntheticsTestRequestDNSServerPort,
+                > = None;
                 let mut files: Option<Vec<crate::datadogV1::model::SyntheticsTestRequestBodyFile>> =
                     None;
                 let mut follow_redirects: Option<bool> = None;
@@ -518,6 +523,14 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                             }
                             dns_server_port =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _dns_server_port) = dns_server_port {
+                                match _dns_server_port {
+                                    crate::datadogV1::model::SyntheticsTestRequestDNSServerPort::UnparsedObject(_dns_server_port) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "files" => {
                             if v.is_null() {
