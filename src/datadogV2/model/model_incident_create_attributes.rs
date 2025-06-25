@@ -28,6 +28,9 @@ pub struct IncidentCreateAttributes {
     /// An array of initial timeline cells to be placed at the beginning of the incident timeline.
     #[serde(rename = "initial_cells")]
     pub initial_cells: Option<Vec<crate::datadogV2::model::IncidentTimelineCellCreateAttributes>>,
+    /// A flag indicating whether the incident is a test incident.
+    #[serde(rename = "is_test")]
+    pub is_test: Option<bool>,
     /// Notification handles that will be notified of the incident at creation.
     #[serde(rename = "notification_handles")]
     pub notification_handles: Option<Vec<crate::datadogV2::model::IncidentNotificationHandle>>,
@@ -49,6 +52,7 @@ impl IncidentCreateAttributes {
             fields: None,
             incident_type_uuid: None,
             initial_cells: None,
+            is_test: None,
             notification_handles: None,
             title,
             additional_properties: std::collections::BTreeMap::new(),
@@ -79,6 +83,11 @@ impl IncidentCreateAttributes {
         value: Vec<crate::datadogV2::model::IncidentTimelineCellCreateAttributes>,
     ) -> Self {
         self.initial_cells = Some(value);
+        self
+    }
+
+    pub fn is_test(mut self, value: bool) -> Self {
+        self.is_test = Some(value);
         self
     }
 
@@ -128,6 +137,7 @@ impl<'de> Deserialize<'de> for IncidentCreateAttributes {
                 let mut initial_cells: Option<
                     Vec<crate::datadogV2::model::IncidentTimelineCellCreateAttributes>,
                 > = None;
+                let mut is_test: Option<bool> = None;
                 let mut notification_handles: Option<
                     Vec<crate::datadogV2::model::IncidentNotificationHandle>,
                 > = None;
@@ -171,6 +181,12 @@ impl<'de> Deserialize<'de> for IncidentCreateAttributes {
                             initial_cells =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "is_test" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            is_test = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "notification_handles" => {
                             if v.is_null() {
                                 continue;
@@ -198,6 +214,7 @@ impl<'de> Deserialize<'de> for IncidentCreateAttributes {
                     fields,
                     incident_type_uuid,
                     initial_cells,
+                    is_test,
                     notification_handles,
                     title,
                     additional_properties,
