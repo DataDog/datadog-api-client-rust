@@ -29,6 +29,7 @@ use datadog_api_client::datadogV1::model::SyntheticsTestOptions;
 use datadog_api_client::datadogV1::model::SyntheticsTestOptionsHTTPVersion;
 use datadog_api_client::datadogV1::model::SyntheticsTestOptionsRetry;
 use datadog_api_client::datadogV1::model::SyntheticsTestRequest;
+use datadog_api_client::datadogV1::model::SyntheticsTestRequestDNSServerPort;
 use datadog_api_client::datadogV1::model::SyntheticsTestRequestPort;
 use datadog_api_client::datadogV1::model::SyntheticsVariableParser;
 use std::collections::BTreeMap;
@@ -186,7 +187,12 @@ async fn main() {
                                     "DNS step".to_string(),
                                     SyntheticsTestRequest::new()
                                         .dns_server("8.8.8.8".to_string())
-                                        .dns_server_port("53".to_string())
+                                        .dns_server_port(
+                                            SyntheticsTestRequestDNSServerPort
+                                            ::SyntheticsTestRequestVariableDNSServerPort(
+                                                "53".to_string(),
+                                            ),
+                                        )
                                         .host("troisdizaines.com".to_string()),
                                     SyntheticsAPITestStepSubtype::DNS,
                                 )
