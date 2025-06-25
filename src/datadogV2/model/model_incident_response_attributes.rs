@@ -71,6 +71,9 @@ pub struct IncidentResponseAttributes {
     /// A unique identifier that represents an incident type.
     #[serde(rename = "incident_type_uuid")]
     pub incident_type_uuid: Option<String>,
+    /// A flag indicating whether the incident is a test incident.
+    #[serde(rename = "is_test")]
+    pub is_test: Option<bool>,
     /// Timestamp when the incident was last modified.
     #[serde(rename = "modified")]
     pub modified: Option<chrono::DateTime<chrono::Utc>>,
@@ -149,6 +152,7 @@ impl IncidentResponseAttributes {
             detected: None,
             fields: None,
             incident_type_uuid: None,
+            is_test: None,
             modified: None,
             non_datadog_creator: None,
             notification_handles: None,
@@ -222,6 +226,11 @@ impl IncidentResponseAttributes {
 
     pub fn incident_type_uuid(mut self, value: String) -> Self {
         self.incident_type_uuid = Some(value);
+        self
+    }
+
+    pub fn is_test(mut self, value: bool) -> Self {
+        self.is_test = Some(value);
         self
     }
 
@@ -333,6 +342,7 @@ impl<'de> Deserialize<'de> for IncidentResponseAttributes {
                     >,
                 > = None;
                 let mut incident_type_uuid: Option<String> = None;
+                let mut is_test: Option<bool> = None;
                 let mut modified: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut non_datadog_creator: Option<
                     Option<crate::datadogV2::model::IncidentNonDatadogCreator>,
@@ -411,6 +421,12 @@ impl<'de> Deserialize<'de> for IncidentResponseAttributes {
                             }
                             incident_type_uuid =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "is_test" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            is_test = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "modified" => {
                             if v.is_null() {
@@ -509,6 +525,7 @@ impl<'de> Deserialize<'de> for IncidentResponseAttributes {
                     detected,
                     fields,
                     incident_type_uuid,
+                    is_test,
                     modified,
                     non_datadog_creator,
                     notification_handles,
