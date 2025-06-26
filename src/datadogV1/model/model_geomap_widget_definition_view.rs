@@ -11,9 +11,12 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct GeomapWidgetDefinitionView {
-    /// The 2-letter ISO code of a country to focus the map on. Or `WORLD`.
+    /// A custom extent of the map defined by an array of four numbers in the order `[minLongitude, minLatitude, maxLongitude, maxLatitude]`. Mutually exclusive with `focus`.
+    #[serde(rename = "custom_extent")]
+    pub custom_extent: Option<Vec<f64>>,
+    /// The 2-letter ISO code of a country to focus the map on. Or `WORLD`. Mutually exclusive with `custom_extent`.
     #[serde(rename = "focus")]
-    pub focus: String,
+    pub focus: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -22,12 +25,23 @@ pub struct GeomapWidgetDefinitionView {
 }
 
 impl GeomapWidgetDefinitionView {
-    pub fn new(focus: String) -> GeomapWidgetDefinitionView {
+    pub fn new() -> GeomapWidgetDefinitionView {
         GeomapWidgetDefinitionView {
-            focus,
+            custom_extent: None,
+            focus: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn custom_extent(mut self, value: Vec<f64>) -> Self {
+        self.custom_extent = Some(value);
+        self
+    }
+
+    pub fn focus(mut self, value: String) -> Self {
+        self.focus = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -36,6 +50,12 @@ impl GeomapWidgetDefinitionView {
     ) -> Self {
         self.additional_properties = value;
         self
+    }
+}
+
+impl Default for GeomapWidgetDefinitionView {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
@@ -56,6 +76,7 @@ impl<'de> Deserialize<'de> for GeomapWidgetDefinitionView {
             where
                 M: MapAccess<'a>,
             {
+                let mut custom_extent: Option<Vec<f64>> = None;
                 let mut focus: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -65,7 +86,17 @@ impl<'de> Deserialize<'de> for GeomapWidgetDefinitionView {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "custom_extent" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            custom_extent =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "focus" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             focus = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -75,9 +106,9 @@ impl<'de> Deserialize<'de> for GeomapWidgetDefinitionView {
                         }
                     }
                 }
-                let focus = focus.ok_or_else(|| M::Error::missing_field("focus"))?;
 
                 let content = GeomapWidgetDefinitionView {
+                    custom_extent,
                     focus,
                     additional_properties,
                     _unparsed,
