@@ -103,7 +103,7 @@ async fn main() {
                                 ],
                                 GeomapWidgetDefinitionStyle::new("hostmap_blues".to_string(), false),
                                 GeomapWidgetDefinitionType::GEOMAP,
-                                GeomapWidgetDefinitionView::new("WORLD".to_string()),
+                                GeomapWidgetDefinitionView::new().focus("WORLD".to_string()),
                             )
                                 .time(WidgetTime::WidgetLegacyLiveSpan(Box::new(WidgetLegacyLiveSpan::new())))
                                 .title("".to_string())

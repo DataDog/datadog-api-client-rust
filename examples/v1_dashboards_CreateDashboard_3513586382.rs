@@ -58,7 +58,7 @@ async fn main() {
                         .response_format(FormulaAndFunctionResponseFormat::EVENT_LIST)],
                     GeomapWidgetDefinitionStyle::new("hostmap_blues".to_string(), false),
                     GeomapWidgetDefinitionType::GEOMAP,
-                    GeomapWidgetDefinitionView::new("WORLD".to_string()),
+                    GeomapWidgetDefinitionView::new().focus("WORLD".to_string()),
                 )
                 .title("".to_string())
                 .title_align(WidgetTextAlign::LEFT)
