@@ -16,6 +16,7 @@ async fn main() {
         std::env::var("SYNTHETICS_MOBILE_TEST_PUBLIC_ID").unwrap();
     let body = SyntheticsMobileTest::new(
         SyntheticsMobileTestConfig::new().variables(vec![]),
+        "".to_string(),
         "Example-Synthetic-updated".to_string(),
         SyntheticsMobileTestOptions::new(
             vec!["synthetics:mobile:device:iphone_15_ios_17".to_string()],
@@ -28,7 +29,6 @@ async fn main() {
         ),
         SyntheticsMobileTestType::MOBILE,
     )
-    .message("".to_string())
     .status(SyntheticsTestPauseStatus::PAUSED)
     .steps(vec![]);
     let configuration = datadog::Configuration::new();
