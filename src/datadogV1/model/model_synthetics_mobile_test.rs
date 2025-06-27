@@ -19,7 +19,7 @@ pub struct SyntheticsMobileTest {
     pub device_ids: Option<Vec<String>>,
     /// Notification message associated with the test.
     #[serde(rename = "message")]
-    pub message: Option<String>,
+    pub message: String,
     /// The associated monitor ID.
     #[serde(rename = "monitor_id")]
     pub monitor_id: Option<i64>,
@@ -55,6 +55,7 @@ pub struct SyntheticsMobileTest {
 impl SyntheticsMobileTest {
     pub fn new(
         config: crate::datadogV1::model::SyntheticsMobileTestConfig,
+        message: String,
         name: String,
         options: crate::datadogV1::model::SyntheticsMobileTestOptions,
         type_: crate::datadogV1::model::SyntheticsMobileTestType,
@@ -62,7 +63,7 @@ impl SyntheticsMobileTest {
         SyntheticsMobileTest {
             config,
             device_ids: None,
-            message: None,
+            message,
             monitor_id: None,
             name,
             options,
@@ -78,11 +79,6 @@ impl SyntheticsMobileTest {
 
     pub fn device_ids(mut self, value: Vec<String>) -> Self {
         self.device_ids = Some(value);
-        self
-    }
-
-    pub fn message(mut self, value: String) -> Self {
-        self.message = Some(value);
         self
     }
 
@@ -167,9 +163,6 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTest {
                             device_ids = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "message" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "monitor_id" => {
@@ -235,6 +228,7 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTest {
                     }
                 }
                 let config = config.ok_or_else(|| M::Error::missing_field("config"))?;
+                let message = message.ok_or_else(|| M::Error::missing_field("message"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let options = options.ok_or_else(|| M::Error::missing_field("options"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
