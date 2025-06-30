@@ -13,6 +13,7 @@ use datadog_api_client::datadogV1::model::SyntheticsTestPauseStatus;
 async fn main() {
     let body = SyntheticsMobileTest::new(
         SyntheticsMobileTestConfig::new().variables(vec![]),
+        "".to_string(),
         "Example-Synthetic".to_string(),
         SyntheticsMobileTestOptions::new(
             vec!["synthetics:mobile:device:iphone_15_ios_17".to_string()],
@@ -25,7 +26,6 @@ async fn main() {
         ),
         SyntheticsMobileTestType::MOBILE,
     )
-    .message("".to_string())
     .status(SyntheticsTestPauseStatus::PAUSED)
     .steps(vec![]);
     let configuration = datadog::Configuration::new();
