@@ -35,6 +35,9 @@ pub struct DashboardTemplateVariable {
     /// The tag prefix associated with the variable. Only tags with this prefix appear in the variable drop-down.
     #[serde(rename = "prefix", default, with = "::serde_with::rust::double_option")]
     pub prefix: Option<Option<String>>,
+    /// The type of variable. This is to differentiate between filter variables (interpolated in query) and group by variables (interpolated into group by).
+    #[serde(rename = "type", default, with = "::serde_with::rust::double_option")]
+    pub type_: Option<Option<String>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -51,6 +54,7 @@ impl DashboardTemplateVariable {
             defaults: None,
             name,
             prefix: None,
+            type_: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -77,6 +81,12 @@ impl DashboardTemplateVariable {
     #[allow(deprecated)]
     pub fn prefix(mut self, value: Option<String>) -> Self {
         self.prefix = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn type_(mut self, value: Option<String>) -> Self {
+        self.type_ = Some(value);
         self
     }
 
@@ -111,6 +121,7 @@ impl<'de> Deserialize<'de> for DashboardTemplateVariable {
                 let mut defaults: Option<Vec<String>> = None;
                 let mut name: Option<String> = None;
                 let mut prefix: Option<Option<String>> = None;
+                let mut type_: Option<Option<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -138,6 +149,9 @@ impl<'de> Deserialize<'de> for DashboardTemplateVariable {
                         "prefix" => {
                             prefix = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "type" => {
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -154,6 +168,7 @@ impl<'de> Deserialize<'de> for DashboardTemplateVariable {
                     defaults,
                     name,
                     prefix,
+                    type_,
                     additional_properties,
                     _unparsed,
                 };
