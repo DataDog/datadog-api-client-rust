@@ -169,6 +169,24 @@ impl ListTagConfigurationsOptionalParams {
     }
 }
 
+/// ListVolumesByMetricNameOptionalParams is a struct for passing parameters to the method [`MetricsAPI::list_volumes_by_metric_name`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListVolumesByMetricNameOptionalParams {
+    /// The number of seconds of look back (from now).
+    /// Default value is 604,800 (1 week), minimum value is 7200 (2 hours), maximum value is 2,630,000 (1 month).
+    pub window_seconds: Option<i64>,
+}
+
+impl ListVolumesByMetricNameOptionalParams {
+    /// The number of seconds of look back (from now).
+    /// Default value is 604,800 (1 week), minimum value is 7200 (2 hours), maximum value is 2,630,000 (1 month).
+    pub fn window_seconds(mut self, value: i64) -> Self {
+        self.window_seconds = Some(value);
+        self
+    }
+}
+
 /// SubmitMetricsOptionalParams is a struct for passing parameters to the method [`MetricsAPI::submit_metrics`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -1794,12 +1812,13 @@ impl MetricsAPI {
     pub async fn list_volumes_by_metric_name(
         &self,
         metric_name: String,
+        params: ListVolumesByMetricNameOptionalParams,
     ) -> Result<
         crate::datadogV2::model::MetricVolumesResponse,
         datadog::Error<ListVolumesByMetricNameError>,
     > {
         match self
-            .list_volumes_by_metric_name_with_http_info(metric_name)
+            .list_volumes_by_metric_name_with_http_info(metric_name, params)
             .await
         {
             Ok(response_content) => {
@@ -1821,12 +1840,16 @@ impl MetricsAPI {
     pub async fn list_volumes_by_metric_name_with_http_info(
         &self,
         metric_name: String,
+        params: ListVolumesByMetricNameOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::MetricVolumesResponse>,
         datadog::Error<ListVolumesByMetricNameError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_volumes_by_metric_name";
+
+        // unbox and build optional parameters
+        let window_seconds = params.window_seconds;
 
         let local_client = &self.client;
 
@@ -1837,6 +1860,11 @@ impl MetricsAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = window_seconds {
+            local_req_builder =
+                local_req_builder.query(&[("window[seconds]", &local_query_param.to_string())]);
+        };
 
         // build headers
         let mut headers = HeaderMap::new();
