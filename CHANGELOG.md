@@ -1,5 +1,32 @@
 # CHANGELOG
 
+## 0.15.0/2025-06-30
+
+### Fixed
+* Synthetics mobile test `message` field is now required [#750](https://github.com/DataDog/datadog-api-client-rust/pull/750)
+* Make dns port be string and number [#734](https://github.com/DataDog/datadog-api-client-rust/pull/734)
+* Fix basic auth requirements [#731](https://github.com/DataDog/datadog-api-client-rust/pull/731)
+* Add support for the api_security detection rule type [#726](https://github.com/DataDog/datadog-api-client-rust/pull/726)
+
+### Security
+* Remove caseIndex from historical jobs api spec [#749](https://github.com/DataDog/datadog-api-client-rust/pull/749)
+
+### Changed
+* Update events intake specs for v2 Events post endpoint [#745](https://github.com/DataDog/datadog-api-client-rust/pull/745)
+* Update events intake specs for v2 Events post endpoint [#707](https://github.com/DataDog/datadog-api-client-rust/pull/707)
+* Add billing read permission [#702](https://github.com/DataDog/datadog-api-client-rust/pull/702)
+
+### Added
+* Update Incident API specs to include `is_test` in `POST /incidents` and incidents response [#744](https://github.com/DataDog/datadog-api-client-rust/pull/744)
+* Add App Key Registration API  [#738](https://github.com/DataDog/datadog-api-client-rust/pull/738)
+* Microsoft Sentinel Public API support [#729](https://github.com/DataDog/datadog-api-client-rust/pull/729)
+* Add the AP2 datacenter. [#727](https://github.com/DataDog/datadog-api-client-rust/pull/727)
+* Add custom fields to Rule update/validate API public documentation. [#718](https://github.com/DataDog/datadog-api-client-rust/pull/718)
+* Add hash field to actions in CWS agent rules [#715](https://github.com/DataDog/datadog-api-client-rust/pull/715)
+
+### Deprecated
+* Deprecate SLO metadata fields in api spec [#700](https://github.com/DataDog/datadog-api-client-rust/pull/700)
+
 ## 0.14.0/2025-06-24
 
 ### Fixed
