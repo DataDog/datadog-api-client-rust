@@ -20,6 +20,9 @@ pub struct SelectableTemplateVariableItems {
     /// The tag/attribute key associated with the template variable.
     #[serde(rename = "prefix")]
     pub prefix: Option<String>,
+    /// The type of variable. This is to differentiate between filter variables (interpolated in query) and group by variables (interpolated into group by).
+    #[serde(rename = "type", default, with = "::serde_with::rust::double_option")]
+    pub type_: Option<Option<String>>,
     /// List of visible tag values on the shared dashboard.
     #[serde(
         rename = "visible_tags",
@@ -40,6 +43,7 @@ impl SelectableTemplateVariableItems {
             default_value: None,
             name: None,
             prefix: None,
+            type_: None,
             visible_tags: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -58,6 +62,11 @@ impl SelectableTemplateVariableItems {
 
     pub fn prefix(mut self, value: String) -> Self {
         self.prefix = Some(value);
+        self
+    }
+
+    pub fn type_(mut self, value: Option<String>) -> Self {
+        self.type_ = Some(value);
         self
     }
 
@@ -101,6 +110,7 @@ impl<'de> Deserialize<'de> for SelectableTemplateVariableItems {
                 let mut default_value: Option<String> = None;
                 let mut name: Option<String> = None;
                 let mut prefix: Option<String> = None;
+                let mut type_: Option<Option<String>> = None;
                 let mut visible_tags: Option<Option<Vec<String>>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -129,6 +139,9 @@ impl<'de> Deserialize<'de> for SelectableTemplateVariableItems {
                             }
                             prefix = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "type" => {
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "visible_tags" => {
                             visible_tags =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -145,6 +158,7 @@ impl<'de> Deserialize<'de> for SelectableTemplateVariableItems {
                     default_value,
                     name,
                     prefix,
+                    type_,
                     visible_tags,
                     additional_properties,
                     _unparsed,
