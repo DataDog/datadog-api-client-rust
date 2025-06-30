@@ -22236,20 +22236,26 @@ fn test_v2_list_volumes_by_metric_name(
         .expect("api instance not found");
     let metric_name =
         serde_json::from_value(_parameters.get("metric_name").unwrap().clone()).unwrap();
-    let response = match block_on(api.list_volumes_by_metric_name_with_http_info(metric_name)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
+    let window_seconds = _parameters
+        .get("window[seconds]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_metrics::ListVolumesByMetricNameOptionalParams::default();
+    params.window_seconds = window_seconds;
+    let response =
+        match block_on(api.list_volumes_by_metric_name_with_http_info(metric_name, params)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
                     }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
