@@ -53650,7 +53650,7 @@ paths:
         schema:
           default: 100
           format: int32
-          maximum: 5000
+          maximum: 7500
           minimum: 1
           type: integer
       responses:
