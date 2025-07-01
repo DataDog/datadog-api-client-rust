@@ -167,6 +167,8 @@ pub struct GetMonthlyUsageAttributionOptionalParams {
     /// The direction to sort by: `[desc, asc]`.
     pub sort_direction: Option<crate::datadogV1::model::UsageSortDirection>,
     /// The field to sort by.
+    /// The following values have been **deprecated**:
+    /// `estimated_indexed_spans_usage`, `estimated_indexed_spans_percentage`, `estimated_ingested_spans_usage`, `estimated_ingested_spans_percentage`.
     pub sort_name: Option<crate::datadogV1::model::MonthlyUsageAttributionSupportedMetrics>,
     /// Comma separated list of tag keys used to group usage. If no value is provided the usage will not be broken down by tags.
     ///
@@ -190,6 +192,8 @@ impl GetMonthlyUsageAttributionOptionalParams {
         self
     }
     /// The field to sort by.
+    /// The following values have been **deprecated**:
+    /// `estimated_indexed_spans_usage`, `estimated_indexed_spans_percentage`, `estimated_ingested_spans_usage`, `estimated_ingested_spans_percentage`.
     pub fn sort_name(
         mut self,
         value: crate::datadogV1::model::MonthlyUsageAttributionSupportedMetrics,
