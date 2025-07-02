@@ -31,8 +31,7 @@ async fn main() {
         )
         .type_(MonitorNotificationRuleResourceType::MONITOR_NOTIFICATION_RULE),
     );
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateMonitorNotificationRule", true);
+    let configuration = datadog::Configuration::new();
     let api = MonitorsAPI::with_config(configuration);
     let resp = api
         .update_monitor_notification_rule(monitor_notification_rule_data_id.clone(), body)

@@ -457,14 +457,6 @@ impl MonitorsAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_monitor_notification_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.create_monitor_notification_rule' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -862,14 +854,6 @@ impl MonitorsAPI {
     {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_monitor_notification_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.delete_monitor_notification_rule' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -1188,14 +1172,6 @@ impl MonitorsAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_monitor_notification_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.get_monitor_notification_rule' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         // unbox and build optional parameters
         let include = params.include;
@@ -1316,14 +1292,6 @@ impl MonitorsAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_monitor_notification_rules";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.get_monitor_notification_rules' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         // unbox and build optional parameters
         let include = params.include;
@@ -1955,14 +1923,6 @@ impl MonitorsAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_monitor_notification_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.update_monitor_notification_rule' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
