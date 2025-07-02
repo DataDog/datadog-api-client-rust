@@ -325,6 +325,12 @@ pub struct UsageSummaryResponse {
     /// Shows the sum of all live logs bytes ingested over all hours in the current month for all organizations (data available as of December 1, 2020).
     #[serde(rename = "live_ingested_bytes_agg_sum")]
     pub live_ingested_bytes_agg_sum: Option<i64>,
+    /// Sum of all LLM observability sessions for all hours in the current month for all organizations.
+    #[serde(rename = "llm_observability_agg_sum")]
+    pub llm_observability_agg_sum: Option<i64>,
+    /// Minimum spend for LLM observability sessions for all hours in the current month for all organizations.
+    #[serde(rename = "llm_observability_min_spend_agg_sum")]
+    pub llm_observability_min_spend_agg_sum: Option<i64>,
     /// Object containing logs usage data broken down by retention period.
     #[serde(rename = "logs_by_retention")]
     pub logs_by_retention: Option<crate::datadogV1::model::LogsByRetention>,
@@ -367,6 +373,9 @@ pub struct UsageSummaryResponse {
     #[deprecated]
     #[serde(rename = "netflow_indexed_events_count_agg_sum")]
     pub netflow_indexed_events_count_agg_sum: Option<i64>,
+    /// Shows the 99th percentile of all Network Device Monitoring wireless devices over all hours in the current month for all organizations.
+    #[serde(rename = "network_device_wireless_top99p_sum")]
+    pub network_device_wireless_top99p_sum: Option<i64>,
     /// Shows the 99th percentile of all distinct Cloud Network Monitoring hosts (formerly known as Network hosts) over all hours in the current month for all organizations.
     #[serde(rename = "npm_host_top99p_sum")]
     pub npm_host_top99p_sum: Option<i64>,
@@ -388,6 +397,9 @@ pub struct UsageSummaryResponse {
     /// Shows the 99th percentile of all hosts reported by the Datadog exporter for the OpenTelemetry Collector over all hours in the current month for all organizations.
     #[serde(rename = "opentelemetry_host_top99p_sum")]
     pub opentelemetry_host_top99p_sum: Option<i64>,
+    /// Sum of all product analytics sessions for all hours in the current month for all organizations.
+    #[serde(rename = "product_analytics_agg_sum")]
+    pub product_analytics_agg_sum: Option<i64>,
     /// Shows the 99th percentile of all profiled Azure app services over all hours in the current month for all organizations.
     #[serde(rename = "profiling_aas_count_top99p_sum")]
     pub profiling_aas_count_top99p_sum: Option<i64>,
@@ -397,6 +409,9 @@ pub struct UsageSummaryResponse {
     /// Shows the 99th percentile of all profiled hosts over all hours in the current month for all organizations.
     #[serde(rename = "profiling_host_count_top99p_sum")]
     pub profiling_host_count_top99p_sum: Option<i64>,
+    /// Shows the high-water mark of all published applications over all hours in the current month for all organizations.
+    #[serde(rename = "published_app_hwm_sum")]
+    pub published_app_hwm_sum: Option<i64>,
     /// Shows the sum of all rehydrated logs indexed over all hours in the current month for all organizations (To be deprecated on October 1st, 2024).
     #[deprecated]
     #[serde(rename = "rehydrated_indexed_events_agg_sum")]
@@ -416,6 +431,12 @@ pub struct UsageSummaryResponse {
     /// Shows the sum of all browser RUM Session Replay counts over all hours in the current month for all organizations (To be introduced on October 1st, 2024).
     #[serde(rename = "rum_browser_replay_session_count_agg_sum")]
     pub rum_browser_replay_session_count_agg_sum: Option<i64>,
+    /// Sum of all RUM indexed sessions for all hours in the current month for all organizations.
+    #[serde(rename = "rum_indexed_sessions_agg_sum")]
+    pub rum_indexed_sessions_agg_sum: Option<i64>,
+    /// Sum of all RUM ingested sessions for all hours in the current month for all organizations.
+    #[serde(rename = "rum_ingested_sessions_agg_sum")]
+    pub rum_ingested_sessions_agg_sum: Option<i64>,
     /// Shows the sum of all RUM lite sessions (browser and mobile) over all hours in the current month for all organizations (To be introduced on October 1st, 2024).
     #[serde(rename = "rum_lite_session_count_agg_sum")]
     pub rum_lite_session_count_agg_sum: Option<i64>,
@@ -474,6 +495,9 @@ pub struct UsageSummaryResponse {
     #[deprecated]
     #[serde(rename = "rum_session_count_agg_sum")]
     pub rum_session_count_agg_sum: Option<i64>,
+    /// Sum of all RUM session replay add-on sessions for all hours in the current month for all organizations.
+    #[serde(rename = "rum_session_replay_add_on_agg_sum")]
+    pub rum_session_replay_add_on_agg_sum: Option<i64>,
     /// Shows the sum of RUM sessions (browser and mobile) over all hours in the current month for all organizations.
     #[serde(rename = "rum_total_session_count_agg_sum")]
     pub rum_total_session_count_agg_sum: Option<i64>,
@@ -664,6 +688,8 @@ impl UsageSummaryResponse {
             last_updated: None,
             live_indexed_events_agg_sum: None,
             live_ingested_bytes_agg_sum: None,
+            llm_observability_agg_sum: None,
+            llm_observability_min_spend_agg_sum: None,
             logs_by_retention: None,
             mobile_rum_lite_session_count_agg_sum: None,
             mobile_rum_session_count_agg_sum: None,
@@ -675,6 +701,7 @@ impl UsageSummaryResponse {
             mobile_rum_units_agg_sum: None,
             ndm_netflow_events_agg_sum: None,
             netflow_indexed_events_count_agg_sum: None,
+            network_device_wireless_top99p_sum: None,
             npm_host_top99p_sum: None,
             observability_pipelines_bytes_processed_agg_sum: None,
             oci_host_agg_sum: None,
@@ -682,15 +709,19 @@ impl UsageSummaryResponse {
             online_archive_events_count_agg_sum: None,
             opentelemetry_apm_host_top99p_sum: None,
             opentelemetry_host_top99p_sum: None,
+            product_analytics_agg_sum: None,
             profiling_aas_count_top99p_sum: None,
             profiling_container_agent_count_avg: None,
             profiling_host_count_top99p_sum: None,
+            published_app_hwm_sum: None,
             rehydrated_indexed_events_agg_sum: None,
             rehydrated_ingested_bytes_agg_sum: None,
             rum_browser_and_mobile_session_count: None,
             rum_browser_legacy_session_count_agg_sum: None,
             rum_browser_lite_session_count_agg_sum: None,
             rum_browser_replay_session_count_agg_sum: None,
+            rum_indexed_sessions_agg_sum: None,
+            rum_ingested_sessions_agg_sum: None,
             rum_lite_session_count_agg_sum: None,
             rum_mobile_legacy_session_count_android_agg_sum: None,
             rum_mobile_legacy_session_count_flutter_agg_sum: None,
@@ -710,6 +741,7 @@ impl UsageSummaryResponse {
             rum_mobile_replay_session_count_reactnative_agg_sum: None,
             rum_replay_session_count_agg_sum: None,
             rum_session_count_agg_sum: None,
+            rum_session_replay_add_on_agg_sum: None,
             rum_total_session_count_agg_sum: None,
             rum_units_agg_sum: None,
             sca_fargate_count_avg_sum: None,
@@ -1359,6 +1391,18 @@ impl UsageSummaryResponse {
     }
 
     #[allow(deprecated)]
+    pub fn llm_observability_agg_sum(mut self, value: i64) -> Self {
+        self.llm_observability_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn llm_observability_min_spend_agg_sum(mut self, value: i64) -> Self {
+        self.llm_observability_min_spend_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn logs_by_retention(mut self, value: crate::datadogV1::model::LogsByRetention) -> Self {
         self.logs_by_retention = Some(value);
         self
@@ -1425,6 +1469,12 @@ impl UsageSummaryResponse {
     }
 
     #[allow(deprecated)]
+    pub fn network_device_wireless_top99p_sum(mut self, value: i64) -> Self {
+        self.network_device_wireless_top99p_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn npm_host_top99p_sum(mut self, value: i64) -> Self {
         self.npm_host_top99p_sum = Some(value);
         self
@@ -1467,6 +1517,12 @@ impl UsageSummaryResponse {
     }
 
     #[allow(deprecated)]
+    pub fn product_analytics_agg_sum(mut self, value: i64) -> Self {
+        self.product_analytics_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn profiling_aas_count_top99p_sum(mut self, value: i64) -> Self {
         self.profiling_aas_count_top99p_sum = Some(value);
         self
@@ -1481,6 +1537,12 @@ impl UsageSummaryResponse {
     #[allow(deprecated)]
     pub fn profiling_host_count_top99p_sum(mut self, value: i64) -> Self {
         self.profiling_host_count_top99p_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn published_app_hwm_sum(mut self, value: i64) -> Self {
+        self.published_app_hwm_sum = Some(value);
         self
     }
 
@@ -1517,6 +1579,18 @@ impl UsageSummaryResponse {
     #[allow(deprecated)]
     pub fn rum_browser_replay_session_count_agg_sum(mut self, value: i64) -> Self {
         self.rum_browser_replay_session_count_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn rum_indexed_sessions_agg_sum(mut self, value: i64) -> Self {
+        self.rum_indexed_sessions_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn rum_ingested_sessions_agg_sum(mut self, value: i64) -> Self {
+        self.rum_ingested_sessions_agg_sum = Some(value);
         self
     }
 
@@ -1634,6 +1708,12 @@ impl UsageSummaryResponse {
     #[allow(deprecated)]
     pub fn rum_session_count_agg_sum(mut self, value: i64) -> Self {
         self.rum_session_count_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn rum_session_replay_add_on_agg_sum(mut self, value: i64) -> Self {
+        self.rum_session_replay_add_on_agg_sum = Some(value);
         self
     }
 
@@ -1923,6 +2003,8 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                 let mut last_updated: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut live_indexed_events_agg_sum: Option<i64> = None;
                 let mut live_ingested_bytes_agg_sum: Option<i64> = None;
+                let mut llm_observability_agg_sum: Option<i64> = None;
+                let mut llm_observability_min_spend_agg_sum: Option<i64> = None;
                 let mut logs_by_retention: Option<crate::datadogV1::model::LogsByRetention> = None;
                 let mut mobile_rum_lite_session_count_agg_sum: Option<i64> = None;
                 let mut mobile_rum_session_count_agg_sum: Option<i64> = None;
@@ -1934,6 +2016,7 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                 let mut mobile_rum_units_agg_sum: Option<i64> = None;
                 let mut ndm_netflow_events_agg_sum: Option<i64> = None;
                 let mut netflow_indexed_events_count_agg_sum: Option<i64> = None;
+                let mut network_device_wireless_top99p_sum: Option<i64> = None;
                 let mut npm_host_top99p_sum: Option<i64> = None;
                 let mut observability_pipelines_bytes_processed_agg_sum: Option<i64> = None;
                 let mut oci_host_agg_sum: Option<i64> = None;
@@ -1941,15 +2024,19 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                 let mut online_archive_events_count_agg_sum: Option<i64> = None;
                 let mut opentelemetry_apm_host_top99p_sum: Option<i64> = None;
                 let mut opentelemetry_host_top99p_sum: Option<i64> = None;
+                let mut product_analytics_agg_sum: Option<i64> = None;
                 let mut profiling_aas_count_top99p_sum: Option<i64> = None;
                 let mut profiling_container_agent_count_avg: Option<i64> = None;
                 let mut profiling_host_count_top99p_sum: Option<i64> = None;
+                let mut published_app_hwm_sum: Option<i64> = None;
                 let mut rehydrated_indexed_events_agg_sum: Option<i64> = None;
                 let mut rehydrated_ingested_bytes_agg_sum: Option<i64> = None;
                 let mut rum_browser_and_mobile_session_count: Option<i64> = None;
                 let mut rum_browser_legacy_session_count_agg_sum: Option<i64> = None;
                 let mut rum_browser_lite_session_count_agg_sum: Option<i64> = None;
                 let mut rum_browser_replay_session_count_agg_sum: Option<i64> = None;
+                let mut rum_indexed_sessions_agg_sum: Option<i64> = None;
+                let mut rum_ingested_sessions_agg_sum: Option<i64> = None;
                 let mut rum_lite_session_count_agg_sum: Option<i64> = None;
                 let mut rum_mobile_legacy_session_count_android_agg_sum: Option<i64> = None;
                 let mut rum_mobile_legacy_session_count_flutter_agg_sum: Option<i64> = None;
@@ -1971,6 +2058,7 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                 let mut rum_mobile_replay_session_count_reactnative_agg_sum: Option<i64> = None;
                 let mut rum_replay_session_count_agg_sum: Option<i64> = None;
                 let mut rum_session_count_agg_sum: Option<i64> = None;
+                let mut rum_session_replay_add_on_agg_sum: Option<i64> = None;
                 let mut rum_total_session_count_agg_sum: Option<i64> = None;
                 let mut rum_units_agg_sum: Option<i64> = None;
                 let mut sca_fargate_count_avg_sum: Option<i64> = None;
@@ -2724,6 +2812,20 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                             live_ingested_bytes_agg_sum =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "llm_observability_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            llm_observability_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "llm_observability_min_spend_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            llm_observability_min_spend_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "logs_by_retention" => {
                             if v.is_null() {
                                 continue;
@@ -2801,6 +2903,13 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                             netflow_indexed_events_count_agg_sum =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "network_device_wireless_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            network_device_wireless_top99p_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "npm_host_top99p_sum" => {
                             if v.is_null() {
                                 continue;
@@ -2850,6 +2959,13 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                             opentelemetry_host_top99p_sum =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "product_analytics_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            product_analytics_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "profiling_aas_count_top99p_sum" => {
                             if v.is_null() {
                                 continue;
@@ -2869,6 +2985,13 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                                 continue;
                             }
                             profiling_host_count_top99p_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "published_app_hwm_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            published_app_hwm_sum =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "rehydrated_indexed_events_agg_sum" => {
@@ -2911,6 +3034,20 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                                 continue;
                             }
                             rum_browser_replay_session_count_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_indexed_sessions_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_indexed_sessions_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_ingested_sessions_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_ingested_sessions_agg_sum =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "rum_lite_session_count_agg_sum" => {
@@ -3044,6 +3181,13 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                                 continue;
                             }
                             rum_session_count_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_session_replay_add_on_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_session_replay_add_on_agg_sum =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "rum_total_session_count_agg_sum" => {
@@ -3332,6 +3476,8 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                     last_updated,
                     live_indexed_events_agg_sum,
                     live_ingested_bytes_agg_sum,
+                    llm_observability_agg_sum,
+                    llm_observability_min_spend_agg_sum,
                     logs_by_retention,
                     mobile_rum_lite_session_count_agg_sum,
                     mobile_rum_session_count_agg_sum,
@@ -3343,6 +3489,7 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                     mobile_rum_units_agg_sum,
                     ndm_netflow_events_agg_sum,
                     netflow_indexed_events_count_agg_sum,
+                    network_device_wireless_top99p_sum,
                     npm_host_top99p_sum,
                     observability_pipelines_bytes_processed_agg_sum,
                     oci_host_agg_sum,
@@ -3350,15 +3497,19 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                     online_archive_events_count_agg_sum,
                     opentelemetry_apm_host_top99p_sum,
                     opentelemetry_host_top99p_sum,
+                    product_analytics_agg_sum,
                     profiling_aas_count_top99p_sum,
                     profiling_container_agent_count_avg,
                     profiling_host_count_top99p_sum,
+                    published_app_hwm_sum,
                     rehydrated_indexed_events_agg_sum,
                     rehydrated_ingested_bytes_agg_sum,
                     rum_browser_and_mobile_session_count,
                     rum_browser_legacy_session_count_agg_sum,
                     rum_browser_lite_session_count_agg_sum,
                     rum_browser_replay_session_count_agg_sum,
+                    rum_indexed_sessions_agg_sum,
+                    rum_ingested_sessions_agg_sum,
                     rum_lite_session_count_agg_sum,
                     rum_mobile_legacy_session_count_android_agg_sum,
                     rum_mobile_legacy_session_count_flutter_agg_sum,
@@ -3378,6 +3529,7 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                     rum_mobile_replay_session_count_reactnative_agg_sum,
                     rum_replay_session_count_agg_sum,
                     rum_session_count_agg_sum,
+                    rum_session_replay_add_on_agg_sum,
                     rum_total_session_count_agg_sum,
                     rum_units_agg_sum,
                     sca_fargate_count_avg_sum,
