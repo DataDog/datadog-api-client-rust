@@ -239,6 +239,12 @@ pub struct MonthlyUsageAttributionValues {
     /// The Serverless APM usage by tag(s).
     #[serde(rename = "lambda_traced_invocations_usage")]
     pub lambda_traced_invocations_usage: Option<f64>,
+    /// The percentage of LLM Observability usage by tag(s).
+    #[serde(rename = "llm_observability_percentage")]
+    pub llm_observability_percentage: Option<f64>,
+    /// The LLM Observability usage by tag(s).
+    #[serde(rename = "llm_observability_usage")]
+    pub llm_observability_usage: Option<f64>,
     /// The percentage of Indexed Logs (15-day Retention) usage by tag(s).
     #[serde(rename = "logs_indexed_15day_percentage")]
     pub logs_indexed_15day_percentage: Option<f64>,
@@ -317,6 +323,12 @@ pub struct MonthlyUsageAttributionValues {
     /// The Network Device Monitoring NetFlow usage by tag(s).
     #[serde(rename = "ndm_netflow_usage")]
     pub ndm_netflow_usage: Option<f64>,
+    /// The percentage of network device wireless usage by tag(s).
+    #[serde(rename = "network_device_wireless_percentage")]
+    pub network_device_wireless_percentage: Option<f64>,
+    /// The network device wireless usage by tag(s).
+    #[serde(rename = "network_device_wireless_usage")]
+    pub network_device_wireless_usage: Option<f64>,
     /// The percentage of network host usage by tag(s).
     #[serde(rename = "npm_host_percentage")]
     pub npm_host_percentage: Option<f64>,
@@ -341,6 +353,12 @@ pub struct MonthlyUsageAttributionValues {
     /// The online archive usage by tag(s).
     #[serde(rename = "online_archive_usage")]
     pub online_archive_usage: Option<f64>,
+    /// The percentage of Product Analytics session usage by tag(s).
+    #[serde(rename = "product_analytics_session_percentage")]
+    pub product_analytics_session_percentage: Option<f64>,
+    /// The Product Analytics session usage by tag(s).
+    #[serde(rename = "product_analytics_session_usage")]
+    pub product_analytics_session_usage: Option<f64>,
     /// The percentage of profiled container usage by tag(s).
     #[serde(rename = "profiled_container_percentage")]
     pub profiled_container_percentage: Option<f64>,
@@ -359,18 +377,42 @@ pub struct MonthlyUsageAttributionValues {
     /// The profiled hosts usage by tag(s).
     #[serde(rename = "profiled_host_usage")]
     pub profiled_host_usage: Option<f64>,
+    /// The percentage of published application usage by tag(s).
+    #[serde(rename = "published_app_percentage")]
+    pub published_app_percentage: Option<f64>,
+    /// The published application usage by tag(s).
+    #[serde(rename = "published_app_usage")]
+    pub published_app_usage: Option<f64>,
     /// The percentage of RUM Browser and Mobile usage by tag(s).
     #[serde(rename = "rum_browser_mobile_sessions_percentage")]
     pub rum_browser_mobile_sessions_percentage: Option<f64>,
     /// The total RUM Browser and Mobile usage by tag(s).
     #[serde(rename = "rum_browser_mobile_sessions_usage")]
     pub rum_browser_mobile_sessions_usage: Option<f64>,
+    /// The percentage of RUM Ingested usage by tag(s).
+    #[serde(rename = "rum_ingested_percentage")]
+    pub rum_ingested_percentage: Option<f64>,
+    /// The total RUM Ingested usage by tag(s).
+    #[serde(rename = "rum_ingested_usage")]
+    pub rum_ingested_usage: Option<f64>,
+    /// The percentage of RUM Investigate usage by tag(s).
+    #[serde(rename = "rum_investigate_percentage")]
+    pub rum_investigate_percentage: Option<f64>,
+    /// The total RUM Investigate usage by tag(s).
+    #[serde(rename = "rum_investigate_usage")]
+    pub rum_investigate_usage: Option<f64>,
     /// The percentage of RUM Session Replay usage by tag(s).
     #[serde(rename = "rum_replay_sessions_percentage")]
     pub rum_replay_sessions_percentage: Option<f64>,
     /// The total RUM Session Replay usage by tag(s).
     #[serde(rename = "rum_replay_sessions_usage")]
     pub rum_replay_sessions_usage: Option<f64>,
+    /// The percentage of RUM Session Replay Add-On usage by tag(s).
+    #[serde(rename = "rum_session_replay_add_on_percentage")]
+    pub rum_session_replay_add_on_percentage: Option<f64>,
+    /// The total RUM Session Replay Add-On usage by tag(s).
+    #[serde(rename = "rum_session_replay_add_on_usage")]
+    pub rum_session_replay_add_on_usage: Option<f64>,
     /// The percentage of Software Composition Analysis Fargate task usage by tag(s).
     #[serde(rename = "sca_fargate_percentage")]
     pub sca_fargate_percentage: Option<f64>,
@@ -511,6 +553,8 @@ impl MonthlyUsageAttributionValues {
             invocations_usage: None,
             lambda_traced_invocations_percentage: None,
             lambda_traced_invocations_usage: None,
+            llm_observability_percentage: None,
+            llm_observability_usage: None,
             logs_indexed_15day_percentage: None,
             logs_indexed_15day_usage: None,
             logs_indexed_180day_percentage: None,
@@ -537,6 +581,8 @@ impl MonthlyUsageAttributionValues {
             mobile_app_testing_usage: None,
             ndm_netflow_percentage: None,
             ndm_netflow_usage: None,
+            network_device_wireless_percentage: None,
+            network_device_wireless_usage: None,
             npm_host_percentage: None,
             npm_host_usage: None,
             obs_pipeline_bytes_percentage: None,
@@ -545,16 +591,26 @@ impl MonthlyUsageAttributionValues {
             obs_pipelines_vcpu_usage: None,
             online_archive_percentage: None,
             online_archive_usage: None,
+            product_analytics_session_percentage: None,
+            product_analytics_session_usage: None,
             profiled_container_percentage: None,
             profiled_container_usage: None,
             profiled_fargate_percentage: None,
             profiled_fargate_usage: None,
             profiled_host_percentage: None,
             profiled_host_usage: None,
+            published_app_percentage: None,
+            published_app_usage: None,
             rum_browser_mobile_sessions_percentage: None,
             rum_browser_mobile_sessions_usage: None,
+            rum_ingested_percentage: None,
+            rum_ingested_usage: None,
+            rum_investigate_percentage: None,
+            rum_investigate_usage: None,
             rum_replay_sessions_percentage: None,
             rum_replay_sessions_usage: None,
+            rum_session_replay_add_on_percentage: None,
+            rum_session_replay_add_on_usage: None,
             sca_fargate_percentage: None,
             sca_fargate_usage: None,
             sds_scanned_bytes_percentage: None,
@@ -958,6 +1014,16 @@ impl MonthlyUsageAttributionValues {
         self
     }
 
+    pub fn llm_observability_percentage(mut self, value: f64) -> Self {
+        self.llm_observability_percentage = Some(value);
+        self
+    }
+
+    pub fn llm_observability_usage(mut self, value: f64) -> Self {
+        self.llm_observability_usage = Some(value);
+        self
+    }
+
     pub fn logs_indexed_15day_percentage(mut self, value: f64) -> Self {
         self.logs_indexed_15day_percentage = Some(value);
         self
@@ -1088,6 +1154,16 @@ impl MonthlyUsageAttributionValues {
         self
     }
 
+    pub fn network_device_wireless_percentage(mut self, value: f64) -> Self {
+        self.network_device_wireless_percentage = Some(value);
+        self
+    }
+
+    pub fn network_device_wireless_usage(mut self, value: f64) -> Self {
+        self.network_device_wireless_usage = Some(value);
+        self
+    }
+
     pub fn npm_host_percentage(mut self, value: f64) -> Self {
         self.npm_host_percentage = Some(value);
         self
@@ -1128,6 +1204,16 @@ impl MonthlyUsageAttributionValues {
         self
     }
 
+    pub fn product_analytics_session_percentage(mut self, value: f64) -> Self {
+        self.product_analytics_session_percentage = Some(value);
+        self
+    }
+
+    pub fn product_analytics_session_usage(mut self, value: f64) -> Self {
+        self.product_analytics_session_usage = Some(value);
+        self
+    }
+
     pub fn profiled_container_percentage(mut self, value: f64) -> Self {
         self.profiled_container_percentage = Some(value);
         self
@@ -1158,6 +1244,16 @@ impl MonthlyUsageAttributionValues {
         self
     }
 
+    pub fn published_app_percentage(mut self, value: f64) -> Self {
+        self.published_app_percentage = Some(value);
+        self
+    }
+
+    pub fn published_app_usage(mut self, value: f64) -> Self {
+        self.published_app_usage = Some(value);
+        self
+    }
+
     pub fn rum_browser_mobile_sessions_percentage(mut self, value: f64) -> Self {
         self.rum_browser_mobile_sessions_percentage = Some(value);
         self
@@ -1168,6 +1264,26 @@ impl MonthlyUsageAttributionValues {
         self
     }
 
+    pub fn rum_ingested_percentage(mut self, value: f64) -> Self {
+        self.rum_ingested_percentage = Some(value);
+        self
+    }
+
+    pub fn rum_ingested_usage(mut self, value: f64) -> Self {
+        self.rum_ingested_usage = Some(value);
+        self
+    }
+
+    pub fn rum_investigate_percentage(mut self, value: f64) -> Self {
+        self.rum_investigate_percentage = Some(value);
+        self
+    }
+
+    pub fn rum_investigate_usage(mut self, value: f64) -> Self {
+        self.rum_investigate_usage = Some(value);
+        self
+    }
+
     pub fn rum_replay_sessions_percentage(mut self, value: f64) -> Self {
         self.rum_replay_sessions_percentage = Some(value);
         self
@@ -1175,6 +1291,16 @@ impl MonthlyUsageAttributionValues {
 
     pub fn rum_replay_sessions_usage(mut self, value: f64) -> Self {
         self.rum_replay_sessions_usage = Some(value);
+        self
+    }
+
+    pub fn rum_session_replay_add_on_percentage(mut self, value: f64) -> Self {
+        self.rum_session_replay_add_on_percentage = Some(value);
+        self
+    }
+
+    pub fn rum_session_replay_add_on_usage(mut self, value: f64) -> Self {
+        self.rum_session_replay_add_on_usage = Some(value);
         self
     }
 
@@ -1376,6 +1502,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                 let mut invocations_usage: Option<f64> = None;
                 let mut lambda_traced_invocations_percentage: Option<f64> = None;
                 let mut lambda_traced_invocations_usage: Option<f64> = None;
+                let mut llm_observability_percentage: Option<f64> = None;
+                let mut llm_observability_usage: Option<f64> = None;
                 let mut logs_indexed_15day_percentage: Option<f64> = None;
                 let mut logs_indexed_15day_usage: Option<f64> = None;
                 let mut logs_indexed_180day_percentage: Option<f64> = None;
@@ -1402,6 +1530,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                 let mut mobile_app_testing_usage: Option<f64> = None;
                 let mut ndm_netflow_percentage: Option<f64> = None;
                 let mut ndm_netflow_usage: Option<f64> = None;
+                let mut network_device_wireless_percentage: Option<f64> = None;
+                let mut network_device_wireless_usage: Option<f64> = None;
                 let mut npm_host_percentage: Option<f64> = None;
                 let mut npm_host_usage: Option<f64> = None;
                 let mut obs_pipeline_bytes_percentage: Option<f64> = None;
@@ -1410,16 +1540,26 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                 let mut obs_pipelines_vcpu_usage: Option<f64> = None;
                 let mut online_archive_percentage: Option<f64> = None;
                 let mut online_archive_usage: Option<f64> = None;
+                let mut product_analytics_session_percentage: Option<f64> = None;
+                let mut product_analytics_session_usage: Option<f64> = None;
                 let mut profiled_container_percentage: Option<f64> = None;
                 let mut profiled_container_usage: Option<f64> = None;
                 let mut profiled_fargate_percentage: Option<f64> = None;
                 let mut profiled_fargate_usage: Option<f64> = None;
                 let mut profiled_host_percentage: Option<f64> = None;
                 let mut profiled_host_usage: Option<f64> = None;
+                let mut published_app_percentage: Option<f64> = None;
+                let mut published_app_usage: Option<f64> = None;
                 let mut rum_browser_mobile_sessions_percentage: Option<f64> = None;
                 let mut rum_browser_mobile_sessions_usage: Option<f64> = None;
+                let mut rum_ingested_percentage: Option<f64> = None;
+                let mut rum_ingested_usage: Option<f64> = None;
+                let mut rum_investigate_percentage: Option<f64> = None;
+                let mut rum_investigate_usage: Option<f64> = None;
                 let mut rum_replay_sessions_percentage: Option<f64> = None;
                 let mut rum_replay_sessions_usage: Option<f64> = None;
+                let mut rum_session_replay_add_on_percentage: Option<f64> = None;
+                let mut rum_session_replay_add_on_usage: Option<f64> = None;
                 let mut sca_fargate_percentage: Option<f64> = None;
                 let mut sca_fargate_usage: Option<f64> = None;
                 let mut sds_scanned_bytes_percentage: Option<f64> = None;
@@ -1977,6 +2117,20 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                             lambda_traced_invocations_usage =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "llm_observability_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            llm_observability_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "llm_observability_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            llm_observability_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "logs_indexed_15day_percentage" => {
                             if v.is_null() {
                                 continue;
@@ -2159,6 +2313,20 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                             ndm_netflow_usage =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "network_device_wireless_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            network_device_wireless_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "network_device_wireless_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            network_device_wireless_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "npm_host_percentage" => {
                             if v.is_null() {
                                 continue;
@@ -2215,6 +2383,20 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                             online_archive_usage =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "product_analytics_session_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            product_analytics_session_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "product_analytics_session_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            product_analytics_session_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "profiled_container_percentage" => {
                             if v.is_null() {
                                 continue;
@@ -2257,6 +2439,20 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                             profiled_host_usage =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "published_app_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            published_app_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "published_app_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            published_app_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "rum_browser_mobile_sessions_percentage" => {
                             if v.is_null() {
                                 continue;
@@ -2271,6 +2467,34 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                             rum_browser_mobile_sessions_usage =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "rum_ingested_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_ingested_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_ingested_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_ingested_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_investigate_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_investigate_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_investigate_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_investigate_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "rum_replay_sessions_percentage" => {
                             if v.is_null() {
                                 continue;
@@ -2283,6 +2507,20 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                                 continue;
                             }
                             rum_replay_sessions_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_session_replay_add_on_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_session_replay_add_on_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_session_replay_add_on_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_session_replay_add_on_usage =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "sca_fargate_percentage" => {
@@ -2495,6 +2733,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                     invocations_usage,
                     lambda_traced_invocations_percentage,
                     lambda_traced_invocations_usage,
+                    llm_observability_percentage,
+                    llm_observability_usage,
                     logs_indexed_15day_percentage,
                     logs_indexed_15day_usage,
                     logs_indexed_180day_percentage,
@@ -2521,6 +2761,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                     mobile_app_testing_usage,
                     ndm_netflow_percentage,
                     ndm_netflow_usage,
+                    network_device_wireless_percentage,
+                    network_device_wireless_usage,
                     npm_host_percentage,
                     npm_host_usage,
                     obs_pipeline_bytes_percentage,
@@ -2529,16 +2771,26 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                     obs_pipelines_vcpu_usage,
                     online_archive_percentage,
                     online_archive_usage,
+                    product_analytics_session_percentage,
+                    product_analytics_session_usage,
                     profiled_container_percentage,
                     profiled_container_usage,
                     profiled_fargate_percentage,
                     profiled_fargate_usage,
                     profiled_host_percentage,
                     profiled_host_usage,
+                    published_app_percentage,
+                    published_app_usage,
                     rum_browser_mobile_sessions_percentage,
                     rum_browser_mobile_sessions_usage,
+                    rum_ingested_percentage,
+                    rum_ingested_usage,
+                    rum_investigate_percentage,
+                    rum_investigate_usage,
                     rum_replay_sessions_percentage,
                     rum_replay_sessions_usage,
+                    rum_session_replay_add_on_percentage,
+                    rum_session_replay_add_on_usage,
                     sca_fargate_percentage,
                     sca_fargate_usage,
                     sds_scanned_bytes_percentage,

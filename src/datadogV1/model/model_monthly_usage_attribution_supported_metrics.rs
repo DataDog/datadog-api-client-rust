@@ -73,10 +73,14 @@ pub enum MonthlyUsageAttributionSupportedMetrics {
     INVOCATIONS_PERCENTAGE,
     LAMBDA_TRACED_INVOCATIONS_USAGE,
     LAMBDA_TRACED_INVOCATIONS_PERCENTAGE,
+    LLM_OBSERVABILITY_USAGE,
+    LLM_OBSERVABILITY_PERCENTAGE,
     MOBILE_APP_TESTING_USAGE,
     MOBILE_APP_TESTING_PERCENTAGE,
     NDM_NETFLOW_USAGE,
     NDM_NETFLOW_PERCENTAGE,
+    NETWORK_DEVICE_WIRELESS_USAGE,
+    NETWORK_DEVICE_WIRELESS_PERCENTAGE,
     NPM_HOST_USAGE,
     NPM_HOST_PERCENTAGE,
     OBS_PIPELINE_BYTES_USAGE,
@@ -85,12 +89,16 @@ pub enum MonthlyUsageAttributionSupportedMetrics {
     OBS_PIPELINES_VCPU_PERCENTAGE,
     ONLINE_ARCHIVE_USAGE,
     ONLINE_ARCHIVE_PERCENTAGE,
+    PRODUCT_ANALYTICS_SESSION_USAGE,
+    PRODUCT_ANALYTICS_SESSION_PERCENTAGE,
     PROFILED_CONTAINER_USAGE,
     PROFILED_CONTAINER_PERCENTAGE,
     PROFILED_FARGATE_USAGE,
     PROFILED_FARGATE_PERCENTAGE,
     PROFILED_HOST_USAGE,
     PROFILED_HOST_PERCENTAGE,
+    PUBLISHED_APP_USAGE,
+    PUBLISHED_APP_PERCENTAGE,
     SERVERLESS_APPS_USAGE,
     SERVERLESS_APPS_PERCENTAGE,
     SNMP_USAGE,
@@ -133,8 +141,14 @@ pub enum MonthlyUsageAttributionSupportedMetrics {
     LOGS_INDEXED_3DAY_PERCENTAGE,
     LOGS_INDEXED_1DAY_USAGE,
     LOGS_INDEXED_1DAY_PERCENTAGE,
+    RUM_INGESTED_USAGE,
+    RUM_INGESTED_PERCENTAGE,
+    RUM_INVESTIGATE_USAGE,
+    RUM_INVESTIGATE_PERCENTAGE,
     RUM_REPLAY_SESSIONS_USAGE,
     RUM_REPLAY_SESSIONS_PERCENTAGE,
+    RUM_SESSION_REPLAY_ADD_ON_USAGE,
+    RUM_SESSION_REPLAY_ADD_ON_PERCENTAGE,
     RUM_BROWSER_MOBILE_SESSIONS_USAGE,
     RUM_BROWSER_MOBILE_SESSIONS_PERCENTAGE,
     INGESTED_SPANS_BYTES_USAGE,
@@ -246,10 +260,16 @@ impl ToString for MonthlyUsageAttributionSupportedMetrics {
             Self::LAMBDA_TRACED_INVOCATIONS_PERCENTAGE => {
                 String::from("lambda_traced_invocations_percentage")
             }
+            Self::LLM_OBSERVABILITY_USAGE => String::from("llm_observability_usage"),
+            Self::LLM_OBSERVABILITY_PERCENTAGE => String::from("llm_observability_percentage"),
             Self::MOBILE_APP_TESTING_USAGE => String::from("mobile_app_testing_percentage"),
             Self::MOBILE_APP_TESTING_PERCENTAGE => String::from("mobile_app_testing_usage"),
             Self::NDM_NETFLOW_USAGE => String::from("ndm_netflow_usage"),
             Self::NDM_NETFLOW_PERCENTAGE => String::from("ndm_netflow_percentage"),
+            Self::NETWORK_DEVICE_WIRELESS_USAGE => String::from("network_device_wireless_usage"),
+            Self::NETWORK_DEVICE_WIRELESS_PERCENTAGE => {
+                String::from("network_device_wireless_percentage")
+            }
             Self::NPM_HOST_USAGE => String::from("npm_host_usage"),
             Self::NPM_HOST_PERCENTAGE => String::from("npm_host_percentage"),
             Self::OBS_PIPELINE_BYTES_USAGE => String::from("obs_pipeline_bytes_usage"),
@@ -258,12 +278,20 @@ impl ToString for MonthlyUsageAttributionSupportedMetrics {
             Self::OBS_PIPELINES_VCPU_PERCENTAGE => String::from("obs_pipelines_vcpu_percentage"),
             Self::ONLINE_ARCHIVE_USAGE => String::from("online_archive_usage"),
             Self::ONLINE_ARCHIVE_PERCENTAGE => String::from("online_archive_percentage"),
+            Self::PRODUCT_ANALYTICS_SESSION_USAGE => {
+                String::from("product_analytics_session_usage")
+            }
+            Self::PRODUCT_ANALYTICS_SESSION_PERCENTAGE => {
+                String::from("product_analytics_session_percentage")
+            }
             Self::PROFILED_CONTAINER_USAGE => String::from("profiled_container_usage"),
             Self::PROFILED_CONTAINER_PERCENTAGE => String::from("profiled_container_percentage"),
             Self::PROFILED_FARGATE_USAGE => String::from("profiled_fargate_usage"),
             Self::PROFILED_FARGATE_PERCENTAGE => String::from("profiled_fargate_percentage"),
             Self::PROFILED_HOST_USAGE => String::from("profiled_host_usage"),
             Self::PROFILED_HOST_PERCENTAGE => String::from("profiled_host_percentage"),
+            Self::PUBLISHED_APP_USAGE => String::from("published_app_usage"),
+            Self::PUBLISHED_APP_PERCENTAGE => String::from("published_app_percentage"),
             Self::SERVERLESS_APPS_USAGE => String::from("serverless_apps_usage"),
             Self::SERVERLESS_APPS_PERCENTAGE => String::from("serverless_apps_percentage"),
             Self::SNMP_USAGE => String::from("snmp_usage"),
@@ -322,8 +350,18 @@ impl ToString for MonthlyUsageAttributionSupportedMetrics {
             Self::LOGS_INDEXED_3DAY_PERCENTAGE => String::from("logs_indexed_3day_percentage"),
             Self::LOGS_INDEXED_1DAY_USAGE => String::from("logs_indexed_1day_usage"),
             Self::LOGS_INDEXED_1DAY_PERCENTAGE => String::from("logs_indexed_1day_percentage"),
+            Self::RUM_INGESTED_USAGE => String::from("rum_ingested_usage"),
+            Self::RUM_INGESTED_PERCENTAGE => String::from("rum_ingested_percentage"),
+            Self::RUM_INVESTIGATE_USAGE => String::from("rum_investigate_usage"),
+            Self::RUM_INVESTIGATE_PERCENTAGE => String::from("rum_investigate_percentage"),
             Self::RUM_REPLAY_SESSIONS_USAGE => String::from("rum_replay_sessions_usage"),
             Self::RUM_REPLAY_SESSIONS_PERCENTAGE => String::from("rum_replay_sessions_percentage"),
+            Self::RUM_SESSION_REPLAY_ADD_ON_USAGE => {
+                String::from("rum_session_replay_add_on_usage")
+            }
+            Self::RUM_SESSION_REPLAY_ADD_ON_PERCENTAGE => {
+                String::from("rum_session_replay_add_on_percentage")
+            }
             Self::RUM_BROWSER_MOBILE_SESSIONS_USAGE => {
                 String::from("rum_browser_mobile_sessions_usage")
             }
@@ -445,10 +483,14 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionSupportedMetrics {
             "invocations_percentage" => Self::INVOCATIONS_PERCENTAGE,
             "lambda_traced_invocations_usage" => Self::LAMBDA_TRACED_INVOCATIONS_USAGE,
             "lambda_traced_invocations_percentage" => Self::LAMBDA_TRACED_INVOCATIONS_PERCENTAGE,
+            "llm_observability_usage" => Self::LLM_OBSERVABILITY_USAGE,
+            "llm_observability_percentage" => Self::LLM_OBSERVABILITY_PERCENTAGE,
             "mobile_app_testing_percentage" => Self::MOBILE_APP_TESTING_USAGE,
             "mobile_app_testing_usage" => Self::MOBILE_APP_TESTING_PERCENTAGE,
             "ndm_netflow_usage" => Self::NDM_NETFLOW_USAGE,
             "ndm_netflow_percentage" => Self::NDM_NETFLOW_PERCENTAGE,
+            "network_device_wireless_usage" => Self::NETWORK_DEVICE_WIRELESS_USAGE,
+            "network_device_wireless_percentage" => Self::NETWORK_DEVICE_WIRELESS_PERCENTAGE,
             "npm_host_usage" => Self::NPM_HOST_USAGE,
             "npm_host_percentage" => Self::NPM_HOST_PERCENTAGE,
             "obs_pipeline_bytes_usage" => Self::OBS_PIPELINE_BYTES_USAGE,
@@ -457,12 +499,16 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionSupportedMetrics {
             "obs_pipelines_vcpu_percentage" => Self::OBS_PIPELINES_VCPU_PERCENTAGE,
             "online_archive_usage" => Self::ONLINE_ARCHIVE_USAGE,
             "online_archive_percentage" => Self::ONLINE_ARCHIVE_PERCENTAGE,
+            "product_analytics_session_usage" => Self::PRODUCT_ANALYTICS_SESSION_USAGE,
+            "product_analytics_session_percentage" => Self::PRODUCT_ANALYTICS_SESSION_PERCENTAGE,
             "profiled_container_usage" => Self::PROFILED_CONTAINER_USAGE,
             "profiled_container_percentage" => Self::PROFILED_CONTAINER_PERCENTAGE,
             "profiled_fargate_usage" => Self::PROFILED_FARGATE_USAGE,
             "profiled_fargate_percentage" => Self::PROFILED_FARGATE_PERCENTAGE,
             "profiled_host_usage" => Self::PROFILED_HOST_USAGE,
             "profiled_host_percentage" => Self::PROFILED_HOST_PERCENTAGE,
+            "published_app_usage" => Self::PUBLISHED_APP_USAGE,
+            "published_app_percentage" => Self::PUBLISHED_APP_PERCENTAGE,
             "serverless_apps_usage" => Self::SERVERLESS_APPS_USAGE,
             "serverless_apps_percentage" => Self::SERVERLESS_APPS_PERCENTAGE,
             "snmp_usage" => Self::SNMP_USAGE,
@@ -509,8 +555,14 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionSupportedMetrics {
             "logs_indexed_3day_percentage" => Self::LOGS_INDEXED_3DAY_PERCENTAGE,
             "logs_indexed_1day_usage" => Self::LOGS_INDEXED_1DAY_USAGE,
             "logs_indexed_1day_percentage" => Self::LOGS_INDEXED_1DAY_PERCENTAGE,
+            "rum_ingested_usage" => Self::RUM_INGESTED_USAGE,
+            "rum_ingested_percentage" => Self::RUM_INGESTED_PERCENTAGE,
+            "rum_investigate_usage" => Self::RUM_INVESTIGATE_USAGE,
+            "rum_investigate_percentage" => Self::RUM_INVESTIGATE_PERCENTAGE,
             "rum_replay_sessions_usage" => Self::RUM_REPLAY_SESSIONS_USAGE,
             "rum_replay_sessions_percentage" => Self::RUM_REPLAY_SESSIONS_PERCENTAGE,
+            "rum_session_replay_add_on_usage" => Self::RUM_SESSION_REPLAY_ADD_ON_USAGE,
+            "rum_session_replay_add_on_percentage" => Self::RUM_SESSION_REPLAY_ADD_ON_PERCENTAGE,
             "rum_browser_mobile_sessions_usage" => Self::RUM_BROWSER_MOBILE_SESSIONS_USAGE,
             "rum_browser_mobile_sessions_percentage" => {
                 Self::RUM_BROWSER_MOBILE_SESSIONS_PERCENTAGE
