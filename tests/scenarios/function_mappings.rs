@@ -1632,6 +1632,9 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         .insert("v1.UpdateMobileTest".into(), test_v1_update_mobile_test);
     world
         .function_mappings
+        .insert("v1.SearchTests".into(), test_v1_search_tests);
+    world
+        .function_mappings
         .insert("v1.TriggerTests".into(), test_v1_trigger_tests);
     world
         .function_mappings
@@ -10283,6 +10286,55 @@ fn test_v1_update_mobile_test(world: &mut DatadogWorld, _parameters: &HashMap<St
     let public_id = serde_json::from_value(_parameters.get("public_id").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.update_mobile_test_with_http_info(public_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v1_search_tests(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v1_api_synthetics
+        .as_ref()
+        .expect("api instance not found");
+    let include_full_config = _parameters
+        .get("include_full_config")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let search_suites = _parameters
+        .get("search_suites")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let facets_only = _parameters
+        .get("facets_only")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let start = _parameters
+        .get("start")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let count = _parameters
+        .get("count")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV1::api_synthetics::SearchTestsOptionalParams::default();
+    params.include_full_config = include_full_config;
+    params.search_suites = search_suites;
+    params.facets_only = facets_only;
+    params.start = start;
+    params.count = count;
+    params.sort = sort;
+    let response = match block_on(api.search_tests_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
