@@ -1,0 +1,33 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "application/json"
+          ]
+        },
+        "method": "get",
+        "uri": "https://api.datadoghq.com/api/v1/synthetics/tests/search?include_full_config=true&search_suites=true&facets_only=true&start=10&count=5&sort=name%2Cdesc"
+      },
+      "response": {
+        "body": {
+          "string": "{\"tests\":[],\"total\":0,\"facets\":[]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Tue, 01 Jul 2025 15:52:56 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

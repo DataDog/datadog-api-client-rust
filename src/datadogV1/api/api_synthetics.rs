@@ -95,6 +95,57 @@ impl ListTestsOptionalParams {
     }
 }
 
+/// SearchTestsOptionalParams is a struct for passing parameters to the method [`SyntheticsAPI::search_tests`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct SearchTestsOptionalParams {
+    /// If true, include the full configuration for each test in the response.
+    pub include_full_config: Option<bool>,
+    /// If true, returns suites instead of tests.
+    pub search_suites: Option<bool>,
+    /// If true, return only facets instead of full test details.
+    pub facets_only: Option<bool>,
+    /// The offset from which to start returning results.
+    pub start: Option<i64>,
+    /// The maximum number of results to return.
+    pub count: Option<i64>,
+    /// The sort order for the results (e.g., 'name,asc' or 'name,desc').
+    pub sort: Option<String>,
+}
+
+impl SearchTestsOptionalParams {
+    /// If true, include the full configuration for each test in the response.
+    pub fn include_full_config(mut self, value: bool) -> Self {
+        self.include_full_config = Some(value);
+        self
+    }
+    /// If true, returns suites instead of tests.
+    pub fn search_suites(mut self, value: bool) -> Self {
+        self.search_suites = Some(value);
+        self
+    }
+    /// If true, return only facets instead of full test details.
+    pub fn facets_only(mut self, value: bool) -> Self {
+        self.facets_only = Some(value);
+        self
+    }
+    /// The offset from which to start returning results.
+    pub fn start(mut self, value: i64) -> Self {
+        self.start = Some(value);
+        self
+    }
+    /// The maximum number of results to return.
+    pub fn count(mut self, value: i64) -> Self {
+        self.count = Some(value);
+        self
+    }
+    /// The sort order for the results (e.g., 'name,asc' or 'name,desc').
+    pub fn sort(mut self, value: String) -> Self {
+        self.sort = Some(value);
+        self
+    }
+}
+
 /// CreateGlobalVariableError is a struct for typed errors of method [`SyntheticsAPI::create_global_variable`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -303,6 +354,14 @@ pub enum PatchTestError {
     UnknownValue(serde_json::Value),
 }
 
+/// SearchTestsError is a struct for typed errors of method [`SyntheticsAPI::search_tests`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum SearchTestsError {
+    APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// TriggerCITestsError is a struct for typed errors of method [`SyntheticsAPI::trigger_ci_tests`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -362,7 +421,7 @@ pub enum UpdateTestPauseStatusError {
 /// Datadog Synthetic Monitoring uses simulated user requests and browser rendering to help you ensure uptime,
 /// identify regional issues, and track your application performance. Synthetic tests come in
 /// two different flavors, [API tests](<https://docs.datadoghq.com/synthetics/api_tests/?tab=httptest>)
-/// and [browser tests](<https://docs.datadoghq.com/synthetics/browser_tests>). You can use Datadog’s API to
+/// and [browser tests](<https://docs.datadoghq.com/synthetics/browser_tests>). You can use Datadog's API to
 /// manage both test types programmatically.
 ///
 /// For more information, see the [Synthetic Monitoring documentation](<https://docs.datadoghq.com/synthetics/>).
@@ -3726,6 +3785,146 @@ impl SyntheticsAPI {
             };
         } else {
             let local_entity: Option<PatchTestError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Search for Synthetic tests and Test Suites.
+    pub async fn search_tests(
+        &self,
+        params: SearchTestsOptionalParams,
+    ) -> Result<
+        crate::datadogV1::model::SyntheticsListTestsResponse,
+        datadog::Error<SearchTestsError>,
+    > {
+        match self.search_tests_with_http_info(params).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Search for Synthetic tests and Test Suites.
+    pub async fn search_tests_with_http_info(
+        &self,
+        params: SearchTestsOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV1::model::SyntheticsListTestsResponse>,
+        datadog::Error<SearchTestsError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v1.search_tests";
+
+        // unbox and build optional parameters
+        let include_full_config = params.include_full_config;
+        let search_suites = params.search_suites;
+        let facets_only = params.facets_only;
+        let start = params.start;
+        let count = params.count;
+        let sort = params.sort;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v1/synthetics/tests/search",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = include_full_config {
+            local_req_builder =
+                local_req_builder.query(&[("include_full_config", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = search_suites {
+            local_req_builder =
+                local_req_builder.query(&[("search_suites", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = facets_only {
+            local_req_builder =
+                local_req_builder.query(&[("facets_only", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = start {
+            local_req_builder =
+                local_req_builder.query(&[("start", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = count {
+            local_req_builder =
+                local_req_builder.query(&[("count", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV1::model::SyntheticsListTestsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<SearchTestsError> = serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
