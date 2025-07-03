@@ -1,0 +1,67 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"filter\":{\"query\":\"source:python\"},\"name\":\"testPipelineArrayAppend\",\"processors\":[{\"is_enabled\":true,\"name\":\"append_ip_to_array\",\"operation\":{\"source\":\"network.client.ip\",\"target\":\"sourceIps\",\"type\":\"append\"},\"type\":\"array-processor\"}],\"tags\":[]}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v1/logs/config/pipelines"
+      },
+      "response": {
+        "body": {
+          "string": "{\"id\":\"s_cPqdnkQVaU6PwbPPt2ZQ\",\"type\":\"pipeline\",\"name\":\"testPipelineArrayAppend\",\"is_enabled\":false,\"is_read_only\":false,\"filter\":{\"query\":\"source:python\"},\"processors\":[{\"name\":\"append_ip_to_array\",\"is_enabled\":true,\"operation\":{\"source\":\"network.client.ip\",\"target\":\"sourceIps\",\"preserve_source\":true,\"type\":\"append\"},\"type\":\"array-processor\"}],\"tags\":[]}\n",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Mon, 30 Jun 2025 15:45:40 GMT"
+    },
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "*/*"
+          ]
+        },
+        "method": "delete",
+        "uri": "https://api.datadoghq.com/api/v1/logs/config/pipelines/s_cPqdnkQVaU6PwbPPt2ZQ"
+      },
+      "response": {
+        "body": {
+          "string": "{}\n",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Mon, 30 Jun 2025 15:45:40 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
