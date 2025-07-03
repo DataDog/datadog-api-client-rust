@@ -27,6 +27,7 @@ pub enum LogsProcessor {
     ),
     LogsTraceRemapper(Box<crate::datadogV1::model::LogsTraceRemapper>),
     LogsSpanRemapper(Box<crate::datadogV1::model::LogsSpanRemapper>),
+    LogsArrayProcessor(Box<crate::datadogV1::model::LogsArrayProcessor>),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -156,6 +157,13 @@ impl<'de> Deserialize<'de> for LogsProcessor {
         {
             if !_v._unparsed {
                 return Ok(LogsProcessor::LogsSpanRemapper(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::LogsArrayProcessor>>(
+            value.clone(),
+        ) {
+            if !_v._unparsed {
+                return Ok(LogsProcessor::LogsArrayProcessor(_v));
             }
         }
 
