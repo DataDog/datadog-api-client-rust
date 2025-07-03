@@ -37,7 +37,7 @@ async fn main() {
                     DateTime::parse_from_rfc3339("2021-11-01T11:11:11+00:00")
                         .expect("Failed to parse datetime")
                         .with_timezone(&Utc),
-                    LayerAttributesInterval::new().seconds(300),
+                    LayerAttributesInterval::new().seconds(3600),
                     vec![
                         ScheduleRequestDataAttributesLayersItemsMembersItems::new().user(
                             ScheduleRequestDataAttributesLayersItemsMembersItemsUser::new()

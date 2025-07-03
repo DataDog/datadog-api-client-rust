@@ -17,7 +17,7 @@ pub struct LayerAttributes {
     /// When the layer ceases to be active (ISO 8601).
     #[serde(rename = "end_date")]
     pub end_date: Option<chrono::DateTime<chrono::Utc>>,
-    /// Defines how often the rotation repeats, using a combination of days and optional seconds.
+    /// Defines how often the rotation repeats, using a combination of days and optional seconds. Should be at least 1 hour.
     #[serde(rename = "interval")]
     pub interval: Option<crate::datadogV2::model::LayerAttributesInterval>,
     /// The name of this layer.

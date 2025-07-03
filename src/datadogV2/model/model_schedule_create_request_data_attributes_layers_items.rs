@@ -17,7 +17,7 @@ pub struct ScheduleCreateRequestDataAttributesLayersItems {
     /// The date/time after which this layer no longer applies (in ISO 8601).
     #[serde(rename = "end_date")]
     pub end_date: Option<chrono::DateTime<chrono::Utc>>,
-    /// Defines how often the rotation repeats, using a combination of days and optional seconds.
+    /// Defines how often the rotation repeats, using a combination of days and optional seconds. Should be at least 1 hour.
     #[serde(rename = "interval")]
     pub interval: crate::datadogV2::model::LayerAttributesInterval,
     /// A list of members who participate in this layer's rotation.
