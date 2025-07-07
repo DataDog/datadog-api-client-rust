@@ -305,6 +305,12 @@ pub struct UsageSummaryDate {
     /// Shows the 99th percentile of all IoT devices over all hours in the current date all organizations.
     #[serde(rename = "iot_device_top99p")]
     pub iot_device_top99p: Option<i64>,
+    /// Sum of all LLM observability minimum spend over all hours in the current date for all organizations.
+    #[serde(rename = "llm_observability_min_spend_sum")]
+    pub llm_observability_min_spend_sum: Option<i64>,
+    /// Sum of all LLM observability sessions over all hours in the current date for all organizations.
+    #[serde(rename = "llm_observability_sum")]
+    pub llm_observability_sum: Option<i64>,
     /// Shows the sum of all mobile lite sessions over all hours in the current date for all organizations (To be deprecated on October 1st, 2024).
     #[deprecated]
     #[serde(rename = "mobile_rum_lite_session_count_sum")]
@@ -344,6 +350,9 @@ pub struct UsageSummaryDate {
     #[deprecated]
     #[serde(rename = "netflow_indexed_events_count_sum")]
     pub netflow_indexed_events_count_sum: Option<i64>,
+    /// Shows the 99th percentile of all Network Device Monitoring wireless devices over all hours in the current date for all organizations.
+    #[serde(rename = "network_device_wireless_top99p")]
+    pub network_device_wireless_top99p: Option<i64>,
     /// Shows the 99th percentile of all distinct Cloud Network Monitoring hosts (formerly known as Network hosts) over all hours in the current date for all organizations.
     #[serde(rename = "npm_host_top99p")]
     pub npm_host_top99p: Option<i64>,
@@ -368,12 +377,18 @@ pub struct UsageSummaryDate {
     /// Organizations associated with a user.
     #[serde(rename = "orgs")]
     pub orgs: Option<Vec<crate::datadogV1::model::UsageSummaryDateOrg>>,
+    /// Sum of all product analytics sessions over all hours in the current date for all organizations.
+    #[serde(rename = "product_analytics_sum")]
+    pub product_analytics_sum: Option<i64>,
     /// Shows the 99th percentile of all profiled Azure app services over all hours in the current date for all organizations.
     #[serde(rename = "profiling_aas_count_top99p")]
     pub profiling_aas_count_top99p: Option<i64>,
     /// Shows the 99th percentile of all profiled hosts over all hours within the current date for all organizations.
     #[serde(rename = "profiling_host_top99p")]
     pub profiling_host_top99p: Option<i64>,
+    /// Shows the high-water mark of all published applications over all hours in the current date for all organizations.
+    #[serde(rename = "published_app_hwm")]
+    pub published_app_hwm: Option<i64>,
     /// Shows the sum of all mobile sessions and all browser lite and legacy sessions over all hours in the current month for all organizations (To be deprecated on October 1st, 2024).
     #[serde(rename = "rum_browser_and_mobile_session_count")]
     pub rum_browser_and_mobile_session_count: Option<i64>,
@@ -386,6 +401,12 @@ pub struct UsageSummaryDate {
     /// Shows the sum of all browser RUM Session Replay counts over all hours in the current date for all organizations (To be introduced on October 1st, 2024).
     #[serde(rename = "rum_browser_replay_session_count_sum")]
     pub rum_browser_replay_session_count_sum: Option<i64>,
+    /// Sum of all RUM indexed sessions over all hours in the current date for all organizations.
+    #[serde(rename = "rum_indexed_sessions_sum")]
+    pub rum_indexed_sessions_sum: Option<i64>,
+    /// Sum of all RUM ingested sessions over all hours in the current date for all organizations.
+    #[serde(rename = "rum_ingested_sessions_sum")]
+    pub rum_ingested_sessions_sum: Option<i64>,
     /// Shows the sum of all RUM lite sessions (browser and mobile) over all hours in the current date for all organizations (To be introduced on October 1st, 2024).
     #[serde(rename = "rum_lite_session_count_sum")]
     pub rum_lite_session_count_sum: Option<i64>,
@@ -444,6 +465,9 @@ pub struct UsageSummaryDate {
     #[deprecated]
     #[serde(rename = "rum_session_count_sum")]
     pub rum_session_count_sum: Option<i64>,
+    /// Sum of all RUM session replay add-on sessions over all hours in the current date for all organizations.
+    #[serde(rename = "rum_session_replay_add_on_sum")]
+    pub rum_session_replay_add_on_sum: Option<i64>,
     /// Shows the sum of RUM sessions (browser and mobile) over all hours in the current date for all organizations.
     #[serde(rename = "rum_total_session_count_sum")]
     pub rum_total_session_count_sum: Option<i64>,
@@ -622,6 +646,8 @@ impl UsageSummaryDate {
             ingested_events_bytes_sum: None,
             iot_device_sum: None,
             iot_device_top99p: None,
+            llm_observability_min_spend_sum: None,
+            llm_observability_sum: None,
             mobile_rum_lite_session_count_sum: None,
             mobile_rum_session_count_android_sum: None,
             mobile_rum_session_count_flutter_sum: None,
@@ -632,6 +658,7 @@ impl UsageSummaryDate {
             mobile_rum_units_sum: None,
             ndm_netflow_events_sum: None,
             netflow_indexed_events_count_sum: None,
+            network_device_wireless_top99p: None,
             npm_host_top99p: None,
             observability_pipelines_bytes_processed_sum: None,
             oci_host_sum: None,
@@ -640,12 +667,16 @@ impl UsageSummaryDate {
             opentelemetry_apm_host_top99p: None,
             opentelemetry_host_top99p: None,
             orgs: None,
+            product_analytics_sum: None,
             profiling_aas_count_top99p: None,
             profiling_host_top99p: None,
+            published_app_hwm: None,
             rum_browser_and_mobile_session_count: None,
             rum_browser_legacy_session_count_sum: None,
             rum_browser_lite_session_count_sum: None,
             rum_browser_replay_session_count_sum: None,
+            rum_indexed_sessions_sum: None,
+            rum_ingested_sessions_sum: None,
             rum_lite_session_count_sum: None,
             rum_mobile_legacy_session_count_android_sum: None,
             rum_mobile_legacy_session_count_flutter_sum: None,
@@ -665,6 +696,7 @@ impl UsageSummaryDate {
             rum_mobile_replay_session_count_reactnative_sum: None,
             rum_replay_session_count_sum: None,
             rum_session_count_sum: None,
+            rum_session_replay_add_on_sum: None,
             rum_total_session_count_sum: None,
             rum_units_sum: None,
             sca_fargate_count_avg: None,
@@ -1276,6 +1308,18 @@ impl UsageSummaryDate {
     }
 
     #[allow(deprecated)]
+    pub fn llm_observability_min_spend_sum(mut self, value: i64) -> Self {
+        self.llm_observability_min_spend_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn llm_observability_sum(mut self, value: i64) -> Self {
+        self.llm_observability_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn mobile_rum_lite_session_count_sum(mut self, value: i64) -> Self {
         self.mobile_rum_lite_session_count_sum = Some(value);
         self
@@ -1336,6 +1380,12 @@ impl UsageSummaryDate {
     }
 
     #[allow(deprecated)]
+    pub fn network_device_wireless_top99p(mut self, value: i64) -> Self {
+        self.network_device_wireless_top99p = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn npm_host_top99p(mut self, value: i64) -> Self {
         self.npm_host_top99p = Some(value);
         self
@@ -1384,6 +1434,12 @@ impl UsageSummaryDate {
     }
 
     #[allow(deprecated)]
+    pub fn product_analytics_sum(mut self, value: i64) -> Self {
+        self.product_analytics_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn profiling_aas_count_top99p(mut self, value: i64) -> Self {
         self.profiling_aas_count_top99p = Some(value);
         self
@@ -1392,6 +1448,12 @@ impl UsageSummaryDate {
     #[allow(deprecated)]
     pub fn profiling_host_top99p(mut self, value: i64) -> Self {
         self.profiling_host_top99p = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn published_app_hwm(mut self, value: i64) -> Self {
+        self.published_app_hwm = Some(value);
         self
     }
 
@@ -1416,6 +1478,18 @@ impl UsageSummaryDate {
     #[allow(deprecated)]
     pub fn rum_browser_replay_session_count_sum(mut self, value: i64) -> Self {
         self.rum_browser_replay_session_count_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn rum_indexed_sessions_sum(mut self, value: i64) -> Self {
+        self.rum_indexed_sessions_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn rum_ingested_sessions_sum(mut self, value: i64) -> Self {
+        self.rum_ingested_sessions_sum = Some(value);
         self
     }
 
@@ -1530,6 +1604,12 @@ impl UsageSummaryDate {
     #[allow(deprecated)]
     pub fn rum_session_count_sum(mut self, value: i64) -> Self {
         self.rum_session_count_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn rum_session_replay_add_on_sum(mut self, value: i64) -> Self {
+        self.rum_session_replay_add_on_sum = Some(value);
         self
     }
 
@@ -1800,6 +1880,8 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                 let mut ingested_events_bytes_sum: Option<i64> = None;
                 let mut iot_device_sum: Option<i64> = None;
                 let mut iot_device_top99p: Option<i64> = None;
+                let mut llm_observability_min_spend_sum: Option<i64> = None;
+                let mut llm_observability_sum: Option<i64> = None;
                 let mut mobile_rum_lite_session_count_sum: Option<i64> = None;
                 let mut mobile_rum_session_count_android_sum: Option<i64> = None;
                 let mut mobile_rum_session_count_flutter_sum: Option<i64> = None;
@@ -1810,6 +1892,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                 let mut mobile_rum_units_sum: Option<i64> = None;
                 let mut ndm_netflow_events_sum: Option<i64> = None;
                 let mut netflow_indexed_events_count_sum: Option<i64> = None;
+                let mut network_device_wireless_top99p: Option<i64> = None;
                 let mut npm_host_top99p: Option<i64> = None;
                 let mut observability_pipelines_bytes_processed_sum: Option<i64> = None;
                 let mut oci_host_sum: Option<i64> = None;
@@ -1818,12 +1901,16 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                 let mut opentelemetry_apm_host_top99p: Option<i64> = None;
                 let mut opentelemetry_host_top99p: Option<i64> = None;
                 let mut orgs: Option<Vec<crate::datadogV1::model::UsageSummaryDateOrg>> = None;
+                let mut product_analytics_sum: Option<i64> = None;
                 let mut profiling_aas_count_top99p: Option<i64> = None;
                 let mut profiling_host_top99p: Option<i64> = None;
+                let mut published_app_hwm: Option<i64> = None;
                 let mut rum_browser_and_mobile_session_count: Option<i64> = None;
                 let mut rum_browser_legacy_session_count_sum: Option<i64> = None;
                 let mut rum_browser_lite_session_count_sum: Option<i64> = None;
                 let mut rum_browser_replay_session_count_sum: Option<i64> = None;
+                let mut rum_indexed_sessions_sum: Option<i64> = None;
+                let mut rum_ingested_sessions_sum: Option<i64> = None;
                 let mut rum_lite_session_count_sum: Option<i64> = None;
                 let mut rum_mobile_legacy_session_count_android_sum: Option<i64> = None;
                 let mut rum_mobile_legacy_session_count_flutter_sum: Option<i64> = None;
@@ -1843,6 +1930,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                 let mut rum_mobile_replay_session_count_reactnative_sum: Option<i64> = None;
                 let mut rum_replay_session_count_sum: Option<i64> = None;
                 let mut rum_session_count_sum: Option<i64> = None;
+                let mut rum_session_replay_add_on_sum: Option<i64> = None;
                 let mut rum_total_session_count_sum: Option<i64> = None;
                 let mut rum_units_sum: Option<i64> = None;
                 let mut sca_fargate_count_avg: Option<i64> = None;
@@ -2552,6 +2640,20 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                             iot_device_top99p =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "llm_observability_min_spend_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            llm_observability_min_spend_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "llm_observability_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            llm_observability_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "mobile_rum_lite_session_count_sum" => {
                             if v.is_null() {
                                 continue;
@@ -2622,6 +2724,13 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                             netflow_indexed_events_count_sum =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "network_device_wireless_top99p" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            network_device_wireless_top99p =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "npm_host_top99p" => {
                             if v.is_null() {
                                 continue;
@@ -2677,6 +2786,13 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                             }
                             orgs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "product_analytics_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            product_analytics_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "profiling_aas_count_top99p" => {
                             if v.is_null() {
                                 continue;
@@ -2689,6 +2805,13 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                                 continue;
                             }
                             profiling_host_top99p =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "published_app_hwm" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            published_app_hwm =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "rum_browser_and_mobile_session_count" => {
@@ -2717,6 +2840,20 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                                 continue;
                             }
                             rum_browser_replay_session_count_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_indexed_sessions_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_indexed_sessions_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_ingested_sessions_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_ingested_sessions_sum =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "rum_lite_session_count_sum" => {
@@ -2850,6 +2987,13 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                                 continue;
                             }
                             rum_session_count_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rum_session_replay_add_on_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_session_replay_add_on_sum =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "rum_total_session_count_sum" => {
@@ -3120,6 +3264,8 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                     ingested_events_bytes_sum,
                     iot_device_sum,
                     iot_device_top99p,
+                    llm_observability_min_spend_sum,
+                    llm_observability_sum,
                     mobile_rum_lite_session_count_sum,
                     mobile_rum_session_count_android_sum,
                     mobile_rum_session_count_flutter_sum,
@@ -3130,6 +3276,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                     mobile_rum_units_sum,
                     ndm_netflow_events_sum,
                     netflow_indexed_events_count_sum,
+                    network_device_wireless_top99p,
                     npm_host_top99p,
                     observability_pipelines_bytes_processed_sum,
                     oci_host_sum,
@@ -3138,12 +3285,16 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                     opentelemetry_apm_host_top99p,
                     opentelemetry_host_top99p,
                     orgs,
+                    product_analytics_sum,
                     profiling_aas_count_top99p,
                     profiling_host_top99p,
+                    published_app_hwm,
                     rum_browser_and_mobile_session_count,
                     rum_browser_legacy_session_count_sum,
                     rum_browser_lite_session_count_sum,
                     rum_browser_replay_session_count_sum,
+                    rum_indexed_sessions_sum,
+                    rum_ingested_sessions_sum,
                     rum_lite_session_count_sum,
                     rum_mobile_legacy_session_count_android_sum,
                     rum_mobile_legacy_session_count_flutter_sum,
@@ -3163,6 +3314,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                     rum_mobile_replay_session_count_reactnative_sum,
                     rum_replay_session_count_sum,
                     rum_session_count_sum,
+                    rum_session_replay_add_on_sum,
                     rum_total_session_count_sum,
                     rum_units_sum,
                     sca_fargate_count_avg,

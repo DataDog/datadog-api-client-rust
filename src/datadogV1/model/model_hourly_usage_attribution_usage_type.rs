@@ -48,6 +48,7 @@ pub enum HourlyUsageAttributionUsageType {
     INGESTED_SPANS_BYTES_USAGE,
     INVOCATIONS_USAGE,
     LAMBDA_TRACED_INVOCATIONS_USAGE,
+    LLM_OBSERVABILITY_USAGE,
     LOGS_INDEXED_15DAY_USAGE,
     LOGS_INDEXED_180DAY_USAGE,
     LOGS_INDEXED_1DAY_USAGE,
@@ -61,15 +62,21 @@ pub enum HourlyUsageAttributionUsageType {
     LOGS_INDEXED_CUSTOM_RETENTION_USAGE,
     MOBILE_APP_TESTING_USAGE,
     NDM_NETFLOW_USAGE,
+    NETWORK_DEVICE_WIRELESS_USAGE,
     NPM_HOST_USAGE,
     OBS_PIPELINE_BYTES_USAGE,
     OBS_PIPELINE_VCPU_USAGE,
     ONLINE_ARCHIVE_USAGE,
+    PRODUCT_ANALYTICS_SESSION_USAGE,
     PROFILED_CONTAINER_USAGE,
     PROFILED_FARGATE_USAGE,
     PROFILED_HOST_USAGE,
+    PUBLISHED_APP_USAGE,
     RUM_BROWSER_MOBILE_SESSIONS_USAGE,
+    RUM_INGESTED_USAGE,
+    RUM_INVESTIGATE_USAGE,
     RUM_REPLAY_SESSIONS_USAGE,
+    RUM_SESSION_REPLAY_ADD_ON_USAGE,
     SCA_FARGATE_USAGE,
     SDS_SCANNED_BYTES_USAGE,
     SERVERLESS_APPS_USAGE,
@@ -138,6 +145,7 @@ impl ToString for HourlyUsageAttributionUsageType {
             Self::LAMBDA_TRACED_INVOCATIONS_USAGE => {
                 String::from("lambda_traced_invocations_usage")
             }
+            Self::LLM_OBSERVABILITY_USAGE => String::from("llm_observability_usage"),
             Self::LOGS_INDEXED_15DAY_USAGE => String::from("logs_indexed_15day_usage"),
             Self::LOGS_INDEXED_180DAY_USAGE => String::from("logs_indexed_180day_usage"),
             Self::LOGS_INDEXED_1DAY_USAGE => String::from("logs_indexed_1day_usage"),
@@ -153,17 +161,27 @@ impl ToString for HourlyUsageAttributionUsageType {
             }
             Self::MOBILE_APP_TESTING_USAGE => String::from("mobile_app_testing_usage"),
             Self::NDM_NETFLOW_USAGE => String::from("ndm_netflow_usage"),
-            Self::NPM_HOST_USAGE => String::from("npm_host_usage"),
+            Self::NETWORK_DEVICE_WIRELESS_USAGE => String::from("npm_host_usage"),
+            Self::NPM_HOST_USAGE => String::from("network_device_wireless_usage"),
             Self::OBS_PIPELINE_BYTES_USAGE => String::from("obs_pipeline_bytes_usage"),
             Self::OBS_PIPELINE_VCPU_USAGE => String::from("obs_pipelines_vcpu_usage"),
             Self::ONLINE_ARCHIVE_USAGE => String::from("online_archive_usage"),
+            Self::PRODUCT_ANALYTICS_SESSION_USAGE => {
+                String::from("product_analytics_session_usage")
+            }
             Self::PROFILED_CONTAINER_USAGE => String::from("profiled_container_usage"),
             Self::PROFILED_FARGATE_USAGE => String::from("profiled_fargate_usage"),
             Self::PROFILED_HOST_USAGE => String::from("profiled_host_usage"),
+            Self::PUBLISHED_APP_USAGE => String::from("published_app"),
             Self::RUM_BROWSER_MOBILE_SESSIONS_USAGE => {
                 String::from("rum_browser_mobile_sessions_usage")
             }
+            Self::RUM_INGESTED_USAGE => String::from("rum_ingested_usage"),
+            Self::RUM_INVESTIGATE_USAGE => String::from("rum_investigate_usage"),
             Self::RUM_REPLAY_SESSIONS_USAGE => String::from("rum_replay_sessions_usage"),
+            Self::RUM_SESSION_REPLAY_ADD_ON_USAGE => {
+                String::from("rum_session_replay_add_on_usage")
+            }
             Self::SCA_FARGATE_USAGE => String::from("sca_fargate_usage"),
             Self::SDS_SCANNED_BYTES_USAGE => String::from("sds_scanned_bytes_usage"),
             Self::SERVERLESS_APPS_USAGE => String::from("serverless_apps_usage"),
@@ -248,6 +266,7 @@ impl<'de> Deserialize<'de> for HourlyUsageAttributionUsageType {
             "ingested_spans_bytes_usage" => Self::INGESTED_SPANS_BYTES_USAGE,
             "invocations_usage" => Self::INVOCATIONS_USAGE,
             "lambda_traced_invocations_usage" => Self::LAMBDA_TRACED_INVOCATIONS_USAGE,
+            "llm_observability_usage" => Self::LLM_OBSERVABILITY_USAGE,
             "logs_indexed_15day_usage" => Self::LOGS_INDEXED_15DAY_USAGE,
             "logs_indexed_180day_usage" => Self::LOGS_INDEXED_180DAY_USAGE,
             "logs_indexed_1day_usage" => Self::LOGS_INDEXED_1DAY_USAGE,
@@ -261,15 +280,21 @@ impl<'de> Deserialize<'de> for HourlyUsageAttributionUsageType {
             "logs_indexed_custom_retention_usage" => Self::LOGS_INDEXED_CUSTOM_RETENTION_USAGE,
             "mobile_app_testing_usage" => Self::MOBILE_APP_TESTING_USAGE,
             "ndm_netflow_usage" => Self::NDM_NETFLOW_USAGE,
-            "npm_host_usage" => Self::NPM_HOST_USAGE,
+            "npm_host_usage" => Self::NETWORK_DEVICE_WIRELESS_USAGE,
+            "network_device_wireless_usage" => Self::NPM_HOST_USAGE,
             "obs_pipeline_bytes_usage" => Self::OBS_PIPELINE_BYTES_USAGE,
             "obs_pipelines_vcpu_usage" => Self::OBS_PIPELINE_VCPU_USAGE,
             "online_archive_usage" => Self::ONLINE_ARCHIVE_USAGE,
+            "product_analytics_session_usage" => Self::PRODUCT_ANALYTICS_SESSION_USAGE,
             "profiled_container_usage" => Self::PROFILED_CONTAINER_USAGE,
             "profiled_fargate_usage" => Self::PROFILED_FARGATE_USAGE,
             "profiled_host_usage" => Self::PROFILED_HOST_USAGE,
+            "published_app" => Self::PUBLISHED_APP_USAGE,
             "rum_browser_mobile_sessions_usage" => Self::RUM_BROWSER_MOBILE_SESSIONS_USAGE,
+            "rum_ingested_usage" => Self::RUM_INGESTED_USAGE,
+            "rum_investigate_usage" => Self::RUM_INVESTIGATE_USAGE,
             "rum_replay_sessions_usage" => Self::RUM_REPLAY_SESSIONS_USAGE,
+            "rum_session_replay_add_on_usage" => Self::RUM_SESSION_REPLAY_ADD_ON_USAGE,
             "sca_fargate_usage" => Self::SCA_FARGATE_USAGE,
             "sds_scanned_bytes_usage" => Self::SDS_SCANNED_BYTES_USAGE,
             "serverless_apps_usage" => Self::SERVERLESS_APPS_USAGE,
