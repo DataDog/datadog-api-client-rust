@@ -343,6 +343,7 @@ impl RestrictionPoliciesAPI {
     /// - Connection Groups: `connection-group`
     /// - RUM Applications: `rum-application`
     /// - Cross Org Connections: `cross-org-connection`
+    /// - Spreadsheets: `spreadsheet`
     ///
     /// #### Supported relations for resources
     /// Resource Type               | Supported Relations
@@ -366,6 +367,7 @@ impl RestrictionPoliciesAPI {
     /// Connection Groups           | `viewer`, `editor`
     /// RUM Application             | `viewer`, `editor`
     /// Cross Org Connections       | `viewer`, `editor`
+    /// Spreadsheets                | `viewer`, `editor`
     pub async fn update_restriction_policy(
         &self,
         resource_id: String,
@@ -415,6 +417,7 @@ impl RestrictionPoliciesAPI {
     /// - Connection Groups: `connection-group`
     /// - RUM Applications: `rum-application`
     /// - Cross Org Connections: `cross-org-connection`
+    /// - Spreadsheets: `spreadsheet`
     ///
     /// #### Supported relations for resources
     /// Resource Type               | Supported Relations
@@ -438,6 +441,7 @@ impl RestrictionPoliciesAPI {
     /// Connection Groups           | `viewer`, `editor`
     /// RUM Application             | `viewer`, `editor`
     /// Cross Org Connections       | `viewer`, `editor`
+    /// Spreadsheets                | `viewer`, `editor`
     pub async fn update_restriction_policy_with_http_info(
         &self,
         resource_id: String,
