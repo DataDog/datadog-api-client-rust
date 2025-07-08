@@ -62,9 +62,6 @@ pub struct SLOResponseData {
     /// determined entirely by the `monitor_ids` field).
     #[serde(rename = "monitor_tags")]
     pub monitor_tags: Option<Vec<String>>,
-    /// The name of the service level objective object.
-    #[serde(rename = "name")]
-    pub name: Option<String>,
     /// A metric-based SLO. **Required if type is `metric`**. Note that Datadog only allows the sum by aggregator
     /// to be used because this will sum up all request counts instead of averaging them, or taking the max or
     /// min of all of those requests.
@@ -118,7 +115,6 @@ impl SLOResponseData {
             modified_at: None,
             monitor_ids: None,
             monitor_tags: None,
-            name: None,
             query: None,
             sli_specification: None,
             tags: None,
@@ -174,11 +170,6 @@ impl SLOResponseData {
 
     pub fn monitor_tags(mut self, value: Vec<String>) -> Self {
         self.monitor_tags = Some(value);
-        self
-    }
-
-    pub fn name(mut self, value: String) -> Self {
-        self.name = Some(value);
         self
     }
 
@@ -263,7 +254,6 @@ impl<'de> Deserialize<'de> for SLOResponseData {
                 let mut modified_at: Option<i64> = None;
                 let mut monitor_ids: Option<Vec<i64>> = None;
                 let mut monitor_tags: Option<Vec<String>> = None;
-                let mut name: Option<String> = None;
                 let mut query: Option<crate::datadogV1::model::ServiceLevelObjectiveQuery> = None;
                 let mut sli_specification: Option<crate::datadogV1::model::SLOSliSpec> = None;
                 let mut tags: Option<Vec<String>> = None;
@@ -335,12 +325,6 @@ impl<'de> Deserialize<'de> for SLOResponseData {
                             }
                             monitor_tags =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "name" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "query" => {
                             if v.is_null() {
@@ -439,7 +423,6 @@ impl<'de> Deserialize<'de> for SLOResponseData {
                     modified_at,
                     monitor_ids,
                     monitor_tags,
-                    name,
                     query,
                     sli_specification,
                     tags,
