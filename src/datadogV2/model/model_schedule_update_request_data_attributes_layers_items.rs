@@ -21,7 +21,7 @@ pub struct ScheduleUpdateRequestDataAttributesLayersItems {
     /// A unique identifier for the layer being updated.
     #[serde(rename = "id")]
     pub id: Option<String>,
-    /// Defines how often the rotation repeats, using a combination of days and optional seconds.
+    /// Defines how often the rotation repeats, using a combination of days and optional seconds. Should be at least 1 hour.
     #[serde(rename = "interval")]
     pub interval: crate::datadogV2::model::LayerAttributesInterval,
     /// The members assigned to this layer.
