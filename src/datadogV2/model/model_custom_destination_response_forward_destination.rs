@@ -8,19 +8,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum CustomDestinationResponseForwardDestination {
-    CustomDestinationResponseForwardDestinationHttp(
-        Box<crate::datadogV2::model::CustomDestinationResponseForwardDestinationHttp>,
-    ),
-    CustomDestinationResponseForwardDestinationSplunk(
-        Box<crate::datadogV2::model::CustomDestinationResponseForwardDestinationSplunk>,
-    ),
-    CustomDestinationResponseForwardDestinationElasticsearch(
-        Box<crate::datadogV2::model::CustomDestinationResponseForwardDestinationElasticsearch>,
-    ),
-    CustomDestinationResponseForwardDestinationMicrosoftSentinel(
-        Box<crate::datadogV2::model::CustomDestinationResponseForwardDestinationMicrosoftSentinel>,
-    ),
-    UnparsedObject(crate::datadog::UnparsedObject),
+    CustomDestinationResponseForwardDestinationHttp(Box<crate::datadogV2::model::CustomDestinationResponseForwardDestinationHttp>),
+	CustomDestinationResponseForwardDestinationSplunk(Box<crate::datadogV2::model::CustomDestinationResponseForwardDestinationSplunk>),
+	CustomDestinationResponseForwardDestinationElasticsearch(Box<crate::datadogV2::model::CustomDestinationResponseForwardDestinationElasticsearch>),
+	CustomDestinationResponseForwardDestinationMicrosoftSentinel(Box<crate::datadogV2::model::CustomDestinationResponseForwardDestinationMicrosoftSentinel>),
+	CustomDestinationResponseForwardDestinationGoogleSecurityOperations(Box<crate::datadogV2::model::CustomDestinationResponseForwardDestinationGoogleSecurityOperations>),
+	UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for CustomDestinationResponseForwardDestination {
@@ -56,6 +49,11 @@ impl<'de> Deserialize<'de> for CustomDestinationResponseForwardDestination {
         if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::CustomDestinationResponseForwardDestinationMicrosoftSentinel>>(value.clone()) {
 			if !_v._unparsed {
                 return Ok(CustomDestinationResponseForwardDestination::CustomDestinationResponseForwardDestinationMicrosoftSentinel(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::CustomDestinationResponseForwardDestinationGoogleSecurityOperations>>(value.clone()) {
+			if !_v._unparsed {
+                return Ok(CustomDestinationResponseForwardDestination::CustomDestinationResponseForwardDestinationGoogleSecurityOperations(_v));
             }
         }
 
