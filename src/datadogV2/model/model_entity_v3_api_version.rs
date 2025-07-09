@@ -8,6 +8,9 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum EntityV3APIVersion {
     V3,
+    V2_2,
+    V2_1,
+    V2,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -15,6 +18,9 @@ impl ToString for EntityV3APIVersion {
     fn to_string(&self) -> String {
         match self {
             Self::V3 => String::from("v3"),
+            Self::V2_2 => String::from("v2.2"),
+            Self::V2_1 => String::from("v2.1"),
+            Self::V2 => String::from("v2"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -40,6 +46,9 @@ impl<'de> Deserialize<'de> for EntityV3APIVersion {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "v3" => Self::V3,
+            "v2.2" => Self::V2_2,
+            "v2.1" => Self::V2_1,
+            "v2" => Self::V2,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
