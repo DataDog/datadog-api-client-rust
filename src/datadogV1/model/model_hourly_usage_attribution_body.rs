@@ -40,6 +40,7 @@ pub struct HourlyUsageAttributionBody {
     #[serde(rename = "updated_at")]
     pub updated_at: Option<String>,
     /// Supported products for hourly usage attribution requests.
+    /// The following values have been **deprecated**: `estimated_indexed_spans_usage`, `estimated_ingested_spans_usage`.
     #[serde(rename = "usage_type")]
     pub usage_type: Option<crate::datadogV1::model::HourlyUsageAttributionUsageType>,
     #[serde(flatten)]

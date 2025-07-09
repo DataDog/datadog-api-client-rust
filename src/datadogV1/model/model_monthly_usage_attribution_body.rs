@@ -37,6 +37,7 @@ pub struct MonthlyUsageAttributionBody {
     #[serde(rename = "updated_at")]
     pub updated_at: Option<chrono::DateTime<chrono::Utc>>,
     /// Fields in Usage Summary by tag(s).
+    /// The following values have been **deprecated**: `estimated_indexed_spans_usage`, `estimated_indexed_spans_percentage`, `estimated_ingested_spans_usage`, `estimated_ingested_spans_percentage`.
     #[serde(rename = "values")]
     pub values: Option<crate::datadogV1::model::MonthlyUsageAttributionValues>,
     #[serde(flatten)]
