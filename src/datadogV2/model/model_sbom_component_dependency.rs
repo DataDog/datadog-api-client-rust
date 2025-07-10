@@ -6,20 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Provides additional information about a BOM.
+/// The dependencies of a component of the SBOM.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct SBOMMetadata {
-    /// List of authors of the SBOM.
-    #[serde(rename = "authors")]
-    pub authors: Option<Vec<crate::datadogV2::model::SBOMMetadataAuthor>>,
-    /// The component that the BOM describes.
-    #[serde(rename = "component")]
-    pub component: Option<crate::datadogV2::model::SBOMMetadataComponent>,
-    /// The timestamp of the SBOM creation.
-    #[serde(rename = "timestamp")]
-    pub timestamp: Option<String>,
+pub struct SBOMComponentDependency {
+    /// The components that are dependencies of the ref component.
+    #[serde(rename = "dependsOn")]
+    pub depends_on: Option<Vec<String>>,
+    /// The identifier for the related component.
+    #[serde(rename = "ref")]
+    pub ref_: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,29 +24,23 @@ pub struct SBOMMetadata {
     pub(crate) _unparsed: bool,
 }
 
-impl SBOMMetadata {
-    pub fn new() -> SBOMMetadata {
-        SBOMMetadata {
-            authors: None,
-            component: None,
-            timestamp: None,
+impl SBOMComponentDependency {
+    pub fn new() -> SBOMComponentDependency {
+        SBOMComponentDependency {
+            depends_on: None,
+            ref_: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn authors(mut self, value: Vec<crate::datadogV2::model::SBOMMetadataAuthor>) -> Self {
-        self.authors = Some(value);
+    pub fn depends_on(mut self, value: Vec<String>) -> Self {
+        self.depends_on = Some(value);
         self
     }
 
-    pub fn component(mut self, value: crate::datadogV2::model::SBOMMetadataComponent) -> Self {
-        self.component = Some(value);
-        self
-    }
-
-    pub fn timestamp(mut self, value: String) -> Self {
-        self.timestamp = Some(value);
+    pub fn ref_(mut self, value: String) -> Self {
+        self.ref_ = Some(value);
         self
     }
 
@@ -62,20 +53,20 @@ impl SBOMMetadata {
     }
 }
 
-impl Default for SBOMMetadata {
+impl Default for SBOMComponentDependency {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for SBOMMetadata {
+impl<'de> Deserialize<'de> for SBOMComponentDependency {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct SBOMMetadataVisitor;
-        impl<'a> Visitor<'a> for SBOMMetadataVisitor {
-            type Value = SBOMMetadata;
+        struct SBOMComponentDependencyVisitor;
+        impl<'a> Visitor<'a> for SBOMComponentDependencyVisitor {
+            type Value = SBOMComponentDependency;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -85,9 +76,8 @@ impl<'de> Deserialize<'de> for SBOMMetadata {
             where
                 M: MapAccess<'a>,
             {
-                let mut authors: Option<Vec<crate::datadogV2::model::SBOMMetadataAuthor>> = None;
-                let mut component: Option<crate::datadogV2::model::SBOMMetadataComponent> = None;
-                let mut timestamp: Option<String> = None;
+                let mut depends_on: Option<Vec<String>> = None;
+                let mut ref_: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -96,23 +86,17 @@ impl<'de> Deserialize<'de> for SBOMMetadata {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "authors" => {
+                        "dependsOn" => {
                             if v.is_null() {
                                 continue;
                             }
-                            authors = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            depends_on = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "component" => {
+                        "ref" => {
                             if v.is_null() {
                                 continue;
                             }
-                            component = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "timestamp" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            timestamp = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            ref_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -122,10 +106,9 @@ impl<'de> Deserialize<'de> for SBOMMetadata {
                     }
                 }
 
-                let content = SBOMMetadata {
-                    authors,
-                    component,
-                    timestamp,
+                let content = SBOMComponentDependency {
+                    depends_on,
+                    ref_,
                     additional_properties,
                     _unparsed,
                 };
@@ -134,6 +117,6 @@ impl<'de> Deserialize<'de> for SBOMMetadata {
             }
         }
 
-        deserializer.deserialize_any(SBOMMetadataVisitor)
+        deserializer.deserialize_any(SBOMComponentDependencyVisitor)
     }
 }

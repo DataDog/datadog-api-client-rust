@@ -14,12 +14,21 @@ pub struct SBOMComponent {
     /// An optional identifier that can be used to reference the component elsewhere in the BOM.
     #[serde(rename = "bom-ref")]
     pub bom_ref: Option<String>,
+    /// The software licenses of the SBOM component.
+    #[serde(rename = "licenses")]
+    pub licenses: Option<Vec<crate::datadogV2::model::SBOMComponentLicense>>,
     /// The name of the component. This will often be a shortened, single name of the component.
     #[serde(rename = "name")]
     pub name: String,
+    /// The custom properties of the component of the SBOM.
+    #[serde(rename = "properties")]
+    pub properties: Option<Vec<crate::datadogV2::model::SBOMComponentProperty>>,
     /// Specifies the package-url (purl). The purl, if specified, MUST be valid and conform to the [specification](<https://github.com/package-url/purl-spec>).
     #[serde(rename = "purl")]
     pub purl: Option<String>,
+    /// The supplier of the component.
+    #[serde(rename = "supplier")]
+    pub supplier: crate::datadogV2::model::SBOMComponentSupplier,
     /// The SBOM component type
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::SBOMComponentType,
@@ -36,13 +45,17 @@ pub struct SBOMComponent {
 impl SBOMComponent {
     pub fn new(
         name: String,
+        supplier: crate::datadogV2::model::SBOMComponentSupplier,
         type_: crate::datadogV2::model::SBOMComponentType,
         version: String,
     ) -> SBOMComponent {
         SBOMComponent {
             bom_ref: None,
+            licenses: None,
             name,
+            properties: None,
             purl: None,
+            supplier,
             type_,
             version,
             additional_properties: std::collections::BTreeMap::new(),
@@ -52,6 +65,19 @@ impl SBOMComponent {
 
     pub fn bom_ref(mut self, value: String) -> Self {
         self.bom_ref = Some(value);
+        self
+    }
+
+    pub fn licenses(mut self, value: Vec<crate::datadogV2::model::SBOMComponentLicense>) -> Self {
+        self.licenses = Some(value);
+        self
+    }
+
+    pub fn properties(
+        mut self,
+        value: Vec<crate::datadogV2::model::SBOMComponentProperty>,
+    ) -> Self {
+        self.properties = Some(value);
         self
     }
 
@@ -87,8 +113,12 @@ impl<'de> Deserialize<'de> for SBOMComponent {
                 M: MapAccess<'a>,
             {
                 let mut bom_ref: Option<String> = None;
+                let mut licenses: Option<Vec<crate::datadogV2::model::SBOMComponentLicense>> = None;
                 let mut name: Option<String> = None;
+                let mut properties: Option<Vec<crate::datadogV2::model::SBOMComponentProperty>> =
+                    None;
                 let mut purl: Option<String> = None;
+                let mut supplier: Option<crate::datadogV2::model::SBOMComponentSupplier> = None;
                 let mut type_: Option<crate::datadogV2::model::SBOMComponentType> = None;
                 let mut version: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -105,14 +135,29 @@ impl<'de> Deserialize<'de> for SBOMComponent {
                             }
                             bom_ref = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "licenses" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            licenses = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "properties" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            properties = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "purl" => {
                             if v.is_null() {
                                 continue;
                             }
                             purl = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "supplier" => {
+                            supplier = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -138,13 +183,17 @@ impl<'de> Deserialize<'de> for SBOMComponent {
                     }
                 }
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
+                let supplier = supplier.ok_or_else(|| M::Error::missing_field("supplier"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
                 let version = version.ok_or_else(|| M::Error::missing_field("version"))?;
 
                 let content = SBOMComponent {
                     bom_ref,
+                    licenses,
                     name,
+                    properties,
                     purl,
+                    supplier,
                     type_,
                     version,
                     additional_properties,
