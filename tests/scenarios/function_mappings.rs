@@ -2090,6 +2090,9 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     );
     world
         .function_mappings
+        .insert("v2.ListAssetsSBOMs".into(), test_v2_list_assets_sbo_ms);
+    world
+        .function_mappings
         .insert("v2.GetSBOM".into(), test_v2_get_sbom);
     world.function_mappings.insert(
         "v2.GetSignalNotificationRules".into(),
@@ -14707,6 +14710,9 @@ fn test_v2_list_vulnerable_assets(world: &mut DatadogWorld, _parameters: &HashMa
     let filter_environments = _parameters
         .get("filter[environments]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_teams = _parameters
+        .get("filter[teams]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let filter_arch = _parameters
         .get("filter[arch]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
@@ -14731,10 +14737,68 @@ fn test_v2_list_vulnerable_assets(world: &mut DatadogWorld, _parameters: &HashMa
     params.filter_risks_has_privileged_access = filter_risks_has_privileged_access;
     params.filter_risks_has_access_to_sensitive_data = filter_risks_has_access_to_sensitive_data;
     params.filter_environments = filter_environments;
+    params.filter_teams = filter_teams;
     params.filter_arch = filter_arch;
     params.filter_operating_system_name = filter_operating_system_name;
     params.filter_operating_system_version = filter_operating_system_version;
     let response = match block_on(api.list_vulnerable_assets_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_assets_sbo_ms(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let page_token = _parameters
+        .get("page[token]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_asset_type = _parameters
+        .get("filter[asset_type]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_asset_name = _parameters
+        .get("filter[asset_name]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_package_name = _parameters
+        .get("filter[package_name]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_package_version = _parameters
+        .get("filter[package_version]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_license_name = _parameters
+        .get("filter[license_name]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_license_type = _parameters
+        .get("filter[license_type]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_security_monitoring::ListAssetsSBOMsOptionalParams::default();
+    params.page_token = page_token;
+    params.page_number = page_number;
+    params.filter_asset_type = filter_asset_type;
+    params.filter_asset_name = filter_asset_name;
+    params.filter_package_name = filter_package_name;
+    params.filter_package_version = filter_package_version;
+    params.filter_license_name = filter_license_name;
+    params.filter_license_type = filter_license_type;
+    let response = match block_on(api.list_assets_sbo_ms_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -15010,6 +15074,9 @@ fn test_v2_list_vulnerabilities(world: &mut DatadogWorld, _parameters: &HashMap<
     let filter_repo_digests = _parameters
         .get("filter[repo_digests]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_origin = _parameters
+        .get("filter[origin]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let filter_asset_name = _parameters
         .get("filter[asset.name]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
@@ -15042,6 +15109,9 @@ fn test_v2_list_vulnerabilities(world: &mut DatadogWorld, _parameters: &HashMap<
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let filter_asset_environments = _parameters
         .get("filter[asset.environments]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_asset_teams = _parameters
+        .get("filter[asset.teams]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let filter_asset_arch = _parameters
         .get("filter[asset.arch]")
@@ -15080,6 +15150,7 @@ fn test_v2_list_vulnerabilities(world: &mut DatadogWorld, _parameters: &HashMap<
     params.filter_code_location_method = filter_code_location_method;
     params.filter_fix_available = filter_fix_available;
     params.filter_repo_digests = filter_repo_digests;
+    params.filter_origin = filter_origin;
     params.filter_asset_name = filter_asset_name;
     params.filter_asset_type = filter_asset_type;
     params.filter_asset_version_first = filter_asset_version_first;
@@ -15092,6 +15163,7 @@ fn test_v2_list_vulnerabilities(world: &mut DatadogWorld, _parameters: &HashMap<
     params.filter_asset_risks_has_access_to_sensitive_data =
         filter_asset_risks_has_access_to_sensitive_data;
     params.filter_asset_environments = filter_asset_environments;
+    params.filter_asset_teams = filter_asset_teams;
     params.filter_asset_arch = filter_asset_arch;
     params.filter_asset_operating_system_name = filter_asset_operating_system_name;
     params.filter_asset_operating_system_version = filter_asset_operating_system_version;
