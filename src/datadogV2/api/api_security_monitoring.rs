@@ -98,6 +98,74 @@ impl GetSBOMOptionalParams {
     }
 }
 
+/// ListAssetsSBOMsOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_assets_sbo_ms`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListAssetsSBOMsOptionalParams {
+    /// Its value must come from the `links` section of the response of the first request. Do not manually edit it.
+    pub page_token: Option<String>,
+    /// The page number to be retrieved. It should be equal or greater than `1`
+    pub page_number: Option<i64>,
+    /// The type of the assets for the SBOM request.
+    pub filter_asset_type: Option<crate::datadogV2::model::AssetType>,
+    /// The name of the asset for the SBOM request.
+    pub filter_asset_name: Option<String>,
+    /// The name of the component that is a dependency of an asset.
+    pub filter_package_name: Option<String>,
+    /// The version of the component that is a dependency of an asset.
+    pub filter_package_version: Option<String>,
+    /// The software license name of the component that is a dependency of an asset.
+    pub filter_license_name: Option<String>,
+    /// The software license type of the component that is a dependency of an asset.
+    pub filter_license_type: Option<crate::datadogV2::model::SBOMComponentLicenseType>,
+}
+
+impl ListAssetsSBOMsOptionalParams {
+    /// Its value must come from the `links` section of the response of the first request. Do not manually edit it.
+    pub fn page_token(mut self, value: String) -> Self {
+        self.page_token = Some(value);
+        self
+    }
+    /// The page number to be retrieved. It should be equal or greater than `1`
+    pub fn page_number(mut self, value: i64) -> Self {
+        self.page_number = Some(value);
+        self
+    }
+    /// The type of the assets for the SBOM request.
+    pub fn filter_asset_type(mut self, value: crate::datadogV2::model::AssetType) -> Self {
+        self.filter_asset_type = Some(value);
+        self
+    }
+    /// The name of the asset for the SBOM request.
+    pub fn filter_asset_name(mut self, value: String) -> Self {
+        self.filter_asset_name = Some(value);
+        self
+    }
+    /// The name of the component that is a dependency of an asset.
+    pub fn filter_package_name(mut self, value: String) -> Self {
+        self.filter_package_name = Some(value);
+        self
+    }
+    /// The version of the component that is a dependency of an asset.
+    pub fn filter_package_version(mut self, value: String) -> Self {
+        self.filter_package_version = Some(value);
+        self
+    }
+    /// The software license name of the component that is a dependency of an asset.
+    pub fn filter_license_name(mut self, value: String) -> Self {
+        self.filter_license_name = Some(value);
+        self
+    }
+    /// The software license type of the component that is a dependency of an asset.
+    pub fn filter_license_type(
+        mut self,
+        value: crate::datadogV2::model::SBOMComponentLicenseType,
+    ) -> Self {
+        self.filter_license_type = Some(value);
+        self
+    }
+}
+
 /// ListFindingsOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_findings`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -375,6 +443,8 @@ pub struct ListVulnerabilitiesOptionalParams {
     pub filter_fix_available: Option<bool>,
     /// Filter by vulnerability `repo_digest` (when the vulnerability is related to `Image` asset).
     pub filter_repo_digests: Option<String>,
+    /// Filter by origin.
+    pub filter_origin: Option<String>,
     /// Filter by asset name.
     pub filter_asset_name: Option<String>,
     /// Filter by asset type.
@@ -397,6 +467,8 @@ pub struct ListVulnerabilitiesOptionalParams {
     pub filter_asset_risks_has_access_to_sensitive_data: Option<bool>,
     /// Filter by asset environments.
     pub filter_asset_environments: Option<String>,
+    /// Filter by asset teams.
+    pub filter_asset_teams: Option<String>,
     /// Filter by asset architecture.
     pub filter_asset_arch: Option<String>,
     /// Filter by asset operating system name.
@@ -548,6 +620,11 @@ impl ListVulnerabilitiesOptionalParams {
         self.filter_repo_digests = Some(value);
         self
     }
+    /// Filter by origin.
+    pub fn filter_origin(mut self, value: String) -> Self {
+        self.filter_origin = Some(value);
+        self
+    }
     /// Filter by asset name.
     pub fn filter_asset_name(mut self, value: String) -> Self {
         self.filter_asset_name = Some(value);
@@ -603,6 +680,11 @@ impl ListVulnerabilitiesOptionalParams {
         self.filter_asset_environments = Some(value);
         self
     }
+    /// Filter by asset teams.
+    pub fn filter_asset_teams(mut self, value: String) -> Self {
+        self.filter_asset_teams = Some(value);
+        self
+    }
     /// Filter by asset architecture.
     pub fn filter_asset_arch(mut self, value: String) -> Self {
         self.filter_asset_arch = Some(value);
@@ -650,6 +732,8 @@ pub struct ListVulnerableAssetsOptionalParams {
     pub filter_risks_has_access_to_sensitive_data: Option<bool>,
     /// Filter by environment.
     pub filter_environments: Option<String>,
+    /// Filter by teams.
+    pub filter_teams: Option<String>,
     /// Filter by architecture.
     pub filter_arch: Option<String>,
     /// Filter by operating system name.
@@ -722,6 +806,11 @@ impl ListVulnerableAssetsOptionalParams {
     /// Filter by environment.
     pub fn filter_environments(mut self, value: String) -> Self {
         self.filter_environments = Some(value);
+        self
+    }
+    /// Filter by teams.
+    pub fn filter_teams(mut self, value: String) -> Self {
+        self.filter_teams = Some(value);
         self
     }
     /// Filter by architecture.
@@ -1027,6 +1116,15 @@ pub enum GetVulnerabilityNotificationRuleError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetVulnerabilityNotificationRulesError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListAssetsSBOMsError is a struct for typed errors of method [`SecurityMonitoringAPI::list_assets_sbo_ms`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListAssetsSBOMsError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -5525,6 +5623,191 @@ impl SecurityMonitoringAPI {
         }
     }
 
+    /// Get a list of assets SBOMs for an organization.
+    ///
+    /// ### Pagination
+    ///
+    /// Please review the [Pagination section for the "List Vulnerabilities"](#pagination) endpoint.
+    ///
+    /// ### Filtering
+    ///
+    /// Please review the [Filtering section for the "List Vulnerabilities"](#filtering) endpoint.
+    ///
+    /// ### Metadata
+    ///
+    /// Please review the [Metadata section for the "List Vulnerabilities"](#metadata) endpoint.
+    ///
+    pub async fn list_assets_sbo_ms(
+        &self,
+        params: ListAssetsSBOMsOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::ListAssetsSBOMsResponse,
+        datadog::Error<ListAssetsSBOMsError>,
+    > {
+        match self.list_assets_sbo_ms_with_http_info(params).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get a list of assets SBOMs for an organization.
+    ///
+    /// ### Pagination
+    ///
+    /// Please review the [Pagination section for the "List Vulnerabilities"](#pagination) endpoint.
+    ///
+    /// ### Filtering
+    ///
+    /// Please review the [Filtering section for the "List Vulnerabilities"](#filtering) endpoint.
+    ///
+    /// ### Metadata
+    ///
+    /// Please review the [Metadata section for the "List Vulnerabilities"](#metadata) endpoint.
+    ///
+    pub async fn list_assets_sbo_ms_with_http_info(
+        &self,
+        params: ListAssetsSBOMsOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::ListAssetsSBOMsResponse>,
+        datadog::Error<ListAssetsSBOMsError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_assets_sbo_ms";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_assets_sbo_ms' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let page_token = params.page_token;
+        let page_number = params.page_number;
+        let filter_asset_type = params.filter_asset_type;
+        let filter_asset_name = params.filter_asset_name;
+        let filter_package_name = params.filter_package_name;
+        let filter_package_version = params.filter_package_version;
+        let filter_license_name = params.filter_license_name;
+        let filter_license_type = params.filter_license_type;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security/sboms",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = page_token {
+            local_req_builder =
+                local_req_builder.query(&[("page[token]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_number {
+            local_req_builder =
+                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_asset_type {
+            local_req_builder =
+                local_req_builder.query(&[("filter[asset_type]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_asset_name {
+            local_req_builder =
+                local_req_builder.query(&[("filter[asset_name]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_package_name {
+            local_req_builder = local_req_builder
+                .query(&[("filter[package_name]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_package_version {
+            local_req_builder = local_req_builder
+                .query(&[("filter[package_version]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_license_name {
+            local_req_builder = local_req_builder
+                .query(&[("filter[license_name]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_license_type {
+            local_req_builder = local_req_builder
+                .query(&[("filter[license_type]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::ListAssetsSBOMsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListAssetsSBOMsError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Get a list of findings. These include both misconfigurations and identity risks.
     ///
     /// **Note**: To filter and return only identity risks, add the following query parameter: `?filter[tags]=dd_rule_type:ciem`
@@ -6734,6 +7017,7 @@ impl SecurityMonitoringAPI {
         let filter_code_location_method = params.filter_code_location_method;
         let filter_fix_available = params.filter_fix_available;
         let filter_repo_digests = params.filter_repo_digests;
+        let filter_origin = params.filter_origin;
         let filter_asset_name = params.filter_asset_name;
         let filter_asset_type = params.filter_asset_type;
         let filter_asset_version_first = params.filter_asset_version_first;
@@ -6748,6 +7032,7 @@ impl SecurityMonitoringAPI {
         let filter_asset_risks_has_access_to_sensitive_data =
             params.filter_asset_risks_has_access_to_sensitive_data;
         let filter_asset_environments = params.filter_asset_environments;
+        let filter_asset_teams = params.filter_asset_teams;
         let filter_asset_arch = params.filter_asset_arch;
         let filter_asset_operating_system_name = params.filter_asset_operating_system_name;
         let filter_asset_operating_system_version = params.filter_asset_operating_system_version;
@@ -6889,6 +7174,10 @@ impl SecurityMonitoringAPI {
             local_req_builder = local_req_builder
                 .query(&[("filter[repo_digests]", &local_query_param.to_string())]);
         };
+        if let Some(ref local_query_param) = filter_origin {
+            local_req_builder =
+                local_req_builder.query(&[("filter[origin]", &local_query_param.to_string())]);
+        };
         if let Some(ref local_query_param) = filter_asset_name {
             local_req_builder =
                 local_req_builder.query(&[("filter[asset.name]", &local_query_param.to_string())]);
@@ -6946,6 +7235,10 @@ impl SecurityMonitoringAPI {
         if let Some(ref local_query_param) = filter_asset_environments {
             local_req_builder = local_req_builder
                 .query(&[("filter[asset.environments]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_asset_teams {
+            local_req_builder =
+                local_req_builder.query(&[("filter[asset.teams]", &local_query_param.to_string())]);
         };
         if let Some(ref local_query_param) = filter_asset_arch {
             local_req_builder =
@@ -7112,6 +7405,7 @@ impl SecurityMonitoringAPI {
         let filter_risks_has_access_to_sensitive_data =
             params.filter_risks_has_access_to_sensitive_data;
         let filter_environments = params.filter_environments;
+        let filter_teams = params.filter_teams;
         let filter_arch = params.filter_arch;
         let filter_operating_system_name = params.filter_operating_system_name;
         let filter_operating_system_version = params.filter_operating_system_version;
@@ -7184,6 +7478,10 @@ impl SecurityMonitoringAPI {
         if let Some(ref local_query_param) = filter_environments {
             local_req_builder = local_req_builder
                 .query(&[("filter[environments]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_teams {
+            local_req_builder =
+                local_req_builder.query(&[("filter[teams]", &local_query_param.to_string())]);
         };
         if let Some(ref local_query_param) = filter_arch {
             local_req_builder =

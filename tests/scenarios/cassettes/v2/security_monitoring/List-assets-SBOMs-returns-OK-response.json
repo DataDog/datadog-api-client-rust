@@ -1,0 +1,33 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "application/json"
+          ]
+        },
+        "method": "get",
+        "uri": "https://api.datadoghq.com/api/v2/security/sboms?filter%5Bpackage_name%5D=pandas&filter%5Basset_type%5D=Service"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":[]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Thu, 10 Jul 2025 10:11:37 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

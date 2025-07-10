@@ -26,6 +26,9 @@ pub struct AssetAttributes {
     /// Asset risks.
     #[serde(rename = "risks")]
     pub risks: crate::datadogV2::model::AssetRisks,
+    /// List of teams that own the asset.
+    #[serde(rename = "teams")]
+    pub teams: Option<Vec<String>>,
     /// The asset type
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::AssetType,
@@ -52,6 +55,7 @@ impl AssetAttributes {
             name,
             operating_system: None,
             risks,
+            teams: None,
             type_,
             version: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -69,6 +73,11 @@ impl AssetAttributes {
         value: crate::datadogV2::model::AssetOperatingSystem,
     ) -> Self {
         self.operating_system = Some(value);
+        self
+    }
+
+    pub fn teams(mut self, value: Vec<String>) -> Self {
+        self.teams = Some(value);
         self
     }
 
@@ -109,6 +118,7 @@ impl<'de> Deserialize<'de> for AssetAttributes {
                 let mut operating_system: Option<crate::datadogV2::model::AssetOperatingSystem> =
                     None;
                 let mut risks: Option<crate::datadogV2::model::AssetRisks> = None;
+                let mut teams: Option<Vec<String>> = None;
                 let mut type_: Option<crate::datadogV2::model::AssetType> = None;
                 let mut version: Option<crate::datadogV2::model::AssetVersion> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -141,6 +151,12 @@ impl<'de> Deserialize<'de> for AssetAttributes {
                         }
                         "risks" => {
                             risks = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "teams" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            teams = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -178,6 +194,7 @@ impl<'de> Deserialize<'de> for AssetAttributes {
                     name,
                     operating_system,
                     risks,
+                    teams,
                     type_,
                     version,
                     additional_properties,

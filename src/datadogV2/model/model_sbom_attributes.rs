@@ -17,6 +17,9 @@ pub struct SBOMAttributes {
     /// A list of software and hardware components.
     #[serde(rename = "components")]
     pub components: Vec<crate::datadogV2::model::SBOMComponent>,
+    /// List of dependencies between components of the SBOM.
+    #[serde(rename = "dependencies")]
+    pub dependencies: Vec<crate::datadogV2::model::SBOMComponentDependency>,
     /// Provides additional information about a BOM.
     #[serde(rename = "metadata")]
     pub metadata: crate::datadogV2::model::SBOMMetadata,
@@ -40,6 +43,7 @@ impl SBOMAttributes {
     pub fn new(
         bom_format: String,
         components: Vec<crate::datadogV2::model::SBOMComponent>,
+        dependencies: Vec<crate::datadogV2::model::SBOMComponentDependency>,
         metadata: crate::datadogV2::model::SBOMMetadata,
         serial_number: String,
         spec_version: crate::datadogV2::model::SpecVersion,
@@ -48,6 +52,7 @@ impl SBOMAttributes {
         SBOMAttributes {
             bom_format,
             components,
+            dependencies,
             metadata,
             serial_number,
             spec_version,
@@ -85,6 +90,9 @@ impl<'de> Deserialize<'de> for SBOMAttributes {
             {
                 let mut bom_format: Option<String> = None;
                 let mut components: Option<Vec<crate::datadogV2::model::SBOMComponent>> = None;
+                let mut dependencies: Option<
+                    Vec<crate::datadogV2::model::SBOMComponentDependency>,
+                > = None;
                 let mut metadata: Option<crate::datadogV2::model::SBOMMetadata> = None;
                 let mut serial_number: Option<String> = None;
                 let mut spec_version: Option<crate::datadogV2::model::SpecVersion> = None;
@@ -102,6 +110,10 @@ impl<'de> Deserialize<'de> for SBOMAttributes {
                         }
                         "components" => {
                             components = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "dependencies" => {
+                            dependencies =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "metadata" => {
                             metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -136,6 +148,8 @@ impl<'de> Deserialize<'de> for SBOMAttributes {
                 }
                 let bom_format = bom_format.ok_or_else(|| M::Error::missing_field("bom_format"))?;
                 let components = components.ok_or_else(|| M::Error::missing_field("components"))?;
+                let dependencies =
+                    dependencies.ok_or_else(|| M::Error::missing_field("dependencies"))?;
                 let metadata = metadata.ok_or_else(|| M::Error::missing_field("metadata"))?;
                 let serial_number =
                     serial_number.ok_or_else(|| M::Error::missing_field("serial_number"))?;
@@ -146,6 +160,7 @@ impl<'de> Deserialize<'de> for SBOMAttributes {
                 let content = SBOMAttributes {
                     bom_format,
                     components,
+                    dependencies,
                     metadata,
                     serial_number,
                     spec_version,

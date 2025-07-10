@@ -1,0 +1,33 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "application/json"
+          ]
+        },
+        "method": "get",
+        "uri": "https://api.datadoghq.com/api/v2/security/sboms?page%5Btoken%5D=unknown&page%5Bnumber%5D=1"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"status\":\"404\",\"title\":\"Unexpected internal error\"}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 404,
+          "message": "Not Found"
+        }
+      },
+      "recorded_at": "Thu, 10 Jul 2025 10:13:27 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

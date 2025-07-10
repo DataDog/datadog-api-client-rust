@@ -6,20 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Provides additional information about a BOM.
+/// The expected response schema when listing assets SBOMs.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct SBOMMetadata {
-    /// List of authors of the SBOM.
-    #[serde(rename = "authors")]
-    pub authors: Option<Vec<crate::datadogV2::model::SBOMMetadataAuthor>>,
-    /// The component that the BOM describes.
-    #[serde(rename = "component")]
-    pub component: Option<crate::datadogV2::model::SBOMMetadataComponent>,
-    /// The timestamp of the SBOM creation.
-    #[serde(rename = "timestamp")]
-    pub timestamp: Option<String>,
+pub struct ListAssetsSBOMsResponse {
+    /// List of assets SBOMs.
+    #[serde(rename = "data")]
+    pub data: Vec<crate::datadogV2::model::SBOM>,
+    /// The JSON:API links related to pagination.
+    #[serde(rename = "links")]
+    pub links: Option<crate::datadogV2::model::Links>,
+    /// The metadata related to this request.
+    #[serde(rename = "meta")]
+    pub meta: Option<crate::datadogV2::model::Metadata>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,29 +27,24 @@ pub struct SBOMMetadata {
     pub(crate) _unparsed: bool,
 }
 
-impl SBOMMetadata {
-    pub fn new() -> SBOMMetadata {
-        SBOMMetadata {
-            authors: None,
-            component: None,
-            timestamp: None,
+impl ListAssetsSBOMsResponse {
+    pub fn new(data: Vec<crate::datadogV2::model::SBOM>) -> ListAssetsSBOMsResponse {
+        ListAssetsSBOMsResponse {
+            data,
+            links: None,
+            meta: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn authors(mut self, value: Vec<crate::datadogV2::model::SBOMMetadataAuthor>) -> Self {
-        self.authors = Some(value);
+    pub fn links(mut self, value: crate::datadogV2::model::Links) -> Self {
+        self.links = Some(value);
         self
     }
 
-    pub fn component(mut self, value: crate::datadogV2::model::SBOMMetadataComponent) -> Self {
-        self.component = Some(value);
-        self
-    }
-
-    pub fn timestamp(mut self, value: String) -> Self {
-        self.timestamp = Some(value);
+    pub fn meta(mut self, value: crate::datadogV2::model::Metadata) -> Self {
+        self.meta = Some(value);
         self
     }
 
@@ -62,20 +57,14 @@ impl SBOMMetadata {
     }
 }
 
-impl Default for SBOMMetadata {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<'de> Deserialize<'de> for SBOMMetadata {
+impl<'de> Deserialize<'de> for ListAssetsSBOMsResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct SBOMMetadataVisitor;
-        impl<'a> Visitor<'a> for SBOMMetadataVisitor {
-            type Value = SBOMMetadata;
+        struct ListAssetsSBOMsResponseVisitor;
+        impl<'a> Visitor<'a> for ListAssetsSBOMsResponseVisitor {
+            type Value = ListAssetsSBOMsResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -85,9 +74,9 @@ impl<'de> Deserialize<'de> for SBOMMetadata {
             where
                 M: MapAccess<'a>,
             {
-                let mut authors: Option<Vec<crate::datadogV2::model::SBOMMetadataAuthor>> = None;
-                let mut component: Option<crate::datadogV2::model::SBOMMetadataComponent> = None;
-                let mut timestamp: Option<String> = None;
+                let mut data: Option<Vec<crate::datadogV2::model::SBOM>> = None;
+                let mut links: Option<crate::datadogV2::model::Links> = None;
+                let mut meta: Option<crate::datadogV2::model::Metadata> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -96,23 +85,20 @@ impl<'de> Deserialize<'de> for SBOMMetadata {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "authors" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            authors = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "data" => {
+                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "component" => {
+                        "links" => {
                             if v.is_null() {
                                 continue;
                             }
-                            component = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            links = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "timestamp" => {
+                        "meta" => {
                             if v.is_null() {
                                 continue;
                             }
-                            timestamp = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -121,11 +107,12 @@ impl<'de> Deserialize<'de> for SBOMMetadata {
                         }
                     }
                 }
+                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = SBOMMetadata {
-                    authors,
-                    component,
-                    timestamp,
+                let content = ListAssetsSBOMsResponse {
+                    data,
+                    links,
+                    meta,
                     additional_properties,
                     _unparsed,
                 };
@@ -134,6 +121,6 @@ impl<'de> Deserialize<'de> for SBOMMetadata {
             }
         }
 
-        deserializer.deserialize_any(SBOMMetadataVisitor)
+        deserializer.deserialize_any(ListAssetsSBOMsResponseVisitor)
     }
 }
