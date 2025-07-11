@@ -27,6 +27,7 @@ pub use self::api::api_csm_coverage_analysis;
 pub use self::api::api_csm_threats;
 pub use self::api::api_dashboard_lists;
 pub use self::api::api_data_deletion;
+pub use self::api::api_datasets;
 pub use self::api::api_domain_allowlist;
 pub use self::api::api_dora_metrics;
 pub use self::api::api_downtimes;
