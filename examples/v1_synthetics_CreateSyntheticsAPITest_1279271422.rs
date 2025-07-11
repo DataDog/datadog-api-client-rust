@@ -158,6 +158,7 @@ async fn main() {
                                     "SSL step".to_string(),
                                     SyntheticsTestRequest::new()
                                         .check_certificate_revocation(true)
+                                        .disable_aia_intermediate_fetching(true)
                                         .host("example.org".to_string())
                                         .port(SyntheticsTestRequestPort::SyntheticsTestRequestNumericalPort(443)),
                                     SyntheticsAPITestStepSubtype::SSL,
