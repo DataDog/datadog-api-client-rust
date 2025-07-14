@@ -1,5 +1,29 @@
 # CHANGELOG
 
+## 0.16.0/2025-07-14
+
+### Added
+* Add Datasets API to Open API Spec  [#777](https://github.com/DataDog/datadog-api-client-rust/pull/777)
+* Add support for vulnerability management - GetSBOMsList new endpoint and update existing ones [#776](https://github.com/DataDog/datadog-api-client-rust/pull/776)
+* Add spreadsheet to restriction_policy specs [#770](https://github.com/DataDog/datadog-api-client-rust/pull/770)
+* Adds missing /api/v1/synthetics/tests/search spec [#764](https://github.com/DataDog/datadog-api-client-rust/pull/764)
+* Add API spec for AWS Integrations IAM permissions [#758](https://github.com/DataDog/datadog-api-client-rust/pull/758)
+* New keys added for multiple products [#756](https://github.com/DataDog/datadog-api-client-rust/pull/756)
+* Add extractFromEmailBody step for synthetics browser test [#753](https://github.com/DataDog/datadog-api-client-rust/pull/753)
+* Add support for `Array Processor` in `Logs Pipelines` [#751](https://github.com/DataDog/datadog-api-client-rust/pull/751)
+* Update Incident API specs to include `is_test` in `POST /incidents` and incidents response [#744](https://github.com/DataDog/datadog-api-client-rust/pull/744)
+* Add App Key Registration API  [#738](https://github.com/DataDog/datadog-api-client-rust/pull/738)
+
+### Changed
+* Update template variable schemas with type field in dashboards and shared dashboards endpoints for group by template variables [#752](https://github.com/DataDog/datadog-api-client-rust/pull/752)
+* Update events intake specs for v2 Events post endpoint [#745](https://github.com/DataDog/datadog-api-client-rust/pull/745)
+
+### Fixed
+* Synthetics mobile test `message` field is now required [#750](https://github.com/DataDog/datadog-api-client-rust/pull/750)
+
+### Removed
+* Remove caseIndex from historical jobs api spec [#749](https://github.com/DataDog/datadog-api-client-rust/pull/749)
+
 ## 0.15.0/2025-06-30
 
 ### Fixed
