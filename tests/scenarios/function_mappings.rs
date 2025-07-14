@@ -76,6 +76,7 @@ pub struct ApiInstances {
     pub v2_api_csm_coverage_analysis:
         Option<datadogV2::api_csm_coverage_analysis::CSMCoverageAnalysisAPI>,
     pub v2_api_dashboard_lists: Option<datadogV2::api_dashboard_lists::DashboardListsAPI>,
+    pub v2_api_datasets: Option<datadogV2::api_datasets::DatasetsAPI>,
     pub v2_api_data_deletion: Option<datadogV2::api_data_deletion::DataDeletionAPI>,
     pub v2_api_domain_allowlist: Option<datadogV2::api_domain_allowlist::DomainAllowlistAPI>,
     pub v2_api_dora_metrics: Option<datadogV2::api_dora_metrics::DORAMetricsAPI>,
@@ -595,6 +596,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 world.config.clone(),
                 world.http_client.as_ref().unwrap().clone()
             ));
+        }
+        "Datasets" => {
+            world.api_instances.v2_api_datasets = Some(
+                datadogV2::api_datasets::DatasetsAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
         }
         "DataDeletion" => {
             world.api_instances.v2_api_data_deletion = Some(
@@ -2441,6 +2450,18 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.UpdateDashboardListItems".into(),
         test_v2_update_dashboard_list_items,
     );
+    world
+        .function_mappings
+        .insert("v2.GetAllDatasets".into(), test_v2_get_all_datasets);
+    world
+        .function_mappings
+        .insert("v2.CreateDataset".into(), test_v2_create_dataset);
+    world
+        .function_mappings
+        .insert("v2.DeleteDataset".into(), test_v2_delete_dataset);
+    world
+        .function_mappings
+        .insert("v2.GetDataset".into(), test_v2_get_dataset);
     world.function_mappings.insert(
         "v2.CreateDataDeletionRequest".into(),
         test_v2_create_data_deletion_request,
@@ -17912,6 +17933,107 @@ fn test_v2_update_dashboard_list_items(
                 };
             }
         };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_all_datasets(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_datasets
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.get_all_datasets_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_dataset(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_datasets
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_dataset_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_dataset(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_datasets
+        .as_ref()
+        .expect("api instance not found");
+    let dataset_id =
+        serde_json::from_value(_parameters.get("dataset_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_dataset_with_http_info(dataset_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_dataset(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_datasets
+        .as_ref()
+        .expect("api instance not found");
+    let dataset_id =
+        serde_json::from_value(_parameters.get("dataset_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_dataset_with_http_info(dataset_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
