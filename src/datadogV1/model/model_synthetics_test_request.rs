@@ -41,6 +41,9 @@ pub struct SyntheticsTestRequest {
     /// A protobuf file that needs to be gzipped first then base64 encoded.
     #[serde(rename = "compressedProtoFile")]
     pub compressed_proto_file: Option<String>,
+    /// Disable fetching intermediate certificates from AIA.
+    #[serde(rename = "disableAiaIntermediateFetching")]
+    pub disable_aia_intermediate_fetching: Option<bool>,
     /// DNS server to use for DNS tests.
     #[serde(rename = "dnsServer")]
     pub dns_server: Option<String>,
@@ -132,6 +135,7 @@ impl SyntheticsTestRequest {
             check_certificate_revocation: None,
             compressed_json_descriptor: None,
             compressed_proto_file: None,
+            disable_aia_intermediate_fetching: None,
             dns_server: None,
             dns_server_port: None,
             files: None,
@@ -213,6 +217,11 @@ impl SyntheticsTestRequest {
 
     pub fn compressed_proto_file(mut self, value: String) -> Self {
         self.compressed_proto_file = Some(value);
+        self
+    }
+
+    pub fn disable_aia_intermediate_fetching(mut self, value: bool) -> Self {
+        self.disable_aia_intermediate_fetching = Some(value);
         self
     }
 
@@ -385,6 +394,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                 let mut check_certificate_revocation: Option<bool> = None;
                 let mut compressed_json_descriptor: Option<String> = None;
                 let mut compressed_proto_file: Option<String> = None;
+                let mut disable_aia_intermediate_fetching: Option<bool> = None;
                 let mut dns_server: Option<String> = None;
                 let mut dns_server_port: Option<
                     crate::datadogV1::model::SyntheticsTestRequestDNSServerPort,
@@ -509,6 +519,13 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                                 continue;
                             }
                             compressed_proto_file =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "disableAiaIntermediateFetching" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            disable_aia_intermediate_fetching =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "dnsServer" => {
@@ -700,6 +717,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                     check_certificate_revocation,
                     compressed_json_descriptor,
                     compressed_proto_file,
+                    disable_aia_intermediate_fetching,
                     dns_server,
                     dns_server_port,
                     files,
