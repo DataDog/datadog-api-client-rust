@@ -11,14 +11,14 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SyntheticsTestOptions {
-    /// For SSL test, whether or not the test should allow self signed
+    /// For SSL tests, whether or not the test should allow self signed
     /// certificates.
     #[serde(rename = "accept_self_signed")]
     pub accept_self_signed: Option<bool>,
     /// Allows loading insecure content for an HTTP request in an API test.
     #[serde(rename = "allow_insecure")]
     pub allow_insecure: Option<bool>,
-    /// For SSL test, whether or not the test should fail on revoked certificate in stapled OCSP.
+    /// For SSL tests, whether or not the test should fail on revoked certificate in stapled OCSP.
     #[serde(rename = "checkCertificateRevocation")]
     pub check_certificate_revocation: Option<bool>,
     /// CI/CD options for a Synthetic test.
@@ -27,6 +27,9 @@ pub struct SyntheticsTestOptions {
     /// For browser test, array with the different device IDs used to run the test.
     #[serde(rename = "device_ids")]
     pub device_ids: Option<Vec<String>>,
+    /// For SSL tests, whether or not the test should disable fetching intermediate certificates from AIA.
+    #[serde(rename = "disableAiaIntermediateFetching")]
+    pub disable_aia_intermediate_fetching: Option<bool>,
     /// Whether or not to disable CORS mechanism.
     #[serde(rename = "disableCors")]
     pub disable_cors: Option<bool>,
@@ -113,6 +116,7 @@ impl SyntheticsTestOptions {
             check_certificate_revocation: None,
             ci: None,
             device_ids: None,
+            disable_aia_intermediate_fetching: None,
             disable_cors: None,
             disable_csp: None,
             enable_profiling: None,
@@ -164,6 +168,12 @@ impl SyntheticsTestOptions {
     #[allow(deprecated)]
     pub fn device_ids(mut self, value: Vec<String>) -> Self {
         self.device_ids = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn disable_aia_intermediate_fetching(mut self, value: bool) -> Self {
+        self.disable_aia_intermediate_fetching = Some(value);
         self
     }
 
@@ -330,6 +340,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptions {
                 let mut check_certificate_revocation: Option<bool> = None;
                 let mut ci: Option<crate::datadogV1::model::SyntheticsTestCiOptions> = None;
                 let mut device_ids: Option<Vec<String>> = None;
+                let mut disable_aia_intermediate_fetching: Option<bool> = None;
                 let mut disable_cors: Option<bool> = None;
                 let mut disable_csp: Option<bool> = None;
                 let mut enable_profiling: Option<bool> = None;
@@ -397,6 +408,13 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptions {
                                 continue;
                             }
                             device_ids = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "disableAiaIntermediateFetching" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            disable_aia_intermediate_fetching =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "disableCors" => {
                             if v.is_null() {
@@ -551,6 +569,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptions {
                     check_certificate_revocation,
                     ci,
                     device_ids,
+                    disable_aia_intermediate_fetching,
                     disable_cors,
                     disable_csp,
                     enable_profiling,
