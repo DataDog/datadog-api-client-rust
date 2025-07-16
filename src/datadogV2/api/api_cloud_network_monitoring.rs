@@ -18,7 +18,7 @@ pub struct GetAggregatedConnectionsOptionalParams {
     pub group_by: Option<String>,
     /// Comma-separated list of tags to filter connections by.
     pub tags: Option<String>,
-    /// The number of connections to be returned. The maximum value is 5000.
+    /// The number of connections to be returned. The maximum value is 7500.
     pub limit: Option<i32>,
 }
 
@@ -43,7 +43,7 @@ impl GetAggregatedConnectionsOptionalParams {
         self.tags = Some(value);
         self
     }
-    /// The number of connections to be returned. The maximum value is 5000.
+    /// The number of connections to be returned. The maximum value is 7500.
     pub fn limit(mut self, value: i32) -> Self {
         self.limit = Some(value);
         self
