@@ -654,6 +654,7 @@ lazy_static! {
                                 description: "The globally available endpoint for On-Call.".into(),
                                 default_value: "navy.oncall.datadoghq.com".into(),
                                 enum_values: vec![
+                                    "lava.oncall.datadoghq.com".into(),
                                     "saffron.oncall.datadoghq.com".into(),
                                     "navy.oncall.datadoghq.com".into(),
                                     "coral.oncall.datadoghq.com".into(),
@@ -721,6 +722,7 @@ lazy_static! {
                                 description: "The globally available endpoint for On-Call.".into(),
                                 default_value: "navy.oncall.datadoghq.com".into(),
                                 enum_values: vec![
+                                    "lava.oncall.datadoghq.com".into(),
                                     "saffron.oncall.datadoghq.com".into(),
                                     "navy.oncall.datadoghq.com".into(),
                                     "coral.oncall.datadoghq.com".into(),
@@ -788,6 +790,7 @@ lazy_static! {
                                 description: "The globally available endpoint for On-Call.".into(),
                                 default_value: "navy.oncall.datadoghq.com".into(),
                                 enum_values: vec![
+                                    "lava.oncall.datadoghq.com".into(),
                                     "saffron.oncall.datadoghq.com".into(),
                                     "navy.oncall.datadoghq.com".into(),
                                     "coral.oncall.datadoghq.com".into(),
@@ -855,6 +858,7 @@ lazy_static! {
                                 description: "The globally available endpoint for On-Call.".into(),
                                 default_value: "navy.oncall.datadoghq.com".into(),
                                 enum_values: vec![
+                                    "lava.oncall.datadoghq.com".into(),
                                     "saffron.oncall.datadoghq.com".into(),
                                     "navy.oncall.datadoghq.com".into(),
                                     "coral.oncall.datadoghq.com".into(),
