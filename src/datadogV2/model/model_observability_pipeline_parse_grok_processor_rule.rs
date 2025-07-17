@@ -25,8 +25,9 @@ pub struct ObservabilityPipelineParseGrokProcessorRule {
     /// A list of Grok helper rules that can be referenced by the parsing rules.
     ///
     #[serde(rename = "support_rules")]
-    pub support_rules:
+    pub support_rules: Option<
         Vec<crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorRuleSupportRule>,
+    >,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -40,17 +41,22 @@ impl ObservabilityPipelineParseGrokProcessorRule {
             crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorRuleMatchRule,
         >,
         source: String,
-        support_rules: Vec<
-            crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorRuleSupportRule,
-        >,
     ) -> ObservabilityPipelineParseGrokProcessorRule {
         ObservabilityPipelineParseGrokProcessorRule {
             match_rules,
             source,
-            support_rules,
+            support_rules: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn support_rules(
+        mut self,
+        value: Vec<crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorRuleSupportRule>,
+    ) -> Self {
+        self.support_rules = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -98,6 +104,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineParseGrokProcessorRule {
                             source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "support_rules" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             support_rules =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -111,8 +120,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineParseGrokProcessorRule {
                 let match_rules =
                     match_rules.ok_or_else(|| M::Error::missing_field("match_rules"))?;
                 let source = source.ok_or_else(|| M::Error::missing_field("source"))?;
-                let support_rules =
-                    support_rules.ok_or_else(|| M::Error::missing_field("support_rules"))?;
 
                 let content = ObservabilityPipelineParseGrokProcessorRule {
                     match_rules,
