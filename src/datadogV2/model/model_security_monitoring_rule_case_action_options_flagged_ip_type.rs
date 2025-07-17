@@ -6,27 +6,23 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum SecurityMonitoringRuleCaseActionType {
-    BLOCK_IP,
-    BLOCK_USER,
-    USER_BEHAVIOR,
-    FLAG_IP,
+pub enum SecurityMonitoringRuleCaseActionOptionsFlaggedIPType {
+    SUSPICIOUS,
+    FLAGGED,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for SecurityMonitoringRuleCaseActionType {
+impl ToString for SecurityMonitoringRuleCaseActionOptionsFlaggedIPType {
     fn to_string(&self) -> String {
         match self {
-            Self::BLOCK_IP => String::from("block_ip"),
-            Self::BLOCK_USER => String::from("block_user"),
-            Self::USER_BEHAVIOR => String::from("user_behavior"),
-            Self::FLAG_IP => String::from("flag_ip"),
+            Self::SUSPICIOUS => String::from("SUSPICIOUS"),
+            Self::FLAGGED => String::from("FLAGGED"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for SecurityMonitoringRuleCaseActionType {
+impl Serialize for SecurityMonitoringRuleCaseActionOptionsFlaggedIPType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -38,17 +34,15 @@ impl Serialize for SecurityMonitoringRuleCaseActionType {
     }
 }
 
-impl<'de> Deserialize<'de> for SecurityMonitoringRuleCaseActionType {
+impl<'de> Deserialize<'de> for SecurityMonitoringRuleCaseActionOptionsFlaggedIPType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "block_ip" => Self::BLOCK_IP,
-            "block_user" => Self::BLOCK_USER,
-            "user_behavior" => Self::USER_BEHAVIOR,
-            "flag_ip" => Self::FLAG_IP,
+            "SUSPICIOUS" => Self::SUSPICIOUS,
+            "FLAGGED" => Self::FLAGGED,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

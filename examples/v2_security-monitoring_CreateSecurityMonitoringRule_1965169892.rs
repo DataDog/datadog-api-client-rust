@@ -3,6 +3,7 @@ use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_security_monitoring::SecurityMonitoringAPI;
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleCaseAction;
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleCaseActionOptions;
+use datadog_api_client::datadogV2::model::SecurityMonitoringRuleCaseActionOptionsFlaggedIPType;
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleCaseActionType;
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleCaseCreate;
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleCreatePayload;
@@ -25,18 +26,23 @@ async fn main() {
                 vec![
                     SecurityMonitoringRuleCaseCreate::new(SecurityMonitoringRuleSeverity::INFO)
                         .actions(vec![
-                            SecurityMonitoringRuleCaseAction::new()
-                                .options(
-                                    SecurityMonitoringRuleCaseActionOptions::new().duration(900),
-                                )
-                                .type_(SecurityMonitoringRuleCaseActionType::BLOCK_IP),
-                            SecurityMonitoringRuleCaseAction::new()
-                                .options(
-                                    SecurityMonitoringRuleCaseActionOptions::new()
-                                        .user_behavior_name("behavior".to_string()),
-                                )
-                                .type_(SecurityMonitoringRuleCaseActionType::USER_BEHAVIOR),
-                        ])
+                        SecurityMonitoringRuleCaseAction::new()
+                            .options(SecurityMonitoringRuleCaseActionOptions::new().duration(900))
+                            .type_(SecurityMonitoringRuleCaseActionType::BLOCK_IP),
+                        SecurityMonitoringRuleCaseAction::new()
+                            .options(
+                                SecurityMonitoringRuleCaseActionOptions::new()
+                                    .user_behavior_name("behavior".to_string()),
+                            )
+                            .type_(SecurityMonitoringRuleCaseActionType::USER_BEHAVIOR),
+                        SecurityMonitoringRuleCaseAction::new()
+                            .options(
+                                SecurityMonitoringRuleCaseActionOptions::new().flagged_ip_type(
+                                    SecurityMonitoringRuleCaseActionOptionsFlaggedIPType::FLAGGED,
+                                ),
+                            )
+                            .type_(SecurityMonitoringRuleCaseActionType::FLAG_IP),
+                    ])
                         .condition("a > 100000".to_string())
                         .name("".to_string())
                         .notifications(vec![]),
