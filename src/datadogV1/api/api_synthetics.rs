@@ -109,7 +109,7 @@ pub struct SearchTestsOptionalParams {
     pub start: Option<i64>,
     /// The maximum number of results to return.
     pub count: Option<i64>,
-    /// The sort order for the results (e.g., 'name,asc' or 'name,desc').
+    /// The sort order for the results (e.g., `name,asc` or `name,desc`).
     pub sort: Option<String>,
 }
 
@@ -139,7 +139,7 @@ impl SearchTestsOptionalParams {
         self.count = Some(value);
         self
     }
-    /// The sort order for the results (e.g., 'name,asc' or 'name,desc').
+    /// The sort order for the results (e.g., `name,asc` or `name,desc`).
     pub fn sort(mut self, value: String) -> Self {
         self.sort = Some(value);
         self
