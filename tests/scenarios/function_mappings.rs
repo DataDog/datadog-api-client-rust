@@ -2987,6 +2987,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_estimate_metrics_output_series,
     );
     world.function_mappings.insert(
+        "v2.GetMetricTagCardinalityDetails".into(),
+        test_v2_get_metric_tag_cardinality_details,
+    );
+    world.function_mappings.insert(
         "v2.DeleteTagConfiguration".into(),
         test_v2_delete_tag_configuration,
     );
@@ -22528,6 +22532,36 @@ fn test_v2_estimate_metrics_output_series(
     params.filter_timespan_h = filter_timespan_h;
     let response =
         match block_on(api.estimate_metrics_output_series_with_http_info(metric_name, params)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_metric_tag_cardinality_details(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_metrics
+        .as_ref()
+        .expect("api instance not found");
+    let metric_name =
+        serde_json::from_value(_parameters.get("metric_name").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.get_metric_tag_cardinality_details_with_http_info(metric_name)) {
             Ok(response) => response,
             Err(error) => {
                 return match error {
