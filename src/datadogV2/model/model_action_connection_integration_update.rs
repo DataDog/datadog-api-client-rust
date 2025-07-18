@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 #[serde(untagged)]
 pub enum ActionConnectionIntegrationUpdate {
     AWSIntegrationUpdate(Box<crate::datadogV2::model::AWSIntegrationUpdate>),
+    DatadogIntegrationUpdate(Box<crate::datadogV2::model::DatadogIntegrationUpdate>),
     HTTPIntegrationUpdate(Box<crate::datadogV2::model::HTTPIntegrationUpdate>),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
@@ -24,6 +25,16 @@ impl<'de> Deserialize<'de> for ActionConnectionIntegrationUpdate {
         ) {
             if !_v._unparsed {
                 return Ok(ActionConnectionIntegrationUpdate::AWSIntegrationUpdate(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::DatadogIntegrationUpdate>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ActionConnectionIntegrationUpdate::DatadogIntegrationUpdate(
+                    _v,
+                ));
             }
         }
         if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::HTTPIntegrationUpdate>>(
