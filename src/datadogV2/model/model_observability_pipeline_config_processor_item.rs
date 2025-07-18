@@ -56,6 +56,9 @@ pub enum ObservabilityPipelineConfigProcessorItem {
     ObservabilityPipelineThrottleProcessor(
         Box<crate::datadogV2::model::ObservabilityPipelineThrottleProcessor>,
     ),
+    ObservabilityPipelineDatadogTagsProcessor(
+        Box<crate::datadogV2::model::ObservabilityPipelineDatadogTagsProcessor>,
+    ),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -211,6 +214,14 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigProcessorItem {
         {
             if !_v._unparsed {
                 return Ok(ObservabilityPipelineConfigProcessorItem::ObservabilityPipelineThrottleProcessor(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineDatadogTagsProcessor>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigProcessorItem::ObservabilityPipelineDatadogTagsProcessor(_v));
             }
         }
 
