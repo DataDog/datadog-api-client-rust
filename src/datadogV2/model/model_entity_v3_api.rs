@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EntityV3API {
-    /// The schema version of entity type. The field is known as schema-version in the previous version.
+    /// The version of the schema data that was used to populate this entity's data. This could be via the API, Terraform, or YAML file in a repository. The field is known as schema-version in the previous version.
     #[serde(rename = "apiVersion")]
     pub api_version: crate::datadogV2::model::EntityV3APIVersion,
     /// Datadog product integrations for the API entity.
