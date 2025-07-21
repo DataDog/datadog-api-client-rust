@@ -14,6 +14,12 @@ pub struct UsageBillableSummaryBody {
     /// The total account usage.
     #[serde(rename = "account_billable_usage")]
     pub account_billable_usage: Option<i64>,
+    /// The total account committed usage.
+    #[serde(rename = "account_committed_usage")]
+    pub account_committed_usage: Option<i64>,
+    /// The total account on-demand usage.
+    #[serde(rename = "account_on_demand_usage")]
+    pub account_on_demand_usage: Option<i64>,
     /// Elapsed usage hours for some billable product.
     #[serde(rename = "elapsed_usage_hours")]
     pub elapsed_usage_hours: Option<i64>,
@@ -43,6 +49,8 @@ impl UsageBillableSummaryBody {
     pub fn new() -> UsageBillableSummaryBody {
         UsageBillableSummaryBody {
             account_billable_usage: None,
+            account_committed_usage: None,
+            account_on_demand_usage: None,
             elapsed_usage_hours: None,
             first_billable_usage_hour: None,
             last_billable_usage_hour: None,
@@ -56,6 +64,16 @@ impl UsageBillableSummaryBody {
 
     pub fn account_billable_usage(mut self, value: i64) -> Self {
         self.account_billable_usage = Some(value);
+        self
+    }
+
+    pub fn account_committed_usage(mut self, value: i64) -> Self {
+        self.account_committed_usage = Some(value);
+        self
+    }
+
+    pub fn account_on_demand_usage(mut self, value: i64) -> Self {
+        self.account_on_demand_usage = Some(value);
         self
     }
 
@@ -122,6 +140,8 @@ impl<'de> Deserialize<'de> for UsageBillableSummaryBody {
                 M: MapAccess<'a>,
             {
                 let mut account_billable_usage: Option<i64> = None;
+                let mut account_committed_usage: Option<i64> = None;
+                let mut account_on_demand_usage: Option<i64> = None;
                 let mut elapsed_usage_hours: Option<i64> = None;
                 let mut first_billable_usage_hour: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut last_billable_usage_hour: Option<chrono::DateTime<chrono::Utc>> = None;
@@ -141,6 +161,20 @@ impl<'de> Deserialize<'de> for UsageBillableSummaryBody {
                                 continue;
                             }
                             account_billable_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "account_committed_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            account_committed_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "account_on_demand_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            account_on_demand_usage =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "elapsed_usage_hours" => {
@@ -194,6 +228,8 @@ impl<'de> Deserialize<'de> for UsageBillableSummaryBody {
 
                 let content = UsageBillableSummaryBody {
                     account_billable_usage,
+                    account_committed_usage,
+                    account_on_demand_usage,
                     elapsed_usage_hours,
                     first_billable_usage_hour,
                     last_billable_usage_hour,
