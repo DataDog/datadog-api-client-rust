@@ -90,10 +90,13 @@ pub enum UpdateApplicationKeyError {
     UnknownValue(serde_json::Value),
 }
 
-/// Manage your Datadog API and application keys. You need an API key and
-/// an application key for a user with the required permissions to interact
-/// with these endpoints. The full list of API and application keys can be
-/// seen on your [Datadog API page](<https://app.datadoghq.com/account/settings#api>).
+/// Manage your Datadog API and application keys. You need an API key and an
+/// application key for a user with the required permissions to interact with these endpoints.
+///
+/// Consult the following pages to view and manage your keys:
+///
+/// - [API Keys](<https://app.datadoghq.com/organization-settings/api-keys>)
+/// - [Application Keys](<https://app.datadoghq.com/personal-settings/application-keys>)
 #[derive(Debug, Clone)]
 pub struct KeyManagementAPI {
     config: datadog::Configuration,
