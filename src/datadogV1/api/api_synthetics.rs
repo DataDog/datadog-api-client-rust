@@ -99,6 +99,8 @@ impl ListTestsOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct SearchTestsOptionalParams {
+    /// The search query.
+    pub text: Option<String>,
     /// If true, include the full configuration for each test in the response.
     pub include_full_config: Option<bool>,
     /// If true, returns suites instead of tests.
@@ -114,6 +116,11 @@ pub struct SearchTestsOptionalParams {
 }
 
 impl SearchTestsOptionalParams {
+    /// The search query.
+    pub fn text(mut self, value: String) -> Self {
+        self.text = Some(value);
+        self
+    }
     /// If true, include the full configuration for each test in the response.
     pub fn include_full_config(mut self, value: bool) -> Self {
         self.include_full_config = Some(value);
@@ -3828,6 +3835,7 @@ impl SyntheticsAPI {
         let operation_id = "v1.search_tests";
 
         // unbox and build optional parameters
+        let text = params.text;
         let include_full_config = params.include_full_config;
         let search_suites = params.search_suites;
         let facets_only = params.facets_only;
@@ -3844,6 +3852,10 @@ impl SyntheticsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        if let Some(ref local_query_param) = text {
+            local_req_builder =
+                local_req_builder.query(&[("text", &local_query_param.to_string())]);
+        };
         if let Some(ref local_query_param) = include_full_config {
             local_req_builder =
                 local_req_builder.query(&[("include_full_config", &local_query_param.to_string())]);

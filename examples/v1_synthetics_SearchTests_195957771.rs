@@ -10,6 +10,7 @@ async fn main() {
     let resp = api
         .search_tests(
             SearchTestsOptionalParams::default()
+                .text("tag:value".to_string())
                 .include_full_config(true)
                 .search_suites(true)
                 .facets_only(true)
