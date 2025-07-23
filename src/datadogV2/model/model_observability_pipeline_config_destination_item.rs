@@ -49,6 +49,9 @@ pub enum ObservabilityPipelineConfigDestinationItem {
     ObservabilityPipelineAmazonOpenSearchDestination(
         Box<crate::datadogV2::model::ObservabilityPipelineAmazonOpenSearchDestination>,
     ),
+    ObservabilityPipelineSocketDestination(
+        Box<crate::datadogV2::model::ObservabilityPipelineSocketDestination>,
+    ),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -178,6 +181,14 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigDestinationItem {
         {
             if !_v._unparsed {
                 return Ok(ObservabilityPipelineConfigDestinationItem::ObservabilityPipelineAmazonOpenSearchDestination(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineSocketDestination>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigDestinationItem::ObservabilityPipelineSocketDestination(_v));
             }
         }
 
