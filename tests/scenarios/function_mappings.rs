@@ -10344,6 +10344,9 @@ fn test_v1_search_tests(world: &mut DatadogWorld, _parameters: &HashMap<String, 
         .v1_api_synthetics
         .as_ref()
         .expect("api instance not found");
+    let text = _parameters
+        .get("text")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let include_full_config = _parameters
         .get("include_full_config")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
@@ -10363,6 +10366,7 @@ fn test_v1_search_tests(world: &mut DatadogWorld, _parameters: &HashMap<String, 
         .get("sort")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV1::api_synthetics::SearchTestsOptionalParams::default();
+    params.text = text;
     params.include_full_config = include_full_config;
     params.search_suites = search_suites;
     params.facets_only = facets_only;
