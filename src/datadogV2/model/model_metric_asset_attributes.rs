@@ -6,11 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Assets related to the object, including title and url.
+/// Assets related to the object, including title, url, and tags.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MetricAssetAttributes {
+    /// List of tag keys used in the asset.
+    #[serde(rename = "tags")]
+    pub tags: Option<Vec<String>>,
     /// Title of the asset.
     #[serde(rename = "title")]
     pub title: Option<String>,
@@ -27,11 +30,17 @@ pub struct MetricAssetAttributes {
 impl MetricAssetAttributes {
     pub fn new() -> MetricAssetAttributes {
         MetricAssetAttributes {
+            tags: None,
             title: None,
             url: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn tags(mut self, value: Vec<String>) -> Self {
+        self.tags = Some(value);
+        self
     }
 
     pub fn title(mut self, value: String) -> Self {
@@ -76,6 +85,7 @@ impl<'de> Deserialize<'de> for MetricAssetAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut tags: Option<Vec<String>> = None;
                 let mut title: Option<String> = None;
                 let mut url: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -86,6 +96,12 @@ impl<'de> Deserialize<'de> for MetricAssetAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "title" => {
                             if v.is_null() {
                                 continue;
@@ -107,6 +123,7 @@ impl<'de> Deserialize<'de> for MetricAssetAttributes {
                 }
 
                 let content = MetricAssetAttributes {
+                    tags,
                     title,
                     url,
                     additional_properties,
