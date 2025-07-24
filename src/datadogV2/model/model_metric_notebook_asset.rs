@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MetricNotebookAsset {
-    /// Assets related to the object, including title and url.
+    /// Assets related to the object, including title, url, and tags.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::MetricAssetAttributes>,
     /// The related notebook's ID.
