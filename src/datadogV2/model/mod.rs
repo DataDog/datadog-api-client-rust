@@ -1380,6 +1380,8 @@ pub mod model_dataset_create_request;
 pub use self::model_dataset_create_request::DatasetCreateRequest;
 pub mod model_dataset_response_single;
 pub use self::model_dataset_response_single::DatasetResponseSingle;
+pub mod model_dataset_update_request;
+pub use self::model_dataset_update_request::DatasetUpdateRequest;
 pub mod model_create_data_deletion_request_body;
 pub use self::model_create_data_deletion_request_body::CreateDataDeletionRequestBody;
 pub mod model_create_data_deletion_request_body_data;
