@@ -6,21 +6,26 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Product-specific filters for the dataset.
+/// Edit request for a dataset.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct FiltersPerProduct {
-    /// Defines the list of tag-based filters used to restrict access to telemetry data for a specific product.
-    /// These filters act as access control rules. Each filter must follow the tag query syntax used by
-    /// Datadog (such as `@tag.key:value`), and only one tag or attribute may be used to define the access strategy
-    /// per telemetry type.
-    #[serde(rename = "filters")]
-    pub filters: Vec<String>,
-    /// Name of the product the dataset is for. Possible values are 'apm', 'rum',
-    /// 'metrics', 'logs', 'error_tracking', and 'cloud_cost'.
-    #[serde(rename = "product")]
-    pub product: String,
+pub struct DatasetUpdateRequest {
+    /// Dataset object.
+    ///
+    /// ### Datasets Constraints
+    /// - **Tag Limit per Dataset**:
+    ///   - Each restricted dataset supports a maximum of 10 key:value pairs per product.
+    ///
+    /// - **Tag Key Rules per Telemetry Type**:
+    ///   - Only one tag key or attribute may be used to define access within a single telemetry type.
+    ///   - The same or different tag key may be used across different telemetry types.
+    ///
+    /// - **Tag Value Uniqueness**:
+    ///   - Tag values must be unique within a single dataset.
+    ///   - A tag value used in one dataset cannot be reused in another dataset of the same telemetry type.
+    #[serde(rename = "data")]
+    pub data: crate::datadogV2::model::Dataset,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -28,11 +33,10 @@ pub struct FiltersPerProduct {
     pub(crate) _unparsed: bool,
 }
 
-impl FiltersPerProduct {
-    pub fn new(filters: Vec<String>, product: String) -> FiltersPerProduct {
-        FiltersPerProduct {
-            filters,
-            product,
+impl DatasetUpdateRequest {
+    pub fn new(data: crate::datadogV2::model::Dataset) -> DatasetUpdateRequest {
+        DatasetUpdateRequest {
+            data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -47,14 +51,14 @@ impl FiltersPerProduct {
     }
 }
 
-impl<'de> Deserialize<'de> for FiltersPerProduct {
+impl<'de> Deserialize<'de> for DatasetUpdateRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct FiltersPerProductVisitor;
-        impl<'a> Visitor<'a> for FiltersPerProductVisitor {
-            type Value = FiltersPerProduct;
+        struct DatasetUpdateRequestVisitor;
+        impl<'a> Visitor<'a> for DatasetUpdateRequestVisitor {
+            type Value = DatasetUpdateRequest;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -64,8 +68,7 @@ impl<'de> Deserialize<'de> for FiltersPerProduct {
             where
                 M: MapAccess<'a>,
             {
-                let mut filters: Option<Vec<String>> = None;
-                let mut product: Option<String> = None;
+                let mut data: Option<crate::datadogV2::model::Dataset> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -74,11 +77,8 @@ impl<'de> Deserialize<'de> for FiltersPerProduct {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "filters" => {
-                            filters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "product" => {
-                            product = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "data" => {
+                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -87,12 +87,10 @@ impl<'de> Deserialize<'de> for FiltersPerProduct {
                         }
                     }
                 }
-                let filters = filters.ok_or_else(|| M::Error::missing_field("filters"))?;
-                let product = product.ok_or_else(|| M::Error::missing_field("product"))?;
+                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = FiltersPerProduct {
-                    filters,
-                    product,
+                let content = DatasetUpdateRequest {
+                    data,
                     additional_properties,
                     _unparsed,
                 };
@@ -101,6 +99,6 @@ impl<'de> Deserialize<'de> for FiltersPerProduct {
             }
         }
 
-        deserializer.deserialize_any(FiltersPerProductVisitor)
+        deserializer.deserialize_any(DatasetUpdateRequestVisitor)
     }
 }
