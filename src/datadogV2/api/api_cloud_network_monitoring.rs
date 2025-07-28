@@ -14,7 +14,7 @@ pub struct GetAggregatedConnectionsOptionalParams {
     pub from: Option<i64>,
     /// Unix timestamp (number of seconds since epoch) of the end of the query window. If not provided, the end of the query window is the current time. If neither `from` nor `to` are provided, the query window is `[now - 15m, now]`.
     pub to: Option<i64>,
-    /// Comma-separated list of fields to group connections by.
+    /// Comma-separated list of fields to group connections by. The maximum number of group_by(s) is 10.
     pub group_by: Option<String>,
     /// Comma-separated list of tags to filter connections by.
     pub tags: Option<String>,
@@ -33,7 +33,7 @@ impl GetAggregatedConnectionsOptionalParams {
         self.to = Some(value);
         self
     }
-    /// Comma-separated list of fields to group connections by.
+    /// Comma-separated list of fields to group connections by. The maximum number of group_by(s) is 10.
     pub fn group_by(mut self, value: String) -> Self {
         self.group_by = Some(value);
         self
