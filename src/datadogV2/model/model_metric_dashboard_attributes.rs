@@ -14,6 +14,9 @@ pub struct MetricDashboardAttributes {
     /// Value from 0 to 5 that ranks popularity of the dashboard.
     #[serde(rename = "popularity")]
     pub popularity: Option<f64>,
+    /// List of tag keys used in the asset.
+    #[serde(rename = "tags")]
+    pub tags: Option<Vec<String>>,
     /// Title of the asset.
     #[serde(rename = "title")]
     pub title: Option<String>,
@@ -31,6 +34,7 @@ impl MetricDashboardAttributes {
     pub fn new() -> MetricDashboardAttributes {
         MetricDashboardAttributes {
             popularity: None,
+            tags: None,
             title: None,
             url: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -40,6 +44,11 @@ impl MetricDashboardAttributes {
 
     pub fn popularity(mut self, value: f64) -> Self {
         self.popularity = Some(value);
+        self
+    }
+
+    pub fn tags(mut self, value: Vec<String>) -> Self {
+        self.tags = Some(value);
         self
     }
 
@@ -86,6 +95,7 @@ impl<'de> Deserialize<'de> for MetricDashboardAttributes {
                 M: MapAccess<'a>,
             {
                 let mut popularity: Option<f64> = None;
+                let mut tags: Option<Vec<String>> = None;
                 let mut title: Option<String> = None;
                 let mut url: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -101,6 +111,12 @@ impl<'de> Deserialize<'de> for MetricDashboardAttributes {
                                 continue;
                             }
                             popularity = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "title" => {
                             if v.is_null() {
@@ -124,6 +140,7 @@ impl<'de> Deserialize<'de> for MetricDashboardAttributes {
 
                 let content = MetricDashboardAttributes {
                     popularity,
+                    tags,
                     title,
                     url,
                     additional_properties,
