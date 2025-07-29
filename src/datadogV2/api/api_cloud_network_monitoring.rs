@@ -18,7 +18,7 @@ pub struct GetAggregatedConnectionsOptionalParams {
     pub group_by: Option<String>,
     /// Comma-separated list of tags to filter connections by.
     pub tags: Option<String>,
-    /// The number of connections to be returned. The maximum value is 7500.
+    /// The number of connections to be returned. The maximum value is 7500. The default is 100.
     pub limit: Option<i32>,
 }
 
@@ -43,7 +43,51 @@ impl GetAggregatedConnectionsOptionalParams {
         self.tags = Some(value);
         self
     }
-    /// The number of connections to be returned. The maximum value is 7500.
+    /// The number of connections to be returned. The maximum value is 7500. The default is 100.
+    pub fn limit(mut self, value: i32) -> Self {
+        self.limit = Some(value);
+        self
+    }
+}
+
+/// GetAggregatedDnsOptionalParams is a struct for passing parameters to the method [`CloudNetworkMonitoringAPI::get_aggregated_dns`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetAggregatedDnsOptionalParams {
+    /// Unix timestamp (number of seconds since epoch) of the start of the query window. If not provided, the start of the query window is 15 minutes before the `to` timestamp. If neither `from` nor `to` are provided, the query window is `[now - 15m, now]`.
+    pub from: Option<i64>,
+    /// Unix timestamp (number of seconds since epoch) of the end of the query window. If not provided, the end of the query window is the current time. If neither `from` nor `to` are provided, the query window is `[now - 15m, now]`.
+    pub to: Option<i64>,
+    /// Comma-separated list of fields to group DNS traffic by. The server side defaults to `network.dns_query` if unspecified. `server_ungrouped` may be used if groups are not desired. The maximum number of group_by(s) is 10.
+    pub group_by: Option<String>,
+    /// Comma-separated list of tags to filter DNS traffic by.
+    pub tags: Option<String>,
+    /// The number of aggregated DNS entries to be returned. The maximum value is 7500. The default is 100.
+    pub limit: Option<i32>,
+}
+
+impl GetAggregatedDnsOptionalParams {
+    /// Unix timestamp (number of seconds since epoch) of the start of the query window. If not provided, the start of the query window is 15 minutes before the `to` timestamp. If neither `from` nor `to` are provided, the query window is `[now - 15m, now]`.
+    pub fn from(mut self, value: i64) -> Self {
+        self.from = Some(value);
+        self
+    }
+    /// Unix timestamp (number of seconds since epoch) of the end of the query window. If not provided, the end of the query window is the current time. If neither `from` nor `to` are provided, the query window is `[now - 15m, now]`.
+    pub fn to(mut self, value: i64) -> Self {
+        self.to = Some(value);
+        self
+    }
+    /// Comma-separated list of fields to group DNS traffic by. The server side defaults to `network.dns_query` if unspecified. `server_ungrouped` may be used if groups are not desired. The maximum number of group_by(s) is 10.
+    pub fn group_by(mut self, value: String) -> Self {
+        self.group_by = Some(value);
+        self
+    }
+    /// Comma-separated list of tags to filter DNS traffic by.
+    pub fn tags(mut self, value: String) -> Self {
+        self.tags = Some(value);
+        self
+    }
+    /// The number of aggregated DNS entries to be returned. The maximum value is 7500. The default is 100.
     pub fn limit(mut self, value: i32) -> Self {
         self.limit = Some(value);
         self
@@ -58,7 +102,15 @@ pub enum GetAggregatedConnectionsError {
     UnknownValue(serde_json::Value),
 }
 
-/// The Cloud Network Monitoring API allows you to fetch aggregated connections and their attributes. See the [Cloud Network Monitoring page](<https://docs.datadoghq.com/network_monitoring/cloud_network_monitoring/>) for more information.
+/// GetAggregatedDnsError is a struct for typed errors of method [`CloudNetworkMonitoringAPI::get_aggregated_dns`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetAggregatedDnsError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// The Cloud Network Monitoring API allows you to fetch aggregated connections and DNS traffic with their attributes. See the [Cloud Network Monitoring page](<https://docs.datadoghq.com/network_monitoring/cloud_network_monitoring/>) and [DNS Monitoring page](<https://docs.datadoghq.com/network_monitoring/dns/>) for more information.
 #[derive(Debug, Clone)]
 pub struct CloudNetworkMonitoringAPI {
     config: datadog::Configuration,
@@ -257,6 +309,149 @@ impl CloudNetworkMonitoringAPI {
             };
         } else {
             let local_entity: Option<GetAggregatedConnectionsError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get all aggregated DNS traffic.
+    pub async fn get_aggregated_dns(
+        &self,
+        params: GetAggregatedDnsOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::SingleAggregatedDnsResponseArray,
+        datadog::Error<GetAggregatedDnsError>,
+    > {
+        match self.get_aggregated_dns_with_http_info(params).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get all aggregated DNS traffic.
+    pub async fn get_aggregated_dns_with_http_info(
+        &self,
+        params: GetAggregatedDnsOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SingleAggregatedDnsResponseArray>,
+        datadog::Error<GetAggregatedDnsError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_aggregated_dns";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_aggregated_dns' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let from = params.from;
+        let to = params.to;
+        let group_by = params.group_by;
+        let tags = params.tags;
+        let limit = params.limit;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/network/dns/aggregate",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = from {
+            local_req_builder =
+                local_req_builder.query(&[("from", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = to {
+            local_req_builder = local_req_builder.query(&[("to", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = group_by {
+            local_req_builder =
+                local_req_builder.query(&[("group_by", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = tags {
+            local_req_builder =
+                local_req_builder.query(&[("tags", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = limit {
+            local_req_builder =
+                local_req_builder.query(&[("limit", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::SingleAggregatedDnsResponseArray>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetAggregatedDnsError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
