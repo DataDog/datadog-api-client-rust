@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineSampleProcessor {
+    /// Optional list of fields to group events by. Each group will be sampled independently
+    #[serde(rename = "group_by")]
+    pub group_by: Option<Vec<String>>,
     /// The unique identifier for this component. Used to reference this component in other parts of the pipeline (for example, as the `input` to downstream components).
     #[serde(rename = "id")]
     pub id: String,
@@ -44,6 +47,7 @@ impl ObservabilityPipelineSampleProcessor {
         type_: crate::datadogV2::model::ObservabilityPipelineSampleProcessorType,
     ) -> ObservabilityPipelineSampleProcessor {
         ObservabilityPipelineSampleProcessor {
+            group_by: None,
             id,
             include,
             inputs,
@@ -53,6 +57,11 @@ impl ObservabilityPipelineSampleProcessor {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn group_by(mut self, value: Vec<String>) -> Self {
+        self.group_by = Some(value);
+        self
     }
 
     pub fn percentage(mut self, value: f64) -> Self {
@@ -91,6 +100,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSampleProcessor {
             where
                 M: MapAccess<'a>,
             {
+                let mut group_by: Option<Vec<String>> = None;
                 let mut id: Option<String> = None;
                 let mut include: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
@@ -107,6 +117,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSampleProcessor {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "group_by" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            group_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -152,6 +168,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSampleProcessor {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineSampleProcessor {
+                    group_by,
                     id,
                     include,
                     inputs,
