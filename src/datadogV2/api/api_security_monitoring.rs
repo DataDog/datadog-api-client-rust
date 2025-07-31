@@ -188,6 +188,8 @@ pub struct ListFindingsOptionalParams {
     pub filter_rule_name: Option<String>,
     /// Return only findings for the specified resource type.
     pub filter_resource_type: Option<String>,
+    /// Return only findings for the specified resource id.
+    pub filter_resource_id: Option<String>,
     /// Return findings that were found on a specified date (Unix ms) or date range (using comparison operators).
     pub filter_discovery_timestamp: Option<String>,
     /// Return only `pass` or `fail` findings.
@@ -244,6 +246,11 @@ impl ListFindingsOptionalParams {
     /// Return only findings for the specified resource type.
     pub fn filter_resource_type(mut self, value: String) -> Self {
         self.filter_resource_type = Some(value);
+        self
+    }
+    /// Return only findings for the specified resource id.
+    pub fn filter_resource_id(mut self, value: String) -> Self {
+        self.filter_resource_id = Some(value);
         self
     }
     /// Return findings that were found on a specified date (Unix ms) or date range (using comparison operators).
@@ -5838,6 +5845,7 @@ impl SecurityMonitoringAPI {
     /// - `external_id`: The resource external ID related to the finding.
     /// - `description`: The description and remediation steps for the finding.
     /// - `datadog_link`: The Datadog relative link for the finding.
+    /// - `ip_addresses`: The list of private IP addresses for the resource related to the finding.
     ///
     /// ### Response
     ///
@@ -5934,6 +5942,7 @@ impl SecurityMonitoringAPI {
     /// - `external_id`: The resource external ID related to the finding.
     /// - `description`: The description and remediation steps for the finding.
     /// - `datadog_link`: The Datadog relative link for the finding.
+    /// - `ip_addresses`: The list of private IP addresses for the resource related to the finding.
     ///
     /// ### Response
     ///
@@ -5974,6 +5983,7 @@ impl SecurityMonitoringAPI {
         let filter_rule_id = params.filter_rule_id;
         let filter_rule_name = params.filter_rule_name;
         let filter_resource_type = params.filter_resource_type;
+        let filter_resource_id = params.filter_resource_id;
         let filter_discovery_timestamp = params.filter_discovery_timestamp;
         let filter_evaluation = params.filter_evaluation;
         let filter_status = params.filter_status;
@@ -6026,6 +6036,10 @@ impl SecurityMonitoringAPI {
         if let Some(ref local_query_param) = filter_resource_type {
             local_req_builder = local_req_builder
                 .query(&[("filter[resource_type]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_resource_id {
+            local_req_builder = local_req_builder
+                .query(&[("filter[@resource_id]", &local_query_param.to_string())]);
         };
         if let Some(ref local_query_param) = filter_discovery_timestamp {
             local_req_builder = local_req_builder.query(&[(
