@@ -6,21 +6,11 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Dataset metadata and configuration(s).
+/// Dataset metadata and configurations.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct DatasetAttributes {
-    /// Timestamp when the dataset was created.
-    #[serde(
-        rename = "created_at",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
-    pub created_at: Option<Option<chrono::DateTime<chrono::Utc>>>,
-    /// Unique ID of the user who created the dataset.
-    #[serde(rename = "created_by")]
-    pub created_by: Option<uuid::Uuid>,
+pub struct DatasetAttributesRequest {
     /// Name of the dataset.
     #[serde(rename = "name")]
     pub name: String,
@@ -37,31 +27,19 @@ pub struct DatasetAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl DatasetAttributes {
+impl DatasetAttributesRequest {
     pub fn new(
         name: String,
         principals: Vec<String>,
         product_filters: Vec<crate::datadogV2::model::FiltersPerProduct>,
-    ) -> DatasetAttributes {
-        DatasetAttributes {
-            created_at: None,
-            created_by: None,
+    ) -> DatasetAttributesRequest {
+        DatasetAttributesRequest {
             name,
             principals,
             product_filters,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn created_at(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
-        self.created_at = Some(value);
-        self
-    }
-
-    pub fn created_by(mut self, value: uuid::Uuid) -> Self {
-        self.created_by = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -73,14 +51,14 @@ impl DatasetAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for DatasetAttributes {
+impl<'de> Deserialize<'de> for DatasetAttributesRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct DatasetAttributesVisitor;
-        impl<'a> Visitor<'a> for DatasetAttributesVisitor {
-            type Value = DatasetAttributes;
+        struct DatasetAttributesRequestVisitor;
+        impl<'a> Visitor<'a> for DatasetAttributesRequestVisitor {
+            type Value = DatasetAttributesRequest;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -90,8 +68,6 @@ impl<'de> Deserialize<'de> for DatasetAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut created_at: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
-                let mut created_by: Option<uuid::Uuid> = None;
                 let mut name: Option<String> = None;
                 let mut principals: Option<Vec<String>> = None;
                 let mut product_filters: Option<Vec<crate::datadogV2::model::FiltersPerProduct>> =
@@ -104,15 +80,6 @@ impl<'de> Deserialize<'de> for DatasetAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "created_at" => {
-                            created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "created_by" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            created_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -135,9 +102,7 @@ impl<'de> Deserialize<'de> for DatasetAttributes {
                 let product_filters =
                     product_filters.ok_or_else(|| M::Error::missing_field("product_filters"))?;
 
-                let content = DatasetAttributes {
-                    created_at,
-                    created_by,
+                let content = DatasetAttributesRequest {
                     name,
                     principals,
                     product_filters,
@@ -149,6 +114,6 @@ impl<'de> Deserialize<'de> for DatasetAttributes {
             }
         }
 
-        deserializer.deserialize_any(DatasetAttributesVisitor)
+        deserializer.deserialize_any(DatasetAttributesRequestVisitor)
     }
 }

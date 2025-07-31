@@ -1,0 +1,67 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"name\":\"Security Audit Dataset\",\"principals\":[\"role:94172442-be03-11e9-a77a-3b7612558ac1\"],\"product_filters\":[{\"filters\":[\"@application.id:ABCD\"],\"product\":\"metrics\"}]},\"type\":\"dataset\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/datasets"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":{\"type\":\"dataset\",\"id\":\"86f67664-8b7b-49ae-b671-919ebe11886c\",\"attributes\":{\"name\":\"Security Audit Dataset\",\"product_filters\":[{\"product\":\"metrics\",\"filters\":[\"@application.id:ABCD\"]}],\"principals\":[\"role:94172442-be03-11e9-a77a-3b7612558ac1\"]}}}\n",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Tue, 29 Jul 2025 20:35:57 GMT"
+    },
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "*/*"
+          ]
+        },
+        "method": "delete",
+        "uri": "https://api.datadoghq.com/api/v2/datasets/86f67664-8b7b-49ae-b671-919ebe11886c"
+      },
+      "response": {
+        "body": {
+          "string": "",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 204,
+          "message": "No Content"
+        }
+      },
+      "recorded_at": "Tue, 29 Jul 2025 20:35:57 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

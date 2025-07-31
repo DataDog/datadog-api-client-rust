@@ -6,29 +6,24 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Dataset object.
-///
-/// ### Datasets Constraints
-/// - **Tag Limit per Dataset**:
+/// **Datasets Object Constraints**
+/// - **Tag limit per dataset**:
 ///   - Each restricted dataset supports a maximum of 10 key:value pairs per product.
 ///
-/// - **Tag Key Rules per Telemetry Type**:
+/// - **Tag key rules per telemetry type**:
 ///   - Only one tag key or attribute may be used to define access within a single telemetry type.
 ///   - The same or different tag key may be used across different telemetry types.
 ///
-/// - **Tag Value Uniqueness**:
+/// - **Tag value uniqueness**:
 ///   - Tag values must be unique within a single dataset.
 ///   - A tag value used in one dataset cannot be reused in another dataset of the same telemetry type.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct Dataset {
-    /// Dataset metadata and configuration(s).
+pub struct DatasetRequest {
+    /// Dataset metadata and configurations.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::DatasetAttributes,
-    /// Unique identifier for the dataset.
-    #[serde(rename = "id")]
-    pub id: Option<String>,
+    pub attributes: crate::datadogV2::model::DatasetAttributesRequest,
     /// Resource type, always "dataset".
     #[serde(rename = "type")]
     pub type_: String,
@@ -39,20 +34,17 @@ pub struct Dataset {
     pub(crate) _unparsed: bool,
 }
 
-impl Dataset {
-    pub fn new(attributes: crate::datadogV2::model::DatasetAttributes, type_: String) -> Dataset {
-        Dataset {
+impl DatasetRequest {
+    pub fn new(
+        attributes: crate::datadogV2::model::DatasetAttributesRequest,
+        type_: String,
+    ) -> DatasetRequest {
+        DatasetRequest {
             attributes,
-            id: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn id(mut self, value: String) -> Self {
-        self.id = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -64,14 +56,14 @@ impl Dataset {
     }
 }
 
-impl<'de> Deserialize<'de> for Dataset {
+impl<'de> Deserialize<'de> for DatasetRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct DatasetVisitor;
-        impl<'a> Visitor<'a> for DatasetVisitor {
-            type Value = Dataset;
+        struct DatasetRequestVisitor;
+        impl<'a> Visitor<'a> for DatasetRequestVisitor {
+            type Value = DatasetRequest;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -81,8 +73,8 @@ impl<'de> Deserialize<'de> for Dataset {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::DatasetAttributes> = None;
-                let mut id: Option<String> = None;
+                let mut attributes: Option<crate::datadogV2::model::DatasetAttributesRequest> =
+                    None;
                 let mut type_: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -94,12 +86,6 @@ impl<'de> Deserialize<'de> for Dataset {
                     match k.as_str() {
                         "attributes" => {
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "id" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -114,9 +100,8 @@ impl<'de> Deserialize<'de> for Dataset {
                 let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = Dataset {
+                let content = DatasetRequest {
                     attributes,
-                    id,
                     type_,
                     additional_properties,
                     _unparsed,
@@ -126,6 +111,6 @@ impl<'de> Deserialize<'de> for Dataset {
             }
         }
 
-        deserializer.deserialize_any(DatasetVisitor)
+        deserializer.deserialize_any(DatasetRequestVisitor)
     }
 }

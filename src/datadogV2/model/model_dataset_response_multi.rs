@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct DatasetResponseMulti {
     /// The list of datasets returned in response.
     #[serde(rename = "data")]
-    pub data: Vec<crate::datadogV2::model::Dataset>,
+    pub data: Option<Vec<crate::datadogV2::model::DatasetResponse>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -22,12 +22,17 @@ pub struct DatasetResponseMulti {
 }
 
 impl DatasetResponseMulti {
-    pub fn new(data: Vec<crate::datadogV2::model::Dataset>) -> DatasetResponseMulti {
+    pub fn new() -> DatasetResponseMulti {
         DatasetResponseMulti {
-            data,
+            data: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn data(mut self, value: Vec<crate::datadogV2::model::DatasetResponse>) -> Self {
+        self.data = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -36,6 +41,12 @@ impl DatasetResponseMulti {
     ) -> Self {
         self.additional_properties = value;
         self
+    }
+}
+
+impl Default for DatasetResponseMulti {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
@@ -56,7 +67,7 @@ impl<'de> Deserialize<'de> for DatasetResponseMulti {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<Vec<crate::datadogV2::model::Dataset>> = None;
+                let mut data: Option<Vec<crate::datadogV2::model::DatasetResponse>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -66,6 +77,9 @@ impl<'de> Deserialize<'de> for DatasetResponseMulti {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "data" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -75,7 +89,6 @@ impl<'de> Deserialize<'de> for DatasetResponseMulti {
                         }
                     }
                 }
-                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
                 let content = DatasetResponseMulti {
                     data,
