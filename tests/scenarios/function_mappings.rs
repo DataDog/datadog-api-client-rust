@@ -14503,6 +14503,9 @@ fn test_v2_list_findings(world: &mut DatadogWorld, _parameters: &HashMap<String,
     let filter_resource_type = _parameters
         .get("filter[resource_type]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_resource_id = _parameters
+        .get("filter[@resource_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let filter_discovery_timestamp = _parameters
         .get("filter[discovery_timestamp]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
@@ -14528,6 +14531,7 @@ fn test_v2_list_findings(world: &mut DatadogWorld, _parameters: &HashMap<String,
     params.filter_rule_id = filter_rule_id;
     params.filter_rule_name = filter_rule_name;
     params.filter_resource_type = filter_resource_type;
+    params.filter_resource_id = filter_resource_id;
     params.filter_discovery_timestamp = filter_discovery_timestamp;
     params.filter_evaluation = filter_evaluation;
     params.filter_status = filter_status;
@@ -14586,6 +14590,9 @@ fn test_v2_list_findings_with_pagination(
     let filter_resource_type = _parameters
         .get("filter[resource_type]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_resource_id = _parameters
+        .get("filter[@resource_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let filter_discovery_timestamp = _parameters
         .get("filter[discovery_timestamp]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
@@ -14611,6 +14618,7 @@ fn test_v2_list_findings_with_pagination(
     params.filter_rule_id = filter_rule_id;
     params.filter_rule_name = filter_rule_name;
     params.filter_resource_type = filter_resource_type;
+    params.filter_resource_id = filter_resource_id;
     params.filter_discovery_timestamp = filter_discovery_timestamp;
     params.filter_evaluation = filter_evaluation;
     params.filter_status = filter_status;
