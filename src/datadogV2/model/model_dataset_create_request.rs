@@ -11,21 +11,19 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DatasetCreateRequest {
-    /// Dataset object.
-    ///
-    /// ### Datasets Constraints
-    /// - **Tag Limit per Dataset**:
+    /// **Datasets Object Constraints**
+    /// - **Tag limit per dataset**:
     ///   - Each restricted dataset supports a maximum of 10 key:value pairs per product.
     ///
-    /// - **Tag Key Rules per Telemetry Type**:
+    /// - **Tag key rules per telemetry type**:
     ///   - Only one tag key or attribute may be used to define access within a single telemetry type.
     ///   - The same or different tag key may be used across different telemetry types.
     ///
-    /// - **Tag Value Uniqueness**:
+    /// - **Tag value uniqueness**:
     ///   - Tag values must be unique within a single dataset.
     ///   - A tag value used in one dataset cannot be reused in another dataset of the same telemetry type.
     #[serde(rename = "data")]
-    pub data: crate::datadogV2::model::Dataset,
+    pub data: crate::datadogV2::model::DatasetRequest,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -34,7 +32,7 @@ pub struct DatasetCreateRequest {
 }
 
 impl DatasetCreateRequest {
-    pub fn new(data: crate::datadogV2::model::Dataset) -> DatasetCreateRequest {
+    pub fn new(data: crate::datadogV2::model::DatasetRequest) -> DatasetCreateRequest {
         DatasetCreateRequest {
             data,
             additional_properties: std::collections::BTreeMap::new(),
@@ -68,7 +66,7 @@ impl<'de> Deserialize<'de> for DatasetCreateRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::Dataset> = None;
+                let mut data: Option<crate::datadogV2::model::DatasetRequest> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,

@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"test\":\"bad_request\"}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/datasets"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[\"Invalid request: Request body contains invalid json\"]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Tue, 29 Jul 2025 20:35:57 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

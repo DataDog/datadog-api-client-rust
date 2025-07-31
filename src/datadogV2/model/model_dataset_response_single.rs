@@ -11,9 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DatasetResponseSingle {
-    /// Dataset object.
-    ///
-    /// ### Datasets Constraints
+    /// **Datasets Object Constraints**
     /// - **Tag Limit per Dataset**:
     ///   - Each restricted dataset supports a maximum of 10 key:value pairs per product.
     ///
@@ -25,7 +23,7 @@ pub struct DatasetResponseSingle {
     ///   - Tag values must be unique within a single dataset.
     ///   - A tag value used in one dataset cannot be reused in another dataset of the same telemetry type.
     #[serde(rename = "data")]
-    pub data: crate::datadogV2::model::Dataset,
+    pub data: Option<crate::datadogV2::model::DatasetResponse>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -34,12 +32,17 @@ pub struct DatasetResponseSingle {
 }
 
 impl DatasetResponseSingle {
-    pub fn new(data: crate::datadogV2::model::Dataset) -> DatasetResponseSingle {
+    pub fn new() -> DatasetResponseSingle {
         DatasetResponseSingle {
-            data,
+            data: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn data(mut self, value: crate::datadogV2::model::DatasetResponse) -> Self {
+        self.data = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -48,6 +51,12 @@ impl DatasetResponseSingle {
     ) -> Self {
         self.additional_properties = value;
         self
+    }
+}
+
+impl Default for DatasetResponseSingle {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
@@ -68,7 +77,7 @@ impl<'de> Deserialize<'de> for DatasetResponseSingle {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::Dataset> = None;
+                let mut data: Option<crate::datadogV2::model::DatasetResponse> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -78,6 +87,9 @@ impl<'de> Deserialize<'de> for DatasetResponseSingle {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "data" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -87,7 +99,6 @@ impl<'de> Deserialize<'de> for DatasetResponseSingle {
                         }
                     }
                 }
-                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
                 let content = DatasetResponseSingle {
                     data,
