@@ -259,7 +259,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Modify the triage assignee of a security signal.
+    /// This endpoint is deprecated - Modify the triage assignee of a security signal.
     pub async fn edit_security_monitoring_signal_assignee(
         &self,
         signal_id: String,
@@ -285,7 +285,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Modify the triage assignee of a security signal.
+    /// This endpoint is deprecated - Modify the triage assignee of a security signal.
     pub async fn edit_security_monitoring_signal_assignee_with_http_info(
         &self,
         signal_id: String,
@@ -419,7 +419,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Change the triage state of a security signal.
+    /// This endpoint is deprecated - Change the triage state of a security signal.
     pub async fn edit_security_monitoring_signal_state(
         &self,
         signal_id: String,
@@ -445,7 +445,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Change the triage state of a security signal.
+    /// This endpoint is deprecated - Change the triage state of a security signal.
     pub async fn edit_security_monitoring_signal_state_with_http_info(
         &self,
         signal_id: String,
