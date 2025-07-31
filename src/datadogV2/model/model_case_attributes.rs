@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Case attributes
+/// Case resource attributes
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -18,6 +18,9 @@ pub struct CaseAttributes {
         with = "::serde_with::rust::double_option"
     )]
     pub archived_at: Option<Option<chrono::DateTime<chrono::Utc>>>,
+    /// The definition of `CaseObjectAttributes` object.
+    #[serde(rename = "attributes")]
+    pub attributes: Option<std::collections::BTreeMap<String, Vec<String>>>,
     /// Timestamp of when the case was closed
     #[serde(
         rename = "closed_at",
@@ -78,6 +81,7 @@ impl CaseAttributes {
     pub fn new() -> CaseAttributes {
         CaseAttributes {
             archived_at: None,
+            attributes: None,
             closed_at: None,
             created_at: None,
             description: None,
@@ -96,6 +100,11 @@ impl CaseAttributes {
 
     pub fn archived_at(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.archived_at = Some(value);
+        self
+    }
+
+    pub fn attributes(mut self, value: std::collections::BTreeMap<String, Vec<String>>) -> Self {
+        self.attributes = Some(value);
         self
     }
 
@@ -190,6 +199,7 @@ impl<'de> Deserialize<'de> for CaseAttributes {
                 M: MapAccess<'a>,
             {
                 let mut archived_at: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
+                let mut attributes: Option<std::collections::BTreeMap<String, Vec<String>>> = None;
                 let mut closed_at: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut description: Option<String> = None;
@@ -214,6 +224,12 @@ impl<'de> Deserialize<'de> for CaseAttributes {
                         "archived_at" => {
                             archived_at =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "attributes" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "closed_at" => {
                             closed_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -310,6 +326,7 @@ impl<'de> Deserialize<'de> for CaseAttributes {
 
                 let content = CaseAttributes {
                     archived_at,
+                    attributes,
                     closed_at,
                     created_at,
                     description,
