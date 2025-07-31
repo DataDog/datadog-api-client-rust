@@ -6,20 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A case
+/// Case update attributes
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct Case {
-    /// Case resource attributes
+pub struct CaseUpdateAttributes {
+    /// Case update attributes attributes
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::CaseAttributes,
-    /// Case's identifier
-    #[serde(rename = "id")]
-    pub id: String,
-    /// Resources related to a case
-    #[serde(rename = "relationships")]
-    pub relationships: Option<crate::datadogV2::model::CaseRelationships>,
+    pub attributes: crate::datadogV2::model::CaseUpdateAttributesAttributes,
     /// Case resource type
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CaseResourceType,
@@ -30,25 +24,17 @@ pub struct Case {
     pub(crate) _unparsed: bool,
 }
 
-impl Case {
+impl CaseUpdateAttributes {
     pub fn new(
-        attributes: crate::datadogV2::model::CaseAttributes,
-        id: String,
+        attributes: crate::datadogV2::model::CaseUpdateAttributesAttributes,
         type_: crate::datadogV2::model::CaseResourceType,
-    ) -> Case {
-        Case {
+    ) -> CaseUpdateAttributes {
+        CaseUpdateAttributes {
             attributes,
-            id,
-            relationships: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn relationships(mut self, value: crate::datadogV2::model::CaseRelationships) -> Self {
-        self.relationships = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -60,14 +46,14 @@ impl Case {
     }
 }
 
-impl<'de> Deserialize<'de> for Case {
+impl<'de> Deserialize<'de> for CaseUpdateAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct CaseVisitor;
-        impl<'a> Visitor<'a> for CaseVisitor {
-            type Value = Case;
+        struct CaseUpdateAttributesVisitor;
+        impl<'a> Visitor<'a> for CaseUpdateAttributesVisitor {
+            type Value = CaseUpdateAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -77,9 +63,9 @@ impl<'de> Deserialize<'de> for Case {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::CaseAttributes> = None;
-                let mut id: Option<String> = None;
-                let mut relationships: Option<crate::datadogV2::model::CaseRelationships> = None;
+                let mut attributes: Option<
+                    crate::datadogV2::model::CaseUpdateAttributesAttributes,
+                > = None;
                 let mut type_: Option<crate::datadogV2::model::CaseResourceType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -91,16 +77,6 @@ impl<'de> Deserialize<'de> for Case {
                     match k.as_str() {
                         "attributes" => {
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "id" => {
-                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "relationships" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            relationships =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -123,13 +99,10 @@ impl<'de> Deserialize<'de> for Case {
                     }
                 }
                 let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
-                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = Case {
+                let content = CaseUpdateAttributes {
                     attributes,
-                    id,
-                    relationships,
                     type_,
                     additional_properties,
                     _unparsed,
@@ -139,6 +112,6 @@ impl<'de> Deserialize<'de> for Case {
             }
         }
 
-        deserializer.deserialize_any(CaseVisitor)
+        deserializer.deserialize_any(CaseUpdateAttributesVisitor)
     }
 }

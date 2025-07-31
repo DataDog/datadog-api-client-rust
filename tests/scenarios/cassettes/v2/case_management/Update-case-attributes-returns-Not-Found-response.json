@@ -3,7 +3,7 @@
     {
       "request": {
         "body": {
-          "string": "{\"data\":{\"type\":\"case\"}}",
+          "string": "{\"data\":{\"attributes\":{\"attributes\":{}},\"type\":\"case\"}}",
           "encoding": null
         },
         "headers": {
@@ -15,7 +15,7 @@
           ]
         },
         "method": "post",
-        "uri": "https://api.datadoghq.com/api/v2/cases/67d80aa3-36ff-44b9-a694-c501a7591737/unarchive"
+        "uri": "https://api.datadoghq.com/api/v2/cases/67d80aa3-36ff-44b9-a694-c501a7591737/attributes"
       },
       "response": {
         "body": {
@@ -32,7 +32,7 @@
           "message": "Not Found"
         }
       },
-      "recorded_at": "Mon, 21 Jul 2025 13:52:50 GMT"
+      "recorded_at": "Mon, 21 Jul 2025 08:23:42 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"
