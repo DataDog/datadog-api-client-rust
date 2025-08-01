@@ -343,6 +343,9 @@ impl RestrictionPoliciesAPI {
     /// - RUM Applications: `rum-application`
     /// - Cross Org Connections: `cross-org-connection`
     /// - Spreadsheets: `spreadsheet`
+    /// - On-Call Schedules: `on-call-schedule`
+    /// - On-Call Escalation Policies: `on-call-escalation-policy`
+    /// - On-Call Team Routing Rules: `on-call-team-routing-rules`
     ///
     /// #### Supported relations for resources
     /// Resource Type               | Supported Relations
@@ -366,6 +369,9 @@ impl RestrictionPoliciesAPI {
     /// RUM Application             | `viewer`, `editor`
     /// Cross Org Connections       | `viewer`, `editor`
     /// Spreadsheets                | `viewer`, `editor`
+    /// On-Call Schedules           | `viewer`, `overrider`, `editor`
+    /// On-Call Escalation Policies | `viewer`, `editor`
+    /// On-Call Team Routing Rules  | `viewer`, `editor`
     pub async fn update_restriction_policy(
         &self,
         resource_id: String,
@@ -415,6 +421,9 @@ impl RestrictionPoliciesAPI {
     /// - RUM Applications: `rum-application`
     /// - Cross Org Connections: `cross-org-connection`
     /// - Spreadsheets: `spreadsheet`
+    /// - On-Call Schedules: `on-call-schedule`
+    /// - On-Call Escalation Policies: `on-call-escalation-policy`
+    /// - On-Call Team Routing Rules: `on-call-team-routing-rules`
     ///
     /// #### Supported relations for resources
     /// Resource Type               | Supported Relations
@@ -438,6 +447,9 @@ impl RestrictionPoliciesAPI {
     /// RUM Application             | `viewer`, `editor`
     /// Cross Org Connections       | `viewer`, `editor`
     /// Spreadsheets                | `viewer`, `editor`
+    /// On-Call Schedules           | `viewer`, `overrider`, `editor`
+    /// On-Call Escalation Policies | `viewer`, `editor`
+    /// On-Call Team Routing Rules  | `viewer`, `editor`
     pub async fn update_restriction_policy_with_http_info(
         &self,
         resource_id: String,
