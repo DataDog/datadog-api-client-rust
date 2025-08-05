@@ -191,6 +191,7 @@ impl Default for Configuration {
             ),
             ("v2.validate_monitor_user_template".to_owned(), false),
             ("v2.get_aggregated_connections".to_owned(), false),
+            ("v2.get_aggregated_dns".to_owned(), false),
             ("v2.create_pipeline".to_owned(), false),
             ("v2.delete_pipeline".to_owned(), false),
             ("v2.get_pipeline".to_owned(), false),

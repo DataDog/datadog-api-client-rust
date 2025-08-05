@@ -3119,6 +3119,9 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.GetAggregatedConnections".into(),
         test_v2_get_aggregated_connections,
     );
+    world
+        .function_mappings
+        .insert("v2.GetAggregatedDns".into(), test_v2_get_aggregated_dns);
     world.function_mappings.insert(
         "v2.CreateOnCallEscalationPolicy".into(),
         test_v2_create_on_call_escalation_policy,
@@ -23613,6 +23616,52 @@ fn test_v2_get_aggregated_connections(
     params.tags = tags;
     params.limit = limit;
     let response = match block_on(api.get_aggregated_connections_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_aggregated_dns(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_network_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let from = _parameters
+        .get("from")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let to = _parameters
+        .get("to")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let group_by = _parameters
+        .get("group_by")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let tags = _parameters
+        .get("tags")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let limit = _parameters
+        .get("limit")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_cloud_network_monitoring::GetAggregatedDnsOptionalParams::default();
+    params.from = from;
+    params.to = to;
+    params.group_by = group_by;
+    params.tags = tags;
+    params.limit = limit;
+    let response = match block_on(api.get_aggregated_dns_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
