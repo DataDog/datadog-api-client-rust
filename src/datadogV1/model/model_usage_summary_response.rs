@@ -251,6 +251,15 @@ pub struct UsageSummaryResponse {
     /// Shows the sum of all Error Tracking RUM error events over all hours in the current month for all organizations.
     #[serde(rename = "error_tracking_rum_error_events_agg_sum")]
     pub error_tracking_rum_error_events_agg_sum: Option<i64>,
+    /// Shows the sum of all Event Management correlations over all hours in the current month for all organizations.
+    #[serde(rename = "event_management_correlation_agg_sum")]
+    pub event_management_correlation_agg_sum: Option<i64>,
+    /// Shows the sum of all Event Management correlated events over all hours in the current month for all organizations.
+    #[serde(rename = "event_management_correlation_correlated_events_agg_sum")]
+    pub event_management_correlation_correlated_events_agg_sum: Option<i64>,
+    /// Shows the sum of all Event Management correlated related events over all hours in the current month for all organizations.
+    #[serde(rename = "event_management_correlation_correlated_related_events_agg_sum")]
+    pub event_management_correlation_correlated_related_events_agg_sum: Option<i64>,
     /// The average number of Profiling Fargate tasks over all hours in the current month for all organizations.
     #[serde(rename = "fargate_container_profiler_profiling_fargate_avg_sum")]
     pub fargate_container_profiler_profiling_fargate_avg_sum: Option<i64>,
@@ -664,6 +673,9 @@ impl UsageSummaryResponse {
             error_tracking_error_events_agg_sum: None,
             error_tracking_events_agg_sum: None,
             error_tracking_rum_error_events_agg_sum: None,
+            event_management_correlation_agg_sum: None,
+            event_management_correlation_correlated_events_agg_sum: None,
+            event_management_correlation_correlated_related_events_agg_sum: None,
             fargate_container_profiler_profiling_fargate_avg_sum: None,
             fargate_container_profiler_profiling_fargate_eks_avg_sum: None,
             fargate_tasks_count_avg_sum: None,
@@ -1243,6 +1255,27 @@ impl UsageSummaryResponse {
     #[allow(deprecated)]
     pub fn error_tracking_rum_error_events_agg_sum(mut self, value: i64) -> Self {
         self.error_tracking_rum_error_events_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn event_management_correlation_agg_sum(mut self, value: i64) -> Self {
+        self.event_management_correlation_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn event_management_correlation_correlated_events_agg_sum(mut self, value: i64) -> Self {
+        self.event_management_correlation_correlated_events_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn event_management_correlation_correlated_related_events_agg_sum(
+        mut self,
+        value: i64,
+    ) -> Self {
+        self.event_management_correlation_correlated_related_events_agg_sum = Some(value);
         self
     }
 
@@ -1978,6 +2011,11 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                 let mut error_tracking_error_events_agg_sum: Option<i64> = None;
                 let mut error_tracking_events_agg_sum: Option<i64> = None;
                 let mut error_tracking_rum_error_events_agg_sum: Option<i64> = None;
+                let mut event_management_correlation_agg_sum: Option<i64> = None;
+                let mut event_management_correlation_correlated_events_agg_sum: Option<i64> = None;
+                let mut event_management_correlation_correlated_related_events_agg_sum: Option<
+                    i64,
+                > = None;
                 let mut fargate_container_profiler_profiling_fargate_avg_sum: Option<i64> = None;
                 let mut fargate_container_profiler_profiling_fargate_eks_avg_sum: Option<i64> =
                     None;
@@ -2642,6 +2680,27 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                                 continue;
                             }
                             error_tracking_rum_error_events_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "event_management_correlation_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            event_management_correlation_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "event_management_correlation_correlated_events_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            event_management_correlation_correlated_events_agg_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "event_management_correlation_correlated_related_events_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            event_management_correlation_correlated_related_events_agg_sum =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "fargate_container_profiler_profiling_fargate_avg_sum" => {
@@ -3452,6 +3511,9 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                     error_tracking_error_events_agg_sum,
                     error_tracking_events_agg_sum,
                     error_tracking_rum_error_events_agg_sum,
+                    event_management_correlation_agg_sum,
+                    event_management_correlation_correlated_events_agg_sum,
+                    event_management_correlation_correlated_related_events_agg_sum,
                     fargate_container_profiler_profiling_fargate_avg_sum,
                     fargate_container_profiler_profiling_fargate_eks_avg_sum,
                     fargate_tasks_count_avg_sum,
