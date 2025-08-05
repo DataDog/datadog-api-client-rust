@@ -15,6 +15,9 @@ pub struct ObservabilityPipelineElasticsearchDestination {
     #[serde(rename = "api_version")]
     pub api_version:
         Option<crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationApiVersion>,
+    /// Configuration for buffer settings on destination components.
+    #[serde(rename = "buffer")]
+    pub buffer: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptions>,
     /// The index to write logs to in Elasticsearch.
     #[serde(rename = "bulk_index")]
     pub bulk_index: Option<String>,
@@ -42,6 +45,7 @@ impl ObservabilityPipelineElasticsearchDestination {
     ) -> ObservabilityPipelineElasticsearchDestination {
         ObservabilityPipelineElasticsearchDestination {
             api_version: None,
+            buffer: None,
             bulk_index: None,
             id,
             inputs,
@@ -56,6 +60,14 @@ impl ObservabilityPipelineElasticsearchDestination {
         value: crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationApiVersion,
     ) -> Self {
         self.api_version = Some(value);
+        self
+    }
+
+    pub fn buffer(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineBufferOptions,
+    ) -> Self {
+        self.buffer = Some(value);
         self
     }
 
@@ -91,6 +103,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineElasticsearchDestination {
                 M: MapAccess<'a>,
             {
                 let mut api_version: Option<crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationApiVersion> = None;
+                let mut buffer: Option<
+                    crate::datadogV2::model::ObservabilityPipelineBufferOptions,
+                > = None;
                 let mut bulk_index: Option<String> = None;
                 let mut id: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
@@ -114,6 +129,20 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineElasticsearchDestination {
                             if let Some(ref _api_version) = api_version {
                                 match _api_version {
                                     crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationApiVersion::UnparsedObject(_api_version) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "buffer" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            buffer = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _buffer) = buffer {
+                                match _buffer {
+                                    crate::datadogV2::model::ObservabilityPipelineBufferOptions::UnparsedObject(_buffer) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -156,6 +185,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineElasticsearchDestination {
 
                 let content = ObservabilityPipelineElasticsearchDestination {
                     api_version,
+                    buffer,
                     bulk_index,
                     id,
                     inputs,
