@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineOpenSearchDestination {
+    /// Configuration for buffer settings on destination components.
+    #[serde(rename = "buffer")]
+    pub buffer: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptions>,
     /// The index to write logs to.
     #[serde(rename = "bulk_index")]
     pub bulk_index: Option<String>,
@@ -37,6 +40,7 @@ impl ObservabilityPipelineOpenSearchDestination {
         type_: crate::datadogV2::model::ObservabilityPipelineOpenSearchDestinationType,
     ) -> ObservabilityPipelineOpenSearchDestination {
         ObservabilityPipelineOpenSearchDestination {
+            buffer: None,
             bulk_index: None,
             id,
             inputs,
@@ -44,6 +48,14 @@ impl ObservabilityPipelineOpenSearchDestination {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn buffer(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineBufferOptions,
+    ) -> Self {
+        self.buffer = Some(value);
+        self
     }
 
     pub fn bulk_index(mut self, value: String) -> Self {
@@ -77,6 +89,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineOpenSearchDestination {
             where
                 M: MapAccess<'a>,
             {
+                let mut buffer: Option<
+                    crate::datadogV2::model::ObservabilityPipelineBufferOptions,
+                > = None;
                 let mut bulk_index: Option<String> = None;
                 let mut id: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
@@ -91,6 +106,20 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineOpenSearchDestination {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "buffer" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            buffer = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _buffer) = buffer {
+                                match _buffer {
+                                    crate::datadogV2::model::ObservabilityPipelineBufferOptions::UnparsedObject(_buffer) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
                         "bulk_index" => {
                             if v.is_null() {
                                 continue;
@@ -126,6 +155,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineOpenSearchDestination {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineOpenSearchDestination {
+                    buffer,
                     bulk_index,
                     id,
                     inputs,
