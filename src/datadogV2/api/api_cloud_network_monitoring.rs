@@ -2,7 +2,6 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog;
-use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 
@@ -207,14 +206,6 @@ impl CloudNetworkMonitoringAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_aggregated_connections";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.get_aggregated_connections' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         // unbox and build optional parameters
         let from = params.from;
@@ -351,14 +342,6 @@ impl CloudNetworkMonitoringAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_aggregated_dns";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.get_aggregated_dns' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         // unbox and build optional parameters
         let from = params.from;

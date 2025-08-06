@@ -5,8 +5,7 @@ use datadog_api_client::datadogV2::api_cloud_network_monitoring::GetAggregatedDn
 
 #[tokio::main]
 async fn main() {
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetAggregatedDns", true);
+    let configuration = datadog::Configuration::new();
     let api = CloudNetworkMonitoringAPI::with_config(configuration);
     let resp = api
         .get_aggregated_dns(GetAggregatedDnsOptionalParams::default())
