@@ -272,6 +272,9 @@ pub struct UsageSummaryDate {
     /// Shows the average number of Flex Logs Compute Small Instances over all hours in the current date for the given org.
     #[serde(rename = "flex_logs_compute_small_avg")]
     pub flex_logs_compute_small_avg: Option<i64>,
+    /// Shows the average number of Flex Logs Compute Extra Large Instances over all hours in the current date for the given org.
+    #[serde(rename = "flex_logs_compute_xlarge_avg")]
+    pub flex_logs_compute_xlarge_avg: Option<i64>,
     /// Shows the average number of Flex Logs Compute Extra Small Instances over all hours in the current date for the given org.
     #[serde(rename = "flex_logs_compute_xsmall_avg")]
     pub flex_logs_compute_xsmall_avg: Option<i64>,
@@ -644,6 +647,7 @@ impl UsageSummaryDate {
             flex_logs_compute_large_avg: None,
             flex_logs_compute_medium_avg: None,
             flex_logs_compute_small_avg: None,
+            flex_logs_compute_xlarge_avg: None,
             flex_logs_compute_xsmall_avg: None,
             flex_logs_starter_avg: None,
             flex_logs_starter_storage_index_avg: None,
@@ -1253,6 +1257,12 @@ impl UsageSummaryDate {
     #[allow(deprecated)]
     pub fn flex_logs_compute_small_avg(mut self, value: i64) -> Self {
         self.flex_logs_compute_small_avg = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn flex_logs_compute_xlarge_avg(mut self, value: i64) -> Self {
+        self.flex_logs_compute_xlarge_avg = Some(value);
         self
     }
 
@@ -1903,6 +1913,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                 let mut flex_logs_compute_large_avg: Option<i64> = None;
                 let mut flex_logs_compute_medium_avg: Option<i64> = None;
                 let mut flex_logs_compute_small_avg: Option<i64> = None;
+                let mut flex_logs_compute_xlarge_avg: Option<i64> = None;
                 let mut flex_logs_compute_xsmall_avg: Option<i64> = None;
                 let mut flex_logs_starter_avg: Option<i64> = None;
                 let mut flex_logs_starter_storage_index_avg: Option<i64> = None;
@@ -2598,6 +2609,13 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                                 continue;
                             }
                             flex_logs_compute_small_avg =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "flex_logs_compute_xlarge_avg" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            flex_logs_compute_xlarge_avg =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "flex_logs_compute_xsmall_avg" => {
@@ -3311,6 +3329,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                     flex_logs_compute_large_avg,
                     flex_logs_compute_medium_avg,
                     flex_logs_compute_small_avg,
+                    flex_logs_compute_xlarge_avg,
                     flex_logs_compute_xsmall_avg,
                     flex_logs_starter_avg,
                     flex_logs_starter_storage_index_avg,
