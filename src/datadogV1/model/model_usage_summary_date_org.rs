@@ -251,6 +251,15 @@ pub struct UsageSummaryDateOrg {
     /// Shows the sum of all Error Tracking RUM error events over all hours in the current date for the given org.
     #[serde(rename = "error_tracking_rum_error_events_sum")]
     pub error_tracking_rum_error_events_sum: Option<i64>,
+    /// Shows the sum of all Event Management correlated events over all hours in the current date for the given org.
+    #[serde(rename = "event_management_correlation_correlated_events_sum")]
+    pub event_management_correlation_correlated_events_sum: Option<i64>,
+    /// Shows the sum of all Event Management correlated related events over all hours in the current date for the given org.
+    #[serde(rename = "event_management_correlation_correlated_related_events_sum")]
+    pub event_management_correlation_correlated_related_events_sum: Option<i64>,
+    /// Shows the sum of all Event Management correlations over all hours in the current date for the given org.
+    #[serde(rename = "event_management_correlation_sum")]
+    pub event_management_correlation_sum: Option<i64>,
     /// The average number of Profiling Fargate tasks over all hours in the current month for the given org.
     #[serde(rename = "fargate_container_profiler_profiling_fargate_avg")]
     pub fargate_container_profiler_profiling_fargate_avg: Option<i64>,
@@ -647,6 +656,9 @@ impl UsageSummaryDateOrg {
             error_tracking_error_events_sum: None,
             error_tracking_events_sum: None,
             error_tracking_rum_error_events_sum: None,
+            event_management_correlation_correlated_events_sum: None,
+            event_management_correlation_correlated_related_events_sum: None,
+            event_management_correlation_sum: None,
             fargate_container_profiler_profiling_fargate_avg: None,
             fargate_container_profiler_profiling_fargate_eks_avg: None,
             fargate_tasks_count_avg: None,
@@ -1221,6 +1233,27 @@ impl UsageSummaryDateOrg {
     #[allow(deprecated)]
     pub fn error_tracking_rum_error_events_sum(mut self, value: i64) -> Self {
         self.error_tracking_rum_error_events_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn event_management_correlation_correlated_events_sum(mut self, value: i64) -> Self {
+        self.event_management_correlation_correlated_events_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn event_management_correlation_correlated_related_events_sum(
+        mut self,
+        value: i64,
+    ) -> Self {
+        self.event_management_correlation_correlated_related_events_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn event_management_correlation_sum(mut self, value: i64) -> Self {
+        self.event_management_correlation_sum = Some(value);
         self
     }
 
@@ -1923,6 +1956,10 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                 let mut error_tracking_error_events_sum: Option<i64> = None;
                 let mut error_tracking_events_sum: Option<i64> = None;
                 let mut error_tracking_rum_error_events_sum: Option<i64> = None;
+                let mut event_management_correlation_correlated_events_sum: Option<i64> = None;
+                let mut event_management_correlation_correlated_related_events_sum: Option<i64> =
+                    None;
+                let mut event_management_correlation_sum: Option<i64> = None;
                 let mut fargate_container_profiler_profiling_fargate_avg: Option<i64> = None;
                 let mut fargate_container_profiler_profiling_fargate_eks_avg: Option<i64> = None;
                 let mut fargate_tasks_count_avg: Option<i64> = None;
@@ -2580,6 +2617,27 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                                 continue;
                             }
                             error_tracking_rum_error_events_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "event_management_correlation_correlated_events_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            event_management_correlation_correlated_events_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "event_management_correlation_correlated_related_events_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            event_management_correlation_correlated_related_events_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "event_management_correlation_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            event_management_correlation_sum =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "fargate_container_profiler_profiling_fargate_avg" => {
@@ -3353,6 +3411,9 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                     error_tracking_error_events_sum,
                     error_tracking_events_sum,
                     error_tracking_rum_error_events_sum,
+                    event_management_correlation_correlated_events_sum,
+                    event_management_correlation_correlated_related_events_sum,
+                    event_management_correlation_sum,
                     fargate_container_profiler_profiling_fargate_avg,
                     fargate_container_profiler_profiling_fargate_eks_avg,
                     fargate_tasks_count_avg,
