@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RelationshipToIncidentUserDefinedFieldData {
-    /// A unique identifier that represents the responder.
+    /// A unique identifier that represents the user defined field.
     #[serde(rename = "id")]
     pub id: String,
     /// The incident user defined fields type.
