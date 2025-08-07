@@ -9,6 +9,8 @@ use datadog_api_client::datadogV2::model::AWSAccountType;
 use datadog_api_client::datadogV2::model::AWSAuthConfig;
 use datadog_api_client::datadogV2::model::AWSAuthConfigRole;
 use datadog_api_client::datadogV2::model::AWSLambdaForwarderConfig;
+use datadog_api_client::datadogV2::model::AWSLambdaForwarderConfigLogSourceConfig;
+use datadog_api_client::datadogV2::model::AWSLogSourceTagFilter;
 use datadog_api_client::datadogV2::model::AWSLogsConfig;
 use datadog_api_client::datadogV2::model::AWSMetricsConfig;
 use datadog_api_client::datadogV2::model::AWSNamespaceTagFilter;
@@ -33,6 +35,13 @@ async fn main() {
                         "arn:aws:lambda:us-east-1:123456789012:function:DatadogLambdaLogForwarder"
                             .to_string(),
                     ])
+                    .log_source_config(AWSLambdaForwarderConfigLogSourceConfig::new().tag_filters(
+                        vec![
+                                            AWSLogSourceTagFilter::new()
+                                                .source("s3".to_string())
+                                                .tags(Some(vec!["test:test".to_string()]))
+                                        ],
+                    ))
                     .sources(vec!["s3".to_string()]),
             ),
         )

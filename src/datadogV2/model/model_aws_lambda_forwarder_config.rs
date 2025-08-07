@@ -15,6 +15,9 @@ pub struct AWSLambdaForwarderConfig {
     /// List of Datadog Lambda Log Forwarder ARNs in your AWS account. Defaults to `[]`.
     #[serde(rename = "lambdas")]
     pub lambdas: Option<Vec<String>>,
+    /// Log source configuration.
+    #[serde(rename = "log_source_config")]
+    pub log_source_config: Option<crate::datadogV2::model::AWSLambdaForwarderConfigLogSourceConfig>,
     /// List of service IDs set to enable automatic log collection. Discover the list of available services with the
     /// [Get list of AWS log ready services](<https://docs.datadoghq.com/api/latest/aws-logs-integration/#get-list-of-aws-log-ready-services>) endpoint.
     #[serde(rename = "sources")]
@@ -30,6 +33,7 @@ impl AWSLambdaForwarderConfig {
     pub fn new() -> AWSLambdaForwarderConfig {
         AWSLambdaForwarderConfig {
             lambdas: None,
+            log_source_config: None,
             sources: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -38,6 +42,14 @@ impl AWSLambdaForwarderConfig {
 
     pub fn lambdas(mut self, value: Vec<String>) -> Self {
         self.lambdas = Some(value);
+        self
+    }
+
+    pub fn log_source_config(
+        mut self,
+        value: crate::datadogV2::model::AWSLambdaForwarderConfigLogSourceConfig,
+    ) -> Self {
+        self.log_source_config = Some(value);
         self
     }
 
@@ -79,6 +91,9 @@ impl<'de> Deserialize<'de> for AWSLambdaForwarderConfig {
                 M: MapAccess<'a>,
             {
                 let mut lambdas: Option<Vec<String>> = None;
+                let mut log_source_config: Option<
+                    crate::datadogV2::model::AWSLambdaForwarderConfigLogSourceConfig,
+                > = None;
                 let mut sources: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -93,6 +108,13 @@ impl<'de> Deserialize<'de> for AWSLambdaForwarderConfig {
                                 continue;
                             }
                             lambdas = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "log_source_config" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            log_source_config =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "sources" => {
                             if v.is_null() {
@@ -110,6 +132,7 @@ impl<'de> Deserialize<'de> for AWSLambdaForwarderConfig {
 
                 let content = AWSLambdaForwarderConfig {
                     lambdas,
+                    log_source_config,
                     sources,
                     additional_properties,
                     _unparsed,
