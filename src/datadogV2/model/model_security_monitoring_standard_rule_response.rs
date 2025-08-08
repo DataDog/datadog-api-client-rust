@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SecurityMonitoringStandardRuleResponse {
+    /// Calculated fields. Only allowed for scheduled rules - in other words, when schedulingOptions is also defined.
+    #[serde(rename = "calculatedFields")]
+    pub calculated_fields: Option<Vec<crate::datadogV2::model::CalculatedField>>,
     /// Cases for generating signals.
     #[serde(rename = "cases")]
     pub cases: Option<Vec<crate::datadogV2::model::SecurityMonitoringRuleCase>>,
@@ -72,6 +75,14 @@ pub struct SecurityMonitoringStandardRuleResponse {
     /// Reference tables for the rule.
     #[serde(rename = "referenceTables")]
     pub reference_tables: Option<Vec<crate::datadogV2::model::SecurityMonitoringReferenceTable>>,
+    /// Options for scheduled rules. When this field is present, the rule runs based on the schedule. When absent, it runs real-time on ingested logs.
+    #[serde(
+        rename = "schedulingOptions",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub scheduling_options:
+        Option<Option<crate::datadogV2::model::SecurityMonitoringSchedulingOptions>>,
     /// Tags for generated signals.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
@@ -101,6 +112,7 @@ pub struct SecurityMonitoringStandardRuleResponse {
 impl SecurityMonitoringStandardRuleResponse {
     pub fn new() -> SecurityMonitoringStandardRuleResponse {
         SecurityMonitoringStandardRuleResponse {
+            calculated_fields: None,
             cases: None,
             compliance_signal_options: None,
             created_at: None,
@@ -121,6 +133,7 @@ impl SecurityMonitoringStandardRuleResponse {
             options: None,
             queries: None,
             reference_tables: None,
+            scheduling_options: None,
             tags: None,
             third_party_cases: None,
             type_: None,
@@ -130,6 +143,14 @@ impl SecurityMonitoringStandardRuleResponse {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn calculated_fields(
+        mut self,
+        value: Vec<crate::datadogV2::model::CalculatedField>,
+    ) -> Self {
+        self.calculated_fields = Some(value);
+        self
     }
 
     pub fn cases(
@@ -250,6 +271,14 @@ impl SecurityMonitoringStandardRuleResponse {
         self
     }
 
+    pub fn scheduling_options(
+        mut self,
+        value: Option<crate::datadogV2::model::SecurityMonitoringSchedulingOptions>,
+    ) -> Self {
+        self.scheduling_options = Some(value);
+        self
+    }
+
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
@@ -315,6 +344,8 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleResponse {
             where
                 M: MapAccess<'a>,
             {
+                let mut calculated_fields: Option<Vec<crate::datadogV2::model::CalculatedField>> =
+                    None;
                 let mut cases: Option<Vec<crate::datadogV2::model::SecurityMonitoringRuleCase>> =
                     None;
                 let mut compliance_signal_options: Option<
@@ -344,6 +375,9 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleResponse {
                 let mut reference_tables: Option<
                     Vec<crate::datadogV2::model::SecurityMonitoringReferenceTable>,
                 > = None;
+                let mut scheduling_options: Option<
+                    Option<crate::datadogV2::model::SecurityMonitoringSchedulingOptions>,
+                > = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut third_party_cases: Option<
                     Vec<crate::datadogV2::model::SecurityMonitoringThirdPartyRuleCase>,
@@ -361,6 +395,13 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleResponse {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "calculatedFields" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            calculated_fields =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "cases" => {
                             if v.is_null() {
                                 continue;
@@ -490,6 +531,10 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleResponse {
                             reference_tables =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "schedulingOptions" => {
+                            scheduling_options =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "tags" => {
                             if v.is_null() {
                                 continue;
@@ -545,6 +590,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleResponse {
                 }
 
                 let content = SecurityMonitoringStandardRuleResponse {
+                    calculated_fields,
                     cases,
                     compliance_signal_options,
                     created_at,
@@ -565,6 +611,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleResponse {
                     options,
                     queries,
                     reference_tables,
+                    scheduling_options,
                     tags,
                     third_party_cases,
                     type_,

@@ -29,6 +29,10 @@ pub struct SecurityMonitoringStandardRuleQuery {
     /// When false, events without a group-by value are ignored by the rule. When true, events with missing group-by fields are processed with `N/A`, replacing the missing values.
     #[serde(rename = "hasOptionalGroupByFields")]
     pub has_optional_group_by_fields: Option<bool>,
+    /// **This field is currently unstable and might be removed in a minor version upgrade.**
+    /// The index to run the query on, if the `dataSource` is `logs`. Only used for scheduled rules - in other words, when the `schedulingOptions` field is present in the rule payload.
+    #[serde(rename = "index")]
+    pub index: Option<String>,
     /// (Deprecated) The target field to aggregate over when using the sum or max
     /// aggregations. `metrics` field should be used instead.
     #[deprecated]
@@ -60,6 +64,7 @@ impl SecurityMonitoringStandardRuleQuery {
             distinct_fields: None,
             group_by_fields: None,
             has_optional_group_by_fields: None,
+            index: None,
             metric: None,
             metrics: None,
             name: None,
@@ -108,6 +113,12 @@ impl SecurityMonitoringStandardRuleQuery {
     #[allow(deprecated)]
     pub fn has_optional_group_by_fields(mut self, value: bool) -> Self {
         self.has_optional_group_by_fields = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn index(mut self, value: String) -> Self {
+        self.index = Some(value);
         self
     }
 
@@ -177,6 +188,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleQuery {
                 let mut distinct_fields: Option<Vec<String>> = None;
                 let mut group_by_fields: Option<Vec<String>> = None;
                 let mut has_optional_group_by_fields: Option<bool> = None;
+                let mut index: Option<String> = None;
                 let mut metric: Option<String> = None;
                 let mut metrics: Option<Vec<String>> = None;
                 let mut name: Option<String> = None;
@@ -247,6 +259,12 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleQuery {
                             has_optional_group_by_fields =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "index" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            index = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "metric" => {
                             if v.is_null() {
                                 continue;
@@ -287,6 +305,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleQuery {
                     distinct_fields,
                     group_by_fields,
                     has_optional_group_by_fields,
+                    index,
                     metric,
                     metrics,
                     name,
