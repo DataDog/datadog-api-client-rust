@@ -6,24 +6,27 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `AWSAssumeRole` object.
+/// The definition of the `AWSAssumeRole` object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AWSAssumeRole {
-    /// AWS account the connection is created for
+    /// AWS account the connection is created for.
     #[serde(rename = "account_id")]
     pub account_id: String,
-    /// External ID used to scope which connection can be used to assume the role
+    /// External ID used to scope which connection can be used to assume the role.
     #[serde(rename = "external_id")]
     pub external_id: Option<String>,
-    /// AWS account that will assume the role
+    /// Pass true if the `external_id` should be regenerated.
+    #[serde(rename = "generate_new_external_id")]
+    pub generate_new_external_id: Option<bool>,
+    /// AWS account that will assume the role.
     #[serde(rename = "principal_id")]
     pub principal_id: Option<String>,
-    /// Role to assume
+    /// Role to assume.
     #[serde(rename = "role")]
     pub role: String,
-    /// The definition of `AWSAssumeRoleType` object.
+    /// The definition of the `AWSAssumeRole` object.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::AWSAssumeRoleType,
     #[serde(flatten)]
@@ -42,6 +45,7 @@ impl AWSAssumeRole {
         AWSAssumeRole {
             account_id,
             external_id: None,
+            generate_new_external_id: None,
             principal_id: None,
             role,
             type_,
@@ -52,6 +56,11 @@ impl AWSAssumeRole {
 
     pub fn external_id(mut self, value: String) -> Self {
         self.external_id = Some(value);
+        self
+    }
+
+    pub fn generate_new_external_id(mut self, value: bool) -> Self {
+        self.generate_new_external_id = Some(value);
         self
     }
 
@@ -88,6 +97,7 @@ impl<'de> Deserialize<'de> for AWSAssumeRole {
             {
                 let mut account_id: Option<String> = None;
                 let mut external_id: Option<String> = None;
+                let mut generate_new_external_id: Option<bool> = None;
                 let mut principal_id: Option<String> = None;
                 let mut role: Option<String> = None;
                 let mut type_: Option<crate::datadogV2::model::AWSAssumeRoleType> = None;
@@ -107,6 +117,13 @@ impl<'de> Deserialize<'de> for AWSAssumeRole {
                                 continue;
                             }
                             external_id =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "generate_new_external_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            generate_new_external_id =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "principal_id" => {
@@ -146,6 +163,7 @@ impl<'de> Deserialize<'de> for AWSAssumeRole {
                 let content = AWSAssumeRole {
                     account_id,
                     external_id,
+                    generate_new_external_id,
                     principal_id,
                     role,
                     type_,
