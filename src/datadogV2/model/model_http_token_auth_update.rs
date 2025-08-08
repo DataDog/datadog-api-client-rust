@@ -20,7 +20,7 @@ pub struct HTTPTokenAuthUpdate {
     /// The `HTTPTokenAuthUpdate` `tokens`.
     #[serde(rename = "tokens")]
     pub tokens: Option<Vec<crate::datadogV2::model::HTTPTokenUpdate>>,
-    /// The definition of `HTTPTokenAuthType` object.
+    /// The definition of the `HTTPTokenAuth` object.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::HTTPTokenAuthType,
     /// The `HTTPTokenAuthUpdate` `url_parameters`.

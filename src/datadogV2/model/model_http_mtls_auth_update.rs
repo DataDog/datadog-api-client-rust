@@ -6,17 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of the `AWSIntegrationUpdate` object.
+/// The definition of the `HTTPMtlsAuth` object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct AWSIntegrationUpdate {
-    /// The definition of the `AWSCredentialsUpdate` object.
-    #[serde(rename = "credentials")]
-    pub credentials: Option<crate::datadogV2::model::AWSCredentialsUpdate>,
-    /// The definition of the `AWSIntegrationType` object.
+pub struct HTTPMtlsAuthUpdate {
+    /// Certificate of authority used to sign the request.
+    #[serde(rename = "certificate")]
+    pub certificate: Option<String>,
+    /// Private key used for the MTLS handshake
+    #[serde(rename = "private_key")]
+    pub private_key: Option<String>,
+    /// The definition of the `HTTPMtlsAuth` object.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::AWSIntegrationType,
+    pub type_: crate::datadogV2::model::HTTPMtlsAuthType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,18 +27,24 @@ pub struct AWSIntegrationUpdate {
     pub(crate) _unparsed: bool,
 }
 
-impl AWSIntegrationUpdate {
-    pub fn new(type_: crate::datadogV2::model::AWSIntegrationType) -> AWSIntegrationUpdate {
-        AWSIntegrationUpdate {
-            credentials: None,
+impl HTTPMtlsAuthUpdate {
+    pub fn new(type_: crate::datadogV2::model::HTTPMtlsAuthType) -> HTTPMtlsAuthUpdate {
+        HTTPMtlsAuthUpdate {
+            certificate: None,
+            private_key: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn credentials(mut self, value: crate::datadogV2::model::AWSCredentialsUpdate) -> Self {
-        self.credentials = Some(value);
+    pub fn certificate(mut self, value: String) -> Self {
+        self.certificate = Some(value);
+        self
+    }
+
+    pub fn private_key(mut self, value: String) -> Self {
+        self.private_key = Some(value);
         self
     }
 
@@ -48,14 +57,14 @@ impl AWSIntegrationUpdate {
     }
 }
 
-impl<'de> Deserialize<'de> for AWSIntegrationUpdate {
+impl<'de> Deserialize<'de> for HTTPMtlsAuthUpdate {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct AWSIntegrationUpdateVisitor;
-        impl<'a> Visitor<'a> for AWSIntegrationUpdateVisitor {
-            type Value = AWSIntegrationUpdate;
+        struct HTTPMtlsAuthUpdateVisitor;
+        impl<'a> Visitor<'a> for HTTPMtlsAuthUpdateVisitor {
+            type Value = HTTPMtlsAuthUpdate;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -65,8 +74,9 @@ impl<'de> Deserialize<'de> for AWSIntegrationUpdate {
             where
                 M: MapAccess<'a>,
             {
-                let mut credentials: Option<crate::datadogV2::model::AWSCredentialsUpdate> = None;
-                let mut type_: Option<crate::datadogV2::model::AWSIntegrationType> = None;
+                let mut certificate: Option<String> = None;
+                let mut private_key: Option<String> = None;
+                let mut type_: Option<crate::datadogV2::model::HTTPMtlsAuthType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -75,26 +85,25 @@ impl<'de> Deserialize<'de> for AWSIntegrationUpdate {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "credentials" => {
+                        "certificate" => {
                             if v.is_null() {
                                 continue;
                             }
-                            credentials =
+                            certificate =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _credentials) = credentials {
-                                match _credentials {
-                                    crate::datadogV2::model::AWSCredentialsUpdate::UnparsedObject(_credentials) => {
-                                        _unparsed = true;
-                                    },
-                                    _ => {}
-                                }
+                        }
+                        "private_key" => {
+                            if v.is_null() {
+                                continue;
                             }
+                            private_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::AWSIntegrationType::UnparsedObject(
+                                    crate::datadogV2::model::HTTPMtlsAuthType::UnparsedObject(
                                         _type_,
                                     ) => {
                                         _unparsed = true;
@@ -112,8 +121,9 @@ impl<'de> Deserialize<'de> for AWSIntegrationUpdate {
                 }
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = AWSIntegrationUpdate {
-                    credentials,
+                let content = HTTPMtlsAuthUpdate {
+                    certificate,
+                    private_key,
                     type_,
                     additional_properties,
                     _unparsed,
@@ -123,6 +133,6 @@ impl<'de> Deserialize<'de> for AWSIntegrationUpdate {
             }
         }
 
-        deserializer.deserialize_any(AWSIntegrationUpdateVisitor)
+        deserializer.deserialize_any(HTTPMtlsAuthUpdateVisitor)
     }
 }

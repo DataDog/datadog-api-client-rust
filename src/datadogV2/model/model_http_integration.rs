@@ -6,18 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `HTTPIntegration` object.
+/// The definition of the `HTTPIntegration` object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct HTTPIntegration {
-    /// Base HTTP url for the integration
+    /// Base HTTP url for the integration.
     #[serde(rename = "base_url")]
     pub base_url: String,
-    /// The definition of `HTTPCredentials` object.
+    /// The definition of the `HTTPCredentials` object.
     #[serde(rename = "credentials")]
     pub credentials: crate::datadogV2::model::HTTPCredentials,
-    /// The definition of `HTTPIntegrationType` object.
+    /// The definition of the `HTTPIntegrationType` object.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::HTTPIntegrationType,
     #[serde(flatten)]
