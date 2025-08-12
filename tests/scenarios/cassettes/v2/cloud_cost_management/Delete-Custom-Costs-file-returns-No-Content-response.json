@@ -1,0 +1,29 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "*/*"
+          ]
+        },
+        "method": "delete",
+        "uri": "https://api.datadoghq.com/api/v2/cost/custom_costs/1234abcd-1234-abcd-1234-1234abcd1234"
+      },
+      "response": {
+        "body": {
+          "string": "",
+          "encoding": null
+        },
+        "headers": {},
+        "status": {
+          "code": 204,
+          "message": "No Content"
+        }
+      },
+      "recorded_at": "Fri, 08 Aug 2025 20:21:19 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

@@ -23,9 +23,6 @@ pub struct AwsCURConfigPostRequestAttributes {
     /// The region the bucket is located in.
     #[serde(rename = "bucket_region")]
     pub bucket_region: Option<String>,
-    /// Whether or not the Cloud Cost Management account is enabled.
-    #[serde(rename = "is_enabled")]
-    pub is_enabled: Option<bool>,
     /// The month of the report.
     #[serde(rename = "months")]
     pub months: Option<i32>,
@@ -54,7 +51,6 @@ impl AwsCURConfigPostRequestAttributes {
             account_id,
             bucket_name,
             bucket_region: None,
-            is_enabled: None,
             months: None,
             report_name,
             report_prefix,
@@ -73,11 +69,6 @@ impl AwsCURConfigPostRequestAttributes {
 
     pub fn bucket_region(mut self, value: String) -> Self {
         self.bucket_region = Some(value);
-        self
-    }
-
-    pub fn is_enabled(mut self, value: bool) -> Self {
-        self.is_enabled = Some(value);
         self
     }
 
@@ -117,7 +108,6 @@ impl<'de> Deserialize<'de> for AwsCURConfigPostRequestAttributes {
                 let mut account_id: Option<String> = None;
                 let mut bucket_name: Option<String> = None;
                 let mut bucket_region: Option<String> = None;
-                let mut is_enabled: Option<bool> = None;
                 let mut months: Option<i32> = None;
                 let mut report_name: Option<String> = None;
                 let mut report_prefix: Option<String> = None;
@@ -149,12 +139,6 @@ impl<'de> Deserialize<'de> for AwsCURConfigPostRequestAttributes {
                             }
                             bucket_region =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "is_enabled" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            is_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "months" => {
                             if v.is_null() {
@@ -190,7 +174,6 @@ impl<'de> Deserialize<'de> for AwsCURConfigPostRequestAttributes {
                     account_id,
                     bucket_name,
                     bucket_region,
-                    is_enabled,
                     months,
                     report_name,
                     report_prefix,

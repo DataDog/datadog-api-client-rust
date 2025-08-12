@@ -16,7 +16,7 @@ pub struct AzureUCConfigPair {
     pub attributes: crate::datadogV2::model::AzureUCConfigPairAttributes,
     /// The ID of Cloud Cost Management account.
     #[serde(rename = "id")]
-    pub id: Option<i64>,
+    pub id: Option<String>,
     /// Type of Azure config pair.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::AzureUCConfigPairType,
@@ -41,7 +41,7 @@ impl AzureUCConfigPair {
         }
     }
 
-    pub fn id(mut self, value: i64) -> Self {
+    pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }
@@ -74,7 +74,7 @@ impl<'de> Deserialize<'de> for AzureUCConfigPair {
             {
                 let mut attributes: Option<crate::datadogV2::model::AzureUCConfigPairAttributes> =
                     None;
-                let mut id: Option<i64> = None;
+                let mut id: Option<String> = None;
                 let mut type_: Option<crate::datadogV2::model::AzureUCConfigPairType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,

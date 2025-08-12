@@ -6,7 +6,9 @@ use datadog_api_client::datadogV2::api_cloud_cost_management::CloudCostManagemen
 async fn main() {
     let configuration = datadog::Configuration::new();
     let api = CloudCostManagementAPI::with_config(configuration);
-    let resp = api.get_custom_costs_file("file_id".to_string()).await;
+    let resp = api
+        .get_custom_costs_file("9ed1a245-8291-44de-9f59-1dc87975ca4a".to_string())
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {
