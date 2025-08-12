@@ -1,5 +1,32 @@
 # CHANGELOG
 
+## 0.17.0/2025-08-12
+
+### Added
+* Add Flex_Logs_Compute_XL to API Spec [#833](https://github.com/DataDog/datadog-api-client-rust/pull/833)
+* Support Host and IaC finding types in security notifications  [#832](https://github.com/DataDog/datadog-api-client-rust/pull/832)
+* New keys for summary public endpoint for Event Management Correlation product [#828](https://github.com/DataDog/datadog-api-client-rust/pull/828)
+* Add log autosubscription tag filters config to aws v2 API [#824](https://github.com/DataDog/datadog-api-client-rust/pull/824)
+* Extended List Findings API to expose resource related Private IP Addresses to details [#817](https://github.com/DataDog/datadog-api-client-rust/pull/817)
+* update metrics.yaml for ListMetricAssets and include Dashboard info [#812](https://github.com/DataDog/datadog-api-client-rust/pull/812)
+* Support Cloud SIEM scheduled rules in API client [#809](https://github.com/DataDog/datadog-api-client-rust/pull/809)
+* Uncomment edit dataset block, add dataset limitations into endpoint descriptions  [#807](https://github.com/DataDog/datadog-api-client-rust/pull/807)
+* Add `text` field in synthetics search endpoint [#806](https://github.com/DataDog/datadog-api-client-rust/pull/806)
+* Adding all action connection types to public API [#805](https://github.com/DataDog/datadog-api-client-rust/pull/805)
+* Document case management attributes endpoints [#803](https://github.com/DataDog/datadog-api-client-rust/pull/803)
+* add AP2 endpoint for On-Call Paging [#800](https://github.com/DataDog/datadog-api-client-rust/pull/800)
+* Flag IP case action [#798](https://github.com/DataDog/datadog-api-client-rust/pull/798)
+* Add DNS specs for Cloud Network Monitoring API [#796](https://github.com/DataDog/datadog-api-client-rust/pull/796)
+* Adding Datadog Connection to Connection API [#790](https://github.com/DataDog/datadog-api-client-rust/pull/790)
+
+### Fixed
+* Split Dataset into separate request and response objects, mark unstable [#816](https://github.com/DataDog/datadog-api-client-rust/pull/816)
+* Disables some tests to avoid fails as the service is disabled [#811](https://github.com/DataDog/datadog-api-client-rust/pull/811)
+* OP make 'support_rules' field in parse_grok processor optional [#801](https://github.com/DataDog/datadog-api-client-rust/pull/801)
+
+### Deprecated
+* Deprecate signals triage v1 endpoints [#813](https://github.com/DataDog/datadog-api-client-rust/pull/813)
+
 ## 0.16.0/2025-07-14
 
 ### Added
