@@ -16,6 +16,7 @@ use std::io::Write;
 pub enum CreateLogsIndexError {
     LogsAPIErrorResponse(crate::datadogV1::model::LogsAPIErrorResponse),
     APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
+    LogsAPILimitReachedResponse(crate::datadogV1::model::LogsAPILimitReachedResponse),
     UnknownValue(serde_json::Value),
 }
 

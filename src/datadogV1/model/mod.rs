@@ -836,6 +836,8 @@ pub mod model_logs_exclusion_filter;
 pub use self::model_logs_exclusion_filter::LogsExclusionFilter;
 pub mod model_logs_filter;
 pub use self::model_logs_filter::LogsFilter;
+pub mod model_logs_api_limit_reached_response;
+pub use self::model_logs_api_limit_reached_response::LogsAPILimitReachedResponse;
 pub mod model_logs_index_update_request;
 pub use self::model_logs_index_update_request::LogsIndexUpdateRequest;
 pub mod model_logs_pipelines_order;
