@@ -26,7 +26,7 @@ async fn main() {
                 ],
                 true,
                 "Test rule".to_string(),
-                "Example-Security-Monitoring".to_string(),
+                "_49768568946de993".to_string(),
                 SecurityMonitoringRuleOptions::new()
                     .evaluation_window(SecurityMonitoringRuleEvaluationWindow::FIFTEEN_MINUTES)
                     .keep_alive(SecurityMonitoringRuleKeepAlive::ONE_HOUR)
