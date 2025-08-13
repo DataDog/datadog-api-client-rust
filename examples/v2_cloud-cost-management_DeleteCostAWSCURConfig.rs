@@ -6,7 +6,7 @@ use datadog_api_client::datadogV2::api_cloud_cost_management::CloudCostManagemen
 async fn main() {
     let configuration = datadog::Configuration::new();
     let api = CloudCostManagementAPI::with_config(configuration);
-    let resp = api.delete_cost_awscur_config("100".to_string()).await;
+    let resp = api.delete_cost_awscur_config(100).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

@@ -14,9 +14,7 @@ async fn main() {
     ));
     let configuration = datadog::Configuration::new();
     let api = CloudCostManagementAPI::with_config(configuration);
-    let resp = api
-        .update_cost_azure_uc_configs("100".to_string(), body)
-        .await;
+    let resp = api.update_cost_azure_uc_configs(100, body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {

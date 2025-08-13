@@ -34,7 +34,7 @@ pub struct AzureUCConfig {
     pub export_path: String,
     /// The ID of the Azure config.
     #[serde(rename = "id")]
-    pub id: Option<i64>,
+    pub id: Option<String>,
     /// The number of months the report has been backfilled.
     #[deprecated]
     #[serde(rename = "months")]
@@ -111,7 +111,7 @@ impl AzureUCConfig {
     }
 
     #[allow(deprecated)]
-    pub fn id(mut self, value: i64) -> Self {
+    pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }
@@ -167,7 +167,7 @@ impl<'de> Deserialize<'de> for AzureUCConfig {
                 let mut error_messages: Option<Vec<String>> = None;
                 let mut export_name: Option<String> = None;
                 let mut export_path: Option<String> = None;
-                let mut id: Option<i64> = None;
+                let mut id: Option<String> = None;
                 let mut months: Option<i32> = None;
                 let mut scope: Option<String> = None;
                 let mut status: Option<String> = None;

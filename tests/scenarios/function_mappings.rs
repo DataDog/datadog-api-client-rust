@@ -17033,7 +17033,25 @@ fn test_v2_list_custom_costs_files(world: &mut DatadogWorld, _parameters: &HashM
         .v2_api_cloud_cost_management
         .as_ref()
         .expect("api instance not found");
-    let response = match block_on(api.list_custom_costs_files_with_http_info()) {
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_status = _parameters
+        .get("filter[status]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_cloud_cost_management::ListCustomCostsFilesOptionalParams::default();
+    params.page_number = page_number;
+    params.page_size = page_size;
+    params.filter_status = filter_status;
+    params.sort = sort;
+    let response = match block_on(api.list_custom_costs_files_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {

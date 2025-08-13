@@ -10,6 +10,43 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
+/// ListCustomCostsFilesOptionalParams is a struct for passing parameters to the method [`CloudCostManagementAPI::list_custom_costs_files`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListCustomCostsFilesOptionalParams {
+    /// Page number for pagination
+    pub page_number: Option<i64>,
+    /// Page size for pagination
+    pub page_size: Option<i64>,
+    /// Filter by file status
+    pub filter_status: Option<String>,
+    /// Sort key with optional descending prefix
+    pub sort: Option<String>,
+}
+
+impl ListCustomCostsFilesOptionalParams {
+    /// Page number for pagination
+    pub fn page_number(mut self, value: i64) -> Self {
+        self.page_number = Some(value);
+        self
+    }
+    /// Page size for pagination
+    pub fn page_size(mut self, value: i64) -> Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Filter by file status
+    pub fn filter_status(mut self, value: String) -> Self {
+        self.filter_status = Some(value);
+        self
+    }
+    /// Sort key with optional descending prefix
+    pub fn sort(mut self, value: String) -> Self {
+        self.sort = Some(value);
+        self
+    }
+}
+
 /// CreateCostAWSCURConfigError is a struct for typed errors of method [`CloudCostManagementAPI::create_cost_awscur_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -790,7 +827,7 @@ impl CloudCostManagementAPI {
     /// Archive a Cloud Cost Management Account.
     pub async fn delete_cost_awscur_config(
         &self,
-        cloud_account_id: String,
+        cloud_account_id: i64,
     ) -> Result<(), datadog::Error<DeleteCostAWSCURConfigError>> {
         match self
             .delete_cost_awscur_config_with_http_info(cloud_account_id)
@@ -804,7 +841,7 @@ impl CloudCostManagementAPI {
     /// Archive a Cloud Cost Management Account.
     pub async fn delete_cost_awscur_config_with_http_info(
         &self,
-        cloud_account_id: String,
+        cloud_account_id: i64,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCostAWSCURConfigError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_cost_awscur_config";
@@ -814,7 +851,7 @@ impl CloudCostManagementAPI {
         let local_uri_str = format!(
             "{}/api/v2/cost/aws_cur_config/{cloud_account_id}",
             local_configuration.get_operation_host(operation_id),
-            cloud_account_id = datadog::urlencode(cloud_account_id)
+            cloud_account_id = cloud_account_id
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -881,7 +918,7 @@ impl CloudCostManagementAPI {
     /// Archive a Cloud Cost Management Account.
     pub async fn delete_cost_azure_uc_config(
         &self,
-        cloud_account_id: String,
+        cloud_account_id: i64,
     ) -> Result<(), datadog::Error<DeleteCostAzureUCConfigError>> {
         match self
             .delete_cost_azure_uc_config_with_http_info(cloud_account_id)
@@ -895,7 +932,7 @@ impl CloudCostManagementAPI {
     /// Archive a Cloud Cost Management Account.
     pub async fn delete_cost_azure_uc_config_with_http_info(
         &self,
-        cloud_account_id: String,
+        cloud_account_id: i64,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCostAzureUCConfigError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_cost_azure_uc_config";
@@ -905,7 +942,7 @@ impl CloudCostManagementAPI {
         let local_uri_str = format!(
             "{}/api/v2/cost/azure_uc_config/{cloud_account_id}",
             local_configuration.get_operation_host(operation_id),
-            cloud_account_id = datadog::urlencode(cloud_account_id)
+            cloud_account_id = cloud_account_id
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -972,7 +1009,7 @@ impl CloudCostManagementAPI {
     /// Archive a Cloud Cost Management account.
     pub async fn delete_cost_gcp_usage_cost_config(
         &self,
-        cloud_account_id: String,
+        cloud_account_id: i64,
     ) -> Result<(), datadog::Error<DeleteCostGCPUsageCostConfigError>> {
         match self
             .delete_cost_gcp_usage_cost_config_with_http_info(cloud_account_id)
@@ -986,7 +1023,7 @@ impl CloudCostManagementAPI {
     /// Archive a Cloud Cost Management account.
     pub async fn delete_cost_gcp_usage_cost_config_with_http_info(
         &self,
-        cloud_account_id: String,
+        cloud_account_id: i64,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCostGCPUsageCostConfigError>>
     {
         let local_configuration = &self.config;
@@ -997,7 +1034,7 @@ impl CloudCostManagementAPI {
         let local_uri_str = format!(
             "{}/api/v2/cost/gcp_uc_config/{cloud_account_id}",
             local_configuration.get_operation_host(operation_id),
-            cloud_account_id = datadog::urlencode(cloud_account_id)
+            cloud_account_id = cloud_account_id
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -1783,11 +1820,12 @@ impl CloudCostManagementAPI {
     /// List the Custom Costs files.
     pub async fn list_custom_costs_files(
         &self,
+        params: ListCustomCostsFilesOptionalParams,
     ) -> Result<
         crate::datadogV2::model::CustomCostsFileListResponse,
         datadog::Error<ListCustomCostsFilesError>,
     > {
-        match self.list_custom_costs_files_with_http_info().await {
+        match self.list_custom_costs_files_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
@@ -1804,12 +1842,19 @@ impl CloudCostManagementAPI {
     /// List the Custom Costs files.
     pub async fn list_custom_costs_files_with_http_info(
         &self,
+        params: ListCustomCostsFilesOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::CustomCostsFileListResponse>,
         datadog::Error<ListCustomCostsFilesError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_custom_costs_files";
+
+        // unbox and build optional parameters
+        let page_number = params.page_number;
+        let page_size = params.page_size;
+        let filter_status = params.filter_status;
+        let sort = params.sort;
 
         let local_client = &self.client;
 
@@ -1819,6 +1864,23 @@ impl CloudCostManagementAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = page_number {
+            local_req_builder =
+                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_size {
+            local_req_builder =
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_status {
+            local_req_builder =
+                local_req_builder.query(&[("filter[status]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+        };
 
         // build headers
         let mut headers = HeaderMap::new();
@@ -1889,7 +1951,7 @@ impl CloudCostManagementAPI {
     /// Update the status (active/archived) and/or account filtering configuration of an AWS CUR config.
     pub async fn update_cost_awscur_config(
         &self,
-        cloud_account_id: String,
+        cloud_account_id: i64,
         body: crate::datadogV2::model::AwsCURConfigPatchRequest,
     ) -> Result<
         crate::datadogV2::model::AwsCURConfigsResponse,
@@ -1915,7 +1977,7 @@ impl CloudCostManagementAPI {
     /// Update the status (active/archived) and/or account filtering configuration of an AWS CUR config.
     pub async fn update_cost_awscur_config_with_http_info(
         &self,
-        cloud_account_id: String,
+        cloud_account_id: i64,
         body: crate::datadogV2::model::AwsCURConfigPatchRequest,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::AwsCURConfigsResponse>,
@@ -1929,7 +1991,7 @@ impl CloudCostManagementAPI {
         let local_uri_str = format!(
             "{}/api/v2/cost/aws_cur_config/{cloud_account_id}",
             local_configuration.get_operation_host(operation_id),
-            cloud_account_id = datadog::urlencode(cloud_account_id)
+            cloud_account_id = cloud_account_id
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -2049,7 +2111,7 @@ impl CloudCostManagementAPI {
     /// Update the status of an  Azure config (active/archived).
     pub async fn update_cost_azure_uc_configs(
         &self,
-        cloud_account_id: String,
+        cloud_account_id: i64,
         body: crate::datadogV2::model::AzureUCConfigPatchRequest,
     ) -> Result<
         crate::datadogV2::model::AzureUCConfigPairsResponse,
@@ -2075,7 +2137,7 @@ impl CloudCostManagementAPI {
     /// Update the status of an  Azure config (active/archived).
     pub async fn update_cost_azure_uc_configs_with_http_info(
         &self,
-        cloud_account_id: String,
+        cloud_account_id: i64,
         body: crate::datadogV2::model::AzureUCConfigPatchRequest,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::AzureUCConfigPairsResponse>,
@@ -2089,7 +2151,7 @@ impl CloudCostManagementAPI {
         let local_uri_str = format!(
             "{}/api/v2/cost/azure_uc_config/{cloud_account_id}",
             local_configuration.get_operation_host(operation_id),
-            cloud_account_id = datadog::urlencode(cloud_account_id)
+            cloud_account_id = cloud_account_id
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -2209,7 +2271,7 @@ impl CloudCostManagementAPI {
     /// Update the status of an GCP Usage Cost config (active/archived).
     pub async fn update_cost_gcp_usage_cost_config(
         &self,
-        cloud_account_id: String,
+        cloud_account_id: i64,
         body: crate::datadogV2::model::GCPUsageCostConfigPatchRequest,
     ) -> Result<
         crate::datadogV2::model::GCPUsageCostConfigResponse,
@@ -2235,7 +2297,7 @@ impl CloudCostManagementAPI {
     /// Update the status of an GCP Usage Cost config (active/archived).
     pub async fn update_cost_gcp_usage_cost_config_with_http_info(
         &self,
-        cloud_account_id: String,
+        cloud_account_id: i64,
         body: crate::datadogV2::model::GCPUsageCostConfigPatchRequest,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::GCPUsageCostConfigResponse>,
@@ -2249,7 +2311,7 @@ impl CloudCostManagementAPI {
         let local_uri_str = format!(
             "{}/api/v2/cost/gcp_uc_config/{cloud_account_id}",
             local_configuration.get_operation_host(operation_id),
-            cloud_account_id = datadog::urlencode(cloud_account_id)
+            cloud_account_id = cloud_account_id
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());

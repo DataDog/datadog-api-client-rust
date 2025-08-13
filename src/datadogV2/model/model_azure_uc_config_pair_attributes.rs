@@ -16,7 +16,7 @@ pub struct AzureUCConfigPairAttributes {
     pub configs: Vec<crate::datadogV2::model::AzureUCConfig>,
     /// The ID of the Azure config pair.
     #[serde(rename = "id")]
-    pub id: Option<i64>,
+    pub id: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -36,7 +36,7 @@ impl AzureUCConfigPairAttributes {
         }
     }
 
-    pub fn id(mut self, value: i64) -> Self {
+    pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }
@@ -68,7 +68,7 @@ impl<'de> Deserialize<'de> for AzureUCConfigPairAttributes {
                 M: MapAccess<'a>,
             {
                 let mut configs: Option<Vec<crate::datadogV2::model::AzureUCConfig>> = None;
-                let mut id: Option<i64> = None;
+                let mut id: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
