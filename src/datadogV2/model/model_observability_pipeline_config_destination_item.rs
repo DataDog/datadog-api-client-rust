@@ -49,6 +49,15 @@ pub enum ObservabilityPipelineConfigDestinationItem {
     ObservabilityPipelineAmazonOpenSearchDestination(
         Box<crate::datadogV2::model::ObservabilityPipelineAmazonOpenSearchDestination>,
     ),
+    ObservabilityPipelineSocketDestination(
+        Box<crate::datadogV2::model::ObservabilityPipelineSocketDestination>,
+    ),
+    ObservabilityPipelineAmazonSecurityLakeDestination(
+        Box<crate::datadogV2::model::ObservabilityPipelineAmazonSecurityLakeDestination>,
+    ),
+    ObservabilityPipelineCrowdStrikeNextGenSiemDestination(
+        Box<crate::datadogV2::model::ObservabilityPipelineCrowdStrikeNextGenSiemDestination>,
+    ),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -178,6 +187,30 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigDestinationItem {
         {
             if !_v._unparsed {
                 return Ok(ObservabilityPipelineConfigDestinationItem::ObservabilityPipelineAmazonOpenSearchDestination(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineSocketDestination>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigDestinationItem::ObservabilityPipelineSocketDestination(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineAmazonSecurityLakeDestination>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigDestinationItem::ObservabilityPipelineAmazonSecurityLakeDestination(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineCrowdStrikeNextGenSiemDestination>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigDestinationItem::ObservabilityPipelineCrowdStrikeNextGenSiemDestination(_v));
             }
         }
 
