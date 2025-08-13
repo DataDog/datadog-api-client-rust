@@ -11,7 +11,10 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct GeomapWidgetDefinitionView {
-    /// The 2-letter ISO code of a country to focus the map on. Or `WORLD`.
+    /// A custom extent of the map defined by an array of four numbers in the order `[minLongitude, minLatitude, maxLongitude, maxLatitude]`.
+    #[serde(rename = "custom_extent")]
+    pub custom_extent: Option<Vec<f64>>,
+    /// The ISO code of a country, sub-division, or region to focus the map on. Or `WORLD`. Mutually exclusive with `custom_extent`.
     #[serde(rename = "focus")]
     pub focus: String,
     #[serde(flatten)]
@@ -24,10 +27,16 @@ pub struct GeomapWidgetDefinitionView {
 impl GeomapWidgetDefinitionView {
     pub fn new(focus: String) -> GeomapWidgetDefinitionView {
         GeomapWidgetDefinitionView {
+            custom_extent: None,
             focus,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn custom_extent(mut self, value: Vec<f64>) -> Self {
+        self.custom_extent = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -56,6 +65,7 @@ impl<'de> Deserialize<'de> for GeomapWidgetDefinitionView {
             where
                 M: MapAccess<'a>,
             {
+                let mut custom_extent: Option<Vec<f64>> = None;
                 let mut focus: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -65,6 +75,13 @@ impl<'de> Deserialize<'de> for GeomapWidgetDefinitionView {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "custom_extent" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            custom_extent =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "focus" => {
                             focus = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -78,6 +95,7 @@ impl<'de> Deserialize<'de> for GeomapWidgetDefinitionView {
                 let focus = focus.ok_or_else(|| M::Error::missing_field("focus"))?;
 
                 let content = GeomapWidgetDefinitionView {
+                    custom_extent,
                     focus,
                     additional_properties,
                     _unparsed,
