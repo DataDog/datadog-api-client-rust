@@ -4,12 +4,12 @@ use datadog_api_client::datadogV2::api_security_monitoring::SecurityMonitoringAP
 
 #[tokio::main]
 async fn main() {
-    // there is a valid "security_rule" in the system
-    let security_rule_id = std::env::var("SECURITY_RULE_ID").unwrap();
+    // there is a valid "security_rule_hash" in the system
+    let security_rule_hash_id = std::env::var("SECURITY_RULE_HASH_ID").unwrap();
     let configuration = datadog::Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api
-        .convert_existing_security_monitoring_rule(security_rule_id.clone())
+        .convert_existing_security_monitoring_rule(security_rule_hash_id.clone())
         .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
