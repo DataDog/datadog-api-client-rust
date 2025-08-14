@@ -8,7 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ChangeEventCustomAttributesChangedResourceType {
     FEATURE_FLAG,
-    CONFIGURATION,
+    METRIC_CONFIGURATION,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -16,7 +16,7 @@ impl ToString for ChangeEventCustomAttributesChangedResourceType {
     fn to_string(&self) -> String {
         match self {
             Self::FEATURE_FLAG => String::from("feature_flag"),
-            Self::CONFIGURATION => String::from("configuration"),
+            Self::METRIC_CONFIGURATION => String::from("metric_configuration"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -42,7 +42,7 @@ impl<'de> Deserialize<'de> for ChangeEventCustomAttributesChangedResourceType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "feature_flag" => Self::FEATURE_FLAG,
-            "configuration" => Self::CONFIGURATION,
+            "metric_configuration" => Self::METRIC_CONFIGURATION,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
