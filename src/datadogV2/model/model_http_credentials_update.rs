@@ -3,12 +3,14 @@
 // Copyright 2019-Present Datadog, Inc.
 use serde::{Deserialize, Deserializer, Serialize};
 
-/// The definition of `HTTPCredentialsUpdate` object.
+/// The definition of the `HTTPCredentialsUpdate` object.
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum HTTPCredentialsUpdate {
     HTTPTokenAuthUpdate(Box<crate::datadogV2::model::HTTPTokenAuthUpdate>),
+    HTTPBasicAuthUpdate(Box<crate::datadogV2::model::HTTPBasicAuthUpdate>),
+    HTTPMtlsAuthUpdate(Box<crate::datadogV2::model::HTTPMtlsAuthUpdate>),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -23,6 +25,20 @@ impl<'de> Deserialize<'de> for HTTPCredentialsUpdate {
         ) {
             if !_v._unparsed {
                 return Ok(HTTPCredentialsUpdate::HTTPTokenAuthUpdate(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::HTTPBasicAuthUpdate>>(
+            value.clone(),
+        ) {
+            if !_v._unparsed {
+                return Ok(HTTPCredentialsUpdate::HTTPBasicAuthUpdate(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::HTTPMtlsAuthUpdate>>(
+            value.clone(),
+        ) {
+            if !_v._unparsed {
+                return Ok(HTTPCredentialsUpdate::HTTPMtlsAuthUpdate(_v));
             }
         }
 

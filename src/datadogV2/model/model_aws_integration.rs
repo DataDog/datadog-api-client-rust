@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `AWSIntegration` object.
+/// The definition of the `AWSIntegration` object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AWSIntegration {
-    /// The definition of `AWSCredentials` object.
+    /// The definition of the `AWSCredentials` object.
     #[serde(rename = "credentials")]
     pub credentials: crate::datadogV2::model::AWSCredentials,
-    /// The definition of `AWSIntegrationType` object.
+    /// The definition of the `AWSIntegrationType` object.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::AWSIntegrationType,
     #[serde(flatten)]
