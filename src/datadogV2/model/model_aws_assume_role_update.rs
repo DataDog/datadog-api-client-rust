@@ -6,21 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `AWSAssumeRoleUpdate` object.
+/// The definition of the `AWSAssumeRole` object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AWSAssumeRoleUpdate {
-    /// AWS account the connection is created for
+    /// AWS account the connection is created for.
     #[serde(rename = "account_id")]
     pub account_id: Option<String>,
-    /// The `AWSAssumeRoleUpdate` `generate_new_external_id`.
+    /// Pass true if the `external_id` should be regenerated.
     #[serde(rename = "generate_new_external_id")]
     pub generate_new_external_id: Option<bool>,
-    /// Role to assume
+    /// Role to assume.
     #[serde(rename = "role")]
     pub role: Option<String>,
-    /// The definition of `AWSAssumeRoleType` object.
+    /// The definition of the `AWSAssumeRole` object.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::AWSAssumeRoleType,
     #[serde(flatten)]
