@@ -49,6 +49,7 @@ pub struct ApiInstances {
     pub v1_api_tags: Option<datadogV1::api_tags::TagsAPI>,
     pub v1_api_users: Option<datadogV1::api_users::UsersAPI>,
     pub v1_api_authentication: Option<datadogV1::api_authentication::AuthenticationAPI>,
+    pub v2_api_actions_datastores: Option<datadogV2::api_actions_datastores::ActionsDatastoresAPI>,
     pub v2_api_action_connection: Option<datadogV2::api_action_connection::ActionConnectionAPI>,
     pub v2_api_agentless_scanning: Option<datadogV2::api_agentless_scanning::AgentlessScanningAPI>,
     pub v2_api_key_management: Option<datadogV2::api_key_management::KeyManagementAPI>,
@@ -465,6 +466,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "Authentication" => {
             world.api_instances.v1_api_authentication = Some(
                 datadogV1::api_authentication::AuthenticationAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+        }
+        "ActionsDatastores" => {
+            world.api_instances.v2_api_actions_datastores = Some(
+                datadogV2::api_actions_datastores::ActionsDatastoresAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -1719,6 +1728,39 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v1.Validate".into(), test_v1_validate);
+    world
+        .function_mappings
+        .insert("v2.ListDatastores".into(), test_v2_list_datastores);
+    world
+        .function_mappings
+        .insert("v2.CreateDatastore".into(), test_v2_create_datastore);
+    world.function_mappings.insert(
+        "v2.CreateDatastoreFromImport".into(),
+        test_v2_create_datastore_from_import,
+    );
+    world
+        .function_mappings
+        .insert("v2.DeleteDatastore".into(), test_v2_delete_datastore);
+    world
+        .function_mappings
+        .insert("v2.GetDatastore".into(), test_v2_get_datastore);
+    world
+        .function_mappings
+        .insert("v2.UpdateDatastore".into(), test_v2_update_datastore);
+    world.function_mappings.insert(
+        "v2.DeleteDatastoreItem".into(),
+        test_v2_delete_datastore_item,
+    );
+    world
+        .function_mappings
+        .insert("v2.ListDatastoreItems".into(), test_v2_list_datastore_items);
+    world
+        .function_mappings
+        .insert("v2.PutDatastoreItem".into(), test_v2_put_datastore_item);
+    world.function_mappings.insert(
+        "v2.BulkPutDatastoreItems".into(),
+        test_v2_bulk_put_datastore_items,
+    );
     world.function_mappings.insert(
         "v2.ListAppKeyRegistrations".into(),
         test_v2_list_app_key_registrations,
@@ -11037,6 +11079,293 @@ fn test_v1_validate(world: &mut DatadogWorld, _parameters: &HashMap<String, Valu
         .as_ref()
         .expect("api instance not found");
     let response = match block_on(api.validate_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_datastores(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_actions_datastores
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_datastores_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_datastore(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_actions_datastores
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_datastore_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_datastore_from_import(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_actions_datastores
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_datastore_from_import_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_datastore(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_actions_datastores
+        .as_ref()
+        .expect("api instance not found");
+    let datastore_id =
+        serde_json::from_value(_parameters.get("datastore_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_datastore_with_http_info(datastore_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_datastore(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_actions_datastores
+        .as_ref()
+        .expect("api instance not found");
+    let datastore_id =
+        serde_json::from_value(_parameters.get("datastore_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_datastore_with_http_info(datastore_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_datastore(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_actions_datastores
+        .as_ref()
+        .expect("api instance not found");
+    let datastore_id =
+        serde_json::from_value(_parameters.get("datastore_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_datastore_with_http_info(datastore_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_datastore_item(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_actions_datastores
+        .as_ref()
+        .expect("api instance not found");
+    let datastore_id =
+        serde_json::from_value(_parameters.get("datastore_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_datastore_item_with_http_info(datastore_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_datastore_items(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_actions_datastores
+        .as_ref()
+        .expect("api instance not found");
+    let datastore_id =
+        serde_json::from_value(_parameters.get("datastore_id").unwrap().clone()).unwrap();
+    let filter = _parameters
+        .get("filter")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let item_key = _parameters
+        .get("item_key")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_offset = _parameters
+        .get("page[offset]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_actions_datastores::ListDatastoreItemsOptionalParams::default();
+    params.filter = filter;
+    params.item_key = item_key;
+    params.page_limit = page_limit;
+    params.page_offset = page_offset;
+    params.sort = sort;
+    let response = match block_on(api.list_datastore_items_with_http_info(datastore_id, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_put_datastore_item(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_actions_datastores
+        .as_ref()
+        .expect("api instance not found");
+    let datastore_id =
+        serde_json::from_value(_parameters.get("datastore_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.put_datastore_item_with_http_info(datastore_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_bulk_put_datastore_items(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_actions_datastores
+        .as_ref()
+        .expect("api instance not found");
+    let datastore_id =
+        serde_json::from_value(_parameters.get("datastore_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.bulk_put_datastore_items_with_http_info(datastore_id, body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
