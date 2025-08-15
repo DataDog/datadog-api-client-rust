@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"source\":\"github\",\"type\":\"link\"},\"type\":\"team_sync_bulk\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "*/*"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/team/sync"
+      },
+      "response": {
+        "body": {
+          "string": "",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "text/plain"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Fri, 15 Aug 2025 17:48:19 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
