@@ -35,6 +35,9 @@ pub struct RUMApplicationAttributes {
     /// Org ID of the RUM application.
     #[serde(rename = "org_id")]
     pub org_id: i32,
+    /// Product Scales configuration for the RUM application.
+    #[serde(rename = "product_scales")]
+    pub product_scales: Option<crate::datadogV2::model::RUMProductScales>,
     /// Type of the RUM application. Supported values are `browser`, `ios`, `android`, `react-native`, `flutter`, `roku`, `electron`, `unity`, `kotlin-multiplatform`.
     #[serde(rename = "type")]
     pub type_: String,
@@ -72,6 +75,7 @@ impl RUMApplicationAttributes {
             is_active: None,
             name,
             org_id,
+            product_scales: None,
             type_,
             updated_at,
             updated_by_handle,
@@ -87,6 +91,11 @@ impl RUMApplicationAttributes {
 
     pub fn is_active(mut self, value: bool) -> Self {
         self.is_active = Some(value);
+        self
+    }
+
+    pub fn product_scales(mut self, value: crate::datadogV2::model::RUMProductScales) -> Self {
+        self.product_scales = Some(value);
         self
     }
 
@@ -124,6 +133,7 @@ impl<'de> Deserialize<'de> for RUMApplicationAttributes {
                 let mut is_active: Option<bool> = None;
                 let mut name: Option<String> = None;
                 let mut org_id: Option<i32> = None;
+                let mut product_scales: Option<crate::datadogV2::model::RUMProductScales> = None;
                 let mut type_: Option<String> = None;
                 let mut updated_at: Option<i64> = None;
                 let mut updated_by_handle: Option<String> = None;
@@ -168,6 +178,13 @@ impl<'de> Deserialize<'de> for RUMApplicationAttributes {
                         "org_id" => {
                             org_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "product_scales" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            product_scales =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -208,6 +225,7 @@ impl<'de> Deserialize<'de> for RUMApplicationAttributes {
                     is_active,
                     name,
                     org_id,
+                    product_scales,
                     type_,
                     updated_at,
                     updated_by_handle,
