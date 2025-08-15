@@ -1724,6 +1724,8 @@ pub mod model_dataset_attributes_response;
 pub use self::model_dataset_attributes_response::DatasetAttributesResponse;
 pub mod model_filters_per_product;
 pub use self::model_filters_per_product::FiltersPerProduct;
+pub mod model_dataset_type;
+pub use self::model_dataset_type::DatasetType;
 pub mod model_dataset_create_request;
 pub use self::model_dataset_create_request::DatasetCreateRequest;
 pub mod model_dataset_request;
