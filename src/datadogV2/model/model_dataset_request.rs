@@ -24,9 +24,9 @@ pub struct DatasetRequest {
     /// Dataset metadata and configurations.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::DatasetAttributesRequest,
-    /// Resource type, always "dataset".
+    /// Resource type, always set to `dataset`.
     #[serde(rename = "type")]
-    pub type_: String,
+    pub type_: crate::datadogV2::model::DatasetType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -37,7 +37,7 @@ pub struct DatasetRequest {
 impl DatasetRequest {
     pub fn new(
         attributes: crate::datadogV2::model::DatasetAttributesRequest,
-        type_: String,
+        type_: crate::datadogV2::model::DatasetType,
     ) -> DatasetRequest {
         DatasetRequest {
             attributes,
@@ -75,7 +75,7 @@ impl<'de> Deserialize<'de> for DatasetRequest {
             {
                 let mut attributes: Option<crate::datadogV2::model::DatasetAttributesRequest> =
                     None;
-                let mut type_: Option<String> = None;
+                let mut type_: Option<crate::datadogV2::model::DatasetType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -89,6 +89,16 @@ impl<'de> Deserialize<'de> for DatasetRequest {
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _type_) = type_ {
+                                match _type_ {
+                                    crate::datadogV2::model::DatasetType::UnparsedObject(
+                                        _type_,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
