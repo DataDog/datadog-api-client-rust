@@ -3,6 +3,7 @@ use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_datasets::DatasetsAPI;
 use datadog_api_client::datadogV2::model::DatasetAttributesRequest;
 use datadog_api_client::datadogV2::model::DatasetRequest;
+use datadog_api_client::datadogV2::model::DatasetType;
 use datadog_api_client::datadogV2::model::DatasetUpdateRequest;
 use datadog_api_client::datadogV2::model::FiltersPerProduct;
 
@@ -19,7 +20,7 @@ async fn main() {
                 "metrics".to_string(),
             )],
         ),
-        "dataset".to_string(),
+        DatasetType::DATASET,
     ));
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.UpdateDataset", true);
