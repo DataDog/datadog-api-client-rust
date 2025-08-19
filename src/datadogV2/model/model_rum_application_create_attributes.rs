@@ -14,6 +14,13 @@ pub struct RUMApplicationCreateAttributes {
     /// Name of the RUM application.
     #[serde(rename = "name")]
     pub name: String,
+    /// Controls the retention policy for Product Analytics data derived from RUM events.
+    #[serde(rename = "product_analytics_retention_state")]
+    pub product_analytics_retention_state:
+        Option<crate::datadogV2::model::RUMProductAnalyticsRetentionState>,
+    /// Configures which RUM events are processed and stored for the application.
+    #[serde(rename = "rum_event_processing_state")]
+    pub rum_event_processing_state: Option<crate::datadogV2::model::RUMEventProcessingState>,
     /// Type of the RUM application. Supported values are `browser`, `ios`, `android`, `react-native`, `flutter`, `roku`, `electron`, `unity`, `kotlin-multiplatform`.
     #[serde(rename = "type")]
     pub type_: Option<String>,
@@ -28,10 +35,28 @@ impl RUMApplicationCreateAttributes {
     pub fn new(name: String) -> RUMApplicationCreateAttributes {
         RUMApplicationCreateAttributes {
             name,
+            product_analytics_retention_state: None,
+            rum_event_processing_state: None,
             type_: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn product_analytics_retention_state(
+        mut self,
+        value: crate::datadogV2::model::RUMProductAnalyticsRetentionState,
+    ) -> Self {
+        self.product_analytics_retention_state = Some(value);
+        self
+    }
+
+    pub fn rum_event_processing_state(
+        mut self,
+        value: crate::datadogV2::model::RUMEventProcessingState,
+    ) -> Self {
+        self.rum_event_processing_state = Some(value);
+        self
     }
 
     pub fn type_(mut self, value: String) -> Self {
@@ -66,6 +91,12 @@ impl<'de> Deserialize<'de> for RUMApplicationCreateAttributes {
                 M: MapAccess<'a>,
             {
                 let mut name: Option<String> = None;
+                let mut product_analytics_retention_state: Option<
+                    crate::datadogV2::model::RUMProductAnalyticsRetentionState,
+                > = None;
+                let mut rum_event_processing_state: Option<
+                    crate::datadogV2::model::RUMEventProcessingState,
+                > = None;
                 let mut type_: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -77,6 +108,40 @@ impl<'de> Deserialize<'de> for RUMApplicationCreateAttributes {
                     match k.as_str() {
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "product_analytics_retention_state" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            product_analytics_retention_state =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _product_analytics_retention_state) =
+                                product_analytics_retention_state
+                            {
+                                match _product_analytics_retention_state {
+                                    crate::datadogV2::model::RUMProductAnalyticsRetentionState::UnparsedObject(_product_analytics_retention_state) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "rum_event_processing_state" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rum_event_processing_state =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _rum_event_processing_state) =
+                                rum_event_processing_state
+                            {
+                                match _rum_event_processing_state {
+                                    crate::datadogV2::model::RUMEventProcessingState::UnparsedObject(_rum_event_processing_state) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "type" => {
                             if v.is_null() {
@@ -95,6 +160,8 @@ impl<'de> Deserialize<'de> for RUMApplicationCreateAttributes {
 
                 let content = RUMApplicationCreateAttributes {
                     name,
+                    product_analytics_retention_state,
+                    rum_event_processing_state,
                     type_,
                     additional_properties,
                     _unparsed,
