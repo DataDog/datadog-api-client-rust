@@ -17279,7 +17279,13 @@ fn test_v2_get_active_billing_dimensions(
         .v2_api_usage_metering
         .as_ref()
         .expect("api instance not found");
-    let response = match block_on(api.get_active_billing_dimensions_with_http_info()) {
+    let month = _parameters
+        .get("month")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_usage_metering::GetActiveBillingDimensionsOptionalParams::default();
+    params.month = month;
+    let response = match block_on(api.get_active_billing_dimensions_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {

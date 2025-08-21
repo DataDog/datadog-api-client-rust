@@ -5,6 +5,22 @@ use crate::datadog;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 
+/// GetActiveBillingDimensionsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_active_billing_dimensions`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetActiveBillingDimensionsOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to month: [YYYY-MM] for billing dimensions active this month. Defaults to the current month.
+    pub month: Option<chrono::DateTime<chrono::Utc>>,
+}
+
+impl GetActiveBillingDimensionsOptionalParams {
+    /// Datetime in ISO-8601 format, UTC, precise to month: [YYYY-MM] for billing dimensions active this month. Defaults to the current month.
+    pub fn month(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
+        self.month = Some(value);
+        self
+    }
+}
+
 /// GetBillingDimensionMappingOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_billing_dimension_mapping`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -479,14 +495,18 @@ impl UsageMeteringAPI {
         Self { config, client }
     }
 
-    /// Get active billing dimensions for cost attribution. Cost data for a given month becomes available no later than the 19th of the following month.
+    /// Get active billing dimensions for cost attribution in a given month. Note that billing dimensions active in a given month may not appear in the Monthly Cost Attribution API response until the 19th of the following month. For the most accurate results, request the same month for both endpoints.
     pub async fn get_active_billing_dimensions(
         &self,
+        params: GetActiveBillingDimensionsOptionalParams,
     ) -> Result<
         crate::datadogV2::model::ActiveBillingDimensionsResponse,
         datadog::Error<GetActiveBillingDimensionsError>,
     > {
-        match self.get_active_billing_dimensions_with_http_info().await {
+        match self
+            .get_active_billing_dimensions_with_http_info(params)
+            .await
+        {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
@@ -500,15 +520,19 @@ impl UsageMeteringAPI {
         }
     }
 
-    /// Get active billing dimensions for cost attribution. Cost data for a given month becomes available no later than the 19th of the following month.
+    /// Get active billing dimensions for cost attribution in a given month. Note that billing dimensions active in a given month may not appear in the Monthly Cost Attribution API response until the 19th of the following month. For the most accurate results, request the same month for both endpoints.
     pub async fn get_active_billing_dimensions_with_http_info(
         &self,
+        params: GetActiveBillingDimensionsOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::ActiveBillingDimensionsResponse>,
         datadog::Error<GetActiveBillingDimensionsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_active_billing_dimensions";
+
+        // unbox and build optional parameters
+        let month = params.month;
 
         let local_client = &self.client;
 
@@ -518,6 +542,13 @@ impl UsageMeteringAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = month {
+            local_req_builder = local_req_builder.query(&[(
+                "month",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
+        };
 
         // build headers
         let mut headers = HeaderMap::new();
