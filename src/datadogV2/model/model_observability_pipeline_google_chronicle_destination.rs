@@ -15,6 +15,9 @@ pub struct ObservabilityPipelineGoogleChronicleDestination {
     ///
     #[serde(rename = "auth")]
     pub auth: crate::datadogV2::model::ObservabilityPipelineGcpAuth,
+    /// Configuration for buffer settings on destination components.
+    #[serde(rename = "buffer")]
+    pub buffer: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptions>,
     /// The Google Chronicle customer ID.
     #[serde(rename = "customer_id")]
     pub customer_id: String,
@@ -51,6 +54,7 @@ impl ObservabilityPipelineGoogleChronicleDestination {
     ) -> ObservabilityPipelineGoogleChronicleDestination {
         ObservabilityPipelineGoogleChronicleDestination {
             auth,
+            buffer: None,
             customer_id,
             encoding: None,
             id,
@@ -60,6 +64,14 @@ impl ObservabilityPipelineGoogleChronicleDestination {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn buffer(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineBufferOptions,
+    ) -> Self {
+        self.buffer = Some(value);
+        self
     }
 
     pub fn encoding(
@@ -102,6 +114,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGoogleChronicleDestination {
                 M: MapAccess<'a>,
             {
                 let mut auth: Option<crate::datadogV2::model::ObservabilityPipelineGcpAuth> = None;
+                let mut buffer: Option<
+                    crate::datadogV2::model::ObservabilityPipelineBufferOptions,
+                > = None;
                 let mut customer_id: Option<String> = None;
                 let mut encoding: Option<crate::datadogV2::model::ObservabilityPipelineGoogleChronicleDestinationEncoding> = None;
                 let mut id: Option<String> = None;
@@ -120,6 +135,20 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGoogleChronicleDestination {
                     match k.as_str() {
                         "auth" => {
                             auth = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "buffer" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            buffer = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _buffer) = buffer {
+                                match _buffer {
+                                    crate::datadogV2::model::ObservabilityPipelineBufferOptions::UnparsedObject(_buffer) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "customer_id" => {
                             customer_id =
@@ -178,6 +207,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGoogleChronicleDestination {
 
                 let content = ObservabilityPipelineGoogleChronicleDestination {
                     auth,
+                    buffer,
                     customer_id,
                     encoding,
                     id,
