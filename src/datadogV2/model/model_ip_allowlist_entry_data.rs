@@ -17,7 +17,7 @@ pub struct IPAllowlistEntryData {
     /// The unique identifier of the IP allowlist entry.
     #[serde(rename = "id")]
     pub id: Option<String>,
-    /// IP allowlist Entry type.
+    /// IP allowlist entry type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::IPAllowlistEntryType,
     #[serde(flatten)]
