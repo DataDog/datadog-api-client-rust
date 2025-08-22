@@ -1,0 +1,66 @@
+// Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
+// This product includes software developed at Datadog (https://www.datadoghq.com/).
+// Copyright 2019-Present Datadog, Inc.
+
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
+
+#[non_exhaustive]
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub enum IssuePlatform {
+    BROWSER,
+    ANDROID,
+    BACKEND,
+    IOS,
+    REACT_NATIVE,
+    FLUTTER,
+    ROKU,
+    UnparsedObject(crate::datadog::UnparsedObject),
+}
+
+impl ToString for IssuePlatform {
+    fn to_string(&self) -> String {
+        match self {
+            Self::BROWSER => String::from("browser"),
+            Self::ANDROID => String::from("android"),
+            Self::BACKEND => String::from("backend"),
+            Self::IOS => String::from("ios"),
+            Self::REACT_NATIVE => String::from("react_native"),
+            Self::FLUTTER => String::from("flutter"),
+            Self::ROKU => String::from("roku"),
+            Self::UnparsedObject(v) => v.value.to_string(),
+        }
+    }
+}
+
+impl Serialize for IssuePlatform {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for IssuePlatform {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {
+            "browser" => Self::BROWSER,
+            "android" => Self::ANDROID,
+            "backend" => Self::BACKEND,
+            "ios" => Self::IOS,
+            "react_native" => Self::REACT_NATIVE,
+            "flutter" => Self::FLUTTER,
+            "roku" => Self::ROKU,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
+        })
+    }
+}
