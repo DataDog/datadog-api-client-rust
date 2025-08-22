@@ -17,7 +17,7 @@ pub struct MicrosoftTeamsChannelInfoResponseData {
     /// The ID of the channel.
     #[serde(rename = "id")]
     pub id: Option<String>,
-    /// Channel info resource type.
+    /// Microsoft Teams channel info resource type.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::MicrosoftTeamsChannelInfoType>,
     #[serde(flatten)]
