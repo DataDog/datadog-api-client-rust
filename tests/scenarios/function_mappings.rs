@@ -133,6 +133,7 @@ pub struct ApiInstances {
     pub v2_api_service_definition: Option<datadogV2::api_service_definition::ServiceDefinitionAPI>,
     pub v2_api_service_level_objectives:
         Option<datadogV2::api_service_level_objectives::ServiceLevelObjectivesAPI>,
+    pub v2_api_spa: Option<datadogV2::api_spa::SpaAPI>,
     pub v2_api_spans: Option<datadogV2::api_spans::SpansAPI>,
     pub v2_api_synthetics: Option<datadogV2::api_synthetics::SyntheticsAPI>,
     pub v2_api_teams: Option<datadogV2::api_teams::TeamsAPI>,
@@ -849,6 +850,13 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                     world.http_client.as_ref().unwrap().clone(),
                 ),
             );
+        }
+        "Spa" => {
+            world.api_instances.v2_api_spa =
+                Some(datadogV2::api_spa::SpaAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ));
         }
         "Spans" => {
             world.api_instances.v2_api_spans =
@@ -3611,6 +3619,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.GetSLOReportJobStatus".into(),
         test_v2_get_slo_report_job_status,
+    );
+    world.function_mappings.insert(
+        "v2.GetSPARecommendations".into(),
+        test_v2_get_spa_recommendations,
     );
     world
         .function_mappings
@@ -27865,6 +27877,32 @@ fn test_v2_get_slo_report_job_status(
         .expect("api instance not found");
     let report_id = serde_json::from_value(_parameters.get("report_id").unwrap().clone()).unwrap();
     let response = match block_on(api.get_slo_report_job_status_with_http_info(report_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_spa_recommendations(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_spa
+        .as_ref()
+        .expect("api instance not found");
+    let shard = serde_json::from_value(_parameters.get("shard").unwrap().clone()).unwrap();
+    let service = serde_json::from_value(_parameters.get("service").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_spa_recommendations_with_http_info(shard, service)) {
         Ok(response) => response,
         Err(error) => {
             return match error {

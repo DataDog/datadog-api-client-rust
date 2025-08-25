@@ -66,6 +66,7 @@ pub mod api_service_definition;
 pub mod api_service_level_objectives;
 pub mod api_service_scorecards;
 pub mod api_software_catalog;
+pub mod api_spa;
 pub mod api_spans;
 pub mod api_spans_metrics;
 pub mod api_synthetics;
