@@ -8,6 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum CaseType {
     STANDARD,
+    TUNKNOWN,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -15,6 +16,7 @@ impl ToString for CaseType {
     fn to_string(&self) -> String {
         match self {
             Self::STANDARD => String::from("STANDARD"),
+            Self::TUNKNOWN => String::from("TUNKNOWN"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -40,6 +42,7 @@ impl<'de> Deserialize<'de> for CaseType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "STANDARD" => Self::STANDARD,
+            "TUNKNOWN" => Self::TUNKNOWN,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

@@ -20,9 +20,9 @@ pub struct CaseCreateAttributes {
     /// Title
     #[serde(rename = "title")]
     pub title: String,
-    /// Case type
-    #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::CaseType,
+    /// Case type UUID
+    #[serde(rename = "type_id")]
+    pub type_id: String,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -31,12 +31,12 @@ pub struct CaseCreateAttributes {
 }
 
 impl CaseCreateAttributes {
-    pub fn new(title: String, type_: crate::datadogV2::model::CaseType) -> CaseCreateAttributes {
+    pub fn new(title: String, type_id: String) -> CaseCreateAttributes {
         CaseCreateAttributes {
             description: None,
             priority: None,
             title,
-            type_,
+            type_id,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -81,7 +81,7 @@ impl<'de> Deserialize<'de> for CaseCreateAttributes {
                 let mut description: Option<String> = None;
                 let mut priority: Option<crate::datadogV2::model::CasePriority> = None;
                 let mut title: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::CaseType> = None;
+                let mut type_id: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -116,16 +116,8 @@ impl<'de> Deserialize<'de> for CaseCreateAttributes {
                         "title" => {
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "type" => {
-                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _type_) = type_ {
-                                match _type_ {
-                                    crate::datadogV2::model::CaseType::UnparsedObject(_type_) => {
-                                        _unparsed = true;
-                                    }
-                                    _ => {}
-                                }
-                            }
+                        "type_id" => {
+                            type_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -135,13 +127,13 @@ impl<'de> Deserialize<'de> for CaseCreateAttributes {
                     }
                 }
                 let title = title.ok_or_else(|| M::Error::missing_field("title"))?;
-                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
+                let type_id = type_id.ok_or_else(|| M::Error::missing_field("type_id"))?;
 
                 let content = CaseCreateAttributes {
                     description,
                     priority,
                     title,
-                    type_,
+                    type_id,
                     additional_properties,
                     _unparsed,
                 };
