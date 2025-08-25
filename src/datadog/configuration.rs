@@ -210,6 +210,7 @@ impl Default for Configuration {
             ("v2.create_slo_report_job".to_owned(), false),
             ("v2.get_slo_report".to_owned(), false),
             ("v2.get_slo_report_job_status".to_owned(), false),
+            ("v2.get_spa_recommendations".to_owned(), false),
             ("v2.add_member_team".to_owned(), false),
             ("v2.list_member_teams".to_owned(), false),
             ("v2.remove_member_team".to_owned(), false),
