@@ -114,6 +114,8 @@ pub mod model_widget_new_fixed_span;
 pub use self::model_widget_new_fixed_span::WidgetNewFixedSpan;
 pub mod model_widget_new_fixed_span_type;
 pub use self::model_widget_new_fixed_span_type::WidgetNewFixedSpanType;
+pub mod model_widget_time_hide_incomplete_data;
+pub use self::model_widget_time_hide_incomplete_data::WidgetTimeHideIncompleteData;
 pub mod model_widget_time;
 pub use self::model_widget_time::WidgetTime;
 pub mod model_widget_text_align;
