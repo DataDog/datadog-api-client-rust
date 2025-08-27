@@ -44,6 +44,9 @@ pub struct DataDeletionResponseItemAttributes {
     /// End of requested time window, milliseconds since Unix epoch.
     #[serde(rename = "to_time")]
     pub to_time: i64,
+    /// Total number of elements to be deleted according to the UI.
+    #[serde(rename = "total_displayed")]
+    pub total_displayed: i64,
     /// Total number of elements to be deleted. Only the data accessible to the current user that matches the query and timeframe provided will be deleted.
     #[serde(rename = "total_unrestricted")]
     pub total_unrestricted: i64,
@@ -69,6 +72,7 @@ impl DataDeletionResponseItemAttributes {
         starting_at: String,
         status: String,
         to_time: i64,
+        total_displayed: i64,
         total_unrestricted: i64,
         updated_at: String,
     ) -> DataDeletionResponseItemAttributes {
@@ -84,6 +88,7 @@ impl DataDeletionResponseItemAttributes {
             starting_at,
             status,
             to_time,
+            total_displayed,
             total_unrestricted,
             updated_at,
             additional_properties: std::collections::BTreeMap::new(),
@@ -133,6 +138,7 @@ impl<'de> Deserialize<'de> for DataDeletionResponseItemAttributes {
                 let mut starting_at: Option<String> = None;
                 let mut status: Option<String> = None;
                 let mut to_time: Option<i64> = None;
+                let mut total_displayed: Option<i64> = None;
                 let mut total_unrestricted: Option<i64> = None;
                 let mut updated_at: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -180,6 +186,10 @@ impl<'de> Deserialize<'de> for DataDeletionResponseItemAttributes {
                         "to_time" => {
                             to_time = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "total_displayed" => {
+                            total_displayed =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "total_unrestricted" => {
                             total_unrestricted =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -205,6 +215,8 @@ impl<'de> Deserialize<'de> for DataDeletionResponseItemAttributes {
                     starting_at.ok_or_else(|| M::Error::missing_field("starting_at"))?;
                 let status = status.ok_or_else(|| M::Error::missing_field("status"))?;
                 let to_time = to_time.ok_or_else(|| M::Error::missing_field("to_time"))?;
+                let total_displayed =
+                    total_displayed.ok_or_else(|| M::Error::missing_field("total_displayed"))?;
                 let total_unrestricted = total_unrestricted
                     .ok_or_else(|| M::Error::missing_field("total_unrestricted"))?;
                 let updated_at = updated_at.ok_or_else(|| M::Error::missing_field("updated_at"))?;
@@ -221,6 +233,7 @@ impl<'de> Deserialize<'de> for DataDeletionResponseItemAttributes {
                     starting_at,
                     status,
                     to_time,
+                    total_displayed,
                     total_unrestricted,
                     updated_at,
                     additional_properties,
