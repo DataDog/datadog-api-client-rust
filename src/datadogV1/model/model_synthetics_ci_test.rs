@@ -53,6 +53,9 @@ pub struct SyntheticsCITest {
     /// Variables to replace in the test.
     #[serde(rename = "variables")]
     pub variables: Option<std::collections::BTreeMap<String, String>>,
+    /// The version number of the Synthetic test version to trigger.
+    #[serde(rename = "version")]
+    pub version: Option<i64>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -77,6 +80,7 @@ impl SyntheticsCITest {
             retry: None,
             start_url: None,
             variables: None,
+            version: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -147,6 +151,11 @@ impl SyntheticsCITest {
         self
     }
 
+    pub fn version(mut self, value: i64) -> Self {
+        self.version = Some(value);
+        self
+    }
+
     pub fn additional_properties(
         mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
@@ -187,6 +196,7 @@ impl<'de> Deserialize<'de> for SyntheticsCITest {
                 let mut retry: Option<crate::datadogV1::model::SyntheticsTestOptionsRetry> = None;
                 let mut start_url: Option<String> = None;
                 let mut variables: Option<std::collections::BTreeMap<String, String>> = None;
+                let mut version: Option<i64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -286,6 +296,12 @@ impl<'de> Deserialize<'de> for SyntheticsCITest {
                             }
                             variables = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "version" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -310,6 +326,7 @@ impl<'de> Deserialize<'de> for SyntheticsCITest {
                     retry,
                     start_url,
                     variables,
+                    version,
                     additional_properties,
                     _unparsed,
                 };
