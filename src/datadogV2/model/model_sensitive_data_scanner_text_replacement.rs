@@ -18,6 +18,9 @@ pub struct SensitiveDataScannerTextReplacement {
     /// Required if type == 'replacement_string'.
     #[serde(rename = "replacement_string")]
     pub replacement_string: Option<String>,
+    /// Only valid when type == `replacement_string`. When enabled, matches can be unmasked in logs by users with ‘Data Scanner Unmask’ permission. As a security best practice, avoid masking for highly-sensitive, long-lived data.
+    #[serde(rename = "should_save_match")]
+    pub should_save_match: Option<bool>,
     /// Type of the replacement text. None means no replacement.
     /// hash means the data will be stubbed. replacement_string means that
     /// one can chose a text to replace the data. partial_replacement_from_beginning
@@ -38,6 +41,7 @@ impl SensitiveDataScannerTextReplacement {
         SensitiveDataScannerTextReplacement {
             number_of_chars: None,
             replacement_string: None,
+            should_save_match: None,
             type_: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -51,6 +55,11 @@ impl SensitiveDataScannerTextReplacement {
 
     pub fn replacement_string(mut self, value: String) -> Self {
         self.replacement_string = Some(value);
+        self
+    }
+
+    pub fn should_save_match(mut self, value: bool) -> Self {
+        self.should_save_match = Some(value);
         self
     }
 
@@ -96,6 +105,7 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerTextReplacement {
             {
                 let mut number_of_chars: Option<i64> = None;
                 let mut replacement_string: Option<String> = None;
+                let mut should_save_match: Option<bool> = None;
                 let mut type_: Option<
                     crate::datadogV2::model::SensitiveDataScannerTextReplacementType,
                 > = None;
@@ -119,6 +129,13 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerTextReplacement {
                                 continue;
                             }
                             replacement_string =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "should_save_match" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            should_save_match =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
@@ -146,6 +163,7 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerTextReplacement {
                 let content = SensitiveDataScannerTextReplacement {
                     number_of_chars,
                     replacement_string,
+                    should_save_match,
                     type_,
                     additional_properties,
                     _unparsed,
