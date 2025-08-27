@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct WidgetLegacyLiveSpan {
+    /// Whether to hide incomplete cost data in the widget.
+    #[serde(rename = "hide_incomplete_cost_data")]
+    pub hide_incomplete_cost_data: Option<bool>,
     /// The available timeframes depend on the widget you are using.
     #[serde(rename = "live_span")]
     pub live_span: Option<crate::datadogV1::model::WidgetLiveSpan>,
@@ -22,9 +25,15 @@ pub struct WidgetLegacyLiveSpan {
 impl WidgetLegacyLiveSpan {
     pub fn new() -> WidgetLegacyLiveSpan {
         WidgetLegacyLiveSpan {
+            hide_incomplete_cost_data: None,
             live_span: None,
             _unparsed: false,
         }
+    }
+
+    pub fn hide_incomplete_cost_data(mut self, value: bool) -> Self {
+        self.hide_incomplete_cost_data = Some(value);
+        self
     }
 
     pub fn live_span(mut self, value: crate::datadogV1::model::WidgetLiveSpan) -> Self {
@@ -56,11 +65,19 @@ impl<'de> Deserialize<'de> for WidgetLegacyLiveSpan {
             where
                 M: MapAccess<'a>,
             {
+                let mut hide_incomplete_cost_data: Option<bool> = None;
                 let mut live_span: Option<crate::datadogV1::model::WidgetLiveSpan> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "hide_incomplete_cost_data" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            hide_incomplete_cost_data =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "live_span" => {
                             if v.is_null() {
                                 continue;
@@ -86,6 +103,7 @@ impl<'de> Deserialize<'de> for WidgetLegacyLiveSpan {
                 }
 
                 let content = WidgetLegacyLiveSpan {
+                    hide_incomplete_cost_data,
                     live_span,
                     _unparsed,
                 };

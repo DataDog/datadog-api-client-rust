@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct WidgetNewLiveSpan {
+    /// Whether to hide incomplete cost data in the widget.
+    #[serde(rename = "hide_incomplete_cost_data")]
+    pub hide_incomplete_cost_data: Option<bool>,
     /// Type "live" denotes a live span in the new format.
     #[serde(rename = "type")]
     pub type_: crate::datadogV1::model::WidgetNewLiveSpanType,
@@ -34,12 +37,18 @@ impl WidgetNewLiveSpan {
         value: i64,
     ) -> WidgetNewLiveSpan {
         WidgetNewLiveSpan {
+            hide_incomplete_cost_data: None,
             type_,
             unit,
             value,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn hide_incomplete_cost_data(mut self, value: bool) -> Self {
+        self.hide_incomplete_cost_data = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -68,6 +77,7 @@ impl<'de> Deserialize<'de> for WidgetNewLiveSpan {
             where
                 M: MapAccess<'a>,
             {
+                let mut hide_incomplete_cost_data: Option<bool> = None;
                 let mut type_: Option<crate::datadogV1::model::WidgetNewLiveSpanType> = None;
                 let mut unit: Option<crate::datadogV1::model::WidgetLiveSpanUnit> = None;
                 let mut value: Option<i64> = None;
@@ -79,6 +89,13 @@ impl<'de> Deserialize<'de> for WidgetNewLiveSpan {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "hide_incomplete_cost_data" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            hide_incomplete_cost_data =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -118,6 +135,7 @@ impl<'de> Deserialize<'de> for WidgetNewLiveSpan {
                 let value = value.ok_or_else(|| M::Error::missing_field("value"))?;
 
                 let content = WidgetNewLiveSpan {
+                    hide_incomplete_cost_data,
                     type_,
                     unit,
                     value,

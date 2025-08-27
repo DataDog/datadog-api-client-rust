@@ -14,6 +14,9 @@ pub struct WidgetNewFixedSpan {
     /// Start time in seconds since epoch.
     #[serde(rename = "from")]
     pub from: i64,
+    /// Whether to hide incomplete cost data in the widget.
+    #[serde(rename = "hide_incomplete_cost_data")]
+    pub hide_incomplete_cost_data: Option<bool>,
     /// End time in seconds since epoch.
     #[serde(rename = "to")]
     pub to: i64,
@@ -35,11 +38,17 @@ impl WidgetNewFixedSpan {
     ) -> WidgetNewFixedSpan {
         WidgetNewFixedSpan {
             from,
+            hide_incomplete_cost_data: None,
             to,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn hide_incomplete_cost_data(mut self, value: bool) -> Self {
+        self.hide_incomplete_cost_data = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -69,6 +78,7 @@ impl<'de> Deserialize<'de> for WidgetNewFixedSpan {
                 M: MapAccess<'a>,
             {
                 let mut from: Option<i64> = None;
+                let mut hide_incomplete_cost_data: Option<bool> = None;
                 let mut to: Option<i64> = None;
                 let mut type_: Option<crate::datadogV1::model::WidgetNewFixedSpanType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -81,6 +91,13 @@ impl<'de> Deserialize<'de> for WidgetNewFixedSpan {
                     match k.as_str() {
                         "from" => {
                             from = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "hide_incomplete_cost_data" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            hide_incomplete_cost_data =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "to" => {
                             to = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -109,6 +126,7 @@ impl<'de> Deserialize<'de> for WidgetNewFixedSpan {
 
                 let content = WidgetNewFixedSpan {
                     from,
+                    hide_incomplete_cost_data,
                     to,
                     type_,
                     additional_properties,
