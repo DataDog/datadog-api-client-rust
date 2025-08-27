@@ -27,6 +27,9 @@ pub struct RuleAttributes {
     /// If enabled, the rule is calculated as part of the score.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
+    /// The maturity level of the rule (1, 2, or 3).
+    #[serde(rename = "level")]
+    pub level: Option<i32>,
     /// Time of the last rule outcome modification.
     #[serde(rename = "modified_at")]
     pub modified_at: Option<chrono::DateTime<chrono::Utc>>,
@@ -55,6 +58,7 @@ impl RuleAttributes {
             custom: None,
             description: None,
             enabled: None,
+            level: None,
             modified_at: None,
             name: None,
             owner: None,
@@ -91,6 +95,12 @@ impl RuleAttributes {
     #[allow(deprecated)]
     pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn level(mut self, value: i32) -> Self {
+        self.level = Some(value);
         self
     }
 
@@ -155,6 +165,7 @@ impl<'de> Deserialize<'de> for RuleAttributes {
                 let mut custom: Option<bool> = None;
                 let mut description: Option<String> = None;
                 let mut enabled: Option<bool> = None;
+                let mut level: Option<i32> = None;
                 let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut name: Option<String> = None;
                 let mut owner: Option<String> = None;
@@ -198,6 +209,12 @@ impl<'de> Deserialize<'de> for RuleAttributes {
                             }
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "level" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            level = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "modified_at" => {
                             if v.is_null() {
                                 continue;
@@ -239,6 +256,7 @@ impl<'de> Deserialize<'de> for RuleAttributes {
                     custom,
                     description,
                     enabled,
+                    level,
                     modified_at,
                     name,
                     owner,
