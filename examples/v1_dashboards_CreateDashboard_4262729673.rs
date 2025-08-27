@@ -89,7 +89,9 @@ async fn main() {
                                 .time(
                                     WidgetTime::WidgetLegacyLiveSpan(
                                         Box::new(
-                                            WidgetLegacyLiveSpan::new().live_span(WidgetLiveSpan::PAST_FIVE_MINUTES),
+                                            WidgetLegacyLiveSpan::new()
+                                                .hide_incomplete_cost_data(true)
+                                                .live_span(WidgetLiveSpan::PAST_FIVE_MINUTES),
                                         ),
                                     ),
                                 )

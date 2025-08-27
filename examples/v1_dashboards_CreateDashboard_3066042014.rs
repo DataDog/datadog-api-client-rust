@@ -94,7 +94,7 @@ async fn main() {
                                                 WidgetNewLiveSpanType::LIVE,
                                                 WidgetLiveSpanUnit::MINUTE,
                                                 8,
-                                            ),
+                                            ).hide_incomplete_cost_data(true),
                                         ),
                                     ),
                                 )

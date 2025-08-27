@@ -93,7 +93,7 @@ async fn main() {
                                                 1712080128,
                                                 1712083128,
                                                 WidgetNewFixedSpanType::FIXED,
-                                            ),
+                                            ).hide_incomplete_cost_data(true),
                                         ),
                                     ),
                                 )
