@@ -3492,6 +3492,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_list_scorecard_outcomes_with_pagination,
     );
     world.function_mappings.insert(
+        "v2.UpdateScorecardOutcomesAsync".into(),
+        test_v2_update_scorecard_outcomes_async,
+    );
+    world.function_mappings.insert(
         "v2.CreateScorecardOutcomesBatch".into(),
         test_v2_create_scorecard_outcomes_batch,
     );
@@ -26794,6 +26798,34 @@ fn test_v2_list_scorecard_outcomes_with_pagination(
     });
     world.response.object = serde_json::to_value(result).unwrap();
     world.response.code = 200;
+}
+
+fn test_v2_update_scorecard_outcomes_async(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_service_scorecards
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_scorecard_outcomes_async_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
 }
 
 fn test_v2_create_scorecard_outcomes_batch(

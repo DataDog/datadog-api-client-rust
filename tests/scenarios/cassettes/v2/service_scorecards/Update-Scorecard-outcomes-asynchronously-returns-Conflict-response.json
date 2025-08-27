@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"results\":[{\"entity_reference\":\"service:my-service\",\"remarks\":\"See: <a href=\\\"https://app.datadoghq.com/services\\\">Services</a>\",\"rule_id\":\"INVALID.RULE_ID\",\"state\":\"pass\"}]},\"type\":\"batched-outcome\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "*/*"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/scorecard/outcomes"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"status\":\"409\",\"title\":\"Invalid rule_id\"}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 409,
+          "message": "Conflict"
+        }
+      },
+      "recorded_at": "Tue, 26 Aug 2025 14:46:20 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
