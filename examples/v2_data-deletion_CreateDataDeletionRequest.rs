@@ -11,6 +11,7 @@ use std::collections::BTreeMap;
 async fn main() {
     let body = CreateDataDeletionRequestBody::new(CreateDataDeletionRequestBodyData::new(
         CreateDataDeletionRequestBodyAttributes::new(
+            25000,
             1672527600000,
             BTreeMap::from([
                 ("host".to_string(), "abc".to_string()),

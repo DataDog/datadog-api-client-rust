@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreateDataDeletionRequestBodyAttributes {
+    /// Total number of elements to be deleted according to the UI.
+    #[serde(rename = "displayed_total")]
+    pub displayed_total: i64,
     /// Start of requested time window, milliseconds since Unix epoch.
     #[serde(rename = "from")]
     pub from: i64,
@@ -32,11 +35,13 @@ pub struct CreateDataDeletionRequestBodyAttributes {
 
 impl CreateDataDeletionRequestBodyAttributes {
     pub fn new(
+        displayed_total: i64,
         from: i64,
         query: std::collections::BTreeMap<String, String>,
         to: i64,
     ) -> CreateDataDeletionRequestBodyAttributes {
         CreateDataDeletionRequestBodyAttributes {
+            displayed_total,
             from,
             indexes: None,
             query,
@@ -77,6 +82,7 @@ impl<'de> Deserialize<'de> for CreateDataDeletionRequestBodyAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut displayed_total: Option<i64> = None;
                 let mut from: Option<i64> = None;
                 let mut indexes: Option<Vec<String>> = None;
                 let mut query: Option<std::collections::BTreeMap<String, String>> = None;
@@ -89,6 +95,10 @@ impl<'de> Deserialize<'de> for CreateDataDeletionRequestBodyAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "displayed_total" => {
+                            displayed_total =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "from" => {
                             from = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -111,11 +121,14 @@ impl<'de> Deserialize<'de> for CreateDataDeletionRequestBodyAttributes {
                         }
                     }
                 }
+                let displayed_total =
+                    displayed_total.ok_or_else(|| M::Error::missing_field("displayed_total"))?;
                 let from = from.ok_or_else(|| M::Error::missing_field("from"))?;
                 let query = query.ok_or_else(|| M::Error::missing_field("query"))?;
                 let to = to.ok_or_else(|| M::Error::missing_field("to"))?;
 
                 let content = CreateDataDeletionRequestBodyAttributes {
+                    displayed_total,
                     from,
                     indexes,
                     query,
