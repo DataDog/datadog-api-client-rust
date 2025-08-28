@@ -1769,6 +1769,9 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.DeleteAwsScanOptions".into(),
         test_v2_delete_aws_scan_options,
     );
+    world
+        .function_mappings
+        .insert("v2.GetAwsScanOptions".into(), test_v2_get_aws_scan_options);
     world.function_mappings.insert(
         "v2.UpdateAwsScanOptions".into(),
         test_v2_update_aws_scan_options,
@@ -11363,6 +11366,32 @@ fn test_v2_delete_aws_scan_options(world: &mut DatadogWorld, _parameters: &HashM
     let account_id =
         serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
     let response = match block_on(api.delete_aws_scan_options_with_http_info(account_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_aws_scan_options(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_agentless_scanning
+        .as_ref()
+        .expect("api instance not found");
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_aws_scan_options_with_http_info(account_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
