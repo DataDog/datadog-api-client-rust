@@ -323,7 +323,7 @@ impl ActionConnectionAPI {
         }
     }
 
-    /// Delete an existing Action Connection. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>).
+    /// Delete an existing Action Connection. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>). Alternatively, you can configure these permissions [in the UI](<https://docs.datadoghq.com/account_management/api-app-keys/#actions-api-access>).
     pub async fn delete_action_connection(
         &self,
         connection_id: String,
@@ -337,7 +337,7 @@ impl ActionConnectionAPI {
         }
     }
 
-    /// Delete an existing Action Connection. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>).
+    /// Delete an existing Action Connection. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>). Alternatively, you can configure these permissions [in the UI](<https://docs.datadoghq.com/account_management/api-app-keys/#actions-api-access>).
     pub async fn delete_action_connection_with_http_info(
         &self,
         connection_id: String,

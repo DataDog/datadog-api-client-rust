@@ -162,7 +162,7 @@ impl WorkflowAutomationAPI {
         Self { config, client }
     }
 
-    /// Cancels a specific execution of a given workflow. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>).
+    /// Cancels a specific execution of a given workflow. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>). Alternatively, you can configure these permissions [in the UI](<https://docs.datadoghq.com/account_management/api-app-keys/#actions-api-access>).
     pub async fn cancel_workflow_instance(
         &self,
         workflow_id: String,
@@ -188,7 +188,7 @@ impl WorkflowAutomationAPI {
         }
     }
 
-    /// Cancels a specific execution of a given workflow. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>).
+    /// Cancels a specific execution of a given workflow. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>). Alternatively, you can configure these permissions [in the UI](<https://docs.datadoghq.com/account_management/api-app-keys/#actions-api-access>).
     pub async fn cancel_workflow_instance_with_http_info(
         &self,
         workflow_id: String,
@@ -277,7 +277,7 @@ impl WorkflowAutomationAPI {
         }
     }
 
-    /// Create a new workflow, returning the workflow ID. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>).
+    /// Create a new workflow, returning the workflow ID. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>). Alternatively, you can configure these permissions [in the UI](<https://docs.datadoghq.com/account_management/api-app-keys/#actions-api-access>).
     pub async fn create_workflow(
         &self,
         body: crate::datadogV2::model::CreateWorkflowRequest,
@@ -297,7 +297,7 @@ impl WorkflowAutomationAPI {
         }
     }
 
-    /// Create a new workflow, returning the workflow ID. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>).
+    /// Create a new workflow, returning the workflow ID. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>). Alternatively, you can configure these permissions [in the UI](<https://docs.datadoghq.com/account_management/api-app-keys/#actions-api-access>).
     pub async fn create_workflow_with_http_info(
         &self,
         body: crate::datadogV2::model::CreateWorkflowRequest,
@@ -429,7 +429,7 @@ impl WorkflowAutomationAPI {
         }
     }
 
-    /// Execute the given workflow. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>).
+    /// Execute the given workflow. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>). Alternatively, you can configure these permissions [in the UI](<https://docs.datadoghq.com/account_management/api-app-keys/#actions-api-access>).
     pub async fn create_workflow_instance(
         &self,
         workflow_id: String,
@@ -455,7 +455,7 @@ impl WorkflowAutomationAPI {
         }
     }
 
-    /// Execute the given workflow. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>).
+    /// Execute the given workflow. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>). Alternatively, you can configure these permissions [in the UI](<https://docs.datadoghq.com/account_management/api-app-keys/#actions-api-access>).
     pub async fn create_workflow_instance_with_http_info(
         &self,
         workflow_id: String,
@@ -589,7 +589,7 @@ impl WorkflowAutomationAPI {
         }
     }
 
-    /// Delete a workflow by ID. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>).
+    /// Delete a workflow by ID. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>). Alternatively, you can configure these permissions [in the UI](<https://docs.datadoghq.com/account_management/api-app-keys/#actions-api-access>).
     pub async fn delete_workflow(
         &self,
         workflow_id: String,
@@ -600,7 +600,7 @@ impl WorkflowAutomationAPI {
         }
     }
 
-    /// Delete a workflow by ID. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>).
+    /// Delete a workflow by ID. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>). Alternatively, you can configure these permissions [in the UI](<https://docs.datadoghq.com/account_management/api-app-keys/#actions-api-access>).
     pub async fn delete_workflow_with_http_info(
         &self,
         workflow_id: String,
@@ -677,7 +677,7 @@ impl WorkflowAutomationAPI {
         }
     }
 
-    /// Get a workflow by ID. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>).
+    /// Get a workflow by ID. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>). Alternatively, you can configure these permissions [in the UI](<https://docs.datadoghq.com/account_management/api-app-keys/#actions-api-access>).
     pub async fn get_workflow(
         &self,
         workflow_id: String,
@@ -697,7 +697,7 @@ impl WorkflowAutomationAPI {
         }
     }
 
-    /// Get a workflow by ID. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>).
+    /// Get a workflow by ID. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>). Alternatively, you can configure these permissions [in the UI](<https://docs.datadoghq.com/account_management/api-app-keys/#actions-api-access>).
     pub async fn get_workflow_with_http_info(
         &self,
         workflow_id: String,
@@ -783,7 +783,7 @@ impl WorkflowAutomationAPI {
         }
     }
 
-    /// Get a specific execution of a given workflow. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>).
+    /// Get a specific execution of a given workflow. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>). Alternatively, you can configure these permissions [in the UI](<https://docs.datadoghq.com/account_management/api-app-keys/#actions-api-access>).
     pub async fn get_workflow_instance(
         &self,
         workflow_id: String,
@@ -809,7 +809,7 @@ impl WorkflowAutomationAPI {
         }
     }
 
-    /// Get a specific execution of a given workflow. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>).
+    /// Get a specific execution of a given workflow. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>). Alternatively, you can configure these permissions [in the UI](<https://docs.datadoghq.com/account_management/api-app-keys/#actions-api-access>).
     pub async fn get_workflow_instance_with_http_info(
         &self,
         workflow_id: String,
@@ -898,7 +898,7 @@ impl WorkflowAutomationAPI {
         }
     }
 
-    /// List all instances of a given workflow. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>).
+    /// List all instances of a given workflow. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>). Alternatively, you can configure these permissions [in the UI](<https://docs.datadoghq.com/account_management/api-app-keys/#actions-api-access>).
     pub async fn list_workflow_instances(
         &self,
         workflow_id: String,
@@ -924,7 +924,7 @@ impl WorkflowAutomationAPI {
         }
     }
 
-    /// List all instances of a given workflow. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>).
+    /// List all instances of a given workflow. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>). Alternatively, you can configure these permissions [in the UI](<https://docs.datadoghq.com/account_management/api-app-keys/#actions-api-access>).
     pub async fn list_workflow_instances_with_http_info(
         &self,
         workflow_id: String,
@@ -1025,7 +1025,7 @@ impl WorkflowAutomationAPI {
         }
     }
 
-    /// Update a workflow by ID. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>).
+    /// Update a workflow by ID. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>). Alternatively, you can configure these permissions [in the UI](<https://docs.datadoghq.com/account_management/api-app-keys/#actions-api-access>).
     pub async fn update_workflow(
         &self,
         workflow_id: String,
@@ -1046,7 +1046,7 @@ impl WorkflowAutomationAPI {
         }
     }
 
-    /// Update a workflow by ID. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>).
+    /// Update a workflow by ID. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>). Alternatively, you can configure these permissions [in the UI](<https://docs.datadoghq.com/account_management/api-app-keys/#actions-api-access>).
     pub async fn update_workflow_with_http_info(
         &self,
         workflow_id: String,
