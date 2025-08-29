@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"state\":\"resolved\"},\"id\":\"67d80aa3-36ff-44b9-a694-c501a7591737\",\"type\":\"error_tracking_issue\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "put",
+        "uri": "https://api.datadoghq.com/api/v2/error-tracking/issues/67d80aa3-36ff-44b9-a694-c501a7591737/state"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"status\":\"404\",\"title\":\"Not Found\",\"detail\":\"issue not found\"}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 404,
+          "message": "Not Found"
+        }
+      },
+      "recorded_at": "Wed, 27 Aug 2025 15:33:35 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
