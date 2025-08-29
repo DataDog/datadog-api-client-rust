@@ -1,0 +1,101 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"description\":\"\",\"name\":\"Test Datastore\",\"org_access\":\"contributor\",\"primary_column_name\":\"id\",\"primary_key_generation_strategy\":\"none\"},\"type\":\"datastores\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/actions-datastores"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":{\"id\":\"f5bb885b-d05e-4a9f-97f6-c050a5ba771b\",\"type\":\"datastores\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Fri, 29 Aug 2025 21:35:06 GMT"
+    },
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"value\":{\"missing\":\"item-key\"}},\"type\":\"items\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/actions-datastores/f5bb885b-d05e-4a9f-97f6-c050a5ba771b/items"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"status\":\"400\",\"id\":\"be36891b-613e-4a1a-bca8-5bcb05cfb1b5\",\"title\":\"item key missing or invalid\",\"detail\":\"primary column \\\"id\\\" is missing\"}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Fri, 29 Aug 2025 21:35:06 GMT"
+    },
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "*/*"
+          ]
+        },
+        "method": "delete",
+        "uri": "https://api.datadoghq.com/api/v2/actions-datastores/f5bb885b-d05e-4a9f-97f6-c050a5ba771b"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":{\"id\":\"f5bb885b-d05e-4a9f-97f6-c050a5ba771b\",\"type\":\"datastores\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Fri, 29 Aug 2025 21:35:06 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

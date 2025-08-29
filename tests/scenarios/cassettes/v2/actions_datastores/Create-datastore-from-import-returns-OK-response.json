@@ -1,0 +1,67 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"name\":\"datastore-name\",\"primary_column_name\":\"primaryKey\",\"values\":[{\"primaryKey\":\"key1\",\"value\":\"Newton\"},{\"primaryKey\":\"key2\",\"value\":\"Leibniz\"}]},\"type\":\"datastores\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/actions-datastores/import"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":{\"id\":\"20c0eef2-c999-4b9f-a0c0-e3aa2ee4e602\",\"type\":\"datastores\",\"attributes\":{\"item_count\":2}}}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Fri, 29 Aug 2025 21:35:03 GMT"
+    },
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "*/*"
+          ]
+        },
+        "method": "delete",
+        "uri": "https://api.datadoghq.com/api/v2/actions-datastores/20c0eef2-c999-4b9f-a0c0-e3aa2ee4e602"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":{\"id\":\"20c0eef2-c999-4b9f-a0c0-e3aa2ee4e602\",\"type\":\"datastores\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Fri, 29 Aug 2025 21:35:03 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
