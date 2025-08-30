@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"invalid_key\":\"invalid_value\"}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/suppressions/rules"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[\"invalid_argument(Invalid rule configuration)\"]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Sat, 30 Aug 2025 15:29:48 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
