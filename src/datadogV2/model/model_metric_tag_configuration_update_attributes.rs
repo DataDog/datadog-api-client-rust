@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MetricTagConfigurationUpdateAttributes {
-    /// Deprecated. You no longer need to configure specific time and space aggregations for Metrics Without Limits.
+    /// Deprecated. You no longer need to configure specific time and space aggregations for Metrics without Limits™.
     #[serde(rename = "aggregations")]
     pub aggregations: Option<Vec<crate::datadogV2::model::MetricCustomAggregation>>,
     /// When set to true, the configuration will exclude the configured tags and include any other submitted tags.
