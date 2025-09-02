@@ -31,6 +31,7 @@ pub use self::api::api_datasets;
 pub use self::api::api_domain_allowlist;
 pub use self::api::api_dora_metrics;
 pub use self::api::api_downtimes;
+pub use self::api::api_error_tracking;
 pub use self::api::api_events;
 pub use self::api::api_fastly_integration;
 pub use self::api::api_gcp_integration;
