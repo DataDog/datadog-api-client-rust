@@ -2206,6 +2206,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_get_suppressions_affecting_rule,
     );
     world.function_mappings.insert(
+        "v2.ValidateSecurityMonitoringSuppression".into(),
+        test_v2_validate_security_monitoring_suppression,
+    );
+    world.function_mappings.insert(
         "v2.DeleteSecurityMonitoringSuppression".into(),
         test_v2_delete_security_monitoring_suppression,
     );
@@ -15702,6 +15706,35 @@ fn test_v2_get_suppressions_affecting_rule(
         .expect("api instance not found");
     let rule_id = serde_json::from_value(_parameters.get("rule_id").unwrap().clone()).unwrap();
     let response = match block_on(api.get_suppressions_affecting_rule_with_http_info(rule_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_validate_security_monitoring_suppression(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.validate_security_monitoring_suppression_with_http_info(body))
+    {
         Ok(response) => response,
         Err(error) => {
             return match error {
