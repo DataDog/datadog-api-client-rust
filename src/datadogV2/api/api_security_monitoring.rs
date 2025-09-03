@@ -98,6 +98,57 @@ impl GetSBOMOptionalParams {
     }
 }
 
+/// GetSecurityMonitoringHistsignalsByJobIdOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::get_security_monitoring_histsignals_by_job_id`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetSecurityMonitoringHistsignalsByJobIdOptionalParams {
+    /// The search query for security signals.
+    pub filter_query: Option<String>,
+    /// The minimum timestamp for requested security signals.
+    pub filter_from: Option<chrono::DateTime<chrono::Utc>>,
+    /// The maximum timestamp for requested security signals.
+    pub filter_to: Option<chrono::DateTime<chrono::Utc>>,
+    /// The order of the security signals in results.
+    pub sort: Option<crate::datadogV2::model::SecurityMonitoringSignalsSort>,
+    /// A list of results using the cursor provided in the previous query.
+    pub page_cursor: Option<String>,
+    /// The maximum number of security signals in the response.
+    pub page_limit: Option<i32>,
+}
+
+impl GetSecurityMonitoringHistsignalsByJobIdOptionalParams {
+    /// The search query for security signals.
+    pub fn filter_query(mut self, value: String) -> Self {
+        self.filter_query = Some(value);
+        self
+    }
+    /// The minimum timestamp for requested security signals.
+    pub fn filter_from(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
+        self.filter_from = Some(value);
+        self
+    }
+    /// The maximum timestamp for requested security signals.
+    pub fn filter_to(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
+        self.filter_to = Some(value);
+        self
+    }
+    /// The order of the security signals in results.
+    pub fn sort(mut self, value: crate::datadogV2::model::SecurityMonitoringSignalsSort) -> Self {
+        self.sort = Some(value);
+        self
+    }
+    /// A list of results using the cursor provided in the previous query.
+    pub fn page_cursor(mut self, value: String) -> Self {
+        self.page_cursor = Some(value);
+        self
+    }
+    /// The maximum number of security signals in the response.
+    pub fn page_limit(mut self, value: i32) -> Self {
+        self.page_limit = Some(value);
+        self
+    }
+}
+
 /// ListAssetsSBOMsOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_assets_sbo_ms`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -316,6 +367,57 @@ impl ListHistoricalJobsOptionalParams {
     /// Query used to filter items from the fetched list.
     pub fn filter_query(mut self, value: String) -> Self {
         self.filter_query = Some(value);
+        self
+    }
+}
+
+/// ListSecurityMonitoringHistsignalsOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_security_monitoring_histsignals`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListSecurityMonitoringHistsignalsOptionalParams {
+    /// The search query for security signals.
+    pub filter_query: Option<String>,
+    /// The minimum timestamp for requested security signals.
+    pub filter_from: Option<chrono::DateTime<chrono::Utc>>,
+    /// The maximum timestamp for requested security signals.
+    pub filter_to: Option<chrono::DateTime<chrono::Utc>>,
+    /// The order of the security signals in results.
+    pub sort: Option<crate::datadogV2::model::SecurityMonitoringSignalsSort>,
+    /// A list of results using the cursor provided in the previous query.
+    pub page_cursor: Option<String>,
+    /// The maximum number of security signals in the response.
+    pub page_limit: Option<i32>,
+}
+
+impl ListSecurityMonitoringHistsignalsOptionalParams {
+    /// The search query for security signals.
+    pub fn filter_query(mut self, value: String) -> Self {
+        self.filter_query = Some(value);
+        self
+    }
+    /// The minimum timestamp for requested security signals.
+    pub fn filter_from(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
+        self.filter_from = Some(value);
+        self
+    }
+    /// The maximum timestamp for requested security signals.
+    pub fn filter_to(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
+        self.filter_to = Some(value);
+        self
+    }
+    /// The order of the security signals in results.
+    pub fn sort(mut self, value: crate::datadogV2::model::SecurityMonitoringSignalsSort) -> Self {
+        self.sort = Some(value);
+        self
+    }
+    /// A list of results using the cursor provided in the previous query.
+    pub fn page_cursor(mut self, value: String) -> Self {
+        self.page_cursor = Some(value);
+        self
+    }
+    /// The maximum number of security signals in the response.
+    pub fn page_limit(mut self, value: i32) -> Self {
+        self.page_limit = Some(value);
         self
     }
 }
@@ -837,6 +939,23 @@ impl ListVulnerableAssetsOptionalParams {
     }
 }
 
+/// SearchSecurityMonitoringHistsignalsOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::search_security_monitoring_histsignals`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct SearchSecurityMonitoringHistsignalsOptionalParams {
+    pub body: Option<crate::datadogV2::model::SecurityMonitoringSignalListRequest>,
+}
+
+impl SearchSecurityMonitoringHistsignalsOptionalParams {
+    pub fn body(
+        mut self,
+        value: crate::datadogV2::model::SecurityMonitoringSignalListRequest,
+    ) -> Self {
+        self.body = Some(value);
+        self
+    }
+}
+
 /// SearchSecurityMonitoringSignalsOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::search_security_monitoring_signals`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -1071,6 +1190,22 @@ pub enum GetSecurityFilterError {
     UnknownValue(serde_json::Value),
 }
 
+/// GetSecurityMonitoringHistsignalError is a struct for typed errors of method [`SecurityMonitoringAPI::get_security_monitoring_histsignal`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetSecurityMonitoringHistsignalError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetSecurityMonitoringHistsignalsByJobIdError is a struct for typed errors of method [`SecurityMonitoringAPI::get_security_monitoring_histsignals_by_job_id`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetSecurityMonitoringHistsignalsByJobIdError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// GetSecurityMonitoringRuleError is a struct for typed errors of method [`SecurityMonitoringAPI::get_security_monitoring_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1176,6 +1311,14 @@ pub enum ListSecurityFiltersError {
     UnknownValue(serde_json::Value),
 }
 
+/// ListSecurityMonitoringHistsignalsError is a struct for typed errors of method [`SecurityMonitoringAPI::list_security_monitoring_histsignals`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListSecurityMonitoringHistsignalsError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// ListSecurityMonitoringRulesError is a struct for typed errors of method [`SecurityMonitoringAPI::list_security_monitoring_rules`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1248,6 +1391,14 @@ pub enum PatchVulnerabilityNotificationRuleError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum RunHistoricalJobError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// SearchSecurityMonitoringHistsignalsError is a struct for typed errors of method [`SecurityMonitoringAPI::search_security_monitoring_histsignals`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum SearchSecurityMonitoringHistsignalsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -4881,6 +5032,287 @@ impl SecurityMonitoringAPI {
         }
     }
 
+    /// Get a hist signal's details.
+    pub async fn get_security_monitoring_histsignal(
+        &self,
+        histsignal_id: String,
+    ) -> Result<
+        crate::datadogV2::model::SecurityMonitoringSignalResponse,
+        datadog::Error<GetSecurityMonitoringHistsignalError>,
+    > {
+        match self
+            .get_security_monitoring_histsignal_with_http_info(histsignal_id)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get a hist signal's details.
+    pub async fn get_security_monitoring_histsignal_with_http_info(
+        &self,
+        histsignal_id: String,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SecurityMonitoringSignalResponse>,
+        datadog::Error<GetSecurityMonitoringHistsignalError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_security_monitoring_histsignal";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_security_monitoring_histsignal' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/siem-historical-detections/histsignals/{histsignal_id}",
+            local_configuration.get_operation_host(operation_id),
+            histsignal_id = datadog::urlencode(histsignal_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::SecurityMonitoringSignalResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetSecurityMonitoringHistsignalError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get a job's hist signals.
+    pub async fn get_security_monitoring_histsignals_by_job_id(
+        &self,
+        job_id: String,
+        params: GetSecurityMonitoringHistsignalsByJobIdOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::SecurityMonitoringSignalsListResponse,
+        datadog::Error<GetSecurityMonitoringHistsignalsByJobIdError>,
+    > {
+        match self
+            .get_security_monitoring_histsignals_by_job_id_with_http_info(job_id, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get a job's hist signals.
+    pub async fn get_security_monitoring_histsignals_by_job_id_with_http_info(
+        &self,
+        job_id: String,
+        params: GetSecurityMonitoringHistsignalsByJobIdOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SecurityMonitoringSignalsListResponse>,
+        datadog::Error<GetSecurityMonitoringHistsignalsByJobIdError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_security_monitoring_histsignals_by_job_id";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_security_monitoring_histsignals_by_job_id' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let filter_query = params.filter_query;
+        let filter_from = params.filter_from;
+        let filter_to = params.filter_to;
+        let sort = params.sort;
+        let page_cursor = params.page_cursor;
+        let page_limit = params.page_limit;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/siem-historical-detections/jobs/{job_id}/histsignals",
+            local_configuration.get_operation_host(operation_id),
+            job_id = datadog::urlencode(job_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = filter_query {
+            local_req_builder =
+                local_req_builder.query(&[("filter[query]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_from {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[from]",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_to {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[to]",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
+        };
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_cursor {
+            local_req_builder =
+                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_limit {
+            local_req_builder =
+                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::SecurityMonitoringSignalsListResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetSecurityMonitoringHistsignalsByJobIdError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Get a rule's details.
     pub async fn get_security_monitoring_rule(
         &self,
@@ -6661,6 +7093,164 @@ impl SecurityMonitoringAPI {
             };
         } else {
             let local_entity: Option<ListSecurityFiltersError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// List hist signals.
+    pub async fn list_security_monitoring_histsignals(
+        &self,
+        params: ListSecurityMonitoringHistsignalsOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::SecurityMonitoringSignalsListResponse,
+        datadog::Error<ListSecurityMonitoringHistsignalsError>,
+    > {
+        match self
+            .list_security_monitoring_histsignals_with_http_info(params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// List hist signals.
+    pub async fn list_security_monitoring_histsignals_with_http_info(
+        &self,
+        params: ListSecurityMonitoringHistsignalsOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SecurityMonitoringSignalsListResponse>,
+        datadog::Error<ListSecurityMonitoringHistsignalsError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_security_monitoring_histsignals";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_security_monitoring_histsignals' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let filter_query = params.filter_query;
+        let filter_from = params.filter_from;
+        let filter_to = params.filter_to;
+        let sort = params.sort;
+        let page_cursor = params.page_cursor;
+        let page_limit = params.page_limit;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/siem-historical-detections/histsignals",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = filter_query {
+            local_req_builder =
+                local_req_builder.query(&[("filter[query]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_from {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[from]",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_to {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[to]",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
+        };
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_cursor {
+            local_req_builder =
+                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_limit {
+            local_req_builder =
+                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::SecurityMonitoringSignalsListResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListSecurityMonitoringHistsignalsError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -8501,6 +9091,176 @@ impl SecurityMonitoringAPI {
             };
         } else {
             let local_entity: Option<RunHistoricalJobError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Search hist signals.
+    pub async fn search_security_monitoring_histsignals(
+        &self,
+        params: SearchSecurityMonitoringHistsignalsOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::SecurityMonitoringSignalsListResponse,
+        datadog::Error<SearchSecurityMonitoringHistsignalsError>,
+    > {
+        match self
+            .search_security_monitoring_histsignals_with_http_info(params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Search hist signals.
+    pub async fn search_security_monitoring_histsignals_with_http_info(
+        &self,
+        params: SearchSecurityMonitoringHistsignalsOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SecurityMonitoringSignalsListResponse>,
+        datadog::Error<SearchSecurityMonitoringHistsignalsError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.search_security_monitoring_histsignals";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.search_security_monitoring_histsignals' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let body = params.body;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/siem-historical-detections/histsignals/search",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::SecurityMonitoringSignalsListResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<SearchSecurityMonitoringHistsignalsError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,

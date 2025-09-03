@@ -2297,6 +2297,18 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.EditSecurityMonitoringSignalState".into(),
         test_v2_edit_security_monitoring_signal_state,
     );
+    world.function_mappings.insert(
+        "v2.ListSecurityMonitoringHistsignals".into(),
+        test_v2_list_security_monitoring_histsignals,
+    );
+    world.function_mappings.insert(
+        "v2.SearchSecurityMonitoringHistsignals".into(),
+        test_v2_search_security_monitoring_histsignals,
+    );
+    world.function_mappings.insert(
+        "v2.GetSecurityMonitoringHistsignal".into(),
+        test_v2_get_security_monitoring_histsignal,
+    );
     world
         .function_mappings
         .insert("v2.ListHistoricalJobs".into(), test_v2_list_historical_jobs);
@@ -2317,6 +2329,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.CancelHistoricalJob".into(),
         test_v2_cancel_historical_job,
+    );
+    world.function_mappings.insert(
+        "v2.GetSecurityMonitoringHistsignalsByJobId".into(),
+        test_v2_get_security_monitoring_histsignals_by_job_id,
     );
     world.function_mappings.insert(
         "v2.ListContainerImages".into(),
@@ -16490,6 +16506,121 @@ fn test_v2_edit_security_monitoring_signal_state(
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_list_security_monitoring_histsignals(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let filter_query = _parameters
+        .get("filter[query]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_from = _parameters
+        .get("filter[from]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_to = _parameters
+        .get("filter[to]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_cursor = _parameters
+        .get("page[cursor]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_security_monitoring::ListSecurityMonitoringHistsignalsOptionalParams::default();
+    params.filter_query = filter_query;
+    params.filter_from = filter_from;
+    params.filter_to = filter_to;
+    params.sort = sort;
+    params.page_cursor = page_cursor;
+    params.page_limit = page_limit;
+    let response = match block_on(api.list_security_monitoring_histsignals_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_search_security_monitoring_histsignals(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let body = _parameters
+        .get("body")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_security_monitoring::SearchSecurityMonitoringHistsignalsOptionalParams::default();
+    params.body = body;
+    let response = match block_on(api.search_security_monitoring_histsignals_with_http_info(params))
+    {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_security_monitoring_histsignal(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let histsignal_id =
+        serde_json::from_value(_parameters.get("histsignal_id").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.get_security_monitoring_histsignal_with_http_info(histsignal_id)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_list_historical_jobs(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
@@ -16643,6 +16774,61 @@ fn test_v2_cancel_historical_job(world: &mut DatadogWorld, _parameters: &HashMap
         .expect("api instance not found");
     let job_id = serde_json::from_value(_parameters.get("job_id").unwrap().clone()).unwrap();
     let response = match block_on(api.cancel_historical_job_with_http_info(job_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_security_monitoring_histsignals_by_job_id(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let job_id = serde_json::from_value(_parameters.get("job_id").unwrap().clone()).unwrap();
+    let filter_query = _parameters
+        .get("filter[query]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_from = _parameters
+        .get("filter[from]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_to = _parameters
+        .get("filter[to]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_cursor = _parameters
+        .get("page[cursor]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_security_monitoring::GetSecurityMonitoringHistsignalsByJobIdOptionalParams::default();
+    params.filter_query = filter_query;
+    params.filter_from = filter_from;
+    params.filter_to = filter_to;
+    params.sort = sort;
+    params.page_cursor = page_cursor;
+    params.page_limit = page_limit;
+    let response = match block_on(
+        api.get_security_monitoring_histsignals_by_job_id_with_http_info(job_id, params),
+    ) {
         Ok(response) => response,
         Err(error) => {
             return match error {
