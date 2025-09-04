@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SyntheticsAPIWaitStep {
+    /// ID of the step.
+    #[serde(rename = "id")]
+    pub id: Option<String>,
     /// The name of the step.
     #[serde(rename = "name")]
     pub name: String,
@@ -34,12 +37,18 @@ impl SyntheticsAPIWaitStep {
         value: i32,
     ) -> SyntheticsAPIWaitStep {
         SyntheticsAPIWaitStep {
+            id: None,
             name,
             subtype,
             value,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn id(mut self, value: String) -> Self {
+        self.id = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -68,6 +77,7 @@ impl<'de> Deserialize<'de> for SyntheticsAPIWaitStep {
             where
                 M: MapAccess<'a>,
             {
+                let mut id: Option<String> = None;
                 let mut name: Option<String> = None;
                 let mut subtype: Option<crate::datadogV1::model::SyntheticsAPIWaitStepSubtype> =
                     None;
@@ -80,6 +90,12 @@ impl<'de> Deserialize<'de> for SyntheticsAPIWaitStep {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -109,6 +125,7 @@ impl<'de> Deserialize<'de> for SyntheticsAPIWaitStep {
                 let value = value.ok_or_else(|| M::Error::missing_field("value"))?;
 
                 let content = SyntheticsAPIWaitStep {
+                    id,
                     name,
                     subtype,
                     value,
