@@ -10747,7 +10747,7 @@ impl SecurityMonitoringAPI {
     /// Validate a suppression rule.
     pub async fn validate_security_monitoring_suppression(
         &self,
-        body: crate::datadogV2::model::SecurityMonitoringSuppressionUpdateRequest,
+        body: crate::datadogV2::model::SecurityMonitoringSuppressionCreateRequest,
     ) -> Result<(), datadog::Error<ValidateSecurityMonitoringSuppressionError>> {
         match self
             .validate_security_monitoring_suppression_with_http_info(body)
@@ -10761,7 +10761,7 @@ impl SecurityMonitoringAPI {
     /// Validate a suppression rule.
     pub async fn validate_security_monitoring_suppression_with_http_info(
         &self,
-        body: crate::datadogV2::model::SecurityMonitoringSuppressionUpdateRequest,
+        body: crate::datadogV2::model::SecurityMonitoringSuppressionCreateRequest,
     ) -> Result<
         datadog::ResponseContent<()>,
         datadog::Error<ValidateSecurityMonitoringSuppressionError>,
