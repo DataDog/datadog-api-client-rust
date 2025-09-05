@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"name\":\"datastore-name\",\"primary_column_name\":\"0invalid_key\"},\"type\":\"datastores\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/actions-datastores"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"status\":\"400\",\"id\":\"78cd887f-1a77-421f-915d-4bfebb3784c0\",\"title\":\"datastore configuration invalid\",\"detail\":\"column name '0invalid_key' does not start with a letter or an underscore\"}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Fri, 05 Sep 2025 22:54:06 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
