@@ -23396,10 +23396,26 @@ fn test_v2_get_monitor_notification_rules(
         .v2_api_monitors
         .as_ref()
         .expect("api instance not found");
+    let page = _parameters
+        .get("page")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let per_page = _parameters
+        .get("per_page")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filters = _parameters
+        .get("filters")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let include = _parameters
         .get("include")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_monitors::GetMonitorNotificationRulesOptionalParams::default();
+    params.page = page;
+    params.per_page = per_page;
+    params.sort = sort;
+    params.filters = filters;
     params.include = include;
     let response = match block_on(api.get_monitor_notification_rules_with_http_info(params)) {
         Ok(response) => response,

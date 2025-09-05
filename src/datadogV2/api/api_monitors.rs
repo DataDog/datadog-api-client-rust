@@ -33,12 +33,46 @@ impl GetMonitorNotificationRuleOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetMonitorNotificationRulesOptionalParams {
+    /// The page to start paginating from. If `page` is not specified, the argument defaults to the first page.
+    pub page: Option<i32>,
+    /// The number of rules to return per page. If `per_page` is not specified, the argument defaults to 100.
+    pub per_page: Option<i32>,
+    /// String for sort order, composed of field and sort order separated by a colon, for example `name:asc`. Supported sort directions: `asc`, `desc`. Supported fields: `name`, `created_at`.
+    pub sort: Option<String>,
+    /// JSON-encoded filter object. Supported keys:
+    /// * `text`: Free-text query matched against rule name, tags, and recipients.
+    /// * `tags`: Array of strings. Return rules that have any of these tags.
+    /// * `recipients`: Array of strings. Return rules that have any of these recipients.
+    pub filters: Option<String>,
     /// Comma-separated list of resource paths for related resources to include in the response. Supported resource
     /// path is `created_by`.
     pub include: Option<String>,
 }
 
 impl GetMonitorNotificationRulesOptionalParams {
+    /// The page to start paginating from. If `page` is not specified, the argument defaults to the first page.
+    pub fn page(mut self, value: i32) -> Self {
+        self.page = Some(value);
+        self
+    }
+    /// The number of rules to return per page. If `per_page` is not specified, the argument defaults to 100.
+    pub fn per_page(mut self, value: i32) -> Self {
+        self.per_page = Some(value);
+        self
+    }
+    /// String for sort order, composed of field and sort order separated by a colon, for example `name:asc`. Supported sort directions: `asc`, `desc`. Supported fields: `name`, `created_at`.
+    pub fn sort(mut self, value: String) -> Self {
+        self.sort = Some(value);
+        self
+    }
+    /// JSON-encoded filter object. Supported keys:
+    /// * `text`: Free-text query matched against rule name, tags, and recipients.
+    /// * `tags`: Array of strings. Return rules that have any of these tags.
+    /// * `recipients`: Array of strings. Return rules that have any of these recipients.
+    pub fn filters(mut self, value: String) -> Self {
+        self.filters = Some(value);
+        self
+    }
     /// Comma-separated list of resource paths for related resources to include in the response. Supported resource
     /// path is `created_by`.
     pub fn include(mut self, value: String) -> Self {
@@ -1294,6 +1328,10 @@ impl MonitorsAPI {
         let operation_id = "v2.get_monitor_notification_rules";
 
         // unbox and build optional parameters
+        let page = params.page;
+        let per_page = params.per_page;
+        let sort = params.sort;
+        let filters = params.filters;
         let include = params.include;
 
         let local_client = &self.client;
@@ -1305,6 +1343,22 @@ impl MonitorsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        if let Some(ref local_query_param) = page {
+            local_req_builder =
+                local_req_builder.query(&[("page", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = per_page {
+            local_req_builder =
+                local_req_builder.query(&[("per_page", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filters {
+            local_req_builder =
+                local_req_builder.query(&[("filters", &local_query_param.to_string())]);
+        };
         if let Some(ref local_query_param) = include {
             local_req_builder =
                 local_req_builder.query(&[("include", &local_query_param.to_string())]);
