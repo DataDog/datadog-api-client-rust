@@ -335,6 +335,7 @@ impl CIVisibilityPipelinesAPI {
     /// Send your pipeline event to your Datadog platform over HTTP. For details about how pipeline executions are modeled and what execution types we support, see [Pipeline Data Model And Execution Types](<https://docs.datadoghq.com/continuous_integration/guides/pipeline_data_model/>).
     ///
     /// Pipeline events can be submitted with a timestamp that is up to 18 hours in the past.
+    /// The duration between the event's start and end times cannot exceed 1 year.
     pub async fn create_ci_app_pipeline_event(
         &self,
         body: crate::datadogV2::model::CIAppCreatePipelineEventRequest,
@@ -359,6 +360,7 @@ impl CIVisibilityPipelinesAPI {
     /// Send your pipeline event to your Datadog platform over HTTP. For details about how pipeline executions are modeled and what execution types we support, see [Pipeline Data Model And Execution Types](<https://docs.datadoghq.com/continuous_integration/guides/pipeline_data_model/>).
     ///
     /// Pipeline events can be submitted with a timestamp that is up to 18 hours in the past.
+    /// The duration between the event's start and end times cannot exceed 1 year.
     pub async fn create_ci_app_pipeline_event_with_http_info(
         &self,
         body: crate::datadogV2::model::CIAppCreatePipelineEventRequest,
