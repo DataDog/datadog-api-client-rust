@@ -1,0 +1,95 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"description\":\"\",\"name\":\"Test Datastore\",\"org_access\":\"contributor\",\"primary_column_name\":\"id\",\"primary_key_generation_strategy\":\"none\"},\"type\":\"datastores\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/actions-datastores"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":{\"id\":\"8185f4a4-6cf6-4fde-a705-e248effe50fc\",\"type\":\"datastores\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Fri, 05 Sep 2025 22:54:08 GMT"
+    },
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "*/*"
+          ]
+        },
+        "method": "delete",
+        "uri": "https://api.datadoghq.com/api/v2/actions-datastores/8185f4a4-6cf6-4fde-a705-e248effe50fc"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":{\"id\":\"8185f4a4-6cf6-4fde-a705-e248effe50fc\",\"type\":\"datastores\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Fri, 05 Sep 2025 22:54:08 GMT"
+    },
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "*/*"
+          ]
+        },
+        "method": "delete",
+        "uri": "https://api.datadoghq.com/api/v2/actions-datastores/8185f4a4-6cf6-4fde-a705-e248effe50fc"
+      },
+      "response": {
+        "body": {
+          "string": "",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Fri, 05 Sep 2025 22:54:08 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
