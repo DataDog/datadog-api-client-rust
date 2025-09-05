@@ -6,23 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Incident type response data.
+/// Notification template data for a create request.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct IncidentTypeObject {
-    /// Incident type's attributes.
+pub struct IncidentNotificationTemplateCreateData {
+    /// The attributes for creating a notification template.
     #[serde(rename = "attributes")]
-    pub attributes: Option<crate::datadogV2::model::IncidentTypeAttributes>,
-    /// The incident type's ID.
-    #[serde(rename = "id")]
-    pub id: String,
-    /// The incident type's resource relationships.
+    pub attributes: crate::datadogV2::model::IncidentNotificationTemplateCreateAttributes,
+    /// The definition of `NotificationTemplateCreateDataRelationships` object.
     #[serde(rename = "relationships")]
-    pub relationships: Option<crate::datadogV2::model::IncidentTypeRelationships>,
-    /// Incident type resource type.
+    pub relationships:
+        Option<crate::datadogV2::model::IncidentNotificationTemplateCreateDataRelationships>,
+    /// Notification templates resource type.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::IncidentTypeType,
+    pub type_: crate::datadogV2::model::IncidentNotificationTemplateType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -30,11 +28,13 @@ pub struct IncidentTypeObject {
     pub(crate) _unparsed: bool,
 }
 
-impl IncidentTypeObject {
-    pub fn new(id: String, type_: crate::datadogV2::model::IncidentTypeType) -> IncidentTypeObject {
-        IncidentTypeObject {
-            attributes: None,
-            id,
+impl IncidentNotificationTemplateCreateData {
+    pub fn new(
+        attributes: crate::datadogV2::model::IncidentNotificationTemplateCreateAttributes,
+        type_: crate::datadogV2::model::IncidentNotificationTemplateType,
+    ) -> IncidentNotificationTemplateCreateData {
+        IncidentNotificationTemplateCreateData {
+            attributes,
             relationships: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
@@ -42,14 +42,9 @@ impl IncidentTypeObject {
         }
     }
 
-    pub fn attributes(mut self, value: crate::datadogV2::model::IncidentTypeAttributes) -> Self {
-        self.attributes = Some(value);
-        self
-    }
-
     pub fn relationships(
         mut self,
-        value: crate::datadogV2::model::IncidentTypeRelationships,
+        value: crate::datadogV2::model::IncidentNotificationTemplateCreateDataRelationships,
     ) -> Self {
         self.relationships = Some(value);
         self
@@ -64,14 +59,14 @@ impl IncidentTypeObject {
     }
 }
 
-impl<'de> Deserialize<'de> for IncidentTypeObject {
+impl<'de> Deserialize<'de> for IncidentNotificationTemplateCreateData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct IncidentTypeObjectVisitor;
-        impl<'a> Visitor<'a> for IncidentTypeObjectVisitor {
-            type Value = IncidentTypeObject;
+        struct IncidentNotificationTemplateCreateDataVisitor;
+        impl<'a> Visitor<'a> for IncidentNotificationTemplateCreateDataVisitor {
+            type Value = IncidentNotificationTemplateCreateData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -81,11 +76,14 @@ impl<'de> Deserialize<'de> for IncidentTypeObject {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::IncidentTypeAttributes> = None;
-                let mut id: Option<String> = None;
-                let mut relationships: Option<crate::datadogV2::model::IncidentTypeRelationships> =
+                let mut attributes: Option<
+                    crate::datadogV2::model::IncidentNotificationTemplateCreateAttributes,
+                > = None;
+                let mut relationships: Option<
+                    crate::datadogV2::model::IncidentNotificationTemplateCreateDataRelationships,
+                > = None;
+                let mut type_: Option<crate::datadogV2::model::IncidentNotificationTemplateType> =
                     None;
-                let mut type_: Option<crate::datadogV2::model::IncidentTypeType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -95,13 +93,7 @@ impl<'de> Deserialize<'de> for IncidentTypeObject {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "attributes" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "id" => {
-                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "relationships" => {
                             if v.is_null() {
@@ -114,11 +106,9 @@ impl<'de> Deserialize<'de> for IncidentTypeObject {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::IncidentTypeType::UnparsedObject(
-                                        _type_,
-                                    ) => {
+                                    crate::datadogV2::model::IncidentNotificationTemplateType::UnparsedObject(_type_) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
@@ -130,12 +120,11 @@ impl<'de> Deserialize<'de> for IncidentTypeObject {
                         }
                     }
                 }
-                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
+                let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = IncidentTypeObject {
+                let content = IncidentNotificationTemplateCreateData {
                     attributes,
-                    id,
                     relationships,
                     type_,
                     additional_properties,
@@ -146,6 +135,6 @@ impl<'de> Deserialize<'de> for IncidentTypeObject {
             }
         }
 
-        deserializer.deserialize_any(IncidentTypeObjectVisitor)
+        deserializer.deserialize_any(IncidentNotificationTemplateCreateDataVisitor)
     }
 }
