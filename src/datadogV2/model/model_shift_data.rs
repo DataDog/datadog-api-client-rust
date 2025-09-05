@@ -6,18 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `ShiftData` object.
+/// Data for an on-call shift.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ShiftData {
-    /// The definition of `ShiftDataAttributes` object.
+    /// Attributes for an on-call shift.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::ShiftDataAttributes>,
     /// The `ShiftData` `id`.
     #[serde(rename = "id")]
     pub id: Option<String>,
-    /// The definition of `ShiftDataRelationships` object.
+    /// Relationships for an on-call shift.
     #[serde(rename = "relationships")]
     pub relationships: Option<crate::datadogV2::model::ShiftDataRelationships>,
     /// Indicates that the resource is of type 'shifts'.
