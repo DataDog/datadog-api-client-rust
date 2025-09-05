@@ -6,20 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Incident type response data.
+/// Relationship to incident type object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct IncidentTypeObject {
-    /// Incident type's attributes.
-    #[serde(rename = "attributes")]
-    pub attributes: Option<crate::datadogV2::model::IncidentTypeAttributes>,
+pub struct RelationshipToIncidentTypeData {
     /// The incident type's ID.
     #[serde(rename = "id")]
     pub id: String,
-    /// The incident type's resource relationships.
-    #[serde(rename = "relationships")]
-    pub relationships: Option<crate::datadogV2::model::IncidentTypeRelationships>,
     /// Incident type resource type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::IncidentTypeType,
@@ -30,29 +24,17 @@ pub struct IncidentTypeObject {
     pub(crate) _unparsed: bool,
 }
 
-impl IncidentTypeObject {
-    pub fn new(id: String, type_: crate::datadogV2::model::IncidentTypeType) -> IncidentTypeObject {
-        IncidentTypeObject {
-            attributes: None,
+impl RelationshipToIncidentTypeData {
+    pub fn new(
+        id: String,
+        type_: crate::datadogV2::model::IncidentTypeType,
+    ) -> RelationshipToIncidentTypeData {
+        RelationshipToIncidentTypeData {
             id,
-            relationships: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn attributes(mut self, value: crate::datadogV2::model::IncidentTypeAttributes) -> Self {
-        self.attributes = Some(value);
-        self
-    }
-
-    pub fn relationships(
-        mut self,
-        value: crate::datadogV2::model::IncidentTypeRelationships,
-    ) -> Self {
-        self.relationships = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -64,14 +46,14 @@ impl IncidentTypeObject {
     }
 }
 
-impl<'de> Deserialize<'de> for IncidentTypeObject {
+impl<'de> Deserialize<'de> for RelationshipToIncidentTypeData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct IncidentTypeObjectVisitor;
-        impl<'a> Visitor<'a> for IncidentTypeObjectVisitor {
-            type Value = IncidentTypeObject;
+        struct RelationshipToIncidentTypeDataVisitor;
+        impl<'a> Visitor<'a> for RelationshipToIncidentTypeDataVisitor {
+            type Value = RelationshipToIncidentTypeData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -81,10 +63,7 @@ impl<'de> Deserialize<'de> for IncidentTypeObject {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::IncidentTypeAttributes> = None;
                 let mut id: Option<String> = None;
-                let mut relationships: Option<crate::datadogV2::model::IncidentTypeRelationships> =
-                    None;
                 let mut type_: Option<crate::datadogV2::model::IncidentTypeType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -94,21 +73,8 @@ impl<'de> Deserialize<'de> for IncidentTypeObject {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "attributes" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "relationships" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            relationships =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -133,10 +99,8 @@ impl<'de> Deserialize<'de> for IncidentTypeObject {
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = IncidentTypeObject {
-                    attributes,
+                let content = RelationshipToIncidentTypeData {
                     id,
-                    relationships,
                     type_,
                     additional_properties,
                     _unparsed,
@@ -146,6 +110,6 @@ impl<'de> Deserialize<'de> for IncidentTypeObject {
             }
         }
 
-        deserializer.deserialize_any(IncidentTypeObjectVisitor)
+        deserializer.deserialize_any(RelationshipToIncidentTypeDataVisitor)
     }
 }
