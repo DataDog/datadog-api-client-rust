@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"category\":\"update\",\"content\":\"Incident Status Update: For more details, visit the incident page.\",\"name\":\"Update Template\",\"subject\":\"Incident Update\"},\"id\":\"00000000-0000-0000-0000-000000000001\",\"type\":\"invalid_type\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "patch",
+        "uri": "https://api.datadoghq.com/api/v2/incidents/config/notification-templates/00000000-1111-2222-3333-444444444444"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"status\":\"400\",\"title\":\"Bad Request\",\"detail\":\"got type \\\"invalid_type\\\" expected one of \\\"notification_templates\\\"\"}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Fri, 05 Sep 2025 02:19:40 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

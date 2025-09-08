@@ -6,23 +6,23 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Incident type response data.
+/// Notification template data from a response.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct IncidentTypeObject {
-    /// Incident type's attributes.
+pub struct IncidentNotificationTemplateResponseData {
+    /// The notification template's attributes.
     #[serde(rename = "attributes")]
-    pub attributes: Option<crate::datadogV2::model::IncidentTypeAttributes>,
-    /// The incident type's ID.
+    pub attributes: Option<crate::datadogV2::model::IncidentNotificationTemplateAttributes>,
+    /// The unique identifier of the notification template.
     #[serde(rename = "id")]
-    pub id: String,
-    /// The incident type's resource relationships.
+    pub id: uuid::Uuid,
+    /// The notification template's resource relationships.
     #[serde(rename = "relationships")]
-    pub relationships: Option<crate::datadogV2::model::IncidentTypeRelationships>,
-    /// Incident type resource type.
+    pub relationships: Option<crate::datadogV2::model::IncidentNotificationTemplateRelationships>,
+    /// Notification templates resource type.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::IncidentTypeType,
+    pub type_: crate::datadogV2::model::IncidentNotificationTemplateType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -30,9 +30,12 @@ pub struct IncidentTypeObject {
     pub(crate) _unparsed: bool,
 }
 
-impl IncidentTypeObject {
-    pub fn new(id: String, type_: crate::datadogV2::model::IncidentTypeType) -> IncidentTypeObject {
-        IncidentTypeObject {
+impl IncidentNotificationTemplateResponseData {
+    pub fn new(
+        id: uuid::Uuid,
+        type_: crate::datadogV2::model::IncidentNotificationTemplateType,
+    ) -> IncidentNotificationTemplateResponseData {
+        IncidentNotificationTemplateResponseData {
             attributes: None,
             id,
             relationships: None,
@@ -42,14 +45,17 @@ impl IncidentTypeObject {
         }
     }
 
-    pub fn attributes(mut self, value: crate::datadogV2::model::IncidentTypeAttributes) -> Self {
+    pub fn attributes(
+        mut self,
+        value: crate::datadogV2::model::IncidentNotificationTemplateAttributes,
+    ) -> Self {
         self.attributes = Some(value);
         self
     }
 
     pub fn relationships(
         mut self,
-        value: crate::datadogV2::model::IncidentTypeRelationships,
+        value: crate::datadogV2::model::IncidentNotificationTemplateRelationships,
     ) -> Self {
         self.relationships = Some(value);
         self
@@ -64,14 +70,14 @@ impl IncidentTypeObject {
     }
 }
 
-impl<'de> Deserialize<'de> for IncidentTypeObject {
+impl<'de> Deserialize<'de> for IncidentNotificationTemplateResponseData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct IncidentTypeObjectVisitor;
-        impl<'a> Visitor<'a> for IncidentTypeObjectVisitor {
-            type Value = IncidentTypeObject;
+        struct IncidentNotificationTemplateResponseDataVisitor;
+        impl<'a> Visitor<'a> for IncidentNotificationTemplateResponseDataVisitor {
+            type Value = IncidentNotificationTemplateResponseData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -81,11 +87,15 @@ impl<'de> Deserialize<'de> for IncidentTypeObject {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::IncidentTypeAttributes> = None;
-                let mut id: Option<String> = None;
-                let mut relationships: Option<crate::datadogV2::model::IncidentTypeRelationships> =
+                let mut attributes: Option<
+                    crate::datadogV2::model::IncidentNotificationTemplateAttributes,
+                > = None;
+                let mut id: Option<uuid::Uuid> = None;
+                let mut relationships: Option<
+                    crate::datadogV2::model::IncidentNotificationTemplateRelationships,
+                > = None;
+                let mut type_: Option<crate::datadogV2::model::IncidentNotificationTemplateType> =
                     None;
-                let mut type_: Option<crate::datadogV2::model::IncidentTypeType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -114,11 +124,9 @@ impl<'de> Deserialize<'de> for IncidentTypeObject {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::IncidentTypeType::UnparsedObject(
-                                        _type_,
-                                    ) => {
+                                    crate::datadogV2::model::IncidentNotificationTemplateType::UnparsedObject(_type_) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
@@ -133,7 +141,7 @@ impl<'de> Deserialize<'de> for IncidentTypeObject {
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = IncidentTypeObject {
+                let content = IncidentNotificationTemplateResponseData {
                     attributes,
                     id,
                     relationships,
@@ -146,6 +154,6 @@ impl<'de> Deserialize<'de> for IncidentTypeObject {
             }
         }
 
-        deserializer.deserialize_any(IncidentTypeObjectVisitor)
+        deserializer.deserialize_any(IncidentNotificationTemplateResponseDataVisitor)
     }
 }
