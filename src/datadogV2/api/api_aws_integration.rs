@@ -6,7 +6,6 @@ use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
 };
-use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
@@ -187,14 +186,6 @@ impl AWSIntegrationAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_aws_account";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.create_aws_account' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -347,14 +338,6 @@ impl AWSIntegrationAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_new_aws_external_id";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.create_new_aws_external_id' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -452,14 +435,6 @@ impl AWSIntegrationAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteAWSAccountError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_aws_account";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.delete_aws_account' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -563,14 +538,6 @@ impl AWSIntegrationAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_aws_account";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.get_aws_account' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -788,14 +755,6 @@ impl AWSIntegrationAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_aws_accounts";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_aws_accounts' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         // unbox and build optional parameters
         let aws_account_id = params.aws_account_id;
@@ -910,14 +869,6 @@ impl AWSIntegrationAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_aws_namespaces";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_aws_namespaces' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -1029,14 +980,6 @@ impl AWSIntegrationAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_aws_account";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.update_aws_account' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 

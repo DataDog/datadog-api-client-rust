@@ -64,8 +64,7 @@ async fn main() {
         .traces_config(AWSTracesConfig::new()),
         AWSAccountType::ACCOUNT,
     ));
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateAWSAccount", true);
+    let configuration = datadog::Configuration::new();
     let api = AWSIntegrationAPI::with_config(configuration);
     let resp = api.create_aws_account(body).await;
     if let Ok(value) = resp {
