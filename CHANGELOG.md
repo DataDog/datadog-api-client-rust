@@ -1,5 +1,34 @@
 # CHANGELOG
 
+## 0.18.0/2025-09-09
+
+### Added
+* Add Incident Notification Template Public Docs [#897](https://github.com/DataDog/datadog-api-client-rust/pull/897)
+* Add Cross Org API to Open API specs [#896](https://github.com/DataDog/datadog-api-client-rust/pull/896)
+* Update Get All Notification Rules API docs to include pagination, sorting, and filtering params [#894](https://github.com/DataDog/datadog-api-client-rust/pull/894)
+* Add readonly ID of synthetics test steps [#891](https://github.com/DataDog/datadog-api-client-rust/pull/891)
+* Create Cloud SIEM histsignals endpoints [#890](https://github.com/DataDog/datadog-api-client-rust/pull/890)
+* Security Monitoring - Validation Endpoint for Suppressions [#887](https://github.com/DataDog/datadog-api-client-rust/pull/887)
+* Security Monitoring - Related Suppressions for a Rule [#884](https://github.com/DataDog/datadog-api-client-rust/pull/884)
+* Extend Widget time schema with support for hide_incomplete_cost_data [#874](https://github.com/DataDog/datadog-api-client-rust/pull/874)
+* Add SDS rule `should_save_match` field [#872](https://github.com/DataDog/datadog-api-client-rust/pull/872)
+* Add spec for Agentless GetAwsScanOptions [#869](https://github.com/DataDog/datadog-api-client-rust/pull/869)
+* Add Cross Org API to Open API specs [#867](https://github.com/DataDog/datadog-api-client-rust/pull/867)
+* Add DNAP Spark Pod Autosizing service to API client [#863](https://github.com/DataDog/datadog-api-client-rust/pull/863)
+* Add version parameter to synthetic test trigger ci endpoint [#862](https://github.com/DataDog/datadog-api-client-rust/pull/862)
+* Document Error Tracking public APIs [#859](https://github.com/DataDog/datadog-api-client-rust/pull/859)
+* Add docs for 404 not found error in cost-onboarding-api [#854](https://github.com/DataDog/datadog-api-client-rust/pull/854)
+* Adds async Scorecard outcomes batch update endpoint [#844](https://github.com/DataDog/datadog-api-client-rust/pull/844)
+
+### Fixed
+* Security Monitoring - Fix payload of Validation Endpoint for Suppressions [#892](https://github.com/DataDog/datadog-api-client-rust/pull/892)
+* [CCA-938][CCC-883] Audit existing CCM endpoints in OpenAPI spec [#849](https://github.com/DataDog/datadog-api-client-rust/pull/849)
+* Add enum Dataset type to Dataset API spec [#847](https://github.com/DataDog/datadog-api-client-rust/pull/847)
+
+### Changed
+* Update public cost permissions [#871](https://github.com/DataDog/datadog-api-client-rust/pull/871)
+* Add Product Scales support to RUM v2 Applications API [#852](https://github.com/DataDog/datadog-api-client-rust/pull/852)
+
 ## 0.17.0/2025-08-12
 
 ### Added
