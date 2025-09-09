@@ -77,8 +77,7 @@ async fn main() {
                 AWSAccountType::ACCOUNT,
             ),
         );
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateAWSAccount", true);
+    let configuration = datadog::Configuration::new();
     let api = AWSIntegrationAPI::with_config(configuration);
     let resp = api
         .update_aws_account(aws_account_v2_data_id.clone(), body)

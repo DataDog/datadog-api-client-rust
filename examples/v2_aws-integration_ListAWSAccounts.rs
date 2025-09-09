@@ -5,8 +5,7 @@ use datadog_api_client::datadogV2::api_aws_integration::ListAWSAccountsOptionalP
 
 #[tokio::main]
 async fn main() {
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListAWSAccounts", true);
+    let configuration = datadog::Configuration::new();
     let api = AWSIntegrationAPI::with_config(configuration);
     let resp = api
         .list_aws_accounts(ListAWSAccountsOptionalParams::default())

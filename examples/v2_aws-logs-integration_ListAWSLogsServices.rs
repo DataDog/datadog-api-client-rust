@@ -5,8 +5,7 @@ use datadog_api_client::datadogV2::api_aws_logs_integration::AWSLogsIntegrationA
 
 #[tokio::main]
 async fn main() {
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListAWSLogsServices", true);
+    let configuration = datadog::Configuration::new();
     let api = AWSLogsIntegrationAPI::with_config(configuration);
     let resp = api.list_aws_logs_services().await;
     if let Ok(value) = resp {
