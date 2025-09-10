@@ -30,15 +30,19 @@ pub struct GCPAccount {
     /// where `$CLIENT_EMAIL` is the email found in your JSON service account key.
     #[serde(rename = "client_x509_cert_url")]
     pub client_x509_cert_url: Option<String>,
-    /// Limit the Cloud Run revisions that are pulled into Datadog by using tags.
+    /// List of filters to limit the Cloud Run revisions that are pulled into Datadog by using tags.
     /// Only Cloud Run revision resources that apply to specified filters are imported into Datadog.
+    /// **Note:** This field is deprecated. Instead, use `monitored_resource_configs` with `type=cloud_run_revision`
+    #[deprecated]
     #[serde(rename = "cloud_run_revision_filters")]
     pub cloud_run_revision_filters: Option<Vec<String>>,
     /// An array of errors.
     #[serde(rename = "errors")]
     pub errors: Option<Vec<String>>,
-    /// Limit the GCE instances that are pulled into Datadog by using tags.
-    /// Only hosts that match one of the defined tags are imported into Datadog.
+    /// A comma-separated list of filters to limit the VM instances that are pulled into Datadog by using tags.
+    /// Only VM instance resources that apply to specified filters are imported into Datadog.
+    /// **Note:** This field is deprecated. Instead, use `monitored_resource_configs` with `type=gce_instance`
+    #[deprecated]
     #[serde(rename = "host_filters")]
     pub host_filters: Option<String>,
     /// When enabled, Datadog will activate the Cloud Security Monitoring product for this service account. Note: This requires resource_collection_enabled to be set to true.
@@ -50,6 +54,10 @@ pub struct GCPAccount {
     /// When enabled, Datadog will attempt to collect Security Command Center Findings. Note: This requires additional permissions on the service account.
     #[serde(rename = "is_security_command_center_enabled")]
     pub is_security_command_center_enabled: Option<bool>,
+    /// Configurations for GCP monitored resources.
+    #[serde(rename = "monitored_resource_configs")]
+    pub monitored_resource_configs:
+        Option<Vec<crate::datadogV1::model::GCPMonitoredResourceConfig>>,
     /// Your private key name found in your JSON service account key.
     #[serde(rename = "private_key")]
     pub private_key: Option<String>,
@@ -77,6 +85,7 @@ pub struct GCPAccount {
 
 impl GCPAccount {
     pub fn new() -> GCPAccount {
+        #[allow(deprecated)]
         GCPAccount {
             auth_provider_x509_cert_url: None,
             auth_uri: None,
@@ -90,6 +99,7 @@ impl GCPAccount {
             is_cspm_enabled: None,
             is_resource_change_collection_enabled: None,
             is_security_command_center_enabled: None,
+            monitored_resource_configs: None,
             private_key: None,
             private_key_id: None,
             project_id: None,
@@ -101,91 +111,118 @@ impl GCPAccount {
         }
     }
 
+    #[allow(deprecated)]
     pub fn auth_provider_x509_cert_url(mut self, value: String) -> Self {
         self.auth_provider_x509_cert_url = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn auth_uri(mut self, value: String) -> Self {
         self.auth_uri = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn automute(mut self, value: bool) -> Self {
         self.automute = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn client_email(mut self, value: String) -> Self {
         self.client_email = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn client_id(mut self, value: String) -> Self {
         self.client_id = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn client_x509_cert_url(mut self, value: String) -> Self {
         self.client_x509_cert_url = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn cloud_run_revision_filters(mut self, value: Vec<String>) -> Self {
         self.cloud_run_revision_filters = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn errors(mut self, value: Vec<String>) -> Self {
         self.errors = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn host_filters(mut self, value: String) -> Self {
         self.host_filters = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn is_cspm_enabled(mut self, value: bool) -> Self {
         self.is_cspm_enabled = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn is_resource_change_collection_enabled(mut self, value: bool) -> Self {
         self.is_resource_change_collection_enabled = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn is_security_command_center_enabled(mut self, value: bool) -> Self {
         self.is_security_command_center_enabled = Some(value);
         self
     }
 
+    #[allow(deprecated)]
+    pub fn monitored_resource_configs(
+        mut self,
+        value: Vec<crate::datadogV1::model::GCPMonitoredResourceConfig>,
+    ) -> Self {
+        self.monitored_resource_configs = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn private_key(mut self, value: String) -> Self {
         self.private_key = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn private_key_id(mut self, value: String) -> Self {
         self.private_key_id = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn project_id(mut self, value: String) -> Self {
         self.project_id = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn resource_collection_enabled(mut self, value: bool) -> Self {
         self.resource_collection_enabled = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn token_uri(mut self, value: String) -> Self {
         self.token_uri = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn type_(mut self, value: String) -> Self {
         self.type_ = Some(value);
         self
@@ -235,6 +272,9 @@ impl<'de> Deserialize<'de> for GCPAccount {
                 let mut is_cspm_enabled: Option<bool> = None;
                 let mut is_resource_change_collection_enabled: Option<bool> = None;
                 let mut is_security_command_center_enabled: Option<bool> = None;
+                let mut monitored_resource_configs: Option<
+                    Vec<crate::datadogV1::model::GCPMonitoredResourceConfig>,
+                > = None;
                 let mut private_key: Option<String> = None;
                 let mut private_key_id: Option<String> = None;
                 let mut project_id: Option<String> = None;
@@ -329,6 +369,13 @@ impl<'de> Deserialize<'de> for GCPAccount {
                             is_security_command_center_enabled =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "monitored_resource_configs" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            monitored_resource_configs =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "private_key" => {
                             if v.is_null() {
                                 continue;
@@ -376,6 +423,7 @@ impl<'de> Deserialize<'de> for GCPAccount {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = GCPAccount {
                     auth_provider_x509_cert_url,
                     auth_uri,
@@ -389,6 +437,7 @@ impl<'de> Deserialize<'de> for GCPAccount {
                     is_cspm_enabled,
                     is_resource_change_collection_enabled,
                     is_security_command_center_enabled,
+                    monitored_resource_configs,
                     private_key,
                     private_key_id,
                     project_id,

@@ -22,9 +22,14 @@ pub struct GCPSTSServiceAccountAttributes {
     pub client_email: Option<String>,
     /// List of filters to limit the Cloud Run revisions that are pulled into Datadog by using tags.
     /// Only Cloud Run revision resources that apply to specified filters are imported into Datadog.
+    /// **Note:** This field is deprecated. Instead, use `monitored_resource_configs` with `type=cloud_run_revision`
+    #[deprecated]
     #[serde(rename = "cloud_run_revision_filters")]
     pub cloud_run_revision_filters: Option<Vec<String>>,
-    /// Your Host Filters.
+    /// List of filters to limit the VM instances that are pulled into Datadog by using tags.
+    /// Only VM instance resources that apply to specified filters are imported into Datadog.
+    /// **Note:** This field is deprecated. Instead, use `monitored_resource_configs` with `type=gce_instance`
+    #[deprecated]
     #[serde(rename = "host_filters")]
     pub host_filters: Option<Vec<String>>,
     /// When enabled, Datadog will activate the Cloud Security Monitoring product for this service account. Note: This requires resource_collection_enabled to be set to true.
@@ -42,6 +47,10 @@ pub struct GCPSTSServiceAccountAttributes {
     /// Configurations for GCP metric namespaces.
     #[serde(rename = "metric_namespace_configs")]
     pub metric_namespace_configs: Option<Vec<crate::datadogV2::model::GCPMetricNamespaceConfig>>,
+    /// Configurations for GCP monitored resources.
+    #[serde(rename = "monitored_resource_configs")]
+    pub monitored_resource_configs:
+        Option<Vec<crate::datadogV2::model::GCPMonitoredResourceConfig>>,
     /// When enabled, Datadog scans for all resources in your GCP environment.
     #[serde(rename = "resource_collection_enabled")]
     pub resource_collection_enabled: Option<bool>,
@@ -54,6 +63,7 @@ pub struct GCPSTSServiceAccountAttributes {
 
 impl GCPSTSServiceAccountAttributes {
     pub fn new() -> GCPSTSServiceAccountAttributes {
+        #[allow(deprecated)]
         GCPSTSServiceAccountAttributes {
             account_tags: None,
             automute: None,
@@ -65,57 +75,68 @@ impl GCPSTSServiceAccountAttributes {
             is_resource_change_collection_enabled: None,
             is_security_command_center_enabled: None,
             metric_namespace_configs: None,
+            monitored_resource_configs: None,
             resource_collection_enabled: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
+    #[allow(deprecated)]
     pub fn account_tags(mut self, value: Vec<String>) -> Self {
         self.account_tags = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn automute(mut self, value: bool) -> Self {
         self.automute = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn client_email(mut self, value: String) -> Self {
         self.client_email = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn cloud_run_revision_filters(mut self, value: Vec<String>) -> Self {
         self.cloud_run_revision_filters = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn host_filters(mut self, value: Vec<String>) -> Self {
         self.host_filters = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn is_cspm_enabled(mut self, value: bool) -> Self {
         self.is_cspm_enabled = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn is_per_project_quota_enabled(mut self, value: bool) -> Self {
         self.is_per_project_quota_enabled = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn is_resource_change_collection_enabled(mut self, value: bool) -> Self {
         self.is_resource_change_collection_enabled = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn is_security_command_center_enabled(mut self, value: bool) -> Self {
         self.is_security_command_center_enabled = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn metric_namespace_configs(
         mut self,
         value: Vec<crate::datadogV2::model::GCPMetricNamespaceConfig>,
@@ -124,6 +145,16 @@ impl GCPSTSServiceAccountAttributes {
         self
     }
 
+    #[allow(deprecated)]
+    pub fn monitored_resource_configs(
+        mut self,
+        value: Vec<crate::datadogV2::model::GCPMonitoredResourceConfig>,
+    ) -> Self {
+        self.monitored_resource_configs = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn resource_collection_enabled(mut self, value: bool) -> Self {
         self.resource_collection_enabled = Some(value);
         self
@@ -172,6 +203,9 @@ impl<'de> Deserialize<'de> for GCPSTSServiceAccountAttributes {
                 let mut is_security_command_center_enabled: Option<bool> = None;
                 let mut metric_namespace_configs: Option<
                     Vec<crate::datadogV2::model::GCPMetricNamespaceConfig>,
+                > = None;
+                let mut monitored_resource_configs: Option<
+                    Vec<crate::datadogV2::model::GCPMonitoredResourceConfig>,
                 > = None;
                 let mut resource_collection_enabled: Option<bool> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -251,6 +285,13 @@ impl<'de> Deserialize<'de> for GCPSTSServiceAccountAttributes {
                             metric_namespace_configs =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "monitored_resource_configs" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            monitored_resource_configs =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "resource_collection_enabled" => {
                             if v.is_null() {
                                 continue;
@@ -266,6 +307,7 @@ impl<'de> Deserialize<'de> for GCPSTSServiceAccountAttributes {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = GCPSTSServiceAccountAttributes {
                     account_tags,
                     automute,
@@ -277,6 +319,7 @@ impl<'de> Deserialize<'de> for GCPSTSServiceAccountAttributes {
                     is_resource_change_collection_enabled,
                     is_security_command_center_enabled,
                     metric_namespace_configs,
+                    monitored_resource_configs,
                     resource_collection_enabled,
                     additional_properties,
                     _unparsed,
