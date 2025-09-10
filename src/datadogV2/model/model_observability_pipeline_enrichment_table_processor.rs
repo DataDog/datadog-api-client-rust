@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineEnrichmentTableProcessor {
+    /// The processor passes through all events if it is set to `false`. Defaults to `true`.
+    #[serde(rename = "enabled")]
+    pub enabled: Option<bool>,
     /// Defines a static enrichment table loaded from a CSV file.
     #[serde(rename = "file")]
     pub file: Option<crate::datadogV2::model::ObservabilityPipelineEnrichmentTableFile>,
@@ -48,6 +51,7 @@ impl ObservabilityPipelineEnrichmentTableProcessor {
         type_: crate::datadogV2::model::ObservabilityPipelineEnrichmentTableProcessorType,
     ) -> ObservabilityPipelineEnrichmentTableProcessor {
         ObservabilityPipelineEnrichmentTableProcessor {
+            enabled: None,
             file: None,
             geoip: None,
             id,
@@ -58,6 +62,11 @@ impl ObservabilityPipelineEnrichmentTableProcessor {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn enabled(mut self, value: bool) -> Self {
+        self.enabled = Some(value);
+        self
     }
 
     pub fn file(
@@ -102,6 +111,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineEnrichmentTableProcessor {
             where
                 M: MapAccess<'a>,
             {
+                let mut enabled: Option<bool> = None;
                 let mut file: Option<
                     crate::datadogV2::model::ObservabilityPipelineEnrichmentTableFile,
                 > = None;
@@ -123,6 +133,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineEnrichmentTableProcessor {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "file" => {
                             if v.is_null() {
                                 continue;
@@ -172,6 +188,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineEnrichmentTableProcessor {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineEnrichmentTableProcessor {
+                    enabled,
                     file,
                     geoip,
                     id,

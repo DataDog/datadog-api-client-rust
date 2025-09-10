@@ -14,6 +14,9 @@ pub struct ObservabilityPipelineQuotaProcessor {
     /// If set to `true`, logs that matched the quota filter and sent after the quota has been met are dropped; only logs that did not match the filter query continue through the pipeline.
     #[serde(rename = "drop_events")]
     pub drop_events: bool,
+    /// The processor passes through all events if it is set to `false`. Defaults to `true`.
+    #[serde(rename = "enabled")]
+    pub enabled: Option<bool>,
     /// The unique identifier for this component. Used to reference this component in other parts of the pipeline (for example, as the `input` to downstream components).
     #[serde(rename = "id")]
     pub id: String,
@@ -69,6 +72,7 @@ impl ObservabilityPipelineQuotaProcessor {
     ) -> ObservabilityPipelineQuotaProcessor {
         ObservabilityPipelineQuotaProcessor {
             drop_events,
+            enabled: None,
             id,
             ignore_when_missing_partitions: None,
             include,
@@ -82,6 +86,11 @@ impl ObservabilityPipelineQuotaProcessor {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn enabled(mut self, value: bool) -> Self {
+        self.enabled = Some(value);
+        self
     }
 
     pub fn ignore_when_missing_partitions(mut self, value: bool) -> Self {
@@ -137,6 +146,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineQuotaProcessor {
                 M: MapAccess<'a>,
             {
                 let mut drop_events: Option<bool> = None;
+                let mut enabled: Option<bool> = None;
                 let mut id: Option<String> = None;
                 let mut ignore_when_missing_partitions: Option<bool> = None;
                 let mut include: Option<String> = None;
@@ -166,6 +176,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineQuotaProcessor {
                         "drop_events" => {
                             drop_events =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -246,6 +262,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineQuotaProcessor {
 
                 let content = ObservabilityPipelineQuotaProcessor {
                     drop_events,
+                    enabled,
                     id,
                     ignore_when_missing_partitions,
                     include,

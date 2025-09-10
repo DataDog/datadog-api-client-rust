@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineAddFieldsProcessor {
+    /// The processor passes through all events if it is set to `false`. Defaults to `true`.
+    #[serde(rename = "enabled")]
+    pub enabled: Option<bool>,
     /// A list of static fields (key-value pairs) that is added to each log event processed by this component.
     #[serde(rename = "fields")]
     pub fields: Vec<crate::datadogV2::model::ObservabilityPipelineFieldValue>,
@@ -42,6 +45,7 @@ impl ObservabilityPipelineAddFieldsProcessor {
         type_: crate::datadogV2::model::ObservabilityPipelineAddFieldsProcessorType,
     ) -> ObservabilityPipelineAddFieldsProcessor {
         ObservabilityPipelineAddFieldsProcessor {
+            enabled: None,
             fields,
             id,
             include,
@@ -50,6 +54,11 @@ impl ObservabilityPipelineAddFieldsProcessor {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn enabled(mut self, value: bool) -> Self {
+        self.enabled = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -78,6 +87,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAddFieldsProcessor {
             where
                 M: MapAccess<'a>,
             {
+                let mut enabled: Option<bool> = None;
                 let mut fields: Option<
                     Vec<crate::datadogV2::model::ObservabilityPipelineFieldValue>,
                 > = None;
@@ -95,6 +105,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAddFieldsProcessor {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "fields" => {
                             fields = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -132,6 +148,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAddFieldsProcessor {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineAddFieldsProcessor {
+                    enabled,
                     fields,
                     id,
                     include,

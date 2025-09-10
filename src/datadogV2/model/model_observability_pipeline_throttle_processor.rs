@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineThrottleProcessor {
+    /// The processor passes through all events if it is set to `false`. Defaults to `true`.
+    #[serde(rename = "enabled")]
+    pub enabled: Option<bool>,
     /// Optional list of fields used to group events before the threshold has been reached.
     #[serde(rename = "group_by")]
     pub group_by: Option<Vec<String>>,
@@ -49,6 +52,7 @@ impl ObservabilityPipelineThrottleProcessor {
         window: f64,
     ) -> ObservabilityPipelineThrottleProcessor {
         ObservabilityPipelineThrottleProcessor {
+            enabled: None,
             group_by: None,
             id,
             include,
@@ -59,6 +63,11 @@ impl ObservabilityPipelineThrottleProcessor {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn enabled(mut self, value: bool) -> Self {
+        self.enabled = Some(value);
+        self
     }
 
     pub fn group_by(mut self, value: Vec<String>) -> Self {
@@ -92,6 +101,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineThrottleProcessor {
             where
                 M: MapAccess<'a>,
             {
+                let mut enabled: Option<bool> = None;
                 let mut group_by: Option<Vec<String>> = None;
                 let mut id: Option<String> = None;
                 let mut include: Option<String> = None;
@@ -109,6 +119,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineThrottleProcessor {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "group_by" => {
                             if v.is_null() {
                                 continue;
@@ -156,6 +172,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineThrottleProcessor {
                 let window = window.ok_or_else(|| M::Error::missing_field("window"))?;
 
                 let content = ObservabilityPipelineThrottleProcessor {
+                    enabled,
                     group_by,
                     id,
                     include,

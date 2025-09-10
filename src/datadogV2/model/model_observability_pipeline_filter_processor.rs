@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineFilterProcessor {
+    /// The processor passes through all events if it is set to `false`. Defaults to `true`.
+    #[serde(rename = "enabled")]
+    pub enabled: Option<bool>,
     /// The unique identifier for this component. Used to reference this component in other parts of the pipeline (for example, as the `input` to downstream components).
     #[serde(rename = "id")]
     pub id: String,
@@ -38,6 +41,7 @@ impl ObservabilityPipelineFilterProcessor {
         type_: crate::datadogV2::model::ObservabilityPipelineFilterProcessorType,
     ) -> ObservabilityPipelineFilterProcessor {
         ObservabilityPipelineFilterProcessor {
+            enabled: None,
             id,
             include,
             inputs,
@@ -45,6 +49,11 @@ impl ObservabilityPipelineFilterProcessor {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn enabled(mut self, value: bool) -> Self {
+        self.enabled = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -73,6 +82,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineFilterProcessor {
             where
                 M: MapAccess<'a>,
             {
+                let mut enabled: Option<bool> = None;
                 let mut id: Option<String> = None;
                 let mut include: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
@@ -87,6 +97,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineFilterProcessor {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -120,6 +136,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineFilterProcessor {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineFilterProcessor {
+                    enabled,
                     id,
                     include,
                     inputs,

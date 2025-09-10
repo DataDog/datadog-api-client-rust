@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineRemoveFieldsProcessor {
+    /// The processor passes through all events if it is set to `false`. Defaults to `true`.
+    #[serde(rename = "enabled")]
+    pub enabled: Option<bool>,
     /// A list of field names to be removed from each log event.
     #[serde(rename = "fields")]
     pub fields: Vec<String>,
@@ -42,6 +45,7 @@ impl ObservabilityPipelineRemoveFieldsProcessor {
         type_: crate::datadogV2::model::ObservabilityPipelineRemoveFieldsProcessorType,
     ) -> ObservabilityPipelineRemoveFieldsProcessor {
         ObservabilityPipelineRemoveFieldsProcessor {
+            enabled: None,
             fields,
             id,
             include,
@@ -50,6 +54,11 @@ impl ObservabilityPipelineRemoveFieldsProcessor {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn enabled(mut self, value: bool) -> Self {
+        self.enabled = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -78,6 +87,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineRemoveFieldsProcessor {
             where
                 M: MapAccess<'a>,
             {
+                let mut enabled: Option<bool> = None;
                 let mut fields: Option<Vec<String>> = None;
                 let mut id: Option<String> = None;
                 let mut include: Option<String> = None;
@@ -93,6 +103,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineRemoveFieldsProcessor {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "fields" => {
                             fields = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -130,6 +146,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineRemoveFieldsProcessor {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineRemoveFieldsProcessor {
+                    enabled,
                     fields,
                     id,
                     include,

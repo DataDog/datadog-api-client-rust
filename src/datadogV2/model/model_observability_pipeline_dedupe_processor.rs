@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineDedupeProcessor {
+    /// The processor passes through all events if it is set to `false`. Defaults to `true`.
+    #[serde(rename = "enabled")]
+    pub enabled: Option<bool>,
     /// A list of log field paths to check for duplicates.
     #[serde(rename = "fields")]
     pub fields: Vec<String>,
@@ -46,6 +49,7 @@ impl ObservabilityPipelineDedupeProcessor {
         type_: crate::datadogV2::model::ObservabilityPipelineDedupeProcessorType,
     ) -> ObservabilityPipelineDedupeProcessor {
         ObservabilityPipelineDedupeProcessor {
+            enabled: None,
             fields,
             id,
             include,
@@ -55,6 +59,11 @@ impl ObservabilityPipelineDedupeProcessor {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn enabled(mut self, value: bool) -> Self {
+        self.enabled = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -83,6 +92,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDedupeProcessor {
             where
                 M: MapAccess<'a>,
             {
+                let mut enabled: Option<bool> = None;
                 let mut fields: Option<Vec<String>> = None;
                 let mut id: Option<String> = None;
                 let mut include: Option<String> = None;
@@ -101,6 +111,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDedupeProcessor {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "fields" => {
                             fields = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -150,6 +166,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDedupeProcessor {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineDedupeProcessor {
+                    enabled,
                     fields,
                     id,
                     include,

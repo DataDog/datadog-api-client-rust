@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineReduceProcessor {
+    /// The processor passes through all events if it is set to `false`. Defaults to `true`.
+    #[serde(rename = "enabled")]
+    pub enabled: Option<bool>,
     /// A list of fields used to group log events for merging.
     #[serde(rename = "group_by")]
     pub group_by: Vec<String>,
@@ -49,6 +52,7 @@ impl ObservabilityPipelineReduceProcessor {
         type_: crate::datadogV2::model::ObservabilityPipelineReduceProcessorType,
     ) -> ObservabilityPipelineReduceProcessor {
         ObservabilityPipelineReduceProcessor {
+            enabled: None,
             group_by,
             id,
             include,
@@ -58,6 +62,11 @@ impl ObservabilityPipelineReduceProcessor {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn enabled(mut self, value: bool) -> Self {
+        self.enabled = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -86,6 +95,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineReduceProcessor {
             where
                 M: MapAccess<'a>,
             {
+                let mut enabled: Option<bool> = None;
                 let mut group_by: Option<Vec<String>> = None;
                 let mut id: Option<String> = None;
                 let mut include: Option<String> = None;
@@ -104,6 +114,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineReduceProcessor {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "group_by" => {
                             group_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -147,6 +163,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineReduceProcessor {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineReduceProcessor {
+                    enabled,
                     group_by,
                     id,
                     include,
