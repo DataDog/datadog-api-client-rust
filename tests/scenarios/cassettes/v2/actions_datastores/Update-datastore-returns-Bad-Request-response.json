@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{},\"id\":\"invalid-uuid\",\"type\":\"datastores\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "patch",
+        "uri": "https://api.datadoghq.com/api/v2/actions-datastores/invalid-uuid"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"status\":\"400\",\"id\":\"22fc6f64-67c9-44ad-b6e0-094dd77c7690\",\"title\":\"invalid path parameter\",\"detail\":\"invalid datastoreId format in path\",\"source\":{\"parameter\":\"datastoreId\"}}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Fri, 05 Sep 2025 22:54:11 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
