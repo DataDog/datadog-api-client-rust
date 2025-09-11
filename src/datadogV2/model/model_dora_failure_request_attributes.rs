@@ -21,7 +21,7 @@ pub struct DORAFailureRequestAttributes {
     /// Environment name that was impacted by the failure.
     #[serde(rename = "env")]
     pub env: Option<String>,
-    /// Unix timestamp when the failure finished. It must be in nanoseconds, milliseconds, or seconds, and it should not be older than 1 hour.
+    /// Unix timestamp when the failure finished. It must be in nanoseconds, milliseconds, or seconds.
     #[serde(rename = "finished_at")]
     pub finished_at: Option<i64>,
     /// Git info for DORA Metrics events.
