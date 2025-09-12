@@ -25488,7 +25488,24 @@ fn test_v2_list_org_connections(world: &mut DatadogWorld, _parameters: &HashMap<
         .v2_api_org_connections
         .as_ref()
         .expect("api instance not found");
-    let response = match block_on(api.list_org_connections_with_http_info()) {
+    let sink_org_id = _parameters
+        .get("sink_org_id")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let source_org_id = _parameters
+        .get("source_org_id")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let limit = _parameters
+        .get("limit")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let offset = _parameters
+        .get("offset")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_org_connections::ListOrgConnectionsOptionalParams::default();
+    params.sink_org_id = sink_org_id;
+    params.source_org_id = source_org_id;
+    params.limit = limit;
+    params.offset = offset;
+    let response = match block_on(api.list_org_connections_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {

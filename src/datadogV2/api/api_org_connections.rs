@@ -10,6 +10,43 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
+/// ListOrgConnectionsOptionalParams is a struct for passing parameters to the method [`OrgConnectionsAPI::list_org_connections`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListOrgConnectionsOptionalParams {
+    /// The Org ID of the sink org.
+    pub sink_org_id: Option<String>,
+    /// The Org ID of the source org.
+    pub source_org_id: Option<String>,
+    /// The limit of number of entries you want to return. Default is 1000.
+    pub limit: Option<i64>,
+    /// The pagination offset which you want to query from. Default is 0.
+    pub offset: Option<i64>,
+}
+
+impl ListOrgConnectionsOptionalParams {
+    /// The Org ID of the sink org.
+    pub fn sink_org_id(mut self, value: String) -> Self {
+        self.sink_org_id = Some(value);
+        self
+    }
+    /// The Org ID of the source org.
+    pub fn source_org_id(mut self, value: String) -> Self {
+        self.source_org_id = Some(value);
+        self
+    }
+    /// The limit of number of entries you want to return. Default is 1000.
+    pub fn limit(mut self, value: i64) -> Self {
+        self.limit = Some(value);
+        self
+    }
+    /// The pagination offset which you want to query from. Default is 0.
+    pub fn offset(mut self, value: i64) -> Self {
+        self.offset = Some(value);
+        self
+    }
+}
+
 /// CreateOrgConnectionsError is a struct for typed errors of method [`OrgConnectionsAPI::create_org_connections`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -355,11 +392,12 @@ impl OrgConnectionsAPI {
     /// Returns a list of org connections.
     pub async fn list_org_connections(
         &self,
+        params: ListOrgConnectionsOptionalParams,
     ) -> Result<
         crate::datadogV2::model::OrgConnectionListResponse,
         datadog::Error<ListOrgConnectionsError>,
     > {
-        match self.list_org_connections_with_http_info().await {
+        match self.list_org_connections_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
@@ -376,12 +414,19 @@ impl OrgConnectionsAPI {
     /// Returns a list of org connections.
     pub async fn list_org_connections_with_http_info(
         &self,
+        params: ListOrgConnectionsOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::OrgConnectionListResponse>,
         datadog::Error<ListOrgConnectionsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_org_connections";
+
+        // unbox and build optional parameters
+        let sink_org_id = params.sink_org_id;
+        let source_org_id = params.source_org_id;
+        let limit = params.limit;
+        let offset = params.offset;
 
         let local_client = &self.client;
 
@@ -391,6 +436,23 @@ impl OrgConnectionsAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = sink_org_id {
+            local_req_builder =
+                local_req_builder.query(&[("sink_org_id", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = source_org_id {
+            local_req_builder =
+                local_req_builder.query(&[("source_org_id", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = limit {
+            local_req_builder =
+                local_req_builder.query(&[("limit", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = offset {
+            local_req_builder =
+                local_req_builder.query(&[("offset", &local_query_param.to_string())]);
+        };
 
         // build headers
         let mut headers = HeaderMap::new();
