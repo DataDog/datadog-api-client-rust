@@ -8,10 +8,10 @@ use datadog_api_client::datadogV2::model::AzureUCConfigPatchRequestType;
 
 #[tokio::main]
 async fn main() {
-    let body = AzureUCConfigPatchRequest::new(AzureUCConfigPatchData::new(
-        AzureUCConfigPatchRequestAttributes::new(true),
-        AzureUCConfigPatchRequestType::AZURE_UC_CONFIG_PATCH_REQUEST,
-    ));
+    let body = AzureUCConfigPatchRequest::new(
+        AzureUCConfigPatchData::new(AzureUCConfigPatchRequestType::AZURE_UC_CONFIG_PATCH_REQUEST)
+            .attributes(AzureUCConfigPatchRequestAttributes::new(true)),
+    );
     let configuration = datadog::Configuration::new();
     let api = CloudCostManagementAPI::with_config(configuration);
     let resp = api.update_cost_azure_uc_configs(100, body).await;

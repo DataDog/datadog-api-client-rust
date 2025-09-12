@@ -1,4 +1,4 @@
-// List Cloud Cost Management GCP Usage Cost configs returns "OK" response
+// List Google Cloud Usage Cost configs returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_cloud_cost_management::CloudCostManagementAPI;
 

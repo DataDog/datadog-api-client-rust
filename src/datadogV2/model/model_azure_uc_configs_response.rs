@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct AzureUCConfigsResponse {
     /// An Azure config pair.
     #[serde(rename = "data")]
-    pub data: Option<Vec<crate::datadogV2::model::AzureUCConfigPair>>,
+    pub data: Vec<crate::datadogV2::model::AzureUCConfigPair>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -22,17 +22,12 @@ pub struct AzureUCConfigsResponse {
 }
 
 impl AzureUCConfigsResponse {
-    pub fn new() -> AzureUCConfigsResponse {
+    pub fn new(data: Vec<crate::datadogV2::model::AzureUCConfigPair>) -> AzureUCConfigsResponse {
         AzureUCConfigsResponse {
-            data: None,
+            data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn data(mut self, value: Vec<crate::datadogV2::model::AzureUCConfigPair>) -> Self {
-        self.data = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -41,12 +36,6 @@ impl AzureUCConfigsResponse {
     ) -> Self {
         self.additional_properties = value;
         self
-    }
-}
-
-impl Default for AzureUCConfigsResponse {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
@@ -77,9 +66,6 @@ impl<'de> Deserialize<'de> for AzureUCConfigsResponse {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "data" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -89,6 +75,7 @@ impl<'de> Deserialize<'de> for AzureUCConfigsResponse {
                         }
                     }
                 }
+                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
                 let content = AzureUCConfigsResponse {
                     data,

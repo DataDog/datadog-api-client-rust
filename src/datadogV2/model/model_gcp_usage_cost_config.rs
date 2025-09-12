@@ -6,18 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// GCP Usage Cost config.
+/// Google Cloud Usage Cost config.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct GCPUsageCostConfig {
-    /// Attributes for a GCP Usage Cost config.
+    /// Attributes for a Google Cloud Usage Cost config.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::GCPUsageCostConfigAttributes,
-    /// The ID of the GCP Usage Cost config.
+    /// The ID of the Google Cloud Usage Cost config.
     #[serde(rename = "id")]
     pub id: Option<String>,
-    /// Type of GCP Usage Cost config.
+    /// Type of Google Cloud Usage Cost config.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::GCPUsageCostConfigType,
     #[serde(flatten)]
