@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SecurityMonitoringRuleConvertResponse {
+    /// the ID of the rule.
+    #[serde(rename = "ruleId")]
+    pub rule_id: Option<String>,
     /// Terraform string as a result of converting the rule from JSON.
     #[serde(rename = "terraformContent")]
     pub terraform_content: Option<String>,
@@ -24,10 +27,16 @@ pub struct SecurityMonitoringRuleConvertResponse {
 impl SecurityMonitoringRuleConvertResponse {
     pub fn new() -> SecurityMonitoringRuleConvertResponse {
         SecurityMonitoringRuleConvertResponse {
+            rule_id: None,
             terraform_content: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn rule_id(mut self, value: String) -> Self {
+        self.rule_id = Some(value);
+        self
     }
 
     pub fn terraform_content(mut self, value: String) -> Self {
@@ -67,6 +76,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleConvertResponse {
             where
                 M: MapAccess<'a>,
             {
+                let mut rule_id: Option<String> = None;
                 let mut terraform_content: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -76,6 +86,12 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleConvertResponse {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "ruleId" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rule_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "terraformContent" => {
                             if v.is_null() {
                                 continue;
@@ -92,6 +108,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleConvertResponse {
                 }
 
                 let content = SecurityMonitoringRuleConvertResponse {
+                    rule_id,
                     terraform_content,
                     additional_properties,
                     _unparsed,
