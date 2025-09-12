@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct AzureUCConfigPatchData {
     /// Attributes for Azure config Patch Request.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::AzureUCConfigPatchRequestAttributes,
+    pub attributes: Option<crate::datadogV2::model::AzureUCConfigPatchRequestAttributes>,
     /// Type of Azure config Patch Request.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::AzureUCConfigPatchRequestType,
@@ -26,15 +26,22 @@ pub struct AzureUCConfigPatchData {
 
 impl AzureUCConfigPatchData {
     pub fn new(
-        attributes: crate::datadogV2::model::AzureUCConfigPatchRequestAttributes,
         type_: crate::datadogV2::model::AzureUCConfigPatchRequestType,
     ) -> AzureUCConfigPatchData {
         AzureUCConfigPatchData {
-            attributes,
+            attributes: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn attributes(
+        mut self,
+        value: crate::datadogV2::model::AzureUCConfigPatchRequestAttributes,
+    ) -> Self {
+        self.attributes = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -77,6 +84,9 @@ impl<'de> Deserialize<'de> for AzureUCConfigPatchData {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "attributes" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
@@ -97,7 +107,6 @@ impl<'de> Deserialize<'de> for AzureUCConfigPatchData {
                         }
                     }
                 }
-                let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = AzureUCConfigPatchData {

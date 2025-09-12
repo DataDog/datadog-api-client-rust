@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AzureUCConfigPostRequestAttributes {
-    /// The tenant ID of the azure account.
+    /// The tenant ID of the Azure account.
     #[serde(rename = "account_id")]
     pub account_id: String,
     /// Bill config.
@@ -20,12 +20,9 @@ pub struct AzureUCConfigPostRequestAttributes {
     /// Bill config.
     #[serde(rename = "amortized_bill_config")]
     pub amortized_bill_config: crate::datadogV2::model::BillConfig,
-    /// The client ID of the azure account.
+    /// The client ID of the Azure account.
     #[serde(rename = "client_id")]
     pub client_id: String,
-    /// Whether or not the Cloud Cost Management account is enabled.
-    #[serde(rename = "is_enabled")]
-    pub is_enabled: Option<bool>,
     /// The scope of your observed subscription.
     #[serde(rename = "scope")]
     pub scope: String,
@@ -49,16 +46,10 @@ impl AzureUCConfigPostRequestAttributes {
             actual_bill_config,
             amortized_bill_config,
             client_id,
-            is_enabled: None,
             scope,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn is_enabled(mut self, value: bool) -> Self {
-        self.is_enabled = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -91,7 +82,6 @@ impl<'de> Deserialize<'de> for AzureUCConfigPostRequestAttributes {
                 let mut actual_bill_config: Option<crate::datadogV2::model::BillConfig> = None;
                 let mut amortized_bill_config: Option<crate::datadogV2::model::BillConfig> = None;
                 let mut client_id: Option<String> = None;
-                let mut is_enabled: Option<bool> = None;
                 let mut scope: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -114,12 +104,6 @@ impl<'de> Deserialize<'de> for AzureUCConfigPostRequestAttributes {
                         }
                         "client_id" => {
                             client_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "is_enabled" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            is_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "scope" => {
                             scope = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -144,7 +128,6 @@ impl<'de> Deserialize<'de> for AzureUCConfigPostRequestAttributes {
                     actual_bill_config,
                     amortized_bill_config,
                     client_id,
-                    is_enabled,
                     scope,
                     additional_properties,
                     _unparsed,

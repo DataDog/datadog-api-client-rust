@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// List of GCP Usage Cost configs.
+/// List of Google Cloud Usage Cost configs.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct GCPUsageCostConfigsResponse {
-    /// A GCP Usage Cost config.
+    /// A Google Cloud Usage Cost config.
     #[serde(rename = "data")]
-    pub data: Option<Vec<crate::datadogV2::model::GCPUsageCostConfig>>,
+    pub data: Vec<crate::datadogV2::model::GCPUsageCostConfig>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -22,17 +22,14 @@ pub struct GCPUsageCostConfigsResponse {
 }
 
 impl GCPUsageCostConfigsResponse {
-    pub fn new() -> GCPUsageCostConfigsResponse {
+    pub fn new(
+        data: Vec<crate::datadogV2::model::GCPUsageCostConfig>,
+    ) -> GCPUsageCostConfigsResponse {
         GCPUsageCostConfigsResponse {
-            data: None,
+            data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn data(mut self, value: Vec<crate::datadogV2::model::GCPUsageCostConfig>) -> Self {
-        self.data = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -41,12 +38,6 @@ impl GCPUsageCostConfigsResponse {
     ) -> Self {
         self.additional_properties = value;
         self
-    }
-}
-
-impl Default for GCPUsageCostConfigsResponse {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
@@ -77,9 +68,6 @@ impl<'de> Deserialize<'de> for GCPUsageCostConfigsResponse {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "data" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -89,6 +77,7 @@ impl<'de> Deserialize<'de> for GCPUsageCostConfigsResponse {
                         }
                     }
                 }
+                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
                 let content = GCPUsageCostConfigsResponse {
                     data,
