@@ -17,6 +17,13 @@ pub struct PartialAPIKeyAttributes {
     /// Creation date of the API key.
     #[serde(rename = "created_at")]
     pub created_at: Option<String>,
+    /// Date the API Key was last used.
+    #[serde(
+        rename = "date_last_used",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub date_last_used: Option<Option<chrono::DateTime<chrono::Utc>>>,
     /// The last four characters of the API key.
     #[serde(rename = "last4")]
     pub last4: Option<String>,
@@ -41,6 +48,7 @@ impl PartialAPIKeyAttributes {
         PartialAPIKeyAttributes {
             category: None,
             created_at: None,
+            date_last_used: None,
             last4: None,
             modified_at: None,
             name: None,
@@ -57,6 +65,11 @@ impl PartialAPIKeyAttributes {
 
     pub fn created_at(mut self, value: String) -> Self {
         self.created_at = Some(value);
+        self
+    }
+
+    pub fn date_last_used(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
+        self.date_last_used = Some(value);
         self
     }
 
@@ -114,6 +127,7 @@ impl<'de> Deserialize<'de> for PartialAPIKeyAttributes {
             {
                 let mut category: Option<String> = None;
                 let mut created_at: Option<String> = None;
+                let mut date_last_used: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
                 let mut last4: Option<String> = None;
                 let mut modified_at: Option<String> = None;
                 let mut name: Option<String> = None;
@@ -137,6 +151,10 @@ impl<'de> Deserialize<'de> for PartialAPIKeyAttributes {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "date_last_used" => {
+                            date_last_used =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "last4" => {
                             if v.is_null() {
@@ -175,6 +193,7 @@ impl<'de> Deserialize<'de> for PartialAPIKeyAttributes {
                 let content = PartialAPIKeyAttributes {
                     category,
                     created_at,
+                    date_last_used,
                     last4,
                     modified_at,
                     name,

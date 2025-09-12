@@ -17,6 +17,13 @@ pub struct PartialApplicationKeyAttributes {
     /// The last four characters of the application key.
     #[serde(rename = "last4")]
     pub last4: Option<String>,
+    /// Last usage timestamp of the application key.
+    #[serde(
+        rename = "last_used_at",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub last_used_at: Option<Option<String>>,
     /// Name of the application key.
     #[serde(rename = "name")]
     pub name: Option<String>,
@@ -35,6 +42,7 @@ impl PartialApplicationKeyAttributes {
         PartialApplicationKeyAttributes {
             created_at: None,
             last4: None,
+            last_used_at: None,
             name: None,
             scopes: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -49,6 +57,11 @@ impl PartialApplicationKeyAttributes {
 
     pub fn last4(mut self, value: String) -> Self {
         self.last4 = Some(value);
+        self
+    }
+
+    pub fn last_used_at(mut self, value: Option<String>) -> Self {
+        self.last_used_at = Some(value);
         self
     }
 
@@ -96,6 +109,7 @@ impl<'de> Deserialize<'de> for PartialApplicationKeyAttributes {
             {
                 let mut created_at: Option<String> = None;
                 let mut last4: Option<String> = None;
+                let mut last_used_at: Option<Option<String>> = None;
                 let mut name: Option<String> = None;
                 let mut scopes: Option<Option<Vec<String>>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -118,6 +132,10 @@ impl<'de> Deserialize<'de> for PartialApplicationKeyAttributes {
                             }
                             last4 = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "last_used_at" => {
+                            last_used_at =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "name" => {
                             if v.is_null() {
                                 continue;
@@ -138,6 +156,7 @@ impl<'de> Deserialize<'de> for PartialApplicationKeyAttributes {
                 let content = PartialApplicationKeyAttributes {
                     created_at,
                     last4,
+                    last_used_at,
                     name,
                     scopes,
                     additional_properties,
