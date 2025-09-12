@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"filter\":{\"query\":\"*\"},\"page\":{\"limit\":2000},\"sort\":\"fqn\"},\"type\":\"search_flaky_tests_request\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/test/flaky-test-management/tests"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"status\":\"400\",\"title\":\"Bad Request\",\"detail\":\"limit must be greater than 1 and less than 1000\"}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Fri, 12 Sep 2025 13:50:09 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

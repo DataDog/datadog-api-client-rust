@@ -75,6 +75,7 @@ pub use self::api::api_spans;
 pub use self::api::api_spans_metrics;
 pub use self::api::api_synthetics;
 pub use self::api::api_teams;
+pub use self::api::api_test_optimization;
 pub use self::api::api_usage_metering;
 pub use self::api::api_users;
 pub use self::api::api_workflow_automation;
