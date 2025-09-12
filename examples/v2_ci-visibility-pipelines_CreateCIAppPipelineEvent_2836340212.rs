@@ -1,5 +1,4 @@
-// Send pipeline event with custom provider returns "Request accepted for
-// processing" response
+// Send several pipeline events returns "Request accepted for processing" response
 use chrono::{DateTime, Utc};
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_ci_visibility_pipelines::CIVisibilityPipelinesAPI;
@@ -20,8 +19,8 @@ async fn main() {
     let body =
         CIAppCreatePipelineEventRequest
         ::new().data(
-            CIAppCreatePipelineEventRequestDataSingleOrArray::CIAppCreatePipelineEventRequestData(
-                Box::new(
+            CIAppCreatePipelineEventRequestDataSingleOrArray::CIAppCreatePipelineEventRequestDataArray(
+                vec![
                     CIAppCreatePipelineEventRequestData::new()
                         .attributes(
                             CIAppCreatePipelineEventRequestAttributes::new(
@@ -58,7 +57,43 @@ async fn main() {
                             ).provider_name("example-provider".to_string()),
                         )
                         .type_(CIAppCreatePipelineEventRequestDataType::CIPIPELINE_RESOURCE_REQUEST),
-                ),
+                    CIAppCreatePipelineEventRequestData::new()
+                        .attributes(
+                            CIAppCreatePipelineEventRequestAttributes::new(
+                                CIAppCreatePipelineEventRequestAttributesResource::CIAppPipelineEventPipeline(
+                                    Box::new(
+                                        CIAppPipelineEventPipeline::CIAppPipelineEventFinishedPipeline(
+                                            Box::new(
+                                                CIAppPipelineEventFinishedPipeline::new(
+                                                    DateTime::parse_from_rfc3339("2021-11-11T11:10:26+00:00")
+                                                        .expect("Failed to parse datetime")
+                                                        .with_timezone(&Utc),
+                                                    CIAppPipelineEventPipelineLevel::PIPELINE,
+                                                    "Deploy to Production".to_string(),
+                                                    false,
+                                                    DateTime::parse_from_rfc3339("2021-11-11T11:08:11+00:00")
+                                                        .expect("Failed to parse datetime")
+                                                        .with_timezone(&Utc),
+                                                    CIAppPipelineEventPipelineStatus::SUCCESS,
+                                                    "7b2c8f9e-aa15-4d22-9c7d-83f4e065138b".to_string(),
+                                                    "https://my-ci-provider.example/pipelines/prod-pipeline/run/2".to_string(),
+                                                ).git(
+                                                    Some(
+                                                        CIAppGitInfo::new(
+                                                            "jane.smith@email.com".to_string(),
+                                                            "https://github.com/DataDog/datadog-agent".to_string(),
+                                                            "9a4f7c28b3e5d12f8e6c9b2a5d8f3e1c7b4a6d9e".to_string(),
+                                                        ),
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ).provider_name("example-provider".to_string()),
+                        )
+                        .type_(CIAppCreatePipelineEventRequestDataType::CIPIPELINE_RESOURCE_REQUEST)
+                ],
             ),
         );
     let configuration = datadog::Configuration::new();
