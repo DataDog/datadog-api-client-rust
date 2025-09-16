@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AwsCURConfigAttributes {
-    /// The account filtering configuration.
+    /// The account filtering configuration object.
     #[serde(rename = "account_filters")]
     pub account_filters: Option<crate::datadogV2::model::AccountFilteringConfig>,
     /// The AWS account ID.
