@@ -16,7 +16,7 @@ pub struct CloudWorkloadSecurityAgentRuleAction {
     pub filter: Option<String>,
     /// An empty object indicating the hash action
     #[serde(rename = "hash")]
-    pub hash: Option<std::collections::BTreeMap<String, serde_json::Value>>,
+    pub hash: Option<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleActionHash>,
     /// Kill system call applied on the container matching the rule
     #[serde(rename = "kill")]
     pub kill: Option<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleKill>,
@@ -51,7 +51,10 @@ impl CloudWorkloadSecurityAgentRuleAction {
         self
     }
 
-    pub fn hash(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
+    pub fn hash(
+        mut self,
+        value: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleActionHash,
+    ) -> Self {
         self.hash = Some(value);
         self
     }
@@ -113,7 +116,9 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleAction {
                 M: MapAccess<'a>,
             {
                 let mut filter: Option<String> = None;
-                let mut hash: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
+                let mut hash: Option<
+                    crate::datadogV2::model::CloudWorkloadSecurityAgentRuleActionHash,
+                > = None;
                 let mut kill: Option<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleKill> =
                     None;
                 let mut metadata: Option<
