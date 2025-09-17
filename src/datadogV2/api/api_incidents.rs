@@ -196,7 +196,7 @@ impl ListIncidentTypesOptionalParams {
 pub struct ListIncidentsOptionalParams {
     /// Specifies which types of related objects should be included in the response.
     pub include: Option<Vec<crate::datadogV2::model::IncidentRelatedObject>>,
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Size for a given page. The maximum allowed value is 100. Test change to trigger client generation.
     pub page_size: Option<i64>,
     /// Specific offset to use as the beginning of the returned page.
     pub page_offset: Option<i64>,
@@ -208,7 +208,7 @@ impl ListIncidentsOptionalParams {
         self.include = Some(value);
         self
     }
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Size for a given page. The maximum allowed value is 100. Test change to trigger client generation.
     pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
@@ -228,7 +228,7 @@ pub struct SearchIncidentsOptionalParams {
     pub include: Option<crate::datadogV2::model::IncidentRelatedObject>,
     /// Specifies the order of returned incidents.
     pub sort: Option<crate::datadogV2::model::IncidentSearchSortOrder>,
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Size for a given page. The maximum allowed value is 100. Test change to trigger client generation.
     pub page_size: Option<i64>,
     /// Specific offset to use as the beginning of the returned page.
     pub page_offset: Option<i64>,
@@ -245,7 +245,7 @@ impl SearchIncidentsOptionalParams {
         self.sort = Some(value);
         self
     }
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Size for a given page. The maximum allowed value is 100. Test change to trigger client generation.
     pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self

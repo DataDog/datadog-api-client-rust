@@ -17,7 +17,7 @@ use std::io::Write;
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetTeamMembershipsOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Size for a given page. The maximum allowed value is 100. Test change to trigger client generation.
     pub page_size: Option<i64>,
     /// Specific page number to return.
     pub page_number: Option<i64>,
@@ -28,7 +28,7 @@ pub struct GetTeamMembershipsOptionalParams {
 }
 
 impl GetTeamMembershipsOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Size for a given page. The maximum allowed value is 100. Test change to trigger client generation.
     pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
@@ -54,7 +54,7 @@ impl GetTeamMembershipsOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListMemberTeamsOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Size for a given page. The maximum allowed value is 100. Test change to trigger client generation.
     pub page_size: Option<i64>,
     /// Specific page number to return.
     pub page_number: Option<i64>,
@@ -63,7 +63,7 @@ pub struct ListMemberTeamsOptionalParams {
 }
 
 impl ListMemberTeamsOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Size for a given page. The maximum allowed value is 100. Test change to trigger client generation.
     pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
@@ -86,7 +86,7 @@ impl ListMemberTeamsOptionalParams {
 pub struct ListTeamsOptionalParams {
     /// Specific page number to return.
     pub page_number: Option<i64>,
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Size for a given page. The maximum allowed value is 100. Test change to trigger client generation.
     pub page_size: Option<i64>,
     /// Specifies the order of the returned teams
     pub sort: Option<crate::datadogV2::model::ListTeamsSort>,
@@ -106,7 +106,7 @@ impl ListTeamsOptionalParams {
         self.page_number = Some(value);
         self
     }
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Size for a given page. The maximum allowed value is 100. Test change to trigger client generation.
     pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self

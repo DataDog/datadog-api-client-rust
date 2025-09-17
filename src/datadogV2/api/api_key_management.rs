@@ -46,7 +46,7 @@ impl GetApplicationKeyOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListAPIKeysOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Size for a given page. The maximum allowed value is 100. Test change to trigger client generation.
     pub page_size: Option<i64>,
     /// Specific page number to return.
     pub page_number: Option<i64>,
@@ -73,7 +73,7 @@ pub struct ListAPIKeysOptionalParams {
 }
 
 impl ListAPIKeysOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Size for a given page. The maximum allowed value is 100. Test change to trigger client generation.
     pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
@@ -136,7 +136,7 @@ impl ListAPIKeysOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListApplicationKeysOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Size for a given page. The maximum allowed value is 100. Test change to trigger client generation.
     pub page_size: Option<i64>,
     /// Specific page number to return.
     pub page_number: Option<i64>,
@@ -155,7 +155,7 @@ pub struct ListApplicationKeysOptionalParams {
 }
 
 impl ListApplicationKeysOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Size for a given page. The maximum allowed value is 100. Test change to trigger client generation.
     pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
@@ -198,7 +198,7 @@ impl ListApplicationKeysOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListCurrentUserApplicationKeysOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Size for a given page. The maximum allowed value is 100. Test change to trigger client generation.
     pub page_size: Option<i64>,
     /// Specific page number to return.
     pub page_number: Option<i64>,
@@ -217,7 +217,7 @@ pub struct ListCurrentUserApplicationKeysOptionalParams {
 }
 
 impl ListCurrentUserApplicationKeysOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Size for a given page. The maximum allowed value is 100. Test change to trigger client generation.
     pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self

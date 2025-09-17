@@ -63,14 +63,14 @@ impl GetResourceEvaluationFiltersOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetRuleVersionHistoryOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Size for a given page. The maximum allowed value is 100. Test change to trigger client generation.
     pub page_size: Option<i64>,
     /// Specific page number to return.
     pub page_number: Option<i64>,
 }
 
 impl GetRuleVersionHistoryOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Size for a given page. The maximum allowed value is 100. Test change to trigger client generation.
     pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
@@ -338,7 +338,7 @@ impl ListFindingsOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListHistoricalJobsOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Size for a given page. The maximum allowed value is 100. Test change to trigger client generation.
     pub page_size: Option<i64>,
     /// Specific page number to return.
     pub page_number: Option<i64>,
@@ -349,7 +349,7 @@ pub struct ListHistoricalJobsOptionalParams {
 }
 
 impl ListHistoricalJobsOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Size for a given page. The maximum allowed value is 100. Test change to trigger client generation.
     pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
@@ -426,14 +426,14 @@ impl ListSecurityMonitoringHistsignalsOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListSecurityMonitoringRulesOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Size for a given page. The maximum allowed value is 100. Test change to trigger client generation.
     pub page_size: Option<i64>,
     /// Specific page number to return.
     pub page_number: Option<i64>,
 }
 
 impl ListSecurityMonitoringRulesOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Size for a given page. The maximum allowed value is 100. Test change to trigger client generation.
     pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self

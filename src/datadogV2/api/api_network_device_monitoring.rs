@@ -32,7 +32,7 @@ impl GetInterfacesOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListDevicesOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Size for a given page. The maximum allowed value is 100. Test change to trigger client generation.
     pub page_size: Option<i64>,
     /// Specific page number to return.
     pub page_number: Option<i64>,
@@ -43,7 +43,7 @@ pub struct ListDevicesOptionalParams {
 }
 
 impl ListDevicesOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Size for a given page. The maximum allowed value is 100. Test change to trigger client generation.
     pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
