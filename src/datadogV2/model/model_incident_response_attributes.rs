@@ -56,6 +56,23 @@ pub struct IncidentResponseAttributes {
     /// A flag indicating whether the incident caused customer impact.
     #[serde(rename = "customer_impacted")]
     pub customer_impacted: Option<bool>,
+    /// Timestamp when the incident was declared.
+    #[serde(rename = "declared")]
+    pub declared: Option<chrono::DateTime<chrono::Utc>>,
+    /// Incident's non Datadog creator.
+    #[serde(
+        rename = "declared_by",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub declared_by: Option<Option<crate::datadogV2::model::IncidentNonDatadogCreator>>,
+    /// UUID of the user who declared the incident.
+    #[serde(
+        rename = "declared_by_uuid",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub declared_by_uuid: Option<Option<String>>,
     /// Timestamp when the incident was detected.
     #[serde(
         rename = "detected",
@@ -149,6 +166,9 @@ impl IncidentResponseAttributes {
             customer_impact_scope: None,
             customer_impact_start: None,
             customer_impacted: None,
+            declared: None,
+            declared_by: None,
+            declared_by_uuid: None,
             detected: None,
             fields: None,
             incident_type_uuid: None,
@@ -208,6 +228,24 @@ impl IncidentResponseAttributes {
 
     pub fn customer_impacted(mut self, value: bool) -> Self {
         self.customer_impacted = Some(value);
+        self
+    }
+
+    pub fn declared(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
+        self.declared = Some(value);
+        self
+    }
+
+    pub fn declared_by(
+        mut self,
+        value: Option<crate::datadogV2::model::IncidentNonDatadogCreator>,
+    ) -> Self {
+        self.declared_by = Some(value);
+        self
+    }
+
+    pub fn declared_by_uuid(mut self, value: Option<String>) -> Self {
+        self.declared_by_uuid = Some(value);
         self
     }
 
@@ -334,6 +372,11 @@ impl<'de> Deserialize<'de> for IncidentResponseAttributes {
                 let mut customer_impact_scope: Option<Option<String>> = None;
                 let mut customer_impact_start: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
                 let mut customer_impacted: Option<bool> = None;
+                let mut declared: Option<chrono::DateTime<chrono::Utc>> = None;
+                let mut declared_by: Option<
+                    Option<crate::datadogV2::model::IncidentNonDatadogCreator>,
+                > = None;
+                let mut declared_by_uuid: Option<Option<String>> = None;
                 let mut detected: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
                 let mut fields: Option<
                     std::collections::BTreeMap<
@@ -404,6 +447,20 @@ impl<'de> Deserialize<'de> for IncidentResponseAttributes {
                                 continue;
                             }
                             customer_impacted =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "declared" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            declared = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "declared_by" => {
+                            declared_by =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "declared_by_uuid" => {
+                            declared_by_uuid =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "detected" => {
@@ -522,6 +579,9 @@ impl<'de> Deserialize<'de> for IncidentResponseAttributes {
                     customer_impact_scope,
                     customer_impact_start,
                     customer_impacted,
+                    declared,
+                    declared_by,
+                    declared_by_uuid,
                     detected,
                     fields,
                     incident_type_uuid,
