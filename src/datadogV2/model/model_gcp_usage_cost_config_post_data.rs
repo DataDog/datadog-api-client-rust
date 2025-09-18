@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// GCP Usage Cost config post data.
+/// Google Cloud Usage Cost config post data.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct GCPUsageCostConfigPostData {
-    /// Attributes for GCP Usage Cost config post request.
+    /// Attributes for Google Cloud Usage Cost config post request.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::GCPUsageCostConfigPostRequestAttributes,
-    /// Type of GCP Usage Cost config post request.
+    pub attributes: Option<crate::datadogV2::model::GCPUsageCostConfigPostRequestAttributes>,
+    /// Type of Google Cloud Usage Cost config post request.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::GCPUsageCostConfigPostRequestType,
     #[serde(flatten)]
@@ -26,15 +26,22 @@ pub struct GCPUsageCostConfigPostData {
 
 impl GCPUsageCostConfigPostData {
     pub fn new(
-        attributes: crate::datadogV2::model::GCPUsageCostConfigPostRequestAttributes,
         type_: crate::datadogV2::model::GCPUsageCostConfigPostRequestType,
     ) -> GCPUsageCostConfigPostData {
         GCPUsageCostConfigPostData {
-            attributes,
+            attributes: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn attributes(
+        mut self,
+        value: crate::datadogV2::model::GCPUsageCostConfigPostRequestAttributes,
+    ) -> Self {
+        self.attributes = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -77,6 +84,9 @@ impl<'de> Deserialize<'de> for GCPUsageCostConfigPostData {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "attributes" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
@@ -97,7 +107,6 @@ impl<'de> Deserialize<'de> for GCPUsageCostConfigPostData {
                         }
                     }
                 }
-                let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = GCPUsageCostConfigPostData {

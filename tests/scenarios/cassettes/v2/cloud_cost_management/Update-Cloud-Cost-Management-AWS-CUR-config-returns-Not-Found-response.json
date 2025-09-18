@@ -15,11 +15,11 @@
           ]
         },
         "method": "patch",
-        "uri": "https://api.datadoghq.com/api/v2/cost/aws_cur_config/12345678"
+        "uri": "https://api.datadoghq.com/api/v2/cost/aws_cur_config/123456"
       },
       "response": {
         "body": {
-          "string": "{\"errors\":[{\"status\":\"404\",\"title\":\"Cloud account not found\",\"detail\":\"Cloud account with ID 12345678 was not found\"}]}",
+          "string": "{\"errors\":[{\"status\":\"404\",\"title\":\"Cloud account not found\",\"detail\":\"Cloud account with ID 123456 was not found\"}]}",
           "encoding": null
         },
         "headers": {

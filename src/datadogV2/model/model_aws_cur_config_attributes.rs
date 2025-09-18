@@ -27,8 +27,12 @@ pub struct AwsCURConfigAttributes {
     #[serde(rename = "created_at")]
     pub created_at: Option<String>,
     /// The error messages for the AWS CUR config.
-    #[serde(rename = "error_messages")]
-    pub error_messages: Option<Vec<String>>,
+    #[serde(
+        rename = "error_messages",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub error_messages: Option<Option<Vec<String>>>,
     /// The number of months the report has been backfilled.
     #[deprecated]
     #[serde(rename = "months")]
@@ -99,7 +103,7 @@ impl AwsCURConfigAttributes {
     }
 
     #[allow(deprecated)]
-    pub fn error_messages(mut self, value: Vec<String>) -> Self {
+    pub fn error_messages(mut self, value: Option<Vec<String>>) -> Self {
         self.error_messages = Some(value);
         self
     }
@@ -154,7 +158,7 @@ impl<'de> Deserialize<'de> for AwsCURConfigAttributes {
                 let mut bucket_name: Option<String> = None;
                 let mut bucket_region: Option<String> = None;
                 let mut created_at: Option<String> = None;
-                let mut error_messages: Option<Vec<String>> = None;
+                let mut error_messages: Option<Option<Vec<String>>> = None;
                 let mut months: Option<i32> = None;
                 let mut report_name: Option<String> = None;
                 let mut report_prefix: Option<String> = None;
@@ -194,9 +198,6 @@ impl<'de> Deserialize<'de> for AwsCURConfigAttributes {
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "error_messages" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             error_messages =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }

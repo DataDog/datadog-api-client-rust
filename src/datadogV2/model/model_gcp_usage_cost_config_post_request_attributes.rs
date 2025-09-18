@@ -6,27 +6,27 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes for GCP Usage Cost config post request.
+/// Attributes for Google Cloud Usage Cost config post request.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct GCPUsageCostConfigPostRequestAttributes {
-    /// The GCP account ID.
+    /// The Google Cloud account ID.
     #[serde(rename = "billing_account_id")]
     pub billing_account_id: String,
-    /// The GCP bucket name used to store the Usage Cost export.
+    /// The Google Cloud bucket name used to store the Usage Cost export.
     #[serde(rename = "bucket_name")]
     pub bucket_name: String,
-    /// The export dataset name used for the GCP Usage Cost report.
+    /// The export dataset name used for the Google Cloud Usage Cost report.
     #[serde(rename = "export_dataset_name")]
     pub export_dataset_name: String,
-    /// The export prefix used for the GCP Usage Cost report.
+    /// The export prefix used for the Google Cloud Usage Cost report.
     #[serde(rename = "export_prefix")]
     pub export_prefix: Option<String>,
-    /// The name of the GCP Usage Cost report.
+    /// The name of the Google Cloud Usage Cost report.
     #[serde(rename = "export_project_name")]
     pub export_project_name: String,
-    /// The unique GCP service account email.
+    /// The unique Google Cloud service account email.
     #[serde(rename = "service_account")]
     pub service_account: String,
     #[serde(flatten)]
