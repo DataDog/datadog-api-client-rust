@@ -148,7 +148,7 @@ impl<'de> Deserialize<'de> for {{ name }} {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                            {% else %}
+                            {%- else %}
                             return Err(serde::de::Error::custom("Additional properties not allowed"));
                             {%- endif %}
                         },
@@ -168,9 +168,9 @@ impl<'de> Deserialize<'de> for {{ name }} {
                 {%- endif %}
                 {%- endfor %}
 
-                {% if ns.hasDeprecated %}
+                {% if ns.hasDeprecated -%}
                 #[allow(deprecated)]
-                {% endif%}
+                {% endif -%}
                 let content = {{ name }} {
                     {%- for attr, schema in model.get("properties", {}).items() %}
                     {%- set propertyName = attr|variable_name %}
