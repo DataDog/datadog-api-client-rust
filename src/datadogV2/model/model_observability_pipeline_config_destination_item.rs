@@ -58,6 +58,9 @@ pub enum ObservabilityPipelineConfigDestinationItem {
     ObservabilityPipelineCrowdStrikeNextGenSiemDestination(
         Box<crate::datadogV2::model::ObservabilityPipelineCrowdStrikeNextGenSiemDestination>,
     ),
+    ObservabilityPipelineGooglePubSubDestination(
+        Box<crate::datadogV2::model::ObservabilityPipelineGooglePubSubDestination>,
+    ),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -211,6 +214,14 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigDestinationItem {
         {
             if !_v._unparsed {
                 return Ok(ObservabilityPipelineConfigDestinationItem::ObservabilityPipelineCrowdStrikeNextGenSiemDestination(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineGooglePubSubDestination>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigDestinationItem::ObservabilityPipelineGooglePubSubDestination(_v));
             }
         }
 
