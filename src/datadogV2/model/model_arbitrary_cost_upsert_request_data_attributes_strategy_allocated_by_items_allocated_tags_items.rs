@@ -82,14 +82,12 @@ impl<'de> Deserialize<'de>
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                            
                         },
                     }
                 }
                 let key = key.ok_or_else(|| M::Error::missing_field("key"))?;
                 let value = value.ok_or_else(|| M::Error::missing_field("value"))?;
 
-                
                 let content = ArbitraryCostUpsertRequestDataAttributesStrategyAllocatedByItemsAllocatedTagsItems {
                     key,
                     value,
