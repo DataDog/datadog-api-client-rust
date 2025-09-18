@@ -3,7 +3,7 @@
     {
       "request": {
         "body": {
-          "string": "{\"data\":{\"attributes\":{\"is_enabled\":true},\"type\":\"gcp_uc_config_patch_request\"}}",
+          "string": "{\"data\":{\"attributes\":{\"Query\":\"example:query AND test:true\"},\"type\":\"validate_query\"}}",
           "encoding": null
         },
         "headers": {
@@ -14,12 +14,12 @@
             "application/json"
           ]
         },
-        "method": "patch",
-        "uri": "https://api.datadoghq.com/api/v2/cost/gcp_uc_config/12345678"
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/tags/enrichment/validate-query"
       },
       "response": {
         "body": {
-          "string": "{\"errors\":[{\"title\":\"Generic Error\",\"detail\":\"rpc error: code = NotFound desc = cloud account '\ufffd' not found\"}]}",
+          "string": "{\"data\":{\"id\":\"6a2cddcf-8498-469f-8da1-7b8fb597868d\",\"type\":\"validate_response\",\"attributes\":{\"Canonical\":\"example:query AND test:true\"}}}",
           "encoding": null
         },
         "headers": {
@@ -28,11 +28,11 @@
           ]
         },
         "status": {
-          "code": 404,
-          "message": "Not Found"
+          "code": 200,
+          "message": "OK"
         }
       },
-      "recorded_at": "Mon, 23 Jun 2025 12:09:42 GMT"
+      "recorded_at": "Thu, 11 Sep 2025 19:06:38 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"

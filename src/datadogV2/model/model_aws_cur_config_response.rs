@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response of AWS CUR config.
+/// The definition of `AwsCurConfigResponse` object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct AwsCURConfigResponse {
-    /// AWS CUR config.
+pub struct AwsCurConfigResponse {
+    /// The definition of `AwsCurConfigResponseData` object.
     #[serde(rename = "data")]
-    pub data: Option<crate::datadogV2::model::AwsCURConfig>,
+    pub data: Option<crate::datadogV2::model::AwsCurConfigResponseData>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,16 +21,16 @@ pub struct AwsCURConfigResponse {
     pub(crate) _unparsed: bool,
 }
 
-impl AwsCURConfigResponse {
-    pub fn new() -> AwsCURConfigResponse {
-        AwsCURConfigResponse {
+impl AwsCurConfigResponse {
+    pub fn new() -> AwsCurConfigResponse {
+        AwsCurConfigResponse {
             data: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn data(mut self, value: crate::datadogV2::model::AwsCURConfig) -> Self {
+    pub fn data(mut self, value: crate::datadogV2::model::AwsCurConfigResponseData) -> Self {
         self.data = Some(value);
         self
     }
@@ -44,20 +44,20 @@ impl AwsCURConfigResponse {
     }
 }
 
-impl Default for AwsCURConfigResponse {
+impl Default for AwsCurConfigResponse {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for AwsCURConfigResponse {
+impl<'de> Deserialize<'de> for AwsCurConfigResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct AwsCURConfigResponseVisitor;
-        impl<'a> Visitor<'a> for AwsCURConfigResponseVisitor {
-            type Value = AwsCURConfigResponse;
+        struct AwsCurConfigResponseVisitor;
+        impl<'a> Visitor<'a> for AwsCurConfigResponseVisitor {
+            type Value = AwsCurConfigResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -67,7 +67,7 @@ impl<'de> Deserialize<'de> for AwsCURConfigResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::AwsCURConfig> = None;
+                let mut data: Option<crate::datadogV2::model::AwsCurConfigResponseData> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -90,7 +90,7 @@ impl<'de> Deserialize<'de> for AwsCURConfigResponse {
                     }
                 }
 
-                let content = AwsCURConfigResponse {
+                let content = AwsCurConfigResponse {
                     data,
                     additional_properties,
                     _unparsed,
@@ -100,6 +100,6 @@ impl<'de> Deserialize<'de> for AwsCURConfigResponse {
             }
         }
 
-        deserializer.deserialize_any(AwsCURConfigResponseVisitor)
+        deserializer.deserialize_any(AwsCurConfigResponseVisitor)
     }
 }
