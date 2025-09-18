@@ -20,6 +20,13 @@ pub struct FullApplicationKeyAttributes {
     /// The last four characters of the application key.
     #[serde(rename = "last4")]
     pub last4: Option<String>,
+    /// Last usage timestamp of the application key.
+    #[serde(
+        rename = "last_used_at",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub last_used_at: Option<Option<chrono::DateTime<chrono::Utc>>>,
     /// Name of the application key.
     #[serde(rename = "name")]
     pub name: Option<String>,
@@ -39,6 +46,7 @@ impl FullApplicationKeyAttributes {
             created_at: None,
             key: None,
             last4: None,
+            last_used_at: None,
             name: None,
             scopes: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -58,6 +66,11 @@ impl FullApplicationKeyAttributes {
 
     pub fn last4(mut self, value: String) -> Self {
         self.last4 = Some(value);
+        self
+    }
+
+    pub fn last_used_at(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
+        self.last_used_at = Some(value);
         self
     }
 
@@ -106,6 +119,7 @@ impl<'de> Deserialize<'de> for FullApplicationKeyAttributes {
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut key: Option<String> = None;
                 let mut last4: Option<String> = None;
+                let mut last_used_at: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
                 let mut name: Option<String> = None;
                 let mut scopes: Option<Option<Vec<String>>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -134,6 +148,10 @@ impl<'de> Deserialize<'de> for FullApplicationKeyAttributes {
                             }
                             last4 = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "last_used_at" => {
+                            last_used_at =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "name" => {
                             if v.is_null() {
                                 continue;
@@ -155,6 +173,7 @@ impl<'de> Deserialize<'de> for FullApplicationKeyAttributes {
                     created_at,
                     key,
                     last4,
+                    last_used_at,
                     name,
                     scopes,
                     additional_properties,

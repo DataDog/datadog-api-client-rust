@@ -17,6 +17,13 @@ pub struct FullAPIKeyAttributes {
     /// Creation date of the API key.
     #[serde(rename = "created_at")]
     pub created_at: Option<chrono::DateTime<chrono::Utc>>,
+    /// Date the API Key was last used
+    #[serde(
+        rename = "date_last_used",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub date_last_used: Option<Option<chrono::DateTime<chrono::Utc>>>,
     /// The API key.
     #[serde(rename = "key")]
     pub key: Option<String>,
@@ -44,6 +51,7 @@ impl FullAPIKeyAttributes {
         FullAPIKeyAttributes {
             category: None,
             created_at: None,
+            date_last_used: None,
             key: None,
             last4: None,
             modified_at: None,
@@ -61,6 +69,11 @@ impl FullAPIKeyAttributes {
 
     pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
+        self
+    }
+
+    pub fn date_last_used(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
+        self.date_last_used = Some(value);
         self
     }
 
@@ -123,6 +136,7 @@ impl<'de> Deserialize<'de> for FullAPIKeyAttributes {
             {
                 let mut category: Option<String> = None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
+                let mut date_last_used: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
                 let mut key: Option<String> = None;
                 let mut last4: Option<String> = None;
                 let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
@@ -147,6 +161,10 @@ impl<'de> Deserialize<'de> for FullAPIKeyAttributes {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "date_last_used" => {
+                            date_last_used =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "key" => {
                             if v.is_null() {
@@ -191,6 +209,7 @@ impl<'de> Deserialize<'de> for FullAPIKeyAttributes {
                 let content = FullAPIKeyAttributes {
                     category,
                     created_at,
+                    date_last_used,
                     key,
                     last4,
                     modified_at,
