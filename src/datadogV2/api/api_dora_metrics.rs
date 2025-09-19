@@ -37,6 +37,24 @@ pub enum CreateDORAIncidentError {
     UnknownValue(serde_json::Value),
 }
 
+/// DeleteDORADeploymentError is a struct for typed errors of method [`DORAMetricsAPI::delete_dora_deployment`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeleteDORADeploymentError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// DeleteDORAFailureError is a struct for typed errors of method [`DORAMetricsAPI::delete_dora_failure`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeleteDORAFailureError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// GetDORADeploymentError is a struct for typed errors of method [`DORAMetricsAPI::get_dora_deployment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -73,7 +91,7 @@ pub enum ListDORAFailuresError {
     UnknownValue(serde_json::Value),
 }
 
-/// Search or send events for DORA Metrics to measure and improve your software delivery performance. See the [DORA Metrics page](<https://docs.datadoghq.com/dora_metrics/>) for more information.
+/// Search, send, or delete events for DORA Metrics to measure and improve your software delivery performance. See the [DORA Metrics page](<https://docs.datadoghq.com/dora_metrics/>) for more information.
 ///
 /// **Note**: DORA Metrics are not available in the US1-FED site.
 #[derive(Debug, Clone)]
@@ -597,6 +615,185 @@ impl DORAMetricsAPI {
             };
         } else {
             let local_entity: Option<CreateDORAIncidentError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Use this API endpoint to delete a deployment event.
+    pub async fn delete_dora_deployment(
+        &self,
+        deployment_id: String,
+    ) -> Result<(), datadog::Error<DeleteDORADeploymentError>> {
+        match self
+            .delete_dora_deployment_with_http_info(deployment_id)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Use this API endpoint to delete a deployment event.
+    pub async fn delete_dora_deployment_with_http_info(
+        &self,
+        deployment_id: String,
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteDORADeploymentError>> {
+        let local_configuration = &self.config;
+        let operation_id = "v2.delete_dora_deployment";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/dora/deployment/{deployment_id}",
+            local_configuration.get_operation_host(operation_id),
+            deployment_id = datadog::urlencode(deployment_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<DeleteDORADeploymentError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Use this API endpoint to delete a failure event.
+    pub async fn delete_dora_failure(
+        &self,
+        failure_id: String,
+    ) -> Result<(), datadog::Error<DeleteDORAFailureError>> {
+        match self.delete_dora_failure_with_http_info(failure_id).await {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Use this API endpoint to delete a failure event.
+    pub async fn delete_dora_failure_with_http_info(
+        &self,
+        failure_id: String,
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteDORAFailureError>> {
+        let local_configuration = &self.config;
+        let operation_id = "v2.delete_dora_failure";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/dora/failure/{failure_id}",
+            local_configuration.get_operation_host(operation_id),
+            failure_id = datadog::urlencode(failure_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<DeleteDORAFailureError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
