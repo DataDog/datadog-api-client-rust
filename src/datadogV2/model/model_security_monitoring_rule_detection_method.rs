@@ -14,6 +14,7 @@ pub enum SecurityMonitoringRuleDetectionMethod {
     HARDCODED,
     THIRD_PARTY,
     ANOMALY_THRESHOLD,
+    SEQUENCE_DETECTION,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -27,6 +28,7 @@ impl ToString for SecurityMonitoringRuleDetectionMethod {
             Self::HARDCODED => String::from("hardcoded"),
             Self::THIRD_PARTY => String::from("third_party"),
             Self::ANOMALY_THRESHOLD => String::from("anomaly_threshold"),
+            Self::SEQUENCE_DETECTION => String::from("sequence_detection"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -58,6 +60,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleDetectionMethod {
             "hardcoded" => Self::HARDCODED,
             "third_party" => Self::THIRD_PARTY,
             "anomaly_threshold" => Self::ANOMALY_THRESHOLD,
+            "sequence_detection" => Self::SEQUENCE_DETECTION,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
