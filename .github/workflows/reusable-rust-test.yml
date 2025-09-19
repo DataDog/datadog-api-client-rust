@@ -1,0 +1,52 @@
+name: Reusable Rust Testing Workflow
+
+on:
+  workflow_call:
+    inputs:
+      target-branch:
+        description: 'Branch to checkout and test (defaults to the calling branch)'
+        required: false
+        type: string
+        default: ''
+      rust-versions:
+        description: 'JSON array of Rust versions to test against'
+        required: false
+        type: string
+        default: '["stable"]'
+      platforms:
+        description: 'JSON array of platforms to run tests on'
+        required: false
+        type: string
+        default: '["ubuntu-latest"]'
+      test-script:
+        description: 'Test script to execute'
+        required: false
+        type: string
+        default: './run-tests.sh'
+    secrets:
+      PIPELINE_GITHUB_APP_ID:
+        required: false
+      PIPELINE_GITHUB_APP_PRIVATE_KEY:
+        required: false
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        rust-version: ${{ fromJSON(inputs.rust-versions) }}
+        platform: ${{ fromJSON(inputs.platforms) }}
+    runs-on: ${{ matrix.platform }}
+    if: (github.event.pull_request.draft == false && !contains(github.event.pull_request.labels.*.name, 'ci/skip') && !contains(github.event.pull_request.head.ref, 'datadog-api-spec/test/')) || github.event_name == 'schedule'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          repository: DataDog/datadog-api-client-rust
+          ref: ${{ inputs.target-branch || github.ref }}
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@v1
+        with:
+          toolchain: ${{ matrix.rust-version }}
+      - uses: Swatinem/rust-cache@v2
+      - name: Test
+        run: ${{ inputs.test-script }}

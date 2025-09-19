@@ -1,4 +1,4 @@
-name: Run Integration Tests
+name: Reusable Integration Test Workflow
 
 permissions:
   contents: read
@@ -16,6 +16,39 @@ on:
       - unlabeled
   schedule:
     - cron: "0 5 * * *"
+  workflow_call:
+    inputs:
+      target-branch:
+        description: 'Branch to checkout and test (defaults to the calling branch)'
+        required: false
+        type: string
+        default: ''
+      enable-status-reporting:
+        description: 'Whether to post status checks to datadog-api-spec repo'
+        required: false
+        type: boolean
+        default: false
+      status-context:
+        description: 'Context for status checks'
+        required: false
+        type: string
+        default: 'integration'
+      target-repo:
+        description: 'Repository to post status to'
+        required: false
+        type: string
+        default: 'datadog-api-spec'
+    secrets:
+      PIPELINE_GITHUB_APP_ID:
+        required: false
+      PIPELINE_GITHUB_APP_PRIVATE_KEY:
+        required: false
+      DD_API_KEY:
+        required: true
+      DD_CLIENT_API_KEY:
+        required: true
+      DD_CLIENT_APP_KEY:
+        required: true
 
 concurrency:
   group: integration-${{ github.head_ref }}
@@ -48,18 +81,19 @@ jobs:
         with:
           app-id: ${{ secrets.PIPELINE_GITHUB_APP_ID }}
           private-key: ${{ secrets.PIPELINE_GITHUB_APP_PRIVATE_KEY }}
-          installation_retrieval_mode: repository
-          installation_retrieval_payload: DataDog/datadog-api-spec
+          repositories: ${{ inputs.target-repo || 'datadog-api-spec' }}
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.target-branch || github.ref }}
       - name: Post pending status check
-        if: github.event_name == 'pull_request' && contains(github.event.pull_request.head.ref, 'datadog-api-spec/generated/')
+        if: github.event_name == 'pull_request' && contains(github.event.pull_request.head.ref, 'datadog-api-spec/generated/') && (inputs.enable-status-reporting || github.event_name != 'workflow_call')
         uses: DataDog/github-actions/post-status-check@v2
         with:
           github-token: ${{ steps.get_token.outputs.token }}
-          repo: datadog-api-spec
+          repo: ${{ inputs.target-repo || 'datadog-api-spec' }}
           status: pending
-          context: integration
+          context: ${{ inputs.status-context || 'integration' }}
       - name: Install Rust
         uses: dtolnay/rust-toolchain@v1
         with:
@@ -78,18 +112,18 @@ jobs:
           DD_TEST_CLIENT_APP_KEY: ${{ secrets.DD_CLIENT_APP_KEY }}
           RECORD: "none"
       - name: Post failure status check
-        if: failure() && github.event_name == 'pull_request' && contains(github.event.pull_request.head.ref, 'datadog-api-spec/generated/')
+        if: failure() && github.event_name == 'pull_request' && contains(github.event.pull_request.head.ref, 'datadog-api-spec/generated/') && (inputs.enable-status-reporting || github.event_name != 'workflow_call')
         uses: DataDog/github-actions/post-status-check@v2
         with:
           github-token: ${{ steps.get_token.outputs.token }}
-          repo: datadog-api-spec
+          repo: ${{ inputs.target-repo || 'datadog-api-spec' }}
           status: failure
-          context: integration
+          context: ${{ inputs.status-context || 'integration' }}
       - name: Post success status check
-        if: "!failure() && github.event_name == 'pull_request' && contains(github.event.pull_request.head.ref, 'datadog-api-spec/generated/')"
+        if: "!failure() && github.event_name == 'pull_request' && contains(github.event.pull_request.head.ref, 'datadog-api-spec/generated/') && (inputs.enable-status-reporting || github.event_name != 'workflow_call')"
         uses: DataDog/github-actions/post-status-check@v2
         with:
           github-token: ${{ steps.get_token.outputs.token }}
-          repo: datadog-api-spec
+          repo: ${{ inputs.target-repo || 'datadog-api-spec' }}
           status: success
-          context: integration
+          context: ${{ inputs.status-context || 'integration' }}
