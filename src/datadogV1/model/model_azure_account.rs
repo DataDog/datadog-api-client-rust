@@ -11,8 +11,8 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AzureAccount {
-    /// Limit the Azure app service plans that are pulled into Datadog using tags.
-    /// Only app service plans that match one of the defined tags are imported into Datadog.
+    /// Limit the Azure app service plans (and Consumption Function Apps) that are pulled into Datadog using tags.
+    /// Filtering an App Service Plan applies to all Apps running on that plan.
     #[serde(rename = "app_service_plan_filters")]
     pub app_service_plan_filters: Option<String>,
     /// Silence monitors for expected Azure VM shutdowns.
