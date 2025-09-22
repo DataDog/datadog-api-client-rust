@@ -107,7 +107,7 @@ pub struct SearchTestsOptionalParams {
     pub search_suites: Option<bool>,
     /// If true, return only facets instead of full test details.
     pub facets_only: Option<bool>,
-    /// The offset from which to start returning results.
+    /// (Only available on legacy search backend. Contact support for more info.) The offset from which to start returning results.
     pub start: Option<i64>,
     /// The maximum number of results to return.
     pub count: Option<i64>,
@@ -136,7 +136,7 @@ impl SearchTestsOptionalParams {
         self.facets_only = Some(value);
         self
     }
-    /// The offset from which to start returning results.
+    /// (Only available on legacy search backend. Contact support for more info.) The offset from which to start returning results.
     pub fn start(mut self, value: i64) -> Self {
         self.start = Some(value);
         self
