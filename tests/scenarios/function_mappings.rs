@@ -2893,6 +2893,14 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_get_aws_integration_iam_permissions,
     );
     world.function_mappings.insert(
+        "v2.GetAWSIntegrationIAMPermissionsResourceCollection".into(),
+        test_v2_get_aws_integration_iam_permissions_resource_collection,
+    );
+    world.function_mappings.insert(
+        "v2.GetAWSIntegrationIAMPermissionsStandard".into(),
+        test_v2_get_aws_integration_iam_permissions_standard,
+    );
+    world.function_mappings.insert(
         "v2.ListAWSLogsServices".into(),
         test_v2_list_aws_logs_services,
     );
@@ -21796,6 +21804,63 @@ fn test_v2_get_aws_integration_iam_permissions(
         .as_ref()
         .expect("api instance not found");
     let response = match block_on(api.get_aws_integration_iam_permissions_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_aws_integration_iam_permissions_resource_collection(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_aws_integration
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(
+        api.get_aws_integration_iam_permissions_resource_collection_with_http_info(),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_aws_integration_iam_permissions_standard(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_aws_integration
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.get_aws_integration_iam_permissions_standard_with_http_info())
+    {
         Ok(response) => response,
         Err(error) => {
             return match error {
