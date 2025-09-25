@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RUMApplicationAttributes {
+    /// ID of the API key associated with the application.
+    #[serde(rename = "api_key_id")]
+    pub api_key_id: Option<i32>,
     /// ID of the RUM application.
     #[serde(rename = "application_id")]
     pub application_id: String,
@@ -67,6 +70,7 @@ impl RUMApplicationAttributes {
         updated_by_handle: String,
     ) -> RUMApplicationAttributes {
         RUMApplicationAttributes {
+            api_key_id: None,
             application_id,
             client_token,
             created_at,
@@ -82,6 +86,11 @@ impl RUMApplicationAttributes {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn api_key_id(mut self, value: i32) -> Self {
+        self.api_key_id = Some(value);
+        self
     }
 
     pub fn hash(mut self, value: String) -> Self {
@@ -125,6 +134,7 @@ impl<'de> Deserialize<'de> for RUMApplicationAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut api_key_id: Option<i32> = None;
                 let mut application_id: Option<String> = None;
                 let mut client_token: Option<String> = None;
                 let mut created_at: Option<i64> = None;
@@ -145,6 +155,12 @@ impl<'de> Deserialize<'de> for RUMApplicationAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "api_key_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            api_key_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "application_id" => {
                             application_id =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -217,6 +233,7 @@ impl<'de> Deserialize<'de> for RUMApplicationAttributes {
                     .ok_or_else(|| M::Error::missing_field("updated_by_handle"))?;
 
                 let content = RUMApplicationAttributes {
+                    api_key_id,
                     application_id,
                     client_token,
                     created_at,
