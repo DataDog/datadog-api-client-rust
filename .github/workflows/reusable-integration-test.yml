@@ -56,7 +56,7 @@ on:
         required: true
 
 concurrency:
-  group: integration-${{ github.head_ref }}
+  group: integration-rust-${{ inputs.target-branch || github.head_ref }}
   cancel-in-progress: true
 
 jobs:
