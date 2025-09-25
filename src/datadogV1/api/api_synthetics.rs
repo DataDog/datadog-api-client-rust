@@ -103,8 +103,6 @@ pub struct SearchTestsOptionalParams {
     pub text: Option<String>,
     /// If true, include the full configuration for each test in the response.
     pub include_full_config: Option<bool>,
-    /// If true, returns suites instead of tests.
-    pub search_suites: Option<bool>,
     /// If true, return only facets instead of full test details.
     pub facets_only: Option<bool>,
     /// The offset from which to start returning results.
@@ -124,11 +122,6 @@ impl SearchTestsOptionalParams {
     /// If true, include the full configuration for each test in the response.
     pub fn include_full_config(mut self, value: bool) -> Self {
         self.include_full_config = Some(value);
-        self
-    }
-    /// If true, returns suites instead of tests.
-    pub fn search_suites(mut self, value: bool) -> Self {
-        self.search_suites = Some(value);
         self
     }
     /// If true, return only facets instead of full test details.
@@ -3801,7 +3794,7 @@ impl SyntheticsAPI {
         }
     }
 
-    /// Search for Synthetic tests and Test Suites.
+    /// Search for Synthetic tests.
     pub async fn search_tests(
         &self,
         params: SearchTestsOptionalParams,
@@ -3823,7 +3816,7 @@ impl SyntheticsAPI {
         }
     }
 
-    /// Search for Synthetic tests and Test Suites.
+    /// Search for Synthetic tests.
     pub async fn search_tests_with_http_info(
         &self,
         params: SearchTestsOptionalParams,
@@ -3837,7 +3830,6 @@ impl SyntheticsAPI {
         // unbox and build optional parameters
         let text = params.text;
         let include_full_config = params.include_full_config;
-        let search_suites = params.search_suites;
         let facets_only = params.facets_only;
         let start = params.start;
         let count = params.count;
@@ -3859,10 +3851,6 @@ impl SyntheticsAPI {
         if let Some(ref local_query_param) = include_full_config {
             local_req_builder =
                 local_req_builder.query(&[("include_full_config", &local_query_param.to_string())]);
-        };
-        if let Some(ref local_query_param) = search_suites {
-            local_req_builder =
-                local_req_builder.query(&[("search_suites", &local_query_param.to_string())]);
         };
         if let Some(ref local_query_param) = facets_only {
             local_req_builder =
