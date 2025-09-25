@@ -11,9 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CIAppCreatePipelineEventRequest {
-    /// Data of the pipeline event to create.
+    /// Data of the pipeline events to create.
     #[serde(rename = "data")]
-    pub data: Option<crate::datadogV2::model::CIAppCreatePipelineEventRequestData>,
+    pub data: Option<crate::datadogV2::model::CIAppCreatePipelineEventRequestDataSingleOrArray>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -32,7 +32,7 @@ impl CIAppCreatePipelineEventRequest {
 
     pub fn data(
         mut self,
-        value: crate::datadogV2::model::CIAppCreatePipelineEventRequestData,
+        value: crate::datadogV2::model::CIAppCreatePipelineEventRequestDataSingleOrArray,
     ) -> Self {
         self.data = Some(value);
         self
@@ -70,8 +70,9 @@ impl<'de> Deserialize<'de> for CIAppCreatePipelineEventRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::CIAppCreatePipelineEventRequestData> =
-                    None;
+                let mut data: Option<
+                    crate::datadogV2::model::CIAppCreatePipelineEventRequestDataSingleOrArray,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -85,6 +86,14 @@ impl<'de> Deserialize<'de> for CIAppCreatePipelineEventRequest {
                                 continue;
                             }
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _data) = data {
+                                match _data {
+                                    crate::datadogV2::model::CIAppCreatePipelineEventRequestDataSingleOrArray::UnparsedObject(_data) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {

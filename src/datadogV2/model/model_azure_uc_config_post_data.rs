@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct AzureUCConfigPostData {
     /// Attributes for Azure config Post Request.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::AzureUCConfigPostRequestAttributes,
+    pub attributes: Option<crate::datadogV2::model::AzureUCConfigPostRequestAttributes>,
     /// Type of Azure config Post Request.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::AzureUCConfigPostRequestType,
@@ -26,15 +26,22 @@ pub struct AzureUCConfigPostData {
 
 impl AzureUCConfigPostData {
     pub fn new(
-        attributes: crate::datadogV2::model::AzureUCConfigPostRequestAttributes,
         type_: crate::datadogV2::model::AzureUCConfigPostRequestType,
     ) -> AzureUCConfigPostData {
         AzureUCConfigPostData {
-            attributes,
+            attributes: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn attributes(
+        mut self,
+        value: crate::datadogV2::model::AzureUCConfigPostRequestAttributes,
+    ) -> Self {
+        self.attributes = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -76,6 +83,9 @@ impl<'de> Deserialize<'de> for AzureUCConfigPostData {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "attributes" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
@@ -96,7 +106,6 @@ impl<'de> Deserialize<'de> for AzureUCConfigPostData {
                         }
                     }
                 }
-                let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = AzureUCConfigPostData {

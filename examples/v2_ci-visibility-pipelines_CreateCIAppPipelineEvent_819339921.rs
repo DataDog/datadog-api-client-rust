@@ -7,6 +7,7 @@ use datadog_api_client::datadogV2::model::CIAppCreatePipelineEventRequest;
 use datadog_api_client::datadogV2::model::CIAppCreatePipelineEventRequestAttributes;
 use datadog_api_client::datadogV2::model::CIAppCreatePipelineEventRequestAttributesResource;
 use datadog_api_client::datadogV2::model::CIAppCreatePipelineEventRequestData;
+use datadog_api_client::datadogV2::model::CIAppCreatePipelineEventRequestDataSingleOrArray;
 use datadog_api_client::datadogV2::model::CIAppCreatePipelineEventRequestDataType;
 use datadog_api_client::datadogV2::model::CIAppGitInfo;
 use datadog_api_client::datadogV2::model::CIAppPipelineEventFinishedPipeline;
@@ -19,42 +20,46 @@ async fn main() {
     let body =
         CIAppCreatePipelineEventRequest
         ::new().data(
-            CIAppCreatePipelineEventRequestData::new()
-                .attributes(
-                    CIAppCreatePipelineEventRequestAttributes::new(
-                        CIAppCreatePipelineEventRequestAttributesResource::CIAppPipelineEventPipeline(
-                            Box::new(
-                                CIAppPipelineEventPipeline::CIAppPipelineEventFinishedPipeline(
+            CIAppCreatePipelineEventRequestDataSingleOrArray::CIAppCreatePipelineEventRequestData(
+                Box::new(
+                    CIAppCreatePipelineEventRequestData::new()
+                        .attributes(
+                            CIAppCreatePipelineEventRequestAttributes::new(
+                                CIAppCreatePipelineEventRequestAttributesResource::CIAppPipelineEventPipeline(
                                     Box::new(
-                                        CIAppPipelineEventFinishedPipeline::new(
-                                            DateTime::parse_from_rfc3339("2021-11-11T11:10:41+00:00")
-                                                .expect("Failed to parse datetime")
-                                                .with_timezone(&Utc),
-                                            CIAppPipelineEventPipelineLevel::PIPELINE,
-                                            "Deploy to AWS".to_string(),
-                                            false,
-                                            DateTime::parse_from_rfc3339("2021-11-11T11:09:11+00:00")
-                                                .expect("Failed to parse datetime")
-                                                .with_timezone(&Utc),
-                                            CIAppPipelineEventPipelineStatus::SUCCESS,
-                                            "3eacb6f3-ff04-4e10-8a9c-46e6d054024a".to_string(),
-                                            "https://my-ci-provider.example/pipelines/my-pipeline/run/1".to_string(),
-                                        ).git(
-                                            Some(
-                                                CIAppGitInfo::new(
-                                                    "john.doe@email.com".to_string(),
-                                                    "https://github.com/DataDog/datadog-agent".to_string(),
-                                                    "7f263865994b76066c4612fd1965215e7dcb4cd2".to_string(),
+                                        CIAppPipelineEventPipeline::CIAppPipelineEventFinishedPipeline(
+                                            Box::new(
+                                                CIAppPipelineEventFinishedPipeline::new(
+                                                    DateTime::parse_from_rfc3339("2021-11-11T11:10:41+00:00")
+                                                        .expect("Failed to parse datetime")
+                                                        .with_timezone(&Utc),
+                                                    CIAppPipelineEventPipelineLevel::PIPELINE,
+                                                    "Deploy to AWS".to_string(),
+                                                    false,
+                                                    DateTime::parse_from_rfc3339("2021-11-11T11:09:11+00:00")
+                                                        .expect("Failed to parse datetime")
+                                                        .with_timezone(&Utc),
+                                                    CIAppPipelineEventPipelineStatus::SUCCESS,
+                                                    "3eacb6f3-ff04-4e10-8a9c-46e6d054024a".to_string(),
+                                                    "https://my-ci-provider.example/pipelines/my-pipeline/run/1".to_string(),
+                                                ).git(
+                                                    Some(
+                                                        CIAppGitInfo::new(
+                                                            "john.doe@email.com".to_string(),
+                                                            "https://github.com/DataDog/datadog-agent".to_string(),
+                                                            "7f263865994b76066c4612fd1965215e7dcb4cd2".to_string(),
+                                                        ),
+                                                    ),
                                                 ),
                                             ),
                                         ),
                                     ),
                                 ),
-                            ),
-                        ),
-                    ).provider_name("example-provider".to_string()),
-                )
-                .type_(CIAppCreatePipelineEventRequestDataType::CIPIPELINE_RESOURCE_REQUEST),
+                            ).provider_name("example-provider".to_string()),
+                        )
+                        .type_(CIAppCreatePipelineEventRequestDataType::CIPIPELINE_RESOURCE_REQUEST),
+                ),
+            ),
         );
     let configuration = datadog::Configuration::new();
     let api = CIVisibilityPipelinesAPI::with_config(configuration);

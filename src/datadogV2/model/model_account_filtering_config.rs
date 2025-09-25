@@ -15,8 +15,12 @@ pub struct AccountFilteringConfig {
     #[serde(rename = "excluded_accounts")]
     pub excluded_accounts: Option<Vec<String>>,
     /// Whether or not to automatically include new member accounts by default in your billing dataset.
-    #[serde(rename = "include_new_accounts")]
-    pub include_new_accounts: Option<bool>,
+    #[serde(
+        rename = "include_new_accounts",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub include_new_accounts: Option<Option<bool>>,
     /// The AWS account IDs to be included in your billing dataset. This field is used when `include_new_accounts` is `false`.
     #[serde(rename = "included_accounts")]
     pub included_accounts: Option<Vec<String>>,
@@ -43,7 +47,7 @@ impl AccountFilteringConfig {
         self
     }
 
-    pub fn include_new_accounts(mut self, value: bool) -> Self {
+    pub fn include_new_accounts(mut self, value: Option<bool>) -> Self {
         self.include_new_accounts = Some(value);
         self
     }
@@ -86,7 +90,7 @@ impl<'de> Deserialize<'de> for AccountFilteringConfig {
                 M: MapAccess<'a>,
             {
                 let mut excluded_accounts: Option<Vec<String>> = None;
-                let mut include_new_accounts: Option<bool> = None;
+                let mut include_new_accounts: Option<Option<bool>> = None;
                 let mut included_accounts: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -104,9 +108,6 @@ impl<'de> Deserialize<'de> for AccountFilteringConfig {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "include_new_accounts" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             include_new_accounts =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }

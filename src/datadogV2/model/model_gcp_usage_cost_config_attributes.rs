@@ -6,53 +6,53 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes for a GCP Usage Cost config.
+/// Attributes for a Google Cloud Usage Cost config.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct GCPUsageCostConfigAttributes {
-    /// The GCP account ID.
+    /// The Google Cloud account ID.
     #[serde(rename = "account_id")]
     pub account_id: String,
-    /// The GCP bucket name used to store the Usage Cost export.
+    /// The Google Cloud bucket name used to store the Usage Cost export.
     #[serde(rename = "bucket_name")]
     pub bucket_name: String,
-    /// The timestamp when the GCP Usage Cost config was created.
+    /// The timestamp when the Google Cloud Usage Cost config was created.
     #[serde(rename = "created_at")]
     pub created_at: Option<String>,
-    /// The export dataset name used for the GCP Usage Cost Report.
+    /// The export dataset name used for the Google Cloud Usage Cost Report.
     #[serde(rename = "dataset")]
     pub dataset: String,
-    /// The error messages for the GCP Usage Cost config.
+    /// The error messages for the Google Cloud Usage Cost config.
     #[serde(
         rename = "error_messages",
         default,
         with = "::serde_with::rust::double_option"
     )]
     pub error_messages: Option<Option<Vec<String>>>,
-    /// The export prefix used for the GCP Usage Cost Report.
+    /// The export prefix used for the Google Cloud Usage Cost Report.
     #[serde(rename = "export_prefix")]
     pub export_prefix: String,
-    /// The name of the GCP Usage Cost Report.
+    /// The name of the Google Cloud Usage Cost Report.
     #[serde(rename = "export_project_name")]
     pub export_project_name: String,
     /// The number of months the report has been backfilled.
     #[deprecated]
     #[serde(rename = "months")]
     pub months: Option<i32>,
-    /// The `project_id` of the GCP Usage Cost report.
+    /// The `project_id` of the Google Cloud Usage Cost report.
     #[serde(rename = "project_id")]
     pub project_id: Option<String>,
-    /// The unique GCP service account email.
+    /// The unique Google Cloud service account email.
     #[serde(rename = "service_account")]
     pub service_account: String,
-    /// The status of the GCP Usage Cost config.
+    /// The status of the Google Cloud Usage Cost config.
     #[serde(rename = "status")]
     pub status: String,
-    /// The timestamp when the GCP Usage Cost config status was updated.
+    /// The timestamp when the Google Cloud Usage Cost config status was updated.
     #[serde(rename = "status_updated_at")]
     pub status_updated_at: Option<String>,
-    /// The timestamp when the GCP Usage Cost config status was updated.
+    /// The timestamp when the Google Cloud Usage Cost config status was updated.
     #[serde(rename = "updated_at")]
     pub updated_at: Option<String>,
     #[serde(flatten)]

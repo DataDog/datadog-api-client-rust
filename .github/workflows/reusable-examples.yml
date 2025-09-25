@@ -1,0 +1,42 @@
+name: Reusable Examples Workflow
+
+on:
+  workflow_call:
+    inputs:
+      target-branch:
+        description: 'Branch to checkout and test (defaults to the calling branch)'
+        required: false
+        type: string
+        default: ''
+      examples-command:
+        description: 'Examples command to execute'
+        required: false
+        type: string
+        default: 'cargo check --examples'
+      rust-version:
+        description: 'Rust version to use for examples'
+        required: false
+        type: string
+        default: 'stable'
+    secrets:
+      PIPELINE_GITHUB_APP_ID:
+        required: false
+      PIPELINE_GITHUB_APP_PRIVATE_KEY:
+        required: false
+
+jobs:
+  examples:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: DataDog/datadog-api-client-rust
+          ref: ${{ inputs.target-branch || github.ref }}
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ inputs.rust-version }}
+      - uses: Swatinem/rust-cache@v2
+      - name: Check examples
+        run: ${{ inputs.examples-command }}
+        shell: bash

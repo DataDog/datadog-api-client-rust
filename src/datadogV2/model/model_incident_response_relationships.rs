@@ -24,6 +24,9 @@ pub struct IncidentResponseRelationships {
     /// Relationship to user.
     #[serde(rename = "created_by_user")]
     pub created_by_user: Option<crate::datadogV2::model::RelationshipToUser>,
+    /// Relationship to user.
+    #[serde(rename = "declared_by_user")]
+    pub declared_by_user: Option<crate::datadogV2::model::RelationshipToUser>,
     /// Relationship to impacts.
     #[serde(rename = "impacts")]
     pub impacts: Option<crate::datadogV2::model::RelationshipToIncidentImpacts>,
@@ -53,6 +56,7 @@ impl IncidentResponseRelationships {
             attachments: None,
             commander_user: None,
             created_by_user: None,
+            declared_by_user: None,
             impacts: None,
             integrations: None,
             last_modified_by_user: None,
@@ -81,6 +85,11 @@ impl IncidentResponseRelationships {
 
     pub fn created_by_user(mut self, value: crate::datadogV2::model::RelationshipToUser) -> Self {
         self.created_by_user = Some(value);
+        self
+    }
+
+    pub fn declared_by_user(mut self, value: crate::datadogV2::model::RelationshipToUser) -> Self {
+        self.declared_by_user = Some(value);
         self
     }
 
@@ -163,6 +172,8 @@ impl<'de> Deserialize<'de> for IncidentResponseRelationships {
                     Option<crate::datadogV2::model::NullableRelationshipToUser>,
                 > = None;
                 let mut created_by_user: Option<crate::datadogV2::model::RelationshipToUser> = None;
+                let mut declared_by_user: Option<crate::datadogV2::model::RelationshipToUser> =
+                    None;
                 let mut impacts: Option<crate::datadogV2::model::RelationshipToIncidentImpacts> =
                     None;
                 let mut integrations: Option<
@@ -200,6 +211,13 @@ impl<'de> Deserialize<'de> for IncidentResponseRelationships {
                                 continue;
                             }
                             created_by_user =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "declared_by_user" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            declared_by_user =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "impacts" => {
@@ -247,6 +265,7 @@ impl<'de> Deserialize<'de> for IncidentResponseRelationships {
                     attachments,
                     commander_user,
                     created_by_user,
+                    declared_by_user,
                     impacts,
                     integrations,
                     last_modified_by_user,
