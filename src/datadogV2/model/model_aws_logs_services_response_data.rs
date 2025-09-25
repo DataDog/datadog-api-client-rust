@@ -17,7 +17,7 @@ pub struct AWSLogsServicesResponseData {
     /// The `AWSLogsServicesResponseData` `id`.
     #[serde(rename = "id")]
     pub id: String,
-    /// The `AWSLogsServicesResponseData` `type`.
+    /// The `AWSLogsServicesResponseData` `type`. Test to trigger client generation.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::AWSLogsServicesResponseDataType,
     #[serde(flatten)]
