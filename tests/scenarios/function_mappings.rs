@@ -16080,7 +16080,13 @@ fn test_v2_list_security_monitoring_suppressions(
         .v2_api_security_monitoring
         .as_ref()
         .expect("api instance not found");
-    let response = match block_on(api.list_security_monitoring_suppressions_with_http_info()) {
+    let query = _parameters
+        .get("query")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_security_monitoring::ListSecurityMonitoringSuppressionsOptionalParams::default();
+    params.query = query;
+    let response = match block_on(api.list_security_monitoring_suppressions_with_http_info(params))
+    {
         Ok(response) => response,
         Err(error) => {
             return match error {

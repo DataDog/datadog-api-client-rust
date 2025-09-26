@@ -496,6 +496,22 @@ impl ListSecurityMonitoringSignalsOptionalParams {
     }
 }
 
+/// ListSecurityMonitoringSuppressionsOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_security_monitoring_suppressions`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListSecurityMonitoringSuppressionsOptionalParams {
+    /// Query string.
+    pub query: Option<String>,
+}
+
+impl ListSecurityMonitoringSuppressionsOptionalParams {
+    /// Query string.
+    pub fn query(mut self, value: String) -> Self {
+        self.query = Some(value);
+        self
+    }
+}
+
 /// ListVulnerabilitiesOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_vulnerabilities`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -7579,12 +7595,13 @@ impl SecurityMonitoringAPI {
     /// Get the list of all suppression rules.
     pub async fn list_security_monitoring_suppressions(
         &self,
+        params: ListSecurityMonitoringSuppressionsOptionalParams,
     ) -> Result<
         crate::datadogV2::model::SecurityMonitoringSuppressionsResponse,
         datadog::Error<ListSecurityMonitoringSuppressionsError>,
     > {
         match self
-            .list_security_monitoring_suppressions_with_http_info()
+            .list_security_monitoring_suppressions_with_http_info(params)
             .await
         {
             Ok(response_content) => {
@@ -7603,12 +7620,16 @@ impl SecurityMonitoringAPI {
     /// Get the list of all suppression rules.
     pub async fn list_security_monitoring_suppressions_with_http_info(
         &self,
+        params: ListSecurityMonitoringSuppressionsOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::SecurityMonitoringSuppressionsResponse>,
         datadog::Error<ListSecurityMonitoringSuppressionsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_security_monitoring_suppressions";
+
+        // unbox and build optional parameters
+        let query = params.query;
 
         let local_client = &self.client;
 
@@ -7618,6 +7639,11 @@ impl SecurityMonitoringAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = query {
+            local_req_builder =
+                local_req_builder.query(&[("query", &local_query_param.to_string())]);
+        };
 
         // build headers
         let mut headers = HeaderMap::new();
