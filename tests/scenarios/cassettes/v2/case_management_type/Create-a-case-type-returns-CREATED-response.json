@@ -1,0 +1,63 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"description\":\"Investigations done in case management\",\"emoji\":\"\ud83d\udc51\",\"name\":\"Investigation\"},\"type\":\"case_type\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/cases/types"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":{\"id\":\"fd1c8062-ecc0-4b79-b466-3ab057b54018\",\"type\":\"case_type\",\"attributes\":{\"description\":\"Investigations done in case management\",\"emoji\":\"\ud83d\udc51\",\"name\":\"Investigation\"}}}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 201,
+          "message": "Created"
+        }
+      },
+      "recorded_at": "Thu, 04 Sep 2025 09:10:57 GMT"
+    },
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "*/*"
+          ]
+        },
+        "method": "delete",
+        "uri": "https://api.datadoghq.com/api/v2/cases/types/fd1c8062-ecc0-4b79-b466-3ab057b54018"
+      },
+      "response": {
+        "body": {
+          "string": "",
+          "encoding": null
+        },
+        "headers": {},
+        "status": {
+          "code": 204,
+          "message": "No Content"
+        }
+      },
+      "recorded_at": "Thu, 04 Sep 2025 09:10:57 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
