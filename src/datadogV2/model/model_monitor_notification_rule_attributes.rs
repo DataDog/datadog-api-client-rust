@@ -11,6 +11,10 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MonitorNotificationRuleAttributes {
+    /// Use conditional recipients to define different recipients for different situations.
+    #[serde(rename = "conditional_recipients")]
+    pub conditional_recipients:
+        Option<crate::datadogV2::model::MonitorNotificationRuleConditionalRecipients>,
     /// Filter used to associate the notification rule with monitors.
     #[serde(rename = "filter")]
     pub filter: Option<crate::datadogV2::model::MonitorNotificationRuleFilter>,
@@ -19,24 +23,38 @@ pub struct MonitorNotificationRuleAttributes {
     pub name: String,
     /// A list of recipients to notify. Uses the same format as the monitor `message` field. Must not start with an '@'.
     #[serde(rename = "recipients")]
-    pub recipients: Vec<String>,
+    pub recipients: Option<Vec<String>>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
 }
 
 impl MonitorNotificationRuleAttributes {
-    pub fn new(name: String, recipients: Vec<String>) -> MonitorNotificationRuleAttributes {
+    pub fn new(name: String) -> MonitorNotificationRuleAttributes {
         MonitorNotificationRuleAttributes {
+            conditional_recipients: None,
             filter: None,
             name,
-            recipients,
+            recipients: None,
             _unparsed: false,
         }
     }
 
+    pub fn conditional_recipients(
+        mut self,
+        value: crate::datadogV2::model::MonitorNotificationRuleConditionalRecipients,
+    ) -> Self {
+        self.conditional_recipients = Some(value);
+        self
+    }
+
     pub fn filter(mut self, value: crate::datadogV2::model::MonitorNotificationRuleFilter) -> Self {
         self.filter = Some(value);
+        self
+    }
+
+    pub fn recipients(mut self, value: Vec<String>) -> Self {
+        self.recipients = Some(value);
         self
     }
 }
@@ -58,6 +76,9 @@ impl<'de> Deserialize<'de> for MonitorNotificationRuleAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut conditional_recipients: Option<
+                    crate::datadogV2::model::MonitorNotificationRuleConditionalRecipients,
+                > = None;
                 let mut filter: Option<crate::datadogV2::model::MonitorNotificationRuleFilter> =
                     None;
                 let mut name: Option<String> = None;
@@ -66,6 +87,13 @@ impl<'de> Deserialize<'de> for MonitorNotificationRuleAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "conditional_recipients" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            conditional_recipients =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "filter" => {
                             if v.is_null() {
                                 continue;
@@ -84,6 +112,9 @@ impl<'de> Deserialize<'de> for MonitorNotificationRuleAttributes {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "recipients" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             recipients = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -94,9 +125,9 @@ impl<'de> Deserialize<'de> for MonitorNotificationRuleAttributes {
                     }
                 }
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
-                let recipients = recipients.ok_or_else(|| M::Error::missing_field("recipients"))?;
 
                 let content = MonitorNotificationRuleAttributes {
+                    conditional_recipients,
                     filter,
                     name,
                     recipients,
