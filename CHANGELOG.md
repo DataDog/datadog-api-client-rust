@@ -1,5 +1,34 @@
 # CHANGELOG
 
+## 0.20.0/2025-09-30
+
+### Added
+* Add API Key ID to rum application response [#939](https://github.com/DataDog/datadog-api-client-rust/pull/939)
+* Add suppression list query string parameter [#938](https://github.com/DataDog/datadog-api-client-rust/pull/938)
+* Add datastore trigger to workflows public API  [#935](https://github.com/DataDog/datadog-api-client-rust/pull/935)
+* Add Google PubSub destination to the Observability Pipelines API [#925](https://github.com/DataDog/datadog-api-client-rust/pull/925)
+* Add API spec for AWS Integrations standard and resource collection IAM permissions [#923](https://github.com/DataDog/datadog-api-client-rust/pull/923)
+* Publish new incident impact APIs [#920](https://github.com/DataDog/datadog-api-client-rust/pull/920)
+* Add product analytics to FormulaAndFunctionEventsDataSource [#918](https://github.com/DataDog/datadog-api-client-rust/pull/918)
+* Add sequence detection to security monitoring rules [#914](https://github.com/DataDog/datadog-api-client-rust/pull/914)
+* Add Query Parameters to ListOrgConnections Endpoint [#911](https://github.com/DataDog/datadog-api-client-rust/pull/911)
+* Add Incident Notification Rules Public Spec [#906](https://github.com/DataDog/datadog-api-client-rust/pull/906)
+* Update v1 and v2 GCP API specs to support `monitored_resource_configs` [#902](https://github.com/DataDog/datadog-api-client-rust/pull/902)
+* Add last_used_at to application keys and date_last_used to api keys responses [#900](https://github.com/DataDog/datadog-api-client-rust/pull/900)
+* Add Incident Notification Template Public Docs [#897](https://github.com/DataDog/datadog-api-client-rust/pull/897)
+* Add Cross Org API to Open API specs [#896](https://github.com/DataDog/datadog-api-client-rust/pull/896)
+* Add Public Delete Dora Events Endpoints [#895](https://github.com/DataDog/datadog-api-client-rust/pull/895)
+* Update Get All Notification Rules API docs to include pagination, sorting, and filtering params [#894](https://github.com/DataDog/datadog-api-client-rust/pull/894)
+
+### Fixed
+* Remove any references to synthetics test suites [#930](https://github.com/DataDog/datadog-api-client-rust/pull/930)
+
+### Changed
+* Add tag pipeline, custom allocation rule and get cloud account by id for AWS/Azure/GCP configs APIs [#912](https://github.com/DataDog/datadog-api-client-rust/pull/912)
+
+### Deprecated
+* Promote unstable aws v2 APIs and deprecate v1 [#901](https://github.com/DataDog/datadog-api-client-rust/pull/901)
+
 ## 0.19.0/2025-09-15
 
 ### Added
