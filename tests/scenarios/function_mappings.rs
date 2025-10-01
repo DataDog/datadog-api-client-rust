@@ -1843,6 +1843,22 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_update_aws_scan_options,
     );
     world.function_mappings.insert(
+        "v2.ListAzureScanOptions".into(),
+        test_v2_list_azure_scan_options,
+    );
+    world.function_mappings.insert(
+        "v2.CreateAzureScanOptions".into(),
+        test_v2_create_azure_scan_options,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteAzureScanOptions".into(),
+        test_v2_delete_azure_scan_options,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateAzureScanOptions".into(),
+        test_v2_update_azure_scan_options,
+    );
+    world.function_mappings.insert(
         "v2.ListAwsOnDemandTasks".into(),
         test_v2_list_aws_on_demand_tasks,
     );
@@ -11941,6 +11957,118 @@ fn test_v2_update_aws_scan_options(world: &mut DatadogWorld, _parameters: &HashM
             };
         }
     };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_azure_scan_options(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_agentless_scanning
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_azure_scan_options_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_azure_scan_options(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_agentless_scanning
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_azure_scan_options_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_azure_scan_options(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_agentless_scanning
+        .as_ref()
+        .expect("api instance not found");
+    let subscription_id =
+        serde_json::from_value(_parameters.get("subscription_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_azure_scan_options_with_http_info(subscription_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_azure_scan_options(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_agentless_scanning
+        .as_ref()
+        .expect("api instance not found");
+    let subscription_id =
+        serde_json::from_value(_parameters.get("subscription_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.update_azure_scan_options_with_http_info(subscription_id, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
