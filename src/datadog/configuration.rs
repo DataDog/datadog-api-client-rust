@@ -166,6 +166,7 @@ impl Default for Configuration {
             ("v2.create_incident_notification_template".to_owned(), false),
             ("v2.create_incident_todo".to_owned(), false),
             ("v2.create_incident_type".to_owned(), false),
+            ("v2.create_page_from_incident".to_owned(), false),
             ("v2.delete_incident".to_owned(), false),
             ("v2.delete_incident_impact".to_owned(), false),
             ("v2.delete_incident_integration".to_owned(), false),
