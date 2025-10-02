@@ -205,6 +205,7 @@ impl Default for Configuration {
                 false,
             ),
             ("v2.validate_monitor_user_template".to_owned(), false),
+            ("v2.list_role_templates".to_owned(), false),
             ("v2.create_pipeline".to_owned(), false),
             ("v2.delete_pipeline".to_owned(), false),
             ("v2.get_pipeline".to_owned(), false),
