@@ -18,6 +18,9 @@ pub struct SyntheticsTestOptions {
     /// Allows loading insecure content for an HTTP request in an API test.
     #[serde(rename = "allow_insecure")]
     pub allow_insecure: Option<bool>,
+    /// Array of URL patterns to block.
+    #[serde(rename = "blockedRequestPatterns")]
+    pub blocked_request_patterns: Option<Vec<String>>,
     /// For SSL tests, whether or not the test should fail on revoked certificate in stapled OCSP.
     #[serde(rename = "checkCertificateRevocation")]
     pub check_certificate_revocation: Option<bool>,
@@ -113,6 +116,7 @@ impl SyntheticsTestOptions {
         SyntheticsTestOptions {
             accept_self_signed: None,
             allow_insecure: None,
+            blocked_request_patterns: None,
             check_certificate_revocation: None,
             ci: None,
             device_ids: None,
@@ -150,6 +154,12 @@ impl SyntheticsTestOptions {
     #[allow(deprecated)]
     pub fn allow_insecure(mut self, value: bool) -> Self {
         self.allow_insecure = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn blocked_request_patterns(mut self, value: Vec<String>) -> Self {
+        self.blocked_request_patterns = Some(value);
         self
     }
 
@@ -337,6 +347,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptions {
             {
                 let mut accept_self_signed: Option<bool> = None;
                 let mut allow_insecure: Option<bool> = None;
+                let mut blocked_request_patterns: Option<Vec<String>> = None;
                 let mut check_certificate_revocation: Option<bool> = None;
                 let mut ci: Option<crate::datadogV1::model::SyntheticsTestCiOptions> = None;
                 let mut device_ids: Option<Vec<String>> = None;
@@ -388,6 +399,13 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptions {
                                 continue;
                             }
                             allow_insecure =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "blockedRequestPatterns" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            blocked_request_patterns =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "checkCertificateRevocation" => {
@@ -566,6 +584,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptions {
                 let content = SyntheticsTestOptions {
                     accept_self_signed,
                     allow_insecure,
+                    blocked_request_patterns,
                     check_certificate_revocation,
                     ci,
                     device_ids,

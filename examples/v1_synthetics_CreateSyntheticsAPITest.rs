@@ -45,6 +45,7 @@ async fn main() {
         "Notification message".to_string(),
         "Example test name".to_string(),
         SyntheticsTestOptions::new()
+            .blocked_request_patterns(vec![])
             .ci(SyntheticsTestCiOptions::new(
                 SyntheticsTestExecutionRule::BLOCKING,
             ))
