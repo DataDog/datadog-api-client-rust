@@ -3,7 +3,7 @@
     {
       "request": {
         "body": {
-          "string": "{\"data\":{\"attributes\":{\"description\":\"My agent policy\",\"enabled\":true,\"hostTags\":[\"env:staging\"],\"name\":\"testgetaworkloadprotectionpolicyreturnsokresponse1748341515\"},\"type\":\"policy\"}}",
+          "string": "{\"data\":{\"attributes\":{\"description\":\"My agent policy\",\"enabled\":true,\"hostTags\":[\"env:staging\"],\"name\":\"testgetaworkloadprotectionpolicyreturnsokresponse1759408845\"},\"type\":\"policy\"}}",
           "encoding": null
         },
         "headers": {
@@ -19,7 +19,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"id\":\"xln-mmt-sy7\",\"type\":\"policy\",\"attributes\":{\"blockingRulesCount\":0,\"datadogManaged\":false,\"description\":\"My agent policy\",\"disabledRulesCount\":1,\"enabled\":true,\"hostTags\":[\"env:staging\"],\"monitoringRulesCount\":225,\"name\":\"testgetaworkloadprotectionpolicyreturnsokresponse1748341515\",\"policyVersion\":\"1\",\"priority\":1000000011,\"ruleCount\":226,\"updateDate\":1748341515373,\"updater\":{\"name\":\"frog\",\"handle\":\"frog@datadoghq.com\"}}}}",
+          "string": "{\"data\":{\"id\":\"smg-qsp-kse\",\"type\":\"policy\",\"attributes\":{\"blockingRulesCount\":0,\"datadogManaged\":false,\"description\":\"My agent policy\",\"disabledRulesCount\":1,\"enabled\":true,\"hostTagsLists\":[[\"env:staging\"]],\"monitoringRulesCount\":7,\"name\":\"testgetaworkloadprotectionpolicyreturnsokresponse1759408845\",\"pinned\":false,\"policyVersion\":\"1\",\"ruleCount\":8,\"updateDate\":1759408845738,\"updater\":{\"name\":\"frog\",\"handle\":\"frog@datadoghq.com\"}}}}",
           "encoding": null
         },
         "headers": {
@@ -32,7 +32,7 @@
           "message": "OK"
         }
       },
-      "recorded_at": "Tue, 27 May 2025 10:25:15 GMT"
+      "recorded_at": "Thu, 02 Oct 2025 12:40:45 GMT"
     },
     {
       "request": {
@@ -43,11 +43,11 @@
           ]
         },
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v2/remote_config/products/cws/policy/xln-mmt-sy7"
+        "uri": "https://api.datadoghq.com/api/v2/remote_config/products/cws/policy/smg-qsp-kse"
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"id\":\"xln-mmt-sy7\",\"type\":\"policy\",\"attributes\":{\"blockingRulesCount\":0,\"datadogManaged\":false,\"description\":\"My agent policy\",\"disabledRulesCount\":1,\"enabled\":true,\"hostTags\":[\"env:staging\"],\"monitoringRulesCount\":225,\"name\":\"testgetaworkloadprotectionpolicyreturnsokresponse1748341515\",\"policyVersion\":\"1\",\"priority\":1000000011,\"ruleCount\":226,\"updateDate\":1748341515373,\"updater\":{\"name\":\"frog\",\"handle\":\"frog@datadoghq.com\"}}}}",
+          "string": "{\"data\":{\"id\":\"smg-qsp-kse\",\"type\":\"policy\",\"attributes\":{\"blockingRulesCount\":0,\"datadogManaged\":false,\"description\":\"My agent policy\",\"disabledRulesCount\":0,\"enabled\":true,\"hostTagsLists\":[[\"env:staging\"]],\"monitoringRulesCount\":0,\"name\":\"testgetaworkloadprotectionpolicyreturnsokresponse1759408845\",\"pinned\":false,\"policyVersion\":\"1\",\"ruleCount\":0,\"updateDate\":1759408845738,\"updater\":{\"name\":\"frog\",\"handle\":\"frog@datadoghq.com\"}}}}",
           "encoding": null
         },
         "headers": {
@@ -60,7 +60,7 @@
           "message": "OK"
         }
       },
-      "recorded_at": "Tue, 27 May 2025 10:25:15 GMT"
+      "recorded_at": "Thu, 02 Oct 2025 12:40:45 GMT"
     },
     {
       "request": {
@@ -71,7 +71,7 @@
           ]
         },
         "method": "delete",
-        "uri": "https://api.datadoghq.com/api/v2/remote_config/products/cws/policy/xln-mmt-sy7"
+        "uri": "https://api.datadoghq.com/api/v2/remote_config/products/cws/policy/smg-qsp-kse"
       },
       "response": {
         "body": {
@@ -88,7 +88,7 @@
           "message": "No Content"
         }
       },
-      "recorded_at": "Tue, 27 May 2025 10:25:15 GMT"
+      "recorded_at": "Thu, 02 Oct 2025 12:40:45 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"
