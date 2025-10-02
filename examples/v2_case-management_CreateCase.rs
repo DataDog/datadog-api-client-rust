@@ -7,7 +7,6 @@ use datadog_api_client::datadogV2::model::CaseCreateRelationships;
 use datadog_api_client::datadogV2::model::CaseCreateRequest;
 use datadog_api_client::datadogV2::model::CasePriority;
 use datadog_api_client::datadogV2::model::CaseResourceType;
-use datadog_api_client::datadogV2::model::CaseType;
 use datadog_api_client::datadogV2::model::NullableUserRelationship;
 use datadog_api_client::datadogV2::model::NullableUserRelationshipData;
 use datadog_api_client::datadogV2::model::ProjectRelationship;
@@ -23,7 +22,7 @@ async fn main() {
         CaseCreate::new(
             CaseCreateAttributes::new(
                 "Security breach investigation in 0cfbc5cbc676ee71".to_string(),
-                CaseType::STANDARD,
+                "00000000-0000-0000-0000-000000000001".to_string(),
             )
             .priority(CasePriority::NOT_DEFINED),
             CaseResourceType::CASE,
