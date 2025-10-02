@@ -15,7 +15,6 @@ pub struct NotificationRuleResponse {
     /// They allow users to define the conditions under which a notification should be generated (based on rule severities,
     /// rule types, rule tags, and so on), and the targets to notify.
     /// A notification rule is composed of a rule ID, a rule type, and the rule attributes. All fields are required.
-    ///
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::NotificationRule>,
     #[serde(flatten)]

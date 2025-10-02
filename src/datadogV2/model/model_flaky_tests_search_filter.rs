@@ -22,7 +22,6 @@ pub struct FlakyTestsSearchFilter {
     /// - `@git.branch`
     /// - `@test.codeowners`
     /// - `env`
-    ///
     #[serde(rename = "query")]
     pub query: Option<String>,
     #[serde(flatten)]

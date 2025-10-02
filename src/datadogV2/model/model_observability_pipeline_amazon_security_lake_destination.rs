@@ -7,14 +7,12 @@ use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
 /// The `amazon_security_lake` destination sends your logs to Amazon Security Lake.
-///
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineAmazonSecurityLakeDestination {
     /// AWS authentication credentials used for accessing AWS services such as S3.
     /// If omitted, the system’s default credentials are used (for example, the IAM role and environment variables).
-    ///
     #[serde(rename = "auth")]
     pub auth: Option<crate::datadogV2::model::ObservabilityPipelineAwsAuth>,
     /// Name of the Amazon S3 bucket in Security Lake (3-63 characters).

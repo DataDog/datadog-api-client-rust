@@ -12,7 +12,6 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineGooglePubSubDestination {
     /// GCP credentials used to authenticate with Google Cloud Storage.
-    ///
     #[serde(rename = "auth")]
     pub auth: Option<crate::datadogV2::model::ObservabilityPipelineGcpAuth>,
     /// Encoding format for log events.

@@ -37,13 +37,11 @@ impl CreateIncidentImpactOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct DeleteIncidentNotificationRuleOptionalParams {
     /// Comma-separated list of resources to include. Supported values: `created_by_user`, `last_modified_by_user`, `incident_type`, `notification_template`
-    ///
     pub include: Option<String>,
 }
 
 impl DeleteIncidentNotificationRuleOptionalParams {
     /// Comma-separated list of resources to include. Supported values: `created_by_user`, `last_modified_by_user`, `incident_type`, `notification_template`
-    ///
     pub fn include(mut self, value: String) -> Self {
         self.include = Some(value);
         self
@@ -55,13 +53,11 @@ impl DeleteIncidentNotificationRuleOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct DeleteIncidentNotificationTemplateOptionalParams {
     /// Comma-separated list of relationships to include. Supported values: `created_by_user`, `last_modified_by_user`, `incident_type`
-    ///
     pub include: Option<String>,
 }
 
 impl DeleteIncidentNotificationTemplateOptionalParams {
     /// Comma-separated list of relationships to include. Supported values: `created_by_user`, `last_modified_by_user`, `incident_type`
-    ///
     pub fn include(mut self, value: String) -> Self {
         self.include = Some(value);
         self
@@ -89,13 +85,11 @@ impl GetIncidentOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetIncidentNotificationRuleOptionalParams {
     /// Comma-separated list of resources to include. Supported values: `created_by_user`, `last_modified_by_user`, `incident_type`, `notification_template`
-    ///
     pub include: Option<String>,
 }
 
 impl GetIncidentNotificationRuleOptionalParams {
     /// Comma-separated list of resources to include. Supported values: `created_by_user`, `last_modified_by_user`, `incident_type`, `notification_template`
-    ///
     pub fn include(mut self, value: String) -> Self {
         self.include = Some(value);
         self
@@ -107,13 +101,11 @@ impl GetIncidentNotificationRuleOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetIncidentNotificationTemplateOptionalParams {
     /// Comma-separated list of relationships to include. Supported values: `created_by_user`, `last_modified_by_user`, `incident_type`
-    ///
     pub include: Option<String>,
 }
 
 impl GetIncidentNotificationTemplateOptionalParams {
     /// Comma-separated list of relationships to include. Supported values: `created_by_user`, `last_modified_by_user`, `incident_type`
-    ///
     pub fn include(mut self, value: String) -> Self {
         self.include = Some(value);
         self
@@ -174,13 +166,11 @@ impl ListIncidentImpactsOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct ListIncidentNotificationRulesOptionalParams {
     /// Comma-separated list of resources to include. Supported values: `created_by_user`, `last_modified_by_user`, `incident_type`, `notification_template`
-    ///
     pub include: Option<String>,
 }
 
 impl ListIncidentNotificationRulesOptionalParams {
     /// Comma-separated list of resources to include. Supported values: `created_by_user`, `last_modified_by_user`, `incident_type`, `notification_template`
-    ///
     pub fn include(mut self, value: String) -> Self {
         self.include = Some(value);
         self
@@ -194,7 +184,6 @@ pub struct ListIncidentNotificationTemplatesOptionalParams {
     /// Optional incident type ID filter.
     pub filter_incident_type: Option<uuid::Uuid>,
     /// Comma-separated list of relationships to include. Supported values: `created_by_user`, `last_modified_by_user`, `incident_type`
-    ///
     pub include: Option<String>,
 }
 
@@ -205,7 +194,6 @@ impl ListIncidentNotificationTemplatesOptionalParams {
         self
     }
     /// Comma-separated list of relationships to include. Supported values: `created_by_user`, `last_modified_by_user`, `incident_type`
-    ///
     pub fn include(mut self, value: String) -> Self {
         self.include = Some(value);
         self
@@ -335,13 +323,11 @@ impl UpdateIncidentAttachmentsOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct UpdateIncidentNotificationRuleOptionalParams {
     /// Comma-separated list of resources to include. Supported values: `created_by_user`, `last_modified_by_user`, `incident_type`, `notification_template`
-    ///
     pub include: Option<String>,
 }
 
 impl UpdateIncidentNotificationRuleOptionalParams {
     /// Comma-separated list of resources to include. Supported values: `created_by_user`, `last_modified_by_user`, `incident_type`, `notification_template`
-    ///
     pub fn include(mut self, value: String) -> Self {
         self.include = Some(value);
         self
@@ -353,13 +339,11 @@ impl UpdateIncidentNotificationRuleOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct UpdateIncidentNotificationTemplateOptionalParams {
     /// Comma-separated list of relationships to include. Supported values: `created_by_user`, `last_modified_by_user`, `incident_type`
-    ///
     pub include: Option<String>,
 }
 
 impl UpdateIncidentNotificationTemplateOptionalParams {
     /// Comma-separated list of relationships to include. Supported values: `created_by_user`, `last_modified_by_user`, `incident_type`
-    ///
     pub fn include(mut self, value: String) -> Self {
         self.include = Some(value);
         self

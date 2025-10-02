@@ -7,7 +7,6 @@ use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
 /// The `socket` destination sends logs over TCP or UDP to a remote server.
-///
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]

@@ -13,7 +13,6 @@ use std::fmt::{self, Formatter};
 pub struct MetricTagCardinalitiesMeta {
     /// The name of metric for which the tag cardinalities are returned.
     /// This matches the metric name provided in the request.
-    ///
     #[serde(rename = "metric_name")]
     pub metric_name: Option<String>,
     #[serde(flatten)]

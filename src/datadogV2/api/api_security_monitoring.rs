@@ -4801,7 +4801,6 @@ impl SecurityMonitoringAPI {
     }
 
     /// Get a single SBOM related to an asset by its type and name.
-    ///
     pub async fn get_sbom(
         &self,
         asset_type: crate::datadogV2::model::AssetType,
@@ -4826,7 +4825,6 @@ impl SecurityMonitoringAPI {
     }
 
     /// Get a single SBOM related to an asset by its type and name.
-    ///
     pub async fn get_sbom_with_http_info(
         &self,
         asset_type: crate::datadogV2::model::AssetType,
@@ -6600,7 +6598,6 @@ impl SecurityMonitoringAPI {
     /// - Core attributes, including status, evaluation, high-level resource details, muted state, and rule details.
     /// - `evaluation_changed_at` and `resource_discovery_date` time stamps.
     /// - An array of associated tags.
-    ///
     pub async fn list_findings(
         &self,
         params: ListFindingsOptionalParams,
@@ -6697,7 +6694,6 @@ impl SecurityMonitoringAPI {
     /// - Core attributes, including status, evaluation, high-level resource details, muted state, and rule details.
     /// - `evaluation_changed_at` and `resource_discovery_date` time stamps.
     /// - An array of associated tags.
-    ///
     pub async fn list_findings_with_http_info(
         &self,
         params: ListFindingsOptionalParams,
@@ -7792,7 +7788,6 @@ impl SecurityMonitoringAPI {
     ///   "links": {...}
     /// }
     /// ```
-    ///
     pub async fn list_vulnerabilities(
         &self,
         params: ListVulnerabilitiesOptionalParams,
@@ -7894,7 +7889,6 @@ impl SecurityMonitoringAPI {
     ///   "links": {...}
     /// }
     /// ```
-    ///
     pub async fn list_vulnerabilities_with_http_info(
         &self,
         params: ListVulnerabilitiesOptionalParams,
@@ -8259,7 +8253,6 @@ impl SecurityMonitoringAPI {
     /// ### Metadata
     ///
     /// Please review the [Metadata section for the "List Vulnerabilities"](#metadata) endpoint.
-    ///
     pub async fn list_vulnerable_assets(
         &self,
         params: ListVulnerableAssetsOptionalParams,
@@ -8294,7 +8287,6 @@ impl SecurityMonitoringAPI {
     /// ### Metadata
     ///
     /// Please review the [Metadata section for the "List Vulnerabilities"](#metadata) endpoint.
-    ///
     pub async fn list_vulnerable_assets_with_http_info(
         &self,
         params: ListVulnerableAssetsOptionalParams,

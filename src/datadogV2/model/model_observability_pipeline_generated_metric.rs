@@ -8,7 +8,6 @@ use std::fmt::{self, Formatter};
 
 /// Defines a log-based custom metric, including its name, type, filter, value computation strategy,
 /// and optional grouping fields.
-///
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]

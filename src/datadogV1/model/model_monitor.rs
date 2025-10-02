@@ -30,7 +30,6 @@ pub struct Monitor {
     /// `published`: The monitor is active and evaluates conditions and notify as configured.
     ///
     /// This field is in preview. The draft value is only available to customers with the feature enabled.
-    ///
     #[serde(rename = "draft_status")]
     pub draft_status: Option<crate::datadogV1::model::MonitorDraftStatus>,
     /// ID of this monitor.

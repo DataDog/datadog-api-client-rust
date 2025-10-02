@@ -182,7 +182,6 @@ impl APIManagementAPI {
     /// See the [API Catalog documentation](<https://docs.datadoghq.com/api_catalog/add_metadata/>) for additional
     /// information about the possible metadata.
     /// It returns the created API ID.
-    ///
     pub async fn create_open_api(
         &self,
         params: CreateOpenAPIOptionalParams,
@@ -206,7 +205,6 @@ impl APIManagementAPI {
     /// See the [API Catalog documentation](<https://docs.datadoghq.com/api_catalog/add_metadata/>) for additional
     /// information about the possible metadata.
     /// It returns the created API ID.
-    ///
     pub async fn create_open_api_with_http_info(
         &self,
         params: CreateOpenAPIOptionalParams,
@@ -660,7 +658,6 @@ impl APIManagementAPI {
 
     /// Update information about a specific API. The given content will replace all API content of the given ID.
     /// The ID is returned by the create API, or can be found in the URL in the API catalog UI.
-    ///
     pub async fn update_open_api(
         &self,
         id: uuid::Uuid,
@@ -683,7 +680,6 @@ impl APIManagementAPI {
 
     /// Update information about a specific API. The given content will replace all API content of the given ID.
     /// The ID is returned by the create API, or can be found in the URL in the API catalog UI.
-    ///
     pub async fn update_open_api_with_http_info(
         &self,
         id: uuid::Uuid,

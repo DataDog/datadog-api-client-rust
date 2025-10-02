@@ -12,7 +12,6 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CloudConfigurationRuleCreatePayload {
     /// Description of generated findings and signals (severity and channels to be notified in case of a signal). Must contain exactly one item.
-    ///
     #[serde(rename = "cases")]
     pub cases: Vec<crate::datadogV2::model::CloudConfigurationRuleCaseCreate>,
     /// How to generate compliance signals. Useful for cloud_configuration rules only.

@@ -8,7 +8,6 @@ use std::fmt::{self, Formatter};
 
 /// The `google_cloud_storage` destination stores logs in a Google Cloud Storage (GCS) bucket.
 /// It requires a bucket name, GCP authentication, and metadata fields.
-///
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -17,7 +16,6 @@ pub struct ObservabilityPipelineGoogleCloudStorageDestination {
     #[serde(rename = "acl")]
     pub acl: crate::datadogV2::model::ObservabilityPipelineGoogleCloudStorageDestinationAcl,
     /// GCP credentials used to authenticate with Google Cloud Storage.
-    ///
     #[serde(rename = "auth")]
     pub auth: crate::datadogV2::model::ObservabilityPipelineGcpAuth,
     /// Name of the GCS bucket.
