@@ -8,14 +8,12 @@ use std::fmt::{self, Formatter};
 
 /// A Grok parsing rule used in the `parse_grok` processor. Each rule defines how to extract structured fields
 /// from a specific log field using Grok patterns.
-///
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineParseGrokProcessorRule {
     /// A list of Grok parsing rules that define how to extract fields from the source field.
     /// Each rule must contain a name and a valid Grok pattern.
-    ///
     #[serde(rename = "match_rules")]
     pub match_rules:
         Vec<crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorRuleMatchRule>,
@@ -23,7 +21,6 @@ pub struct ObservabilityPipelineParseGrokProcessorRule {
     #[serde(rename = "source")]
     pub source: String,
     /// A list of Grok helper rules that can be referenced by the parsing rules.
-    ///
     #[serde(rename = "support_rules")]
     pub support_rules: Option<
         Vec<crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorRuleSupportRule>,

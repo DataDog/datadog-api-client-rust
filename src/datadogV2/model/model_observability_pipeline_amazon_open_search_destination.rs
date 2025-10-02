@@ -13,7 +13,6 @@ use std::fmt::{self, Formatter};
 pub struct ObservabilityPipelineAmazonOpenSearchDestination {
     /// Authentication settings for the Amazon OpenSearch destination.
     /// The `strategy` field determines whether basic or AWS-based authentication is used.
-    ///
     #[serde(rename = "auth")]
     pub auth: crate::datadogV2::model::ObservabilityPipelineAmazonOpenSearchDestinationAuth,
     /// The index to write logs to.

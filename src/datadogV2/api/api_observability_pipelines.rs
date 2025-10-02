@@ -809,7 +809,6 @@ impl ObservabilityPipelinesAPI {
 
     /// Validates a pipeline configuration without creating or updating any resources.
     /// Returns a list of validation errors, if any.
-    ///
     pub async fn validate_pipeline(
         &self,
         body: crate::datadogV2::model::ObservabilityPipelineSpec,
@@ -831,7 +830,6 @@ impl ObservabilityPipelinesAPI {
 
     /// Validates a pipeline configuration without creating or updating any resources.
     /// Returns a list of validation errors, if any.
-    ///
     pub async fn validate_pipeline_with_http_info(
         &self,
         body: crate::datadogV2::model::ObservabilityPipelineSpec,

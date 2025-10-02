@@ -8,7 +8,6 @@ use std::fmt::{self, Formatter};
 
 /// Authentication settings for the Amazon OpenSearch destination.
 /// The `strategy` field determines whether basic or AWS-based authentication is used.
-///
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]

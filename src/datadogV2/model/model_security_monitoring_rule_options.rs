@@ -13,7 +13,6 @@ use std::fmt::{self, Formatter};
 pub struct SecurityMonitoringRuleOptions {
     /// Options for cloud_configuration rules.
     /// Fields `resourceType` and `regoRule` are mandatory when managing custom `cloud_configuration` rules.
-    ///
     #[serde(rename = "complianceRuleOptions")]
     pub compliance_rule_options:
         Option<crate::datadogV2::model::CloudConfigurationComplianceRuleOptions>,

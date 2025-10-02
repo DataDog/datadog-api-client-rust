@@ -109,7 +109,6 @@ impl OnCallPagingAPI {
     }
 
     /// Acknowledges an On-Call Page.
-    ///
     pub async fn acknowledge_on_call_page(
         &self,
         page_id: uuid::Uuid,
@@ -121,7 +120,6 @@ impl OnCallPagingAPI {
     }
 
     /// Acknowledges an On-Call Page.
-    ///
     pub async fn acknowledge_on_call_page_with_http_info(
         &self,
         page_id: uuid::Uuid,
@@ -199,7 +197,6 @@ impl OnCallPagingAPI {
     }
 
     /// Trigger a new On-Call Page.
-    ///
     pub async fn create_on_call_page(
         &self,
         body: crate::datadogV2::model::CreatePageRequest,
@@ -220,7 +217,6 @@ impl OnCallPagingAPI {
     }
 
     /// Trigger a new On-Call Page.
-    ///
     pub async fn create_on_call_page_with_http_info(
         &self,
         body: crate::datadogV2::model::CreatePageRequest,
@@ -353,7 +349,6 @@ impl OnCallPagingAPI {
     }
 
     /// Escalates an On-Call Page.
-    ///
     pub async fn escalate_on_call_page(
         &self,
         page_id: uuid::Uuid,
@@ -365,7 +360,6 @@ impl OnCallPagingAPI {
     }
 
     /// Escalates an On-Call Page.
-    ///
     pub async fn escalate_on_call_page_with_http_info(
         &self,
         page_id: uuid::Uuid,
@@ -443,7 +437,6 @@ impl OnCallPagingAPI {
     }
 
     /// Resolves an On-Call Page.
-    ///
     pub async fn resolve_on_call_page(
         &self,
         page_id: uuid::Uuid,
@@ -455,7 +448,6 @@ impl OnCallPagingAPI {
     }
 
     /// Resolves an On-Call Page.
-    ///
     pub async fn resolve_on_call_page_with_http_info(
         &self,
         page_id: uuid::Uuid,

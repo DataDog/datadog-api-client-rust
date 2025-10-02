@@ -8,7 +8,6 @@ use std::fmt::{self, Formatter};
 
 /// Defines a Grok parsing rule, which extracts structured fields from log content using named Grok patterns.
 /// Each rule must have a unique name and a valid Datadog Grok pattern that will be applied to the source field.
-///
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]

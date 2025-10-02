@@ -8,21 +8,18 @@ use std::fmt::{self, Formatter};
 
 /// Options for cloud_configuration rules.
 /// Fields `resourceType` and `regoRule` are mandatory when managing custom `cloud_configuration` rules.
-///
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CloudConfigurationComplianceRuleOptions {
     /// Whether the rule is a complex one.
     /// Must be set to true if `regoRule.resourceTypes` contains more than one item. Defaults to false.
-    ///
     #[serde(rename = "complexRule")]
     pub complex_rule: Option<bool>,
     /// Rule details.
     #[serde(rename = "regoRule")]
     pub rego_rule: Option<crate::datadogV2::model::CloudConfigurationRegoRule>,
     /// Main resource type to be checked by the rule. It should be specified again in `regoRule.resourceTypes`.
-    ///
     #[serde(rename = "resourceType")]
     pub resource_type: Option<String>,
     #[serde(flatten)]

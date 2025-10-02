@@ -7,7 +7,6 @@ use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
 /// The `splunk_hec` source implements the Splunk HTTP Event Collector (HEC) API.
-///
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]

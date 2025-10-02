@@ -7,7 +7,6 @@ use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
 /// Response object that includes an array of objects representing the cardinality details of a metric's tags.
-///
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]

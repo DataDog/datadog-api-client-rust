@@ -36,7 +36,6 @@ pub struct ObservabilityPipelineQuotaProcessor {
     /// - `drop`: Drop the event.
     /// - `no_action`: Let the event pass through.
     /// - `overflow_routing`: Route to an overflow destination.
-    ///
     #[serde(rename = "overflow_action")]
     pub overflow_action:
         Option<crate::datadogV2::model::ObservabilityPipelineQuotaProcessorOverflowAction>,

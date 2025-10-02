@@ -7,7 +7,6 @@ use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
 /// GCP credentials used to authenticate with Google Cloud Storage.
-///
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]

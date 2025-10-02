@@ -13,7 +13,6 @@ use std::fmt::{self, Formatter};
 pub struct ObservabilityPipelineAmazonDataFirehoseSource {
     /// AWS authentication credentials used for accessing AWS services such as S3.
     /// If omitted, the system’s default credentials are used (for example, the IAM role and environment variables).
-    ///
     #[serde(rename = "auth")]
     pub auth: Option<crate::datadogV2::model::ObservabilityPipelineAwsAuth>,
     /// The unique identifier for this component. Used to reference this component in other parts of the pipeline (e.g., as input to downstream components).

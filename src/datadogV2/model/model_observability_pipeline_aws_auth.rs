@@ -8,7 +8,6 @@ use std::fmt::{self, Formatter};
 
 /// AWS authentication credentials used for accessing AWS services such as S3.
 /// If omitted, the system’s default credentials are used (for example, the IAM role and environment variables).
-///
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
