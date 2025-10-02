@@ -63,6 +63,9 @@ pub struct CloudWorkloadSecurityAgentRuleAttributes {
     /// The list of product tags associated with the rule
     #[serde(rename = "product_tags")]
     pub product_tags: Option<Vec<String>>,
+    /// Whether the rule is silent.
+    #[serde(rename = "silent")]
+    pub silent: Option<bool>,
     /// The ID of the user who updated the rule
     #[serde(rename = "updateAuthorUuId")]
     pub update_author_uu_id: Option<String>,
@@ -104,6 +107,7 @@ impl CloudWorkloadSecurityAgentRuleAttributes {
             monitoring: None,
             name: None,
             product_tags: None,
+            silent: None,
             update_author_uu_id: None,
             update_date: None,
             updated_at: None,
@@ -200,6 +204,11 @@ impl CloudWorkloadSecurityAgentRuleAttributes {
         self
     }
 
+    pub fn silent(mut self, value: bool) -> Self {
+        self.silent = Some(value);
+        self
+    }
+
     pub fn update_author_uu_id(mut self, value: String) -> Self {
         self.update_author_uu_id = Some(value);
         self
@@ -280,6 +289,7 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleAttributes {
                 let mut monitoring: Option<Vec<String>> = None;
                 let mut name: Option<String> = None;
                 let mut product_tags: Option<Vec<String>> = None;
+                let mut silent: Option<bool> = None;
                 let mut update_author_uu_id: Option<String> = None;
                 let mut update_date: Option<i64> = None;
                 let mut updated_at: Option<i64> = None;
@@ -394,6 +404,12 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleAttributes {
                             product_tags =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "silent" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            silent = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "updateAuthorUuId" => {
                             if v.is_null() {
                                 continue;
@@ -451,6 +467,7 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleAttributes {
                     monitoring,
                     name,
                     product_tags,
+                    silent,
                     update_author_uu_id,
                     update_date,
                     updated_at,
