@@ -1790,6 +1790,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_update_datastore_item,
     );
     world.function_mappings.insert(
+        "v2.BulkDeleteDatastoreItems".into(),
+        test_v2_bulk_delete_datastore_items,
+    );
+    world.function_mappings.insert(
         "v2.BulkWriteDatastoreItems".into(),
         test_v2_bulk_write_datastore_items,
     );
@@ -11569,6 +11573,37 @@ fn test_v2_update_datastore_item(world: &mut DatadogWorld, _parameters: &HashMap
             };
         }
     };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_bulk_delete_datastore_items(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_actions_datastores
+        .as_ref()
+        .expect("api instance not found");
+    let datastore_id =
+        serde_json::from_value(_parameters.get("datastore_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.bulk_delete_datastore_items_with_http_info(datastore_id, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
