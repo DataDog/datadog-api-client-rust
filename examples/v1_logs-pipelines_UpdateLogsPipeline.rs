@@ -16,15 +16,13 @@ async fn main() {
             LogsGrokParser::new(
                 LogsGrokParserRules::new(
                     r#"rule_name_1 foo
-rule_name_2 bar
-"#
-                    .to_string(),
+rule_name_2 bar"#
+                        .to_string(),
                 )
                 .support_rules(
                     r#"rule_name_1 foo
-rule_name_2 bar
-"#
-                    .to_string(),
+rule_name_2 bar"#
+                        .to_string(),
                 ),
                 "message".to_string(),
                 LogsGrokParserType::GROK_PARSER,
