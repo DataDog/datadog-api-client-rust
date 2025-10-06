@@ -11,6 +11,10 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MonitorNotificationRuleResponseAttributes {
+    /// Use conditional recipients to define different recipients for different situations.
+    #[serde(rename = "conditional_recipients")]
+    pub conditional_recipients:
+        Option<crate::datadogV2::model::MonitorNotificationRuleConditionalRecipients>,
     /// Creation time of the monitor notification rule.
     #[serde(rename = "created")]
     pub created: Option<chrono::DateTime<chrono::Utc>>,
@@ -36,6 +40,7 @@ pub struct MonitorNotificationRuleResponseAttributes {
 impl MonitorNotificationRuleResponseAttributes {
     pub fn new() -> MonitorNotificationRuleResponseAttributes {
         MonitorNotificationRuleResponseAttributes {
+            conditional_recipients: None,
             created: None,
             filter: None,
             modified: None,
@@ -44,6 +49,14 @@ impl MonitorNotificationRuleResponseAttributes {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn conditional_recipients(
+        mut self,
+        value: crate::datadogV2::model::MonitorNotificationRuleConditionalRecipients,
+    ) -> Self {
+        self.conditional_recipients = Some(value);
+        self
     }
 
     pub fn created(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
@@ -103,6 +116,9 @@ impl<'de> Deserialize<'de> for MonitorNotificationRuleResponseAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut conditional_recipients: Option<
+                    crate::datadogV2::model::MonitorNotificationRuleConditionalRecipients,
+                > = None;
                 let mut created: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut filter: Option<crate::datadogV2::model::MonitorNotificationRuleFilter> =
                     None;
@@ -117,6 +133,13 @@ impl<'de> Deserialize<'de> for MonitorNotificationRuleResponseAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "conditional_recipients" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            conditional_recipients =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "created" => {
                             if v.is_null() {
                                 continue;
@@ -164,6 +187,7 @@ impl<'de> Deserialize<'de> for MonitorNotificationRuleResponseAttributes {
                 }
 
                 let content = MonitorNotificationRuleResponseAttributes {
+                    conditional_recipients,
                     created,
                     filter,
                     modified,

@@ -1,7 +1,10 @@
-// Update a monitor notification rule returns "OK" response
+// Update a monitor notification rule with conditional_recipients returns "OK"
+// response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_monitors::MonitorsAPI;
 use datadog_api_client::datadogV2::model::MonitorNotificationRuleAttributes;
+use datadog_api_client::datadogV2::model::MonitorNotificationRuleCondition;
+use datadog_api_client::datadogV2::model::MonitorNotificationRuleConditionalRecipients;
 use datadog_api_client::datadogV2::model::MonitorNotificationRuleFilter;
 use datadog_api_client::datadogV2::model::MonitorNotificationRuleFilterTags;
 use datadog_api_client::datadogV2::model::MonitorNotificationRuleResourceType;
@@ -16,6 +19,12 @@ async fn main() {
     let body = MonitorNotificationRuleUpdateRequest::new(
         MonitorNotificationRuleUpdateRequestData::new(
             MonitorNotificationRuleAttributes::new("updated rule".to_string())
+                .conditional_recipients(MonitorNotificationRuleConditionalRecipients::new(vec![
+                    MonitorNotificationRuleCondition::new(
+                        vec!["slack-test-channel".to_string(), "jira-test".to_string()],
+                        "transition_type:is_alert".to_string(),
+                    ),
+                ]))
                 .filter(
                     MonitorNotificationRuleFilter::MonitorNotificationRuleFilterTags(Box::new(
                         MonitorNotificationRuleFilterTags::new(vec![
@@ -23,8 +32,7 @@ async fn main() {
                             "host:abc".to_string(),
                         ]),
                     )),
-                )
-                .recipients(vec!["slack-test-channel".to_string()]),
+                ),
             monitor_notification_rule_data_id.clone(),
         )
         .type_(MonitorNotificationRuleResourceType::MONITOR_NOTIFICATION_RULE),
