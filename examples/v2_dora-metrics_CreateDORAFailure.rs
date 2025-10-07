@@ -1,5 +1,4 @@
-// Send a failure event for DORA Metrics returns "OK - but delayed due to
-// incident" response
+// Send a failure event returns "OK - but delayed due to incident" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_dora_metrics::DORAMetricsAPI;
 use datadog_api_client::datadogV2::model::DORAFailureRequest;
