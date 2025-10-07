@@ -1,4 +1,4 @@
-// Send a deployment event for DORA Metrics returns "OK" response
+// Send a deployment event returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_dora_metrics::DORAMetricsAPI;
 use datadog_api_client::datadogV2::model::DORADeploymentRequest;

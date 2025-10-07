@@ -158,7 +158,7 @@ impl DORAMetricsAPI {
         Self { config, client }
     }
 
-    /// Use this API endpoint to provide data about deployments for DORA metrics.
+    /// Use this API endpoint to provide deployment data.
     ///
     /// This is necessary for:
     /// - Deployment Frequency
@@ -185,7 +185,7 @@ impl DORAMetricsAPI {
         }
     }
 
-    /// Use this API endpoint to provide data about deployments for DORA metrics.
+    /// Use this API endpoint to provide deployment data.
     ///
     /// This is necessary for:
     /// - Deployment Frequency
@@ -315,7 +315,7 @@ impl DORAMetricsAPI {
         }
     }
 
-    /// Use this API endpoint to provide failure data for DORA metrics.
+    /// Use this API endpoint to provide failure data.
     ///
     /// This is necessary for:
     /// - Change Failure Rate
@@ -339,7 +339,7 @@ impl DORAMetricsAPI {
         }
     }
 
-    /// Use this API endpoint to provide failure data for DORA metrics.
+    /// Use this API endpoint to provide failure data.
     ///
     /// This is necessary for:
     /// - Change Failure Rate
@@ -470,7 +470,7 @@ impl DORAMetricsAPI {
 
     /// **Note**: This endpoint is deprecated. Please use `/api/v2/dora/failure` instead.
     ///
-    /// Use this API endpoint to provide failure data for DORA metrics.
+    /// Use this API endpoint to provide failure data.
     ///
     /// This is necessary for:
     /// - Change Failure Rate
@@ -496,7 +496,7 @@ impl DORAMetricsAPI {
 
     /// **Note**: This endpoint is deprecated. Please use `/api/v2/dora/failure` instead.
     ///
-    /// Use this API endpoint to provide failure data for DORA metrics.
+    /// Use this API endpoint to provide failure data.
     ///
     /// This is necessary for:
     /// - Change Failure Rate
