@@ -58,6 +58,7 @@ pub use self::api::api_org_connections;
 pub use self::api::api_organizations;
 pub use self::api::api_powerpack;
 pub use self::api::api_processes;
+pub use self::api::api_reference_tables;
 pub use self::api::api_restriction_policies;
 pub use self::api::api_roles;
 pub use self::api::api_rum;
