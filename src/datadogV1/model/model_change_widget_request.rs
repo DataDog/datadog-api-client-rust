@@ -29,6 +29,9 @@ pub struct ChangeWidgetRequest {
     /// Whether to show increase as good.
     #[serde(rename = "increase_good")]
     pub increase_good: Option<bool>,
+    /// The number of items to show.
+    #[serde(rename = "limit")]
+    pub limit: Option<i64>,
     /// The log query.
     #[serde(rename = "log_query")]
     pub log_query: Option<crate::datadogV1::model::LogQueryDefinition>,
@@ -81,6 +84,7 @@ impl ChangeWidgetRequest {
             event_query: None,
             formulas: None,
             increase_good: None,
+            limit: None,
             log_query: None,
             network_query: None,
             order_by: None,
@@ -125,6 +129,11 @@ impl ChangeWidgetRequest {
 
     pub fn increase_good(mut self, value: bool) -> Self {
         self.increase_good = Some(value);
+        self
+    }
+
+    pub fn limit(mut self, value: i64) -> Self {
+        self.limit = Some(value);
         self
     }
 
@@ -235,6 +244,7 @@ impl<'de> Deserialize<'de> for ChangeWidgetRequest {
                 let mut event_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
                 let mut formulas: Option<Vec<crate::datadogV1::model::WidgetFormula>> = None;
                 let mut increase_good: Option<bool> = None;
+                let mut limit: Option<i64> = None;
                 let mut log_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
                 let mut network_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
                 let mut order_by: Option<crate::datadogV1::model::WidgetOrderBy> = None;
@@ -319,6 +329,12 @@ impl<'de> Deserialize<'de> for ChangeWidgetRequest {
                             }
                             increase_good =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "limit" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            limit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "log_query" => {
                             if v.is_null() {
@@ -441,6 +457,7 @@ impl<'de> Deserialize<'de> for ChangeWidgetRequest {
                     event_query,
                     formulas,
                     increase_good,
+                    limit,
                     log_query,
                     network_query,
                     order_by,
