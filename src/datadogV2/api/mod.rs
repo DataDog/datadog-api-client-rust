@@ -57,6 +57,7 @@ pub mod api_org_connections;
 pub mod api_organizations;
 pub mod api_powerpack;
 pub mod api_processes;
+pub mod api_reference_tables;
 pub mod api_restriction_policies;
 pub mod api_roles;
 pub mod api_rum;
