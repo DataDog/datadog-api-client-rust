@@ -27,6 +27,9 @@ pub struct ArbitraryRuleResponseDataAttributes {
     /// The `attributes` `order_id`.
     #[serde(rename = "order_id")]
     pub order_id: i64,
+    /// The `attributes` `processing_status`.
+    #[serde(rename = "processing_status")]
+    pub processing_status: Option<String>,
     /// The `attributes` `provider`.
     #[serde(rename = "provider")]
     pub provider: Vec<String>,
@@ -77,6 +80,7 @@ impl ArbitraryRuleResponseDataAttributes {
             enabled,
             last_modified_user_uuid,
             order_id,
+            processing_status: None,
             provider,
             rejected: None,
             rule_name,
@@ -87,6 +91,11 @@ impl ArbitraryRuleResponseDataAttributes {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn processing_status(mut self, value: String) -> Self {
+        self.processing_status = Some(value);
+        self
     }
 
     pub fn rejected(mut self, value: bool) -> Self {
@@ -125,6 +134,7 @@ impl<'de> Deserialize<'de> for ArbitraryRuleResponseDataAttributes {
                 let mut enabled: Option<bool> = None;
                 let mut last_modified_user_uuid: Option<String> = None;
                 let mut order_id: Option<i64> = None;
+                let mut processing_status: Option<String> = None;
                 let mut provider: Option<Vec<String>> = None;
                 let mut rejected: Option<bool> = None;
                 let mut rule_name: Option<String> = None;
@@ -158,6 +168,13 @@ impl<'de> Deserialize<'de> for ArbitraryRuleResponseDataAttributes {
                         }
                         "order_id" => {
                             order_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "processing_status" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            processing_status =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "provider" => {
                             provider = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -210,6 +227,7 @@ impl<'de> Deserialize<'de> for ArbitraryRuleResponseDataAttributes {
                     enabled,
                     last_modified_user_uuid,
                     order_id,
+                    processing_status,
                     provider,
                     rejected,
                     rule_name,

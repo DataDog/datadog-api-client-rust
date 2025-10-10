@@ -2436,28 +2436,28 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_list_containers_with_pagination,
     );
     world.function_mappings.insert(
-        "v2.ListArbitraryCostRules".into(),
-        test_v2_list_arbitrary_cost_rules,
+        "v2.ListCustomAllocationRules".into(),
+        test_v2_list_custom_allocation_rules,
     );
     world.function_mappings.insert(
-        "v2.CreateArbitraryCostRule".into(),
-        test_v2_create_arbitrary_cost_rule,
+        "v2.CreateCustomAllocationRule".into(),
+        test_v2_create_custom_allocation_rule,
     );
     world.function_mappings.insert(
-        "v2.ReorderArbitraryCostRules".into(),
-        test_v2_reorder_arbitrary_cost_rules,
+        "v2.ReorderCustomAllocationRules".into(),
+        test_v2_reorder_custom_allocation_rules,
     );
     world.function_mappings.insert(
-        "v2.DeleteArbitraryCostRule".into(),
-        test_v2_delete_arbitrary_cost_rule,
+        "v2.DeleteCustomAllocationRule".into(),
+        test_v2_delete_custom_allocation_rule,
     );
     world.function_mappings.insert(
-        "v2.GetArbitraryCostRule".into(),
-        test_v2_get_arbitrary_cost_rule,
+        "v2.GetCustomAllocationRule".into(),
+        test_v2_get_custom_allocation_rule,
     );
     world.function_mappings.insert(
-        "v2.UpdateArbitraryCostRule".into(),
-        test_v2_update_arbitrary_cost_rule,
+        "v2.UpdateCustomAllocationRule".into(),
+        test_v2_update_custom_allocation_rule,
     );
     world.function_mappings.insert(
         "v2.ListCostAWSCURConfigs".into(),
@@ -2547,27 +2547,33 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.UpdateCostGCPUsageCostConfig".into(),
         test_v2_update_cost_gcp_usage_cost_config,
     );
-    world
-        .function_mappings
-        .insert("v2.ListRulesets".into(), test_v2_list_rulesets);
-    world
-        .function_mappings
-        .insert("v2.CreateRuleset".into(), test_v2_create_ruleset);
-    world
-        .function_mappings
-        .insert("v2.ReorderRulesets".into(), test_v2_reorder_rulesets);
+    world.function_mappings.insert(
+        "v2.ListTagPipelinesRulesets".into(),
+        test_v2_list_tag_pipelines_rulesets,
+    );
+    world.function_mappings.insert(
+        "v2.CreateTagPipelinesRuleset".into(),
+        test_v2_create_tag_pipelines_ruleset,
+    );
+    world.function_mappings.insert(
+        "v2.ReorderTagPipelinesRulesets".into(),
+        test_v2_reorder_tag_pipelines_rulesets,
+    );
     world
         .function_mappings
         .insert("v2.ValidateQuery".into(), test_v2_validate_query);
-    world
-        .function_mappings
-        .insert("v2.DeleteRuleset".into(), test_v2_delete_ruleset);
-    world
-        .function_mappings
-        .insert("v2.GetRuleset".into(), test_v2_get_ruleset);
-    world
-        .function_mappings
-        .insert("v2.UpdateRuleset".into(), test_v2_update_ruleset);
+    world.function_mappings.insert(
+        "v2.DeleteTagPipelinesRuleset".into(),
+        test_v2_delete_tag_pipelines_ruleset,
+    );
+    world.function_mappings.insert(
+        "v2.GetTagPipelinesRuleset".into(),
+        test_v2_get_tag_pipelines_ruleset,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateTagPipelinesRuleset".into(),
+        test_v2_update_tag_pipelines_ruleset,
+    );
     world.function_mappings.insert(
         "v2.GetActiveBillingDimensions".into(),
         test_v2_get_active_billing_dimensions,
@@ -17714,7 +17720,7 @@ fn test_v2_list_containers_with_pagination(
     world.response.code = 200;
 }
 
-fn test_v2_list_arbitrary_cost_rules(
+fn test_v2_list_custom_allocation_rules(
     world: &mut DatadogWorld,
     _parameters: &HashMap<String, Value>,
 ) {
@@ -17723,7 +17729,7 @@ fn test_v2_list_arbitrary_cost_rules(
         .v2_api_cloud_cost_management
         .as_ref()
         .expect("api instance not found");
-    let response = match block_on(api.list_arbitrary_cost_rules_with_http_info()) {
+    let response = match block_on(api.list_custom_allocation_rules_with_http_info()) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -17741,35 +17747,7 @@ fn test_v2_list_arbitrary_cost_rules(
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_create_arbitrary_cost_rule(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
-    let api = world
-        .api_instances
-        .v2_api_cloud_cost_management
-        .as_ref()
-        .expect("api instance not found");
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.create_arbitrary_cost_rule_with_http_info(body)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_reorder_arbitrary_cost_rules(
+fn test_v2_create_custom_allocation_rule(
     world: &mut DatadogWorld,
     _parameters: &HashMap<String, Value>,
 ) {
@@ -17779,7 +17757,7 @@ fn test_v2_reorder_arbitrary_cost_rules(
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.reorder_arbitrary_cost_rules_with_http_info(body)) {
+    let response = match block_on(api.create_custom_allocation_rule_with_http_info(body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -17797,7 +17775,35 @@ fn test_v2_reorder_arbitrary_cost_rules(
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_delete_arbitrary_cost_rule(
+fn test_v2_reorder_custom_allocation_rules(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_cost_management
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.reorder_custom_allocation_rules_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_custom_allocation_rule(
     world: &mut DatadogWorld,
     _parameters: &HashMap<String, Value>,
 ) {
@@ -17807,7 +17813,7 @@ fn test_v2_delete_arbitrary_cost_rule(
         .as_ref()
         .expect("api instance not found");
     let rule_id = serde_json::from_value(_parameters.get("rule_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.delete_arbitrary_cost_rule_with_http_info(rule_id)) {
+    let response = match block_on(api.delete_custom_allocation_rule_with_http_info(rule_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -17825,14 +17831,17 @@ fn test_v2_delete_arbitrary_cost_rule(
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_get_arbitrary_cost_rule(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+fn test_v2_get_custom_allocation_rule(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
     let api = world
         .api_instances
         .v2_api_cloud_cost_management
         .as_ref()
         .expect("api instance not found");
     let rule_id = serde_json::from_value(_parameters.get("rule_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.get_arbitrary_cost_rule_with_http_info(rule_id)) {
+    let response = match block_on(api.get_custom_allocation_rule_with_http_info(rule_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -17850,7 +17859,7 @@ fn test_v2_get_arbitrary_cost_rule(world: &mut DatadogWorld, _parameters: &HashM
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_update_arbitrary_cost_rule(
+fn test_v2_update_custom_allocation_rule(
     world: &mut DatadogWorld,
     _parameters: &HashMap<String, Value>,
 ) {
@@ -17861,7 +17870,7 @@ fn test_v2_update_arbitrary_cost_rule(
         .expect("api instance not found");
     let rule_id = serde_json::from_value(_parameters.get("rule_id").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.update_arbitrary_cost_rule_with_http_info(rule_id, body)) {
+    let response = match block_on(api.update_custom_allocation_rule_with_http_info(rule_id, body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -18534,13 +18543,16 @@ fn test_v2_update_cost_gcp_usage_cost_config(
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_list_rulesets(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+fn test_v2_list_tag_pipelines_rulesets(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
     let api = world
         .api_instances
         .v2_api_cloud_cost_management
         .as_ref()
         .expect("api instance not found");
-    let response = match block_on(api.list_rulesets_with_http_info()) {
+    let response = match block_on(api.list_tag_pipelines_rulesets_with_http_info()) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -18558,14 +18570,17 @@ fn test_v2_list_rulesets(world: &mut DatadogWorld, _parameters: &HashMap<String,
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_create_ruleset(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+fn test_v2_create_tag_pipelines_ruleset(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
     let api = world
         .api_instances
         .v2_api_cloud_cost_management
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.create_ruleset_with_http_info(body)) {
+    let response = match block_on(api.create_tag_pipelines_ruleset_with_http_info(body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -18583,14 +18598,17 @@ fn test_v2_create_ruleset(world: &mut DatadogWorld, _parameters: &HashMap<String
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_reorder_rulesets(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+fn test_v2_reorder_tag_pipelines_rulesets(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
     let api = world
         .api_instances
         .v2_api_cloud_cost_management
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.reorder_rulesets_with_http_info(body)) {
+    let response = match block_on(api.reorder_tag_pipelines_rulesets_with_http_info(body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -18633,7 +18651,10 @@ fn test_v2_validate_query(world: &mut DatadogWorld, _parameters: &HashMap<String
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_delete_ruleset(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+fn test_v2_delete_tag_pipelines_ruleset(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
     let api = world
         .api_instances
         .v2_api_cloud_cost_management
@@ -18641,7 +18662,7 @@ fn test_v2_delete_ruleset(world: &mut DatadogWorld, _parameters: &HashMap<String
         .expect("api instance not found");
     let ruleset_id =
         serde_json::from_value(_parameters.get("ruleset_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.delete_ruleset_with_http_info(ruleset_id)) {
+    let response = match block_on(api.delete_tag_pipelines_ruleset_with_http_info(ruleset_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -18659,7 +18680,10 @@ fn test_v2_delete_ruleset(world: &mut DatadogWorld, _parameters: &HashMap<String
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_get_ruleset(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+fn test_v2_get_tag_pipelines_ruleset(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
     let api = world
         .api_instances
         .v2_api_cloud_cost_management
@@ -18667,7 +18691,7 @@ fn test_v2_get_ruleset(world: &mut DatadogWorld, _parameters: &HashMap<String, V
         .expect("api instance not found");
     let ruleset_id =
         serde_json::from_value(_parameters.get("ruleset_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.get_ruleset_with_http_info(ruleset_id)) {
+    let response = match block_on(api.get_tag_pipelines_ruleset_with_http_info(ruleset_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -18685,7 +18709,10 @@ fn test_v2_get_ruleset(world: &mut DatadogWorld, _parameters: &HashMap<String, V
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_update_ruleset(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+fn test_v2_update_tag_pipelines_ruleset(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
     let api = world
         .api_instances
         .v2_api_cloud_cost_management
@@ -18694,7 +18721,8 @@ fn test_v2_update_ruleset(world: &mut DatadogWorld, _parameters: &HashMap<String
     let ruleset_id =
         serde_json::from_value(_parameters.get("ruleset_id").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.update_ruleset_with_http_info(ruleset_id, body)) {
+    let response = match block_on(api.update_tag_pipelines_ruleset_with_http_info(ruleset_id, body))
+    {
         Ok(response) => response,
         Err(error) => {
             return match error {

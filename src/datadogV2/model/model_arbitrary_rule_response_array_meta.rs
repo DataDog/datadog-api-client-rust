@@ -6,17 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `ArbitraryRuleResponseArray` object.
+/// The `ArbitraryRuleResponseArray` `meta`.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ArbitraryRuleResponseArray {
-    /// The `ArbitraryRuleResponseArray` `data`.
-    #[serde(rename = "data")]
-    pub data: Vec<crate::datadogV2::model::ArbitraryRuleResponseData>,
-    /// The `ArbitraryRuleResponseArray` `meta`.
-    #[serde(rename = "meta")]
-    pub meta: Option<crate::datadogV2::model::ArbitraryRuleResponseArrayMeta>,
+pub struct ArbitraryRuleResponseArrayMeta {
+    /// The `meta` `total_count`.
+    #[serde(rename = "total_count")]
+    pub total_count: Option<i64>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,20 +21,17 @@ pub struct ArbitraryRuleResponseArray {
     pub(crate) _unparsed: bool,
 }
 
-impl ArbitraryRuleResponseArray {
-    pub fn new(
-        data: Vec<crate::datadogV2::model::ArbitraryRuleResponseData>,
-    ) -> ArbitraryRuleResponseArray {
-        ArbitraryRuleResponseArray {
-            data,
-            meta: None,
+impl ArbitraryRuleResponseArrayMeta {
+    pub fn new() -> ArbitraryRuleResponseArrayMeta {
+        ArbitraryRuleResponseArrayMeta {
+            total_count: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn meta(mut self, value: crate::datadogV2::model::ArbitraryRuleResponseArrayMeta) -> Self {
-        self.meta = Some(value);
+    pub fn total_count(mut self, value: i64) -> Self {
+        self.total_count = Some(value);
         self
     }
 
@@ -50,14 +44,20 @@ impl ArbitraryRuleResponseArray {
     }
 }
 
-impl<'de> Deserialize<'de> for ArbitraryRuleResponseArray {
+impl Default for ArbitraryRuleResponseArrayMeta {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for ArbitraryRuleResponseArrayMeta {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ArbitraryRuleResponseArrayVisitor;
-        impl<'a> Visitor<'a> for ArbitraryRuleResponseArrayVisitor {
-            type Value = ArbitraryRuleResponseArray;
+        struct ArbitraryRuleResponseArrayMetaVisitor;
+        impl<'a> Visitor<'a> for ArbitraryRuleResponseArrayMetaVisitor {
+            type Value = ArbitraryRuleResponseArrayMeta;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -67,10 +67,7 @@ impl<'de> Deserialize<'de> for ArbitraryRuleResponseArray {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<Vec<crate::datadogV2::model::ArbitraryRuleResponseData>> =
-                    None;
-                let mut meta: Option<crate::datadogV2::model::ArbitraryRuleResponseArrayMeta> =
-                    None;
+                let mut total_count: Option<i64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -79,14 +76,12 @@ impl<'de> Deserialize<'de> for ArbitraryRuleResponseArray {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "data" => {
-                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "meta" => {
+                        "total_count" => {
                             if v.is_null() {
                                 continue;
                             }
-                            meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            total_count =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -95,11 +90,9 @@ impl<'de> Deserialize<'de> for ArbitraryRuleResponseArray {
                         }
                     }
                 }
-                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = ArbitraryRuleResponseArray {
-                    data,
-                    meta,
+                let content = ArbitraryRuleResponseArrayMeta {
+                    total_count,
                     additional_properties,
                     _unparsed,
                 };
@@ -108,6 +101,6 @@ impl<'de> Deserialize<'de> for ArbitraryRuleResponseArray {
             }
         }
 
-        deserializer.deserialize_any(ArbitraryRuleResponseArrayVisitor)
+        deserializer.deserialize_any(ArbitraryRuleResponseArrayMetaVisitor)
     }
 }

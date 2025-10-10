@@ -29,6 +29,9 @@ pub struct RulesetRespDataAttributes {
     /// The `attributes` `position`.
     #[serde(rename = "position")]
     pub position: i32,
+    /// The `attributes` `processing_status`.
+    #[serde(rename = "processing_status")]
+    pub processing_status: Option<String>,
     /// The `attributes` `rules`.
     #[serde(rename = "rules")]
     pub rules: Vec<crate::datadogV2::model::RulesetRespDataAttributesRulesItems>,
@@ -60,11 +63,17 @@ impl RulesetRespDataAttributes {
             modified,
             name,
             position,
+            processing_status: None,
             rules,
             version,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn processing_status(mut self, value: String) -> Self {
+        self.processing_status = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -102,6 +111,7 @@ impl<'de> Deserialize<'de> for RulesetRespDataAttributes {
                 > = None;
                 let mut name: Option<String> = None;
                 let mut position: Option<i32> = None;
+                let mut processing_status: Option<String> = None;
                 let mut rules: Option<
                     Vec<crate::datadogV2::model::RulesetRespDataAttributesRulesItems>,
                 > = None;
@@ -133,6 +143,13 @@ impl<'de> Deserialize<'de> for RulesetRespDataAttributes {
                         "position" => {
                             position = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "processing_status" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            processing_status =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "rules" => {
                             rules = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -163,6 +180,7 @@ impl<'de> Deserialize<'de> for RulesetRespDataAttributes {
                     modified,
                     name,
                     position,
+                    processing_status,
                     rules,
                     version,
                     additional_properties,
