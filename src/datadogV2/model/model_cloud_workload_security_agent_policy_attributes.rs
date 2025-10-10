@@ -38,6 +38,9 @@ pub struct CloudWorkloadSecurityAgentPolicyAttributes {
     /// The name of the policy
     #[serde(rename = "name")]
     pub name: Option<String>,
+    /// Whether the policy is pinned
+    #[serde(rename = "pinned")]
+    pub pinned: Option<bool>,
     /// The version of the policy
     #[serde(rename = "policyVersion")]
     pub policy_version: Option<String>,
@@ -56,6 +59,9 @@ pub struct CloudWorkloadSecurityAgentPolicyAttributes {
     /// The attributes of the user who last updated the policy
     #[serde(rename = "updater")]
     pub updater: Option<crate::datadogV2::model::CloudWorkloadSecurityAgentPolicyUpdaterAttributes>,
+    /// The versions of the policy
+    #[serde(rename = "versions")]
+    pub versions: Option<Vec<crate::datadogV2::model::CloudWorkloadSecurityAgentPolicyVersion>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -75,12 +81,14 @@ impl CloudWorkloadSecurityAgentPolicyAttributes {
             host_tags_lists: None,
             monitoring_rules_count: None,
             name: None,
+            pinned: None,
             policy_version: None,
             priority: None,
             rule_count: None,
             update_date: None,
             updated_at: None,
             updater: None,
+            versions: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -131,6 +139,11 @@ impl CloudWorkloadSecurityAgentPolicyAttributes {
         self
     }
 
+    pub fn pinned(mut self, value: bool) -> Self {
+        self.pinned = Some(value);
+        self
+    }
+
     pub fn policy_version(mut self, value: String) -> Self {
         self.policy_version = Some(value);
         self
@@ -161,6 +174,14 @@ impl CloudWorkloadSecurityAgentPolicyAttributes {
         value: crate::datadogV2::model::CloudWorkloadSecurityAgentPolicyUpdaterAttributes,
     ) -> Self {
         self.updater = Some(value);
+        self
+    }
+
+    pub fn versions(
+        mut self,
+        value: Vec<crate::datadogV2::model::CloudWorkloadSecurityAgentPolicyVersion>,
+    ) -> Self {
+        self.versions = Some(value);
         self
     }
 
@@ -205,6 +226,7 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentPolicyAttributes {
                 let mut host_tags_lists: Option<Vec<Vec<String>>> = None;
                 let mut monitoring_rules_count: Option<i32> = None;
                 let mut name: Option<String> = None;
+                let mut pinned: Option<bool> = None;
                 let mut policy_version: Option<String> = None;
                 let mut priority: Option<i64> = None;
                 let mut rule_count: Option<i32> = None;
@@ -212,6 +234,9 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentPolicyAttributes {
                 let mut updated_at: Option<i64> = None;
                 let mut updater: Option<
                     crate::datadogV2::model::CloudWorkloadSecurityAgentPolicyUpdaterAttributes,
+                > = None;
+                let mut versions: Option<
+                    Vec<crate::datadogV2::model::CloudWorkloadSecurityAgentPolicyVersion>,
                 > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -281,6 +306,12 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentPolicyAttributes {
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "pinned" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            pinned = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "policyVersion" => {
                             if v.is_null() {
                                 continue;
@@ -319,6 +350,12 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentPolicyAttributes {
                             }
                             updater = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "versions" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            versions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -337,12 +374,14 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentPolicyAttributes {
                     host_tags_lists,
                     monitoring_rules_count,
                     name,
+                    pinned,
                     policy_version,
                     priority,
                     rule_count,
                     update_date,
                     updated_at,
                     updater,
+                    versions,
                     additional_properties,
                     _unparsed,
                 };
