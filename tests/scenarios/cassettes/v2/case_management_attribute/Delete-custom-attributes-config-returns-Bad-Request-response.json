@@ -1,0 +1,67 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"description\":\"Worldwide case type\",\"emoji\":\"\ud83c\udf0d\",\"name\":\"World\"},\"type\":\"case_type\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/cases/types"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":{\"id\":\"3ffd2bc8-e360-40d4-8ed6-60f72161fd89\",\"type\":\"case_type\",\"attributes\":{\"description\":\"Worldwide case type\",\"emoji\":\"\ud83c\udf0d\",\"internal\":false,\"name\":\"World\",\"statuses_config\":{\"open\":{\"status_options\":[{\"name\":\"Open\"}],\"default\":\"Open\"},\"in_progress\":{\"status_options\":[{\"name\":\"In Progress\"}],\"default\":\"In Progress\"},\"closed\":{\"status_options\":[{\"name\":\"Closed\"}],\"default\":\"Closed\"}}}}}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 201,
+          "message": "Created"
+        }
+      },
+      "recorded_at": "Wed, 01 Oct 2025 12:50:13 GMT"
+    },
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "*/*"
+          ]
+        },
+        "method": "delete",
+        "uri": "https://api.datadoghq.com/api/v2/cases/types/3ffd2bc8-e360-40d4-8ed6-60f72161fd89/custom_attributes/not-an-uuid"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"status\":\"400\",\"title\":\"Invalid Parameter\",\"detail\":\"invalid parameter \\\"CustomAttributeId\\\" in \\\"path\\\"; expected type \\\"uuid\\\"\"}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Wed, 01 Oct 2025 12:50:13 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
