@@ -10,7 +10,7 @@ use datadog_api_client::datadogV2::model::CloudWorkloadSecurityAgentPolicyType;
 async fn main() {
     let body = CloudWorkloadSecurityAgentPolicyCreateRequest::new(
         CloudWorkloadSecurityAgentPolicyCreateData::new(
-            CloudWorkloadSecurityAgentPolicyCreateAttributes::new("my_agent_policy".to_string())
+            CloudWorkloadSecurityAgentPolicyCreateAttributes::new("my_agent_policy_2".to_string())
                 .description("My agent policy".to_string())
                 .enabled(true)
                 .host_tags_lists(vec![vec!["env:test".to_string()]]),

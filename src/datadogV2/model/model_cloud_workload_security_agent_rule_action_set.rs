@@ -11,22 +11,31 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CloudWorkloadSecurityAgentRuleActionSet {
-    /// Whether the value should be appended to the field
+    /// Whether the value should be appended to the field.
     #[serde(rename = "append")]
     pub append: Option<bool>,
+    /// The default value of the set action
+    #[serde(rename = "default_value")]
+    pub default_value: Option<String>,
+    /// The expression of the set action.
+    #[serde(rename = "expression")]
+    pub expression: Option<String>,
     /// The field of the set action
     #[serde(rename = "field")]
     pub field: Option<String>,
+    /// Whether the value should be inherited.
+    #[serde(rename = "inherited")]
+    pub inherited: Option<bool>,
     /// The name of the set action
     #[serde(rename = "name")]
     pub name: Option<String>,
-    /// The scope of the set action
+    /// The scope of the set action.
     #[serde(rename = "scope")]
     pub scope: Option<String>,
-    /// The size of the set action
+    /// The size of the set action.
     #[serde(rename = "size")]
     pub size: Option<i64>,
-    /// The time to live of the set action
+    /// The time to live of the set action.
     #[serde(rename = "ttl")]
     pub ttl: Option<i64>,
     /// The value of the set action
@@ -43,7 +52,10 @@ impl CloudWorkloadSecurityAgentRuleActionSet {
     pub fn new() -> CloudWorkloadSecurityAgentRuleActionSet {
         CloudWorkloadSecurityAgentRuleActionSet {
             append: None,
+            default_value: None,
+            expression: None,
             field: None,
+            inherited: None,
             name: None,
             scope: None,
             size: None,
@@ -59,8 +71,23 @@ impl CloudWorkloadSecurityAgentRuleActionSet {
         self
     }
 
+    pub fn default_value(mut self, value: String) -> Self {
+        self.default_value = Some(value);
+        self
+    }
+
+    pub fn expression(mut self, value: String) -> Self {
+        self.expression = Some(value);
+        self
+    }
+
     pub fn field(mut self, value: String) -> Self {
         self.field = Some(value);
+        self
+    }
+
+    pub fn inherited(mut self, value: bool) -> Self {
+        self.inherited = Some(value);
         self
     }
 
@@ -122,7 +149,10 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleActionSet {
                 M: MapAccess<'a>,
             {
                 let mut append: Option<bool> = None;
+                let mut default_value: Option<String> = None;
+                let mut expression: Option<String> = None;
                 let mut field: Option<String> = None;
+                let mut inherited: Option<bool> = None;
                 let mut name: Option<String> = None;
                 let mut scope: Option<String> = None;
                 let mut size: Option<i64> = None;
@@ -142,11 +172,30 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleActionSet {
                             }
                             append = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "default_value" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            default_value =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "expression" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            expression = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "field" => {
                             if v.is_null() {
                                 continue;
                             }
                             field = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "inherited" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            inherited = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "name" => {
                             if v.is_null() {
@@ -188,7 +237,10 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleActionSet {
 
                 let content = CloudWorkloadSecurityAgentRuleActionSet {
                     append,
+                    default_value,
+                    expression,
                     field,
+                    inherited,
                     name,
                     scope,
                     size,

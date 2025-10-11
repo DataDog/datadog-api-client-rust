@@ -9,11 +9,11 @@
           ]
         },
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v2/security_monitoring/cloud_workload_security/agent_rules/non-existent-rule-id"
+        "uri": "https://api.datadoghq.com/api/v2/security_monitoring/cloud_workload_security/agent_rules/abc-def-ghi"
       },
       "response": {
         "body": {
-          "string": "{\"errors\":[\"Not found\"]}\n",
+          "string": "{\"errors\":[\"not_found(Agent rule not found: agentRuleId=abc-def-ghi)\"]}",
           "encoding": null
         },
         "headers": {
@@ -26,7 +26,7 @@
           "message": "Not Found"
         }
       },
-      "recorded_at": "Tue, 27 May 2025 10:25:09 GMT"
+      "recorded_at": "Fri, 10 Oct 2025 15:21:08 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"

@@ -22,6 +22,7 @@ async fn main() {
             .actions(Some(vec![
                 CloudWorkloadSecurityAgentRuleAction::new().set(
                     CloudWorkloadSecurityAgentRuleActionSet::new()
+                        .inherited(true)
                         .name("test_set".to_string())
                         .scope("process".to_string())
                         .value("test_value".to_string()),
