@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"vuln_containers_os\":false},\"id\":\"api-spec-test\",\"type\":\"gcp_scan_options\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "patch",
+        "uri": "https://api.datadoghq.com/api/v2/agentless_scanning/accounts/gcp/api-spec-test"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":{\"id\":\"api-spec-test\",\"type\":\"gcp_scan_options\",\"attributes\":{\"vuln_containers_os\":false,\"vuln_host_os\":true}}}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Sun, 12 Oct 2025 15:49:59 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

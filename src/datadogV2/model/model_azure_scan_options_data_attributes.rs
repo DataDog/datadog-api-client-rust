@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `AzureScanOptionsDataAttributes` object.
+/// Attributes for Azure scan options configuration.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AzureScanOptionsDataAttributes {
-    /// The `attributes` `vuln_containers_os`.
+    /// Indicates if scanning for vulnerabilities in containers is enabled.
     #[serde(rename = "vuln_containers_os")]
     pub vuln_containers_os: Option<bool>,
-    /// The `attributes` `vuln_host_os`.
+    /// Indicates if scanning for vulnerabilities in hosts is enabled.
     #[serde(rename = "vuln_host_os")]
     pub vuln_host_os: Option<bool>,
     #[serde(flatten)]

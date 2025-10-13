@@ -1,0 +1,33 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "application/json"
+          ]
+        },
+        "method": "get",
+        "uri": "https://api.datadoghq.com/api/v2/agentless_scanning/accounts/gcp/no"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"title\":\"Generic Error\",\"detail\":\"project_id 'no' is too short: must be at least 6 characters (current: 2)\"}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Sun, 12 Oct 2025 15:49:53 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

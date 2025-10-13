@@ -13,7 +13,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"errors\":[{\"status\":\"404\",\"detail\":\"no aws scan options found for subscription 000000000005\"}]}",
+          "string": "{\"errors\":[{\"status\":\"404\",\"detail\":\"no aws scan options found for account 000000000005\"}]}",
           "encoding": null
         },
         "headers": {
@@ -26,7 +26,7 @@
           "message": "Not Found"
         }
       },
-      "recorded_at": "Sat, 01 Mar 2025 20:02:08 GMT"
+      "recorded_at": "Sun, 12 Oct 2025 15:49:47 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"
