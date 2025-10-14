@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `AzureScanOptionsArray` object.
+/// Response object containing a list of Azure scan options.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AzureScanOptionsArray {
-    /// The `AzureScanOptionsArray` `data`.
+    /// A list of Azure scan options.
     #[serde(rename = "data")]
     pub data: Vec<crate::datadogV2::model::AzureScanOptionsData>,
     #[serde(flatten)]

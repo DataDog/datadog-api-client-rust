@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `AzureScanOptionsInputUpdate` object.
+/// Request object for updating Azure scan options.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AzureScanOptionsInputUpdate {
-    /// The definition of `AzureScanOptionsInputUpdateData` object.
+    /// Data object for updating the scan options of a single Azure subscription.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::AzureScanOptionsInputUpdateData>,
     #[serde(flatten)]

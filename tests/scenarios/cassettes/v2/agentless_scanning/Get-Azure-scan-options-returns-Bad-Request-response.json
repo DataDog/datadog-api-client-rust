@@ -1,0 +1,33 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "application/json"
+          ]
+        },
+        "method": "get",
+        "uri": "https://api.datadoghq.com/api/v2/agentless_scanning/accounts/azure/invalid%20uuid"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"title\":\"Generic Error\",\"detail\":\"missing or invalid url parameter 'subscriptionId', expected uuid format '12345678-90ab-cdef-1234-567890abcdef'\"}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Sun, 12 Oct 2025 14:43:00 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
