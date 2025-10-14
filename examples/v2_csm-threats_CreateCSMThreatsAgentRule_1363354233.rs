@@ -1,6 +1,9 @@
-// Create a Workload Protection agent rule returns "OK" response
+// Create a Workload Protection agent rule with set action with expression returns
+// "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_csm_threats::CSMThreatsAPI;
+use datadog_api_client::datadogV2::model::CloudWorkloadSecurityAgentRuleAction;
+use datadog_api_client::datadogV2::model::CloudWorkloadSecurityAgentRuleActionSet;
 use datadog_api_client::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateAttributes;
 use datadog_api_client::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateData;
 use datadog_api_client::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateRequest;
@@ -16,8 +19,14 @@ async fn main() {
                 r#"exec.file.name == "sh""#.to_string(),
                 "examplecsmthreat".to_string(),
             )
-            .agent_version("> 7.60".to_string())
-            .description("My Agent rule".to_string())
+            .actions(Some(vec![CloudWorkloadSecurityAgentRuleAction::new().set(
+                CloudWorkloadSecurityAgentRuleActionSet::new()
+                    .default_value("/dev/null".to_string())
+                    .expression("open.file.path".to_string())
+                    .name("test_set".to_string())
+                    .scope("process".to_string()),
+            )]))
+            .description("My Agent rule with set action with expression".to_string())
             .enabled(true)
             .filters(vec![])
             .policy_id(policy_data_id.clone())

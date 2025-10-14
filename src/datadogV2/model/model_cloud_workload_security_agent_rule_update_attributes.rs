@@ -18,6 +18,9 @@ pub struct CloudWorkloadSecurityAgentRuleUpdateAttributes {
         with = "::serde_with::rust::double_option"
     )]
     pub actions: Option<Option<Vec<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleAction>>>,
+    /// Constrain the rule to specific versions of the Datadog Agent
+    #[serde(rename = "agent_version")]
+    pub agent_version: Option<String>,
     /// The blocking policies that the rule belongs to
     #[serde(rename = "blocking")]
     pub blocking: Option<Vec<String>>,
@@ -42,6 +45,9 @@ pub struct CloudWorkloadSecurityAgentRuleUpdateAttributes {
     /// The list of product tags associated with the rule
     #[serde(rename = "product_tags")]
     pub product_tags: Option<Vec<String>>,
+    /// Whether the rule is silent.
+    #[serde(rename = "silent")]
+    pub silent: Option<bool>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -53,6 +59,7 @@ impl CloudWorkloadSecurityAgentRuleUpdateAttributes {
     pub fn new() -> CloudWorkloadSecurityAgentRuleUpdateAttributes {
         CloudWorkloadSecurityAgentRuleUpdateAttributes {
             actions: None,
+            agent_version: None,
             blocking: None,
             description: None,
             disabled: None,
@@ -61,6 +68,7 @@ impl CloudWorkloadSecurityAgentRuleUpdateAttributes {
             monitoring: None,
             policy_id: None,
             product_tags: None,
+            silent: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -71,6 +79,11 @@ impl CloudWorkloadSecurityAgentRuleUpdateAttributes {
         value: Option<Vec<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleAction>>,
     ) -> Self {
         self.actions = Some(value);
+        self
+    }
+
+    pub fn agent_version(mut self, value: String) -> Self {
+        self.agent_version = Some(value);
         self
     }
 
@@ -114,6 +127,11 @@ impl CloudWorkloadSecurityAgentRuleUpdateAttributes {
         self
     }
 
+    pub fn silent(mut self, value: bool) -> Self {
+        self.silent = Some(value);
+        self
+    }
+
     pub fn additional_properties(
         mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
@@ -149,6 +167,7 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleUpdateAttributes {
                 let mut actions: Option<
                     Option<Vec<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleAction>>,
                 > = None;
+                let mut agent_version: Option<String> = None;
                 let mut blocking: Option<Vec<String>> = None;
                 let mut description: Option<String> = None;
                 let mut disabled: Option<Vec<String>> = None;
@@ -157,6 +176,7 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleUpdateAttributes {
                 let mut monitoring: Option<Vec<String>> = None;
                 let mut policy_id: Option<String> = None;
                 let mut product_tags: Option<Vec<String>> = None;
+                let mut silent: Option<bool> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -167,6 +187,13 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleUpdateAttributes {
                     match k.as_str() {
                         "actions" => {
                             actions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "agent_version" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            agent_version =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "blocking" => {
                             if v.is_null() {
@@ -218,6 +245,12 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleUpdateAttributes {
                             product_tags =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "silent" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            silent = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -228,6 +261,7 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleUpdateAttributes {
 
                 let content = CloudWorkloadSecurityAgentRuleUpdateAttributes {
                     actions,
+                    agent_version,
                     blocking,
                     description,
                     disabled,
@@ -236,6 +270,7 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleUpdateAttributes {
                     monitoring,
                     policy_id,
                     product_tags,
+                    silent,
                     additional_properties,
                     _unparsed,
                 };
