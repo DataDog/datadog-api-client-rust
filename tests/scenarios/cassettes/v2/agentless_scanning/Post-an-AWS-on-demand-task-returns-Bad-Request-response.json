@@ -19,7 +19,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"errors\":[{\"title\":\"Generic Error\",\"detail\":\"invalid aws resource arn\"}]}",
+          "string": "{\"errors\":[{\"title\":\"Generic Error\",\"detail\":\"invalid aws arn\"}]}",
           "encoding": null
         },
         "headers": {
@@ -32,7 +32,7 @@
           "message": "Bad Request"
         }
       },
-      "recorded_at": "Wed, 05 Mar 2025 15:30:09 GMT"
+      "recorded_at": "Sun, 12 Oct 2025 15:50:03 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"

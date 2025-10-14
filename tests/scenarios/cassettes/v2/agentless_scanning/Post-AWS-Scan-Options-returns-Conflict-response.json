@@ -19,7 +19,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"errors\":[{\"status\":\"409\",\"detail\":\"aws scan options already exist for subscription 000000000002\"}]}",
+          "string": "{\"errors\":[{\"status\":\"409\",\"detail\":\"aws scan options already exist for account 000000000002\"}]}",
           "encoding": null
         },
         "headers": {
@@ -32,7 +32,7 @@
           "message": "Conflict"
         }
       },
-      "recorded_at": "Thu, 06 Mar 2025 11:57:47 GMT"
+      "recorded_at": "Sun, 12 Oct 2025 15:50:00 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"

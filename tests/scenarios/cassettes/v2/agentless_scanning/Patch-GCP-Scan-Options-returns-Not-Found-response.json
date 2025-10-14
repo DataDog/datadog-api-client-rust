@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"vuln_containers_os\":true,\"vuln_host_os\":true},\"id\":\"nonexistent-project-id\",\"type\":\"gcp_scan_options\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "patch",
+        "uri": "https://api.datadoghq.com/api/v2/agentless_scanning/accounts/gcp/nonexistent-project-id"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"status\":\"404\",\"detail\":\"no gcp scan options found for project nonexistent-project-id\"}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 404,
+          "message": "Not Found"
+        }
+      },
+      "recorded_at": "Sun, 12 Oct 2025 15:49:59 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
