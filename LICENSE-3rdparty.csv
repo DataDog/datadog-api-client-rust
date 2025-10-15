@@ -83,10 +83,10 @@ native-tls,https://github.com/sfackler/rust-native-tls,MIT OR Apache-2.0,Steven 
 num-conv,https://github.com/jhpratt/num-conv,MIT OR Apache-2.0,Jacob Pratt <jacob@jhpratt.dev>
 num-traits,https://github.com/rust-num/num-traits,MIT OR Apache-2.0,The Rust Project Developers
 once_cell,https://github.com/matklad/once_cell,MIT OR Apache-2.0,Aleksey Kladov <aleksey.kladov@gmail.com>
-openssl,https://github.com/sfackler/rust-openssl,Apache-2.0,Steven Fackler <sfackler@gmail.com>
+openssl,https://github.com/rust-openssl/rust-openssl,Apache-2.0,Steven Fackler <sfackler@gmail.com>
 openssl-macros,https://github.com/sfackler/rust-openssl,MIT OR Apache-2.0,The openssl-macros Authors
 openssl-probe,https://github.com/alexcrichton/openssl-probe,MIT OR Apache-2.0,Alex Crichton <alex@alexcrichton.com>
-openssl-sys,https://github.com/sfackler/rust-openssl,MIT,"Alex Crichton <alex@alexcrichton.com>, Steven Fackler <sfackler@gmail.com>"
+openssl-sys,https://github.com/rust-openssl/rust-openssl,MIT,"Alex Crichton <alex@alexcrichton.com>, Steven Fackler <sfackler@gmail.com>"
 parking_lot,https://github.com/Amanieu/parking_lot,Apache-2.0 OR MIT,Amanieu d'Antras <amanieu@gmail.com>
 parking_lot_core,https://github.com/Amanieu/parking_lot,Apache-2.0 OR MIT,Amanieu d'Antras <amanieu@gmail.com>
 percent-encoding,https://github.com/servo/rust-url,MIT OR Apache-2.0,The rust-url developers
