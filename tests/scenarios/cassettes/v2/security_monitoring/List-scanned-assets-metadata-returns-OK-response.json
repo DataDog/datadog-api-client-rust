@@ -9,11 +9,11 @@
           ]
         },
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v2/security/vulnerable-assets?page%5Btoken%5D=unknown&page%5Bnumber%5D=1"
+        "uri": "https://api.datadoghq.com/api/v2/security/scanned-assets-metadata"
       },
       "response": {
         "body": {
-          "string": "{\"errors\":[{\"status\":\"404\",\"title\":\"Unexpected internal error\"}]}",
+          "string": "{\"data\":[]}",
           "encoding": null
         },
         "headers": {
@@ -22,11 +22,11 @@
           ]
         },
         "status": {
-          "code": 404,
-          "message": "Not Found"
+          "code": 200,
+          "message": "OK"
         }
       },
-      "recorded_at": "Tue, 14 Oct 2025 13:43:32 GMT"
+      "recorded_at": "Wed, 15 Oct 2025 08:42:14 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"

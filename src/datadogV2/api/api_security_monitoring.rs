@@ -88,12 +88,19 @@ impl GetRuleVersionHistoryOptionalParams {
 pub struct GetSBOMOptionalParams {
     /// The container image `repo_digest` for the SBOM request. When the requested asset type is 'Image', this filter is mandatory.
     pub filter_repo_digest: Option<String>,
+    /// The standard of the SBOM.
+    pub ext_format: Option<crate::datadogV2::model::SBOMFormat>,
 }
 
 impl GetSBOMOptionalParams {
     /// The container image `repo_digest` for the SBOM request. When the requested asset type is 'Image', this filter is mandatory.
     pub fn filter_repo_digest(mut self, value: String) -> Self {
         self.filter_repo_digest = Some(value);
+        self
+    }
+    /// The standard of the SBOM.
+    pub fn ext_format(mut self, value: crate::datadogV2::model::SBOMFormat) -> Self {
+        self.ext_format = Some(value);
         self
     }
 }
@@ -371,6 +378,57 @@ impl ListHistoricalJobsOptionalParams {
     }
 }
 
+/// ListScannedAssetsMetadataOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_scanned_assets_metadata`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListScannedAssetsMetadataOptionalParams {
+    /// Its value must come from the `links` section of the response of the first request. Do not manually edit it.
+    pub page_token: Option<String>,
+    /// The page number to be retrieved. It should be equal to or greater than 1.
+    pub page_number: Option<i64>,
+    /// The type of the scanned asset.
+    pub filter_asset_type: Option<crate::datadogV2::model::CloudAssetType>,
+    /// The name of the scanned asset.
+    pub filter_asset_name: Option<String>,
+    /// The origin of last success scan.
+    pub filter_last_success_origin: Option<String>,
+    /// The environment of last success scan.
+    pub filter_last_success_env: Option<String>,
+}
+
+impl ListScannedAssetsMetadataOptionalParams {
+    /// Its value must come from the `links` section of the response of the first request. Do not manually edit it.
+    pub fn page_token(mut self, value: String) -> Self {
+        self.page_token = Some(value);
+        self
+    }
+    /// The page number to be retrieved. It should be equal to or greater than 1.
+    pub fn page_number(mut self, value: i64) -> Self {
+        self.page_number = Some(value);
+        self
+    }
+    /// The type of the scanned asset.
+    pub fn filter_asset_type(mut self, value: crate::datadogV2::model::CloudAssetType) -> Self {
+        self.filter_asset_type = Some(value);
+        self
+    }
+    /// The name of the scanned asset.
+    pub fn filter_asset_name(mut self, value: String) -> Self {
+        self.filter_asset_name = Some(value);
+        self
+    }
+    /// The origin of last success scan.
+    pub fn filter_last_success_origin(mut self, value: String) -> Self {
+        self.filter_last_success_origin = Some(value);
+        self
+    }
+    /// The environment of last success scan.
+    pub fn filter_last_success_env(mut self, value: String) -> Self {
+        self.filter_last_success_env = Some(value);
+        self
+    }
+}
+
 /// ListSecurityMonitoringHistsignalsOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_security_monitoring_histsignals`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -570,7 +628,7 @@ pub struct ListVulnerabilitiesOptionalParams {
     pub filter_repo_digests: Option<String>,
     /// Filter by origin.
     pub filter_origin: Option<String>,
-    /// Filter by asset name.
+    /// Filter by asset name. This field supports the usage of wildcards (*).
     pub filter_asset_name: Option<String>,
     /// Filter by asset type.
     pub filter_asset_type: Option<crate::datadogV2::model::AssetType>,
@@ -750,7 +808,7 @@ impl ListVulnerabilitiesOptionalParams {
         self.filter_origin = Some(value);
         self
     }
-    /// Filter by asset name.
+    /// Filter by asset name. This field supports the usage of wildcards (*).
     pub fn filter_asset_name(mut self, value: String) -> Self {
         self.filter_asset_name = Some(value);
         self
@@ -835,7 +893,7 @@ pub struct ListVulnerableAssetsOptionalParams {
     pub page_token: Option<String>,
     /// The page number to be retrieved. It should be equal or greater than `1`
     pub page_number: Option<i64>,
-    /// Filter by name.
+    /// Filter by name. This field supports the usage of wildcards (*).
     pub filter_name: Option<String>,
     /// Filter by type.
     pub filter_type: Option<crate::datadogV2::model::AssetType>,
@@ -878,7 +936,7 @@ impl ListVulnerableAssetsOptionalParams {
         self.page_number = Some(value);
         self
     }
-    /// Filter by name.
+    /// Filter by name. This field supports the usage of wildcards (*).
     pub fn filter_name(mut self, value: String) -> Self {
         self.filter_name = Some(value);
         self
@@ -1315,6 +1373,15 @@ pub enum ListFindingsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListHistoricalJobsError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListScannedAssetsMetadataError is a struct for typed errors of method [`SecurityMonitoringAPI::list_scanned_assets_metadata`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListScannedAssetsMetadataError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -4847,6 +4914,7 @@ impl SecurityMonitoringAPI {
 
         // unbox and build optional parameters
         let filter_repo_digest = params.filter_repo_digest;
+        let ext_format = params.ext_format;
 
         let local_client = &self.client;
 
@@ -4863,6 +4931,10 @@ impl SecurityMonitoringAPI {
         if let Some(ref local_query_param) = filter_repo_digest {
             local_req_builder =
                 local_req_builder.query(&[("filter[repo_digest]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = ext_format {
+            local_req_builder =
+                local_req_builder.query(&[("ext:format", &local_query_param.to_string())]);
         };
 
         // build headers
@@ -7009,6 +7081,246 @@ impl SecurityMonitoringAPI {
         }
     }
 
+    /// Get a list of security scanned assets metadata for an organization.
+    ///
+    /// ### Pagination
+    ///
+    /// For the "List Vulnerabilities" endpoint, see the [Pagination section](#pagination).
+    ///
+    /// ### Filtering
+    ///
+    /// For the "List Vulnerabilities" endpoint, see the [Filtering section](#filtering).
+    ///
+    /// ### Metadata
+    ///
+    ///  For the "List Vulnerabilities" endpoint, see the [Metadata section](#metadata).
+    ///
+    /// ### Related endpoints
+    ///
+    /// This endpoint returns additional metadata for cloud resources that is not available from the standard resource endpoints. To access a richer dataset, call this endpoint together with the relevant resource endpoint(s) and merge (join) their results using the resource identifier.
+    ///
+    /// **Hosts**
+    ///
+    /// To enrich host data, join the response from the [Hosts](<https://docs.datadoghq.com/api/latest/hosts/>) endpoint with the response from the scanned-assets-metadata endpoint on the following key fields:
+    ///
+    /// | ENDPOINT | JOIN KEY | TYPE |
+    /// | --- | --- | --- |
+    /// | [/api/v1/hosts](<https://docs.datadoghq.com/api/latest/hosts/>) | host_list.host_name | string |
+    /// | /api/v2/security/scanned-assets-metadata | data.attributes.asset.name | string |
+    ///
+    /// **Host Images**
+    ///
+    /// To enrich host image data, join the response from the [Hosts](<https://docs.datadoghq.com/api/latest/hosts/>) endpoint with the response from the scanned-assets-metadata endpoint on the following key fields:
+    ///
+    /// | ENDPOINT | JOIN KEY | TYPE |
+    /// | --- | --- | --- |
+    /// | [/api/v1/hosts](<https://docs.datadoghq.com/api/latest/hosts/>) | host_list.tags_by_source["Amazon Web Services"]["image"] | string |
+    /// | /api/v2/security/scanned-assets-metadata | data.attributes.asset.name | string |
+    ///
+    /// **Container Images**
+    ///
+    /// To enrich container image data, join the response from the [Container Images](<https://docs.datadoghq.com/api/latest/container-images/>) endpoint with the response from the scanned-assets-metadata endpoint on the following key fields:
+    ///
+    /// | ENDPOINT | JOIN KEY | TYPE |
+    /// | --- | --- | --- |
+    /// | [/api/v2/container_images](<https://docs.datadoghq.com/api/latest/container-images/>) | `data.attributes.name`@`data.attributes.repo_digest` | string |
+    /// | /api/v2/security/scanned-assets-metadata | data.attributes.asset.name | string |
+    pub async fn list_scanned_assets_metadata(
+        &self,
+        params: ListScannedAssetsMetadataOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::ScannedAssetsMetadata,
+        datadog::Error<ListScannedAssetsMetadataError>,
+    > {
+        match self
+            .list_scanned_assets_metadata_with_http_info(params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get a list of security scanned assets metadata for an organization.
+    ///
+    /// ### Pagination
+    ///
+    /// For the "List Vulnerabilities" endpoint, see the [Pagination section](#pagination).
+    ///
+    /// ### Filtering
+    ///
+    /// For the "List Vulnerabilities" endpoint, see the [Filtering section](#filtering).
+    ///
+    /// ### Metadata
+    ///
+    ///  For the "List Vulnerabilities" endpoint, see the [Metadata section](#metadata).
+    ///
+    /// ### Related endpoints
+    ///
+    /// This endpoint returns additional metadata for cloud resources that is not available from the standard resource endpoints. To access a richer dataset, call this endpoint together with the relevant resource endpoint(s) and merge (join) their results using the resource identifier.
+    ///
+    /// **Hosts**
+    ///
+    /// To enrich host data, join the response from the [Hosts](<https://docs.datadoghq.com/api/latest/hosts/>) endpoint with the response from the scanned-assets-metadata endpoint on the following key fields:
+    ///
+    /// | ENDPOINT | JOIN KEY | TYPE |
+    /// | --- | --- | --- |
+    /// | [/api/v1/hosts](<https://docs.datadoghq.com/api/latest/hosts/>) | host_list.host_name | string |
+    /// | /api/v2/security/scanned-assets-metadata | data.attributes.asset.name | string |
+    ///
+    /// **Host Images**
+    ///
+    /// To enrich host image data, join the response from the [Hosts](<https://docs.datadoghq.com/api/latest/hosts/>) endpoint with the response from the scanned-assets-metadata endpoint on the following key fields:
+    ///
+    /// | ENDPOINT | JOIN KEY | TYPE |
+    /// | --- | --- | --- |
+    /// | [/api/v1/hosts](<https://docs.datadoghq.com/api/latest/hosts/>) | host_list.tags_by_source["Amazon Web Services"]["image"] | string |
+    /// | /api/v2/security/scanned-assets-metadata | data.attributes.asset.name | string |
+    ///
+    /// **Container Images**
+    ///
+    /// To enrich container image data, join the response from the [Container Images](<https://docs.datadoghq.com/api/latest/container-images/>) endpoint with the response from the scanned-assets-metadata endpoint on the following key fields:
+    ///
+    /// | ENDPOINT | JOIN KEY | TYPE |
+    /// | --- | --- | --- |
+    /// | [/api/v2/container_images](<https://docs.datadoghq.com/api/latest/container-images/>) | `data.attributes.name`@`data.attributes.repo_digest` | string |
+    /// | /api/v2/security/scanned-assets-metadata | data.attributes.asset.name | string |
+    pub async fn list_scanned_assets_metadata_with_http_info(
+        &self,
+        params: ListScannedAssetsMetadataOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::ScannedAssetsMetadata>,
+        datadog::Error<ListScannedAssetsMetadataError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_scanned_assets_metadata";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_scanned_assets_metadata' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let page_token = params.page_token;
+        let page_number = params.page_number;
+        let filter_asset_type = params.filter_asset_type;
+        let filter_asset_name = params.filter_asset_name;
+        let filter_last_success_origin = params.filter_last_success_origin;
+        let filter_last_success_env = params.filter_last_success_env;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security/scanned-assets-metadata",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = page_token {
+            local_req_builder =
+                local_req_builder.query(&[("page[token]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_number {
+            local_req_builder =
+                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_asset_type {
+            local_req_builder =
+                local_req_builder.query(&[("filter[asset.type]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_asset_name {
+            local_req_builder =
+                local_req_builder.query(&[("filter[asset.name]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_last_success_origin {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[last_success.origin]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_last_success_env {
+            local_req_builder = local_req_builder
+                .query(&[("filter[last_success.env]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::ScannedAssetsMetadata>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListScannedAssetsMetadataError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Get the list of configured security filters with their definitions.
     pub async fn list_security_filters(
         &self,
@@ -7749,6 +8061,8 @@ impl SecurityMonitoringAPI {
     ///
     /// This token can then be used in the subsequent paginated requests.
     ///
+    /// *Note: The first request may take longer to complete than subsequent requests.*
+    ///
     /// #### Subsequent requests
     ///
     /// Any request containing valid `page[token]` and `page[number]` parameters will be considered a subsequent request.
@@ -7756,6 +8070,8 @@ impl SecurityMonitoringAPI {
     /// If the `token` is invalid, a `404` response will be returned.
     ///
     /// If the page `number` is invalid, a `400` response will be returned.
+    ///
+    /// The returned `token` is valid for all requests in the pagination sequence. To send paginated requests in parallel, reuse the same `token` and change only the `page[number]` parameter.
     ///
     /// ### Filtering
     ///
@@ -7788,6 +8104,11 @@ impl SecurityMonitoringAPI {
     ///   "links": {...}
     /// }
     /// ```
+    /// ### Extensions
+    ///
+    /// Requests may include extensions to modify the behavior of the requested endpoint. The filter parameters follow the [JSON:API format](<https://jsonapi.org/extensions/#extensions>) format: `ext:$extension_name`, where `extension_name` is the name of the modifier that is being applied.
+    ///
+    /// Extensions can only include one value: `ext:modifier=value`.
     pub async fn list_vulnerabilities(
         &self,
         params: ListVulnerabilitiesOptionalParams,
@@ -7850,6 +8171,8 @@ impl SecurityMonitoringAPI {
     ///
     /// This token can then be used in the subsequent paginated requests.
     ///
+    /// *Note: The first request may take longer to complete than subsequent requests.*
+    ///
     /// #### Subsequent requests
     ///
     /// Any request containing valid `page[token]` and `page[number]` parameters will be considered a subsequent request.
@@ -7857,6 +8180,8 @@ impl SecurityMonitoringAPI {
     /// If the `token` is invalid, a `404` response will be returned.
     ///
     /// If the page `number` is invalid, a `400` response will be returned.
+    ///
+    /// The returned `token` is valid for all requests in the pagination sequence. To send paginated requests in parallel, reuse the same `token` and change only the `page[number]` parameter.
     ///
     /// ### Filtering
     ///
@@ -7889,6 +8214,11 @@ impl SecurityMonitoringAPI {
     ///   "links": {...}
     /// }
     /// ```
+    /// ### Extensions
+    ///
+    /// Requests may include extensions to modify the behavior of the requested endpoint. The filter parameters follow the [JSON:API format](<https://jsonapi.org/extensions/#extensions>) format: `ext:$extension_name`, where `extension_name` is the name of the modifier that is being applied.
+    ///
+    /// Extensions can only include one value: `ext:modifier=value`.
     pub async fn list_vulnerabilities_with_http_info(
         &self,
         params: ListVulnerabilitiesOptionalParams,
@@ -8025,7 +8355,7 @@ impl SecurityMonitoringAPI {
         };
         if let Some(ref local_query_param) = filter_advisory_id {
             local_req_builder =
-                local_req_builder.query(&[("filter[advisory_id]", &local_query_param.to_string())]);
+                local_req_builder.query(&[("filter[advisory.id]", &local_query_param.to_string())]);
         };
         if let Some(ref local_query_param) = filter_risks_exploitation_probability {
             local_req_builder = local_req_builder.query(&[(
@@ -8328,7 +8658,7 @@ impl SecurityMonitoringAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/security/assets",
+            "{}/api/v2/security/vulnerable-assets",
             local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =

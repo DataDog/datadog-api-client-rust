@@ -142,6 +142,7 @@ impl Default for Configuration {
             ("v2.list_assets_sbo_ms".to_owned(), false),
             ("v2.list_findings".to_owned(), false),
             ("v2.list_historical_jobs".to_owned(), false),
+            ("v2.list_scanned_assets_metadata".to_owned(), false),
             ("v2.list_security_monitoring_histsignals".to_owned(), false),
             ("v2.list_vulnerabilities".to_owned(), false),
             ("v2.list_vulnerable_assets".to_owned(), false),
