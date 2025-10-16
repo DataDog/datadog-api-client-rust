@@ -33,6 +33,9 @@ pub struct SecurityMonitoringStandardRuleQuery {
     /// The index to run the query on, if the `dataSource` is `logs`. Only used for scheduled rules - in other words, when the `schedulingOptions` field is present in the rule payload.
     #[serde(rename = "index")]
     pub index: Option<String>,
+    /// List of indexes to query when the `dataSource` is `logs`. Only used for scheduled rules, such as when the `schedulingOptions` field is present in the rule payload.
+    #[serde(rename = "indexes")]
+    pub indexes: Option<Vec<String>>,
     /// (Deprecated) The target field to aggregate over when using the sum or max
     /// aggregations. `metrics` field should be used instead.
     #[deprecated]
@@ -65,6 +68,7 @@ impl SecurityMonitoringStandardRuleQuery {
             group_by_fields: None,
             has_optional_group_by_fields: None,
             index: None,
+            indexes: None,
             metric: None,
             metrics: None,
             name: None,
@@ -119,6 +123,12 @@ impl SecurityMonitoringStandardRuleQuery {
     #[allow(deprecated)]
     pub fn index(mut self, value: String) -> Self {
         self.index = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn indexes(mut self, value: Vec<String>) -> Self {
+        self.indexes = Some(value);
         self
     }
 
@@ -189,6 +199,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleQuery {
                 let mut group_by_fields: Option<Vec<String>> = None;
                 let mut has_optional_group_by_fields: Option<bool> = None;
                 let mut index: Option<String> = None;
+                let mut indexes: Option<Vec<String>> = None;
                 let mut metric: Option<String> = None;
                 let mut metrics: Option<Vec<String>> = None;
                 let mut name: Option<String> = None;
@@ -265,6 +276,12 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleQuery {
                             }
                             index = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "indexes" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            indexes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "metric" => {
                             if v.is_null() {
                                 continue;
@@ -306,6 +323,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleQuery {
                     group_by_fields,
                     has_optional_group_by_fields,
                     index,
+                    indexes,
                     metric,
                     metrics,
                     name,
