@@ -36,7 +36,7 @@ async fn main() {
                     .aggregation(SecurityMonitoringRuleQueryAggregation::COUNT)
                     .distinct_fields(vec![])
                     .group_by_fields(vec![])
-                    .index("main".to_string())
+                    .indexes(vec!["main".to_string()])
                     .query("@test:true".to_string())],
             )
             .filters(vec![])
