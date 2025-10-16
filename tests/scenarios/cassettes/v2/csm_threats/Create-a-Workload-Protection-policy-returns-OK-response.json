@@ -3,7 +3,7 @@
     {
       "request": {
         "body": {
-          "string": "{\"data\":{\"attributes\":{\"description\":\"My agent policy\",\"enabled\":true,\"hostTagsLists\":[[\"env:test\"]],\"name\":\"my_agent_policy_2\"},\"type\":\"policy\"}}",
+          "string": "{\"data\":{\"attributes\":{\"description\":\"My agent policy\",\"enabled\":true,\"hostTagsLists\":[[\"env:test\"]],\"name\":\"testcreateaworkloadprotectionpolicyreturnsokresponse1760630575\"},\"type\":\"policy\"}}",
           "encoding": null
         },
         "headers": {
@@ -19,7 +19,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"id\":\"fwg-18e-cfb\",\"type\":\"policy\",\"attributes\":{\"blockingRulesCount\":0,\"datadogManaged\":false,\"description\":\"My agent policy\",\"disabledRulesCount\":1,\"enabled\":true,\"hostTagsLists\":[[\"env:test\"]],\"monitoringRulesCount\":7,\"name\":\"my_agent_policy_2\",\"pinned\":false,\"policyVersion\":\"1\",\"ruleCount\":8,\"updateDate\":1760109655264,\"updater\":{\"name\":\"frog\",\"handle\":\"frog@datadoghq.com\"}}}}",
+          "string": "{\"data\":{\"id\":\"dkt-nw6-1fd\",\"type\":\"policy\",\"attributes\":{\"blockingRulesCount\":0,\"datadogManaged\":false,\"description\":\"My agent policy\",\"disabledRulesCount\":1,\"enabled\":true,\"hostTagsLists\":[[\"env:test\"]],\"monitoringRulesCount\":7,\"name\":\"testcreateaworkloadprotectionpolicyreturnsokresponse1760630575\",\"pinned\":false,\"policyVersion\":\"1\",\"ruleCount\":8,\"updateDate\":1760630575680,\"updater\":{\"name\":\"frog\",\"handle\":\"frog@datadoghq.com\"}}}}",
           "encoding": null
         },
         "headers": {
@@ -32,7 +32,7 @@
           "message": "OK"
         }
       },
-      "recorded_at": "Fri, 10 Oct 2025 15:20:54 GMT"
+      "recorded_at": "Thu, 16 Oct 2025 16:02:55 GMT"
     },
     {
       "request": {
@@ -43,7 +43,7 @@
           ]
         },
         "method": "delete",
-        "uri": "https://api.datadoghq.com/api/v2/remote_config/products/cws/policy/fwg-18e-cfb"
+        "uri": "https://api.datadoghq.com/api/v2/remote_config/products/cws/policy/dkt-nw6-1fd"
       },
       "response": {
         "body": {
@@ -60,7 +60,7 @@
           "message": "No Content"
         }
       },
-      "recorded_at": "Fri, 10 Oct 2025 15:20:54 GMT"
+      "recorded_at": "Thu, 16 Oct 2025 16:02:55 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"
