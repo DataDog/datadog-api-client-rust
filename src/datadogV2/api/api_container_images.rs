@@ -127,6 +127,7 @@ impl ContainerImagesAPI {
     }
 
     /// Get all Container Images for your organization.
+    /// **Note**: To enrich the data returned by this endpoint with security scans, see the new [api/v2/security/scanned-assets-metadata](<https://docs.datadoghq.com/api/latest/security-monitoring/#list-scanned-assets-metadata>) endpoint.
     pub async fn list_container_images(
         &self,
         params: ListContainerImagesOptionalParams,
@@ -187,6 +188,7 @@ impl ContainerImagesAPI {
     }
 
     /// Get all Container Images for your organization.
+    /// **Note**: To enrich the data returned by this endpoint with security scans, see the new [api/v2/security/scanned-assets-metadata](<https://docs.datadoghq.com/api/latest/security-monitoring/#list-scanned-assets-metadata>) endpoint.
     pub async fn list_container_images_with_http_info(
         &self,
         params: ListContainerImagesOptionalParams,
