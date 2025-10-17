@@ -306,6 +306,7 @@ impl HostsAPI {
     /// Retention is 7 days.
     /// Results are paginated with a max of 1000 results at a time.
     /// **Note:** If the host is an Amazon EC2 instance, `id` is replaced with `aws_id` in the response.
+    /// **Note**: To enrich the data returned by this endpoint with security scans, see the new [api/v2/security/scanned-assets-metadata](<https://docs.datadoghq.com/api/latest/security-monitoring/#list-scanned-assets-metadata>) endpoint.
     pub async fn list_hosts(
         &self,
         params: ListHostsOptionalParams,
@@ -329,6 +330,7 @@ impl HostsAPI {
     /// Retention is 7 days.
     /// Results are paginated with a max of 1000 results at a time.
     /// **Note:** If the host is an Amazon EC2 instance, `id` is replaced with `aws_id` in the response.
+    /// **Note**: To enrich the data returned by this endpoint with security scans, see the new [api/v2/security/scanned-assets-metadata](<https://docs.datadoghq.com/api/latest/security-monitoring/#list-scanned-assets-metadata>) endpoint.
     pub async fn list_hosts_with_http_info(
         &self,
         params: ListHostsOptionalParams,
