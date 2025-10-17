@@ -14,6 +14,8 @@ pub mod api_authn_mappings;
 pub mod api_aws_integration;
 pub mod api_aws_logs_integration;
 pub mod api_case_management;
+pub mod api_case_management_attribute;
+pub mod api_case_management_type;
 pub mod api_ci_visibility_pipelines;
 pub mod api_ci_visibility_tests;
 pub mod api_cloud_cost_management;

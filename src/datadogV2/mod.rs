@@ -15,6 +15,8 @@ pub use self::api::api_authn_mappings;
 pub use self::api::api_aws_integration;
 pub use self::api::api_aws_logs_integration;
 pub use self::api::api_case_management;
+pub use self::api::api_case_management_attribute;
+pub use self::api::api_case_management_type;
 pub use self::api::api_ci_visibility_pipelines;
 pub use self::api::api_ci_visibility_tests;
 pub use self::api::api_cloud_cost_management;

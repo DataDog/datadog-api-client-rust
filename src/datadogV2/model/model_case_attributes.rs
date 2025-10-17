@@ -31,6 +31,10 @@ pub struct CaseAttributes {
     /// Timestamp of when the case was created
     #[serde(rename = "created_at")]
     pub created_at: Option<chrono::DateTime<chrono::Utc>>,
+    /// Case custom attributes
+    #[serde(rename = "custom_attributes")]
+    pub custom_attributes:
+        Option<std::collections::BTreeMap<String, crate::datadogV2::model::CustomAttributeValue>>,
     /// Description
     #[serde(rename = "description")]
     pub description: Option<String>,
@@ -68,8 +72,12 @@ pub struct CaseAttributes {
     #[serde(rename = "title")]
     pub title: Option<String>,
     /// Case type
+    #[deprecated]
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::CaseType>,
+    /// Case type UUID
+    #[serde(rename = "type_id")]
+    pub type_id: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -79,11 +87,13 @@ pub struct CaseAttributes {
 
 impl CaseAttributes {
     pub fn new() -> CaseAttributes {
+        #[allow(deprecated)]
         CaseAttributes {
             archived_at: None,
             attributes: None,
             closed_at: None,
             created_at: None,
+            custom_attributes: None,
             description: None,
             jira_issue: None,
             key: None,
@@ -93,56 +103,76 @@ impl CaseAttributes {
             status: None,
             title: None,
             type_: None,
+            type_id: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
+    #[allow(deprecated)]
     pub fn archived_at(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.archived_at = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn attributes(mut self, value: std::collections::BTreeMap<String, Vec<String>>) -> Self {
         self.attributes = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn closed_at(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.closed_at = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
 
+    #[allow(deprecated)]
+    pub fn custom_attributes(
+        mut self,
+        value: std::collections::BTreeMap<String, crate::datadogV2::model::CustomAttributeValue>,
+    ) -> Self {
+        self.custom_attributes = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn jira_issue(mut self, value: Option<crate::datadogV2::model::JiraIssue>) -> Self {
         self.jira_issue = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn key(mut self, value: String) -> Self {
         self.key = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn modified_at(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.modified_at = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn priority(mut self, value: crate::datadogV2::model::CasePriority) -> Self {
         self.priority = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn service_now_ticket(
         mut self,
         value: Option<crate::datadogV2::model::ServiceNowTicket>,
@@ -151,18 +181,27 @@ impl CaseAttributes {
         self
     }
 
+    #[allow(deprecated)]
     pub fn status(mut self, value: crate::datadogV2::model::CaseStatus) -> Self {
         self.status = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn type_(mut self, value: crate::datadogV2::model::CaseType) -> Self {
         self.type_ = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn type_id(mut self, value: String) -> Self {
+        self.type_id = Some(value);
         self
     }
 
@@ -202,6 +241,12 @@ impl<'de> Deserialize<'de> for CaseAttributes {
                 let mut attributes: Option<std::collections::BTreeMap<String, Vec<String>>> = None;
                 let mut closed_at: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
+                let mut custom_attributes: Option<
+                    std::collections::BTreeMap<
+                        String,
+                        crate::datadogV2::model::CustomAttributeValue,
+                    >,
+                > = None;
                 let mut description: Option<String> = None;
                 let mut jira_issue: Option<Option<crate::datadogV2::model::JiraIssue>> = None;
                 let mut key: Option<String> = None;
@@ -213,6 +258,7 @@ impl<'de> Deserialize<'de> for CaseAttributes {
                 let mut status: Option<crate::datadogV2::model::CaseStatus> = None;
                 let mut title: Option<String> = None;
                 let mut type_: Option<crate::datadogV2::model::CaseType> = None;
+                let mut type_id: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -239,6 +285,13 @@ impl<'de> Deserialize<'de> for CaseAttributes {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "custom_attributes" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            custom_attributes =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "description" => {
                             if v.is_null() {
@@ -316,6 +369,12 @@ impl<'de> Deserialize<'de> for CaseAttributes {
                                 }
                             }
                         }
+                        "type_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            type_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -324,11 +383,13 @@ impl<'de> Deserialize<'de> for CaseAttributes {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = CaseAttributes {
                     archived_at,
                     attributes,
                     closed_at,
                     created_at,
+                    custom_attributes,
                     description,
                     jira_issue,
                     key,
@@ -338,6 +399,7 @@ impl<'de> Deserialize<'de> for CaseAttributes {
                     status,
                     title,
                     type_,
+                    type_id,
                     additional_properties,
                     _unparsed,
                 };
