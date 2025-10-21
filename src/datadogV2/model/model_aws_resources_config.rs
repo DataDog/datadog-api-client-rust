@@ -11,10 +11,13 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AWSResourcesConfig {
-    /// Enable Cloud Security Management to scan AWS resources for vulnerabilities, misconfigurations, identity risks, and compliance violations. Defaults to `false`. Requires `extended_collection` to be set to `true`.
+    /// Enable Cloud Security Management to scan AWS resources for vulnerabilities, misconfigurations,
+    /// identity risks, and compliance violations. Defaults to `false`.
+    /// Requires `extended_collection` to be set to `true`.
     #[serde(rename = "cloud_security_posture_management_collection")]
     pub cloud_security_posture_management_collection: Option<bool>,
-    /// Whether Datadog collects additional attributes and configuration information about the resources in your AWS account. Defaults to `true`. Required for `cloud_security_posture_management_collection`.
+    /// Whether Datadog collects additional attributes and configuration information about the resources
+    /// in your AWS account. Defaults to `true`. Required for `cloud_security_posture_management_collection`.
     #[serde(rename = "extended_collection")]
     pub extended_collection: Option<bool>,
     #[serde(flatten)]

@@ -25,7 +25,8 @@ pub struct AWSAccountCreateRequestAttributes {
     #[serde(rename = "aws_account_id")]
     pub aws_account_id: String,
     /// AWS partition your AWS account is scoped to. Defaults to `aws`.
-    /// See [Partitions](<https://docs.aws.amazon.com/whitepapers/latest/aws-fault-isolation-boundaries/partitions.html>) in the AWS documentation for more information.
+    /// See [Partitions](<https://docs.aws.amazon.com/whitepapers/latest/aws-fault-isolation-boundaries/partitions.html>)
+    /// in the AWS documentation for more information.
     #[serde(rename = "aws_partition")]
     pub aws_partition: crate::datadogV2::model::AWSAccountPartition,
     /// AWS Regions to collect data from. Defaults to `include_all`.

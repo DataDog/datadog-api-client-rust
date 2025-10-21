@@ -6,8 +6,9 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Log Autosubscription configuration for Datadog Forwarder Lambda functions. Automatically set up triggers for existing
-/// and new logs for some services, ensuring no logs from new resources are missed and saving time spent on manual configuration.
+/// Log Autosubscription configuration for Datadog Forwarder Lambda functions.
+/// Automatically set up triggers for existing and new logs for some services,
+/// ensuring no logs from new resources are missed and saving time spent on manual configuration.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -18,8 +19,10 @@ pub struct AWSLambdaForwarderConfig {
     /// Log source configuration.
     #[serde(rename = "log_source_config")]
     pub log_source_config: Option<crate::datadogV2::model::AWSLambdaForwarderConfigLogSourceConfig>,
-    /// List of service IDs set to enable automatic log collection. Discover the list of available services with the
-    /// [Get list of AWS log ready services](<https://docs.datadoghq.com/api/latest/aws-logs-integration/#get-list-of-aws-log-ready-services>) endpoint.
+    /// List of service IDs set to enable automatic log collection.
+    /// Discover the list of available services with the
+    /// [Get list of AWS log ready services](<https://docs.datadoghq.com/api/latest/aws-logs-integration/#get-list-of-aws-log-ready-services>)
+    /// endpoint.
     #[serde(rename = "sources")]
     pub sources: Option<Vec<String>>,
     #[serde(flatten)]
