@@ -14,6 +14,9 @@ pub struct GCPMetricNamespaceConfig {
     /// When disabled, Datadog does not collect metrics that are related to this GCP metric namespace.
     #[serde(rename = "disabled")]
     pub disabled: Option<bool>,
+    /// When enabled, Datadog applies these additional filters to limit metric collection. A metric is collected only if it does not match all exclusion filters and matches at least one allow filter.
+    #[serde(rename = "filters")]
+    pub filters: Option<Vec<String>>,
     /// The id of the GCP metric namespace.
     #[serde(rename = "id")]
     pub id: Option<String>,
@@ -28,6 +31,7 @@ impl GCPMetricNamespaceConfig {
     pub fn new() -> GCPMetricNamespaceConfig {
         GCPMetricNamespaceConfig {
             disabled: None,
+            filters: None,
             id: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -36,6 +40,11 @@ impl GCPMetricNamespaceConfig {
 
     pub fn disabled(mut self, value: bool) -> Self {
         self.disabled = Some(value);
+        self
+    }
+
+    pub fn filters(mut self, value: Vec<String>) -> Self {
+        self.filters = Some(value);
         self
     }
 
@@ -77,6 +86,7 @@ impl<'de> Deserialize<'de> for GCPMetricNamespaceConfig {
                 M: MapAccess<'a>,
             {
                 let mut disabled: Option<bool> = None;
+                let mut filters: Option<Vec<String>> = None;
                 let mut id: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -91,6 +101,12 @@ impl<'de> Deserialize<'de> for GCPMetricNamespaceConfig {
                                 continue;
                             }
                             disabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "filters" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            filters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "id" => {
                             if v.is_null() {
@@ -108,6 +124,7 @@ impl<'de> Deserialize<'de> for GCPMetricNamespaceConfig {
 
                 let content = GCPMetricNamespaceConfig {
                     disabled,
+                    filters,
                     id,
                     additional_properties,
                     _unparsed,
