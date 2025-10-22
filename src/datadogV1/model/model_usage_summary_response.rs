@@ -538,9 +538,87 @@ pub struct UsageSummaryResponse {
     /// Shows the sum of all bytes scanned across all usage types by the Sensitive Data Scanner over all hours in the current month for all organizations.
     #[serde(rename = "sds_total_scanned_bytes_sum")]
     pub sds_total_scanned_bytes_sum: Option<i64>,
+    /// Sum of the average number of Serverless Apps with Application Performance Monitoring for Azure App Service instances in the current month for all organizations.
+    #[serde(rename = "serverless_apps_apm_apm_azure_appservice_instances_avg_sum")]
+    pub serverless_apps_apm_apm_azure_appservice_instances_avg_sum: Option<i64>,
+    /// Sum of the average number of Serverless Apps with Application Performance Monitoring for Azure Function instances in the current month for all organizations.
+    #[serde(rename = "serverless_apps_apm_apm_azure_azurefunction_instances_avg_sum")]
+    pub serverless_apps_apm_apm_azure_azurefunction_instances_avg_sum: Option<i64>,
+    /// Sum of the average number of Serverless Apps with Application Performance Monitoring for Azure Container App instances in the current month for all organizations.
+    #[serde(rename = "serverless_apps_apm_apm_azure_containerapp_instances_avg_sum")]
+    pub serverless_apps_apm_apm_azure_containerapp_instances_avg_sum: Option<i64>,
+    /// Sum of the average number of Serverless Apps with Application Performance Monitoring for Fargate Elastic Container Service tasks in the current month for all organizations.
+    #[serde(rename = "serverless_apps_apm_apm_fargate_ecs_tasks_avg_sum")]
+    pub serverless_apps_apm_apm_fargate_ecs_tasks_avg_sum: Option<i64>,
+    /// Sum of the average number of Serverless Apps with Application Performance Monitoring for Google Cloud Platform Cloud Function instances in the current month for all organizations.
+    #[serde(rename = "serverless_apps_apm_apm_gcp_cloudfunction_instances_avg_sum")]
+    pub serverless_apps_apm_apm_gcp_cloudfunction_instances_avg_sum: Option<i64>,
+    /// Sum of the average number of Serverless Apps with Application Performance Monitoring for Google Cloud Platform Cloud Run instances in the current month for all organizations.
+    #[serde(rename = "serverless_apps_apm_apm_gcp_cloudrun_instances_avg_sum")]
+    pub serverless_apps_apm_apm_gcp_cloudrun_instances_avg_sum: Option<i64>,
+    /// Sum of the average number of Serverless Apps with Application Performance Monitoring in the current month for all organizations.
+    #[serde(rename = "serverless_apps_apm_avg_sum")]
+    pub serverless_apps_apm_avg_sum: Option<i64>,
+    /// Sum of the average number of Serverless Apps with Application Performance Monitoring excluding Fargate for Azure App Service instances in the current month for all organizations.
+    #[serde(rename = "serverless_apps_apm_excl_fargate_apm_azure_appservice_instances_avg_sum")]
+    pub serverless_apps_apm_excl_fargate_apm_azure_appservice_instances_avg_sum: Option<i64>,
+    /// Sum of the average number of Serverless Apps with Application Performance Monitoring excluding Fargate for Azure Function instances in the current month for all organizations.
+    #[serde(rename = "serverless_apps_apm_excl_fargate_apm_azure_azurefunction_instances_avg_sum")]
+    pub serverless_apps_apm_excl_fargate_apm_azure_azurefunction_instances_avg_sum: Option<i64>,
+    /// Sum of the average number of Serverless Apps with Application Performance Monitoring excluding Fargate for Azure Container App instances in the current month for all organizations.
+    #[serde(rename = "serverless_apps_apm_excl_fargate_apm_azure_containerapp_instances_avg_sum")]
+    pub serverless_apps_apm_excl_fargate_apm_azure_containerapp_instances_avg_sum: Option<i64>,
+    /// Sum of the average number of Serverless Apps with Application Performance Monitoring excluding Fargate for Google Cloud Platform Cloud Function instances in the current month for all organizations.
+    #[serde(rename = "serverless_apps_apm_excl_fargate_apm_gcp_cloudfunction_instances_avg_sum")]
+    pub serverless_apps_apm_excl_fargate_apm_gcp_cloudfunction_instances_avg_sum: Option<i64>,
+    /// Sum of the average number of Serverless Apps with Application Performance Monitoring excluding Fargate for Google Cloud Platform Cloud Run instances in the current month for all organizations.
+    #[serde(rename = "serverless_apps_apm_excl_fargate_apm_gcp_cloudrun_instances_avg_sum")]
+    pub serverless_apps_apm_excl_fargate_apm_gcp_cloudrun_instances_avg_sum: Option<i64>,
+    /// Sum of the average number of Serverless Apps with Application Performance Monitoring excluding Fargate in the current month for all organizations.
+    #[serde(rename = "serverless_apps_apm_excl_fargate_avg_sum")]
+    pub serverless_apps_apm_excl_fargate_avg_sum: Option<i64>,
+    /// Sum of the average number of Serverless Apps for Azure Container App instances in the current month for all organizations.
+    #[serde(rename = "serverless_apps_azure_container_app_instances_avg_sum")]
+    pub serverless_apps_azure_container_app_instances_avg_sum: Option<i64>,
     /// Sum of the average number of Serverless Apps for Azure in the current month for all organizations.
     #[serde(rename = "serverless_apps_azure_count_avg_sum")]
     pub serverless_apps_azure_count_avg_sum: Option<i64>,
+    /// Sum of the average number of Serverless Apps for Azure Function App instances in the current month for all organizations.
+    #[serde(rename = "serverless_apps_azure_function_app_instances_avg_sum")]
+    pub serverless_apps_azure_function_app_instances_avg_sum: Option<i64>,
+    /// Sum of the average number of Serverless Apps for Azure Web App instances in the current month for all organizations.
+    #[serde(rename = "serverless_apps_azure_web_app_instances_avg_sum")]
+    pub serverless_apps_azure_web_app_instances_avg_sum: Option<i64>,
+    /// Sum of the average number of Serverless Apps for Elastic Container Service in the current month for all organizations.
+    #[serde(rename = "serverless_apps_ecs_avg_sum")]
+    pub serverless_apps_ecs_avg_sum: Option<i64>,
+    /// Sum of the average number of Serverless Apps for Elastic Kubernetes Service in the current month for all organizations.
+    #[serde(rename = "serverless_apps_eks_avg_sum")]
+    pub serverless_apps_eks_avg_sum: Option<i64>,
+    /// Sum of the average number of Serverless Apps excluding Fargate in the current month for all organizations.
+    #[serde(rename = "serverless_apps_excl_fargate_avg_sum")]
+    pub serverless_apps_excl_fargate_avg_sum: Option<i64>,
+    /// Sum of the average number of Serverless Apps excluding Fargate for Azure Container App instances in the current month for all organizations.
+    #[serde(rename = "serverless_apps_excl_fargate_azure_container_app_instances_avg_sum")]
+    pub serverless_apps_excl_fargate_azure_container_app_instances_avg_sum: Option<i64>,
+    /// Sum of the average number of Serverless Apps excluding Fargate for Azure Function App instances in the current month for all organizations.
+    #[serde(rename = "serverless_apps_excl_fargate_azure_function_app_instances_avg_sum")]
+    pub serverless_apps_excl_fargate_azure_function_app_instances_avg_sum: Option<i64>,
+    /// Sum of the average number of Serverless Apps excluding Fargate for Azure Web App instances in the current month for all organizations.
+    #[serde(rename = "serverless_apps_excl_fargate_azure_web_app_instances_avg_sum")]
+    pub serverless_apps_excl_fargate_azure_web_app_instances_avg_sum: Option<i64>,
+    /// Sum of the average number of Serverless Apps excluding Fargate for Google Cloud Platform Cloud Functions instances in the current month for all organizations.
+    #[serde(rename = "serverless_apps_excl_fargate_google_cloud_functions_instances_avg_sum")]
+    pub serverless_apps_excl_fargate_google_cloud_functions_instances_avg_sum: Option<i64>,
+    /// Sum of the average number of Serverless Apps excluding Fargate for Google Cloud Platform Cloud Run instances in the current month for all organizations.
+    #[serde(rename = "serverless_apps_excl_fargate_google_cloud_run_instances_avg_sum")]
+    pub serverless_apps_excl_fargate_google_cloud_run_instances_avg_sum: Option<i64>,
+    /// Sum of the average number of Serverless Apps for Google Cloud Platform Cloud Functions instances in the current month for all organizations.
+    #[serde(rename = "serverless_apps_google_cloud_functions_instances_avg_sum")]
+    pub serverless_apps_google_cloud_functions_instances_avg_sum: Option<i64>,
+    /// Sum of the average number of Serverless Apps for Google Cloud Platform Cloud Run instances in the current month for all organizations.
+    #[serde(rename = "serverless_apps_google_cloud_run_instances_avg_sum")]
+    pub serverless_apps_google_cloud_run_instances_avg_sum: Option<i64>,
     /// Sum of the average number of Serverless Apps for Google Cloud in the current month for all organizations.
     #[serde(rename = "serverless_apps_google_count_avg_sum")]
     pub serverless_apps_google_count_avg_sum: Option<i64>,
@@ -767,7 +845,33 @@ impl UsageSummaryResponse {
             sds_logs_scanned_bytes_sum: None,
             sds_rum_scanned_bytes_sum: None,
             sds_total_scanned_bytes_sum: None,
+            serverless_apps_apm_apm_azure_appservice_instances_avg_sum: None,
+            serverless_apps_apm_apm_azure_azurefunction_instances_avg_sum: None,
+            serverless_apps_apm_apm_azure_containerapp_instances_avg_sum: None,
+            serverless_apps_apm_apm_fargate_ecs_tasks_avg_sum: None,
+            serverless_apps_apm_apm_gcp_cloudfunction_instances_avg_sum: None,
+            serverless_apps_apm_apm_gcp_cloudrun_instances_avg_sum: None,
+            serverless_apps_apm_avg_sum: None,
+            serverless_apps_apm_excl_fargate_apm_azure_appservice_instances_avg_sum: None,
+            serverless_apps_apm_excl_fargate_apm_azure_azurefunction_instances_avg_sum: None,
+            serverless_apps_apm_excl_fargate_apm_azure_containerapp_instances_avg_sum: None,
+            serverless_apps_apm_excl_fargate_apm_gcp_cloudfunction_instances_avg_sum: None,
+            serverless_apps_apm_excl_fargate_apm_gcp_cloudrun_instances_avg_sum: None,
+            serverless_apps_apm_excl_fargate_avg_sum: None,
+            serverless_apps_azure_container_app_instances_avg_sum: None,
             serverless_apps_azure_count_avg_sum: None,
+            serverless_apps_azure_function_app_instances_avg_sum: None,
+            serverless_apps_azure_web_app_instances_avg_sum: None,
+            serverless_apps_ecs_avg_sum: None,
+            serverless_apps_eks_avg_sum: None,
+            serverless_apps_excl_fargate_avg_sum: None,
+            serverless_apps_excl_fargate_azure_container_app_instances_avg_sum: None,
+            serverless_apps_excl_fargate_azure_function_app_instances_avg_sum: None,
+            serverless_apps_excl_fargate_azure_web_app_instances_avg_sum: None,
+            serverless_apps_excl_fargate_google_cloud_functions_instances_avg_sum: None,
+            serverless_apps_excl_fargate_google_cloud_run_instances_avg_sum: None,
+            serverless_apps_google_cloud_functions_instances_avg_sum: None,
+            serverless_apps_google_cloud_run_instances_avg_sum: None,
             serverless_apps_google_count_avg_sum: None,
             serverless_apps_total_count_avg_sum: None,
             siem_analyzed_logs_add_on_count_agg_sum: None,
@@ -1815,8 +1919,208 @@ impl UsageSummaryResponse {
     }
 
     #[allow(deprecated)]
+    pub fn serverless_apps_apm_apm_azure_appservice_instances_avg_sum(
+        mut self,
+        value: i64,
+    ) -> Self {
+        self.serverless_apps_apm_apm_azure_appservice_instances_avg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn serverless_apps_apm_apm_azure_azurefunction_instances_avg_sum(
+        mut self,
+        value: i64,
+    ) -> Self {
+        self.serverless_apps_apm_apm_azure_azurefunction_instances_avg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn serverless_apps_apm_apm_azure_containerapp_instances_avg_sum(
+        mut self,
+        value: i64,
+    ) -> Self {
+        self.serverless_apps_apm_apm_azure_containerapp_instances_avg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn serverless_apps_apm_apm_fargate_ecs_tasks_avg_sum(mut self, value: i64) -> Self {
+        self.serverless_apps_apm_apm_fargate_ecs_tasks_avg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn serverless_apps_apm_apm_gcp_cloudfunction_instances_avg_sum(
+        mut self,
+        value: i64,
+    ) -> Self {
+        self.serverless_apps_apm_apm_gcp_cloudfunction_instances_avg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn serverless_apps_apm_apm_gcp_cloudrun_instances_avg_sum(mut self, value: i64) -> Self {
+        self.serverless_apps_apm_apm_gcp_cloudrun_instances_avg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn serverless_apps_apm_avg_sum(mut self, value: i64) -> Self {
+        self.serverless_apps_apm_avg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn serverless_apps_apm_excl_fargate_apm_azure_appservice_instances_avg_sum(
+        mut self,
+        value: i64,
+    ) -> Self {
+        self.serverless_apps_apm_excl_fargate_apm_azure_appservice_instances_avg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn serverless_apps_apm_excl_fargate_apm_azure_azurefunction_instances_avg_sum(
+        mut self,
+        value: i64,
+    ) -> Self {
+        self.serverless_apps_apm_excl_fargate_apm_azure_azurefunction_instances_avg_sum =
+            Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn serverless_apps_apm_excl_fargate_apm_azure_containerapp_instances_avg_sum(
+        mut self,
+        value: i64,
+    ) -> Self {
+        self.serverless_apps_apm_excl_fargate_apm_azure_containerapp_instances_avg_sum =
+            Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn serverless_apps_apm_excl_fargate_apm_gcp_cloudfunction_instances_avg_sum(
+        mut self,
+        value: i64,
+    ) -> Self {
+        self.serverless_apps_apm_excl_fargate_apm_gcp_cloudfunction_instances_avg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn serverless_apps_apm_excl_fargate_apm_gcp_cloudrun_instances_avg_sum(
+        mut self,
+        value: i64,
+    ) -> Self {
+        self.serverless_apps_apm_excl_fargate_apm_gcp_cloudrun_instances_avg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn serverless_apps_apm_excl_fargate_avg_sum(mut self, value: i64) -> Self {
+        self.serverless_apps_apm_excl_fargate_avg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn serverless_apps_azure_container_app_instances_avg_sum(mut self, value: i64) -> Self {
+        self.serverless_apps_azure_container_app_instances_avg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn serverless_apps_azure_count_avg_sum(mut self, value: i64) -> Self {
         self.serverless_apps_azure_count_avg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn serverless_apps_azure_function_app_instances_avg_sum(mut self, value: i64) -> Self {
+        self.serverless_apps_azure_function_app_instances_avg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn serverless_apps_azure_web_app_instances_avg_sum(mut self, value: i64) -> Self {
+        self.serverless_apps_azure_web_app_instances_avg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn serverless_apps_ecs_avg_sum(mut self, value: i64) -> Self {
+        self.serverless_apps_ecs_avg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn serverless_apps_eks_avg_sum(mut self, value: i64) -> Self {
+        self.serverless_apps_eks_avg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn serverless_apps_excl_fargate_avg_sum(mut self, value: i64) -> Self {
+        self.serverless_apps_excl_fargate_avg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn serverless_apps_excl_fargate_azure_container_app_instances_avg_sum(
+        mut self,
+        value: i64,
+    ) -> Self {
+        self.serverless_apps_excl_fargate_azure_container_app_instances_avg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn serverless_apps_excl_fargate_azure_function_app_instances_avg_sum(
+        mut self,
+        value: i64,
+    ) -> Self {
+        self.serverless_apps_excl_fargate_azure_function_app_instances_avg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn serverless_apps_excl_fargate_azure_web_app_instances_avg_sum(
+        mut self,
+        value: i64,
+    ) -> Self {
+        self.serverless_apps_excl_fargate_azure_web_app_instances_avg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn serverless_apps_excl_fargate_google_cloud_functions_instances_avg_sum(
+        mut self,
+        value: i64,
+    ) -> Self {
+        self.serverless_apps_excl_fargate_google_cloud_functions_instances_avg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn serverless_apps_excl_fargate_google_cloud_run_instances_avg_sum(
+        mut self,
+        value: i64,
+    ) -> Self {
+        self.serverless_apps_excl_fargate_google_cloud_run_instances_avg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn serverless_apps_google_cloud_functions_instances_avg_sum(mut self, value: i64) -> Self {
+        self.serverless_apps_google_cloud_functions_instances_avg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn serverless_apps_google_cloud_run_instances_avg_sum(mut self, value: i64) -> Self {
+        self.serverless_apps_google_cloud_run_instances_avg_sum = Some(value);
         self
     }
 
@@ -2117,7 +2421,45 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                 let mut sds_logs_scanned_bytes_sum: Option<i64> = None;
                 let mut sds_rum_scanned_bytes_sum: Option<i64> = None;
                 let mut sds_total_scanned_bytes_sum: Option<i64> = None;
+                let mut serverless_apps_apm_apm_azure_appservice_instances_avg_sum: Option<i64> =
+                    None;
+                let mut serverless_apps_apm_apm_azure_azurefunction_instances_avg_sum: Option<i64> =
+                    None;
+                let mut serverless_apps_apm_apm_azure_containerapp_instances_avg_sum: Option<i64> =
+                    None;
+                let mut serverless_apps_apm_apm_fargate_ecs_tasks_avg_sum: Option<i64> = None;
+                let mut serverless_apps_apm_apm_gcp_cloudfunction_instances_avg_sum: Option<i64> =
+                    None;
+                let mut serverless_apps_apm_apm_gcp_cloudrun_instances_avg_sum: Option<i64> = None;
+                let mut serverless_apps_apm_avg_sum: Option<i64> = None;
+                let mut serverless_apps_apm_excl_fargate_apm_azure_appservice_instances_avg_sum: Option<i64> = None;
+                let mut serverless_apps_apm_excl_fargate_apm_azure_azurefunction_instances_avg_sum: Option<i64> = None;
+                let mut serverless_apps_apm_excl_fargate_apm_azure_containerapp_instances_avg_sum: Option<i64> = None;
+                let mut serverless_apps_apm_excl_fargate_apm_gcp_cloudfunction_instances_avg_sum: Option<i64> = None;
+                let mut serverless_apps_apm_excl_fargate_apm_gcp_cloudrun_instances_avg_sum: Option<i64> = None;
+                let mut serverless_apps_apm_excl_fargate_avg_sum: Option<i64> = None;
+                let mut serverless_apps_azure_container_app_instances_avg_sum: Option<i64> = None;
                 let mut serverless_apps_azure_count_avg_sum: Option<i64> = None;
+                let mut serverless_apps_azure_function_app_instances_avg_sum: Option<i64> = None;
+                let mut serverless_apps_azure_web_app_instances_avg_sum: Option<i64> = None;
+                let mut serverless_apps_ecs_avg_sum: Option<i64> = None;
+                let mut serverless_apps_eks_avg_sum: Option<i64> = None;
+                let mut serverless_apps_excl_fargate_avg_sum: Option<i64> = None;
+                let mut serverless_apps_excl_fargate_azure_container_app_instances_avg_sum: Option<
+                    i64,
+                > = None;
+                let mut serverless_apps_excl_fargate_azure_function_app_instances_avg_sum: Option<
+                    i64,
+                > = None;
+                let mut serverless_apps_excl_fargate_azure_web_app_instances_avg_sum: Option<i64> =
+                    None;
+                let mut serverless_apps_excl_fargate_google_cloud_functions_instances_avg_sum: Option<i64> = None;
+                let mut serverless_apps_excl_fargate_google_cloud_run_instances_avg_sum: Option<
+                    i64,
+                > = None;
+                let mut serverless_apps_google_cloud_functions_instances_avg_sum: Option<i64> =
+                    None;
+                let mut serverless_apps_google_cloud_run_instances_avg_sum: Option<i64> = None;
                 let mut serverless_apps_google_count_avg_sum: Option<i64> = None;
                 let mut serverless_apps_total_count_avg_sum: Option<i64> = None;
                 let mut siem_analyzed_logs_add_on_count_agg_sum: Option<i64> = None;
@@ -2145,1306 +2487,1279 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                             if v.is_null() {
                                 continue;
                             }
-                            agent_host_top99p_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            agent_host_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "apm_azure_app_service_host_top99p_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            apm_azure_app_service_host_top99p_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            apm_azure_app_service_host_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "apm_devsecops_host_top99p_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            apm_devsecops_host_top99p_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            apm_devsecops_host_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "apm_fargate_count_avg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            apm_fargate_count_avg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            apm_fargate_count_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "apm_host_top99p_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            apm_host_top99p_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            apm_host_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "appsec_fargate_count_avg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            appsec_fargate_count_avg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            appsec_fargate_count_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "asm_serverless_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            asm_serverless_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            asm_serverless_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "audit_logs_lines_indexed_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            audit_logs_lines_indexed_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            audit_logs_lines_indexed_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "audit_trail_enabled_hwm_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            audit_trail_enabled_hwm_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            audit_trail_enabled_hwm_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "avg_profiled_fargate_tasks_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            avg_profiled_fargate_tasks_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            avg_profiled_fargate_tasks_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "aws_host_top99p_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            aws_host_top99p_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            aws_host_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "aws_lambda_func_count" => {
                             if v.is_null() {
                                 continue;
                             }
-                            aws_lambda_func_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            aws_lambda_func_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "aws_lambda_invocations_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            aws_lambda_invocations_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            aws_lambda_invocations_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "azure_app_service_top99p_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            azure_app_service_top99p_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            azure_app_service_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "azure_host_top99p_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            azure_host_top99p_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            azure_host_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "billable_ingested_bytes_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            billable_ingested_bytes_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            billable_ingested_bytes_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "browser_rum_lite_session_count_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            browser_rum_lite_session_count_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            browser_rum_lite_session_count_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "browser_rum_replay_session_count_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            browser_rum_replay_session_count_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            browser_rum_replay_session_count_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "browser_rum_units_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            browser_rum_units_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            browser_rum_units_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ci_pipeline_indexed_spans_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            ci_pipeline_indexed_spans_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ci_pipeline_indexed_spans_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ci_test_indexed_spans_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            ci_test_indexed_spans_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ci_test_indexed_spans_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ci_visibility_itr_committers_hwm_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            ci_visibility_itr_committers_hwm_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ci_visibility_itr_committers_hwm_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ci_visibility_pipeline_committers_hwm_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            ci_visibility_pipeline_committers_hwm_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ci_visibility_pipeline_committers_hwm_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ci_visibility_test_committers_hwm_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            ci_visibility_test_committers_hwm_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ci_visibility_test_committers_hwm_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cloud_cost_management_aws_host_count_avg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cloud_cost_management_aws_host_count_avg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cloud_cost_management_aws_host_count_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cloud_cost_management_azure_host_count_avg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cloud_cost_management_azure_host_count_avg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cloud_cost_management_azure_host_count_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cloud_cost_management_gcp_host_count_avg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cloud_cost_management_gcp_host_count_avg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cloud_cost_management_gcp_host_count_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cloud_cost_management_host_count_avg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cloud_cost_management_host_count_avg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cloud_cost_management_host_count_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cloud_siem_events_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cloud_siem_events_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cloud_siem_events_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "code_analysis_sa_committers_hwm_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            code_analysis_sa_committers_hwm_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            code_analysis_sa_committers_hwm_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "code_analysis_sca_committers_hwm_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            code_analysis_sca_committers_hwm_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            code_analysis_sca_committers_hwm_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "code_security_host_top99p_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            code_security_host_top99p_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            code_security_host_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "container_avg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            container_avg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            container_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "container_excl_agent_avg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            container_excl_agent_avg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            container_excl_agent_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "container_hwm_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            container_hwm_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            container_hwm_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "csm_container_enterprise_compliance_count_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            csm_container_enterprise_compliance_count_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            csm_container_enterprise_compliance_count_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "csm_container_enterprise_cws_count_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            csm_container_enterprise_cws_count_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            csm_container_enterprise_cws_count_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "csm_container_enterprise_total_count_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            csm_container_enterprise_total_count_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            csm_container_enterprise_total_count_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "csm_host_enterprise_aas_host_count_top99p_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            csm_host_enterprise_aas_host_count_top99p_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            csm_host_enterprise_aas_host_count_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "csm_host_enterprise_aws_host_count_top99p_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            csm_host_enterprise_aws_host_count_top99p_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            csm_host_enterprise_aws_host_count_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "csm_host_enterprise_azure_host_count_top99p_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            csm_host_enterprise_azure_host_count_top99p_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            csm_host_enterprise_azure_host_count_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "csm_host_enterprise_compliance_host_count_top99p_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            csm_host_enterprise_compliance_host_count_top99p_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            csm_host_enterprise_compliance_host_count_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "csm_host_enterprise_cws_host_count_top99p_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            csm_host_enterprise_cws_host_count_top99p_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            csm_host_enterprise_cws_host_count_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "csm_host_enterprise_gcp_host_count_top99p_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            csm_host_enterprise_gcp_host_count_top99p_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            csm_host_enterprise_gcp_host_count_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "csm_host_enterprise_total_host_count_top99p_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            csm_host_enterprise_total_host_count_top99p_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            csm_host_enterprise_total_host_count_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cspm_aas_host_top99p_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cspm_aas_host_top99p_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cspm_aas_host_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cspm_aws_host_top99p_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cspm_aws_host_top99p_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cspm_aws_host_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cspm_azure_host_top99p_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cspm_azure_host_top99p_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cspm_azure_host_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cspm_container_avg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cspm_container_avg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cspm_container_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cspm_container_hwm_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cspm_container_hwm_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cspm_container_hwm_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cspm_gcp_host_top99p_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cspm_gcp_host_top99p_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cspm_gcp_host_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cspm_host_top99p_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cspm_host_top99p_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cspm_host_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "custom_historical_ts_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            custom_historical_ts_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            custom_historical_ts_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "custom_live_ts_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            custom_live_ts_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            custom_live_ts_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "custom_ts_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            custom_ts_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            custom_ts_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cws_container_avg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cws_container_avg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cws_container_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cws_fargate_task_avg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cws_fargate_task_avg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cws_fargate_task_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cws_host_top99p_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cws_host_top99p_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cws_host_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "data_jobs_monitoring_host_hr_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            data_jobs_monitoring_host_hr_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            data_jobs_monitoring_host_hr_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "dbm_host_top99p_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            dbm_host_top99p_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            dbm_host_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "dbm_queries_avg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            dbm_queries_avg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            dbm_queries_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "end_date" => {
                             if v.is_null() {
                                 continue;
                             }
                             end_date = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "eph_infra_host_agent_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            eph_infra_host_agent_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            eph_infra_host_agent_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "eph_infra_host_alibaba_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            eph_infra_host_alibaba_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            eph_infra_host_alibaba_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "eph_infra_host_aws_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            eph_infra_host_aws_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            eph_infra_host_aws_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "eph_infra_host_azure_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            eph_infra_host_azure_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            eph_infra_host_azure_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "eph_infra_host_ent_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            eph_infra_host_ent_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            eph_infra_host_ent_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "eph_infra_host_gcp_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            eph_infra_host_gcp_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            eph_infra_host_gcp_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "eph_infra_host_heroku_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            eph_infra_host_heroku_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            eph_infra_host_heroku_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "eph_infra_host_only_aas_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            eph_infra_host_only_aas_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            eph_infra_host_only_aas_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "eph_infra_host_only_vsphere_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            eph_infra_host_only_vsphere_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            eph_infra_host_only_vsphere_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "eph_infra_host_opentelemetry_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            eph_infra_host_opentelemetry_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            eph_infra_host_opentelemetry_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "eph_infra_host_opentelemetry_apm_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            eph_infra_host_opentelemetry_apm_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            eph_infra_host_opentelemetry_apm_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "eph_infra_host_pro_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            eph_infra_host_pro_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            eph_infra_host_pro_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "eph_infra_host_proplus_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            eph_infra_host_proplus_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            eph_infra_host_proplus_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "error_tracking_apm_error_events_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            error_tracking_apm_error_events_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            error_tracking_apm_error_events_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "error_tracking_error_events_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            error_tracking_error_events_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            error_tracking_error_events_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "error_tracking_events_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            error_tracking_events_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            error_tracking_events_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "error_tracking_rum_error_events_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            error_tracking_rum_error_events_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            error_tracking_rum_error_events_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "event_management_correlation_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            event_management_correlation_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            event_management_correlation_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "event_management_correlation_correlated_events_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            event_management_correlation_correlated_events_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            event_management_correlation_correlated_events_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "event_management_correlation_correlated_related_events_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            event_management_correlation_correlated_related_events_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            event_management_correlation_correlated_related_events_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "fargate_container_profiler_profiling_fargate_avg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            fargate_container_profiler_profiling_fargate_avg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            fargate_container_profiler_profiling_fargate_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "fargate_container_profiler_profiling_fargate_eks_avg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            fargate_container_profiler_profiling_fargate_eks_avg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            fargate_container_profiler_profiling_fargate_eks_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "fargate_tasks_count_avg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            fargate_tasks_count_avg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            fargate_tasks_count_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "fargate_tasks_count_hwm_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            fargate_tasks_count_hwm_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            fargate_tasks_count_hwm_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "flex_logs_compute_large_avg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            flex_logs_compute_large_avg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            flex_logs_compute_large_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "flex_logs_compute_medium_avg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            flex_logs_compute_medium_avg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            flex_logs_compute_medium_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "flex_logs_compute_small_avg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            flex_logs_compute_small_avg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            flex_logs_compute_small_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "flex_logs_compute_xlarge_avg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            flex_logs_compute_xlarge_avg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            flex_logs_compute_xlarge_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "flex_logs_compute_xsmall_avg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            flex_logs_compute_xsmall_avg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            flex_logs_compute_xsmall_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "flex_logs_starter_avg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            flex_logs_starter_avg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            flex_logs_starter_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "flex_logs_starter_storage_index_avg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            flex_logs_starter_storage_index_avg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            flex_logs_starter_storage_index_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "flex_logs_starter_storage_retention_adjustment_avg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            flex_logs_starter_storage_retention_adjustment_avg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            flex_logs_starter_storage_retention_adjustment_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "flex_stored_logs_avg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            flex_stored_logs_avg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            flex_stored_logs_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "forwarding_events_bytes_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            forwarding_events_bytes_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            forwarding_events_bytes_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "gcp_host_top99p_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            gcp_host_top99p_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            gcp_host_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "heroku_host_top99p_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            heroku_host_top99p_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            heroku_host_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "incident_management_monthly_active_users_hwm_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            incident_management_monthly_active_users_hwm_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            incident_management_monthly_active_users_hwm_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "indexed_events_count_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            indexed_events_count_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            indexed_events_count_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "infra_host_top99p_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            infra_host_top99p_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            infra_host_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ingested_events_bytes_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            ingested_events_bytes_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ingested_events_bytes_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "iot_device_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            iot_device_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            iot_device_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "iot_device_top99p_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            iot_device_top99p_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            iot_device_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "last_updated" => {
                             if v.is_null() {
                                 continue;
                             }
-                            last_updated =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            last_updated = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "live_indexed_events_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            live_indexed_events_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            live_indexed_events_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "live_ingested_bytes_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            live_ingested_bytes_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            live_ingested_bytes_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "llm_observability_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            llm_observability_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            llm_observability_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "llm_observability_min_spend_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            llm_observability_min_spend_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            llm_observability_min_spend_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_by_retention" => {
                             if v.is_null() {
                                 continue;
                             }
-                            logs_by_retention =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_by_retention = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "mobile_rum_lite_session_count_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            mobile_rum_lite_session_count_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            mobile_rum_lite_session_count_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "mobile_rum_session_count_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            mobile_rum_session_count_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            mobile_rum_session_count_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "mobile_rum_session_count_android_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            mobile_rum_session_count_android_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            mobile_rum_session_count_android_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "mobile_rum_session_count_flutter_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            mobile_rum_session_count_flutter_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            mobile_rum_session_count_flutter_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "mobile_rum_session_count_ios_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            mobile_rum_session_count_ios_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            mobile_rum_session_count_ios_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "mobile_rum_session_count_reactnative_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            mobile_rum_session_count_reactnative_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            mobile_rum_session_count_reactnative_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "mobile_rum_session_count_roku_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            mobile_rum_session_count_roku_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            mobile_rum_session_count_roku_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "mobile_rum_units_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            mobile_rum_units_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            mobile_rum_units_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ndm_netflow_events_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            ndm_netflow_events_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ndm_netflow_events_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "netflow_indexed_events_count_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            netflow_indexed_events_count_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            netflow_indexed_events_count_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "network_device_wireless_top99p_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            network_device_wireless_top99p_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            network_device_wireless_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "npm_host_top99p_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            npm_host_top99p_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            npm_host_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "observability_pipelines_bytes_processed_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            observability_pipelines_bytes_processed_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            observability_pipelines_bytes_processed_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "oci_host_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            oci_host_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            oci_host_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "oci_host_top99p_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            oci_host_top99p_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            oci_host_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "online_archive_events_count_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            online_archive_events_count_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            online_archive_events_count_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "opentelemetry_apm_host_top99p_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            opentelemetry_apm_host_top99p_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            opentelemetry_apm_host_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "opentelemetry_host_top99p_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            opentelemetry_host_top99p_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            opentelemetry_host_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "product_analytics_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            product_analytics_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            product_analytics_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "profiling_aas_count_top99p_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            profiling_aas_count_top99p_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            profiling_aas_count_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "profiling_container_agent_count_avg" => {
                             if v.is_null() {
                                 continue;
                             }
-                            profiling_container_agent_count_avg =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            profiling_container_agent_count_avg = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "profiling_host_count_top99p_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            profiling_host_count_top99p_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            profiling_host_count_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "published_app_hwm_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            published_app_hwm_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            published_app_hwm_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rehydrated_indexed_events_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rehydrated_indexed_events_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rehydrated_indexed_events_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rehydrated_ingested_bytes_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rehydrated_ingested_bytes_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rehydrated_ingested_bytes_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_browser_and_mobile_session_count" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rum_browser_and_mobile_session_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_browser_and_mobile_session_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_browser_legacy_session_count_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rum_browser_legacy_session_count_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_browser_legacy_session_count_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_browser_lite_session_count_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rum_browser_lite_session_count_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_browser_lite_session_count_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_browser_replay_session_count_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rum_browser_replay_session_count_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_browser_replay_session_count_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_indexed_sessions_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rum_indexed_sessions_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_indexed_sessions_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_ingested_sessions_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rum_ingested_sessions_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_ingested_sessions_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_lite_session_count_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rum_lite_session_count_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_lite_session_count_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_mobile_legacy_session_count_android_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rum_mobile_legacy_session_count_android_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_mobile_legacy_session_count_android_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_mobile_legacy_session_count_flutter_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rum_mobile_legacy_session_count_flutter_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_mobile_legacy_session_count_flutter_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_mobile_legacy_session_count_ios_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rum_mobile_legacy_session_count_ios_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_mobile_legacy_session_count_ios_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_mobile_legacy_session_count_reactnative_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rum_mobile_legacy_session_count_reactnative_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_mobile_legacy_session_count_reactnative_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_mobile_legacy_session_count_roku_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rum_mobile_legacy_session_count_roku_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_mobile_legacy_session_count_roku_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_mobile_lite_session_count_android_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rum_mobile_lite_session_count_android_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_mobile_lite_session_count_android_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_mobile_lite_session_count_flutter_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rum_mobile_lite_session_count_flutter_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_mobile_lite_session_count_flutter_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_mobile_lite_session_count_ios_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rum_mobile_lite_session_count_ios_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_mobile_lite_session_count_ios_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_mobile_lite_session_count_kotlinmultiplatform_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rum_mobile_lite_session_count_kotlinmultiplatform_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_mobile_lite_session_count_kotlinmultiplatform_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_mobile_lite_session_count_reactnative_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rum_mobile_lite_session_count_reactnative_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_mobile_lite_session_count_reactnative_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_mobile_lite_session_count_roku_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rum_mobile_lite_session_count_roku_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_mobile_lite_session_count_roku_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_mobile_lite_session_count_unity_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rum_mobile_lite_session_count_unity_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_mobile_lite_session_count_unity_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_mobile_replay_session_count_android_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rum_mobile_replay_session_count_android_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_mobile_replay_session_count_android_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_mobile_replay_session_count_ios_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rum_mobile_replay_session_count_ios_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_mobile_replay_session_count_ios_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_mobile_replay_session_count_kotlinmultiplatform_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rum_mobile_replay_session_count_kotlinmultiplatform_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_mobile_replay_session_count_kotlinmultiplatform_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_mobile_replay_session_count_reactnative_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rum_mobile_replay_session_count_reactnative_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_mobile_replay_session_count_reactnative_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_replay_session_count_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rum_replay_session_count_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_replay_session_count_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_session_count_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rum_session_count_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_session_count_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_session_replay_add_on_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rum_session_replay_add_on_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_session_replay_add_on_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_total_session_count_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rum_total_session_count_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_total_session_count_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_units_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rum_units_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_units_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "sca_fargate_count_avg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            sca_fargate_count_avg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            sca_fargate_count_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "sca_fargate_count_hwm_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            sca_fargate_count_hwm_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            sca_fargate_count_hwm_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "sds_apm_scanned_bytes_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            sds_apm_scanned_bytes_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            sds_apm_scanned_bytes_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "sds_events_scanned_bytes_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            sds_events_scanned_bytes_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            sds_events_scanned_bytes_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "sds_logs_scanned_bytes_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            sds_logs_scanned_bytes_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            sds_logs_scanned_bytes_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "sds_rum_scanned_bytes_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            sds_rum_scanned_bytes_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            sds_rum_scanned_bytes_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "sds_total_scanned_bytes_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            sds_total_scanned_bytes_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            sds_total_scanned_bytes_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "serverless_apps_apm_apm_azure_appservice_instances_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            serverless_apps_apm_apm_azure_appservice_instances_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "serverless_apps_apm_apm_azure_azurefunction_instances_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            serverless_apps_apm_apm_azure_azurefunction_instances_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "serverless_apps_apm_apm_azure_containerapp_instances_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            serverless_apps_apm_apm_azure_containerapp_instances_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "serverless_apps_apm_apm_fargate_ecs_tasks_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            serverless_apps_apm_apm_fargate_ecs_tasks_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "serverless_apps_apm_apm_gcp_cloudfunction_instances_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            serverless_apps_apm_apm_gcp_cloudfunction_instances_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "serverless_apps_apm_apm_gcp_cloudrun_instances_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            serverless_apps_apm_apm_gcp_cloudrun_instances_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "serverless_apps_apm_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            serverless_apps_apm_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "serverless_apps_apm_excl_fargate_apm_azure_appservice_instances_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            serverless_apps_apm_excl_fargate_apm_azure_appservice_instances_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "serverless_apps_apm_excl_fargate_apm_azure_azurefunction_instances_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            serverless_apps_apm_excl_fargate_apm_azure_azurefunction_instances_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "serverless_apps_apm_excl_fargate_apm_azure_containerapp_instances_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            serverless_apps_apm_excl_fargate_apm_azure_containerapp_instances_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "serverless_apps_apm_excl_fargate_apm_gcp_cloudfunction_instances_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            serverless_apps_apm_excl_fargate_apm_gcp_cloudfunction_instances_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "serverless_apps_apm_excl_fargate_apm_gcp_cloudrun_instances_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            serverless_apps_apm_excl_fargate_apm_gcp_cloudrun_instances_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "serverless_apps_apm_excl_fargate_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            serverless_apps_apm_excl_fargate_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "serverless_apps_azure_container_app_instances_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            serverless_apps_azure_container_app_instances_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "serverless_apps_azure_count_avg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            serverless_apps_azure_count_avg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            serverless_apps_azure_count_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "serverless_apps_azure_function_app_instances_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            serverless_apps_azure_function_app_instances_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "serverless_apps_azure_web_app_instances_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            serverless_apps_azure_web_app_instances_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "serverless_apps_ecs_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            serverless_apps_ecs_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "serverless_apps_eks_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            serverless_apps_eks_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "serverless_apps_excl_fargate_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            serverless_apps_excl_fargate_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "serverless_apps_excl_fargate_azure_container_app_instances_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            serverless_apps_excl_fargate_azure_container_app_instances_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "serverless_apps_excl_fargate_azure_function_app_instances_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            serverless_apps_excl_fargate_azure_function_app_instances_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "serverless_apps_excl_fargate_azure_web_app_instances_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            serverless_apps_excl_fargate_azure_web_app_instances_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "serverless_apps_excl_fargate_google_cloud_functions_instances_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            serverless_apps_excl_fargate_google_cloud_functions_instances_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "serverless_apps_excl_fargate_google_cloud_run_instances_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            serverless_apps_excl_fargate_google_cloud_run_instances_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "serverless_apps_google_cloud_functions_instances_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            serverless_apps_google_cloud_functions_instances_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "serverless_apps_google_cloud_run_instances_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            serverless_apps_google_cloud_run_instances_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "serverless_apps_google_count_avg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            serverless_apps_google_count_avg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            serverless_apps_google_count_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "serverless_apps_total_count_avg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            serverless_apps_total_count_avg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            serverless_apps_total_count_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "siem_analyzed_logs_add_on_count_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            siem_analyzed_logs_add_on_count_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            siem_analyzed_logs_add_on_count_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "start_date" => {
                             if v.is_null() {
                                 continue;
                             }
                             start_date = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "synthetics_browser_check_calls_count_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            synthetics_browser_check_calls_count_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            synthetics_browser_check_calls_count_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "synthetics_check_calls_count_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            synthetics_check_calls_count_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            synthetics_check_calls_count_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "synthetics_mobile_test_runs_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            synthetics_mobile_test_runs_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            synthetics_mobile_test_runs_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "synthetics_parallel_testing_max_slots_hwm_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            synthetics_parallel_testing_max_slots_hwm_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            synthetics_parallel_testing_max_slots_hwm_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "trace_search_indexed_events_count_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            trace_search_indexed_events_count_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            trace_search_indexed_events_count_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "twol_ingested_events_bytes_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            twol_ingested_events_bytes_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            twol_ingested_events_bytes_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "universal_service_monitoring_host_top99p_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            universal_service_monitoring_host_top99p_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            universal_service_monitoring_host_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "usage" => {
                             if v.is_null() {
                                 continue;
                             }
                             usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "vsphere_host_top99p_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            vsphere_host_top99p_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            vsphere_host_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "vuln_management_host_count_top99p_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            vuln_management_host_count_top99p_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            vuln_management_host_count_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "workflow_executions_usage_agg_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            workflow_executions_usage_agg_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            workflow_executions_usage_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 
@@ -3620,7 +3935,33 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                     sds_logs_scanned_bytes_sum,
                     sds_rum_scanned_bytes_sum,
                     sds_total_scanned_bytes_sum,
+                    serverless_apps_apm_apm_azure_appservice_instances_avg_sum,
+                    serverless_apps_apm_apm_azure_azurefunction_instances_avg_sum,
+                    serverless_apps_apm_apm_azure_containerapp_instances_avg_sum,
+                    serverless_apps_apm_apm_fargate_ecs_tasks_avg_sum,
+                    serverless_apps_apm_apm_gcp_cloudfunction_instances_avg_sum,
+                    serverless_apps_apm_apm_gcp_cloudrun_instances_avg_sum,
+                    serverless_apps_apm_avg_sum,
+                    serverless_apps_apm_excl_fargate_apm_azure_appservice_instances_avg_sum,
+                    serverless_apps_apm_excl_fargate_apm_azure_azurefunction_instances_avg_sum,
+                    serverless_apps_apm_excl_fargate_apm_azure_containerapp_instances_avg_sum,
+                    serverless_apps_apm_excl_fargate_apm_gcp_cloudfunction_instances_avg_sum,
+                    serverless_apps_apm_excl_fargate_apm_gcp_cloudrun_instances_avg_sum,
+                    serverless_apps_apm_excl_fargate_avg_sum,
+                    serverless_apps_azure_container_app_instances_avg_sum,
                     serverless_apps_azure_count_avg_sum,
+                    serverless_apps_azure_function_app_instances_avg_sum,
+                    serverless_apps_azure_web_app_instances_avg_sum,
+                    serverless_apps_ecs_avg_sum,
+                    serverless_apps_eks_avg_sum,
+                    serverless_apps_excl_fargate_avg_sum,
+                    serverless_apps_excl_fargate_azure_container_app_instances_avg_sum,
+                    serverless_apps_excl_fargate_azure_function_app_instances_avg_sum,
+                    serverless_apps_excl_fargate_azure_web_app_instances_avg_sum,
+                    serverless_apps_excl_fargate_google_cloud_functions_instances_avg_sum,
+                    serverless_apps_excl_fargate_google_cloud_run_instances_avg_sum,
+                    serverless_apps_google_cloud_functions_instances_avg_sum,
+                    serverless_apps_google_cloud_run_instances_avg_sum,
                     serverless_apps_google_count_avg_sum,
                     serverless_apps_total_count_avg_sum,
                     siem_analyzed_logs_add_on_count_agg_sum,
