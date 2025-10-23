@@ -70,6 +70,8 @@ def is_primitive(schema):
 
 
 def block_comment(comment, prefix="///", first_line=True):
+    if not comment:
+        return ""
     comment = re.sub(r"(\w+://[^\s\(\)]+)", r"<\1>", comment)
     lines = comment.split("\n")
     start = "" if first_line else lines[0] + "\n"
