@@ -6,20 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Exclude only these namespaces from metrics collection.
-/// Defaults to `["AWS/SQS", "AWS/ElasticMapReduce", "AWS/Usage"]`.
-/// `AWS/SQS`, `AWS/ElasticMapReduce`, and `AWS/Usage` are excluded by default
-/// to reduce your AWS CloudWatch costs from `GetMetricData` API calls.
+/// Amazon EventBridge create request body.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct AWSNamespaceFiltersExcludeOnly {
-    /// Exclude only these namespaces from metrics collection.
-    /// Defaults to `["AWS/SQS", "AWS/ElasticMapReduce", "AWS/Usage"]`.
-    /// `AWS/SQS`, `AWS/ElasticMapReduce`, and `AWS/Usage` are excluded by default
-    /// to reduce your AWS CloudWatch costs from `GetMetricData` API calls.
-    #[serde(rename = "exclude_only")]
-    pub exclude_only: Vec<String>,
+pub struct AWSEventBridgeCreateRequest {
+    /// Amazon EventBridge create request data.
+    #[serde(rename = "data")]
+    pub data: crate::datadogV2::model::AWSEventBridgeCreateRequestData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,10 +21,12 @@ pub struct AWSNamespaceFiltersExcludeOnly {
     pub(crate) _unparsed: bool,
 }
 
-impl AWSNamespaceFiltersExcludeOnly {
-    pub fn new(exclude_only: Vec<String>) -> AWSNamespaceFiltersExcludeOnly {
-        AWSNamespaceFiltersExcludeOnly {
-            exclude_only,
+impl AWSEventBridgeCreateRequest {
+    pub fn new(
+        data: crate::datadogV2::model::AWSEventBridgeCreateRequestData,
+    ) -> AWSEventBridgeCreateRequest {
+        AWSEventBridgeCreateRequest {
+            data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -45,14 +41,14 @@ impl AWSNamespaceFiltersExcludeOnly {
     }
 }
 
-impl<'de> Deserialize<'de> for AWSNamespaceFiltersExcludeOnly {
+impl<'de> Deserialize<'de> for AWSEventBridgeCreateRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct AWSNamespaceFiltersExcludeOnlyVisitor;
-        impl<'a> Visitor<'a> for AWSNamespaceFiltersExcludeOnlyVisitor {
-            type Value = AWSNamespaceFiltersExcludeOnly;
+        struct AWSEventBridgeCreateRequestVisitor;
+        impl<'a> Visitor<'a> for AWSEventBridgeCreateRequestVisitor {
+            type Value = AWSEventBridgeCreateRequest;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -62,7 +58,8 @@ impl<'de> Deserialize<'de> for AWSNamespaceFiltersExcludeOnly {
             where
                 M: MapAccess<'a>,
             {
-                let mut exclude_only: Option<Vec<String>> = None;
+                let mut data: Option<crate::datadogV2::model::AWSEventBridgeCreateRequestData> =
+                    None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -71,9 +68,8 @@ impl<'de> Deserialize<'de> for AWSNamespaceFiltersExcludeOnly {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "exclude_only" => {
-                            exclude_only =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "data" => {
+                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -82,11 +78,10 @@ impl<'de> Deserialize<'de> for AWSNamespaceFiltersExcludeOnly {
                         }
                     }
                 }
-                let exclude_only =
-                    exclude_only.ok_or_else(|| M::Error::missing_field("exclude_only"))?;
+                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = AWSNamespaceFiltersExcludeOnly {
-                    exclude_only,
+                let content = AWSEventBridgeCreateRequest {
+                    data,
                     additional_properties,
                     _unparsed,
                 };
@@ -95,6 +90,6 @@ impl<'de> Deserialize<'de> for AWSNamespaceFiltersExcludeOnly {
             }
         }
 
-        deserializer.deserialize_any(AWSNamespaceFiltersExcludeOnlyVisitor)
+        deserializer.deserialize_any(AWSEventBridgeCreateRequestVisitor)
     }
 }

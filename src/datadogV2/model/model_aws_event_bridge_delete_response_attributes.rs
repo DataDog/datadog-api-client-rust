@@ -6,20 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Exclude only these namespaces from metrics collection.
-/// Defaults to `["AWS/SQS", "AWS/ElasticMapReduce", "AWS/Usage"]`.
-/// `AWS/SQS`, `AWS/ElasticMapReduce`, and `AWS/Usage` are excluded by default
-/// to reduce your AWS CloudWatch costs from `GetMetricData` API calls.
+/// The EventBridge source delete response attributes.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct AWSNamespaceFiltersExcludeOnly {
-    /// Exclude only these namespaces from metrics collection.
-    /// Defaults to `["AWS/SQS", "AWS/ElasticMapReduce", "AWS/Usage"]`.
-    /// `AWS/SQS`, `AWS/ElasticMapReduce`, and `AWS/Usage` are excluded by default
-    /// to reduce your AWS CloudWatch costs from `GetMetricData` API calls.
-    #[serde(rename = "exclude_only")]
-    pub exclude_only: Vec<String>,
+pub struct AWSEventBridgeDeleteResponseAttributes {
+    /// The event source status "empty".
+    #[serde(rename = "status")]
+    pub status: Option<crate::datadogV2::model::AWSEventBridgeDeleteStatus>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,13 +21,18 @@ pub struct AWSNamespaceFiltersExcludeOnly {
     pub(crate) _unparsed: bool,
 }
 
-impl AWSNamespaceFiltersExcludeOnly {
-    pub fn new(exclude_only: Vec<String>) -> AWSNamespaceFiltersExcludeOnly {
-        AWSNamespaceFiltersExcludeOnly {
-            exclude_only,
+impl AWSEventBridgeDeleteResponseAttributes {
+    pub fn new() -> AWSEventBridgeDeleteResponseAttributes {
+        AWSEventBridgeDeleteResponseAttributes {
+            status: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn status(mut self, value: crate::datadogV2::model::AWSEventBridgeDeleteStatus) -> Self {
+        self.status = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -45,14 +44,20 @@ impl AWSNamespaceFiltersExcludeOnly {
     }
 }
 
-impl<'de> Deserialize<'de> for AWSNamespaceFiltersExcludeOnly {
+impl Default for AWSEventBridgeDeleteResponseAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for AWSEventBridgeDeleteResponseAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct AWSNamespaceFiltersExcludeOnlyVisitor;
-        impl<'a> Visitor<'a> for AWSNamespaceFiltersExcludeOnlyVisitor {
-            type Value = AWSNamespaceFiltersExcludeOnly;
+        struct AWSEventBridgeDeleteResponseAttributesVisitor;
+        impl<'a> Visitor<'a> for AWSEventBridgeDeleteResponseAttributesVisitor {
+            type Value = AWSEventBridgeDeleteResponseAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -62,7 +67,7 @@ impl<'de> Deserialize<'de> for AWSNamespaceFiltersExcludeOnly {
             where
                 M: MapAccess<'a>,
             {
-                let mut exclude_only: Option<Vec<String>> = None;
+                let mut status: Option<crate::datadogV2::model::AWSEventBridgeDeleteStatus> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -71,9 +76,19 @@ impl<'de> Deserialize<'de> for AWSNamespaceFiltersExcludeOnly {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "exclude_only" => {
-                            exclude_only =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "status" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _status) = status {
+                                match _status {
+                                    crate::datadogV2::model::AWSEventBridgeDeleteStatus::UnparsedObject(_status) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -82,11 +97,9 @@ impl<'de> Deserialize<'de> for AWSNamespaceFiltersExcludeOnly {
                         }
                     }
                 }
-                let exclude_only =
-                    exclude_only.ok_or_else(|| M::Error::missing_field("exclude_only"))?;
 
-                let content = AWSNamespaceFiltersExcludeOnly {
-                    exclude_only,
+                let content = AWSEventBridgeDeleteResponseAttributes {
+                    status,
                     additional_properties,
                     _unparsed,
                 };
@@ -95,6 +108,6 @@ impl<'de> Deserialize<'de> for AWSNamespaceFiltersExcludeOnly {
             }
         }
 
-        deserializer.deserialize_any(AWSNamespaceFiltersExcludeOnlyVisitor)
+        deserializer.deserialize_any(AWSEventBridgeDeleteResponseAttributesVisitor)
     }
 }

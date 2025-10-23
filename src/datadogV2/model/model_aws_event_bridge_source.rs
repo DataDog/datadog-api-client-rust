@@ -6,20 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Exclude only these namespaces from metrics collection.
-/// Defaults to `["AWS/SQS", "AWS/ElasticMapReduce", "AWS/Usage"]`.
-/// `AWS/SQS`, `AWS/ElasticMapReduce`, and `AWS/Usage` are excluded by default
-/// to reduce your AWS CloudWatch costs from `GetMetricData` API calls.
+/// An EventBridge source.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct AWSNamespaceFiltersExcludeOnly {
-    /// Exclude only these namespaces from metrics collection.
-    /// Defaults to `["AWS/SQS", "AWS/ElasticMapReduce", "AWS/Usage"]`.
-    /// `AWS/SQS`, `AWS/ElasticMapReduce`, and `AWS/Usage` are excluded by default
-    /// to reduce your AWS CloudWatch costs from `GetMetricData` API calls.
-    #[serde(rename = "exclude_only")]
-    pub exclude_only: Vec<String>,
+pub struct AWSEventBridgeSource {
+    /// The event source name.
+    #[serde(rename = "name")]
+    pub name: Option<String>,
+    /// The event source's
+    /// [AWS region](<https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints>).
+    #[serde(rename = "region")]
+    pub region: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,13 +25,24 @@ pub struct AWSNamespaceFiltersExcludeOnly {
     pub(crate) _unparsed: bool,
 }
 
-impl AWSNamespaceFiltersExcludeOnly {
-    pub fn new(exclude_only: Vec<String>) -> AWSNamespaceFiltersExcludeOnly {
-        AWSNamespaceFiltersExcludeOnly {
-            exclude_only,
+impl AWSEventBridgeSource {
+    pub fn new() -> AWSEventBridgeSource {
+        AWSEventBridgeSource {
+            name: None,
+            region: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn name(mut self, value: String) -> Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn region(mut self, value: String) -> Self {
+        self.region = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -45,14 +54,20 @@ impl AWSNamespaceFiltersExcludeOnly {
     }
 }
 
-impl<'de> Deserialize<'de> for AWSNamespaceFiltersExcludeOnly {
+impl Default for AWSEventBridgeSource {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for AWSEventBridgeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct AWSNamespaceFiltersExcludeOnlyVisitor;
-        impl<'a> Visitor<'a> for AWSNamespaceFiltersExcludeOnlyVisitor {
-            type Value = AWSNamespaceFiltersExcludeOnly;
+        struct AWSEventBridgeSourceVisitor;
+        impl<'a> Visitor<'a> for AWSEventBridgeSourceVisitor {
+            type Value = AWSEventBridgeSource;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -62,7 +77,8 @@ impl<'de> Deserialize<'de> for AWSNamespaceFiltersExcludeOnly {
             where
                 M: MapAccess<'a>,
             {
-                let mut exclude_only: Option<Vec<String>> = None;
+                let mut name: Option<String> = None;
+                let mut region: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -71,9 +87,17 @@ impl<'de> Deserialize<'de> for AWSNamespaceFiltersExcludeOnly {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "exclude_only" => {
-                            exclude_only =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "region" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            region = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -82,11 +106,10 @@ impl<'de> Deserialize<'de> for AWSNamespaceFiltersExcludeOnly {
                         }
                     }
                 }
-                let exclude_only =
-                    exclude_only.ok_or_else(|| M::Error::missing_field("exclude_only"))?;
 
-                let content = AWSNamespaceFiltersExcludeOnly {
-                    exclude_only,
+                let content = AWSEventBridgeSource {
+                    name,
+                    region,
                     additional_properties,
                     _unparsed,
                 };
@@ -95,6 +118,6 @@ impl<'de> Deserialize<'de> for AWSNamespaceFiltersExcludeOnly {
             }
         }
 
-        deserializer.deserialize_any(AWSNamespaceFiltersExcludeOnlyVisitor)
+        deserializer.deserialize_any(AWSEventBridgeSourceVisitor)
     }
 }
