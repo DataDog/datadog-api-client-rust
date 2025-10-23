@@ -121,7 +121,7 @@ def cli(specs, output):
             api_path = resources_dir / "api" / filename
             api_path.parent.mkdir(parents=True, exist_ok=True)
             with api_path.open("w") as fp:
-                fp.write(api_j2.render(name=name, operations=operations, description=tags_by_name[name]["description"]))
+                fp.write(api_j2.render(name=name, operations=operations, description=tags_by_name[name].get("description")))
             all_operations.append((name, operations))
 
         mod_path = resources_dir / "api" / "mod.rs"
