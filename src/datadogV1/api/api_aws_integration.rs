@@ -236,7 +236,7 @@ impl AWSIntegrationAPI {
         Self { config, client }
     }
 
-    /// Create a Datadog-Amazon Web Services integration.
+    /// "**This endpoint is deprecated - use the V2 endpoints instead.** Create a Datadog-Amazon Web Services integration.
     /// Using the `POST` method updates your integration configuration
     /// by adding your new configuration to the existing one in your Datadog organization.
     /// A unique AWS Account ID for role based authentication.
@@ -261,7 +261,7 @@ impl AWSIntegrationAPI {
         }
     }
 
-    /// Create a Datadog-Amazon Web Services integration.
+    /// "**This endpoint is deprecated - use the V2 endpoints instead.** Create a Datadog-Amazon Web Services integration.
     /// Using the `POST` method updates your integration configuration
     /// by adding your new configuration to the existing one in your Datadog organization.
     /// A unique AWS Account ID for role based authentication.
@@ -707,7 +707,7 @@ impl AWSIntegrationAPI {
         }
     }
 
-    /// Generate a new AWS external ID for a given AWS account ID and role name pair.
+    /// **This endpoint is deprecated - use the V2 endpoints instead.** Generate a new AWS external ID for a given AWS account ID and role name pair.
     pub async fn create_new_aws_external_id(
         &self,
         body: crate::datadogV1::model::AWSAccount,
@@ -729,7 +729,7 @@ impl AWSIntegrationAPI {
         }
     }
 
-    /// Generate a new AWS external ID for a given AWS account ID and role name pair.
+    /// **This endpoint is deprecated - use the V2 endpoints instead.** Generate a new AWS external ID for a given AWS account ID and role name pair.
     pub async fn create_new_aws_external_id_with_http_info(
         &self,
         body: crate::datadogV1::model::AWSAccount,
@@ -861,7 +861,7 @@ impl AWSIntegrationAPI {
         }
     }
 
-    /// Delete a Datadog-AWS integration matching the specified `account_id` and `role_name parameters`.
+    /// **This endpoint is deprecated - use the V2 endpoints instead.** Delete a Datadog-AWS integration matching the specified `account_id` and `role_name parameters`.
     pub async fn delete_aws_account(
         &self,
         body: crate::datadogV1::model::AWSAccountDeleteRequest,
@@ -883,7 +883,7 @@ impl AWSIntegrationAPI {
         }
     }
 
-    /// Delete a Datadog-AWS integration matching the specified `account_id` and `role_name parameters`.
+    /// **This endpoint is deprecated - use the V2 endpoints instead.** Delete a Datadog-AWS integration matching the specified `account_id` and `role_name parameters`.
     pub async fn delete_aws_account_with_http_info(
         &self,
         body: crate::datadogV1::model::AWSAccountDeleteRequest,
@@ -1326,7 +1326,7 @@ impl AWSIntegrationAPI {
         }
     }
 
-    /// List all Datadog-AWS integrations available in your Datadog organization.
+    /// **This endpoint is deprecated - use the V2 endpoints instead.** List all Datadog-AWS integrations available in your Datadog organization.
     pub async fn list_aws_accounts(
         &self,
         params: ListAWSAccountsOptionalParams,
@@ -1346,7 +1346,7 @@ impl AWSIntegrationAPI {
         }
     }
 
-    /// List all Datadog-AWS integrations available in your Datadog organization.
+    /// **This endpoint is deprecated - use the V2 endpoints instead.** List all Datadog-AWS integrations available in your Datadog organization.
     pub async fn list_aws_accounts_with_http_info(
         &self,
         params: ListAWSAccountsOptionalParams,
@@ -1666,7 +1666,7 @@ impl AWSIntegrationAPI {
         }
     }
 
-    /// List all namespace rules for a given Datadog-AWS integration. This endpoint takes no arguments.
+    /// **This endpoint is deprecated - use the V2 endpoints instead.** List all namespace rules for a given Datadog-AWS integration. This endpoint takes no arguments.
     pub async fn list_available_aws_namespaces(
         &self,
     ) -> Result<Vec<String>, datadog::Error<ListAvailableAWSNamespacesError>> {
@@ -1684,7 +1684,7 @@ impl AWSIntegrationAPI {
         }
     }
 
-    /// List all namespace rules for a given Datadog-AWS integration. This endpoint takes no arguments.
+    /// **This endpoint is deprecated - use the V2 endpoints instead.** List all namespace rules for a given Datadog-AWS integration. This endpoint takes no arguments.
     pub async fn list_available_aws_namespaces_with_http_info(
         &self,
     ) -> Result<
@@ -1767,7 +1767,7 @@ impl AWSIntegrationAPI {
         }
     }
 
-    /// Update a Datadog-Amazon Web Services integration.
+    /// **This endpoint is deprecated - use the V2 endpoints instead.** Update a Datadog-Amazon Web Services integration.
     pub async fn update_aws_account(
         &self,
         body: crate::datadogV1::model::AWSAccount,
@@ -1790,7 +1790,7 @@ impl AWSIntegrationAPI {
         }
     }
 
-    /// Update a Datadog-Amazon Web Services integration.
+    /// **This endpoint is deprecated - use the V2 endpoints instead.** Update a Datadog-Amazon Web Services integration.
     pub async fn update_aws_account_with_http_info(
         &self,
         body: crate::datadogV1::model::AWSAccount,
