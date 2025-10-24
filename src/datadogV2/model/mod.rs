@@ -2,6 +2,32 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
+pub mod model_fleet_deployments_response;
+pub use self::model_fleet_deployments_response::FleetDeploymentsResponse;
+pub mod model_fleet_deployment;
+pub use self::model_fleet_deployment::FleetDeployment;
+pub mod model_fleet_deployment_attributes;
+pub use self::model_fleet_deployment_attributes::FleetDeploymentAttributes;
+pub mod model_fleet_deployment_operation;
+pub use self::model_fleet_deployment_operation::FleetDeploymentOperation;
+pub mod model_fleet_deployment_file_op;
+pub use self::model_fleet_deployment_file_op::FleetDeploymentFileOp;
+pub mod model_fleet_deployment_resource_type;
+pub use self::model_fleet_deployment_resource_type::FleetDeploymentResourceType;
+pub mod model_fleet_deployments_response_meta;
+pub use self::model_fleet_deployments_response_meta::FleetDeploymentsResponseMeta;
+pub mod model_fleet_deployments_page;
+pub use self::model_fleet_deployments_page::FleetDeploymentsPage;
+pub mod model_api_error_response;
+pub use self::model_api_error_response::APIErrorResponse;
+pub mod model_fleet_deployment_configure_create_request;
+pub use self::model_fleet_deployment_configure_create_request::FleetDeploymentConfigureCreateRequest;
+pub mod model_fleet_deployment_configure_create;
+pub use self::model_fleet_deployment_configure_create::FleetDeploymentConfigureCreate;
+pub mod model_fleet_deployment_configure_attributes;
+pub use self::model_fleet_deployment_configure_attributes::FleetDeploymentConfigureAttributes;
+pub mod model_fleet_deployment_response;
+pub use self::model_fleet_deployment_response::FleetDeploymentResponse;
 pub mod model_datastore_array;
 pub use self::model_datastore_array::DatastoreArray;
 pub mod model_datastore_data;
@@ -12,8 +38,6 @@ pub mod model_datastore_primary_key_generation_strategy;
 pub use self::model_datastore_primary_key_generation_strategy::DatastorePrimaryKeyGenerationStrategy;
 pub mod model_datastore_data_type;
 pub use self::model_datastore_data_type::DatastoreDataType;
-pub mod model_api_error_response;
-pub use self::model_api_error_response::APIErrorResponse;
 pub mod model_create_apps_datastore_request;
 pub use self::model_create_apps_datastore_request::CreateAppsDatastoreRequest;
 pub mod model_create_apps_datastore_request_data;

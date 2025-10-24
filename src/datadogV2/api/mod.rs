@@ -36,6 +36,7 @@ pub mod api_downtimes;
 pub mod api_error_tracking;
 pub mod api_events;
 pub mod api_fastly_integration;
+pub mod api_fleet_automation;
 pub mod api_gcp_integration;
 pub mod api_incident_services;
 pub mod api_incident_teams;

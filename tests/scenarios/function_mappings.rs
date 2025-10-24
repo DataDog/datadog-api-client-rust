@@ -49,6 +49,7 @@ pub struct ApiInstances {
     pub v1_api_tags: Option<datadogV1::api_tags::TagsAPI>,
     pub v1_api_users: Option<datadogV1::api_users::UsersAPI>,
     pub v1_api_authentication: Option<datadogV1::api_authentication::AuthenticationAPI>,
+    pub v2_api_fleet_automation: Option<datadogV2::api_fleet_automation::FleetAutomationAPI>,
     pub v2_api_actions_datastores: Option<datadogV2::api_actions_datastores::ActionsDatastoresAPI>,
     pub v2_api_action_connection: Option<datadogV2::api_action_connection::ActionConnectionAPI>,
     pub v2_api_agentless_scanning: Option<datadogV2::api_agentless_scanning::AgentlessScanningAPI>,
@@ -475,6 +476,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "Authentication" => {
             world.api_instances.v1_api_authentication = Some(
                 datadogV1::api_authentication::AuthenticationAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+        }
+        "FleetAutomation" => {
+            world.api_instances.v2_api_fleet_automation = Some(
+                datadogV2::api_fleet_automation::FleetAutomationAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -1790,6 +1799,21 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v1.Validate".into(), test_v1_validate);
+    world.function_mappings.insert(
+        "v2.ListFleetDeployments".into(),
+        test_v2_list_fleet_deployments,
+    );
+    world.function_mappings.insert(
+        "v2.CreateFleetDeploymentConfigure".into(),
+        test_v2_create_fleet_deployment_configure,
+    );
+    world
+        .function_mappings
+        .insert("v2.GetFleetDeployment".into(), test_v2_get_fleet_deployment);
+    world.function_mappings.insert(
+        "v2.CancelFleetDeployment".into(),
+        test_v2_cancel_fleet_deployment,
+    );
     world
         .function_mappings
         .insert("v2.ListDatastores".into(), test_v2_list_datastores);
@@ -11465,6 +11489,119 @@ fn test_v1_validate(world: &mut DatadogWorld, _parameters: &HashMap<String, Valu
         .as_ref()
         .expect("api instance not found");
     let response = match block_on(api.validate_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_fleet_deployments(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_fleet_automation
+        .as_ref()
+        .expect("api instance not found");
+    let page_size = _parameters
+        .get("page_size")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_offset = _parameters
+        .get("page_offset")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_fleet_automation::ListFleetDeploymentsOptionalParams::default();
+    params.page_size = page_size;
+    params.page_offset = page_offset;
+    let response = match block_on(api.list_fleet_deployments_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_fleet_deployment_configure(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_fleet_automation
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_fleet_deployment_configure_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_fleet_deployment(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_fleet_automation
+        .as_ref()
+        .expect("api instance not found");
+    let deployment_id =
+        serde_json::from_value(_parameters.get("deployment_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_fleet_deployment_with_http_info(deployment_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_cancel_fleet_deployment(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_fleet_automation
+        .as_ref()
+        .expect("api instance not found");
+    let deployment_id =
+        serde_json::from_value(_parameters.get("deployment_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.cancel_fleet_deployment_with_http_info(deployment_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
