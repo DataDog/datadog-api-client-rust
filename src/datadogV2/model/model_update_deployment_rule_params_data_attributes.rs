@@ -1,0 +1,124 @@
+// Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
+// This product includes software developed at Datadog (https://www.datadoghq.com/).
+// Copyright 2019-Present Datadog, Inc.
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
+use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
+
+/// Parameters for updating a deployment rule.
+#[non_exhaustive]
+#[skip_serializing_none]
+#[derive(Clone, Debug, PartialEq, Serialize)]
+pub struct UpdateDeploymentRuleParamsDataAttributes {
+    /// Whether to run this rule in dry-run mode.
+    #[serde(rename = "dry_run")]
+    pub dry_run: bool,
+    /// The name of the deployment rule.
+    #[serde(rename = "name")]
+    pub name: String,
+    /// Options for deployment rule response representing either faulty deployment detection or monitor options.
+    #[serde(rename = "options")]
+    pub options: crate::datadogV2::model::DeploymentRulesOptions,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
+}
+
+impl UpdateDeploymentRuleParamsDataAttributes {
+    pub fn new(
+        dry_run: bool,
+        name: String,
+        options: crate::datadogV2::model::DeploymentRulesOptions,
+    ) -> UpdateDeploymentRuleParamsDataAttributes {
+        UpdateDeploymentRuleParamsDataAttributes {
+            dry_run,
+            name,
+            options,
+            additional_properties: std::collections::BTreeMap::new(),
+            _unparsed: false,
+        }
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
+}
+
+impl<'de> Deserialize<'de> for UpdateDeploymentRuleParamsDataAttributes {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct UpdateDeploymentRuleParamsDataAttributesVisitor;
+        impl<'a> Visitor<'a> for UpdateDeploymentRuleParamsDataAttributesVisitor {
+            type Value = UpdateDeploymentRuleParamsDataAttributes;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut dry_run: Option<bool> = None;
+                let mut name: Option<String> = None;
+                let mut options: Option<crate::datadogV2::model::DeploymentRulesOptions> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "dry_run" => {
+                            dry_run = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "name" => {
+                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "options" => {
+                            options = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _options) = options {
+                                match _options {
+                                    crate::datadogV2::model::DeploymentRulesOptions::UnparsedObject(_options) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
+                    }
+                }
+                let dry_run = dry_run.ok_or_else(|| M::Error::missing_field("dry_run"))?;
+                let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
+                let options = options.ok_or_else(|| M::Error::missing_field("options"))?;
+
+                let content = UpdateDeploymentRuleParamsDataAttributes {
+                    dry_run,
+                    name,
+                    options,
+                    additional_properties,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(UpdateDeploymentRuleParamsDataAttributesVisitor)
+    }
+}
