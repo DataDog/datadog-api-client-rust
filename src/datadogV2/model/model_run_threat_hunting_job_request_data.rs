@@ -6,20 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Historical job response data.
+/// Data for running a threat hunting job request.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct HistoricalJobResponseData {
-    /// Historical job attributes.
+pub struct RunThreatHuntingJobRequestData {
+    /// Run a threat hunting job request.
     #[serde(rename = "attributes")]
-    pub attributes: Option<crate::datadogV2::model::HistoricalJobResponseAttributes>,
-    /// ID of the job.
-    #[serde(rename = "id")]
-    pub id: Option<String>,
-    /// Type of payload.
+    pub attributes: Option<crate::datadogV2::model::RunThreatHuntingJobRequestAttributes>,
+    /// Type of data.
     #[serde(rename = "type")]
-    pub type_: Option<crate::datadogV2::model::HistoricalJobDataType>,
+    pub type_: Option<crate::datadogV2::model::RunThreatHuntingJobRequestDataType>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,11 +24,10 @@ pub struct HistoricalJobResponseData {
     pub(crate) _unparsed: bool,
 }
 
-impl HistoricalJobResponseData {
-    pub fn new() -> HistoricalJobResponseData {
-        HistoricalJobResponseData {
+impl RunThreatHuntingJobRequestData {
+    pub fn new() -> RunThreatHuntingJobRequestData {
+        RunThreatHuntingJobRequestData {
             attributes: None,
-            id: None,
             type_: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -40,18 +36,16 @@ impl HistoricalJobResponseData {
 
     pub fn attributes(
         mut self,
-        value: crate::datadogV2::model::HistoricalJobResponseAttributes,
+        value: crate::datadogV2::model::RunThreatHuntingJobRequestAttributes,
     ) -> Self {
         self.attributes = Some(value);
         self
     }
 
-    pub fn id(mut self, value: String) -> Self {
-        self.id = Some(value);
-        self
-    }
-
-    pub fn type_(mut self, value: crate::datadogV2::model::HistoricalJobDataType) -> Self {
+    pub fn type_(
+        mut self,
+        value: crate::datadogV2::model::RunThreatHuntingJobRequestDataType,
+    ) -> Self {
         self.type_ = Some(value);
         self
     }
@@ -65,20 +59,20 @@ impl HistoricalJobResponseData {
     }
 }
 
-impl Default for HistoricalJobResponseData {
+impl Default for RunThreatHuntingJobRequestData {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for HistoricalJobResponseData {
+impl<'de> Deserialize<'de> for RunThreatHuntingJobRequestData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct HistoricalJobResponseDataVisitor;
-        impl<'a> Visitor<'a> for HistoricalJobResponseDataVisitor {
-            type Value = HistoricalJobResponseData;
+        struct RunThreatHuntingJobRequestDataVisitor;
+        impl<'a> Visitor<'a> for RunThreatHuntingJobRequestDataVisitor {
+            type Value = RunThreatHuntingJobRequestData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -89,10 +83,10 @@ impl<'de> Deserialize<'de> for HistoricalJobResponseData {
                 M: MapAccess<'a>,
             {
                 let mut attributes: Option<
-                    crate::datadogV2::model::HistoricalJobResponseAttributes,
+                    crate::datadogV2::model::RunThreatHuntingJobRequestAttributes,
                 > = None;
-                let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::HistoricalJobDataType> = None;
+                let mut type_: Option<crate::datadogV2::model::RunThreatHuntingJobRequestDataType> =
+                    None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -107,12 +101,6 @@ impl<'de> Deserialize<'de> for HistoricalJobResponseData {
                             }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "id" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "type" => {
                             if v.is_null() {
                                 continue;
@@ -120,7 +108,7 @@ impl<'de> Deserialize<'de> for HistoricalJobResponseData {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::HistoricalJobDataType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::RunThreatHuntingJobRequestDataType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -135,9 +123,8 @@ impl<'de> Deserialize<'de> for HistoricalJobResponseData {
                     }
                 }
 
-                let content = HistoricalJobResponseData {
+                let content = RunThreatHuntingJobRequestData {
                     attributes,
-                    id,
                     type_,
                     additional_properties,
                     _unparsed,
@@ -147,6 +134,6 @@ impl<'de> Deserialize<'de> for HistoricalJobResponseData {
             }
         }
 
-        deserializer.deserialize_any(HistoricalJobResponseDataVisitor)
+        deserializer.deserialize_any(RunThreatHuntingJobRequestDataVisitor)
     }
 }

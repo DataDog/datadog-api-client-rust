@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Request for converting historical job results to signals.
+/// Request for converting threat hunting job results to signals.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ConvertJobResultsToSignalsRequest {
-    /// Data for converting historical job results to signals.
+    /// Data for converting threat hunting job results to signals.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::ConvertJobResultsToSignalsData>,
     #[serde(flatten)]
