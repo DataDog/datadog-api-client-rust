@@ -144,6 +144,7 @@ pub struct ApiInstances {
         Option<datadogV2::api_service_level_objectives::ServiceLevelObjectivesAPI>,
     pub v2_api_spa: Option<datadogV2::api_spa::SpaAPI>,
     pub v2_api_spans: Option<datadogV2::api_spans::SpansAPI>,
+    pub v2_api_static_analysis: Option<datadogV2::api_static_analysis::StaticAnalysisAPI>,
     pub v2_api_synthetics: Option<datadogV2::api_synthetics::SyntheticsAPI>,
     pub v2_api_teams: Option<datadogV2::api_teams::TeamsAPI>,
     pub v2_api_incident_teams: Option<datadogV2::api_incident_teams::IncidentTeamsAPI>,
@@ -928,6 +929,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ));
+        }
+        "StaticAnalysis" => {
+            world.api_instances.v2_api_static_analysis = Some(
+                datadogV2::api_static_analysis::StaticAnalysisAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
         }
         "Teams" => {
             world.api_instances.v2_api_teams =
@@ -4074,6 +4083,13 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.ListSpansWithPagination".into(),
         test_v2_list_spans_with_pagination,
+    );
+    world
+        .function_mappings
+        .insert("v2.CreateSCAResult".into(), test_v2_create_sca_result);
+    world.function_mappings.insert(
+        "v2.CreateSCAResolveVulnerableSymbols".into(),
+        test_v2_create_sca_resolve_vulnerable_symbols,
     );
     world.function_mappings.insert(
         "v2.GetOnDemandConcurrencyCap".into(),
@@ -31450,6 +31466,59 @@ fn test_v2_list_spans_with_pagination(
     });
     world.response.object = serde_json::to_value(result).unwrap();
     world.response.code = 200;
+}
+
+fn test_v2_create_sca_result(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_static_analysis
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_sca_result_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_sca_resolve_vulnerable_symbols(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_static_analysis
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_sca_resolve_vulnerable_symbols_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
 }
 
 fn test_v2_get_on_demand_concurrency_cap(
