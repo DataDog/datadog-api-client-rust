@@ -15,11 +15,11 @@
           ]
         },
         "method": "post",
-        "uri": "https://api.datadoghq.com/api/v2/siem-historical-detections/jobs"
+        "uri": "https://api.datadoghq.com/api/v2/siem-threat-hunting/jobs"
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"id\":\"e332b07e-d573-45fa-b2df-9a1bcc27f17e\",\"type\":\"historicalDetectionsJob\"}}",
+          "string": "{\"data\":{\"id\":\"cafe565c-106b-486e-ad21-a712656723b4\",\"type\":\"historicalDetectionsJob\"}}",
           "encoding": null
         },
         "headers": {
@@ -32,7 +32,7 @@
           "message": "Created"
         }
       },
-      "recorded_at": "Fri, 08 Nov 2024 09:54:39 GMT"
+      "recorded_at": "Fri, 24 Oct 2025 14:24:00 GMT"
     },
     {
       "request": {
@@ -43,7 +43,7 @@
           ]
         },
         "method": "patch",
-        "uri": "https://api.datadoghq.com/api/v2/siem-historical-detections/jobs/e332b07e-d573-45fa-b2df-9a1bcc27f17e/cancel"
+        "uri": "https://api.datadoghq.com/api/v2/siem-threat-hunting/jobs/cafe565c-106b-486e-ad21-a712656723b4/cancel"
       },
       "response": {
         "body": {
@@ -56,7 +56,7 @@
           "message": "No Content"
         }
       },
-      "recorded_at": "Fri, 08 Nov 2024 09:54:39 GMT"
+      "recorded_at": "Fri, 24 Oct 2025 14:24:00 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"

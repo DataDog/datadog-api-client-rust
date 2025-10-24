@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum RunHistoricalJobRequestDataType {
+pub enum RunThreatHuntingJobRequestDataType {
     HISTORICALDETECTIONSJOBCREATE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for RunHistoricalJobRequestDataType {
+impl ToString for RunThreatHuntingJobRequestDataType {
     fn to_string(&self) -> String {
         match self {
             Self::HISTORICALDETECTIONSJOBCREATE => String::from("historicalDetectionsJobCreate"),
@@ -20,7 +20,7 @@ impl ToString for RunHistoricalJobRequestDataType {
     }
 }
 
-impl Serialize for RunHistoricalJobRequestDataType {
+impl Serialize for RunThreatHuntingJobRequestDataType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -32,7 +32,7 @@ impl Serialize for RunHistoricalJobRequestDataType {
     }
 }
 
-impl<'de> Deserialize<'de> for RunHistoricalJobRequestDataType {
+impl<'de> Deserialize<'de> for RunThreatHuntingJobRequestDataType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,

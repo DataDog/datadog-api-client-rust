@@ -6,11 +6,11 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Historical job attributes.
+/// Threat hunting job attributes.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct HistoricalJobResponseAttributes {
+pub struct ThreatHuntingJobResponseAttributes {
     /// Time when the job was created.
     #[serde(rename = "createdAt")]
     pub created_at: Option<String>,
@@ -23,7 +23,7 @@ pub struct HistoricalJobResponseAttributes {
     /// ID of the rule used to create the job (if it is created from a rule).
     #[serde(rename = "createdFromRuleId")]
     pub created_from_rule_id: Option<String>,
-    /// Definition of a historical job.
+    /// Definition of a threat hunting job.
     #[serde(rename = "jobDefinition")]
     pub job_definition: Option<crate::datadogV2::model::JobDefinition>,
     /// Job name.
@@ -42,9 +42,9 @@ pub struct HistoricalJobResponseAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl HistoricalJobResponseAttributes {
-    pub fn new() -> HistoricalJobResponseAttributes {
-        HistoricalJobResponseAttributes {
+impl ThreatHuntingJobResponseAttributes {
+    pub fn new() -> ThreatHuntingJobResponseAttributes {
+        ThreatHuntingJobResponseAttributes {
             created_at: None,
             created_by_handle: None,
             created_by_name: None,
@@ -107,20 +107,20 @@ impl HistoricalJobResponseAttributes {
     }
 }
 
-impl Default for HistoricalJobResponseAttributes {
+impl Default for ThreatHuntingJobResponseAttributes {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for HistoricalJobResponseAttributes {
+impl<'de> Deserialize<'de> for ThreatHuntingJobResponseAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct HistoricalJobResponseAttributesVisitor;
-        impl<'a> Visitor<'a> for HistoricalJobResponseAttributesVisitor {
-            type Value = HistoricalJobResponseAttributes;
+        struct ThreatHuntingJobResponseAttributesVisitor;
+        impl<'a> Visitor<'a> for ThreatHuntingJobResponseAttributesVisitor {
+            type Value = ThreatHuntingJobResponseAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -207,7 +207,7 @@ impl<'de> Deserialize<'de> for HistoricalJobResponseAttributes {
                     }
                 }
 
-                let content = HistoricalJobResponseAttributes {
+                let content = ThreatHuntingJobResponseAttributes {
                     created_at,
                     created_by_handle,
                     created_by_name,
@@ -224,6 +224,6 @@ impl<'de> Deserialize<'de> for HistoricalJobResponseAttributes {
             }
         }
 
-        deserializer.deserialize_any(HistoricalJobResponseAttributesVisitor)
+        deserializer.deserialize_any(ThreatHuntingJobResponseAttributesVisitor)
     }
 }

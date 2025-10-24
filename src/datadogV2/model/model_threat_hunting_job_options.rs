@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct HistoricalJobOptions {
+pub struct ThreatHuntingJobOptions {
     /// The detection method.
     #[serde(rename = "detectionMethod")]
     pub detection_method: Option<crate::datadogV2::model::SecurityMonitoringRuleDetectionMethod>,
@@ -49,9 +49,9 @@ pub struct HistoricalJobOptions {
     pub(crate) _unparsed: bool,
 }
 
-impl HistoricalJobOptions {
-    pub fn new() -> HistoricalJobOptions {
-        HistoricalJobOptions {
+impl ThreatHuntingJobOptions {
+    pub fn new() -> ThreatHuntingJobOptions {
+        ThreatHuntingJobOptions {
             detection_method: None,
             evaluation_window: None,
             impossible_travel_options: None,
@@ -138,20 +138,20 @@ impl HistoricalJobOptions {
     }
 }
 
-impl Default for HistoricalJobOptions {
+impl Default for ThreatHuntingJobOptions {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for HistoricalJobOptions {
+impl<'de> Deserialize<'de> for ThreatHuntingJobOptions {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct HistoricalJobOptionsVisitor;
-        impl<'a> Visitor<'a> for HistoricalJobOptionsVisitor {
-            type Value = HistoricalJobOptions;
+        struct ThreatHuntingJobOptionsVisitor;
+        impl<'a> Visitor<'a> for ThreatHuntingJobOptionsVisitor {
+            type Value = ThreatHuntingJobOptions;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -288,7 +288,7 @@ impl<'de> Deserialize<'de> for HistoricalJobOptions {
                     }
                 }
 
-                let content = HistoricalJobOptions {
+                let content = ThreatHuntingJobOptions {
                     detection_method,
                     evaluation_window,
                     impossible_travel_options,
@@ -305,6 +305,6 @@ impl<'de> Deserialize<'de> for HistoricalJobOptions {
             }
         }
 
-        deserializer.deserialize_any(HistoricalJobOptionsVisitor)
+        deserializer.deserialize_any(ThreatHuntingJobOptionsVisitor)
     }
 }

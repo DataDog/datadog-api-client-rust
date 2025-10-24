@@ -16,7 +16,7 @@ pub struct JobCreateResponseData {
     pub id: Option<String>,
     /// Type of payload.
     #[serde(rename = "type")]
-    pub type_: Option<crate::datadogV2::model::HistoricalJobDataType>,
+    pub type_: Option<crate::datadogV2::model::ThreatHuntingJobDataType>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -39,7 +39,7 @@ impl JobCreateResponseData {
         self
     }
 
-    pub fn type_(mut self, value: crate::datadogV2::model::HistoricalJobDataType) -> Self {
+    pub fn type_(mut self, value: crate::datadogV2::model::ThreatHuntingJobDataType) -> Self {
         self.type_ = Some(value);
         self
     }
@@ -77,7 +77,7 @@ impl<'de> Deserialize<'de> for JobCreateResponseData {
                 M: MapAccess<'a>,
             {
                 let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::HistoricalJobDataType> = None;
+                let mut type_: Option<crate::datadogV2::model::ThreatHuntingJobDataType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -99,7 +99,7 @@ impl<'de> Deserialize<'de> for JobCreateResponseData {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::HistoricalJobDataType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::ThreatHuntingJobDataType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}

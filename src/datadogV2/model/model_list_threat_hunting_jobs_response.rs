@@ -6,17 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// List of historical jobs.
+/// List of threat hunting jobs.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ListHistoricalJobsResponse {
-    /// Array containing the list of historical jobs.
+pub struct ListThreatHuntingJobsResponse {
+    /// Array containing the list of threat hunting jobs.
     #[serde(rename = "data")]
-    pub data: Option<Vec<crate::datadogV2::model::HistoricalJobResponseData>>,
+    pub data: Option<Vec<crate::datadogV2::model::ThreatHuntingJobResponseData>>,
     /// Metadata about the list of jobs.
     #[serde(rename = "meta")]
-    pub meta: Option<crate::datadogV2::model::HistoricalJobListMeta>,
+    pub meta: Option<crate::datadogV2::model::ThreatHuntingJobListMeta>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,9 +24,9 @@ pub struct ListHistoricalJobsResponse {
     pub(crate) _unparsed: bool,
 }
 
-impl ListHistoricalJobsResponse {
-    pub fn new() -> ListHistoricalJobsResponse {
-        ListHistoricalJobsResponse {
+impl ListThreatHuntingJobsResponse {
+    pub fn new() -> ListThreatHuntingJobsResponse {
+        ListThreatHuntingJobsResponse {
             data: None,
             meta: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -34,12 +34,15 @@ impl ListHistoricalJobsResponse {
         }
     }
 
-    pub fn data(mut self, value: Vec<crate::datadogV2::model::HistoricalJobResponseData>) -> Self {
+    pub fn data(
+        mut self,
+        value: Vec<crate::datadogV2::model::ThreatHuntingJobResponseData>,
+    ) -> Self {
         self.data = Some(value);
         self
     }
 
-    pub fn meta(mut self, value: crate::datadogV2::model::HistoricalJobListMeta) -> Self {
+    pub fn meta(mut self, value: crate::datadogV2::model::ThreatHuntingJobListMeta) -> Self {
         self.meta = Some(value);
         self
     }
@@ -53,20 +56,20 @@ impl ListHistoricalJobsResponse {
     }
 }
 
-impl Default for ListHistoricalJobsResponse {
+impl Default for ListThreatHuntingJobsResponse {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for ListHistoricalJobsResponse {
+impl<'de> Deserialize<'de> for ListThreatHuntingJobsResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ListHistoricalJobsResponseVisitor;
-        impl<'a> Visitor<'a> for ListHistoricalJobsResponseVisitor {
-            type Value = ListHistoricalJobsResponse;
+        struct ListThreatHuntingJobsResponseVisitor;
+        impl<'a> Visitor<'a> for ListThreatHuntingJobsResponseVisitor {
+            type Value = ListThreatHuntingJobsResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -76,9 +79,9 @@ impl<'de> Deserialize<'de> for ListHistoricalJobsResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<Vec<crate::datadogV2::model::HistoricalJobResponseData>> =
+                let mut data: Option<Vec<crate::datadogV2::model::ThreatHuntingJobResponseData>> =
                     None;
-                let mut meta: Option<crate::datadogV2::model::HistoricalJobListMeta> = None;
+                let mut meta: Option<crate::datadogV2::model::ThreatHuntingJobListMeta> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -107,7 +110,7 @@ impl<'de> Deserialize<'de> for ListHistoricalJobsResponse {
                     }
                 }
 
-                let content = ListHistoricalJobsResponse {
+                let content = ListThreatHuntingJobsResponse {
                     data,
                     meta,
                     additional_properties,
@@ -118,6 +121,6 @@ impl<'de> Deserialize<'de> for ListHistoricalJobsResponse {
             }
         }
 
-        deserializer.deserialize_any(ListHistoricalJobsResponseVisitor)
+        deserializer.deserialize_any(ListThreatHuntingJobsResponseVisitor)
     }
 }

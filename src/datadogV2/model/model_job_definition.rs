@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Definition of a historical job.
+/// Definition of a threat hunting job.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -34,10 +34,10 @@ pub struct JobDefinition {
     pub name: String,
     /// Job options.
     #[serde(rename = "options")]
-    pub options: Option<crate::datadogV2::model::HistoricalJobOptions>,
+    pub options: Option<crate::datadogV2::model::ThreatHuntingJobOptions>,
     /// Queries for selecting logs analyzed by the job.
     #[serde(rename = "queries")]
-    pub queries: Vec<crate::datadogV2::model::HistoricalJobQuery>,
+    pub queries: Vec<crate::datadogV2::model::ThreatHuntingJobQuery>,
     /// Reference tables used in the queries.
     #[serde(rename = "referenceTables")]
     pub reference_tables: Option<Vec<crate::datadogV2::model::SecurityMonitoringReferenceTable>>,
@@ -68,7 +68,7 @@ impl JobDefinition {
         index: String,
         message: String,
         name: String,
-        queries: Vec<crate::datadogV2::model::HistoricalJobQuery>,
+        queries: Vec<crate::datadogV2::model::ThreatHuntingJobQuery>,
         to: i64,
     ) -> JobDefinition {
         JobDefinition {
@@ -104,7 +104,7 @@ impl JobDefinition {
         self
     }
 
-    pub fn options(mut self, value: crate::datadogV2::model::HistoricalJobOptions) -> Self {
+    pub fn options(mut self, value: crate::datadogV2::model::ThreatHuntingJobOptions) -> Self {
         self.options = Some(value);
         self
     }
@@ -171,8 +171,8 @@ impl<'de> Deserialize<'de> for JobDefinition {
                 let mut index: Option<String> = None;
                 let mut message: Option<String> = None;
                 let mut name: Option<String> = None;
-                let mut options: Option<crate::datadogV2::model::HistoricalJobOptions> = None;
-                let mut queries: Option<Vec<crate::datadogV2::model::HistoricalJobQuery>> = None;
+                let mut options: Option<crate::datadogV2::model::ThreatHuntingJobOptions> = None;
+                let mut queries: Option<Vec<crate::datadogV2::model::ThreatHuntingJobQuery>> = None;
                 let mut reference_tables: Option<
                     Vec<crate::datadogV2::model::SecurityMonitoringReferenceTable>,
                 > = None;
