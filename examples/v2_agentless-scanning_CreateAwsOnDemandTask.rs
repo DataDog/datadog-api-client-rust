@@ -1,4 +1,4 @@
-// Post an AWS on demand task returns "AWS on demand task created successfully."
+// Create AWS on demand task returns "AWS on demand task created successfully."
 // response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_agentless_scanning::AgentlessScanningAPI;

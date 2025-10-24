@@ -1,0 +1,33 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "application/json"
+          ]
+        },
+        "method": "get",
+        "uri": "https://api.datadoghq.com/api/v2/agentless_scanning/accounts/azure"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":[]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Thu, 23 Oct 2025 22:22:00 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
