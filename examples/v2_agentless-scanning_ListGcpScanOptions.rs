@@ -1,4 +1,4 @@
-// List GCP Scan Options returns "OK" response
+// List GCP scan options returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_agentless_scanning::AgentlessScanningAPI;
 

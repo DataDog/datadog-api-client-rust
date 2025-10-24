@@ -1,4 +1,4 @@
-// Delete azure scan options returns "No Content" response
+// Delete Azure scan options returns "No Content" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_agentless_scanning::AgentlessScanningAPI;
 

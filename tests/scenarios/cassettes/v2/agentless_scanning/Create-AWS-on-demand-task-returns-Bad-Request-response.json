@@ -3,7 +3,7 @@
     {
       "request": {
         "body": {
-          "string": "{\"data\":{\"attributes\":{\"lambda\":true,\"sensitive_data\":false,\"vuln_containers_os\":true,\"vuln_host_os\":true},\"id\":\"184366314700\",\"type\":\"incorrect_type\"}}",
+          "string": "{\"data\":{\"attributes\":{\"arn\":\"invalid-arn\"},\"type\":\"aws_resource\"}}",
           "encoding": null
         },
         "headers": {
@@ -15,11 +15,11 @@
           ]
         },
         "method": "post",
-        "uri": "https://api.datadoghq.com/api/v2/agentless_scanning/accounts/aws"
+        "uri": "https://api.datadoghq.com/api/v2/agentless_scanning/ondemand/aws"
       },
       "response": {
         "body": {
-          "string": "{\"errors\":[{\"status\":\"400\",\"title\":\"Bad Request\",\"detail\":\"got type \\\"incorrect_type\\\" expected one of \\\"aws_scan_options\\\"\"}]}",
+          "string": "{\"errors\":[{\"title\":\"Generic Error\",\"detail\":\"invalid aws arn\"}]}",
           "encoding": null
         },
         "headers": {
@@ -32,7 +32,7 @@
           "message": "Bad Request"
         }
       },
-      "recorded_at": "Thu, 27 Feb 2025 17:01:48 GMT"
+      "recorded_at": "Thu, 23 Oct 2025 22:21:54 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"

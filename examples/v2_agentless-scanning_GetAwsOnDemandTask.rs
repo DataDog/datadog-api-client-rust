@@ -1,4 +1,4 @@
-// Get AWS On Demand task by id returns "OK." response
+// Get AWS on demand task returns "OK." response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_agentless_scanning::AgentlessScanningAPI;
 

@@ -1,0 +1,63 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"vuln_containers_os\":true,\"vuln_host_os\":true},\"id\":\"new-project\",\"type\":\"gcp_scan_options\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/agentless_scanning/accounts/gcp"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":{\"id\":\"new-project\",\"type\":\"gcp_scan_options\",\"attributes\":{\"vuln_containers_os\":true,\"vuln_host_os\":true}}}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 201,
+          "message": "Created"
+        }
+      },
+      "recorded_at": "Thu, 23 Oct 2025 22:21:55 GMT"
+    },
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "*/*"
+          ]
+        },
+        "method": "delete",
+        "uri": "https://api.datadoghq.com/api/v2/agentless_scanning/accounts/gcp/new-project"
+      },
+      "response": {
+        "body": {
+          "string": "",
+          "encoding": null
+        },
+        "headers": {},
+        "status": {
+          "code": 204,
+          "message": "No Content"
+        }
+      },
+      "recorded_at": "Thu, 23 Oct 2025 22:21:55 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
