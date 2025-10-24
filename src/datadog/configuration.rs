@@ -122,6 +122,10 @@ impl Configuration {
 impl Default for Configuration {
     fn default() -> Self {
         let unstable_operations = HashMap::from([
+            ("v2.cancel_fleet_deployment".to_owned(), false),
+            ("v2.create_fleet_deployment_configure".to_owned(), false),
+            ("v2.get_fleet_deployment".to_owned(), false),
+            ("v2.list_fleet_deployments".to_owned(), false),
             ("v2.create_open_api".to_owned(), false),
             ("v2.delete_open_api".to_owned(), false),
             ("v2.get_open_api".to_owned(), false),
