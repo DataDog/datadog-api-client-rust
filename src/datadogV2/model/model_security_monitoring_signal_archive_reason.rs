@@ -11,6 +11,8 @@ pub enum SecurityMonitoringSignalArchiveReason {
     FALSE_POSITIVE,
     TESTING_OR_MAINTENANCE,
     INVESTIGATED_CASE_OPENED,
+    TRUE_POSITIVE_BENIGN,
+    TRUE_POSITIVE_MALICIOUS,
     OTHER,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
@@ -22,6 +24,8 @@ impl ToString for SecurityMonitoringSignalArchiveReason {
             Self::FALSE_POSITIVE => String::from("false_positive"),
             Self::TESTING_OR_MAINTENANCE => String::from("testing_or_maintenance"),
             Self::INVESTIGATED_CASE_OPENED => String::from("investigated_case_opened"),
+            Self::TRUE_POSITIVE_BENIGN => String::from("true_positive_benign"),
+            Self::TRUE_POSITIVE_MALICIOUS => String::from("true_positive_malicious"),
             Self::OTHER => String::from("other"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
@@ -51,6 +55,8 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalArchiveReason {
             "false_positive" => Self::FALSE_POSITIVE,
             "testing_or_maintenance" => Self::TESTING_OR_MAINTENANCE,
             "investigated_case_opened" => Self::INVESTIGATED_CASE_OPENED,
+            "true_positive_benign" => Self::TRUE_POSITIVE_BENIGN,
+            "true_positive_malicious" => Self::TRUE_POSITIVE_MALICIOUS,
             "other" => Self::OTHER,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
