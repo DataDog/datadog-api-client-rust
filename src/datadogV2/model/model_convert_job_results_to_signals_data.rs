@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Data for converting historical job results to signals.
+/// Data for converting threat hunting job results to signals.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ConvertJobResultsToSignalsData {
-    /// Attributes for converting historical job results to signals.
+    /// Attributes for converting threat hunting job results to signals.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::ConvertJobResultsToSignalsAttributes>,
     /// Type of payload.

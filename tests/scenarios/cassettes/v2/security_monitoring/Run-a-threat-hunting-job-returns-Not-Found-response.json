@@ -15,7 +15,7 @@
           ]
         },
         "method": "post",
-        "uri": "https://api.datadoghq.com/api/v2/siem-historical-detections/jobs"
+        "uri": "https://api.datadoghq.com/api/v2/siem-threat-hunting/jobs"
       },
       "response": {
         "body": {
@@ -32,7 +32,7 @@
           "message": "Not Found"
         }
       },
-      "recorded_at": "Thu, 26 Jun 2025 16:57:47 GMT"
+      "recorded_at": "Fri, 24 Oct 2025 14:24:02 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"

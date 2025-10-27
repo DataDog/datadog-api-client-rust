@@ -6,11 +6,11 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Query for selecting logs analyzed by the historical job.
+/// Query for selecting logs analyzed by the threat hunting job.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct HistoricalJobQuery {
+pub struct ThreatHuntingJobQuery {
     /// The aggregation type.
     #[serde(rename = "aggregation")]
     pub aggregation: Option<crate::datadogV2::model::SecurityMonitoringRuleQueryAggregation>,
@@ -42,9 +42,9 @@ pub struct HistoricalJobQuery {
     pub(crate) _unparsed: bool,
 }
 
-impl HistoricalJobQuery {
-    pub fn new() -> HistoricalJobQuery {
-        HistoricalJobQuery {
+impl ThreatHuntingJobQuery {
+    pub fn new() -> ThreatHuntingJobQuery {
+        ThreatHuntingJobQuery {
             aggregation: None,
             data_source: None,
             distinct_fields: None,
@@ -113,20 +113,20 @@ impl HistoricalJobQuery {
     }
 }
 
-impl Default for HistoricalJobQuery {
+impl Default for ThreatHuntingJobQuery {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for HistoricalJobQuery {
+impl<'de> Deserialize<'de> for ThreatHuntingJobQuery {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct HistoricalJobQueryVisitor;
-        impl<'a> Visitor<'a> for HistoricalJobQueryVisitor {
-            type Value = HistoricalJobQuery;
+        struct ThreatHuntingJobQueryVisitor;
+        impl<'a> Visitor<'a> for ThreatHuntingJobQueryVisitor {
+            type Value = ThreatHuntingJobQuery;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -233,7 +233,7 @@ impl<'de> Deserialize<'de> for HistoricalJobQuery {
                     }
                 }
 
-                let content = HistoricalJobQuery {
+                let content = ThreatHuntingJobQuery {
                     aggregation,
                     data_source,
                     distinct_fields,
@@ -250,6 +250,6 @@ impl<'de> Deserialize<'de> for HistoricalJobQuery {
             }
         }
 
-        deserializer.deserialize_any(HistoricalJobQueryVisitor)
+        deserializer.deserialize_any(ThreatHuntingJobQueryVisitor)
     }
 }
