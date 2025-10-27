@@ -2548,6 +2548,13 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_get_security_monitoring_histsignals_by_job_id,
     );
     world.function_mappings.insert(
+        "v2.ListMultipleRulesets".into(),
+        test_v2_list_multiple_rulesets,
+    );
+    world
+        .function_mappings
+        .insert("v2.GetSecretsRules".into(), test_v2_get_secrets_rules);
+    world.function_mappings.insert(
         "v2.ListContainerImages".into(),
         test_v2_list_container_images,
     );
@@ -18338,6 +18345,55 @@ fn test_v2_get_security_monitoring_histsignals_by_job_id(
     let response = match block_on(
         api.get_security_monitoring_histsignals_by_job_id_with_http_info(job_id, params),
     ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_multiple_rulesets(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.list_multiple_rulesets_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_secrets_rules(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.get_secrets_rules_with_http_info()) {
         Ok(response) => response,
         Err(error) => {
             return match error {

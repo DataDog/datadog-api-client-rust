@@ -137,6 +137,7 @@ impl Default for Configuration {
             ("v2.get_finding".to_owned(), false),
             ("v2.get_rule_version_history".to_owned(), false),
             ("v2.get_sbom".to_owned(), false),
+            ("v2.get_secrets_rules".to_owned(), false),
             ("v2.get_security_monitoring_histsignal".to_owned(), false),
             (
                 "v2.get_security_monitoring_histsignals_by_job_id".to_owned(),
@@ -145,6 +146,7 @@ impl Default for Configuration {
             ("v2.get_threat_hunting_job".to_owned(), false),
             ("v2.list_assets_sbo_ms".to_owned(), false),
             ("v2.list_findings".to_owned(), false),
+            ("v2.list_multiple_rulesets".to_owned(), false),
             ("v2.list_scanned_assets_metadata".to_owned(), false),
             ("v2.list_security_monitoring_histsignals".to_owned(), false),
             ("v2.list_threat_hunting_jobs".to_owned(), false),
