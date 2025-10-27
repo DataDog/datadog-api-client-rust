@@ -15,7 +15,7 @@
           ]
         },
         "method": "post",
-        "uri": "https://api.datadoghq.com/api/v2/siem-historical-detections/jobs/signal_convert"
+        "uri": "https://api.datadoghq.com/api/v2/siem-threat-hunting/jobs/signal_convert"
       },
       "response": {
         "body": {
@@ -32,7 +32,7 @@
           "message": "Bad Request"
         }
       },
-      "recorded_at": "Fri, 08 Nov 2024 09:54:39 GMT"
+      "recorded_at": "Fri, 24 Oct 2025 14:24:01 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"

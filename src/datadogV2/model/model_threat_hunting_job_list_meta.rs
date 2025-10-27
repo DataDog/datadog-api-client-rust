@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct HistoricalJobListMeta {
+pub struct ThreatHuntingJobListMeta {
     /// Number of jobs in the list.
     #[serde(rename = "totalCount")]
     pub total_count: Option<i32>,
@@ -21,9 +21,9 @@ pub struct HistoricalJobListMeta {
     pub(crate) _unparsed: bool,
 }
 
-impl HistoricalJobListMeta {
-    pub fn new() -> HistoricalJobListMeta {
-        HistoricalJobListMeta {
+impl ThreatHuntingJobListMeta {
+    pub fn new() -> ThreatHuntingJobListMeta {
+        ThreatHuntingJobListMeta {
             total_count: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -44,20 +44,20 @@ impl HistoricalJobListMeta {
     }
 }
 
-impl Default for HistoricalJobListMeta {
+impl Default for ThreatHuntingJobListMeta {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for HistoricalJobListMeta {
+impl<'de> Deserialize<'de> for ThreatHuntingJobListMeta {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct HistoricalJobListMetaVisitor;
-        impl<'a> Visitor<'a> for HistoricalJobListMetaVisitor {
-            type Value = HistoricalJobListMeta;
+        struct ThreatHuntingJobListMetaVisitor;
+        impl<'a> Visitor<'a> for ThreatHuntingJobListMetaVisitor {
+            type Value = ThreatHuntingJobListMeta;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -91,7 +91,7 @@ impl<'de> Deserialize<'de> for HistoricalJobListMeta {
                     }
                 }
 
-                let content = HistoricalJobListMeta {
+                let content = ThreatHuntingJobListMeta {
                     total_count,
                     additional_properties,
                     _unparsed,
@@ -101,6 +101,6 @@ impl<'de> Deserialize<'de> for HistoricalJobListMeta {
             }
         }
 
-        deserializer.deserialize_any(HistoricalJobListMetaVisitor)
+        deserializer.deserialize_any(ThreatHuntingJobListMetaVisitor)
     }
 }

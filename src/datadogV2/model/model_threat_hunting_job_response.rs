@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Historical job response.
+/// Threat hunting job response.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct HistoricalJobResponse {
-    /// Historical job response data.
+pub struct ThreatHuntingJobResponse {
+    /// Threat hunting job response data.
     #[serde(rename = "data")]
-    pub data: Option<crate::datadogV2::model::HistoricalJobResponseData>,
+    pub data: Option<crate::datadogV2::model::ThreatHuntingJobResponseData>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,16 +21,16 @@ pub struct HistoricalJobResponse {
     pub(crate) _unparsed: bool,
 }
 
-impl HistoricalJobResponse {
-    pub fn new() -> HistoricalJobResponse {
-        HistoricalJobResponse {
+impl ThreatHuntingJobResponse {
+    pub fn new() -> ThreatHuntingJobResponse {
+        ThreatHuntingJobResponse {
             data: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn data(mut self, value: crate::datadogV2::model::HistoricalJobResponseData) -> Self {
+    pub fn data(mut self, value: crate::datadogV2::model::ThreatHuntingJobResponseData) -> Self {
         self.data = Some(value);
         self
     }
@@ -44,20 +44,20 @@ impl HistoricalJobResponse {
     }
 }
 
-impl Default for HistoricalJobResponse {
+impl Default for ThreatHuntingJobResponse {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for HistoricalJobResponse {
+impl<'de> Deserialize<'de> for ThreatHuntingJobResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct HistoricalJobResponseVisitor;
-        impl<'a> Visitor<'a> for HistoricalJobResponseVisitor {
-            type Value = HistoricalJobResponse;
+        struct ThreatHuntingJobResponseVisitor;
+        impl<'a> Visitor<'a> for ThreatHuntingJobResponseVisitor {
+            type Value = ThreatHuntingJobResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -67,7 +67,7 @@ impl<'de> Deserialize<'de> for HistoricalJobResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::HistoricalJobResponseData> = None;
+                let mut data: Option<crate::datadogV2::model::ThreatHuntingJobResponseData> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -90,7 +90,7 @@ impl<'de> Deserialize<'de> for HistoricalJobResponse {
                     }
                 }
 
-                let content = HistoricalJobResponse {
+                let content = ThreatHuntingJobResponse {
                     data,
                     additional_properties,
                     _unparsed,
@@ -100,6 +100,6 @@ impl<'de> Deserialize<'de> for HistoricalJobResponse {
             }
         }
 
-        deserializer.deserialize_any(HistoricalJobResponseVisitor)
+        deserializer.deserialize_any(ThreatHuntingJobResponseVisitor)
     }
 }
