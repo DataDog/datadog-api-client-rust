@@ -1,5 +1,30 @@
 # CHANGELOG
 
+## 0.21.0/2025-10-27
+
+### Added
+* Add endpoints for Software Composition Analysis [#990](https://github.com/DataDog/datadog-api-client-rust/pull/990)
+* Add support for `Schema Processor` in `Logs Pipelines` [#973](https://github.com/DataDog/datadog-api-client-rust/pull/973)
+* Add new DeleteAssignee endpoint to Error Tracking APIs [#968](https://github.com/DataDog/datadog-api-client-rust/pull/968)
+* document agentless GCP scan options CRUD endpoints [#962](https://github.com/DataDog/datadog-api-client-rust/pull/962)
+* Document `/api/v2/roles/templates`  [#952](https://github.com/DataDog/datadog-api-client-rust/pull/952)
+* Add Reference Tables API spec [#951](https://github.com/DataDog/datadog-api-client-rust/pull/951)
+* Add blockedRequestPatterns to synthetics browser test options [#945](https://github.com/DataDog/datadog-api-client-rust/pull/945)
+* Add `BulkDeleteDatastoreItems` to Datastore API spec [#944](https://github.com/DataDog/datadog-api-client-rust/pull/944)
+* Add some missing Workload Protection agent rule fields [#943](https://github.com/DataDog/datadog-api-client-rust/pull/943)
+* Add AzureScanOptions to agentless scanning API [#941](https://github.com/DataDog/datadog-api-client-rust/pull/941)
+* Add API Key ID to rum application response [#939](https://github.com/DataDog/datadog-api-client-rust/pull/939)
+
+### Changed
+* Include mention to new scanned-assets-metadata endpoint on container images v1 endpoint [#972](https://github.com/DataDog/datadog-api-client-rust/pull/972)
+* Include mention to new scanned-assets-metadata endpoint on hosts v1 endpoint [#971](https://github.com/DataDog/datadog-api-client-rust/pull/971)
+* security_monitoring - Add indexes to deprecate index in ruleQuery [#963](https://github.com/DataDog/datadog-api-client-rust/pull/963)
+* Add support for vulnerability management - Add ListScannedAssetsMetadata new endpoint and update existing ones [#961](https://github.com/DataDog/datadog-api-client-rust/pull/961)
+* Update description, operationId and examples for tag pipeline and custom allocation rules [#958](https://github.com/DataDog/datadog-api-client-rust/pull/958)
+
+### Fixed
+* Update the summary name for get a tag pipeline ruleset. [#969](https://github.com/DataDog/datadog-api-client-rust/pull/969)
+
 ## 0.20.0/2025-09-30
 
 ### Added
