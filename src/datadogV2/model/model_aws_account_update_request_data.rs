@@ -15,7 +15,8 @@ pub struct AWSAccountUpdateRequestData {
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::AWSAccountUpdateRequestAttributes,
     /// Unique Datadog ID of the AWS Account Integration Config.
-    /// To get the config ID for an account, use the [List all AWS integrations](<https://docs.datadoghq.com/api/latest/aws-integration/#list-all-aws-integrations>)
+    /// To get the config ID for an account, use the
+    /// [List all AWS integrations](<https://docs.datadoghq.com/api/latest/aws-integration/#list-all-aws-integrations>)
     /// endpoint and query by AWS Account ID.
     #[serde(rename = "id")]
     pub id: Option<String>,

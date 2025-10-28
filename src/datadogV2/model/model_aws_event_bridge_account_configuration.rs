@@ -6,24 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// AWS log source tag filter list. Defaults to `[]`.
-/// Array of log source to AWS resource tag mappings. Each mapping contains a log source and its
-/// associated AWS resource tags (in `key:value` format) used to filter logs submitted to Datadog.
-/// Tag filters are applied for tags on the AWS resource emitting logs; tags associated with the
-/// log storage entity (such as a CloudWatch Log Group or S3 Bucket) are not considered.
-/// For more information on resource tag filter syntax,
-/// [see AWS resource exclusion](<https://docs.datadoghq.com/account_management/billing/aws/#aws-resource-exclusion>)
-/// in the AWS integration billing page.
+/// The EventBridge configuration for one AWS account.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct AWSLogSourceTagFilter {
-    /// The AWS log source to which the tag filters defined in `tags` are applied.
-    #[serde(rename = "source")]
-    pub source: Option<String>,
-    /// The AWS resource tags to filter on for the log source specified by `source`.
-    #[serde(rename = "tags", default, with = "::serde_with::rust::double_option")]
-    pub tags: Option<Option<Vec<String>>>,
+pub struct AWSEventBridgeAccountConfiguration {
+    /// Your AWS Account ID without dashes.
+    #[serde(rename = "account_id")]
+    pub account_id: Option<String>,
+    /// Array of AWS event sources associated with this account.
+    #[serde(rename = "event_hubs")]
+    pub event_hubs: Option<Vec<crate::datadogV2::model::AWSEventBridgeSource>>,
+    /// Array of tags (in the form `key:value`) which are added to all hosts
+    /// and metrics reporting through the main AWS integration.
+    #[serde(rename = "tags")]
+    pub tags: Option<Vec<String>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -31,22 +28,28 @@ pub struct AWSLogSourceTagFilter {
     pub(crate) _unparsed: bool,
 }
 
-impl AWSLogSourceTagFilter {
-    pub fn new() -> AWSLogSourceTagFilter {
-        AWSLogSourceTagFilter {
-            source: None,
+impl AWSEventBridgeAccountConfiguration {
+    pub fn new() -> AWSEventBridgeAccountConfiguration {
+        AWSEventBridgeAccountConfiguration {
+            account_id: None,
+            event_hubs: None,
             tags: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn source(mut self, value: String) -> Self {
-        self.source = Some(value);
+    pub fn account_id(mut self, value: String) -> Self {
+        self.account_id = Some(value);
         self
     }
 
-    pub fn tags(mut self, value: Option<Vec<String>>) -> Self {
+    pub fn event_hubs(mut self, value: Vec<crate::datadogV2::model::AWSEventBridgeSource>) -> Self {
+        self.event_hubs = Some(value);
+        self
+    }
+
+    pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
@@ -60,20 +63,20 @@ impl AWSLogSourceTagFilter {
     }
 }
 
-impl Default for AWSLogSourceTagFilter {
+impl Default for AWSEventBridgeAccountConfiguration {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for AWSLogSourceTagFilter {
+impl<'de> Deserialize<'de> for AWSEventBridgeAccountConfiguration {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct AWSLogSourceTagFilterVisitor;
-        impl<'a> Visitor<'a> for AWSLogSourceTagFilterVisitor {
-            type Value = AWSLogSourceTagFilter;
+        struct AWSEventBridgeAccountConfigurationVisitor;
+        impl<'a> Visitor<'a> for AWSEventBridgeAccountConfigurationVisitor {
+            type Value = AWSEventBridgeAccountConfiguration;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -83,8 +86,10 @@ impl<'de> Deserialize<'de> for AWSLogSourceTagFilter {
             where
                 M: MapAccess<'a>,
             {
-                let mut source: Option<String> = None;
-                let mut tags: Option<Option<Vec<String>>> = None;
+                let mut account_id: Option<String> = None;
+                let mut event_hubs: Option<Vec<crate::datadogV2::model::AWSEventBridgeSource>> =
+                    None;
+                let mut tags: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -93,13 +98,22 @@ impl<'de> Deserialize<'de> for AWSLogSourceTagFilter {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "source" => {
+                        "account_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            account_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "event_hubs" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            event_hubs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -110,8 +124,9 @@ impl<'de> Deserialize<'de> for AWSLogSourceTagFilter {
                     }
                 }
 
-                let content = AWSLogSourceTagFilter {
-                    source,
+                let content = AWSEventBridgeAccountConfiguration {
+                    account_id,
+                    event_hubs,
                     tags,
                     additional_properties,
                     _unparsed,
@@ -121,6 +136,6 @@ impl<'de> Deserialize<'de> for AWSLogSourceTagFilter {
             }
         }
 
-        deserializer.deserialize_any(AWSLogSourceTagFilterVisitor)
+        deserializer.deserialize_any(AWSEventBridgeAccountConfigurationVisitor)
     }
 }
