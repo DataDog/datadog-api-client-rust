@@ -6,23 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// AWS Account response data.
+/// Amazon EventBridge delete response data.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct AWSAccountResponseData {
-    /// AWS Account response attributes.
+pub struct AWSEventBridgeDeleteResponseData {
+    /// The EventBridge source delete response attributes.
     #[serde(rename = "attributes")]
-    pub attributes: Option<crate::datadogV2::model::AWSAccountResponseAttributes>,
-    /// Unique Datadog ID of the AWS Account Integration Config.
-    /// To get the config ID for an account, use the
-    /// [List all AWS integrations](<https://docs.datadoghq.com/api/latest/aws-integration/#list-all-aws-integrations>)
-    /// endpoint and query by AWS Account ID.
+    pub attributes: crate::datadogV2::model::AWSEventBridgeDeleteResponseAttributes,
+    /// The ID of the Amazon EventBridge list response data.
     #[serde(rename = "id")]
-    pub id: String,
-    /// AWS Account resource type.
+    pub id: Option<String>,
+    /// Amazon EventBridge resource type.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::AWSAccountType,
+    pub type_: crate::datadogV2::model::AWSEventBridgeType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -30,25 +27,22 @@ pub struct AWSAccountResponseData {
     pub(crate) _unparsed: bool,
 }
 
-impl AWSAccountResponseData {
+impl AWSEventBridgeDeleteResponseData {
     pub fn new(
-        id: String,
-        type_: crate::datadogV2::model::AWSAccountType,
-    ) -> AWSAccountResponseData {
-        AWSAccountResponseData {
-            attributes: None,
-            id,
+        attributes: crate::datadogV2::model::AWSEventBridgeDeleteResponseAttributes,
+        type_: crate::datadogV2::model::AWSEventBridgeType,
+    ) -> AWSEventBridgeDeleteResponseData {
+        AWSEventBridgeDeleteResponseData {
+            attributes,
+            id: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn attributes(
-        mut self,
-        value: crate::datadogV2::model::AWSAccountResponseAttributes,
-    ) -> Self {
-        self.attributes = Some(value);
+    pub fn id(mut self, value: String) -> Self {
+        self.id = Some(value);
         self
     }
 
@@ -61,14 +55,14 @@ impl AWSAccountResponseData {
     }
 }
 
-impl<'de> Deserialize<'de> for AWSAccountResponseData {
+impl<'de> Deserialize<'de> for AWSEventBridgeDeleteResponseData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct AWSAccountResponseDataVisitor;
-        impl<'a> Visitor<'a> for AWSAccountResponseDataVisitor {
-            type Value = AWSAccountResponseData;
+        struct AWSEventBridgeDeleteResponseDataVisitor;
+        impl<'a> Visitor<'a> for AWSEventBridgeDeleteResponseDataVisitor {
+            type Value = AWSEventBridgeDeleteResponseData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -78,10 +72,11 @@ impl<'de> Deserialize<'de> for AWSAccountResponseData {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::AWSAccountResponseAttributes> =
-                    None;
+                let mut attributes: Option<
+                    crate::datadogV2::model::AWSEventBridgeDeleteResponseAttributes,
+                > = None;
                 let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::AWSAccountType> = None;
+                let mut type_: Option<crate::datadogV2::model::AWSEventBridgeType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -91,19 +86,19 @@ impl<'de> Deserialize<'de> for AWSAccountResponseData {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "attributes" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "id" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::AWSAccountType::UnparsedObject(
+                                    crate::datadogV2::model::AWSEventBridgeType::UnparsedObject(
                                         _type_,
                                     ) => {
                                         _unparsed = true;
@@ -119,10 +114,10 @@ impl<'de> Deserialize<'de> for AWSAccountResponseData {
                         }
                     }
                 }
-                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
+                let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = AWSAccountResponseData {
+                let content = AWSEventBridgeDeleteResponseData {
                     attributes,
                     id,
                     type_,
@@ -134,6 +129,6 @@ impl<'de> Deserialize<'de> for AWSAccountResponseData {
             }
         }
 
-        deserializer.deserialize_any(AWSAccountResponseDataVisitor)
+        deserializer.deserialize_any(AWSEventBridgeDeleteResponseDataVisitor)
     }
 }

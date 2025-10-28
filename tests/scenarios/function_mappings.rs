@@ -3060,6 +3060,18 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         .function_mappings
         .insert("v2.ListAWSNamespaces".into(), test_v2_list_aws_namespaces);
     world.function_mappings.insert(
+        "v2.DeleteAWSEventBridgeSource".into(),
+        test_v2_delete_aws_event_bridge_source,
+    );
+    world.function_mappings.insert(
+        "v2.ListAWSEventBridgeSources".into(),
+        test_v2_list_aws_event_bridge_sources,
+    );
+    world.function_mappings.insert(
+        "v2.CreateAWSEventBridgeSource".into(),
+        test_v2_create_aws_event_bridge_source,
+    );
+    world.function_mappings.insert(
         "v2.CreateNewAWSExternalID".into(),
         test_v2_create_new_aws_external_id,
     );
@@ -22859,6 +22871,89 @@ fn test_v2_list_aws_namespaces(world: &mut DatadogWorld, _parameters: &HashMap<S
         .as_ref()
         .expect("api instance not found");
     let response = match block_on(api.list_aws_namespaces_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_aws_event_bridge_source(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_aws_integration
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_aws_event_bridge_source_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_aws_event_bridge_sources(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_aws_integration
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_aws_event_bridge_sources_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_aws_event_bridge_source(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_aws_integration
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_aws_event_bridge_source_with_http_info(body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
