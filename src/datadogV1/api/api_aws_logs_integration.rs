@@ -1043,7 +1043,7 @@ impl AWSLogsIntegrationAPI {
         }
     }
 
-    /// Get the list of current AWS services that Datadog offers automatic log collection. Use returned service IDs with the services parameter for the Enable an AWS service log collection API endpoint.
+    /// **This endpoint is deprecated - use the V2 endpoint instead.** Get the list of current AWS services that Datadog offers automatic log collection. Use returned service IDs with the services parameter for the Enable an AWS service log collection API endpoint.
     pub async fn list_aws_logs_services(
         &self,
     ) -> Result<
@@ -1064,7 +1064,7 @@ impl AWSLogsIntegrationAPI {
         }
     }
 
-    /// Get the list of current AWS services that Datadog offers automatic log collection. Use returned service IDs with the services parameter for the Enable an AWS service log collection API endpoint.
+    /// **This endpoint is deprecated - use the V2 endpoint instead.** Get the list of current AWS services that Datadog offers automatic log collection. Use returned service IDs with the services parameter for the Enable an AWS service log collection API endpoint.
     pub async fn list_aws_logs_services_with_http_info(
         &self,
     ) -> Result<
