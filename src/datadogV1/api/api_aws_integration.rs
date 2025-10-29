@@ -236,7 +236,7 @@ impl AWSIntegrationAPI {
         Self { config, client }
     }
 
-    /// "**This endpoint is deprecated - use the V2 endpoints instead.** Create a Datadog-Amazon Web Services integration.
+    /// **This endpoint is deprecated - use the V2 endpoints instead.** Create a Datadog-Amazon Web Services integration.
     /// Using the `POST` method updates your integration configuration
     /// by adding your new configuration to the existing one in your Datadog organization.
     /// A unique AWS Account ID for role based authentication.
@@ -261,7 +261,7 @@ impl AWSIntegrationAPI {
         }
     }
 
-    /// "**This endpoint is deprecated - use the V2 endpoints instead.** Create a Datadog-Amazon Web Services integration.
+    /// **This endpoint is deprecated - use the V2 endpoints instead.** Create a Datadog-Amazon Web Services integration.
     /// Using the `POST` method updates your integration configuration
     /// by adding your new configuration to the existing one in your Datadog organization.
     /// A unique AWS Account ID for role based authentication.
@@ -396,7 +396,7 @@ impl AWSIntegrationAPI {
         }
     }
 
-    /// Create an Amazon EventBridge source.
+    /// **This endpoint is deprecated - use the V2 endpoints instead.** Create an Amazon EventBridge source.
     pub async fn create_aws_event_bridge_source(
         &self,
         body: crate::datadogV1::model::AWSEventBridgeCreateRequest,
@@ -421,7 +421,7 @@ impl AWSIntegrationAPI {
         }
     }
 
-    /// Create an Amazon EventBridge source.
+    /// **This endpoint is deprecated - use the V2 endpoints instead.** Create an Amazon EventBridge source.
     pub async fn create_aws_event_bridge_source_with_http_info(
         &self,
         body: crate::datadogV1::model::AWSEventBridgeCreateRequest,
@@ -1015,7 +1015,7 @@ impl AWSIntegrationAPI {
         }
     }
 
-    /// Delete an Amazon EventBridge source.
+    /// **This endpoint is deprecated - use the V2 endpoints instead.** Delete an Amazon EventBridge source.
     pub async fn delete_aws_event_bridge_source(
         &self,
         body: crate::datadogV1::model::AWSEventBridgeDeleteRequest,
@@ -1040,7 +1040,7 @@ impl AWSIntegrationAPI {
         }
     }
 
-    /// Delete an Amazon EventBridge source.
+    /// **This endpoint is deprecated - use the V2 endpoints instead.** Delete an Amazon EventBridge source.
     pub async fn delete_aws_event_bridge_source_with_http_info(
         &self,
         body: crate::datadogV1::model::AWSEventBridgeDeleteRequest,
@@ -1450,7 +1450,7 @@ impl AWSIntegrationAPI {
         }
     }
 
-    /// Get all Amazon EventBridge sources.
+    /// **This endpoint is deprecated - use the V2 endpoints instead.** Get all Amazon EventBridge sources.
     pub async fn list_aws_event_bridge_sources(
         &self,
     ) -> Result<
@@ -1471,7 +1471,7 @@ impl AWSIntegrationAPI {
         }
     }
 
-    /// Get all Amazon EventBridge sources.
+    /// **This endpoint is deprecated - use the V2 endpoints instead.** Get all Amazon EventBridge sources.
     pub async fn list_aws_event_bridge_sources_with_http_info(
         &self,
     ) -> Result<
