@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `TableResultV2DataAttributes` object.
+/// The definition of the reference table attributes object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -17,7 +17,7 @@ pub struct TableResultV2DataAttributes {
     /// The description of the reference table.
     #[serde(rename = "description")]
     pub description: Option<String>,
-    /// The definition of `TableResultV2DataAttributesFileMetadata` object.
+    /// The definition of the file metadata object.
     #[serde(rename = "file_metadata")]
     pub file_metadata: Option<crate::datadogV2::model::TableResultV2DataAttributesFileMetadata>,
     /// UUID of the user who last updated the reference table.
@@ -26,7 +26,7 @@ pub struct TableResultV2DataAttributes {
     /// The number of successfully processed rows in the reference table.
     #[serde(rename = "row_count")]
     pub row_count: Option<i64>,
-    /// The definition of `TableResultV2DataAttributesSchema` object.
+    /// The definition of the schema object.
     #[serde(rename = "schema")]
     pub schema: Option<crate::datadogV2::model::TableResultV2DataAttributesSchema>,
     /// The source type for reference table data. Includes all possible source types that can appear in responses.

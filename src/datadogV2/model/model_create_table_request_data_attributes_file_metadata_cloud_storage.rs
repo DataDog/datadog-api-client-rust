@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreateTableRequestDataAttributesFileMetadataCloudStorage {
-    /// The definition of `CreateTableRequestDataAttributesFileMetadataOneOfAccessDetails` object.
+    /// The definition of the access details object.
     #[serde(rename = "access_details")]
     pub access_details:
         crate::datadogV2::model::CreateTableRequestDataAttributesFileMetadataOneOfAccessDetails,

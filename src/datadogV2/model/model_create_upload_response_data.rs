@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `CreateUploadResponseData` object.
+/// The definition of the upload response data object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreateUploadResponseData {
-    /// The definition of `CreateUploadResponseDataAttributes` object.
+    /// The definition of the upload response attributes object.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::CreateUploadResponseDataAttributes>,
     /// The ID of the upload.

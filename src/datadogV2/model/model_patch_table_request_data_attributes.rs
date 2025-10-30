@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `PatchTableRequestDataAttributes` object.
+/// The definition of the reference table attributes object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -14,10 +14,10 @@ pub struct PatchTableRequestDataAttributes {
     /// The description of the reference table.
     #[serde(rename = "description")]
     pub description: Option<String>,
-    /// The definition of `PatchTableRequestDataAttributesFileMetadata` object.
+    /// The definition of the file metadata object.
     #[serde(rename = "file_metadata")]
     pub file_metadata: Option<crate::datadogV2::model::PatchTableRequestDataAttributesFileMetadata>,
-    /// The definition of `PatchTableRequestDataAttributesSchema` object.
+    /// The definition of the schema object.
     #[serde(rename = "schema")]
     pub schema: Option<crate::datadogV2::model::PatchTableRequestDataAttributesSchema>,
     /// Whether this table is synced automatically.

@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `TableResultV2Data` object.
+/// The definition of the table result data object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TableResultV2Data {
-    /// The definition of `TableResultV2DataAttributes` object.
+    /// The definition of the reference table attributes object.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::TableResultV2DataAttributes>,
     /// The ID of the reference table.

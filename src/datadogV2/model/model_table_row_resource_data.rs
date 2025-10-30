@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `TableRowResourceData` object.
+/// The definition of the table row resource data object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TableRowResourceData {
-    /// The definition of `TableRowResourceDataAttributes` object.
+    /// The definition of the row attributes object.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::TableRowResourceDataAttributes>,
     /// The ID of the row.
