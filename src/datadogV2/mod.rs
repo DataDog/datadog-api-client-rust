@@ -65,6 +65,7 @@ pub use self::api::api_reference_tables;
 pub use self::api::api_restriction_policies;
 pub use self::api::api_roles;
 pub use self::api::api_rum;
+pub use self::api::api_rum_audience_management;
 pub use self::api::api_rum_metrics;
 pub use self::api::api_rum_retention_filters;
 pub use self::api::api_security_monitoring;
