@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `CreateTableRequestData` object.
+/// The definition of the reference table request data object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreateTableRequestData {
-    /// The definition of `CreateTableRequestDataAttributes` object.
+    /// The definition of the reference table attributes object.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::CreateTableRequestDataAttributes>,
     /// The ID of the reference table.

@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `CreateTableRequestDataAttributes` object.
+/// The definition of the reference table attributes object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -14,11 +14,11 @@ pub struct CreateTableRequestDataAttributes {
     /// The description of the reference table.
     #[serde(rename = "description")]
     pub description: Option<String>,
-    /// The definition of `CreateTableRequestDataAttributesFileMetadata` object.
+    /// The definition of the file metadata object.
     #[serde(rename = "file_metadata")]
     pub file_metadata:
         Option<crate::datadogV2::model::CreateTableRequestDataAttributesFileMetadata>,
-    /// The definition of `CreateTableRequestDataAttributesSchema` object.
+    /// The definition of the schema object.
     #[serde(rename = "schema")]
     pub schema: crate::datadogV2::model::CreateTableRequestDataAttributesSchema,
     /// The source type for creating reference table data. Only these source types can be created through this API.

@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `CreateUploadRequestDataAttributes` object.
+/// The definition of the upload attributes object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreateUploadRequestDataAttributes {
-    /// The headers of the file to upload.
+    /// The headers of the CSV file to upload to be used as the schema fields, provided in the same order as the columns in the CSV file.
     #[serde(rename = "headers")]
     pub headers: Vec<String>,
     /// The number of parts in the upload.

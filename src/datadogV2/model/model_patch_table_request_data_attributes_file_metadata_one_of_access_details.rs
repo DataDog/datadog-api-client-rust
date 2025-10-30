@@ -6,18 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `PatchTableRequestDataAttributesFileMetadataOneOfAccessDetails` object.
+/// The definition of the access details object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct PatchTableRequestDataAttributesFileMetadataOneOfAccessDetails {
-    /// The definition of `PatchTableRequestDataAttributesFileMetadataOneOfAccessDetailsAwsDetail` object.
+    /// The definition of the AWS access details object.
     #[serde(rename = "aws_detail")]
     pub aws_detail: Option<crate::datadogV2::model::PatchTableRequestDataAttributesFileMetadataOneOfAccessDetailsAwsDetail>,
-    /// The definition of `PatchTableRequestDataAttributesFileMetadataOneOfAccessDetailsAzureDetail` object.
+    /// The definition of the Azure access details object.
     #[serde(rename = "azure_detail")]
     pub azure_detail: Option<crate::datadogV2::model::PatchTableRequestDataAttributesFileMetadataOneOfAccessDetailsAzureDetail>,
-    /// The definition of `PatchTableRequestDataAttributesFileMetadataOneOfAccessDetailsGcpDetail` object.
+    /// The definition of the GCP access details object.
     #[serde(rename = "gcp_detail")]
     pub gcp_detail: Option<crate::datadogV2::model::PatchTableRequestDataAttributesFileMetadataOneOfAccessDetailsGcpDetail>,
     #[serde(flatten)]

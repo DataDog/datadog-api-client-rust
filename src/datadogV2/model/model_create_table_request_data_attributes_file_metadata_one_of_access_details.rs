@@ -6,18 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `CreateTableRequestDataAttributesFileMetadataOneOfAccessDetails` object.
+/// The definition of the access details object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreateTableRequestDataAttributesFileMetadataOneOfAccessDetails {
-    /// The definition of `CreateTableRequestDataAttributesFileMetadataOneOfAccessDetailsAwsDetail` object.
+    /// The definition of the AWS access details object.
     #[serde(rename = "aws_detail")]
     pub aws_detail: Option<crate::datadogV2::model::CreateTableRequestDataAttributesFileMetadataOneOfAccessDetailsAwsDetail>,
-    /// The definition of `CreateTableRequestDataAttributesFileMetadataOneOfAccessDetailsAzureDetail` object.
+    /// The definition of the Azure access details object.
     #[serde(rename = "azure_detail")]
     pub azure_detail: Option<crate::datadogV2::model::CreateTableRequestDataAttributesFileMetadataOneOfAccessDetailsAzureDetail>,
-    /// The definition of `CreateTableRequestDataAttributesFileMetadataOneOfAccessDetailsGcpDetail` object.
+    /// The definition of the GCP access details object.
     #[serde(rename = "gcp_detail")]
     pub gcp_detail: Option<crate::datadogV2::model::CreateTableRequestDataAttributesFileMetadataOneOfAccessDetailsGcpDetail>,
     #[serde(flatten)]
