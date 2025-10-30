@@ -117,7 +117,7 @@ pub enum UpdateReferenceTableError {
     UnknownValue(serde_json::Value),
 }
 
-/// Auto-generated tag Reference Tables
+/// View and manage Reference Tables in your organization.
 #[derive(Debug, Clone)]
 pub struct ReferenceTablesAPI {
     config: datadog::Configuration,
