@@ -28297,11 +28297,11 @@ fn test_v2_list_tables(world: &mut DatadogWorld, _parameters: &HashMap<String, V
         .v2_api_reference_tables
         .as_ref()
         .expect("api instance not found");
-    let limit = _parameters
-        .get("limit")
+    let page_limit = _parameters
+        .get("page[limit]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let offset = _parameters
-        .get("offset")
+    let page_offset = _parameters
+        .get("page[offset]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let sort = _parameters
         .get("sort")
@@ -28316,8 +28316,8 @@ fn test_v2_list_tables(world: &mut DatadogWorld, _parameters: &HashMap<String, V
         .get("filter[table_name][contains]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_reference_tables::ListTablesOptionalParams::default();
-    params.limit = limit;
-    params.offset = offset;
+    params.page_limit = page_limit;
+    params.page_offset = page_offset;
     params.sort = sort;
     params.filter_status = filter_status;
     params.filter_table_name_exact = filter_table_name_exact;

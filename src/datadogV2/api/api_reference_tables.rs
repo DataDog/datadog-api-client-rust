@@ -15,9 +15,9 @@ use std::io::Write;
 #[derive(Clone, Default, Debug)]
 pub struct ListTablesOptionalParams {
     /// Number of tables to return.
-    pub limit: Option<i64>,
+    pub page_limit: Option<i64>,
     /// Number of tables to skip for pagination.
-    pub offset: Option<i64>,
+    pub page_offset: Option<i64>,
     /// Sort field and direction. Use field name for ascending, prefix with "-" for descending.
     pub sort: Option<crate::datadogV2::model::ReferenceTableSortType>,
     /// Filter by table status.
@@ -30,13 +30,13 @@ pub struct ListTablesOptionalParams {
 
 impl ListTablesOptionalParams {
     /// Number of tables to return.
-    pub fn limit(mut self, value: i64) -> Self {
-        self.limit = Some(value);
+    pub fn page_limit(mut self, value: i64) -> Self {
+        self.page_limit = Some(value);
         self
     }
     /// Number of tables to skip for pagination.
-    pub fn offset(mut self, value: i64) -> Self {
-        self.offset = Some(value);
+    pub fn page_offset(mut self, value: i64) -> Self {
+        self.page_offset = Some(value);
         self
     }
     /// Sort field and direction. Use field name for ascending, prefix with "-" for descending.
@@ -825,8 +825,8 @@ impl ReferenceTablesAPI {
         let operation_id = "v2.list_tables";
 
         // unbox and build optional parameters
-        let limit = params.limit;
-        let offset = params.offset;
+        let page_limit = params.page_limit;
+        let page_offset = params.page_offset;
         let sort = params.sort;
         let filter_status = params.filter_status;
         let filter_table_name_exact = params.filter_table_name_exact;
@@ -841,13 +841,13 @@ impl ReferenceTablesAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_query_param) = limit {
+        if let Some(ref local_query_param) = page_limit {
             local_req_builder =
-                local_req_builder.query(&[("limit", &local_query_param.to_string())]);
+                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_query_param) = offset {
+        if let Some(ref local_query_param) = page_offset {
             local_req_builder =
-                local_req_builder.query(&[("offset", &local_query_param.to_string())]);
+                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
         };
         if let Some(ref local_query_param) = sort {
             local_req_builder =
