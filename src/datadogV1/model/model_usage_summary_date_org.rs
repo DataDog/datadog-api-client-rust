@@ -63,6 +63,9 @@ pub struct UsageSummaryDateOrg {
     /// Shows the sum of all log bytes ingested over all hours in the current date for the given org.
     #[serde(rename = "billable_ingested_bytes_sum")]
     pub billable_ingested_bytes_sum: Option<i64>,
+    /// Shows the sum of all Bits AI Investigations over all hours in the current date for the given org.
+    #[serde(rename = "bits_ai_investigations_sum")]
+    pub bits_ai_investigations_sum: Option<i64>,
     /// Shows the sum of all browser lite sessions over all hours in the current date for the given org (To be deprecated on October 1st, 2024).
     #[deprecated]
     #[serde(rename = "browser_rum_lite_session_count_sum")]
@@ -393,6 +396,9 @@ pub struct UsageSummaryDateOrg {
     /// Shows the 99th percentile of all Oracle Cloud Infrastructure hosts over all hours in the current date for the given org.
     #[serde(rename = "oci_host_top99p")]
     pub oci_host_top99p: Option<i64>,
+    /// Shows the high-water mark of On-Call seats over all hours in the current date for the given org.
+    #[serde(rename = "on_call_seat_hwm")]
+    pub on_call_seat_hwm: Option<i64>,
     /// Sum of all online archived events over all hours in the current date for the given org.
     #[serde(rename = "online_archive_events_count_sum")]
     pub online_archive_events_count_sum: Option<i64>,
@@ -675,6 +681,7 @@ impl UsageSummaryDateOrg {
             aws_lambda_invocations_sum: None,
             azure_app_service_top99p: None,
             billable_ingested_bytes_sum: None,
+            bits_ai_investigations_sum: None,
             browser_rum_lite_session_count_sum: None,
             browser_rum_replay_session_count_sum: None,
             browser_rum_units_sum: None,
@@ -781,6 +788,7 @@ impl UsageSummaryDateOrg {
             observability_pipelines_bytes_processed_sum: None,
             oci_host_sum: None,
             oci_host_top99p: None,
+            on_call_seat_hwm: None,
             online_archive_events_count_sum: None,
             opentelemetry_apm_host_top99p: None,
             opentelemetry_host_top99p: None,
@@ -969,6 +977,12 @@ impl UsageSummaryDateOrg {
     #[allow(deprecated)]
     pub fn billable_ingested_bytes_sum(mut self, value: i64) -> Self {
         self.billable_ingested_bytes_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn bits_ai_investigations_sum(mut self, value: i64) -> Self {
+        self.bits_ai_investigations_sum = Some(value);
         self
     }
 
@@ -1612,6 +1626,12 @@ impl UsageSummaryDateOrg {
     }
 
     #[allow(deprecated)]
+    pub fn on_call_seat_hwm(mut self, value: i64) -> Self {
+        self.on_call_seat_hwm = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn online_archive_events_count_sum(mut self, value: i64) -> Self {
         self.online_archive_events_count_sum = Some(value);
         self
@@ -2191,6 +2211,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                 let mut aws_lambda_invocations_sum: Option<i64> = None;
                 let mut azure_app_service_top99p: Option<i64> = None;
                 let mut billable_ingested_bytes_sum: Option<i64> = None;
+                let mut bits_ai_investigations_sum: Option<i64> = None;
                 let mut browser_rum_lite_session_count_sum: Option<i64> = None;
                 let mut browser_rum_replay_session_count_sum: Option<i64> = None;
                 let mut browser_rum_units_sum: Option<i64> = None;
@@ -2298,6 +2319,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                 let mut observability_pipelines_bytes_processed_sum: Option<i64> = None;
                 let mut oci_host_sum: Option<i64> = None;
                 let mut oci_host_top99p: Option<i64> = None;
+                let mut on_call_seat_hwm: Option<i64> = None;
                 let mut online_archive_events_count_sum: Option<i64> = None;
                 let mut opentelemetry_apm_host_top99p: Option<i64> = None;
                 let mut opentelemetry_host_top99p: Option<i64> = None;
@@ -2502,6 +2524,12 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                                 continue;
                             }
                             billable_ingested_bytes_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "bits_ai_investigations_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            bits_ai_investigations_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
                         "browser_rum_lite_session_count_sum" => {
                             if v.is_null() {
@@ -3139,6 +3167,12 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                             }
                             oci_host_top99p = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
+                        "on_call_seat_hwm" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            on_call_seat_hwm = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "online_archive_events_count_sum" => {
                             if v.is_null() {
                                 continue;
@@ -3670,6 +3704,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                     aws_lambda_invocations_sum,
                     azure_app_service_top99p,
                     billable_ingested_bytes_sum,
+                    bits_ai_investigations_sum,
                     browser_rum_lite_session_count_sum,
                     browser_rum_replay_session_count_sum,
                     browser_rum_units_sum,
@@ -3776,6 +3811,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                     observability_pipelines_bytes_processed_sum,
                     oci_host_sum,
                     oci_host_top99p,
+                    on_call_seat_hwm,
                     online_archive_events_count_sum,
                     opentelemetry_apm_host_top99p,
                     opentelemetry_host_top99p,

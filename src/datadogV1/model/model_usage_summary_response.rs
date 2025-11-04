@@ -60,6 +60,9 @@ pub struct UsageSummaryResponse {
     /// Shows the sum of all log bytes ingested over all hours in the current month for all organizations.
     #[serde(rename = "billable_ingested_bytes_agg_sum")]
     pub billable_ingested_bytes_agg_sum: Option<i64>,
+    /// Shows the sum of all Bits AI Investigations over all hours in the current month for all organizations.
+    #[serde(rename = "bits_ai_investigations_agg_sum")]
+    pub bits_ai_investigations_agg_sum: Option<i64>,
     /// Shows the sum of all browser lite sessions over all hours in the current month for all organizations (To be deprecated on October 1st, 2024).
     #[deprecated]
     #[serde(rename = "browser_rum_lite_session_count_agg_sum")]
@@ -400,6 +403,9 @@ pub struct UsageSummaryResponse {
     /// Shows the 99th percentile of Oracle Cloud Infrastructure hosts over all hours in the current months for all organizations
     #[serde(rename = "oci_host_top99p_sum")]
     pub oci_host_top99p_sum: Option<i64>,
+    /// Shows the sum of the high-water marks of On-Call seats over all hours in the current month for all organizations.
+    #[serde(rename = "on_call_seat_hwm_sum")]
+    pub on_call_seat_hwm_sum: Option<i64>,
     /// Sum of all online archived events over all hours in the current month for all organizations.
     #[serde(rename = "online_archive_events_count_agg_sum")]
     pub online_archive_events_count_agg_sum: Option<i64>,
@@ -691,6 +697,7 @@ impl UsageSummaryResponse {
             azure_app_service_top99p_sum: None,
             azure_host_top99p_sum: None,
             billable_ingested_bytes_agg_sum: None,
+            bits_ai_investigations_agg_sum: None,
             browser_rum_lite_session_count_agg_sum: None,
             browser_rum_replay_session_count_agg_sum: None,
             browser_rum_units_agg_sum: None,
@@ -800,6 +807,7 @@ impl UsageSummaryResponse {
             observability_pipelines_bytes_processed_agg_sum: None,
             oci_host_agg_sum: None,
             oci_host_top99p_sum: None,
+            on_call_seat_hwm_sum: None,
             online_archive_events_count_agg_sum: None,
             opentelemetry_apm_host_top99p_sum: None,
             opentelemetry_host_top99p_sum: None,
@@ -985,6 +993,12 @@ impl UsageSummaryResponse {
     #[allow(deprecated)]
     pub fn billable_ingested_bytes_agg_sum(mut self, value: i64) -> Self {
         self.billable_ingested_bytes_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn bits_ai_investigations_agg_sum(mut self, value: i64) -> Self {
+        self.bits_ai_investigations_agg_sum = Some(value);
         self
     }
 
@@ -1646,6 +1660,12 @@ impl UsageSummaryResponse {
     }
 
     #[allow(deprecated)]
+    pub fn on_call_seat_hwm_sum(mut self, value: i64) -> Self {
+        self.on_call_seat_hwm_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn online_archive_events_count_agg_sum(mut self, value: i64) -> Self {
         self.online_archive_events_count_agg_sum = Some(value);
         self
@@ -2262,6 +2282,7 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                 let mut azure_app_service_top99p_sum: Option<i64> = None;
                 let mut azure_host_top99p_sum: Option<i64> = None;
                 let mut billable_ingested_bytes_agg_sum: Option<i64> = None;
+                let mut bits_ai_investigations_agg_sum: Option<i64> = None;
                 let mut browser_rum_lite_session_count_agg_sum: Option<i64> = None;
                 let mut browser_rum_replay_session_count_agg_sum: Option<i64> = None;
                 let mut browser_rum_units_agg_sum: Option<i64> = None;
@@ -2374,6 +2395,7 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                 let mut observability_pipelines_bytes_processed_agg_sum: Option<i64> = None;
                 let mut oci_host_agg_sum: Option<i64> = None;
                 let mut oci_host_top99p_sum: Option<i64> = None;
+                let mut on_call_seat_hwm_sum: Option<i64> = None;
                 let mut online_archive_events_count_agg_sum: Option<i64> = None;
                 let mut opentelemetry_apm_host_top99p_sum: Option<i64> = None;
                 let mut opentelemetry_host_top99p_sum: Option<i64> = None;
@@ -2578,6 +2600,12 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                                 continue;
                             }
                             billable_ingested_bytes_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "bits_ai_investigations_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            bits_ai_investigations_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
                         "browser_rum_lite_session_count_agg_sum" => {
                             if v.is_null() {
@@ -3233,6 +3261,12 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                             }
                             oci_host_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
+                        "on_call_seat_hwm_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            on_call_seat_hwm_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "online_archive_events_count_agg_sum" => {
                             if v.is_null() {
                                 continue;
@@ -3781,6 +3815,7 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                     azure_app_service_top99p_sum,
                     azure_host_top99p_sum,
                     billable_ingested_bytes_agg_sum,
+                    bits_ai_investigations_agg_sum,
                     browser_rum_lite_session_count_agg_sum,
                     browser_rum_replay_session_count_agg_sum,
                     browser_rum_units_agg_sum,
@@ -3890,6 +3925,7 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                     observability_pipelines_bytes_processed_agg_sum,
                     oci_host_agg_sum,
                     oci_host_top99p_sum,
+                    on_call_seat_hwm_sum,
                     online_archive_events_count_agg_sum,
                     opentelemetry_apm_host_top99p_sum,
                     opentelemetry_host_top99p_sum,
