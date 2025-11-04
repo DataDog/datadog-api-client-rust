@@ -1809,6 +1809,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         .function_mappings
         .insert("v1.Validate".into(), test_v1_validate);
     world.function_mappings.insert(
+        "v2.ListFleetAgentVersions".into(),
+        test_v2_list_fleet_agent_versions,
+    );
+    world.function_mappings.insert(
         "v2.ListFleetDeployments".into(),
         test_v2_list_fleet_deployments,
     );
@@ -1816,12 +1820,38 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.CreateFleetDeploymentConfigure".into(),
         test_v2_create_fleet_deployment_configure,
     );
+    world.function_mappings.insert(
+        "v2.CreateFleetDeploymentUpgrade".into(),
+        test_v2_create_fleet_deployment_upgrade,
+    );
     world
         .function_mappings
         .insert("v2.GetFleetDeployment".into(), test_v2_get_fleet_deployment);
     world.function_mappings.insert(
         "v2.CancelFleetDeployment".into(),
         test_v2_cancel_fleet_deployment,
+    );
+    world
+        .function_mappings
+        .insert("v2.ListFleetSchedules".into(), test_v2_list_fleet_schedules);
+    world.function_mappings.insert(
+        "v2.CreateFleetSchedule".into(),
+        test_v2_create_fleet_schedule,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteFleetSchedule".into(),
+        test_v2_delete_fleet_schedule,
+    );
+    world
+        .function_mappings
+        .insert("v2.GetFleetSchedule".into(), test_v2_get_fleet_schedule);
+    world.function_mappings.insert(
+        "v2.UpdateFleetSchedule".into(),
+        test_v2_update_fleet_schedule,
+    );
+    world.function_mappings.insert(
+        "v2.TriggerFleetSchedule".into(),
+        test_v2_trigger_fleet_schedule,
     );
     world
         .function_mappings
@@ -11548,6 +11578,33 @@ fn test_v1_validate(world: &mut DatadogWorld, _parameters: &HashMap<String, Valu
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_list_fleet_agent_versions(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_fleet_automation
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_fleet_agent_versions_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_list_fleet_deployments(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
@@ -11609,6 +11666,34 @@ fn test_v2_create_fleet_deployment_configure(
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_create_fleet_deployment_upgrade(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_fleet_automation
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_fleet_deployment_upgrade_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_get_fleet_deployment(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
@@ -11617,7 +11702,16 @@ fn test_v2_get_fleet_deployment(world: &mut DatadogWorld, _parameters: &HashMap<
         .expect("api instance not found");
     let deployment_id =
         serde_json::from_value(_parameters.get("deployment_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.get_fleet_deployment_with_http_info(deployment_id)) {
+    let limit = _parameters
+        .get("limit")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page = _parameters
+        .get("page")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_fleet_automation::GetFleetDeploymentOptionalParams::default();
+    params.limit = limit;
+    params.page = page;
+    let response = match block_on(api.get_fleet_deployment_with_http_info(deployment_id, params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -11644,6 +11738,156 @@ fn test_v2_cancel_fleet_deployment(world: &mut DatadogWorld, _parameters: &HashM
     let deployment_id =
         serde_json::from_value(_parameters.get("deployment_id").unwrap().clone()).unwrap();
     let response = match block_on(api.cancel_fleet_deployment_with_http_info(deployment_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_fleet_schedules(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_fleet_automation
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_fleet_schedules_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_fleet_schedule(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_fleet_automation
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_fleet_schedule_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_fleet_schedule(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_fleet_automation
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_fleet_schedule_with_http_info(id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_fleet_schedule(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_fleet_automation
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_fleet_schedule_with_http_info(id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_fleet_schedule(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_fleet_automation
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_fleet_schedule_with_http_info(id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_trigger_fleet_schedule(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_fleet_automation
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let response = match block_on(api.trigger_fleet_schedule_with_http_info(id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {

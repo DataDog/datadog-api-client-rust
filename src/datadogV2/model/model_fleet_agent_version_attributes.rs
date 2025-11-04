@@ -6,17 +6,13 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response containing a single deployment.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct FleetDeploymentResponse {
-    /// A deployment that defines automated configuration changes for a fleet of hosts.
-    #[serde(rename = "data")]
-    pub data: Option<crate::datadogV2::model::FleetDeployment>,
-    /// Metadata for a single deployment response, including pagination information for hosts.
-    #[serde(rename = "meta")]
-    pub meta: Option<crate::datadogV2::model::FleetDeploymentResponseMeta>,
+pub struct FleetAgentVersionAttributes {
+    /// The Agent version string.
+    #[serde(rename = "version")]
+    pub version: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,23 +20,17 @@ pub struct FleetDeploymentResponse {
     pub(crate) _unparsed: bool,
 }
 
-impl FleetDeploymentResponse {
-    pub fn new() -> FleetDeploymentResponse {
-        FleetDeploymentResponse {
-            data: None,
-            meta: None,
+impl FleetAgentVersionAttributes {
+    pub fn new() -> FleetAgentVersionAttributes {
+        FleetAgentVersionAttributes {
+            version: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn data(mut self, value: crate::datadogV2::model::FleetDeployment) -> Self {
-        self.data = Some(value);
-        self
-    }
-
-    pub fn meta(mut self, value: crate::datadogV2::model::FleetDeploymentResponseMeta) -> Self {
-        self.meta = Some(value);
+    pub fn version(mut self, value: String) -> Self {
+        self.version = Some(value);
         self
     }
 
@@ -53,20 +43,20 @@ impl FleetDeploymentResponse {
     }
 }
 
-impl Default for FleetDeploymentResponse {
+impl Default for FleetAgentVersionAttributes {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for FleetDeploymentResponse {
+impl<'de> Deserialize<'de> for FleetAgentVersionAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct FleetDeploymentResponseVisitor;
-        impl<'a> Visitor<'a> for FleetDeploymentResponseVisitor {
-            type Value = FleetDeploymentResponse;
+        struct FleetAgentVersionAttributesVisitor;
+        impl<'a> Visitor<'a> for FleetAgentVersionAttributesVisitor {
+            type Value = FleetAgentVersionAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -76,8 +66,7 @@ impl<'de> Deserialize<'de> for FleetDeploymentResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::FleetDeployment> = None;
-                let mut meta: Option<crate::datadogV2::model::FleetDeploymentResponseMeta> = None;
+                let mut version: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -86,17 +75,11 @@ impl<'de> Deserialize<'de> for FleetDeploymentResponse {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "data" => {
+                        "version" => {
                             if v.is_null() {
                                 continue;
                             }
-                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "meta" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -106,9 +89,8 @@ impl<'de> Deserialize<'de> for FleetDeploymentResponse {
                     }
                 }
 
-                let content = FleetDeploymentResponse {
-                    data,
-                    meta,
+                let content = FleetAgentVersionAttributes {
+                    version,
                     additional_properties,
                     _unparsed,
                 };
@@ -117,6 +99,6 @@ impl<'de> Deserialize<'de> for FleetDeploymentResponse {
             }
         }
 
-        deserializer.deserialize_any(FleetDeploymentResponseVisitor)
+        deserializer.deserialize_any(FleetAgentVersionAttributesVisitor)
     }
 }
