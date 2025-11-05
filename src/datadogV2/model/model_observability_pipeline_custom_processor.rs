@@ -11,15 +11,18 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineCustomProcessor {
+    /// Whether this processor is enabled.
+    #[serde(rename = "enabled")]
+    pub enabled: Option<bool>,
     /// The unique identifier for this processor.
     #[serde(rename = "id")]
     pub id: String,
     /// A Datadog search query used to determine which logs this processor targets. This field should always be set to `*` for the custom_processor processor.
     #[serde(rename = "include")]
     pub include: String,
-    /// A list of component IDs whose output is used as the input for this processor.
+    /// A list of component IDs whose output is used as input for this processor. Required when used as a standalone processor, omit when used within a processor group.
     #[serde(rename = "inputs")]
-    pub inputs: Vec<String>,
+    pub inputs: Option<Vec<String>>,
     /// Array of VRL remap rules.
     #[serde(rename = "remaps")]
     pub remaps: Vec<crate::datadogV2::model::ObservabilityPipelineCustomProcessorRemap>,
@@ -37,19 +40,29 @@ impl ObservabilityPipelineCustomProcessor {
     pub fn new(
         id: String,
         include: String,
-        inputs: Vec<String>,
         remaps: Vec<crate::datadogV2::model::ObservabilityPipelineCustomProcessorRemap>,
         type_: crate::datadogV2::model::ObservabilityPipelineCustomProcessorType,
     ) -> ObservabilityPipelineCustomProcessor {
         ObservabilityPipelineCustomProcessor {
+            enabled: None,
             id,
             include,
-            inputs,
+            inputs: None,
             remaps,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn enabled(mut self, value: bool) -> Self {
+        self.enabled = Some(value);
+        self
+    }
+
+    pub fn inputs(mut self, value: Vec<String>) -> Self {
+        self.inputs = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -78,6 +91,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineCustomProcessor {
             where
                 M: MapAccess<'a>,
             {
+                let mut enabled: Option<bool> = None;
                 let mut id: Option<String> = None;
                 let mut include: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
@@ -95,6 +109,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineCustomProcessor {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -102,6 +122,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineCustomProcessor {
                             include = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "inputs" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             inputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "remaps" => {
@@ -127,11 +150,11 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineCustomProcessor {
                 }
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let include = include.ok_or_else(|| M::Error::missing_field("include"))?;
-                let inputs = inputs.ok_or_else(|| M::Error::missing_field("inputs"))?;
                 let remaps = remaps.ok_or_else(|| M::Error::missing_field("remaps"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineCustomProcessor {
+                    enabled,
                     id,
                     include,
                     inputs,

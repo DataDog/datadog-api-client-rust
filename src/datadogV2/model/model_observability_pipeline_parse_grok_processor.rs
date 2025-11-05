@@ -14,15 +14,18 @@ pub struct ObservabilityPipelineParseGrokProcessor {
     /// If set to `true`, disables the default Grok rules provided by Datadog.
     #[serde(rename = "disable_library_rules")]
     pub disable_library_rules: Option<bool>,
+    /// Whether this processor is enabled.
+    #[serde(rename = "enabled")]
+    pub enabled: Option<bool>,
     /// A unique identifier for this processor.
     #[serde(rename = "id")]
     pub id: String,
     /// A Datadog search query used to determine which logs this processor targets.
     #[serde(rename = "include")]
     pub include: String,
-    /// A list of component IDs whose output is used as the `input` for this component.
+    /// A list of component IDs whose output is used as input for this processor. Required when used as a standalone processor, omit when used within a processor group.
     #[serde(rename = "inputs")]
-    pub inputs: Vec<String>,
+    pub inputs: Option<Vec<String>>,
     /// The list of Grok parsing rules. If multiple matching rules are provided, they are evaluated in order. The first successful match is applied.
     #[serde(rename = "rules")]
     pub rules: Vec<crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorRule>,
@@ -40,15 +43,15 @@ impl ObservabilityPipelineParseGrokProcessor {
     pub fn new(
         id: String,
         include: String,
-        inputs: Vec<String>,
         rules: Vec<crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorRule>,
         type_: crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorType,
     ) -> ObservabilityPipelineParseGrokProcessor {
         ObservabilityPipelineParseGrokProcessor {
             disable_library_rules: None,
+            enabled: None,
             id,
             include,
-            inputs,
+            inputs: None,
             rules,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
@@ -58,6 +61,16 @@ impl ObservabilityPipelineParseGrokProcessor {
 
     pub fn disable_library_rules(mut self, value: bool) -> Self {
         self.disable_library_rules = Some(value);
+        self
+    }
+
+    pub fn enabled(mut self, value: bool) -> Self {
+        self.enabled = Some(value);
+        self
+    }
+
+    pub fn inputs(mut self, value: Vec<String>) -> Self {
+        self.inputs = Some(value);
         self
     }
 
@@ -88,6 +101,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineParseGrokProcessor {
                 M: MapAccess<'a>,
             {
                 let mut disable_library_rules: Option<bool> = None;
+                let mut enabled: Option<bool> = None;
                 let mut id: Option<String> = None;
                 let mut include: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
@@ -112,6 +126,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineParseGrokProcessor {
                             disable_library_rules =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -119,6 +139,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineParseGrokProcessor {
                             include = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "inputs" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             inputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "rules" => {
@@ -144,12 +167,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineParseGrokProcessor {
                 }
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let include = include.ok_or_else(|| M::Error::missing_field("include"))?;
-                let inputs = inputs.ok_or_else(|| M::Error::missing_field("inputs"))?;
                 let rules = rules.ok_or_else(|| M::Error::missing_field("rules"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineParseGrokProcessor {
                     disable_library_rules,
+                    enabled,
                     id,
                     include,
                     inputs,

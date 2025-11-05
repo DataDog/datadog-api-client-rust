@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineParseJSONProcessor {
+    /// Whether this processor is enabled.
+    #[serde(rename = "enabled")]
+    pub enabled: Option<bool>,
     /// The name of the log field that contains a JSON string.
     #[serde(rename = "field")]
     pub field: String,
@@ -20,9 +23,9 @@ pub struct ObservabilityPipelineParseJSONProcessor {
     /// A Datadog search query used to determine which logs this processor targets.
     #[serde(rename = "include")]
     pub include: String,
-    /// A list of component IDs whose output is used as the `input` for this component.
+    /// A list of component IDs whose output is used as input for this processor. Required when used as a standalone processor, omit when used within a processor group.
     #[serde(rename = "inputs")]
-    pub inputs: Vec<String>,
+    pub inputs: Option<Vec<String>>,
     /// The processor type. The value should always be `parse_json`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ObservabilityPipelineParseJSONProcessorType,
@@ -38,18 +41,28 @@ impl ObservabilityPipelineParseJSONProcessor {
         field: String,
         id: String,
         include: String,
-        inputs: Vec<String>,
         type_: crate::datadogV2::model::ObservabilityPipelineParseJSONProcessorType,
     ) -> ObservabilityPipelineParseJSONProcessor {
         ObservabilityPipelineParseJSONProcessor {
+            enabled: None,
             field,
             id,
             include,
-            inputs,
+            inputs: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn enabled(mut self, value: bool) -> Self {
+        self.enabled = Some(value);
+        self
+    }
+
+    pub fn inputs(mut self, value: Vec<String>) -> Self {
+        self.inputs = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -78,6 +91,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineParseJSONProcessor {
             where
                 M: MapAccess<'a>,
             {
+                let mut enabled: Option<bool> = None;
                 let mut field: Option<String> = None;
                 let mut id: Option<String> = None;
                 let mut include: Option<String> = None;
@@ -93,6 +107,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineParseJSONProcessor {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "field" => {
                             field = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -103,6 +123,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineParseJSONProcessor {
                             include = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "inputs" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             inputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
@@ -126,10 +149,10 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineParseJSONProcessor {
                 let field = field.ok_or_else(|| M::Error::missing_field("field"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let include = include.ok_or_else(|| M::Error::missing_field("include"))?;
-                let inputs = inputs.ok_or_else(|| M::Error::missing_field("inputs"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineParseJSONProcessor {
+                    enabled,
                     field,
                     id,
                     include,

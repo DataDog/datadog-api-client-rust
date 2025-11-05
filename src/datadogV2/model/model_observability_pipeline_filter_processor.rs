@@ -11,15 +11,18 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineFilterProcessor {
+    /// Whether this processor is enabled.
+    #[serde(rename = "enabled")]
+    pub enabled: Option<bool>,
     /// The unique identifier for this component. Used to reference this component in other parts of the pipeline (for example, as the `input` to downstream components).
     #[serde(rename = "id")]
     pub id: String,
     /// A Datadog search query used to determine which logs should pass through the filter. Logs that match this query continue to downstream components; others are dropped.
     #[serde(rename = "include")]
     pub include: String,
-    /// A list of component IDs whose output is used as the `input` for this component.
+    /// A list of component IDs whose output is used as input for this processor. Required when used as a standalone processor, omit when used within a processor group.
     #[serde(rename = "inputs")]
-    pub inputs: Vec<String>,
+    pub inputs: Option<Vec<String>>,
     /// The processor type. The value should always be `filter`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ObservabilityPipelineFilterProcessorType,
@@ -34,17 +37,27 @@ impl ObservabilityPipelineFilterProcessor {
     pub fn new(
         id: String,
         include: String,
-        inputs: Vec<String>,
         type_: crate::datadogV2::model::ObservabilityPipelineFilterProcessorType,
     ) -> ObservabilityPipelineFilterProcessor {
         ObservabilityPipelineFilterProcessor {
+            enabled: None,
             id,
             include,
-            inputs,
+            inputs: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn enabled(mut self, value: bool) -> Self {
+        self.enabled = Some(value);
+        self
+    }
+
+    pub fn inputs(mut self, value: Vec<String>) -> Self {
+        self.inputs = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -73,6 +86,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineFilterProcessor {
             where
                 M: MapAccess<'a>,
             {
+                let mut enabled: Option<bool> = None;
                 let mut id: Option<String> = None;
                 let mut include: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
@@ -87,6 +101,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineFilterProcessor {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -94,6 +114,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineFilterProcessor {
                             include = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "inputs" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             inputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
@@ -116,10 +139,10 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineFilterProcessor {
                 }
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let include = include.ok_or_else(|| M::Error::missing_field("include"))?;
-                let inputs = inputs.ok_or_else(|| M::Error::missing_field("inputs"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineFilterProcessor {
+                    enabled,
                     id,
                     include,
                     inputs,

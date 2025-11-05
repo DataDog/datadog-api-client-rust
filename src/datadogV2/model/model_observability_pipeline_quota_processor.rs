@@ -14,6 +14,9 @@ pub struct ObservabilityPipelineQuotaProcessor {
     /// If set to `true`, logs that matched the quota filter and sent after the quota has been met are dropped; only logs that did not match the filter query continue through the pipeline.
     #[serde(rename = "drop_events")]
     pub drop_events: bool,
+    /// Whether this processor is enabled.
+    #[serde(rename = "enabled")]
+    pub enabled: Option<bool>,
     /// The unique identifier for this component. Used to reference this component in other parts of the pipeline (for example, as the `input` to downstream components).
     #[serde(rename = "id")]
     pub id: String,
@@ -23,9 +26,9 @@ pub struct ObservabilityPipelineQuotaProcessor {
     /// A Datadog search query used to determine which logs this processor targets.
     #[serde(rename = "include")]
     pub include: String,
-    /// A list of component IDs whose output is used as the `input` for this component.
+    /// A list of component IDs whose output is used as input for this processor. Required when used as a standalone processor, omit when used within a processor group.
     #[serde(rename = "inputs")]
-    pub inputs: Vec<String>,
+    pub inputs: Option<Vec<String>>,
     /// The maximum amount of data or number of events allowed before the quota is enforced. Can be specified in bytes or events.
     #[serde(rename = "limit")]
     pub limit: crate::datadogV2::model::ObservabilityPipelineQuotaProcessorLimit,
@@ -61,17 +64,17 @@ impl ObservabilityPipelineQuotaProcessor {
         drop_events: bool,
         id: String,
         include: String,
-        inputs: Vec<String>,
         limit: crate::datadogV2::model::ObservabilityPipelineQuotaProcessorLimit,
         name: String,
         type_: crate::datadogV2::model::ObservabilityPipelineQuotaProcessorType,
     ) -> ObservabilityPipelineQuotaProcessor {
         ObservabilityPipelineQuotaProcessor {
             drop_events,
+            enabled: None,
             id,
             ignore_when_missing_partitions: None,
             include,
-            inputs,
+            inputs: None,
             limit,
             name,
             overflow_action: None,
@@ -83,8 +86,18 @@ impl ObservabilityPipelineQuotaProcessor {
         }
     }
 
+    pub fn enabled(mut self, value: bool) -> Self {
+        self.enabled = Some(value);
+        self
+    }
+
     pub fn ignore_when_missing_partitions(mut self, value: bool) -> Self {
         self.ignore_when_missing_partitions = Some(value);
+        self
+    }
+
+    pub fn inputs(mut self, value: Vec<String>) -> Self {
+        self.inputs = Some(value);
         self
     }
 
@@ -136,6 +149,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineQuotaProcessor {
                 M: MapAccess<'a>,
             {
                 let mut drop_events: Option<bool> = None;
+                let mut enabled: Option<bool> = None;
                 let mut id: Option<String> = None;
                 let mut ignore_when_missing_partitions: Option<bool> = None;
                 let mut include: Option<String> = None;
@@ -166,6 +180,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineQuotaProcessor {
                             drop_events =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -180,6 +200,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineQuotaProcessor {
                             include = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "inputs" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             inputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "limit" => {
@@ -238,13 +261,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineQuotaProcessor {
                     drop_events.ok_or_else(|| M::Error::missing_field("drop_events"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let include = include.ok_or_else(|| M::Error::missing_field("include"))?;
-                let inputs = inputs.ok_or_else(|| M::Error::missing_field("inputs"))?;
                 let limit = limit.ok_or_else(|| M::Error::missing_field("limit"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineQuotaProcessor {
                     drop_events,
+                    enabled,
                     id,
                     ignore_when_missing_partitions,
                     include,

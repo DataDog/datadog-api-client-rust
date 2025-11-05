@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineAddFieldsProcessor {
+    /// Whether this processor is enabled.
+    #[serde(rename = "enabled")]
+    pub enabled: Option<bool>,
     /// A list of static fields (key-value pairs) that is added to each log event processed by this component.
     #[serde(rename = "fields")]
     pub fields: Vec<crate::datadogV2::model::ObservabilityPipelineFieldValue>,
@@ -20,9 +23,9 @@ pub struct ObservabilityPipelineAddFieldsProcessor {
     /// A Datadog search query used to determine which logs this processor targets.
     #[serde(rename = "include")]
     pub include: String,
-    /// A list of component IDs whose output is used as the `input` for this component.
+    /// A list of component IDs whose output is used as input for this processor. Required when used as a standalone processor, omit when used within a processor group.
     #[serde(rename = "inputs")]
-    pub inputs: Vec<String>,
+    pub inputs: Option<Vec<String>>,
     /// The processor type. The value should always be `add_fields`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ObservabilityPipelineAddFieldsProcessorType,
@@ -38,18 +41,28 @@ impl ObservabilityPipelineAddFieldsProcessor {
         fields: Vec<crate::datadogV2::model::ObservabilityPipelineFieldValue>,
         id: String,
         include: String,
-        inputs: Vec<String>,
         type_: crate::datadogV2::model::ObservabilityPipelineAddFieldsProcessorType,
     ) -> ObservabilityPipelineAddFieldsProcessor {
         ObservabilityPipelineAddFieldsProcessor {
+            enabled: None,
             fields,
             id,
             include,
-            inputs,
+            inputs: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn enabled(mut self, value: bool) -> Self {
+        self.enabled = Some(value);
+        self
+    }
+
+    pub fn inputs(mut self, value: Vec<String>) -> Self {
+        self.inputs = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -78,6 +91,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAddFieldsProcessor {
             where
                 M: MapAccess<'a>,
             {
+                let mut enabled: Option<bool> = None;
                 let mut fields: Option<
                     Vec<crate::datadogV2::model::ObservabilityPipelineFieldValue>,
                 > = None;
@@ -95,6 +109,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAddFieldsProcessor {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "fields" => {
                             fields = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -105,6 +125,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAddFieldsProcessor {
                             include = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "inputs" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             inputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
@@ -128,10 +151,10 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAddFieldsProcessor {
                 let fields = fields.ok_or_else(|| M::Error::missing_field("fields"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let include = include.ok_or_else(|| M::Error::missing_field("include"))?;
-                let inputs = inputs.ok_or_else(|| M::Error::missing_field("inputs"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineAddFieldsProcessor {
+                    enabled,
                     fields,
                     id,
                     include,

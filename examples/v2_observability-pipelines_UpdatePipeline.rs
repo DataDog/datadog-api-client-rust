@@ -5,6 +5,7 @@ use datadog_api_client::datadogV2::model::ObservabilityPipeline;
 use datadog_api_client::datadogV2::model::ObservabilityPipelineConfig;
 use datadog_api_client::datadogV2::model::ObservabilityPipelineConfigDestinationItem;
 use datadog_api_client::datadogV2::model::ObservabilityPipelineConfigProcessorItem;
+use datadog_api_client::datadogV2::model::ObservabilityPipelineConfigProcessors;
 use datadog_api_client::datadogV2::model::ObservabilityPipelineConfigSourceItem;
 use datadog_api_client::datadogV2::model::ObservabilityPipelineData;
 use datadog_api_client::datadogV2::model::ObservabilityPipelineDataAttributes;
@@ -46,18 +47,19 @@ async fn main() {
                             )
                         ],
                     ).processors(
-                        vec![
-                            ObservabilityPipelineConfigProcessorItem::ObservabilityPipelineFilterProcessor(
-                                Box::new(
-                                    ObservabilityPipelineFilterProcessor::new(
-                                        "filter-processor".to_string(),
-                                        "service:my-service".to_string(),
-                                        vec!["datadog-agent-source".to_string()],
-                                        ObservabilityPipelineFilterProcessorType::FILTER,
+                        ObservabilityPipelineConfigProcessors::ObservabilityPipelineConfigProcessorsList(
+                            vec![
+                                ObservabilityPipelineConfigProcessorItem::ObservabilityPipelineFilterProcessor(
+                                    Box::new(
+                                        ObservabilityPipelineFilterProcessor::new(
+                                            "filter-processor".to_string(),
+                                            "service:my-service".to_string(),
+                                            ObservabilityPipelineFilterProcessorType::FILTER,
+                                        ).inputs(vec!["datadog-agent-source".to_string()]),
                                     ),
-                                ),
-                            )
-                        ],
+                                )
+                            ],
+                        ),
                     ),
                     "Updated Pipeline Name".to_string(),
                 ),

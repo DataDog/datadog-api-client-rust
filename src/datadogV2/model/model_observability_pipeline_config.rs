@@ -14,9 +14,9 @@ pub struct ObservabilityPipelineConfig {
     /// A list of destination components where processed logs are sent.
     #[serde(rename = "destinations")]
     pub destinations: Vec<crate::datadogV2::model::ObservabilityPipelineConfigDestinationItem>,
-    /// A list of processors that transform or enrich log data.
+    /// A list of processors that transform or enrich log data, or a list of grouped processor configurations.
     #[serde(rename = "processors")]
-    pub processors: Option<Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorItem>>,
+    pub processors: Option<crate::datadogV2::model::ObservabilityPipelineConfigProcessors>,
     /// A list of configured data sources for the pipeline.
     #[serde(rename = "sources")]
     pub sources: Vec<crate::datadogV2::model::ObservabilityPipelineConfigSourceItem>,
@@ -43,7 +43,7 @@ impl ObservabilityPipelineConfig {
 
     pub fn processors(
         mut self,
-        value: Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorItem>,
+        value: crate::datadogV2::model::ObservabilityPipelineConfigProcessors,
     ) -> Self {
         self.processors = Some(value);
         self
@@ -79,7 +79,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfig {
                     Vec<crate::datadogV2::model::ObservabilityPipelineConfigDestinationItem>,
                 > = None;
                 let mut processors: Option<
-                    Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorItem>,
+                    crate::datadogV2::model::ObservabilityPipelineConfigProcessors,
                 > = None;
                 let mut sources: Option<
                     Vec<crate::datadogV2::model::ObservabilityPipelineConfigSourceItem>,
@@ -101,6 +101,14 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfig {
                                 continue;
                             }
                             processors = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _processors) = processors {
+                                match _processors {
+                                    crate::datadogV2::model::ObservabilityPipelineConfigProcessors::UnparsedObject(_processors) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "sources" => {
                             sources = Some(serde_json::from_value(v).map_err(M::Error::custom)?);

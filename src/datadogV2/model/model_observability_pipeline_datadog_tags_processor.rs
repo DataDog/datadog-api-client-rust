@@ -14,15 +14,18 @@ pub struct ObservabilityPipelineDatadogTagsProcessor {
     /// The action to take on tags with matching keys.
     #[serde(rename = "action")]
     pub action: crate::datadogV2::model::ObservabilityPipelineDatadogTagsProcessorAction,
+    /// Whether this processor is enabled.
+    #[serde(rename = "enabled")]
+    pub enabled: Option<bool>,
     /// The unique identifier for this component. Used to reference this component in other parts of the pipeline (for example, as the `input` to downstream components).
     #[serde(rename = "id")]
     pub id: String,
     /// A Datadog search query used to determine which logs this processor targets.
     #[serde(rename = "include")]
     pub include: String,
-    /// A list of component IDs whose output is used as the `input` for this component.
+    /// A list of component IDs whose output is used as input for this processor. Required when used as a standalone processor, omit when used within a processor group.
     #[serde(rename = "inputs")]
-    pub inputs: Vec<String>,
+    pub inputs: Option<Vec<String>>,
     /// A list of tag keys.
     #[serde(rename = "keys")]
     pub keys: Vec<String>,
@@ -44,22 +47,32 @@ impl ObservabilityPipelineDatadogTagsProcessor {
         action: crate::datadogV2::model::ObservabilityPipelineDatadogTagsProcessorAction,
         id: String,
         include: String,
-        inputs: Vec<String>,
         keys: Vec<String>,
         mode: crate::datadogV2::model::ObservabilityPipelineDatadogTagsProcessorMode,
         type_: crate::datadogV2::model::ObservabilityPipelineDatadogTagsProcessorType,
     ) -> ObservabilityPipelineDatadogTagsProcessor {
         ObservabilityPipelineDatadogTagsProcessor {
             action,
+            enabled: None,
             id,
             include,
-            inputs,
+            inputs: None,
             keys,
             mode,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn enabled(mut self, value: bool) -> Self {
+        self.enabled = Some(value);
+        self
+    }
+
+    pub fn inputs(mut self, value: Vec<String>) -> Self {
+        self.inputs = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -91,6 +104,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDatadogTagsProcessor {
                 let mut action: Option<
                     crate::datadogV2::model::ObservabilityPipelineDatadogTagsProcessorAction,
                 > = None;
+                let mut enabled: Option<bool> = None;
                 let mut id: Option<String> = None;
                 let mut include: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
@@ -120,6 +134,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDatadogTagsProcessor {
                                 }
                             }
                         }
+                        "enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -127,6 +147,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDatadogTagsProcessor {
                             include = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "inputs" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             inputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "keys" => {
@@ -164,13 +187,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDatadogTagsProcessor {
                 let action = action.ok_or_else(|| M::Error::missing_field("action"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let include = include.ok_or_else(|| M::Error::missing_field("include"))?;
-                let inputs = inputs.ok_or_else(|| M::Error::missing_field("inputs"))?;
                 let keys = keys.ok_or_else(|| M::Error::missing_field("keys"))?;
                 let mode = mode.ok_or_else(|| M::Error::missing_field("mode"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineDatadogTagsProcessor {
                     action,
+                    enabled,
                     id,
                     include,
                     inputs,

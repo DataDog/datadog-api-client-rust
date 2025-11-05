@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineThrottleProcessor {
+    /// Whether this processor is enabled.
+    #[serde(rename = "enabled")]
+    pub enabled: Option<bool>,
     /// Optional list of fields used to group events before the threshold has been reached.
     #[serde(rename = "group_by")]
     pub group_by: Option<Vec<String>>,
@@ -20,9 +23,9 @@ pub struct ObservabilityPipelineThrottleProcessor {
     /// A Datadog search query used to determine which logs this processor targets.
     #[serde(rename = "include")]
     pub include: String,
-    /// A list of component IDs whose output is used as the input for this processor.
+    /// A list of component IDs whose output is used as input for this processor. Required when used as a standalone processor, omit when used within a processor group.
     #[serde(rename = "inputs")]
-    pub inputs: Vec<String>,
+    pub inputs: Option<Vec<String>>,
     /// the number of events allowed in a given time window. Events sent after the threshold has been reached, are dropped.
     #[serde(rename = "threshold")]
     pub threshold: i64,
@@ -43,16 +46,16 @@ impl ObservabilityPipelineThrottleProcessor {
     pub fn new(
         id: String,
         include: String,
-        inputs: Vec<String>,
         threshold: i64,
         type_: crate::datadogV2::model::ObservabilityPipelineThrottleProcessorType,
         window: f64,
     ) -> ObservabilityPipelineThrottleProcessor {
         ObservabilityPipelineThrottleProcessor {
+            enabled: None,
             group_by: None,
             id,
             include,
-            inputs,
+            inputs: None,
             threshold,
             type_,
             window,
@@ -61,8 +64,18 @@ impl ObservabilityPipelineThrottleProcessor {
         }
     }
 
+    pub fn enabled(mut self, value: bool) -> Self {
+        self.enabled = Some(value);
+        self
+    }
+
     pub fn group_by(mut self, value: Vec<String>) -> Self {
         self.group_by = Some(value);
+        self
+    }
+
+    pub fn inputs(mut self, value: Vec<String>) -> Self {
+        self.inputs = Some(value);
         self
     }
 
@@ -92,6 +105,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineThrottleProcessor {
             where
                 M: MapAccess<'a>,
             {
+                let mut enabled: Option<bool> = None;
                 let mut group_by: Option<Vec<String>> = None;
                 let mut id: Option<String> = None;
                 let mut include: Option<String> = None;
@@ -109,6 +123,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineThrottleProcessor {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "group_by" => {
                             if v.is_null() {
                                 continue;
@@ -122,6 +142,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineThrottleProcessor {
                             include = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "inputs" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             inputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "threshold" => {
@@ -150,12 +173,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineThrottleProcessor {
                 }
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let include = include.ok_or_else(|| M::Error::missing_field("include"))?;
-                let inputs = inputs.ok_or_else(|| M::Error::missing_field("inputs"))?;
                 let threshold = threshold.ok_or_else(|| M::Error::missing_field("threshold"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
                 let window = window.ok_or_else(|| M::Error::missing_field("window"))?;
 
                 let content = ObservabilityPipelineThrottleProcessor {
+                    enabled,
                     group_by,
                     id,
                     include,

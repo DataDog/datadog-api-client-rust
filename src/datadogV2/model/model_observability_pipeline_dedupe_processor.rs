@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineDedupeProcessor {
+    /// Whether this processor is enabled.
+    #[serde(rename = "enabled")]
+    pub enabled: Option<bool>,
     /// A list of log field paths to check for duplicates.
     #[serde(rename = "fields")]
     pub fields: Vec<String>,
@@ -20,9 +23,9 @@ pub struct ObservabilityPipelineDedupeProcessor {
     /// A Datadog search query used to determine which logs this processor targets.
     #[serde(rename = "include")]
     pub include: String,
-    /// A list of component IDs whose output is used as the input for this processor.
+    /// A list of component IDs whose output is used as input for this processor. Required when used as a standalone processor, omit when used within a processor group.
     #[serde(rename = "inputs")]
-    pub inputs: Vec<String>,
+    pub inputs: Option<Vec<String>>,
     /// The deduplication mode to apply to the fields.
     #[serde(rename = "mode")]
     pub mode: crate::datadogV2::model::ObservabilityPipelineDedupeProcessorMode,
@@ -41,20 +44,30 @@ impl ObservabilityPipelineDedupeProcessor {
         fields: Vec<String>,
         id: String,
         include: String,
-        inputs: Vec<String>,
         mode: crate::datadogV2::model::ObservabilityPipelineDedupeProcessorMode,
         type_: crate::datadogV2::model::ObservabilityPipelineDedupeProcessorType,
     ) -> ObservabilityPipelineDedupeProcessor {
         ObservabilityPipelineDedupeProcessor {
+            enabled: None,
             fields,
             id,
             include,
-            inputs,
+            inputs: None,
             mode,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn enabled(mut self, value: bool) -> Self {
+        self.enabled = Some(value);
+        self
+    }
+
+    pub fn inputs(mut self, value: Vec<String>) -> Self {
+        self.inputs = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -83,6 +96,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDedupeProcessor {
             where
                 M: MapAccess<'a>,
             {
+                let mut enabled: Option<bool> = None;
                 let mut fields: Option<Vec<String>> = None;
                 let mut id: Option<String> = None;
                 let mut include: Option<String> = None;
@@ -101,6 +115,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDedupeProcessor {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "fields" => {
                             fields = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -111,6 +131,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDedupeProcessor {
                             include = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "inputs" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             inputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "mode" => {
@@ -145,11 +168,11 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDedupeProcessor {
                 let fields = fields.ok_or_else(|| M::Error::missing_field("fields"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let include = include.ok_or_else(|| M::Error::missing_field("include"))?;
-                let inputs = inputs.ok_or_else(|| M::Error::missing_field("inputs"))?;
                 let mode = mode.ok_or_else(|| M::Error::missing_field("mode"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineDedupeProcessor {
+                    enabled,
                     fields,
                     id,
                     include,
