@@ -20,12 +20,18 @@ pub struct UsageSummaryResponse {
     /// Shows the 99th percentile of all APM DevSecOps hosts over all hours in the current month for all organizations.
     #[serde(rename = "apm_devsecops_host_top99p_sum")]
     pub apm_devsecops_host_top99p_sum: Option<i64>,
+    /// Shows the sum of the 99th percentile of all distinct standalone Enterprise hosts over all hours in the current month for all organizations.
+    #[serde(rename = "apm_enterprise_standalone_hosts_top99p_sum")]
+    pub apm_enterprise_standalone_hosts_top99p_sum: Option<i64>,
     /// Shows the average of all APM ECS Fargate tasks over all hours in the current month for all organizations.
     #[serde(rename = "apm_fargate_count_avg_sum")]
     pub apm_fargate_count_avg_sum: Option<i64>,
     /// Shows the 99th percentile of all distinct APM hosts over all hours in the current month for all organizations.
     #[serde(rename = "apm_host_top99p_sum")]
     pub apm_host_top99p_sum: Option<i64>,
+    /// Shows the sum of the 99th percentile of all distinct standalone Pro hosts over all hours in the current month for all organizations.
+    #[serde(rename = "apm_pro_standalone_hosts_top99p_sum")]
+    pub apm_pro_standalone_hosts_top99p_sum: Option<i64>,
     /// Shows the average of all Application Security Monitoring ECS Fargate tasks over all hours in the current month for all organizations.
     #[serde(rename = "appsec_fargate_count_avg_sum")]
     pub appsec_fargate_count_avg_sum: Option<i64>,
@@ -684,8 +690,10 @@ impl UsageSummaryResponse {
             agent_host_top99p_sum: None,
             apm_azure_app_service_host_top99p_sum: None,
             apm_devsecops_host_top99p_sum: None,
+            apm_enterprise_standalone_hosts_top99p_sum: None,
             apm_fargate_count_avg_sum: None,
             apm_host_top99p_sum: None,
+            apm_pro_standalone_hosts_top99p_sum: None,
             appsec_fargate_count_avg_sum: None,
             asm_serverless_agg_sum: None,
             audit_logs_lines_indexed_agg_sum: None,
@@ -919,6 +927,12 @@ impl UsageSummaryResponse {
     }
 
     #[allow(deprecated)]
+    pub fn apm_enterprise_standalone_hosts_top99p_sum(mut self, value: i64) -> Self {
+        self.apm_enterprise_standalone_hosts_top99p_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn apm_fargate_count_avg_sum(mut self, value: i64) -> Self {
         self.apm_fargate_count_avg_sum = Some(value);
         self
@@ -927,6 +941,12 @@ impl UsageSummaryResponse {
     #[allow(deprecated)]
     pub fn apm_host_top99p_sum(mut self, value: i64) -> Self {
         self.apm_host_top99p_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn apm_pro_standalone_hosts_top99p_sum(mut self, value: i64) -> Self {
+        self.apm_pro_standalone_hosts_top99p_sum = Some(value);
         self
     }
 
@@ -2269,8 +2289,10 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                 let mut agent_host_top99p_sum: Option<i64> = None;
                 let mut apm_azure_app_service_host_top99p_sum: Option<i64> = None;
                 let mut apm_devsecops_host_top99p_sum: Option<i64> = None;
+                let mut apm_enterprise_standalone_hosts_top99p_sum: Option<i64> = None;
                 let mut apm_fargate_count_avg_sum: Option<i64> = None;
                 let mut apm_host_top99p_sum: Option<i64> = None;
+                let mut apm_pro_standalone_hosts_top99p_sum: Option<i64> = None;
                 let mut appsec_fargate_count_avg_sum: Option<i64> = None;
                 let mut asm_serverless_agg_sum: Option<i64> = None;
                 let mut audit_logs_lines_indexed_agg_sum: Option<i64> = None;
@@ -2523,6 +2545,12 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                             }
                             apm_devsecops_host_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
+                        "apm_enterprise_standalone_hosts_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            apm_enterprise_standalone_hosts_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "apm_fargate_count_avg_sum" => {
                             if v.is_null() {
                                 continue;
@@ -2534,6 +2562,12 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                                 continue;
                             }
                             apm_host_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "apm_pro_standalone_hosts_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            apm_pro_standalone_hosts_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
                         "appsec_fargate_count_avg_sum" => {
                             if v.is_null() {
@@ -3802,8 +3836,10 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                     agent_host_top99p_sum,
                     apm_azure_app_service_host_top99p_sum,
                     apm_devsecops_host_top99p_sum,
+                    apm_enterprise_standalone_hosts_top99p_sum,
                     apm_fargate_count_avg_sum,
                     apm_host_top99p_sum,
+                    apm_pro_standalone_hosts_top99p_sum,
                     appsec_fargate_count_avg_sum,
                     asm_serverless_agg_sum,
                     audit_logs_lines_indexed_agg_sum,
