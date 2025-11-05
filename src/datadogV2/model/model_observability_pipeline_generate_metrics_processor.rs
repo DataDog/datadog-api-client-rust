@@ -12,18 +12,21 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineGenerateMetricsProcessor {
+    /// Whether this processor is enabled.
+    #[serde(rename = "enabled")]
+    pub enabled: Option<bool>,
     /// The unique identifier for this component. Used to reference this component in other parts of the pipeline.
     #[serde(rename = "id")]
     pub id: String,
     /// A Datadog search query used to determine which logs this processor targets.
     #[serde(rename = "include")]
-    pub include: String,
-    /// A list of component IDs whose output is used as the `input` for this processor.
+    pub include: Option<String>,
+    /// A list of component IDs whose output is used as input for this processor. Required when used as a standalone processor, omit when used within a processor group.
     #[serde(rename = "inputs")]
-    pub inputs: Vec<String>,
+    pub inputs: Option<Vec<String>>,
     /// Configuration for generating individual metrics.
     #[serde(rename = "metrics")]
-    pub metrics: Vec<crate::datadogV2::model::ObservabilityPipelineGeneratedMetric>,
+    pub metrics: Option<Vec<crate::datadogV2::model::ObservabilityPipelineGeneratedMetric>>,
     /// The processor type. Always `generate_datadog_metrics`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ObservabilityPipelineGenerateMetricsProcessorType,
@@ -37,20 +40,41 @@ pub struct ObservabilityPipelineGenerateMetricsProcessor {
 impl ObservabilityPipelineGenerateMetricsProcessor {
     pub fn new(
         id: String,
-        include: String,
-        inputs: Vec<String>,
-        metrics: Vec<crate::datadogV2::model::ObservabilityPipelineGeneratedMetric>,
         type_: crate::datadogV2::model::ObservabilityPipelineGenerateMetricsProcessorType,
     ) -> ObservabilityPipelineGenerateMetricsProcessor {
         ObservabilityPipelineGenerateMetricsProcessor {
+            enabled: None,
             id,
-            include,
-            inputs,
-            metrics,
+            include: None,
+            inputs: None,
+            metrics: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn enabled(mut self, value: bool) -> Self {
+        self.enabled = Some(value);
+        self
+    }
+
+    pub fn include(mut self, value: String) -> Self {
+        self.include = Some(value);
+        self
+    }
+
+    pub fn inputs(mut self, value: Vec<String>) -> Self {
+        self.inputs = Some(value);
+        self
+    }
+
+    pub fn metrics(
+        mut self,
+        value: Vec<crate::datadogV2::model::ObservabilityPipelineGeneratedMetric>,
+    ) -> Self {
+        self.metrics = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -79,6 +103,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGenerateMetricsProcessor {
             where
                 M: MapAccess<'a>,
             {
+                let mut enabled: Option<bool> = None;
                 let mut id: Option<String> = None;
                 let mut include: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
@@ -96,16 +121,31 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGenerateMetricsProcessor {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "include" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             include = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "inputs" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             inputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "metrics" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             metrics = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
@@ -127,12 +167,10 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGenerateMetricsProcessor {
                     }
                 }
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
-                let include = include.ok_or_else(|| M::Error::missing_field("include"))?;
-                let inputs = inputs.ok_or_else(|| M::Error::missing_field("inputs"))?;
-                let metrics = metrics.ok_or_else(|| M::Error::missing_field("metrics"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineGenerateMetricsProcessor {
+                    enabled,
                     id,
                     include,
                     inputs,
