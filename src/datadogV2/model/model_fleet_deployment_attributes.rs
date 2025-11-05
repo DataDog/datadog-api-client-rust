@@ -20,9 +20,18 @@ pub struct FleetDeploymentAttributes {
     /// Query used to filter and select target hosts for the deployment. Uses the Datadog query syntax.
     #[serde(rename = "filter_query")]
     pub filter_query: Option<String>,
-    /// Current high-level status of the deployment (for example, "pending", "running", "completed", "failed").
+    /// Current high-level status of the deployment (for example, "pending", "running",
+    /// "completed", "failed").
     #[serde(rename = "high_level_status")]
     pub high_level_status: Option<String>,
+    /// Paginated list of hosts in this deployment with their individual statuses. Only included
+    /// when fetching a single deployment by ID. Use the `limit` and `page` query parameters to
+    /// navigate through pages. Pagination metadata is included in the response `meta.hosts` field.
+    #[serde(rename = "hosts")]
+    pub hosts: Option<Vec<crate::datadogV2::model::FleetDeploymentHost>>,
+    /// List of packages to deploy to target hosts. Present only for package upgrade deployments.
+    #[serde(rename = "packages")]
+    pub packages: Option<Vec<crate::datadogV2::model::FleetDeploymentPackage>>,
     /// Total number of hosts targeted by this deployment.
     #[serde(rename = "total_hosts")]
     pub total_hosts: Option<i64>,
@@ -40,6 +49,8 @@ impl FleetDeploymentAttributes {
             estimated_end_time_unix: None,
             filter_query: None,
             high_level_status: None,
+            hosts: None,
+            packages: None,
             total_hosts: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -66,6 +77,16 @@ impl FleetDeploymentAttributes {
 
     pub fn high_level_status(mut self, value: String) -> Self {
         self.high_level_status = Some(value);
+        self
+    }
+
+    pub fn hosts(mut self, value: Vec<crate::datadogV2::model::FleetDeploymentHost>) -> Self {
+        self.hosts = Some(value);
+        self
+    }
+
+    pub fn packages(mut self, value: Vec<crate::datadogV2::model::FleetDeploymentPackage>) -> Self {
+        self.packages = Some(value);
         self
     }
 
@@ -112,6 +133,9 @@ impl<'de> Deserialize<'de> for FleetDeploymentAttributes {
                 let mut estimated_end_time_unix: Option<i64> = None;
                 let mut filter_query: Option<String> = None;
                 let mut high_level_status: Option<String> = None;
+                let mut hosts: Option<Vec<crate::datadogV2::model::FleetDeploymentHost>> = None;
+                let mut packages: Option<Vec<crate::datadogV2::model::FleetDeploymentPackage>> =
+                    None;
                 let mut total_hosts: Option<i64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -149,6 +173,18 @@ impl<'de> Deserialize<'de> for FleetDeploymentAttributes {
                             high_level_status =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "hosts" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            hosts = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "packages" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            packages = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "total_hosts" => {
                             if v.is_null() {
                                 continue;
@@ -169,6 +205,8 @@ impl<'de> Deserialize<'de> for FleetDeploymentAttributes {
                     estimated_end_time_unix,
                     filter_query,
                     high_level_status,
+                    hosts,
+                    packages,
                     total_hosts,
                     additional_properties,
                     _unparsed,

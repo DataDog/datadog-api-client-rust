@@ -1,4 +1,4 @@
-// Create a deployment returns "CREATED" response
+// Create a configuration deployment returns "CREATED" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_fleet_automation::FleetAutomationAPI;
 use datadog_api_client::datadogV2::model::FleetDeploymentConfigureAttributes;

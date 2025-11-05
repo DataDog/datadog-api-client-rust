@@ -6,17 +6,19 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Data for creating a new configuration deployment.
+/// Represents an available Datadog Agent version.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct FleetDeploymentConfigureCreate {
-    /// Attributes for creating a new configuration deployment.
+pub struct FleetAgentVersion {
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::FleetDeploymentConfigureAttributes,
-    /// The type of deployment resource.
+    pub attributes: Option<crate::datadogV2::model::FleetAgentVersionAttributes>,
+    /// Unique identifier for the Agent version (same as version).
+    #[serde(rename = "id")]
+    pub id: String,
+    /// The type of Agent version resource.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::FleetDeploymentResourceType,
+    pub type_: crate::datadogV2::model::FleetAgentVersionResourceType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,17 +26,26 @@ pub struct FleetDeploymentConfigureCreate {
     pub(crate) _unparsed: bool,
 }
 
-impl FleetDeploymentConfigureCreate {
+impl FleetAgentVersion {
     pub fn new(
-        attributes: crate::datadogV2::model::FleetDeploymentConfigureAttributes,
-        type_: crate::datadogV2::model::FleetDeploymentResourceType,
-    ) -> FleetDeploymentConfigureCreate {
-        FleetDeploymentConfigureCreate {
-            attributes,
+        id: String,
+        type_: crate::datadogV2::model::FleetAgentVersionResourceType,
+    ) -> FleetAgentVersion {
+        FleetAgentVersion {
+            attributes: None,
+            id,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn attributes(
+        mut self,
+        value: crate::datadogV2::model::FleetAgentVersionAttributes,
+    ) -> Self {
+        self.attributes = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -46,14 +57,14 @@ impl FleetDeploymentConfigureCreate {
     }
 }
 
-impl<'de> Deserialize<'de> for FleetDeploymentConfigureCreate {
+impl<'de> Deserialize<'de> for FleetAgentVersion {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct FleetDeploymentConfigureCreateVisitor;
-        impl<'a> Visitor<'a> for FleetDeploymentConfigureCreateVisitor {
-            type Value = FleetDeploymentConfigureCreate;
+        struct FleetAgentVersionVisitor;
+        impl<'a> Visitor<'a> for FleetAgentVersionVisitor {
+            type Value = FleetAgentVersion;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -63,10 +74,11 @@ impl<'de> Deserialize<'de> for FleetDeploymentConfigureCreate {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<
-                    crate::datadogV2::model::FleetDeploymentConfigureAttributes,
-                > = None;
-                let mut type_: Option<crate::datadogV2::model::FleetDeploymentResourceType> = None;
+                let mut attributes: Option<crate::datadogV2::model::FleetAgentVersionAttributes> =
+                    None;
+                let mut id: Option<String> = None;
+                let mut type_: Option<crate::datadogV2::model::FleetAgentVersionResourceType> =
+                    None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -76,13 +88,19 @@ impl<'de> Deserialize<'de> for FleetDeploymentConfigureCreate {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "attributes" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "id" => {
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::FleetDeploymentResourceType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::FleetAgentVersionResourceType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -96,11 +114,12 @@ impl<'de> Deserialize<'de> for FleetDeploymentConfigureCreate {
                         }
                     }
                 }
-                let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
+                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = FleetDeploymentConfigureCreate {
+                let content = FleetAgentVersion {
                     attributes,
+                    id,
                     type_,
                     additional_properties,
                     _unparsed,
@@ -110,6 +129,6 @@ impl<'de> Deserialize<'de> for FleetDeploymentConfigureCreate {
             }
         }
 
-        deserializer.deserialize_any(FleetDeploymentConfigureCreateVisitor)
+        deserializer.deserialize_any(FleetAgentVersionVisitor)
     }
 }

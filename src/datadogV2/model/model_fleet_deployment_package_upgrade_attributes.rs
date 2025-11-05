@@ -6,17 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response containing a single deployment.
+/// Attributes for creating a new package upgrade deployment.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct FleetDeploymentResponse {
-    /// A deployment that defines automated configuration changes for a fleet of hosts.
-    #[serde(rename = "data")]
-    pub data: Option<crate::datadogV2::model::FleetDeployment>,
-    /// Metadata for a single deployment response, including pagination information for hosts.
-    #[serde(rename = "meta")]
-    pub meta: Option<crate::datadogV2::model::FleetDeploymentResponseMeta>,
+pub struct FleetDeploymentPackageUpgradeAttributes {
+    /// Query used to filter and select target hosts for the deployment. Uses the Datadog query syntax.
+    #[serde(rename = "filter_query")]
+    pub filter_query: Option<String>,
+    /// List of packages and their target versions to deploy to the selected hosts.
+    #[serde(rename = "target_packages")]
+    pub target_packages: Vec<crate::datadogV2::model::FleetDeploymentPackage>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,23 +24,20 @@ pub struct FleetDeploymentResponse {
     pub(crate) _unparsed: bool,
 }
 
-impl FleetDeploymentResponse {
-    pub fn new() -> FleetDeploymentResponse {
-        FleetDeploymentResponse {
-            data: None,
-            meta: None,
+impl FleetDeploymentPackageUpgradeAttributes {
+    pub fn new(
+        target_packages: Vec<crate::datadogV2::model::FleetDeploymentPackage>,
+    ) -> FleetDeploymentPackageUpgradeAttributes {
+        FleetDeploymentPackageUpgradeAttributes {
+            filter_query: None,
+            target_packages,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn data(mut self, value: crate::datadogV2::model::FleetDeployment) -> Self {
-        self.data = Some(value);
-        self
-    }
-
-    pub fn meta(mut self, value: crate::datadogV2::model::FleetDeploymentResponseMeta) -> Self {
-        self.meta = Some(value);
+    pub fn filter_query(mut self, value: String) -> Self {
+        self.filter_query = Some(value);
         self
     }
 
@@ -53,20 +50,14 @@ impl FleetDeploymentResponse {
     }
 }
 
-impl Default for FleetDeploymentResponse {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<'de> Deserialize<'de> for FleetDeploymentResponse {
+impl<'de> Deserialize<'de> for FleetDeploymentPackageUpgradeAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct FleetDeploymentResponseVisitor;
-        impl<'a> Visitor<'a> for FleetDeploymentResponseVisitor {
-            type Value = FleetDeploymentResponse;
+        struct FleetDeploymentPackageUpgradeAttributesVisitor;
+        impl<'a> Visitor<'a> for FleetDeploymentPackageUpgradeAttributesVisitor {
+            type Value = FleetDeploymentPackageUpgradeAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -76,8 +67,10 @@ impl<'de> Deserialize<'de> for FleetDeploymentResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::FleetDeployment> = None;
-                let mut meta: Option<crate::datadogV2::model::FleetDeploymentResponseMeta> = None;
+                let mut filter_query: Option<String> = None;
+                let mut target_packages: Option<
+                    Vec<crate::datadogV2::model::FleetDeploymentPackage>,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -86,17 +79,16 @@ impl<'de> Deserialize<'de> for FleetDeploymentResponse {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "data" => {
+                        "filter_query" => {
                             if v.is_null() {
                                 continue;
                             }
-                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            filter_query =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "meta" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "target_packages" => {
+                            target_packages =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -105,10 +97,12 @@ impl<'de> Deserialize<'de> for FleetDeploymentResponse {
                         }
                     }
                 }
+                let target_packages =
+                    target_packages.ok_or_else(|| M::Error::missing_field("target_packages"))?;
 
-                let content = FleetDeploymentResponse {
-                    data,
-                    meta,
+                let content = FleetDeploymentPackageUpgradeAttributes {
+                    filter_query,
+                    target_packages,
                     additional_properties,
                     _unparsed,
                 };
@@ -117,6 +111,6 @@ impl<'de> Deserialize<'de> for FleetDeploymentResponse {
             }
         }
 
-        deserializer.deserialize_any(FleetDeploymentResponseVisitor)
+        deserializer.deserialize_any(FleetDeploymentPackageUpgradeAttributesVisitor)
     }
 }

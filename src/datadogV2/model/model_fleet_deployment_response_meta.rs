@@ -6,17 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response containing a single deployment.
+/// Metadata for a single deployment response, including pagination information for hosts.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct FleetDeploymentResponse {
-    /// A deployment that defines automated configuration changes for a fleet of hosts.
-    #[serde(rename = "data")]
-    pub data: Option<crate::datadogV2::model::FleetDeployment>,
-    /// Metadata for a single deployment response, including pagination information for hosts.
-    #[serde(rename = "meta")]
-    pub meta: Option<crate::datadogV2::model::FleetDeploymentResponseMeta>,
+pub struct FleetDeploymentResponseMeta {
+    /// Pagination details for the list of hosts in a deployment.
+    #[serde(rename = "hosts")]
+    pub hosts: Option<crate::datadogV2::model::FleetDeploymentHostsPage>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,23 +21,17 @@ pub struct FleetDeploymentResponse {
     pub(crate) _unparsed: bool,
 }
 
-impl FleetDeploymentResponse {
-    pub fn new() -> FleetDeploymentResponse {
-        FleetDeploymentResponse {
-            data: None,
-            meta: None,
+impl FleetDeploymentResponseMeta {
+    pub fn new() -> FleetDeploymentResponseMeta {
+        FleetDeploymentResponseMeta {
+            hosts: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn data(mut self, value: crate::datadogV2::model::FleetDeployment) -> Self {
-        self.data = Some(value);
-        self
-    }
-
-    pub fn meta(mut self, value: crate::datadogV2::model::FleetDeploymentResponseMeta) -> Self {
-        self.meta = Some(value);
+    pub fn hosts(mut self, value: crate::datadogV2::model::FleetDeploymentHostsPage) -> Self {
+        self.hosts = Some(value);
         self
     }
 
@@ -53,20 +44,20 @@ impl FleetDeploymentResponse {
     }
 }
 
-impl Default for FleetDeploymentResponse {
+impl Default for FleetDeploymentResponseMeta {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for FleetDeploymentResponse {
+impl<'de> Deserialize<'de> for FleetDeploymentResponseMeta {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct FleetDeploymentResponseVisitor;
-        impl<'a> Visitor<'a> for FleetDeploymentResponseVisitor {
-            type Value = FleetDeploymentResponse;
+        struct FleetDeploymentResponseMetaVisitor;
+        impl<'a> Visitor<'a> for FleetDeploymentResponseMetaVisitor {
+            type Value = FleetDeploymentResponseMeta;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -76,8 +67,7 @@ impl<'de> Deserialize<'de> for FleetDeploymentResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::FleetDeployment> = None;
-                let mut meta: Option<crate::datadogV2::model::FleetDeploymentResponseMeta> = None;
+                let mut hosts: Option<crate::datadogV2::model::FleetDeploymentHostsPage> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -86,17 +76,11 @@ impl<'de> Deserialize<'de> for FleetDeploymentResponse {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "data" => {
+                        "hosts" => {
                             if v.is_null() {
                                 continue;
                             }
-                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "meta" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            hosts = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -106,9 +90,8 @@ impl<'de> Deserialize<'de> for FleetDeploymentResponse {
                     }
                 }
 
-                let content = FleetDeploymentResponse {
-                    data,
-                    meta,
+                let content = FleetDeploymentResponseMeta {
+                    hosts,
                     additional_properties,
                     _unparsed,
                 };
@@ -117,6 +100,6 @@ impl<'de> Deserialize<'de> for FleetDeploymentResponse {
             }
         }
 
-        deserializer.deserialize_any(FleetDeploymentResponseVisitor)
+        deserializer.deserialize_any(FleetDeploymentResponseMetaVisitor)
     }
 }

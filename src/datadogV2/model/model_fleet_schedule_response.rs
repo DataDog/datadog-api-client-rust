@@ -6,17 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response containing a single deployment.
+/// Response containing a single schedule.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct FleetDeploymentResponse {
-    /// A deployment that defines automated configuration changes for a fleet of hosts.
+pub struct FleetScheduleResponse {
+    /// A schedule that automatically creates deployments based on a recurrence rule.
     #[serde(rename = "data")]
-    pub data: Option<crate::datadogV2::model::FleetDeployment>,
-    /// Metadata for a single deployment response, including pagination information for hosts.
-    #[serde(rename = "meta")]
-    pub meta: Option<crate::datadogV2::model::FleetDeploymentResponseMeta>,
+    pub data: Option<crate::datadogV2::model::FleetSchedule>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,23 +21,17 @@ pub struct FleetDeploymentResponse {
     pub(crate) _unparsed: bool,
 }
 
-impl FleetDeploymentResponse {
-    pub fn new() -> FleetDeploymentResponse {
-        FleetDeploymentResponse {
+impl FleetScheduleResponse {
+    pub fn new() -> FleetScheduleResponse {
+        FleetScheduleResponse {
             data: None,
-            meta: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn data(mut self, value: crate::datadogV2::model::FleetDeployment) -> Self {
+    pub fn data(mut self, value: crate::datadogV2::model::FleetSchedule) -> Self {
         self.data = Some(value);
-        self
-    }
-
-    pub fn meta(mut self, value: crate::datadogV2::model::FleetDeploymentResponseMeta) -> Self {
-        self.meta = Some(value);
         self
     }
 
@@ -53,20 +44,20 @@ impl FleetDeploymentResponse {
     }
 }
 
-impl Default for FleetDeploymentResponse {
+impl Default for FleetScheduleResponse {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for FleetDeploymentResponse {
+impl<'de> Deserialize<'de> for FleetScheduleResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct FleetDeploymentResponseVisitor;
-        impl<'a> Visitor<'a> for FleetDeploymentResponseVisitor {
-            type Value = FleetDeploymentResponse;
+        struct FleetScheduleResponseVisitor;
+        impl<'a> Visitor<'a> for FleetScheduleResponseVisitor {
+            type Value = FleetScheduleResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -76,8 +67,7 @@ impl<'de> Deserialize<'de> for FleetDeploymentResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::FleetDeployment> = None;
-                let mut meta: Option<crate::datadogV2::model::FleetDeploymentResponseMeta> = None;
+                let mut data: Option<crate::datadogV2::model::FleetSchedule> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -92,12 +82,6 @@ impl<'de> Deserialize<'de> for FleetDeploymentResponse {
                             }
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "meta" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -106,9 +90,8 @@ impl<'de> Deserialize<'de> for FleetDeploymentResponse {
                     }
                 }
 
-                let content = FleetDeploymentResponse {
+                let content = FleetScheduleResponse {
                     data,
-                    meta,
                     additional_properties,
                     _unparsed,
                 };
@@ -117,6 +100,6 @@ impl<'de> Deserialize<'de> for FleetDeploymentResponse {
             }
         }
 
-        deserializer.deserialize_any(FleetDeploymentResponseVisitor)
+        deserializer.deserialize_any(FleetScheduleResponseVisitor)
     }
 }

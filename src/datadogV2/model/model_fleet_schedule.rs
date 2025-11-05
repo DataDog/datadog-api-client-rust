@@ -6,17 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Data for creating a new configuration deployment.
+/// A schedule that automatically creates deployments based on a recurrence rule.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct FleetDeploymentConfigureCreate {
-    /// Attributes for creating a new configuration deployment.
+pub struct FleetSchedule {
+    /// Attributes of a schedule in the response.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::FleetDeploymentConfigureAttributes,
-    /// The type of deployment resource.
+    pub attributes: crate::datadogV2::model::FleetScheduleAttributes,
+    /// Unique identifier for the schedule.
+    #[serde(rename = "id")]
+    pub id: String,
+    /// The type of schedule resource.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::FleetDeploymentResourceType,
+    pub type_: crate::datadogV2::model::FleetScheduleResourceType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,13 +27,15 @@ pub struct FleetDeploymentConfigureCreate {
     pub(crate) _unparsed: bool,
 }
 
-impl FleetDeploymentConfigureCreate {
+impl FleetSchedule {
     pub fn new(
-        attributes: crate::datadogV2::model::FleetDeploymentConfigureAttributes,
-        type_: crate::datadogV2::model::FleetDeploymentResourceType,
-    ) -> FleetDeploymentConfigureCreate {
-        FleetDeploymentConfigureCreate {
+        attributes: crate::datadogV2::model::FleetScheduleAttributes,
+        id: String,
+        type_: crate::datadogV2::model::FleetScheduleResourceType,
+    ) -> FleetSchedule {
+        FleetSchedule {
             attributes,
+            id,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -46,14 +51,14 @@ impl FleetDeploymentConfigureCreate {
     }
 }
 
-impl<'de> Deserialize<'de> for FleetDeploymentConfigureCreate {
+impl<'de> Deserialize<'de> for FleetSchedule {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct FleetDeploymentConfigureCreateVisitor;
-        impl<'a> Visitor<'a> for FleetDeploymentConfigureCreateVisitor {
-            type Value = FleetDeploymentConfigureCreate;
+        struct FleetScheduleVisitor;
+        impl<'a> Visitor<'a> for FleetScheduleVisitor {
+            type Value = FleetSchedule;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -63,10 +68,9 @@ impl<'de> Deserialize<'de> for FleetDeploymentConfigureCreate {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<
-                    crate::datadogV2::model::FleetDeploymentConfigureAttributes,
-                > = None;
-                let mut type_: Option<crate::datadogV2::model::FleetDeploymentResourceType> = None;
+                let mut attributes: Option<crate::datadogV2::model::FleetScheduleAttributes> = None;
+                let mut id: Option<String> = None;
+                let mut type_: Option<crate::datadogV2::model::FleetScheduleResourceType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -78,11 +82,14 @@ impl<'de> Deserialize<'de> for FleetDeploymentConfigureCreate {
                         "attributes" => {
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "id" => {
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::FleetDeploymentResourceType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::FleetScheduleResourceType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -97,10 +104,12 @@ impl<'de> Deserialize<'de> for FleetDeploymentConfigureCreate {
                     }
                 }
                 let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
+                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = FleetDeploymentConfigureCreate {
+                let content = FleetSchedule {
                     attributes,
+                    id,
                     type_,
                     additional_properties,
                     _unparsed,
@@ -110,6 +119,6 @@ impl<'de> Deserialize<'de> for FleetDeploymentConfigureCreate {
             }
         }
 
-        deserializer.deserialize_any(FleetDeploymentConfigureCreateVisitor)
+        deserializer.deserialize_any(FleetScheduleVisitor)
     }
 }

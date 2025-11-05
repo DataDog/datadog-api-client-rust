@@ -23,8 +23,8 @@ pub struct FleetDeploymentOperation {
     /// Patch data in JSON format to apply to the configuration file.
     /// When using `merge-patch`, this object is merged with the existing configuration,
     /// allowing you to add, update, or override specific fields without replacing the entire file.
-    /// The structure must match the target configuration file format (for example, YAML structure for Datadog Agent config).
-    /// Not applicable when using the `delete` operation.
+    /// The structure must match the target configuration file format (for example, YAML structure
+    /// for Datadog Agent config). Not applicable when using the `delete` operation.
     #[serde(rename = "patch")]
     pub patch: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     #[serde(flatten)]

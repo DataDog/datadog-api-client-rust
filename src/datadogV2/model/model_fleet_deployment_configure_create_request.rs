@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Request payload for creating a new deployment.
+/// Request payload for creating a new configuration deployment.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct FleetDeploymentConfigureCreateRequest {
-    /// Data for creating a new deployment.
+    /// Data for creating a new configuration deployment.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::FleetDeploymentConfigureCreate,
     #[serde(flatten)]
