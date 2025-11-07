@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `PatchTableRequestDataAttributesSchema` object.
+/// Schema defining the updates to the structure and columns of the reference table. Schema fields cannot be deleted or renamed.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct PatchTableRequestDataAttributesSchema {
-    /// The `schema` `fields`.
+    /// The schema fields.
     #[serde(rename = "fields")]
     pub fields: Vec<crate::datadogV2::model::PatchTableRequestDataAttributesSchemaFieldsItems>,
-    /// List of field names that serve as primary keys for the table. Only one primary key is supported, and it is used as an ID to retrieve rows.
+    /// List of field names that serve as primary keys for the table. Only one primary key is supported, and it is used as an ID to retrieve rows. Primary keys cannot be changed after table creation.
     #[serde(rename = "primary_keys")]
     pub primary_keys: Vec<String>,
     #[serde(flatten)]

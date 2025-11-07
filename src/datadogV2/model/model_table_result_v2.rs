@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `TableResultV2` object.
+/// A reference table resource containing its full configuration and state.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TableResultV2 {
-    /// The definition of `TableResultV2Data` object.
+    /// The data object containing the reference table configuration and state.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::TableResultV2Data>,
     #[serde(flatten)]

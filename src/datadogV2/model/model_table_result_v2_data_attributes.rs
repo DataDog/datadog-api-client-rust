@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `TableResultV2DataAttributes` object.
+/// Attributes that define the reference table's configuration and properties.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -14,10 +14,10 @@ pub struct TableResultV2DataAttributes {
     /// UUID of the user who created the reference table.
     #[serde(rename = "created_by")]
     pub created_by: Option<String>,
-    /// The description of the reference table.
+    /// Optional text describing the purpose or contents of this reference table.
     #[serde(rename = "description")]
     pub description: Option<String>,
-    /// The definition of `TableResultV2DataAttributesFileMetadata` object.
+    /// Metadata specifying where and how to access the reference table's data file.
     #[serde(rename = "file_metadata")]
     pub file_metadata: Option<crate::datadogV2::model::TableResultV2DataAttributesFileMetadata>,
     /// UUID of the user who last updated the reference table.
@@ -26,22 +26,22 @@ pub struct TableResultV2DataAttributes {
     /// The number of successfully processed rows in the reference table.
     #[serde(rename = "row_count")]
     pub row_count: Option<i64>,
-    /// The definition of `TableResultV2DataAttributesSchema` object.
+    /// Schema defining the structure and columns of the reference table.
     #[serde(rename = "schema")]
     pub schema: Option<crate::datadogV2::model::TableResultV2DataAttributesSchema>,
     /// The source type for reference table data. Includes all possible source types that can appear in responses.
     #[serde(rename = "source")]
     pub source: Option<crate::datadogV2::model::ReferenceTableSourceType>,
-    /// The status of the reference table.
+    /// The processing status of the table.
     #[serde(rename = "status")]
     pub status: Option<String>,
-    /// The name of the reference table.
+    /// Unique name to identify this reference table. Used in enrichment processors and API calls.
     #[serde(rename = "table_name")]
     pub table_name: Option<String>,
-    /// The tags of the reference table.
+    /// Tags for organizing and filtering reference tables.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
-    /// The timestamp of the last update to the reference table in ISO 8601 format.
+    /// When the reference table was last updated, in ISO 8601 format.
     #[serde(rename = "updated_at")]
     pub updated_at: Option<String>,
     #[serde(flatten)]

@@ -6,22 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `CreateTableRequestData` object.
+/// The data object containing the table definition.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreateTableRequestData {
-    /// The definition of `CreateTableRequestDataAttributes` object.
+    /// Attributes that define the reference table's configuration and properties.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::CreateTableRequestDataAttributes>,
-    /// The ID of the reference table.
-    #[serde(rename = "id")]
-    pub id: Option<String>,
     /// Reference table resource type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CreateTableRequestDataType,
-    #[serde(flatten)]
-    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -33,9 +28,7 @@ impl CreateTableRequestData {
     ) -> CreateTableRequestData {
         CreateTableRequestData {
             attributes: None,
-            id: None,
             type_,
-            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -45,19 +38,6 @@ impl CreateTableRequestData {
         value: crate::datadogV2::model::CreateTableRequestDataAttributes,
     ) -> Self {
         self.attributes = Some(value);
-        self
-    }
-
-    pub fn id(mut self, value: String) -> Self {
-        self.id = Some(value);
-        self
-    }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
-        self.additional_properties = value;
         self
     }
 }
@@ -82,12 +62,7 @@ impl<'de> Deserialize<'de> for CreateTableRequestData {
                 let mut attributes: Option<
                     crate::datadogV2::model::CreateTableRequestDataAttributes,
                 > = None;
-                let mut id: Option<String> = None;
                 let mut type_: Option<crate::datadogV2::model::CreateTableRequestDataType> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -97,12 +72,6 @@ impl<'de> Deserialize<'de> for CreateTableRequestData {
                                 continue;
                             }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "id" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -116,9 +85,9 @@ impl<'de> Deserialize<'de> for CreateTableRequestData {
                             }
                         }
                         &_ => {
-                            if let Ok(value) = serde_json::from_value(v.clone()) {
-                                additional_properties.insert(k, value);
-                            }
+                            return Err(serde::de::Error::custom(
+                                "Additional properties not allowed",
+                            ));
                         }
                     }
                 }
@@ -126,9 +95,7 @@ impl<'de> Deserialize<'de> for CreateTableRequestData {
 
                 let content = CreateTableRequestData {
                     attributes,
-                    id,
                     type_,
-                    additional_properties,
                     _unparsed,
                 };
 

@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `PatchTableRequest` object.
+/// Request body for updating an existing reference table.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct PatchTableRequest {
-    /// The definition of `PatchTableRequestData` object.
+    /// The data object containing the partial table definition updates.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::PatchTableRequestData>,
     #[serde(flatten)]

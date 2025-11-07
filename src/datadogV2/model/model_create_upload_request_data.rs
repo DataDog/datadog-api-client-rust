@@ -6,22 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `CreateUploadRequestData` object.
+/// Request data for creating an upload for a file to be ingested into a reference table.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreateUploadRequestData {
-    /// The definition of `CreateUploadRequestDataAttributes` object.
+    /// Upload configuration specifying how data is uploaded by the user, and properties of the table to associate the upload with.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::CreateUploadRequestDataAttributes>,
-    /// The ID of the upload.
-    #[serde(rename = "id")]
-    pub id: Option<String>,
     /// Upload resource type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CreateUploadRequestDataType,
-    #[serde(flatten)]
-    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -33,9 +28,7 @@ impl CreateUploadRequestData {
     ) -> CreateUploadRequestData {
         CreateUploadRequestData {
             attributes: None,
-            id: None,
             type_,
-            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -45,19 +38,6 @@ impl CreateUploadRequestData {
         value: crate::datadogV2::model::CreateUploadRequestDataAttributes,
     ) -> Self {
         self.attributes = Some(value);
-        self
-    }
-
-    pub fn id(mut self, value: String) -> Self {
-        self.id = Some(value);
-        self
-    }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
-        self.additional_properties = value;
         self
     }
 }
@@ -82,12 +62,7 @@ impl<'de> Deserialize<'de> for CreateUploadRequestData {
                 let mut attributes: Option<
                     crate::datadogV2::model::CreateUploadRequestDataAttributes,
                 > = None;
-                let mut id: Option<String> = None;
                 let mut type_: Option<crate::datadogV2::model::CreateUploadRequestDataType> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -97,12 +72,6 @@ impl<'de> Deserialize<'de> for CreateUploadRequestData {
                                 continue;
                             }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "id" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -116,9 +85,9 @@ impl<'de> Deserialize<'de> for CreateUploadRequestData {
                             }
                         }
                         &_ => {
-                            if let Ok(value) = serde_json::from_value(v.clone()) {
-                                additional_properties.insert(k, value);
-                            }
+                            return Err(serde::de::Error::custom(
+                                "Additional properties not allowed",
+                            ));
                         }
                     }
                 }
@@ -126,9 +95,7 @@ impl<'de> Deserialize<'de> for CreateUploadRequestData {
 
                 let content = CreateUploadRequestData {
                     attributes,
-                    id,
                     type_,
-                    additional_properties,
                     _unparsed,
                 };
 

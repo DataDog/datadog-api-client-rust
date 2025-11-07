@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `TableResultV2DataAttributesFileMetadataOneOfAccessDetailsGcpDetail` object.
+/// Google Cloud Platform storage access configuration.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -14,13 +14,13 @@ pub struct TableResultV2DataAttributesFileMetadataOneOfAccessDetailsGcpDetail {
     /// The relative file path from the GCS bucket root to the CSV file.
     #[serde(rename = "file_path")]
     pub file_path: Option<String>,
-    /// The name of the GCP bucket.
+    /// GCP bucket containing the CSV file.
     #[serde(rename = "gcp_bucket_name")]
     pub gcp_bucket_name: Option<String>,
-    /// The ID of the GCP project.
+    /// GCP project ID where the bucket is located.
     #[serde(rename = "gcp_project_id")]
     pub gcp_project_id: Option<String>,
-    /// The email of the GCP service account.
+    /// Service account email with read permissions for the GCS bucket.
     #[serde(rename = "gcp_service_account_email")]
     pub gcp_service_account_email: Option<String>,
     #[serde(flatten)]

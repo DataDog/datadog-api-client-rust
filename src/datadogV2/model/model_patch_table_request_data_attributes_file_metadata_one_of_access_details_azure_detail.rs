@@ -6,21 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `PatchTableRequestDataAttributesFileMetadataOneOfAccessDetailsAzureDetail` object.
+/// Azure Blob Storage access configuration.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct PatchTableRequestDataAttributesFileMetadataOneOfAccessDetailsAzureDetail {
-    /// The Azure client ID.
+    /// Azure service principal (application) client ID with permissions to read from the container.
     #[serde(rename = "azure_client_id")]
     pub azure_client_id: Option<String>,
-    /// The name of the Azure container.
+    /// Azure Blob Storage container containing the CSV file.
     #[serde(rename = "azure_container_name")]
     pub azure_container_name: Option<String>,
-    /// The name of the Azure storage account.
+    /// Azure storage account where the container is located.
     #[serde(rename = "azure_storage_account_name")]
     pub azure_storage_account_name: Option<String>,
-    /// The ID of the Azure tenant.
+    /// Azure Active Directory tenant ID.
     #[serde(rename = "azure_tenant_id")]
     pub azure_tenant_id: Option<String>,
     /// The relative file path from the Azure container root to the CSV file.

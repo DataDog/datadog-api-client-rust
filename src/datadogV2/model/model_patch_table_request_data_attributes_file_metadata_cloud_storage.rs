@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct PatchTableRequestDataAttributesFileMetadataCloudStorage {
-    /// The definition of `PatchTableRequestDataAttributesFileMetadataOneOfAccessDetails` object.
+    /// Cloud storage access configuration for the reference table data file.
     #[serde(rename = "access_details")]
     pub access_details: Option<
         crate::datadogV2::model::PatchTableRequestDataAttributesFileMetadataOneOfAccessDetails,

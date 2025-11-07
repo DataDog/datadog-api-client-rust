@@ -6,21 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `CreateUploadRequestDataAttributes` object.
+/// Upload configuration specifying how data is uploaded by the user, and properties of the table to associate the upload with.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreateUploadRequestDataAttributes {
-    /// The headers of the file to upload.
+    /// The CSV file headers that define the schema fields, provided in the same order as the columns in the uploaded file.
     #[serde(rename = "headers")]
     pub headers: Vec<String>,
-    /// The number of parts in the upload.
+    /// Number of parts to split the file into for multipart upload.
     #[serde(rename = "part_count")]
     pub part_count: i32,
-    /// The size of each part in the upload in bytes. For multipart uploads (part_count > 1), all parts except the last one must be at least 5,000,000 bytes. For single-part uploads (part_count = 1), any size is allowed.
+    /// The size of each part in the upload in bytes. All parts except the last one must be at least 5,000,000 bytes.
     #[serde(rename = "part_size")]
     pub part_size: i64,
-    /// The name of the reference table.
+    /// Name of the table to associate with this upload.
     #[serde(rename = "table_name")]
     pub table_name: String,
     #[serde(flatten)]

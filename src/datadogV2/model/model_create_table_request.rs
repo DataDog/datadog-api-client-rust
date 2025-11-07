@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `CreateTableRequest` object.
+/// Request body for creating a new reference table from a local file or cloud storage.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreateTableRequest {
-    /// The definition of `CreateTableRequestData` object.
+    /// The data object containing the table definition.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::CreateTableRequestData>,
     #[serde(flatten)]

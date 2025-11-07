@@ -6,16 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `TableRowResourceDataAttributes` object.
+/// Column values for this row in the reference table.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TableRowResourceDataAttributes {
-    /// The values of the row.
+    /// Key-value pairs representing the row data, where keys are field names from the schema.
     #[serde(rename = "values")]
     pub values: Option<std::collections::BTreeMap<String, serde_json::Value>>,
-    #[serde(flatten)]
-    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -25,21 +23,12 @@ impl TableRowResourceDataAttributes {
     pub fn new() -> TableRowResourceDataAttributes {
         TableRowResourceDataAttributes {
             values: None,
-            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn values(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.values = Some(value);
-        self
-    }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
-        self.additional_properties = value;
         self
     }
 }
@@ -69,10 +58,6 @@ impl<'de> Deserialize<'de> for TableRowResourceDataAttributes {
             {
                 let mut values: Option<std::collections::BTreeMap<String, serde_json::Value>> =
                     None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -84,18 +69,14 @@ impl<'de> Deserialize<'de> for TableRowResourceDataAttributes {
                             values = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
-                            if let Ok(value) = serde_json::from_value(v.clone()) {
-                                additional_properties.insert(k, value);
-                            }
+                            return Err(serde::de::Error::custom(
+                                "Additional properties not allowed",
+                            ));
                         }
                     }
                 }
 
-                let content = TableRowResourceDataAttributes {
-                    values,
-                    additional_properties,
-                    _unparsed,
-                };
+                let content = TableRowResourceDataAttributes { values, _unparsed };
 
                 Ok(content)
             }

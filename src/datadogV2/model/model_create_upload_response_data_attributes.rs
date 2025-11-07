@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `CreateUploadResponseDataAttributes` object.
+/// Pre-signed URLs for uploading parts of the file.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreateUploadResponseDataAttributes {
-    /// The URLs of the parts in the upload.
+    /// The pre-signed URLs for uploading parts. These URLs expire after 5 minutes.
     #[serde(rename = "part_urls")]
     pub part_urls: Option<Vec<String>>,
     #[serde(flatten)]
