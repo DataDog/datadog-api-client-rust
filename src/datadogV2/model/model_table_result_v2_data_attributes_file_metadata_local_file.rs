@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// File metadata for reference tables created by upload.
+/// File metadata for reference tables created by upload. Note that upload_id is only returned in the immediate create/replace response and is not available in subsequent GET requests.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -17,9 +17,6 @@ pub struct TableResultV2DataAttributesFileMetadataLocalFile {
     /// The number of rows that failed to create/update.
     #[serde(rename = "error_row_count")]
     pub error_row_count: Option<i64>,
-    /// The upload ID that was used to create/update the table.
-    #[serde(rename = "upload_id")]
-    pub upload_id: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -32,7 +29,6 @@ impl TableResultV2DataAttributesFileMetadataLocalFile {
         TableResultV2DataAttributesFileMetadataLocalFile {
             error_message: None,
             error_row_count: None,
-            upload_id: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -45,11 +41,6 @@ impl TableResultV2DataAttributesFileMetadataLocalFile {
 
     pub fn error_row_count(mut self, value: i64) -> Self {
         self.error_row_count = Some(value);
-        self
-    }
-
-    pub fn upload_id(mut self, value: String) -> Self {
-        self.upload_id = Some(value);
         self
     }
 
@@ -87,7 +78,6 @@ impl<'de> Deserialize<'de> for TableResultV2DataAttributesFileMetadataLocalFile 
             {
                 let mut error_message: Option<String> = None;
                 let mut error_row_count: Option<i64> = None;
-                let mut upload_id: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -110,12 +100,6 @@ impl<'de> Deserialize<'de> for TableResultV2DataAttributesFileMetadataLocalFile 
                             error_row_count =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "upload_id" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            upload_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -127,7 +111,6 @@ impl<'de> Deserialize<'de> for TableResultV2DataAttributesFileMetadataLocalFile 
                 let content = TableResultV2DataAttributesFileMetadataLocalFile {
                     error_message,
                     error_row_count,
-                    upload_id,
                     additional_properties,
                     _unparsed,
                 };

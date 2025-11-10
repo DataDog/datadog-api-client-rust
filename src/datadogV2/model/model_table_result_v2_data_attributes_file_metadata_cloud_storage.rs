@@ -11,10 +11,10 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TableResultV2DataAttributesFileMetadataCloudStorage {
-    /// The definition of `TableResultV2DataAttributesFileMetadataOneOfAccessDetails` object.
+    /// Cloud storage access configuration for the reference table data file.
     #[serde(rename = "access_details")]
     pub access_details:
-        Option<crate::datadogV2::model::TableResultV2DataAttributesFileMetadataOneOfAccessDetails>,
+        crate::datadogV2::model::TableResultV2DataAttributesFileMetadataOneOfAccessDetails,
     /// The error message returned from the sync.
     #[serde(rename = "error_message")]
     pub error_message: Option<String>,
@@ -37,9 +37,11 @@ pub struct TableResultV2DataAttributesFileMetadataCloudStorage {
 }
 
 impl TableResultV2DataAttributesFileMetadataCloudStorage {
-    pub fn new() -> TableResultV2DataAttributesFileMetadataCloudStorage {
+    pub fn new(
+        access_details: crate::datadogV2::model::TableResultV2DataAttributesFileMetadataOneOfAccessDetails,
+    ) -> TableResultV2DataAttributesFileMetadataCloudStorage {
         TableResultV2DataAttributesFileMetadataCloudStorage {
-            access_details: None,
+            access_details,
             error_message: None,
             error_row_count: None,
             error_type: None,
@@ -47,14 +49,6 @@ impl TableResultV2DataAttributesFileMetadataCloudStorage {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn access_details(
-        mut self,
-        value: crate::datadogV2::model::TableResultV2DataAttributesFileMetadataOneOfAccessDetails,
-    ) -> Self {
-        self.access_details = Some(value);
-        self
     }
 
     pub fn error_message(mut self, value: String) -> Self {
@@ -89,12 +83,6 @@ impl TableResultV2DataAttributesFileMetadataCloudStorage {
     }
 }
 
-impl Default for TableResultV2DataAttributesFileMetadataCloudStorage {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
 impl<'de> Deserialize<'de> for TableResultV2DataAttributesFileMetadataCloudStorage {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
@@ -126,9 +114,6 @@ impl<'de> Deserialize<'de> for TableResultV2DataAttributesFileMetadataCloudStora
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "access_details" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             access_details =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -174,6 +159,8 @@ impl<'de> Deserialize<'de> for TableResultV2DataAttributesFileMetadataCloudStora
                         }
                     }
                 }
+                let access_details =
+                    access_details.ok_or_else(|| M::Error::missing_field("access_details"))?;
 
                 let content = TableResultV2DataAttributesFileMetadataCloudStorage {
                     access_details,

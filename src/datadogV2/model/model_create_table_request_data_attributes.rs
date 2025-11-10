@@ -6,28 +6,28 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `CreateTableRequestDataAttributes` object.
+/// Attributes that define the reference table's configuration and properties.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreateTableRequestDataAttributes {
-    /// The description of the reference table.
+    /// Optional text describing the purpose or contents of this reference table.
     #[serde(rename = "description")]
     pub description: Option<String>,
-    /// The definition of `CreateTableRequestDataAttributesFileMetadata` object.
+    /// Metadata specifying where and how to access the reference table's data file.
     #[serde(rename = "file_metadata")]
     pub file_metadata:
         Option<crate::datadogV2::model::CreateTableRequestDataAttributesFileMetadata>,
-    /// The definition of `CreateTableRequestDataAttributesSchema` object.
+    /// Schema defining the structure and columns of the reference table.
     #[serde(rename = "schema")]
     pub schema: crate::datadogV2::model::CreateTableRequestDataAttributesSchema,
     /// The source type for creating reference table data. Only these source types can be created through this API.
     #[serde(rename = "source")]
     pub source: crate::datadogV2::model::ReferenceTableCreateSourceType,
-    /// The name of the reference table.
+    /// Name to identify this reference table.
     #[serde(rename = "table_name")]
     pub table_name: String,
-    /// The tags of the reference table.
+    /// Tags for organizing and filtering reference tables.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
     #[serde(flatten)]

@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `TableResultV2DataAttributesFileMetadataOneOfAccessDetailsAwsDetail` object.
+/// Amazon Web Services S3 storage access configuration.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TableResultV2DataAttributesFileMetadataOneOfAccessDetailsAwsDetail {
-    /// The ID of the AWS account.
+    /// AWS account ID where the S3 bucket is located.
     #[serde(rename = "aws_account_id")]
     pub aws_account_id: Option<String>,
-    /// The name of the AWS bucket.
+    /// S3 bucket containing the CSV file.
     #[serde(rename = "aws_bucket_name")]
     pub aws_bucket_name: Option<String>,
     /// The relative file path from the S3 bucket root to the CSV file.

@@ -18,7 +18,7 @@ pub struct ListTablesOptionalParams {
     pub page_limit: Option<i64>,
     /// Number of tables to skip for pagination.
     pub page_offset: Option<i64>,
-    /// Sort field and direction. Use field name for ascending, prefix with "-" for descending.
+    /// Sort field and direction for the list of reference tables. Use field name for ascending, prefix with "-" for descending.
     pub sort: Option<crate::datadogV2::model::ReferenceTableSortType>,
     /// Filter by table status.
     pub filter_status: Option<String>,
@@ -39,7 +39,7 @@ impl ListTablesOptionalParams {
         self.page_offset = Some(value);
         self
     }
-    /// Sort field and direction. Use field name for ascending, prefix with "-" for descending.
+    /// Sort field and direction for the list of reference tables. Use field name for ascending, prefix with "-" for descending.
     pub fn sort(mut self, value: crate::datadogV2::model::ReferenceTableSortType) -> Self {
         self.sort = Some(value);
         self
@@ -182,7 +182,11 @@ impl ReferenceTablesAPI {
         Self { config, client }
     }
 
-    /// Create a new reference table. You can provide data in two ways: 1) Call POST api/v2/reference-tables/upload first to get an upload ID, then PUT chunks of CSV data to each provided URL, and finally call this POST endpoint with the upload_id in file_metadata, OR 2) Provide access_details in file_metadata pointing to a CSV file in cloud storage (Amazon S3, Azure Blob Storage, or GCP Cloud Storage).
+    /// Creates a reference table. You can provide data in two ways:
+    /// 1. Call POST /api/v2/reference-tables/upload to get an upload ID. Then, PUT the CSV data
+    ///    (not the file itself) in chunks to each URL in the request body. Finally, call this
+    ///    POST endpoint with `upload_id` in `file_metadata`.
+    /// 2. Provide `access_details` in `file_metadata` pointing to a CSV file in cloud storage.
     pub async fn create_reference_table(
         &self,
         body: crate::datadogV2::model::CreateTableRequest,
@@ -202,7 +206,11 @@ impl ReferenceTablesAPI {
         }
     }
 
-    /// Create a new reference table. You can provide data in two ways: 1) Call POST api/v2/reference-tables/upload first to get an upload ID, then PUT chunks of CSV data to each provided URL, and finally call this POST endpoint with the upload_id in file_metadata, OR 2) Provide access_details in file_metadata pointing to a CSV file in cloud storage (Amazon S3, Azure Blob Storage, or GCP Cloud Storage).
+    /// Creates a reference table. You can provide data in two ways:
+    /// 1. Call POST /api/v2/reference-tables/upload to get an upload ID. Then, PUT the CSV data
+    ///    (not the file itself) in chunks to each URL in the request body. Finally, call this
+    ///    POST endpoint with `upload_id` in `file_metadata`.
+    /// 2. Provide `access_details` in `file_metadata` pointing to a CSV file in cloud storage.
     pub async fn create_reference_table_with_http_info(
         &self,
         body: crate::datadogV2::model::CreateTableRequest,

@@ -6,18 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `CreateTableRequestDataAttributesFileMetadataOneOfAccessDetails` object.
+/// Cloud storage access configuration for the reference table data file.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreateTableRequestDataAttributesFileMetadataOneOfAccessDetails {
-    /// The definition of `CreateTableRequestDataAttributesFileMetadataOneOfAccessDetailsAwsDetail` object.
+    /// Amazon Web Services S3 storage access configuration.
     #[serde(rename = "aws_detail")]
     pub aws_detail: Option<crate::datadogV2::model::CreateTableRequestDataAttributesFileMetadataOneOfAccessDetailsAwsDetail>,
-    /// The definition of `CreateTableRequestDataAttributesFileMetadataOneOfAccessDetailsAzureDetail` object.
+    /// Azure Blob Storage access configuration.
     #[serde(rename = "azure_detail")]
     pub azure_detail: Option<crate::datadogV2::model::CreateTableRequestDataAttributesFileMetadataOneOfAccessDetailsAzureDetail>,
-    /// The definition of `CreateTableRequestDataAttributesFileMetadataOneOfAccessDetailsGcpDetail` object.
+    /// Google Cloud Platform storage access configuration.
     #[serde(rename = "gcp_detail")]
     pub gcp_detail: Option<crate::datadogV2::model::CreateTableRequestDataAttributesFileMetadataOneOfAccessDetailsGcpDetail>,
     #[serde(flatten)]

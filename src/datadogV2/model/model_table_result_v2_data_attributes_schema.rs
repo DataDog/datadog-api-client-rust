@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `TableResultV2DataAttributesSchema` object.
+/// Schema defining the structure and columns of the reference table.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TableResultV2DataAttributesSchema {
-    /// The `schema` `fields`.
+    /// The schema fields.
     #[serde(rename = "fields")]
     pub fields: Vec<crate::datadogV2::model::TableResultV2DataAttributesSchemaFieldsItems>,
     /// List of field names that serve as primary keys for the table. Only one primary key is supported, and it is used as an ID to retrieve rows.

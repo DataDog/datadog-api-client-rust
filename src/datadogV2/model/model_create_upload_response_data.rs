@@ -6,22 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `CreateUploadResponseData` object.
+/// Upload ID and attributes of the created upload.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreateUploadResponseData {
-    /// The definition of `CreateUploadResponseDataAttributes` object.
+    /// Pre-signed URLs for uploading parts of the file.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::CreateUploadResponseDataAttributes>,
-    /// The ID of the upload.
+    /// Unique identifier for this upload. Use this ID when creating the reference table.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Upload resource type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CreateUploadResponseDataType,
-    #[serde(flatten)]
-    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -35,7 +33,6 @@ impl CreateUploadResponseData {
             attributes: None,
             id: None,
             type_,
-            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -50,14 +47,6 @@ impl CreateUploadResponseData {
 
     pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
-        self
-    }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
-        self.additional_properties = value;
         self
     }
 }
@@ -84,10 +73,6 @@ impl<'de> Deserialize<'de> for CreateUploadResponseData {
                 > = None;
                 let mut id: Option<String> = None;
                 let mut type_: Option<crate::datadogV2::model::CreateUploadResponseDataType> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -116,9 +101,9 @@ impl<'de> Deserialize<'de> for CreateUploadResponseData {
                             }
                         }
                         &_ => {
-                            if let Ok(value) = serde_json::from_value(v.clone()) {
-                                additional_properties.insert(k, value);
-                            }
+                            return Err(serde::de::Error::custom(
+                                "Additional properties not allowed",
+                            ));
                         }
                     }
                 }
@@ -128,7 +113,6 @@ impl<'de> Deserialize<'de> for CreateUploadResponseData {
                     attributes,
                     id,
                     type_,
-                    additional_properties,
                     _unparsed,
                 };
 
