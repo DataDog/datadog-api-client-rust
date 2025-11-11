@@ -47,6 +47,7 @@ pub mod api_logs;
 pub mod api_logs_archives;
 pub mod api_logs_custom_destinations;
 pub mod api_logs_metrics;
+pub mod api_logs_restriction_queries;
 pub mod api_metrics;
 pub mod api_microsoft_teams_integration;
 pub mod api_monitors;
