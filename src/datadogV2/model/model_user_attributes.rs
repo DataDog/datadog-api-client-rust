@@ -26,6 +26,13 @@ pub struct UserAttributes {
     /// URL of the user's icon.
     #[serde(rename = "icon")]
     pub icon: Option<String>,
+    /// The last time the user logged in.
+    #[serde(
+        rename = "last_login_time",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub last_login_time: Option<Option<chrono::DateTime<chrono::Utc>>>,
     /// If user has MFA enabled.
     #[serde(rename = "mfa_enabled")]
     pub mfa_enabled: Option<bool>,
@@ -62,6 +69,7 @@ impl UserAttributes {
             email: None,
             handle: None,
             icon: None,
+            last_login_time: None,
             mfa_enabled: None,
             modified_at: None,
             name: None,
@@ -96,6 +104,11 @@ impl UserAttributes {
 
     pub fn icon(mut self, value: String) -> Self {
         self.icon = Some(value);
+        self
+    }
+
+    pub fn last_login_time(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
+        self.last_login_time = Some(value);
         self
     }
 
@@ -171,6 +184,7 @@ impl<'de> Deserialize<'de> for UserAttributes {
                 let mut email: Option<String> = None;
                 let mut handle: Option<String> = None;
                 let mut icon: Option<String> = None;
+                let mut last_login_time: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
                 let mut mfa_enabled: Option<bool> = None;
                 let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut name: Option<Option<String>> = None;
@@ -215,6 +229,10 @@ impl<'de> Deserialize<'de> for UserAttributes {
                                 continue;
                             }
                             icon = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "last_login_time" => {
+                            last_login_time =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "mfa_enabled" => {
                             if v.is_null() {
@@ -269,6 +287,7 @@ impl<'de> Deserialize<'de> for UserAttributes {
                     email,
                     handle,
                     icon,
+                    last_login_time,
                     mfa_enabled,
                     modified_at,
                     name,
