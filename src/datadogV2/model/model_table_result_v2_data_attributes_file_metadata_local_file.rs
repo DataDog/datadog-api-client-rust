@@ -17,8 +17,6 @@ pub struct TableResultV2DataAttributesFileMetadataLocalFile {
     /// The number of rows that failed to create/update.
     #[serde(rename = "error_row_count")]
     pub error_row_count: Option<i64>,
-    #[serde(flatten)]
-    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -29,7 +27,6 @@ impl TableResultV2DataAttributesFileMetadataLocalFile {
         TableResultV2DataAttributesFileMetadataLocalFile {
             error_message: None,
             error_row_count: None,
-            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -41,14 +38,6 @@ impl TableResultV2DataAttributesFileMetadataLocalFile {
 
     pub fn error_row_count(mut self, value: i64) -> Self {
         self.error_row_count = Some(value);
-        self
-    }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
-        self.additional_properties = value;
         self
     }
 }
@@ -78,10 +67,6 @@ impl<'de> Deserialize<'de> for TableResultV2DataAttributesFileMetadataLocalFile 
             {
                 let mut error_message: Option<String> = None;
                 let mut error_row_count: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -101,9 +86,9 @@ impl<'de> Deserialize<'de> for TableResultV2DataAttributesFileMetadataLocalFile 
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
-                            if let Ok(value) = serde_json::from_value(v.clone()) {
-                                additional_properties.insert(k, value);
-                            }
+                            return Err(serde::de::Error::custom(
+                                "Additional properties not allowed",
+                            ));
                         }
                     }
                 }
@@ -111,7 +96,6 @@ impl<'de> Deserialize<'de> for TableResultV2DataAttributesFileMetadataLocalFile 
                 let content = TableResultV2DataAttributesFileMetadataLocalFile {
                     error_message,
                     error_row_count,
-                    additional_properties,
                     _unparsed,
                 };
 
