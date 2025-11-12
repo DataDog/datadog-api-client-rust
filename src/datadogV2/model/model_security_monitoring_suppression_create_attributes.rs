@@ -35,6 +35,9 @@ pub struct SecurityMonitoringSuppressionCreateAttributes {
     /// The suppression query of the suppression rule. If a signal matches this query, it is suppressed and is not triggered. It uses the same syntax as the queries to search signals in the Signals Explorer.
     #[serde(rename = "suppression_query")]
     pub suppression_query: Option<String>,
+    /// List of tags associated with the suppression rule.
+    #[serde(rename = "tags")]
+    pub tags: Option<Vec<String>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -57,6 +60,7 @@ impl SecurityMonitoringSuppressionCreateAttributes {
             rule_query,
             start_date: None,
             suppression_query: None,
+            tags: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -84,6 +88,11 @@ impl SecurityMonitoringSuppressionCreateAttributes {
 
     pub fn suppression_query(mut self, value: String) -> Self {
         self.suppression_query = Some(value);
+        self
+    }
+
+    pub fn tags(mut self, value: Vec<String>) -> Self {
+        self.tags = Some(value);
         self
     }
 
@@ -121,6 +130,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSuppressionCreateAttributes {
                 let mut rule_query: Option<String> = None;
                 let mut start_date: Option<i64> = None;
                 let mut suppression_query: Option<String> = None;
+                let mut tags: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -172,6 +182,12 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSuppressionCreateAttributes {
                             suppression_query =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -192,6 +208,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSuppressionCreateAttributes {
                     rule_query,
                     start_date,
                     suppression_query,
+                    tags,
                     additional_properties,
                     _unparsed,
                 };

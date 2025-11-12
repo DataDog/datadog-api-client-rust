@@ -20,7 +20,11 @@ async fn main() {
             )
             .expiration_date(1638443471000)
             .start_date(1637493071000)
-            .suppression_query("env:staging status:low".to_string()),
+            .suppression_query("env:staging status:low".to_string())
+            .tags(vec![
+                "technique:T1110-brute-force".to_string(),
+                "source:cloudtrail".to_string(),
+            ]),
             SecurityMonitoringSuppressionType::SUPPRESSIONS,
         ),
     );

@@ -43,6 +43,9 @@ pub struct SecurityMonitoringSuppressionUpdateAttributes {
     /// The suppression query of the suppression rule. If a signal matches this query, it is suppressed and not triggered. Same syntax as the queries to search signals in the signal explorer.
     #[serde(rename = "suppression_query")]
     pub suppression_query: Option<String>,
+    /// List of tags associated with the suppression rule.
+    #[serde(rename = "tags")]
+    pub tags: Option<Vec<String>>,
     /// The current version of the suppression. This is optional, but it can help prevent concurrent modifications.
     #[serde(rename = "version")]
     pub version: Option<i32>,
@@ -64,6 +67,7 @@ impl SecurityMonitoringSuppressionUpdateAttributes {
             rule_query: None,
             start_date: None,
             suppression_query: None,
+            tags: None,
             version: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -107,6 +111,11 @@ impl SecurityMonitoringSuppressionUpdateAttributes {
 
     pub fn suppression_query(mut self, value: String) -> Self {
         self.suppression_query = Some(value);
+        self
+    }
+
+    pub fn tags(mut self, value: Vec<String>) -> Self {
+        self.tags = Some(value);
         self
     }
 
@@ -155,6 +164,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSuppressionUpdateAttributes {
                 let mut rule_query: Option<String> = None;
                 let mut start_date: Option<Option<i64>> = None;
                 let mut suppression_query: Option<String> = None;
+                let mut tags: Option<Vec<String>> = None;
                 let mut version: Option<i32> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -210,6 +220,12 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSuppressionUpdateAttributes {
                             suppression_query =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "version" => {
                             if v.is_null() {
                                 continue;
@@ -233,6 +249,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSuppressionUpdateAttributes {
                     rule_query,
                     start_date,
                     suppression_query,
+                    tags,
                     version,
                     additional_properties,
                     _unparsed,
