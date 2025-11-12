@@ -14,12 +14,12 @@ use std::io::Write;
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetIssueOptionalParams {
-    /// Comma-separated list of relationship objects that should be included in the response.
+    /// Comma-separated list of relationship objects that should be included in the response. Possible values are `assignee`, `case`, and `team_owners`.
     pub include: Option<Vec<crate::datadogV2::model::GetIssueIncludeQueryParameterItem>>,
 }
 
 impl GetIssueOptionalParams {
-    /// Comma-separated list of relationship objects that should be included in the response.
+    /// Comma-separated list of relationship objects that should be included in the response. Possible values are `assignee`, `case`, and `team_owners`.
     pub fn include(
         mut self,
         value: Vec<crate::datadogV2::model::GetIssueIncludeQueryParameterItem>,
@@ -33,12 +33,12 @@ impl GetIssueOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct SearchIssuesOptionalParams {
-    /// Comma-separated list of relationship objects that should be included in the response.
+    /// Comma-separated list of relationship objects that should be included in the response. Possible values are `issue`, `issue.assignee`, `issue.case`, and `issue.team_owners`.
     pub include: Option<Vec<crate::datadogV2::model::SearchIssuesIncludeQueryParameterItem>>,
 }
 
 impl SearchIssuesOptionalParams {
-    /// Comma-separated list of relationship objects that should be included in the response.
+    /// Comma-separated list of relationship objects that should be included in the response. Possible values are `issue`, `issue.assignee`, `issue.case`, and `issue.team_owners`.
     pub fn include(
         mut self,
         value: Vec<crate::datadogV2::model::SearchIssuesIncludeQueryParameterItem>,
