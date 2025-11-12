@@ -44,6 +44,9 @@ pub struct SecurityMonitoringSuppressionAttributes {
     /// The suppression query of the suppression rule. If a signal matches this query, it is suppressed and not triggered. Same syntax as the queries to search signals in the signal explorer.
     #[serde(rename = "suppression_query")]
     pub suppression_query: Option<String>,
+    /// List of tags associated with the suppression rule.
+    #[serde(rename = "tags")]
+    pub tags: Option<Vec<String>>,
     /// A Unix millisecond timestamp given the update date of the suppression rule.
     #[serde(rename = "update_date")]
     pub update_date: Option<i64>,
@@ -74,6 +77,7 @@ impl SecurityMonitoringSuppressionAttributes {
             rule_query: None,
             start_date: None,
             suppression_query: None,
+            tags: None,
             update_date: None,
             updater: None,
             version: None,
@@ -137,6 +141,11 @@ impl SecurityMonitoringSuppressionAttributes {
         self
     }
 
+    pub fn tags(mut self, value: Vec<String>) -> Self {
+        self.tags = Some(value);
+        self
+    }
+
     pub fn update_date(mut self, value: i64) -> Self {
         self.update_date = Some(value);
         self
@@ -195,6 +204,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSuppressionAttributes {
                 let mut rule_query: Option<String> = None;
                 let mut start_date: Option<i64> = None;
                 let mut suppression_query: Option<String> = None;
+                let mut tags: Option<Vec<String>> = None;
                 let mut update_date: Option<i64> = None;
                 let mut updater: Option<crate::datadogV2::model::SecurityMonitoringUser> = None;
                 let mut version: Option<i32> = None;
@@ -277,6 +287,12 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSuppressionAttributes {
                             suppression_query =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "update_date" => {
                             if v.is_null() {
                                 continue;
@@ -316,6 +332,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSuppressionAttributes {
                     rule_query,
                     start_date,
                     suppression_query,
+                    tags,
                     update_date,
                     updater,
                     version,
