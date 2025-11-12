@@ -1246,7 +1246,8 @@ impl KeyManagementAPI {
         }
     }
 
-    /// Get an application key owned by current user
+    /// Get an application key owned by current user.
+    /// The `key` field is not returned for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
     pub async fn get_current_user_application_key(
         &self,
         app_key_id: String,
@@ -1271,7 +1272,8 @@ impl KeyManagementAPI {
         }
     }
 
-    /// Get an application key owned by current user
+    /// Get an application key owned by current user.
+    /// The `key` field is not returned for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
     pub async fn get_current_user_application_key_with_http_info(
         &self,
         app_key_id: String,
@@ -2126,7 +2128,8 @@ impl KeyManagementAPI {
         }
     }
 
-    /// Edit an application key owned by current user
+    /// Edit an application key owned by current user.
+    /// The `key` field is not returned for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
     pub async fn update_current_user_application_key(
         &self,
         app_key_id: String,
@@ -2152,7 +2155,8 @@ impl KeyManagementAPI {
         }
     }
 
-    /// Edit an application key owned by current user
+    /// Edit an application key owned by current user.
+    /// The `key` field is not returned for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
     pub async fn update_current_user_application_key_with_http_info(
         &self,
         app_key_id: String,
