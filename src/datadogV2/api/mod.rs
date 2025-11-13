@@ -79,6 +79,7 @@ pub mod api_spans;
 pub mod api_spans_metrics;
 pub mod api_static_analysis;
 pub mod api_synthetics;
+pub mod api_team_connections;
 pub mod api_teams;
 pub mod api_test_optimization;
 pub mod api_usage_metering;
