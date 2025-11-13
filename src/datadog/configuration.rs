@@ -256,6 +256,7 @@ impl Default for Configuration {
             ("v2.create_sca_resolve_vulnerable_symbols".to_owned(), false),
             ("v2.create_sca_result".to_owned(), false),
             ("v2.add_member_team".to_owned(), false),
+            ("v2.get_team_sync".to_owned(), false),
             ("v2.list_member_teams".to_owned(), false),
             ("v2.remove_member_team".to_owned(), false),
             ("v2.sync_teams".to_owned(), false),

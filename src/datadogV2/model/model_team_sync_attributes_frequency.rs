@@ -6,23 +6,25 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum TeamSyncAttributesType {
-    LINK,
-    PROVISION,
+pub enum TeamSyncAttributesFrequency {
+    ONCE,
+    CONTINUOUSLY,
+    PAUSED,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for TeamSyncAttributesType {
+impl ToString for TeamSyncAttributesFrequency {
     fn to_string(&self) -> String {
         match self {
-            Self::LINK => String::from("link"),
-            Self::PROVISION => String::from("provision"),
+            Self::ONCE => String::from("once"),
+            Self::CONTINUOUSLY => String::from("continuously"),
+            Self::PAUSED => String::from("paused"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for TeamSyncAttributesType {
+impl Serialize for TeamSyncAttributesFrequency {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -34,15 +36,16 @@ impl Serialize for TeamSyncAttributesType {
     }
 }
 
-impl<'de> Deserialize<'de> for TeamSyncAttributesType {
+impl<'de> Deserialize<'de> for TeamSyncAttributesFrequency {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "link" => Self::LINK,
-            "provision" => Self::PROVISION,
+            "once" => Self::ONCE,
+            "continuously" => Self::CONTINUOUSLY,
+            "paused" => Self::PAUSED,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
