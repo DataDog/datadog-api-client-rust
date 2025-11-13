@@ -234,6 +234,14 @@ pub enum GetTeamPermissionSettingsError {
     UnknownValue(serde_json::Value),
 }
 
+/// GetTeamSyncError is a struct for typed errors of method [`TeamsAPI::get_team_sync`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetTeamSyncError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// GetUserMembershipsError is a struct for typed errors of method [`TeamsAPI::get_user_memberships`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1848,6 +1856,122 @@ impl TeamsAPI {
         }
     }
 
+    /// Get all team synchronization configurations.
+    /// Returns a list of configurations used for linking or provisioning teams with external sources like GitHub.
+    pub async fn get_team_sync(
+        &self,
+        filter_source: crate::datadogV2::model::TeamSyncAttributesSource,
+    ) -> Result<crate::datadogV2::model::TeamSyncResponse, datadog::Error<GetTeamSyncError>> {
+        match self.get_team_sync_with_http_info(filter_source).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get all team synchronization configurations.
+    /// Returns a list of configurations used for linking or provisioning teams with external sources like GitHub.
+    pub async fn get_team_sync_with_http_info(
+        &self,
+        filter_source: crate::datadogV2::model::TeamSyncAttributesSource,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::TeamSyncResponse>,
+        datadog::Error<GetTeamSyncError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_team_sync";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_team_sync' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/team/sync",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        local_req_builder =
+            local_req_builder.query(&[("filter[source]", &filter_source.to_string())]);
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::TeamSyncResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetTeamSyncError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Get a list of memberships for a user
     pub async fn get_user_memberships(
         &self,
@@ -2426,7 +2550,7 @@ impl TeamsAPI {
     /// [A GitHub organization must be connected to your Datadog account](<https://docs.datadoghq.com/integrations/github/>),
     /// and the GitHub App integrated with Datadog must have the `Members Read` permission. Matching is performed by comparing the Datadog team handle to the GitHub team slug
     /// using a normalized exact match; case is ignored and spaces are removed. No modifications are made
-    /// to teams in GitHub. This will not create new Teams in Datadog.
+    /// to teams in GitHub. This only creates new teams in Datadog when type is set to `provision`.
     pub async fn sync_teams(
         &self,
         body: crate::datadogV2::model::TeamSyncRequest,
@@ -2447,7 +2571,7 @@ impl TeamsAPI {
     /// [A GitHub organization must be connected to your Datadog account](<https://docs.datadoghq.com/integrations/github/>),
     /// and the GitHub App integrated with Datadog must have the `Members Read` permission. Matching is performed by comparing the Datadog team handle to the GitHub team slug
     /// using a normalized exact match; case is ignored and spaces are removed. No modifications are made
-    /// to teams in GitHub. This will not create new Teams in Datadog.
+    /// to teams in GitHub. This only creates new teams in Datadog when type is set to `provision`.
     pub async fn sync_teams_with_http_info(
         &self,
         body: crate::datadogV2::model::TeamSyncRequest,

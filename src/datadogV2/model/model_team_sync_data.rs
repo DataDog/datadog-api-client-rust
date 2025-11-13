@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Team sync data.
+/// A configuration governing syncing between Datadog teams and teams from an external system.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -14,6 +14,9 @@ pub struct TeamSyncData {
     /// Team sync attributes.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::TeamSyncAttributes,
+    /// The sync's identifier
+    #[serde(rename = "id")]
+    pub id: Option<String>,
     /// Team sync bulk type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::TeamSyncBulkType,
@@ -31,10 +34,16 @@ impl TeamSyncData {
     ) -> TeamSyncData {
         TeamSyncData {
             attributes,
+            id: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn id(mut self, value: String) -> Self {
+        self.id = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -64,6 +73,7 @@ impl<'de> Deserialize<'de> for TeamSyncData {
                 M: MapAccess<'a>,
             {
                 let mut attributes: Option<crate::datadogV2::model::TeamSyncAttributes> = None;
+                let mut id: Option<String> = None;
                 let mut type_: Option<crate::datadogV2::model::TeamSyncBulkType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -75,6 +85,12 @@ impl<'de> Deserialize<'de> for TeamSyncData {
                     match k.as_str() {
                         "attributes" => {
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -101,6 +117,7 @@ impl<'de> Deserialize<'de> for TeamSyncData {
 
                 let content = TeamSyncData {
                     attributes,
+                    id,
                     type_,
                     additional_properties,
                     _unparsed,
