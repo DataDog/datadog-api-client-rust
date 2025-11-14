@@ -18,6 +18,14 @@ pub struct TableResultV2DataAttributes {
     #[serde(rename = "description")]
     pub description: Option<String>,
     /// Metadata specifying where and how to access the reference table's data file.
+    ///
+    /// For cloud storage tables (S3/GCS/Azure):
+    ///   - sync_enabled and access_details will always be present
+    ///   - error fields (error_message, error_row_count, error_type) are present only when errors occur
+    ///
+    /// For local file tables:
+    ///   - error fields (error_message, error_row_count) are present only when errors occur
+    ///   - sync_enabled, access_details are never present
     #[serde(rename = "file_metadata")]
     pub file_metadata: Option<crate::datadogV2::model::TableResultV2DataAttributesFileMetadata>,
     /// UUID of the user who last updated the reference table.
@@ -204,14 +212,6 @@ impl<'de> Deserialize<'de> for TableResultV2DataAttributes {
                             }
                             file_metadata =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _file_metadata) = file_metadata {
-                                match _file_metadata {
-                                    crate::datadogV2::model::TableResultV2DataAttributesFileMetadata::UnparsedObject(_file_metadata) => {
-                                        _unparsed = true;
-                                    },
-                                    _ => {}
-                                }
-                            }
                         }
                         "last_updated_by" => {
                             if v.is_null() {

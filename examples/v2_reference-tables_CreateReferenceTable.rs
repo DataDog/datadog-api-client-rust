@@ -8,6 +8,8 @@ use datadog_api_client::datadogV2::model::CreateTableRequestDataAttributesFileMe
 use datadog_api_client::datadogV2::model::CreateTableRequestDataAttributesFileMetadataCloudStorage;
 use datadog_api_client::datadogV2::model::CreateTableRequestDataAttributesFileMetadataOneOfAccessDetails;
 use datadog_api_client::datadogV2::model::CreateTableRequestDataAttributesFileMetadataOneOfAccessDetailsAwsDetail;
+use datadog_api_client::datadogV2::model::CreateTableRequestDataAttributesFileMetadataOneOfAccessDetailsAzureDetail;
+use datadog_api_client::datadogV2::model::CreateTableRequestDataAttributesFileMetadataOneOfAccessDetailsGcpDetail;
 use datadog_api_client::datadogV2::model::CreateTableRequestDataAttributesSchema;
 use datadog_api_client::datadogV2::model::CreateTableRequestDataAttributesSchemaFieldsItems;
 use datadog_api_client::datadogV2::model::CreateTableRequestDataType;
@@ -26,39 +28,54 @@ async fn main() {
                     CreateTableRequestDataAttributesSchema::new(
                         vec![
                             CreateTableRequestDataAttributesSchemaFieldsItems::new(
-                                "name".to_string(),
-                                ReferenceTableSchemaFieldType::STRING,
-                            ),
-                            CreateTableRequestDataAttributesSchemaFieldsItems::new(
-                                "account_id".to_string(),
+                                "field_1".to_string(),
                                 ReferenceTableSchemaFieldType::STRING,
                             )
                         ],
-                        vec!["account_id".to_string()],
+                        vec!["field_1".to_string()],
                     ),
-                    ReferenceTableCreateSourceType::S3,
-                    "test_reference_table".to_string(),
+                    ReferenceTableCreateSourceType::LOCAL_FILE,
+                    "table_1".to_string(),
                 )
-                    .description("this is a cloud table generated via a cloud bucket sync".to_string())
                     .file_metadata(
                         CreateTableRequestDataAttributesFileMetadata
                         ::CreateTableRequestDataAttributesFileMetadataCloudStorage(
                             Box::new(
                                 CreateTableRequestDataAttributesFileMetadataCloudStorage::new(
-                                    CreateTableRequestDataAttributesFileMetadataOneOfAccessDetails
-                                    ::new().aws_detail(
-                                        CreateTableRequestDataAttributesFileMetadataOneOfAccessDetailsAwsDetail::new(
-                                            "test-account-id".to_string(),
-                                            "test-bucket".to_string(),
-                                            "test_rt.csv".to_string(),
+                                    CreateTableRequestDataAttributesFileMetadataOneOfAccessDetails::new()
+                                        .aws_detail(
+                                            CreateTableRequestDataAttributesFileMetadataOneOfAccessDetailsAwsDetail
+                                            ::new(
+                                                "123456789000".to_string(),
+                                                "example-data-bucket".to_string(),
+                                                "reference-tables/users.csv".to_string(),
+                                            ),
+                                        )
+                                        .azure_detail(
+                                            CreateTableRequestDataAttributesFileMetadataOneOfAccessDetailsAzureDetail
+                                            ::new(
+                                                "aaaaaaaa-1111-2222-3333-bbbbbbbbbbbb".to_string(),
+                                                "reference-data".to_string(),
+                                                "examplestorageaccount".to_string(),
+                                                "cccccccc-4444-5555-6666-dddddddddddd".to_string(),
+                                                "tables/users.csv".to_string(),
+                                            ),
+                                        )
+                                        .gcp_detail(
+                                            CreateTableRequestDataAttributesFileMetadataOneOfAccessDetailsGcpDetail
+                                            ::new(
+                                                "data/reference_tables/users.csv".to_string(),
+                                                "example-data-bucket".to_string(),
+                                                "example-gcp-project-12345".to_string(),
+                                                "example-service@example-gcp-project-12345.iam.gserviceaccount.com".to_string(),
+                                            ),
                                         ),
-                                    ),
-                                    true,
+                                    false,
                                 ),
                             ),
                         ),
                     )
-                    .tags(vec!["test_tag".to_string()]),
+                    .tags(vec!["tag_1".to_string(), "tag_2".to_string()]),
             ),
         );
     let configuration = datadog::Configuration::new();
