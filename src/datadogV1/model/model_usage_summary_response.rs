@@ -320,6 +320,9 @@ pub struct UsageSummaryResponse {
     /// Shows sum of the high-water marks of incident management monthly active users in the current month for all organizations.
     #[serde(rename = "incident_management_monthly_active_users_hwm_sum")]
     pub incident_management_monthly_active_users_hwm_sum: Option<i64>,
+    /// Shows the sum of the high-water marks of Incident Management seats over all hours in the current month for all organizations.
+    #[serde(rename = "incident_management_seats_hwm_sum")]
+    pub incident_management_seats_hwm_sum: Option<i64>,
     /// Shows the sum of all log events indexed over all hours in the current month for all organizations (To be deprecated on October 1st, 2024).
     #[deprecated]
     #[serde(rename = "indexed_events_count_agg_sum")]
@@ -789,6 +792,7 @@ impl UsageSummaryResponse {
             gcp_host_top99p_sum: None,
             heroku_host_top99p_sum: None,
             incident_management_monthly_active_users_hwm_sum: None,
+            incident_management_seats_hwm_sum: None,
             indexed_events_count_agg_sum: None,
             infra_host_top99p_sum: None,
             ingested_events_bytes_agg_sum: None,
@@ -1520,6 +1524,12 @@ impl UsageSummaryResponse {
     #[allow(deprecated)]
     pub fn incident_management_monthly_active_users_hwm_sum(mut self, value: i64) -> Self {
         self.incident_management_monthly_active_users_hwm_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn incident_management_seats_hwm_sum(mut self, value: i64) -> Self {
+        self.incident_management_seats_hwm_sum = Some(value);
         self
     }
 
@@ -2391,6 +2401,7 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                 let mut gcp_host_top99p_sum: Option<i64> = None;
                 let mut heroku_host_top99p_sum: Option<i64> = None;
                 let mut incident_management_monthly_active_users_hwm_sum: Option<i64> = None;
+                let mut incident_management_seats_hwm_sum: Option<i64> = None;
                 let mut indexed_events_count_agg_sum: Option<i64> = None;
                 let mut infra_host_top99p_sum: Option<i64> = None;
                 let mut ingested_events_bytes_agg_sum: Option<i64> = None;
@@ -3138,6 +3149,12 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                                 continue;
                             }
                             incident_management_monthly_active_users_hwm_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "incident_management_seats_hwm_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            incident_management_seats_hwm_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
                         "indexed_events_count_agg_sum" => {
                             if v.is_null() {
@@ -3935,6 +3952,7 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                     gcp_host_top99p_sum,
                     heroku_host_top99p_sum,
                     incident_management_monthly_active_users_hwm_sum,
+                    incident_management_seats_hwm_sum,
                     indexed_events_count_agg_sum,
                     infra_host_top99p_sum,
                     ingested_events_bytes_agg_sum,
