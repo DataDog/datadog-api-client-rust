@@ -1,5 +1,28 @@
 # CHANGELOG
 
+## 0.22.0/2025-11-14
+
+### Added
+* Add suppression tags [#1016](https://github.com/DataDog/datadog-api-client-rust/pull/1016)
+* Add Team Connection API Documentation [#1014](https://github.com/DataDog/datadog-api-client-rust/pull/1014)
+* Add new summary keys for new standalone billing dimensions [#1011](https://github.com/DataDog/datadog-api-client-rust/pull/1011)
+* Add Bits AI Investigations and On-Call to  API specs [#1007](https://github.com/DataDog/datadog-api-client-rust/pull/1007)
+* Add `PreviewCatalogEntities` [#1004](https://github.com/DataDog/datadog-api-client-rust/pull/1004)
+* Sync 'audience_management.yaml' files with backend [#1002](https://github.com/DataDog/datadog-api-client-rust/pull/1002)
+* Dashboards - Add on_call_events datasources [#1001](https://github.com/DataDog/datadog-api-client-rust/pull/1001)
+* 📝 [LOGSAC-1298] Add logs-pipeline type to restriction policy OpenAPI spec [#995](https://github.com/DataDog/datadog-api-client-rust/pull/995)
+* Security Monitoring - Update Signal Archive Reasons [#993](https://github.com/DataDog/datadog-api-client-rust/pull/993)
+* Add endpoints for Software Composition Analysis [#990](https://github.com/DataDog/datadog-api-client-rust/pull/990)
+* Add New Serverless Summary Entries to Api Spec [#981](https://github.com/DataDog/datadog-api-client-rust/pull/981)
+* Add metric namespace config filters to V2 GCP API [#979](https://github.com/DataDog/datadog-api-client-rust/pull/979)
+
+### Deprecated
+* [api-spec] Mark PATCH /api/v2/incidents/incident_id/attachments endpoint as deprecated [#1013](https://github.com/DataDog/datadog-api-client-rust/pull/1013)
+* [METEXP-2068] Deprecate api/v1/search Endpoint [#1008](https://github.com/DataDog/datadog-api-client-rust/pull/1008)
+
+### Changed
+* Rename historical job API endpoints to threat hunting [#991](https://github.com/DataDog/datadog-api-client-rust/pull/991)
+
 ## 0.21.0/2025-10-27
 
 ### Added
