@@ -35,6 +35,9 @@ pub struct ThreatHuntingJobResponseAttributes {
     /// Last modification time of the job.
     #[serde(rename = "modifiedAt")]
     pub modified_at: Option<String>,
+    /// Whether the job outputs signals.
+    #[serde(rename = "signalOutput")]
+    pub signal_output: Option<bool>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -53,6 +56,7 @@ impl ThreatHuntingJobResponseAttributes {
             job_name: None,
             job_status: None,
             modified_at: None,
+            signal_output: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -98,6 +102,11 @@ impl ThreatHuntingJobResponseAttributes {
         self
     }
 
+    pub fn signal_output(mut self, value: bool) -> Self {
+        self.signal_output = Some(value);
+        self
+    }
+
     pub fn additional_properties(
         mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
@@ -138,6 +147,7 @@ impl<'de> Deserialize<'de> for ThreatHuntingJobResponseAttributes {
                 let mut job_name: Option<String> = None;
                 let mut job_status: Option<String> = None;
                 let mut modified_at: Option<String> = None;
+                let mut signal_output: Option<bool> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -199,6 +209,13 @@ impl<'de> Deserialize<'de> for ThreatHuntingJobResponseAttributes {
                             modified_at =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "signalOutput" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            signal_output =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -216,6 +233,7 @@ impl<'de> Deserialize<'de> for ThreatHuntingJobResponseAttributes {
                     job_name,
                     job_status,
                     modified_at,
+                    signal_output,
                     additional_properties,
                     _unparsed,
                 };
