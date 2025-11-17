@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MonitorNotificationRuleCondition {
-    /// A list of recipients to notify. Uses the same format as the monitor `message` field. Must not start with an '@'.
+    /// A list of recipients to notify. Uses the same format as the monitor `message` field. Must not start with an '@'. Cannot be used with `conditional_recipients`.
     #[serde(rename = "recipients")]
     pub recipients: Vec<String>,
     /// The scope to which the monitor applied.

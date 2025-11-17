@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MonitorNotificationRuleAttributes {
-    /// Use conditional recipients to define different recipients for different situations.
+    /// Use conditional recipients to define different recipients for different situations. Cannot be used with `recipients`.
     #[serde(rename = "conditional_recipients")]
     pub conditional_recipients:
         Option<crate::datadogV2::model::MonitorNotificationRuleConditionalRecipients>,
@@ -21,7 +21,7 @@ pub struct MonitorNotificationRuleAttributes {
     /// The name of the monitor notification rule.
     #[serde(rename = "name")]
     pub name: String,
-    /// A list of recipients to notify. Uses the same format as the monitor `message` field. Must not start with an '@'.
+    /// A list of recipients to notify. Uses the same format as the monitor `message` field. Must not start with an '@'. Cannot be used with `conditional_recipients`.
     #[serde(rename = "recipients")]
     pub recipients: Option<Vec<String>>,
     #[serde(skip)]
