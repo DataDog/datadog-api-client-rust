@@ -11,10 +11,16 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TeamSyncAttributes {
+    /// How often the sync process should be run. Defaults to `once` when not provided.
+    #[serde(rename = "frequency")]
+    pub frequency: Option<crate::datadogV2::model::TeamSyncAttributesFrequency>,
     /// The external source platform for team synchronization. Only "github" is supported.
     #[serde(rename = "source")]
     pub source: crate::datadogV2::model::TeamSyncAttributesSource,
-    /// The type of synchronization operation. Only "link" is supported, which links existing teams by matching names.
+    /// Whether to sync members from the external team to the Datadog team. Defaults to `false` when not provided.
+    #[serde(rename = "sync_membership")]
+    pub sync_membership: Option<bool>,
+    /// The type of synchronization operation. "link" connects teams by matching names. "provision" creates new teams when no match is found.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::TeamSyncAttributesType,
     #[serde(flatten)]
@@ -30,11 +36,26 @@ impl TeamSyncAttributes {
         type_: crate::datadogV2::model::TeamSyncAttributesType,
     ) -> TeamSyncAttributes {
         TeamSyncAttributes {
+            frequency: None,
             source,
+            sync_membership: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn frequency(
+        mut self,
+        value: crate::datadogV2::model::TeamSyncAttributesFrequency,
+    ) -> Self {
+        self.frequency = Some(value);
+        self
+    }
+
+    pub fn sync_membership(mut self, value: bool) -> Self {
+        self.sync_membership = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -63,7 +84,10 @@ impl<'de> Deserialize<'de> for TeamSyncAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut frequency: Option<crate::datadogV2::model::TeamSyncAttributesFrequency> =
+                    None;
                 let mut source: Option<crate::datadogV2::model::TeamSyncAttributesSource> = None;
+                let mut sync_membership: Option<bool> = None;
                 let mut type_: Option<crate::datadogV2::model::TeamSyncAttributesType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -73,6 +97,20 @@ impl<'de> Deserialize<'de> for TeamSyncAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "frequency" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            frequency = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _frequency) = frequency {
+                                match _frequency {
+                                    crate::datadogV2::model::TeamSyncAttributesFrequency::UnparsedObject(_frequency) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
                         "source" => {
                             source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _source) = source {
@@ -83,6 +121,13 @@ impl<'de> Deserialize<'de> for TeamSyncAttributes {
                                     _ => {}
                                 }
                             }
+                        }
+                        "sync_membership" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            sync_membership =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -106,7 +151,9 @@ impl<'de> Deserialize<'de> for TeamSyncAttributes {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = TeamSyncAttributes {
+                    frequency,
                     source,
+                    sync_membership,
                     type_,
                     additional_properties,
                     _unparsed,

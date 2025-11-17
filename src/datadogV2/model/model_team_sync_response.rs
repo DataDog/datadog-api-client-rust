@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Team sync request.
+/// Team sync configurations response.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct TeamSyncRequest {
-    /// A configuration governing syncing between Datadog teams and teams from an external system.
+pub struct TeamSyncResponse {
+    /// List of team sync configurations
     #[serde(rename = "data")]
-    pub data: crate::datadogV2::model::TeamSyncData,
+    pub data: Option<Vec<crate::datadogV2::model::TeamSyncData>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,13 +21,18 @@ pub struct TeamSyncRequest {
     pub(crate) _unparsed: bool,
 }
 
-impl TeamSyncRequest {
-    pub fn new(data: crate::datadogV2::model::TeamSyncData) -> TeamSyncRequest {
-        TeamSyncRequest {
-            data,
+impl TeamSyncResponse {
+    pub fn new() -> TeamSyncResponse {
+        TeamSyncResponse {
+            data: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn data(mut self, value: Vec<crate::datadogV2::model::TeamSyncData>) -> Self {
+        self.data = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -39,14 +44,20 @@ impl TeamSyncRequest {
     }
 }
 
-impl<'de> Deserialize<'de> for TeamSyncRequest {
+impl Default for TeamSyncResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for TeamSyncResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct TeamSyncRequestVisitor;
-        impl<'a> Visitor<'a> for TeamSyncRequestVisitor {
-            type Value = TeamSyncRequest;
+        struct TeamSyncResponseVisitor;
+        impl<'a> Visitor<'a> for TeamSyncResponseVisitor {
+            type Value = TeamSyncResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -56,7 +67,7 @@ impl<'de> Deserialize<'de> for TeamSyncRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::TeamSyncData> = None;
+                let mut data: Option<Vec<crate::datadogV2::model::TeamSyncData>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -66,6 +77,9 @@ impl<'de> Deserialize<'de> for TeamSyncRequest {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "data" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -75,9 +89,8 @@ impl<'de> Deserialize<'de> for TeamSyncRequest {
                         }
                     }
                 }
-                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = TeamSyncRequest {
+                let content = TeamSyncResponse {
                     data,
                     additional_properties,
                     _unparsed,
@@ -87,6 +100,6 @@ impl<'de> Deserialize<'de> for TeamSyncRequest {
             }
         }
 
-        deserializer.deserialize_any(TeamSyncRequestVisitor)
+        deserializer.deserialize_any(TeamSyncResponseVisitor)
     }
 }
