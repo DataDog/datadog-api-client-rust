@@ -84,6 +84,7 @@ pub struct ApiInstances {
     pub v2_api_dashboard_lists: Option<datadogV2::api_dashboard_lists::DashboardListsAPI>,
     pub v2_api_datasets: Option<datadogV2::api_datasets::DatasetsAPI>,
     pub v2_api_data_deletion: Option<datadogV2::api_data_deletion::DataDeletionAPI>,
+    pub v2_api_deployment_gates: Option<datadogV2::api_deployment_gates::DeploymentGatesAPI>,
     pub v2_api_domain_allowlist: Option<datadogV2::api_domain_allowlist::DomainAllowlistAPI>,
     pub v2_api_dora_metrics: Option<datadogV2::api_dora_metrics::DORAMetricsAPI>,
     pub v2_api_downtimes: Option<datadogV2::api_downtimes::DowntimesAPI>,
@@ -653,6 +654,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "DataDeletion" => {
             world.api_instances.v2_api_data_deletion = Some(
                 datadogV2::api_data_deletion::DataDeletionAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+        }
+        "DeploymentGates" => {
+            world.api_instances.v2_api_deployment_gates = Some(
+                datadogV2::api_deployment_gates::DeploymentGatesAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -2861,6 +2870,36 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.CancelDataDeletionRequest".into(),
         test_v2_cancel_data_deletion_request,
+    );
+    world.function_mappings.insert(
+        "v2.CreateDeploymentGate".into(),
+        test_v2_create_deployment_gate,
+    );
+    world.function_mappings.insert(
+        "v2.CreateDeploymentRule".into(),
+        test_v2_create_deployment_rule,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteDeploymentRule".into(),
+        test_v2_delete_deployment_rule,
+    );
+    world
+        .function_mappings
+        .insert("v2.GetDeploymentRule".into(), test_v2_get_deployment_rule);
+    world.function_mappings.insert(
+        "v2.UpdateDeploymentRule".into(),
+        test_v2_update_deployment_rule,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteDeploymentGate".into(),
+        test_v2_delete_deployment_gate,
+    );
+    world
+        .function_mappings
+        .insert("v2.GetDeploymentGate".into(), test_v2_get_deployment_gate);
+    world.function_mappings.insert(
+        "v2.UpdateDeploymentGate".into(),
+        test_v2_update_deployment_gate,
     );
     world
         .function_mappings
@@ -20948,6 +20987,212 @@ fn test_v2_cancel_data_deletion_request(
         .expect("api instance not found");
     let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
     let response = match block_on(api.cancel_data_deletion_request_with_http_info(id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_deployment_gate(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_deployment_gates
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_deployment_gate_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_deployment_rule(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_deployment_gates
+        .as_ref()
+        .expect("api instance not found");
+    let gate_id = serde_json::from_value(_parameters.get("gate_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_deployment_rule_with_http_info(gate_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_deployment_rule(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_deployment_gates
+        .as_ref()
+        .expect("api instance not found");
+    let gate_id = serde_json::from_value(_parameters.get("gate_id").unwrap().clone()).unwrap();
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_deployment_rule_with_http_info(gate_id, id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_deployment_rule(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_deployment_gates
+        .as_ref()
+        .expect("api instance not found");
+    let gate_id = serde_json::from_value(_parameters.get("gate_id").unwrap().clone()).unwrap();
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_deployment_rule_with_http_info(gate_id, id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_deployment_rule(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_deployment_gates
+        .as_ref()
+        .expect("api instance not found");
+    let gate_id = serde_json::from_value(_parameters.get("gate_id").unwrap().clone()).unwrap();
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_deployment_rule_with_http_info(gate_id, id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_deployment_gate(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_deployment_gates
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_deployment_gate_with_http_info(id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_deployment_gate(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_deployment_gates
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_deployment_gate_with_http_info(id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_deployment_gate(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_deployment_gates
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_deployment_gate_with_http_info(id, body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
