@@ -32,6 +32,9 @@ pub struct ScheduleCreateRequestDataAttributesLayersItems {
     /// The date/time when the rotation for this layer starts (in ISO 8601).
     #[serde(rename = "rotation_start")]
     pub rotation_start: chrono::DateTime<chrono::Utc>,
+    /// The time zone for this layer.
+    #[serde(rename = "time_zone")]
+    pub time_zone: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -55,6 +58,7 @@ impl ScheduleCreateRequestDataAttributesLayersItems {
             name,
             restrictions: None,
             rotation_start,
+            time_zone: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -67,6 +71,11 @@ impl ScheduleCreateRequestDataAttributesLayersItems {
 
     pub fn restrictions(mut self, value: Vec<crate::datadogV2::model::TimeRestriction>) -> Self {
         self.restrictions = Some(value);
+        self
+    }
+
+    pub fn time_zone(mut self, value: String) -> Self {
+        self.time_zone = Some(value);
         self
     }
 
@@ -103,6 +112,7 @@ impl<'de> Deserialize<'de> for ScheduleCreateRequestDataAttributesLayersItems {
                 let mut name: Option<String> = None;
                 let mut restrictions: Option<Vec<crate::datadogV2::model::TimeRestriction>> = None;
                 let mut rotation_start: Option<chrono::DateTime<chrono::Utc>> = None;
+                let mut time_zone: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -141,6 +151,12 @@ impl<'de> Deserialize<'de> for ScheduleCreateRequestDataAttributesLayersItems {
                             rotation_start =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "time_zone" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            time_zone = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -164,6 +180,7 @@ impl<'de> Deserialize<'de> for ScheduleCreateRequestDataAttributesLayersItems {
                     name,
                     restrictions,
                     rotation_start,
+                    time_zone,
                     additional_properties,
                     _unparsed,
                 };
