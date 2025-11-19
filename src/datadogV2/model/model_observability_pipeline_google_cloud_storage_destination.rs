@@ -14,10 +14,10 @@ use std::fmt::{self, Formatter};
 pub struct ObservabilityPipelineGoogleCloudStorageDestination {
     /// Access control list setting for objects written to the bucket.
     #[serde(rename = "acl")]
-    pub acl: crate::datadogV2::model::ObservabilityPipelineGoogleCloudStorageDestinationAcl,
+    pub acl: Option<crate::datadogV2::model::ObservabilityPipelineGoogleCloudStorageDestinationAcl>,
     /// GCP credentials used to authenticate with Google Cloud Storage.
     #[serde(rename = "auth")]
-    pub auth: crate::datadogV2::model::ObservabilityPipelineGcpAuth,
+    pub auth: Option<crate::datadogV2::model::ObservabilityPipelineGcpAuth>,
     /// Name of the GCS bucket.
     #[serde(rename = "bucket")]
     pub bucket: String,
@@ -49,8 +49,6 @@ pub struct ObservabilityPipelineGoogleCloudStorageDestination {
 
 impl ObservabilityPipelineGoogleCloudStorageDestination {
     pub fn new(
-        acl: crate::datadogV2::model::ObservabilityPipelineGoogleCloudStorageDestinationAcl,
-        auth: crate::datadogV2::model::ObservabilityPipelineGcpAuth,
         bucket: String,
         id: String,
         inputs: Vec<String>,
@@ -58,8 +56,8 @@ impl ObservabilityPipelineGoogleCloudStorageDestination {
         type_: crate::datadogV2::model::ObservabilityPipelineGoogleCloudStorageDestinationType,
     ) -> ObservabilityPipelineGoogleCloudStorageDestination {
         ObservabilityPipelineGoogleCloudStorageDestination {
-            acl,
-            auth,
+            acl: None,
+            auth: None,
             bucket,
             id,
             inputs,
@@ -70,6 +68,19 @@ impl ObservabilityPipelineGoogleCloudStorageDestination {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn acl(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineGoogleCloudStorageDestinationAcl,
+    ) -> Self {
+        self.acl = Some(value);
+        self
+    }
+
+    pub fn auth(mut self, value: crate::datadogV2::model::ObservabilityPipelineGcpAuth) -> Self {
+        self.auth = Some(value);
+        self
     }
 
     pub fn key_prefix(mut self, value: String) -> Self {
@@ -135,6 +146,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGoogleCloudStorageDestinatio
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "acl" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             acl = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _acl) = acl {
                                 match _acl {
@@ -146,6 +160,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGoogleCloudStorageDestinatio
                             }
                         }
                         "auth" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             auth = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "bucket" => {
@@ -199,8 +216,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGoogleCloudStorageDestinatio
                         }
                     }
                 }
-                let acl = acl.ok_or_else(|| M::Error::missing_field("acl"))?;
-                let auth = auth.ok_or_else(|| M::Error::missing_field("auth"))?;
                 let bucket = bucket.ok_or_else(|| M::Error::missing_field("bucket"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let inputs = inputs.ok_or_else(|| M::Error::missing_field("inputs"))?;

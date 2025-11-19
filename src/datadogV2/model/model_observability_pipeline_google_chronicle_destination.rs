@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct ObservabilityPipelineGoogleChronicleDestination {
     /// GCP credentials used to authenticate with Google Cloud Storage.
     #[serde(rename = "auth")]
-    pub auth: crate::datadogV2::model::ObservabilityPipelineGcpAuth,
+    pub auth: Option<crate::datadogV2::model::ObservabilityPipelineGcpAuth>,
     /// The Google Chronicle customer ID.
     #[serde(rename = "customer_id")]
     pub customer_id: String,
@@ -42,14 +42,13 @@ pub struct ObservabilityPipelineGoogleChronicleDestination {
 
 impl ObservabilityPipelineGoogleChronicleDestination {
     pub fn new(
-        auth: crate::datadogV2::model::ObservabilityPipelineGcpAuth,
         customer_id: String,
         id: String,
         inputs: Vec<String>,
         type_: crate::datadogV2::model::ObservabilityPipelineGoogleChronicleDestinationType,
     ) -> ObservabilityPipelineGoogleChronicleDestination {
         ObservabilityPipelineGoogleChronicleDestination {
-            auth,
+            auth: None,
             customer_id,
             encoding: None,
             id,
@@ -59,6 +58,11 @@ impl ObservabilityPipelineGoogleChronicleDestination {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn auth(mut self, value: crate::datadogV2::model::ObservabilityPipelineGcpAuth) -> Self {
+        self.auth = Some(value);
+        self
     }
 
     pub fn encoding(
@@ -118,6 +122,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGoogleChronicleDestination {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "auth" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             auth = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "customer_id" => {
@@ -168,7 +175,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGoogleChronicleDestination {
                         }
                     }
                 }
-                let auth = auth.ok_or_else(|| M::Error::missing_field("auth"))?;
                 let customer_id =
                     customer_id.ok_or_else(|| M::Error::missing_field("customer_id"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;

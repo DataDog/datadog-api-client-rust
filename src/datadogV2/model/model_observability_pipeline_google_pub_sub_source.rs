@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct ObservabilityPipelineGooglePubSubSource {
     /// GCP credentials used to authenticate with Google Cloud Storage.
     #[serde(rename = "auth")]
-    pub auth: crate::datadogV2::model::ObservabilityPipelineGcpAuth,
+    pub auth: Option<crate::datadogV2::model::ObservabilityPipelineGcpAuth>,
     /// The decoding format used to interpret incoming logs.
     #[serde(rename = "decoding")]
     pub decoding: crate::datadogV2::model::ObservabilityPipelineDecoding,
@@ -41,7 +41,6 @@ pub struct ObservabilityPipelineGooglePubSubSource {
 
 impl ObservabilityPipelineGooglePubSubSource {
     pub fn new(
-        auth: crate::datadogV2::model::ObservabilityPipelineGcpAuth,
         decoding: crate::datadogV2::model::ObservabilityPipelineDecoding,
         id: String,
         project: String,
@@ -49,7 +48,7 @@ impl ObservabilityPipelineGooglePubSubSource {
         type_: crate::datadogV2::model::ObservabilityPipelineGooglePubSubSourceType,
     ) -> ObservabilityPipelineGooglePubSubSource {
         ObservabilityPipelineGooglePubSubSource {
-            auth,
+            auth: None,
             decoding,
             id,
             project,
@@ -59,6 +58,11 @@ impl ObservabilityPipelineGooglePubSubSource {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn auth(mut self, value: crate::datadogV2::model::ObservabilityPipelineGcpAuth) -> Self {
+        self.auth = Some(value);
+        self
     }
 
     pub fn tls(mut self, value: crate::datadogV2::model::ObservabilityPipelineTls) -> Self {
@@ -111,6 +115,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGooglePubSubSource {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "auth" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             auth = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "decoding" => {
@@ -158,7 +165,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGooglePubSubSource {
                         }
                     }
                 }
-                let auth = auth.ok_or_else(|| M::Error::missing_field("auth"))?;
                 let decoding = decoding.ok_or_else(|| M::Error::missing_field("decoding"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let project = project.ok_or_else(|| M::Error::missing_field("project"))?;
