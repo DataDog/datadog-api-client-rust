@@ -57,7 +57,6 @@ async fn main() {
                             vec!["id".to_string()],
                         ),
                     )
-                    .sync_enabled(false)
                     .tags(vec!["test_tag".to_string()]),
             ),
         );
