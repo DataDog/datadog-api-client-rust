@@ -3750,6 +3750,8 @@ pub mod model_monitor_notification_rule_condition;
 pub use self::model_monitor_notification_rule_condition::MonitorNotificationRuleCondition;
 pub mod model_monitor_notification_rule_filter_tags;
 pub use self::model_monitor_notification_rule_filter_tags::MonitorNotificationRuleFilterTags;
+pub mod model_monitor_notification_rule_filter_scope;
+pub use self::model_monitor_notification_rule_filter_scope::MonitorNotificationRuleFilterScope;
 pub mod model_monitor_notification_rule_filter;
 pub use self::model_monitor_notification_rule_filter::MonitorNotificationRuleFilter;
 pub mod model_monitor_notification_rule_relationships;

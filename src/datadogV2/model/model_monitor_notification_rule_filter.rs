@@ -11,6 +11,9 @@ pub enum MonitorNotificationRuleFilter {
     MonitorNotificationRuleFilterTags(
         Box<crate::datadogV2::model::MonitorNotificationRuleFilterTags>,
     ),
+    MonitorNotificationRuleFilterScope(
+        Box<crate::datadogV2::model::MonitorNotificationRuleFilterScope>,
+    ),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -26,6 +29,14 @@ impl<'de> Deserialize<'de> for MonitorNotificationRuleFilter {
         {
             if !_v._unparsed {
                 return Ok(MonitorNotificationRuleFilter::MonitorNotificationRuleFilterTags(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::MonitorNotificationRuleFilterScope>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(MonitorNotificationRuleFilter::MonitorNotificationRuleFilterScope(_v));
             }
         }
 

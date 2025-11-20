@@ -6,36 +6,36 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Filter monitor notifications by tags. A monitor notification must match all tags.
+/// Filter monitor notifications. A monitor notification must match the scope.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct MonitorNotificationRuleFilterTags {
-    /// A list of tags (key:value pairs), which can be used to filter monitor notifications on monitor and group tags.
-    #[serde(rename = "tags")]
-    pub tags: Vec<String>,
+pub struct MonitorNotificationRuleFilterScope {
+    /// A scope composed of one or several key:value pairs, which can be used to filter monitor notifications on monitor and group tags.
+    #[serde(rename = "scope")]
+    pub scope: String,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
 }
 
-impl MonitorNotificationRuleFilterTags {
-    pub fn new(tags: Vec<String>) -> MonitorNotificationRuleFilterTags {
-        MonitorNotificationRuleFilterTags {
-            tags,
+impl MonitorNotificationRuleFilterScope {
+    pub fn new(scope: String) -> MonitorNotificationRuleFilterScope {
+        MonitorNotificationRuleFilterScope {
+            scope,
             _unparsed: false,
         }
     }
 }
 
-impl<'de> Deserialize<'de> for MonitorNotificationRuleFilterTags {
+impl<'de> Deserialize<'de> for MonitorNotificationRuleFilterScope {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct MonitorNotificationRuleFilterTagsVisitor;
-        impl<'a> Visitor<'a> for MonitorNotificationRuleFilterTagsVisitor {
-            type Value = MonitorNotificationRuleFilterTags;
+        struct MonitorNotificationRuleFilterScopeVisitor;
+        impl<'a> Visitor<'a> for MonitorNotificationRuleFilterScopeVisitor {
+            type Value = MonitorNotificationRuleFilterScope;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -45,13 +45,13 @@ impl<'de> Deserialize<'de> for MonitorNotificationRuleFilterTags {
             where
                 M: MapAccess<'a>,
             {
-                let mut tags: Option<Vec<String>> = None;
+                let mut scope: Option<String> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "tags" => {
-                            tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "scope" => {
+                            scope = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             return Err(serde::de::Error::custom(
@@ -60,14 +60,14 @@ impl<'de> Deserialize<'de> for MonitorNotificationRuleFilterTags {
                         }
                     }
                 }
-                let tags = tags.ok_or_else(|| M::Error::missing_field("tags"))?;
+                let scope = scope.ok_or_else(|| M::Error::missing_field("scope"))?;
 
-                let content = MonitorNotificationRuleFilterTags { tags, _unparsed };
+                let content = MonitorNotificationRuleFilterScope { scope, _unparsed };
 
                 Ok(content)
             }
         }
 
-        deserializer.deserialize_any(MonitorNotificationRuleFilterTagsVisitor)
+        deserializer.deserialize_any(MonitorNotificationRuleFilterScopeVisitor)
     }
 }
