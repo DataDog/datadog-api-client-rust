@@ -65,12 +65,12 @@ pub struct SLOResponseData {
     /// The name of the service level objective object.
     #[serde(rename = "name")]
     pub name: Option<String>,
-    /// A metric-based SLO. **Required if type is `metric`**. Note that Datadog only allows the sum by aggregator
+    /// A metric-based SLO. Note that Datadog only allows the sum by aggregator
     /// to be used because this will sum up all request counts instead of averaging them, or taking the max or
     /// min of all of those requests.
     #[serde(rename = "query")]
     pub query: Option<crate::datadogV1::model::ServiceLevelObjectiveQuery>,
-    /// A generic SLI specification. This is currently used for time-slice SLOs only.
+    /// A generic SLI specification. This is currently used for time-slice and count-based SLOs only.
     #[serde(rename = "sli_specification")]
     pub sli_specification: Option<crate::datadogV1::model::SLOSliSpec>,
     /// A list of tags associated with this service level objective.
@@ -90,9 +90,6 @@ pub struct SLOResponseData {
     /// or updating SLOs. It is only used when querying SLO history over custom timeframes.
     #[serde(rename = "timeframe")]
     pub timeframe: Option<crate::datadogV1::model::SLOTimeframe>,
-    /// The type of the service level objective.
-    #[serde(rename = "type")]
-    pub type_: Option<crate::datadogV1::model::SLOType>,
     /// The optional warning threshold such that when the service level indicator is
     /// below this value for the given threshold, but above the target threshold, the
     /// objective appears in a "warning" state. This value must be greater than the target
@@ -125,7 +122,6 @@ impl SLOResponseData {
             target_threshold: None,
             thresholds: None,
             timeframe: None,
-            type_: None,
             warning_threshold: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -212,11 +208,6 @@ impl SLOResponseData {
         self
     }
 
-    pub fn type_(mut self, value: crate::datadogV1::model::SLOType) -> Self {
-        self.type_ = Some(value);
-        self
-    }
-
     pub fn warning_threshold(mut self, value: f64) -> Self {
         self.warning_threshold = Some(value);
         self
@@ -270,7 +261,6 @@ impl<'de> Deserialize<'de> for SLOResponseData {
                 let mut target_threshold: Option<f64> = None;
                 let mut thresholds: Option<Vec<crate::datadogV1::model::SLOThreshold>> = None;
                 let mut timeframe: Option<crate::datadogV1::model::SLOTimeframe> = None;
-                let mut type_: Option<crate::datadogV1::model::SLOType> = None;
                 let mut warning_threshold: Option<f64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -400,20 +390,6 @@ impl<'de> Deserialize<'de> for SLOResponseData {
                                 }
                             }
                         }
-                        "type" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _type_) = type_ {
-                                match _type_ {
-                                    crate::datadogV1::model::SLOType::UnparsedObject(_type_) => {
-                                        _unparsed = true;
-                                    }
-                                    _ => {}
-                                }
-                            }
-                        }
                         "warning_threshold" => {
                             if v.is_null() {
                                 continue;
@@ -446,7 +422,6 @@ impl<'de> Deserialize<'de> for SLOResponseData {
                     target_threshold,
                     thresholds,
                     timeframe,
-                    type_,
                     warning_threshold,
                     additional_properties,
                     _unparsed,
