@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineEnrichmentTableProcessor {
+    /// Whether this processor is enabled.
+    #[serde(rename = "enabled")]
+    pub enabled: bool,
     /// Defines a static enrichment table loaded from a CSV file.
     #[serde(rename = "file")]
     pub file: Option<crate::datadogV2::model::ObservabilityPipelineEnrichmentTableFile>,
@@ -23,9 +26,6 @@ pub struct ObservabilityPipelineEnrichmentTableProcessor {
     /// A Datadog search query used to determine which logs this processor targets.
     #[serde(rename = "include")]
     pub include: String,
-    /// A list of component IDs whose output is used as the input for this processor.
-    #[serde(rename = "inputs")]
-    pub inputs: Vec<String>,
     /// Path where enrichment results should be stored in the log.
     #[serde(rename = "target")]
     pub target: String,
@@ -41,18 +41,18 @@ pub struct ObservabilityPipelineEnrichmentTableProcessor {
 
 impl ObservabilityPipelineEnrichmentTableProcessor {
     pub fn new(
+        enabled: bool,
         id: String,
         include: String,
-        inputs: Vec<String>,
         target: String,
         type_: crate::datadogV2::model::ObservabilityPipelineEnrichmentTableProcessorType,
     ) -> ObservabilityPipelineEnrichmentTableProcessor {
         ObservabilityPipelineEnrichmentTableProcessor {
+            enabled,
             file: None,
             geoip: None,
             id,
             include,
-            inputs,
             target,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
@@ -102,6 +102,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineEnrichmentTableProcessor {
             where
                 M: MapAccess<'a>,
             {
+                let mut enabled: Option<bool> = None;
                 let mut file: Option<
                     crate::datadogV2::model::ObservabilityPipelineEnrichmentTableFile,
                 > = None;
@@ -110,7 +111,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineEnrichmentTableProcessor {
                 > = None;
                 let mut id: Option<String> = None;
                 let mut include: Option<String> = None;
-                let mut inputs: Option<Vec<String>> = None;
                 let mut target: Option<String> = None;
                 let mut type_: Option<
                     crate::datadogV2::model::ObservabilityPipelineEnrichmentTableProcessorType,
@@ -123,6 +123,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineEnrichmentTableProcessor {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "enabled" => {
+                            enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "file" => {
                             if v.is_null() {
                                 continue;
@@ -140,9 +143,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineEnrichmentTableProcessor {
                         }
                         "include" => {
                             include = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "inputs" => {
-                            inputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "target" => {
                             target = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -165,18 +165,18 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineEnrichmentTableProcessor {
                         }
                     }
                 }
+                let enabled = enabled.ok_or_else(|| M::Error::missing_field("enabled"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let include = include.ok_or_else(|| M::Error::missing_field("include"))?;
-                let inputs = inputs.ok_or_else(|| M::Error::missing_field("inputs"))?;
                 let target = target.ok_or_else(|| M::Error::missing_field("target"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineEnrichmentTableProcessor {
+                    enabled,
                     file,
                     geoip,
                     id,
                     include,
-                    inputs,
                     target,
                     type_,
                     additional_properties,

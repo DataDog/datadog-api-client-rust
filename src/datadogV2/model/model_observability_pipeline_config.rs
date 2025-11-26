@@ -14,9 +14,9 @@ pub struct ObservabilityPipelineConfig {
     /// A list of destination components where processed logs are sent.
     #[serde(rename = "destinations")]
     pub destinations: Vec<crate::datadogV2::model::ObservabilityPipelineConfigDestinationItem>,
-    /// A list of processors that transform or enrich log data.
+    /// A list of processor groups that transform or enrich log data.
     #[serde(rename = "processors")]
-    pub processors: Option<Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorItem>>,
+    pub processors: Option<Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorGroup>>,
     /// A list of configured data sources for the pipeline.
     #[serde(rename = "sources")]
     pub sources: Vec<crate::datadogV2::model::ObservabilityPipelineConfigSourceItem>,
@@ -43,7 +43,7 @@ impl ObservabilityPipelineConfig {
 
     pub fn processors(
         mut self,
-        value: Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorItem>,
+        value: Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorGroup>,
     ) -> Self {
         self.processors = Some(value);
         self
@@ -79,7 +79,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfig {
                     Vec<crate::datadogV2::model::ObservabilityPipelineConfigDestinationItem>,
                 > = None;
                 let mut processors: Option<
-                    Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorItem>,
+                    Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorGroup>,
                 > = None;
                 let mut sources: Option<
                     Vec<crate::datadogV2::model::ObservabilityPipelineConfigSourceItem>,
