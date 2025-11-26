@@ -3,6 +3,7 @@ use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_observability_pipelines::ObservabilityPipelinesAPI;
 use datadog_api_client::datadogV2::model::ObservabilityPipelineConfig;
 use datadog_api_client::datadogV2::model::ObservabilityPipelineConfigDestinationItem;
+use datadog_api_client::datadogV2::model::ObservabilityPipelineConfigProcessorGroup;
 use datadog_api_client::datadogV2::model::ObservabilityPipelineConfigProcessorItem;
 use datadog_api_client::datadogV2::model::ObservabilityPipelineConfigSourceItem;
 use datadog_api_client::datadogV2::model::ObservabilityPipelineDataAttributes;
@@ -27,7 +28,7 @@ async fn main() {
                                 Box::new(
                                     ObservabilityPipelineDatadogLogsDestination::new(
                                         "datadog-logs-destination".to_string(),
-                                        vec!["filter-processor".to_string()],
+                                        vec!["my-processor-group".to_string()],
                                         ObservabilityPipelineDatadogLogsDestinationType::DATADOG_LOGS,
                                     ),
                                 ),
@@ -45,15 +46,23 @@ async fn main() {
                         ],
                     ).processors(
                         vec![
-                            ObservabilityPipelineConfigProcessorItem::ObservabilityPipelineFilterProcessor(
-                                Box::new(
-                                    ObservabilityPipelineFilterProcessor::new(
-                                        "filter-processor".to_string(),
-                                        "service:my-service".to_string(),
-                                        vec!["datadog-agent-source".to_string()],
-                                        ObservabilityPipelineFilterProcessorType::FILTER,
-                                    ),
-                                ),
+                            ObservabilityPipelineConfigProcessorGroup::new(
+                                true,
+                                "my-processor-group".to_string(),
+                                "service:my-service".to_string(),
+                                vec!["datadog-agent-source".to_string()],
+                                vec![
+                                    ObservabilityPipelineConfigProcessorItem::ObservabilityPipelineFilterProcessor(
+                                        Box::new(
+                                            ObservabilityPipelineFilterProcessor::new(
+                                                true,
+                                                "filter-processor".to_string(),
+                                                "status:error".to_string(),
+                                                ObservabilityPipelineFilterProcessorType::FILTER,
+                                            ),
+                                        ),
+                                    )
+                                ],
                             )
                         ],
                     ),

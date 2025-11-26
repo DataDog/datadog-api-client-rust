@@ -11,15 +11,15 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineSampleProcessor {
+    /// Whether this processor is enabled.
+    #[serde(rename = "enabled")]
+    pub enabled: bool,
     /// The unique identifier for this component. Used to reference this component in other parts of the pipeline (for example, as the `input` to downstream components).
     #[serde(rename = "id")]
     pub id: String,
     /// A Datadog search query used to determine which logs this processor targets.
     #[serde(rename = "include")]
     pub include: String,
-    /// A list of component IDs whose output is used as the `input` for this component.
-    #[serde(rename = "inputs")]
-    pub inputs: Vec<String>,
     /// The percentage of logs to sample.
     #[serde(rename = "percentage")]
     pub percentage: Option<f64>,
@@ -38,15 +38,15 @@ pub struct ObservabilityPipelineSampleProcessor {
 
 impl ObservabilityPipelineSampleProcessor {
     pub fn new(
+        enabled: bool,
         id: String,
         include: String,
-        inputs: Vec<String>,
         type_: crate::datadogV2::model::ObservabilityPipelineSampleProcessorType,
     ) -> ObservabilityPipelineSampleProcessor {
         ObservabilityPipelineSampleProcessor {
+            enabled,
             id,
             include,
-            inputs,
             percentage: None,
             rate: None,
             type_,
@@ -91,9 +91,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSampleProcessor {
             where
                 M: MapAccess<'a>,
             {
+                let mut enabled: Option<bool> = None;
                 let mut id: Option<String> = None;
                 let mut include: Option<String> = None;
-                let mut inputs: Option<Vec<String>> = None;
                 let mut percentage: Option<f64> = None;
                 let mut rate: Option<i64> = None;
                 let mut type_: Option<
@@ -107,14 +107,14 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSampleProcessor {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "enabled" => {
+                            enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "include" => {
                             include = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "inputs" => {
-                            inputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "percentage" => {
                             if v.is_null() {
@@ -146,15 +146,15 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSampleProcessor {
                         }
                     }
                 }
+                let enabled = enabled.ok_or_else(|| M::Error::missing_field("enabled"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let include = include.ok_or_else(|| M::Error::missing_field("include"))?;
-                let inputs = inputs.ok_or_else(|| M::Error::missing_field("inputs"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineSampleProcessor {
+                    enabled,
                     id,
                     include,
-                    inputs,
                     percentage,
                     rate,
                     type_,

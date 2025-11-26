@@ -11,15 +11,15 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineOcsfMapperProcessor {
+    /// Whether this processor is enabled.
+    #[serde(rename = "enabled")]
+    pub enabled: bool,
     /// The unique identifier for this component. Used to reference this component in other parts of the pipeline.
     #[serde(rename = "id")]
     pub id: String,
     /// A Datadog search query used to determine which logs this processor targets.
     #[serde(rename = "include")]
     pub include: String,
-    /// A list of component IDs whose output is used as the `input` for this processor.
-    #[serde(rename = "inputs")]
-    pub inputs: Vec<String>,
     /// A list of mapping rules to convert events to the OCSF format.
     #[serde(rename = "mappings")]
     pub mappings: Vec<crate::datadogV2::model::ObservabilityPipelineOcsfMapperProcessorMapping>,
@@ -35,16 +35,16 @@ pub struct ObservabilityPipelineOcsfMapperProcessor {
 
 impl ObservabilityPipelineOcsfMapperProcessor {
     pub fn new(
+        enabled: bool,
         id: String,
         include: String,
-        inputs: Vec<String>,
         mappings: Vec<crate::datadogV2::model::ObservabilityPipelineOcsfMapperProcessorMapping>,
         type_: crate::datadogV2::model::ObservabilityPipelineOcsfMapperProcessorType,
     ) -> ObservabilityPipelineOcsfMapperProcessor {
         ObservabilityPipelineOcsfMapperProcessor {
+            enabled,
             id,
             include,
-            inputs,
             mappings,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
@@ -78,9 +78,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineOcsfMapperProcessor {
             where
                 M: MapAccess<'a>,
             {
+                let mut enabled: Option<bool> = None;
                 let mut id: Option<String> = None;
                 let mut include: Option<String> = None;
-                let mut inputs: Option<Vec<String>> = None;
                 let mut mappings: Option<
                     Vec<crate::datadogV2::model::ObservabilityPipelineOcsfMapperProcessorMapping>,
                 > = None;
@@ -95,14 +95,14 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineOcsfMapperProcessor {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "enabled" => {
+                            enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "include" => {
                             include = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "inputs" => {
-                            inputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "mappings" => {
                             mappings = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -125,16 +125,16 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineOcsfMapperProcessor {
                         }
                     }
                 }
+                let enabled = enabled.ok_or_else(|| M::Error::missing_field("enabled"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let include = include.ok_or_else(|| M::Error::missing_field("include"))?;
-                let inputs = inputs.ok_or_else(|| M::Error::missing_field("inputs"))?;
                 let mappings = mappings.ok_or_else(|| M::Error::missing_field("mappings"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineOcsfMapperProcessor {
+                    enabled,
                     id,
                     include,
-                    inputs,
                     mappings,
                     type_,
                     additional_properties,
