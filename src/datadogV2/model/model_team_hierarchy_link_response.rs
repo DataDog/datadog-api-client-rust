@@ -6,17 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Relationship between a user team permission and a team
+/// Team hierarchy link response
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RelationshipToUserTeamPermission {
-    /// Related user team permission data
-    #[serde(rename = "data", default, with = "::serde_with::rust::double_option")]
-    pub data: Option<Option<crate::datadogV2::model::RelationshipToUserTeamPermissionData>>,
-    /// Links attributes.
+pub struct TeamHierarchyLinkResponse {
+    /// Team hierarchy link
+    #[serde(rename = "data")]
+    pub data: Option<crate::datadogV2::model::TeamHierarchyLink>,
+    /// Included teams
+    #[serde(rename = "included")]
+    pub included: Option<Vec<crate::datadogV2::model::TeamHierarchyLinkTeam>>,
+    /// Teams hierarchy links response links.
     #[serde(rename = "links")]
-    pub links: Option<crate::datadogV2::model::TeamRelationshipsLinks>,
+    pub links: Option<crate::datadogV2::model::TeamsHierarchyLinksResponseLinks>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,25 +27,31 @@ pub struct RelationshipToUserTeamPermission {
     pub(crate) _unparsed: bool,
 }
 
-impl RelationshipToUserTeamPermission {
-    pub fn new() -> RelationshipToUserTeamPermission {
-        RelationshipToUserTeamPermission {
+impl TeamHierarchyLinkResponse {
+    pub fn new() -> TeamHierarchyLinkResponse {
+        TeamHierarchyLinkResponse {
             data: None,
+            included: None,
             links: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn data(
-        mut self,
-        value: Option<crate::datadogV2::model::RelationshipToUserTeamPermissionData>,
-    ) -> Self {
+    pub fn data(mut self, value: crate::datadogV2::model::TeamHierarchyLink) -> Self {
         self.data = Some(value);
         self
     }
 
-    pub fn links(mut self, value: crate::datadogV2::model::TeamRelationshipsLinks) -> Self {
+    pub fn included(mut self, value: Vec<crate::datadogV2::model::TeamHierarchyLinkTeam>) -> Self {
+        self.included = Some(value);
+        self
+    }
+
+    pub fn links(
+        mut self,
+        value: crate::datadogV2::model::TeamsHierarchyLinksResponseLinks,
+    ) -> Self {
         self.links = Some(value);
         self
     }
@@ -56,20 +65,20 @@ impl RelationshipToUserTeamPermission {
     }
 }
 
-impl Default for RelationshipToUserTeamPermission {
+impl Default for TeamHierarchyLinkResponse {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for RelationshipToUserTeamPermission {
+impl<'de> Deserialize<'de> for TeamHierarchyLinkResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RelationshipToUserTeamPermissionVisitor;
-        impl<'a> Visitor<'a> for RelationshipToUserTeamPermissionVisitor {
-            type Value = RelationshipToUserTeamPermission;
+        struct TeamHierarchyLinkResponseVisitor;
+        impl<'a> Visitor<'a> for TeamHierarchyLinkResponseVisitor {
+            type Value = TeamHierarchyLinkResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -79,10 +88,11 @@ impl<'de> Deserialize<'de> for RelationshipToUserTeamPermission {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<
-                    Option<crate::datadogV2::model::RelationshipToUserTeamPermissionData>,
-                > = None;
-                let mut links: Option<crate::datadogV2::model::TeamRelationshipsLinks> = None;
+                let mut data: Option<crate::datadogV2::model::TeamHierarchyLink> = None;
+                let mut included: Option<Vec<crate::datadogV2::model::TeamHierarchyLinkTeam>> =
+                    None;
+                let mut links: Option<crate::datadogV2::model::TeamsHierarchyLinksResponseLinks> =
+                    None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -92,7 +102,16 @@ impl<'de> Deserialize<'de> for RelationshipToUserTeamPermission {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "data" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "included" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            included = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "links" => {
                             if v.is_null() {
@@ -108,8 +127,9 @@ impl<'de> Deserialize<'de> for RelationshipToUserTeamPermission {
                     }
                 }
 
-                let content = RelationshipToUserTeamPermission {
+                let content = TeamHierarchyLinkResponse {
                     data,
+                    included,
                     links,
                     additional_properties,
                     _unparsed,
@@ -119,6 +139,6 @@ impl<'de> Deserialize<'de> for RelationshipToUserTeamPermission {
             }
         }
 
-        deserializer.deserialize_any(RelationshipToUserTeamPermissionVisitor)
+        deserializer.deserialize_any(TeamHierarchyLinkResponseVisitor)
     }
 }

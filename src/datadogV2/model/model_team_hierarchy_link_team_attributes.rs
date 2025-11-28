@@ -6,66 +6,42 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Team attributes
+/// Team attributes in hierarchy link context
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct TeamAttributes {
-    /// Unicode representation of the avatar for the team, limited to a single grapheme
+pub struct TeamHierarchyLinkTeamAttributes {
+    /// The team's avatar
     #[serde(rename = "avatar", default, with = "::serde_with::rust::double_option")]
     pub avatar: Option<Option<String>>,
-    /// Banner selection for the team
-    #[serde(rename = "banner", default, with = "::serde_with::rust::double_option")]
-    pub banner: Option<Option<i64>>,
-    /// Creation date of the team
-    #[serde(rename = "created_at")]
-    pub created_at: Option<chrono::DateTime<chrono::Utc>>,
-    /// Free-form markdown description/content for the team's homepage
-    #[serde(
-        rename = "description",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
-    pub description: Option<Option<String>>,
-    /// The team's identifier
+    /// The team's banner
+    #[serde(rename = "banner")]
+    pub banner: Option<i64>,
+    /// The team's handle
     #[serde(rename = "handle")]
     pub handle: String,
-    /// Collection of hidden modules for the team
-    #[serde(
-        rename = "hidden_modules",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
-    pub hidden_modules: Option<Option<Vec<String>>>,
-    /// Whether the team is managed from an external source
+    /// Whether the team is managed
     #[serde(rename = "is_managed")]
     pub is_managed: Option<bool>,
-    /// The number of links belonging to the team
+    /// Whether the team has open membership
+    #[serde(rename = "is_open_membership")]
+    pub is_open_membership: Option<bool>,
+    /// The number of links for the team
     #[serde(rename = "link_count")]
-    pub link_count: Option<i32>,
-    /// Modification date of the team
-    #[serde(rename = "modified_at")]
-    pub modified_at: Option<chrono::DateTime<chrono::Utc>>,
-    /// The name of the team
+    pub link_count: Option<i64>,
+    /// The team's name
     #[serde(rename = "name")]
     pub name: String,
-    /// A brief summary of the team, derived from the `description`
+    /// The team's summary
     #[serde(
         rename = "summary",
         default,
         with = "::serde_with::rust::double_option"
     )]
     pub summary: Option<Option<String>>,
-    /// The number of users belonging to the team
+    /// The number of users in the team
     #[serde(rename = "user_count")]
-    pub user_count: Option<i32>,
-    /// Collection of visible modules for the team
-    #[serde(
-        rename = "visible_modules",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
-    pub visible_modules: Option<Option<Vec<String>>>,
+    pub user_count: Option<i64>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -73,22 +49,18 @@ pub struct TeamAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl TeamAttributes {
-    pub fn new(handle: String, name: String) -> TeamAttributes {
-        TeamAttributes {
+impl TeamHierarchyLinkTeamAttributes {
+    pub fn new(handle: String, name: String) -> TeamHierarchyLinkTeamAttributes {
+        TeamHierarchyLinkTeamAttributes {
             avatar: None,
             banner: None,
-            created_at: None,
-            description: None,
             handle,
-            hidden_modules: None,
             is_managed: None,
+            is_open_membership: None,
             link_count: None,
-            modified_at: None,
             name,
             summary: None,
             user_count: None,
-            visible_modules: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -99,23 +71,8 @@ impl TeamAttributes {
         self
     }
 
-    pub fn banner(mut self, value: Option<i64>) -> Self {
+    pub fn banner(mut self, value: i64) -> Self {
         self.banner = Some(value);
-        self
-    }
-
-    pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
-        self.created_at = Some(value);
-        self
-    }
-
-    pub fn description(mut self, value: Option<String>) -> Self {
-        self.description = Some(value);
-        self
-    }
-
-    pub fn hidden_modules(mut self, value: Option<Vec<String>>) -> Self {
-        self.hidden_modules = Some(value);
         self
     }
 
@@ -124,13 +81,13 @@ impl TeamAttributes {
         self
     }
 
-    pub fn link_count(mut self, value: i32) -> Self {
-        self.link_count = Some(value);
+    pub fn is_open_membership(mut self, value: bool) -> Self {
+        self.is_open_membership = Some(value);
         self
     }
 
-    pub fn modified_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
-        self.modified_at = Some(value);
+    pub fn link_count(mut self, value: i64) -> Self {
+        self.link_count = Some(value);
         self
     }
 
@@ -139,13 +96,8 @@ impl TeamAttributes {
         self
     }
 
-    pub fn user_count(mut self, value: i32) -> Self {
+    pub fn user_count(mut self, value: i64) -> Self {
         self.user_count = Some(value);
-        self
-    }
-
-    pub fn visible_modules(mut self, value: Option<Vec<String>>) -> Self {
-        self.visible_modules = Some(value);
         self
     }
 
@@ -158,14 +110,14 @@ impl TeamAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for TeamAttributes {
+impl<'de> Deserialize<'de> for TeamHierarchyLinkTeamAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct TeamAttributesVisitor;
-        impl<'a> Visitor<'a> for TeamAttributesVisitor {
-            type Value = TeamAttributes;
+        struct TeamHierarchyLinkTeamAttributesVisitor;
+        impl<'a> Visitor<'a> for TeamHierarchyLinkTeamAttributesVisitor {
+            type Value = TeamHierarchyLinkTeamAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -176,18 +128,14 @@ impl<'de> Deserialize<'de> for TeamAttributes {
                 M: MapAccess<'a>,
             {
                 let mut avatar: Option<Option<String>> = None;
-                let mut banner: Option<Option<i64>> = None;
-                let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut description: Option<Option<String>> = None;
+                let mut banner: Option<i64> = None;
                 let mut handle: Option<String> = None;
-                let mut hidden_modules: Option<Option<Vec<String>>> = None;
                 let mut is_managed: Option<bool> = None;
-                let mut link_count: Option<i32> = None;
-                let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
+                let mut is_open_membership: Option<bool> = None;
+                let mut link_count: Option<i64> = None;
                 let mut name: Option<String> = None;
                 let mut summary: Option<Option<String>> = None;
-                let mut user_count: Option<i32> = None;
-                let mut visible_modules: Option<Option<Vec<String>>> = None;
+                let mut user_count: Option<i64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -200,24 +148,13 @@ impl<'de> Deserialize<'de> for TeamAttributes {
                             avatar = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "banner" => {
-                            banner = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "created_at" => {
                             if v.is_null() {
                                 continue;
                             }
-                            created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "description" => {
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            banner = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "handle" => {
                             handle = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "hidden_modules" => {
-                            hidden_modules =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "is_managed" => {
                             if v.is_null() {
@@ -225,18 +162,18 @@ impl<'de> Deserialize<'de> for TeamAttributes {
                             }
                             is_managed = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "is_open_membership" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            is_open_membership =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "link_count" => {
                             if v.is_null() {
                                 continue;
                             }
                             link_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "modified_at" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            modified_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -250,10 +187,6 @@ impl<'de> Deserialize<'de> for TeamAttributes {
                             }
                             user_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "visible_modules" => {
-                            visible_modules =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -264,20 +197,16 @@ impl<'de> Deserialize<'de> for TeamAttributes {
                 let handle = handle.ok_or_else(|| M::Error::missing_field("handle"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
 
-                let content = TeamAttributes {
+                let content = TeamHierarchyLinkTeamAttributes {
                     avatar,
                     banner,
-                    created_at,
-                    description,
                     handle,
-                    hidden_modules,
                     is_managed,
+                    is_open_membership,
                     link_count,
-                    modified_at,
                     name,
                     summary,
                     user_count,
-                    visible_modules,
                     additional_properties,
                     _unparsed,
                 };
@@ -286,6 +215,6 @@ impl<'de> Deserialize<'de> for TeamAttributes {
             }
         }
 
-        deserializer.deserialize_any(TeamAttributesVisitor)
+        deserializer.deserialize_any(TeamHierarchyLinkTeamAttributesVisitor)
     }
 }
