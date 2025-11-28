@@ -2,12 +2,13 @@
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_csm_threats::CSMThreatsAPI;
 use datadog_api_client::datadogV2::model::CloudWorkloadSecurityAgentRuleAction;
+use datadog_api_client::datadogV2::model::CloudWorkloadSecurityAgentRuleActionHash;
 use datadog_api_client::datadogV2::model::CloudWorkloadSecurityAgentRuleActionSet;
+use datadog_api_client::datadogV2::model::CloudWorkloadSecurityAgentRuleActionSetValue;
 use datadog_api_client::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateAttributes;
 use datadog_api_client::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateData;
 use datadog_api_client::datadogV2::model::CloudWorkloadSecurityAgentRuleCreateRequest;
 use datadog_api_client::datadogV2::model::CloudWorkloadSecurityAgentRuleType;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -25,9 +26,13 @@ async fn main() {
                         .inherited(true)
                         .name("test_set".to_string())
                         .scope("process".to_string())
-                        .value("test_value".to_string()),
+                        .value(CloudWorkloadSecurityAgentRuleActionSetValue::String(
+                            "test_value".to_string(),
+                        )),
                 ),
-                CloudWorkloadSecurityAgentRuleAction::new().hash(BTreeMap::from([])),
+                CloudWorkloadSecurityAgentRuleAction::new().hash(
+                    CloudWorkloadSecurityAgentRuleActionHash::new().field("exec.file".to_string()),
+                ),
             ]))
             .description("My Agent rule with set action".to_string())
             .enabled(true)
