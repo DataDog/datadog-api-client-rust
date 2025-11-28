@@ -40,7 +40,7 @@ pub struct CloudWorkloadSecurityAgentRuleActionSet {
     pub ttl: Option<i64>,
     /// The value of the set action
     #[serde(rename = "value")]
-    pub value: Option<String>,
+    pub value: Option<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleActionSetValue>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -111,7 +111,10 @@ impl CloudWorkloadSecurityAgentRuleActionSet {
         self
     }
 
-    pub fn value(mut self, value: String) -> Self {
+    pub fn value(
+        mut self,
+        value: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleActionSetValue,
+    ) -> Self {
         self.value = Some(value);
         self
     }
@@ -157,7 +160,9 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleActionSet {
                 let mut scope: Option<String> = None;
                 let mut size: Option<i64> = None;
                 let mut ttl: Option<i64> = None;
-                let mut value: Option<String> = None;
+                let mut value: Option<
+                    crate::datadogV2::model::CloudWorkloadSecurityAgentRuleActionSetValue,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -226,6 +231,14 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleActionSet {
                                 continue;
                             }
                             value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _value) = value {
+                                match _value {
+                                    crate::datadogV2::model::CloudWorkloadSecurityAgentRuleActionSetValue::UnparsedObject(_value) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
