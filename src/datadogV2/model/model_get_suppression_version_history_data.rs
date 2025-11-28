@@ -6,17 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A rule version with a list of updates.
+/// Data for the suppression version history.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RuleVersions {
-    /// A list of changes.
-    #[serde(rename = "changes")]
-    pub changes: Option<Vec<crate::datadogV2::model::VersionHistoryUpdate>>,
-    /// Create a new rule.
-    #[serde(rename = "rule")]
-    pub rule: Option<crate::datadogV2::model::SecurityMonitoringRuleResponse>,
+pub struct GetSuppressionVersionHistoryData {
+    /// Response object containing the version history of a suppression.
+    #[serde(rename = "attributes")]
+    pub attributes: Option<crate::datadogV2::model::SuppressionVersionHistory>,
+    /// ID of the suppression.
+    #[serde(rename = "id")]
+    pub id: Option<String>,
+    /// Type of data.
+    #[serde(rename = "type")]
+    pub type_: Option<crate::datadogV2::model::GetSuppressionVersionHistoryDataType>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,23 +27,32 @@ pub struct RuleVersions {
     pub(crate) _unparsed: bool,
 }
 
-impl RuleVersions {
-    pub fn new() -> RuleVersions {
-        RuleVersions {
-            changes: None,
-            rule: None,
+impl GetSuppressionVersionHistoryData {
+    pub fn new() -> GetSuppressionVersionHistoryData {
+        GetSuppressionVersionHistoryData {
+            attributes: None,
+            id: None,
+            type_: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn changes(mut self, value: Vec<crate::datadogV2::model::VersionHistoryUpdate>) -> Self {
-        self.changes = Some(value);
+    pub fn attributes(mut self, value: crate::datadogV2::model::SuppressionVersionHistory) -> Self {
+        self.attributes = Some(value);
         self
     }
 
-    pub fn rule(mut self, value: crate::datadogV2::model::SecurityMonitoringRuleResponse) -> Self {
-        self.rule = Some(value);
+    pub fn id(mut self, value: String) -> Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn type_(
+        mut self,
+        value: crate::datadogV2::model::GetSuppressionVersionHistoryDataType,
+    ) -> Self {
+        self.type_ = Some(value);
         self
     }
 
@@ -53,20 +65,20 @@ impl RuleVersions {
     }
 }
 
-impl Default for RuleVersions {
+impl Default for GetSuppressionVersionHistoryData {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for RuleVersions {
+impl<'de> Deserialize<'de> for GetSuppressionVersionHistoryData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RuleVersionsVisitor;
-        impl<'a> Visitor<'a> for RuleVersionsVisitor {
-            type Value = RuleVersions;
+        struct GetSuppressionVersionHistoryDataVisitor;
+        impl<'a> Visitor<'a> for GetSuppressionVersionHistoryDataVisitor {
+            type Value = GetSuppressionVersionHistoryData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -76,9 +88,12 @@ impl<'de> Deserialize<'de> for RuleVersions {
             where
                 M: MapAccess<'a>,
             {
-                let mut changes: Option<Vec<crate::datadogV2::model::VersionHistoryUpdate>> = None;
-                let mut rule: Option<crate::datadogV2::model::SecurityMonitoringRuleResponse> =
+                let mut attributes: Option<crate::datadogV2::model::SuppressionVersionHistory> =
                     None;
+                let mut id: Option<String> = None;
+                let mut type_: Option<
+                    crate::datadogV2::model::GetSuppressionVersionHistoryDataType,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -87,20 +102,26 @@ impl<'de> Deserialize<'de> for RuleVersions {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "changes" => {
+                        "attributes" => {
                             if v.is_null() {
                                 continue;
                             }
-                            changes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "rule" => {
+                        "id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rule = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _rule) = rule {
-                                match _rule {
-                                    crate::datadogV2::model::SecurityMonitoringRuleResponse::UnparsedObject(_rule) => {
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "type" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _type_) = type_ {
+                                match _type_ {
+                                    crate::datadogV2::model::GetSuppressionVersionHistoryDataType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -115,9 +136,10 @@ impl<'de> Deserialize<'de> for RuleVersions {
                     }
                 }
 
-                let content = RuleVersions {
-                    changes,
-                    rule,
+                let content = GetSuppressionVersionHistoryData {
+                    attributes,
+                    id,
+                    type_,
                     additional_properties,
                     _unparsed,
                 };
@@ -126,6 +148,6 @@ impl<'de> Deserialize<'de> for RuleVersions {
             }
         }
 
-        deserializer.deserialize_any(RuleVersionsVisitor)
+        deserializer.deserialize_any(GetSuppressionVersionHistoryDataVisitor)
     }
 }
