@@ -80,6 +80,43 @@ impl ListMemberTeamsOptionalParams {
     }
 }
 
+/// ListTeamHierarchyLinksOptionalParams is a struct for passing parameters to the method [`TeamsAPI::list_team_hierarchy_links`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListTeamHierarchyLinksOptionalParams {
+    /// Specific page number to return.
+    pub page_number: Option<i64>,
+    /// Size for a given page. The maximum allowed value is 100.
+    pub page_size: Option<i64>,
+    /// Filter by parent team ID
+    pub filter_parent_team: Option<String>,
+    /// Filter by sub team ID
+    pub filter_sub_team: Option<String>,
+}
+
+impl ListTeamHierarchyLinksOptionalParams {
+    /// Specific page number to return.
+    pub fn page_number(mut self, value: i64) -> Self {
+        self.page_number = Some(value);
+        self
+    }
+    /// Size for a given page. The maximum allowed value is 100.
+    pub fn page_size(mut self, value: i64) -> Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Filter by parent team ID
+    pub fn filter_parent_team(mut self, value: String) -> Self {
+        self.filter_parent_team = Some(value);
+        self
+    }
+    /// Filter by sub team ID
+    pub fn filter_sub_team(mut self, value: String) -> Self {
+        self.filter_sub_team = Some(value);
+        self
+    }
+}
+
 /// ListTeamsOptionalParams is a struct for passing parameters to the method [`TeamsAPI::list_teams`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -146,6 +183,14 @@ pub enum AddMemberTeamError {
     UnknownValue(serde_json::Value),
 }
 
+/// AddTeamHierarchyLinkError is a struct for typed errors of method [`TeamsAPI::add_team_hierarchy_link`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum AddTeamHierarchyLinkError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// CreateTeamError is a struct for typed errors of method [`TeamsAPI::create_team`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -198,6 +243,14 @@ pub enum DeleteTeamMembershipError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetTeamError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetTeamHierarchyLinkError is a struct for typed errors of method [`TeamsAPI::get_team_hierarchy_link`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetTeamHierarchyLinkError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -258,6 +311,14 @@ pub enum ListMemberTeamsError {
     UnknownValue(serde_json::Value),
 }
 
+/// ListTeamHierarchyLinksError is a struct for typed errors of method [`TeamsAPI::list_team_hierarchy_links`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListTeamHierarchyLinksError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// ListTeamsError is a struct for typed errors of method [`TeamsAPI::list_teams`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -270,6 +331,14 @@ pub enum ListTeamsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum RemoveMemberTeamError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// RemoveTeamHierarchyLinkError is a struct for typed errors of method [`TeamsAPI::remove_team_hierarchy_link`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum RemoveTeamHierarchyLinkError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -381,6 +450,8 @@ impl TeamsAPI {
 
     /// Add a member team.
     /// Adds the team given by the `id` in the body as a member team of the super team.
+    ///
+    /// **Note**: This API is deprecated. For creating team hierarchy links, use the team hierarchy links API: `POST /api/v2/team-hierarchy-links`.
     pub async fn add_member_team(
         &self,
         super_team_id: String,
@@ -397,6 +468,8 @@ impl TeamsAPI {
 
     /// Add a member team.
     /// Adds the team given by the `id` in the body as a member team of the super team.
+    ///
+    /// **Note**: This API is deprecated. For creating team hierarchy links, use the team hierarchy links API: `POST /api/v2/team-hierarchy-links`.
     pub async fn add_member_team_with_http_info(
         &self,
         super_team_id: String,
@@ -518,6 +591,160 @@ impl TeamsAPI {
             })
         } else {
             let local_entity: Option<AddMemberTeamError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Create a new team hierarchy link between a parent team and a sub team.
+    pub async fn add_team_hierarchy_link(
+        &self,
+        body: crate::datadogV2::model::TeamHierarchyLinkCreateRequest,
+    ) -> Result<
+        crate::datadogV2::model::TeamHierarchyLinkResponse,
+        datadog::Error<AddTeamHierarchyLinkError>,
+    > {
+        match self.add_team_hierarchy_link_with_http_info(body).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Create a new team hierarchy link between a parent team and a sub team.
+    pub async fn add_team_hierarchy_link_with_http_info(
+        &self,
+        body: crate::datadogV2::model::TeamHierarchyLinkCreateRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::TeamHierarchyLinkResponse>,
+        datadog::Error<AddTeamHierarchyLinkError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.add_team_hierarchy_link";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/team-hierarchy-links",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::TeamHierarchyLinkResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<AddTeamHierarchyLinkError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -1364,6 +1591,115 @@ impl TeamsAPI {
         }
     }
 
+    /// Get a single team hierarchy link for the given link_id.
+    pub async fn get_team_hierarchy_link(
+        &self,
+        link_id: String,
+    ) -> Result<
+        crate::datadogV2::model::TeamHierarchyLinkResponse,
+        datadog::Error<GetTeamHierarchyLinkError>,
+    > {
+        match self.get_team_hierarchy_link_with_http_info(link_id).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get a single team hierarchy link for the given link_id.
+    pub async fn get_team_hierarchy_link_with_http_info(
+        &self,
+        link_id: String,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::TeamHierarchyLinkResponse>,
+        datadog::Error<GetTeamHierarchyLinkError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_team_hierarchy_link";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/team-hierarchy-links/{link_id}",
+            local_configuration.get_operation_host(operation_id),
+            link_id = datadog::urlencode(link_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::TeamHierarchyLinkResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetTeamHierarchyLinkError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Get a single link for a team.
     pub async fn get_team_link(
         &self,
@@ -2079,6 +2415,9 @@ impl TeamsAPI {
     }
 
     /// Get all member teams.
+    ///
+    /// **Note**: This API is deprecated. For team hierarchy relationships (parent-child
+    /// teams), use the team hierarchy links API: `GET /api/v2/team-hierarchy-links`.
     pub async fn list_member_teams(
         &self,
         super_team_id: String,
@@ -2137,6 +2476,9 @@ impl TeamsAPI {
     }
 
     /// Get all member teams.
+    ///
+    /// **Note**: This API is deprecated. For team hierarchy relationships (parent-child
+    /// teams), use the team hierarchy links API: `GET /api/v2/team-hierarchy-links`.
     pub async fn list_member_teams_with_http_info(
         &self,
         super_team_id: String,
@@ -2245,6 +2587,174 @@ impl TeamsAPI {
             };
         } else {
             let local_entity: Option<ListMemberTeamsError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// List all team hierarchy links that match the provided filters.
+    pub async fn list_team_hierarchy_links(
+        &self,
+        params: ListTeamHierarchyLinksOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::TeamHierarchyLinksResponse,
+        datadog::Error<ListTeamHierarchyLinksError>,
+    > {
+        match self.list_team_hierarchy_links_with_http_info(params).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    pub fn list_team_hierarchy_links_with_pagination(
+        &self,
+        mut params: ListTeamHierarchyLinksOptionalParams,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV2::model::TeamHierarchyLink,
+            datadog::Error<ListTeamHierarchyLinksError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 10;
+            if params.page_size.is_none() {
+                params.page_size = Some(page_size);
+            } else {
+                page_size = params.page_size.unwrap().clone();
+            }
+            if params.page_number.is_none() {
+                params.page_number = Some(0);
+            }
+            loop {
+                let resp = self.list_team_hierarchy_links(params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                params.page_number = Some(params.page_number.unwrap() + 1);
+            }
+        }
+    }
+
+    /// List all team hierarchy links that match the provided filters.
+    pub async fn list_team_hierarchy_links_with_http_info(
+        &self,
+        params: ListTeamHierarchyLinksOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::TeamHierarchyLinksResponse>,
+        datadog::Error<ListTeamHierarchyLinksError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_team_hierarchy_links";
+
+        // unbox and build optional parameters
+        let page_number = params.page_number;
+        let page_size = params.page_size;
+        let filter_parent_team = params.filter_parent_team;
+        let filter_sub_team = params.filter_sub_team;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/team-hierarchy-links",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = page_number {
+            local_req_builder =
+                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_size {
+            local_req_builder =
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_parent_team {
+            local_req_builder =
+                local_req_builder.query(&[("filter[parent_team]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_sub_team {
+            local_req_builder =
+                local_req_builder.query(&[("filter[sub_team]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::TeamHierarchyLinksResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListTeamHierarchyLinksError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -2439,6 +2949,8 @@ impl TeamsAPI {
     }
 
     /// Remove a super team's member team identified by `member_team_id`.
+    ///
+    /// **Note**: This API is deprecated. For deleting team hierarchy links, use the team hierarchy links API: `DELETE /api/v2/team-hierarchy-links/{link_id}`.
     pub async fn remove_member_team(
         &self,
         super_team_id: String,
@@ -2454,6 +2966,8 @@ impl TeamsAPI {
     }
 
     /// Remove a super team's member team identified by `member_team_id`.
+    ///
+    /// **Note**: This API is deprecated. For deleting team hierarchy links, use the team hierarchy links API: `DELETE /api/v2/team-hierarchy-links/{link_id}`.
     pub async fn remove_member_team_with_http_info(
         &self,
         super_team_id: String,
@@ -2530,6 +3044,97 @@ impl TeamsAPI {
             })
         } else {
             let local_entity: Option<RemoveMemberTeamError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Remove a team hierarchy link by the given link_id.
+    pub async fn remove_team_hierarchy_link(
+        &self,
+        link_id: String,
+    ) -> Result<(), datadog::Error<RemoveTeamHierarchyLinkError>> {
+        match self
+            .remove_team_hierarchy_link_with_http_info(link_id)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Remove a team hierarchy link by the given link_id.
+    pub async fn remove_team_hierarchy_link_with_http_info(
+        &self,
+        link_id: String,
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<RemoveTeamHierarchyLinkError>> {
+        let local_configuration = &self.config;
+        let operation_id = "v2.remove_team_hierarchy_link";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/team-hierarchy-links/{link_id}",
+            local_configuration.get_operation_host(operation_id),
+            link_id = datadog::urlencode(link_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<RemoveTeamHierarchyLinkError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,

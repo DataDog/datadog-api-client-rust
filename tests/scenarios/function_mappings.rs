@@ -110,6 +110,8 @@ pub struct ApiInstances {
     pub v2_api_logs_custom_destinations:
         Option<datadogV2::api_logs_custom_destinations::LogsCustomDestinationsAPI>,
     pub v2_api_logs_metrics: Option<datadogV2::api_logs_metrics::LogsMetricsAPI>,
+    pub v2_api_logs_restriction_queries:
+        Option<datadogV2::api_logs_restriction_queries::LogsRestrictionQueriesAPI>,
     pub v2_api_metrics: Option<datadogV2::api_metrics::MetricsAPI>,
     pub v2_api_monitors: Option<datadogV2::api_monitors::MonitorsAPI>,
     pub v2_api_network_device_monitoring:
@@ -772,6 +774,12 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                     world.http_client.as_ref().unwrap().clone(),
                 ),
             );
+        }
+        "LogsRestrictionQueries" => {
+            world.api_instances.v2_api_logs_restriction_queries = Some(datadogV2::api_logs_restriction_queries::LogsRestrictionQueriesAPI::with_client_and_config(
+                world.config.clone(),
+                world.http_client.as_ref().unwrap().clone()
+            ));
         }
         "NetworkDeviceMonitoring" => {
             world.api_instances.v2_api_network_device_monitoring = Some(datadogV2::api_network_device_monitoring::NetworkDeviceMonitoringAPI::with_client_and_config(
@@ -3479,6 +3487,50 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         .function_mappings
         .insert("v2.UpdateLogsMetric".into(), test_v2_update_logs_metric);
     world.function_mappings.insert(
+        "v2.ListRestrictionQueries".into(),
+        test_v2_list_restriction_queries,
+    );
+    world.function_mappings.insert(
+        "v2.CreateRestrictionQuery".into(),
+        test_v2_create_restriction_query,
+    );
+    world.function_mappings.insert(
+        "v2.GetRoleRestrictionQuery".into(),
+        test_v2_get_role_restriction_query,
+    );
+    world.function_mappings.insert(
+        "v2.ListUserRestrictionQueries".into(),
+        test_v2_list_user_restriction_queries,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteRestrictionQuery".into(),
+        test_v2_delete_restriction_query,
+    );
+    world.function_mappings.insert(
+        "v2.GetRestrictionQuery".into(),
+        test_v2_get_restriction_query,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateRestrictionQuery".into(),
+        test_v2_update_restriction_query,
+    );
+    world.function_mappings.insert(
+        "v2.ReplaceRestrictionQuery".into(),
+        test_v2_replace_restriction_query,
+    );
+    world.function_mappings.insert(
+        "v2.RemoveRoleFromRestrictionQuery".into(),
+        test_v2_remove_role_from_restriction_query,
+    );
+    world.function_mappings.insert(
+        "v2.ListRestrictionQueryRoles".into(),
+        test_v2_list_restriction_query_roles,
+    );
+    world.function_mappings.insert(
+        "v2.AddRoleToRestrictionQuery".into(),
+        test_v2_add_role_to_restriction_query,
+    );
+    world.function_mappings.insert(
         "v2.ListTagConfigurations".into(),
         test_v2_list_tag_configurations,
     );
@@ -4253,6 +4305,26 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.CreateTeam".into(), test_v2_create_team);
+    world.function_mappings.insert(
+        "v2.ListTeamHierarchyLinks".into(),
+        test_v2_list_team_hierarchy_links,
+    );
+    world.function_mappings.insert(
+        "v2.ListTeamHierarchyLinksWithPagination".into(),
+        test_v2_list_team_hierarchy_links_with_pagination,
+    );
+    world.function_mappings.insert(
+        "v2.AddTeamHierarchyLink".into(),
+        test_v2_add_team_hierarchy_link,
+    );
+    world.function_mappings.insert(
+        "v2.RemoveTeamHierarchyLink".into(),
+        test_v2_remove_team_hierarchy_link,
+    );
+    world.function_mappings.insert(
+        "v2.GetTeamHierarchyLink".into(),
+        test_v2_get_team_hierarchy_link,
+    );
     world
         .function_mappings
         .insert("v2.GetTeamSync".into(), test_v2_get_team_sync);
@@ -26027,6 +26099,350 @@ fn test_v2_update_logs_metric(world: &mut DatadogWorld, _parameters: &HashMap<St
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_list_restriction_queries(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_logs_restriction_queries
+        .as_ref()
+        .expect("api instance not found");
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_logs_restriction_queries::ListRestrictionQueriesOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    let response = match block_on(api.list_restriction_queries_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_restriction_query(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_logs_restriction_queries
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_restriction_query_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_role_restriction_query(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_logs_restriction_queries
+        .as_ref()
+        .expect("api instance not found");
+    let role_id = serde_json::from_value(_parameters.get("role_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_role_restriction_query_with_http_info(role_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_user_restriction_queries(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_logs_restriction_queries
+        .as_ref()
+        .expect("api instance not found");
+    let user_id = serde_json::from_value(_parameters.get("user_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.list_user_restriction_queries_with_http_info(user_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_restriction_query(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_logs_restriction_queries
+        .as_ref()
+        .expect("api instance not found");
+    let restriction_query_id =
+        serde_json::from_value(_parameters.get("restriction_query_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_restriction_query_with_http_info(restriction_query_id))
+    {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_restriction_query(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_logs_restriction_queries
+        .as_ref()
+        .expect("api instance not found");
+    let restriction_query_id =
+        serde_json::from_value(_parameters.get("restriction_query_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_restriction_query_with_http_info(restriction_query_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_restriction_query(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_logs_restriction_queries
+        .as_ref()
+        .expect("api instance not found");
+    let restriction_query_id =
+        serde_json::from_value(_parameters.get("restriction_query_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.update_restriction_query_with_http_info(restriction_query_id, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_replace_restriction_query(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_logs_restriction_queries
+        .as_ref()
+        .expect("api instance not found");
+    let restriction_query_id =
+        serde_json::from_value(_parameters.get("restriction_query_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.replace_restriction_query_with_http_info(restriction_query_id, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_remove_role_from_restriction_query(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_logs_restriction_queries
+        .as_ref()
+        .expect("api instance not found");
+    let restriction_query_id =
+        serde_json::from_value(_parameters.get("restriction_query_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.remove_role_from_restriction_query_with_http_info(restriction_query_id, body),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_restriction_query_roles(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_logs_restriction_queries
+        .as_ref()
+        .expect("api instance not found");
+    let restriction_query_id =
+        serde_json::from_value(_parameters.get("restriction_query_id").unwrap().clone()).unwrap();
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_logs_restriction_queries::ListRestrictionQueryRolesOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    let response = match block_on(
+        api.list_restriction_query_roles_with_http_info(restriction_query_id, params),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_add_role_to_restriction_query(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_logs_restriction_queries
+        .as_ref()
+        .expect("api instance not found");
+    let restriction_query_id =
+        serde_json::from_value(_parameters.get("restriction_query_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.add_role_to_restriction_query_with_http_info(restriction_query_id, body),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_list_tag_configurations(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
@@ -32709,6 +33125,181 @@ fn test_v2_create_team(world: &mut DatadogWorld, _parameters: &HashMap<String, V
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.create_team_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_team_hierarchy_links(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_teams
+        .as_ref()
+        .expect("api instance not found");
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_parent_team = _parameters
+        .get("filter[parent_team]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_sub_team = _parameters
+        .get("filter[sub_team]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_teams::ListTeamHierarchyLinksOptionalParams::default();
+    params.page_number = page_number;
+    params.page_size = page_size;
+    params.filter_parent_team = filter_parent_team;
+    params.filter_sub_team = filter_sub_team;
+    let response = match block_on(api.list_team_hierarchy_links_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+fn test_v2_list_team_hierarchy_links_with_pagination(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_teams
+        .as_ref()
+        .expect("api instance not found");
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_parent_team = _parameters
+        .get("filter[parent_team]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_sub_team = _parameters
+        .get("filter[sub_team]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_teams::ListTeamHierarchyLinksOptionalParams::default();
+    params.page_number = page_number;
+    params.page_size = page_size;
+    params.filter_parent_team = filter_parent_team;
+    params.filter_sub_team = filter_sub_team;
+    let response = api.list_team_hierarchy_links_with_pagination(params);
+    let mut result = Vec::new();
+
+    block_on(async {
+        pin_mut!(response);
+
+        while let Some(resp) = response.next().await {
+            match resp {
+                Ok(response) => {
+                    result.push(response);
+                }
+                Err(error) => {
+                    return match error {
+                        Error::ResponseError(e) => {
+                            if let Some(entity) = e.entity {
+                                world.response.object = serde_json::to_value(entity).unwrap();
+                            }
+                        }
+                        _ => panic!("error parsing response: {}", error),
+                    };
+                }
+            }
+        }
+    });
+    world.response.object = serde_json::to_value(result).unwrap();
+    world.response.code = 200;
+}
+
+fn test_v2_add_team_hierarchy_link(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_teams
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.add_team_hierarchy_link_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_remove_team_hierarchy_link(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_teams
+        .as_ref()
+        .expect("api instance not found");
+    let link_id = serde_json::from_value(_parameters.get("link_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.remove_team_hierarchy_link_with_http_info(link_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_team_hierarchy_link(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_teams
+        .as_ref()
+        .expect("api instance not found");
+    let link_id = serde_json::from_value(_parameters.get("link_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_team_hierarchy_link_with_http_info(link_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {

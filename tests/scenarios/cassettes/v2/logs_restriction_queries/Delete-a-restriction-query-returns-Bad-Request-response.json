@@ -1,0 +1,33 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "*/*"
+          ]
+        },
+        "method": "delete",
+        "uri": "https://api.datadoghq.com/api/v2/logs/config/restriction_queries/malformed_id"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[\"uuid is not proper type\"]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Tue, 18 Nov 2025 19:17:06 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
