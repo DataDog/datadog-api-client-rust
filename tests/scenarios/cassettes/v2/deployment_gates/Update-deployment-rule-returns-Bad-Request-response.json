@@ -3,7 +3,7 @@
     {
       "request": {
         "body": {
-          "string": "{\"data\":{\"attributes\":{\"dry_run\":false,\"env\":\"production\",\"identifier\":\"my-gate\",\"service\":\"my-service\"},\"type\":\"deployment_gate\"}}",
+          "string": "{\"data\":{\"attributes\":{\"dry_run\":false,\"env\":\"production\",\"identifier\":\"my-gate-testupdatedeploymentrulereturnsbadrequestresponse1764326924\",\"service\":\"my-service\"},\"type\":\"deployment_gate\"}}",
           "encoding": null
         },
         "headers": {
@@ -19,7 +19,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"id\":\"b2bd3ad3-f414-4f05-9ad6-248ed3f99f4d\",\"type\":\"deployment_gate\",\"attributes\":{\"created_at\":\"2025-10-28T14:51:18.108594Z\",\"created_by\":{\"id\":\"9919ec9b-ebc7-49ee-8dc8-03626e717cca\",\"name\":\"CI Account\",\"handle\":\"9919ec9b-ebc7-49ee-8dc8-03626e717cca\"},\"dry_run\":false,\"env\":\"production\",\"identifier\":\"my-gate\",\"service\":\"my-service\",\"updated_at\":\"2025-10-28T14:51:18.108594Z\",\"updated_by\":{\"id\":\"9919ec9b-ebc7-49ee-8dc8-03626e717cca\",\"name\":\"CI Account\",\"handle\":\"9919ec9b-ebc7-49ee-8dc8-03626e717cca\"}}}}",
+          "string": "{\"data\":{\"id\":\"f7fc03e3-86d9-4731-9baf-9b3a2f9239c3\",\"type\":\"deployment_gate\",\"attributes\":{\"created_at\":\"2025-11-28T10:48:44.325367Z\",\"created_by\":{\"id\":\"9919ec9b-ebc7-49ee-8dc8-03626e717cca\",\"name\":\"CI Account\",\"handle\":\"9919ec9b-ebc7-49ee-8dc8-03626e717cca\"},\"dry_run\":false,\"env\":\"production\",\"identifier\":\"my-gate-testupdatedeploymentrulereturnsbadrequestresponse1764326924\",\"service\":\"my-service\",\"updated_at\":\"2025-11-28T10:48:44.325367Z\",\"updated_by\":{\"id\":\"9919ec9b-ebc7-49ee-8dc8-03626e717cca\",\"name\":\"CI Account\",\"handle\":\"9919ec9b-ebc7-49ee-8dc8-03626e717cca\"}}}}",
           "encoding": null
         },
         "headers": {
@@ -32,7 +32,7 @@
           "message": "OK"
         }
       },
-      "recorded_at": "Tue, 28 Oct 2025 14:51:18 GMT"
+      "recorded_at": "Fri, 28 Nov 2025 10:48:44 GMT"
     },
     {
       "request": {
@@ -49,11 +49,11 @@
           ]
         },
         "method": "post",
-        "uri": "https://api.datadoghq.com/api/v2/deployment_gates/b2bd3ad3-f414-4f05-9ad6-248ed3f99f4d/rules"
+        "uri": "https://api.datadoghq.com/api/v2/deployment_gates/f7fc03e3-86d9-4731-9baf-9b3a2f9239c3/rules"
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"id\":\"189846d6-3c19-46e8-98d1-9d05a2f43361\",\"type\":\"deployment_rule\",\"attributes\":{\"created_at\":\"2025-10-28T14:51:18.251816Z\",\"created_by\":{\"id\":\"9919ec9b-ebc7-49ee-8dc8-03626e717cca\",\"name\":\"CI Account\",\"handle\":\"9919ec9b-ebc7-49ee-8dc8-03626e717cca\"},\"dry_run\":false,\"gate_id\":\"b2bd3ad3-f414-4f05-9ad6-248ed3f99f4d\",\"name\":\"My deployment rule\",\"options\":{},\"type\":\"faulty_deployment_detection\",\"updated_at\":\"2025-10-28T14:51:18.251816Z\",\"updated_by\":{\"id\":\"9919ec9b-ebc7-49ee-8dc8-03626e717cca\",\"name\":\"CI Account\",\"handle\":\"9919ec9b-ebc7-49ee-8dc8-03626e717cca\"}}}}",
+          "string": "{\"data\":{\"id\":\"63e71fe3-f002-4e46-bc24-772c7a743e95\",\"type\":\"deployment_rule\",\"attributes\":{\"created_at\":\"2025-11-28T10:48:44.453112Z\",\"created_by\":{\"id\":\"9919ec9b-ebc7-49ee-8dc8-03626e717cca\",\"name\":\"CI Account\",\"handle\":\"9919ec9b-ebc7-49ee-8dc8-03626e717cca\"},\"dry_run\":false,\"gate_id\":\"f7fc03e3-86d9-4731-9baf-9b3a2f9239c3\",\"name\":\"My deployment rule\",\"options\":{},\"type\":\"faulty_deployment_detection\",\"updated_at\":\"2025-11-28T10:48:44.453112Z\",\"updated_by\":{\"id\":\"9919ec9b-ebc7-49ee-8dc8-03626e717cca\",\"name\":\"CI Account\",\"handle\":\"9919ec9b-ebc7-49ee-8dc8-03626e717cca\"}}}}",
           "encoding": null
         },
         "headers": {
@@ -66,7 +66,7 @@
           "message": "OK"
         }
       },
-      "recorded_at": "Tue, 28 Oct 2025 14:51:18 GMT"
+      "recorded_at": "Fri, 28 Nov 2025 10:48:44 GMT"
     },
     {
       "request": {
@@ -100,7 +100,7 @@
           "message": "Bad Request"
         }
       },
-      "recorded_at": "Tue, 28 Oct 2025 14:51:18 GMT"
+      "recorded_at": "Fri, 28 Nov 2025 10:48:44 GMT"
     },
     {
       "request": {
@@ -111,7 +111,7 @@
           ]
         },
         "method": "delete",
-        "uri": "https://api.datadoghq.com/api/v2/deployment_gates/b2bd3ad3-f414-4f05-9ad6-248ed3f99f4d/rules/189846d6-3c19-46e8-98d1-9d05a2f43361"
+        "uri": "https://api.datadoghq.com/api/v2/deployment_gates/f7fc03e3-86d9-4731-9baf-9b3a2f9239c3/rules/63e71fe3-f002-4e46-bc24-772c7a743e95"
       },
       "response": {
         "body": {
@@ -124,7 +124,7 @@
           "message": "No Content"
         }
       },
-      "recorded_at": "Tue, 28 Oct 2025 14:51:18 GMT"
+      "recorded_at": "Fri, 28 Nov 2025 10:48:44 GMT"
     },
     {
       "request": {
@@ -135,7 +135,7 @@
           ]
         },
         "method": "delete",
-        "uri": "https://api.datadoghq.com/api/v2/deployment_gates/b2bd3ad3-f414-4f05-9ad6-248ed3f99f4d"
+        "uri": "https://api.datadoghq.com/api/v2/deployment_gates/f7fc03e3-86d9-4731-9baf-9b3a2f9239c3"
       },
       "response": {
         "body": {
@@ -148,7 +148,7 @@
           "message": "No Content"
         }
       },
-      "recorded_at": "Tue, 28 Oct 2025 14:51:18 GMT"
+      "recorded_at": "Fri, 28 Nov 2025 10:48:44 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"
