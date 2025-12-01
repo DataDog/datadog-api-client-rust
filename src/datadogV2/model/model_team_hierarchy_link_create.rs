@@ -6,17 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Relationship between a user team permission and a team
+/// Data provided when creating a team hierarchy link
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RelationshipToUserTeamPermission {
-    /// Related user team permission data
-    #[serde(rename = "data", default, with = "::serde_with::rust::double_option")]
-    pub data: Option<Option<crate::datadogV2::model::RelationshipToUserTeamPermissionData>>,
-    /// Links attributes.
-    #[serde(rename = "links")]
-    pub links: Option<crate::datadogV2::model::TeamRelationshipsLinks>,
+pub struct TeamHierarchyLinkCreate {
+    /// The related teams that will be connected by the team hierarchy link
+    #[serde(rename = "relationships")]
+    pub relationships: crate::datadogV2::model::TeamHierarchyLinkCreateRelationships,
+    /// Team hierarchy link type
+    #[serde(rename = "type")]
+    pub type_: crate::datadogV2::model::TeamHierarchyLinkType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,27 +24,17 @@ pub struct RelationshipToUserTeamPermission {
     pub(crate) _unparsed: bool,
 }
 
-impl RelationshipToUserTeamPermission {
-    pub fn new() -> RelationshipToUserTeamPermission {
-        RelationshipToUserTeamPermission {
-            data: None,
-            links: None,
+impl TeamHierarchyLinkCreate {
+    pub fn new(
+        relationships: crate::datadogV2::model::TeamHierarchyLinkCreateRelationships,
+        type_: crate::datadogV2::model::TeamHierarchyLinkType,
+    ) -> TeamHierarchyLinkCreate {
+        TeamHierarchyLinkCreate {
+            relationships,
+            type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn data(
-        mut self,
-        value: Option<crate::datadogV2::model::RelationshipToUserTeamPermissionData>,
-    ) -> Self {
-        self.data = Some(value);
-        self
-    }
-
-    pub fn links(mut self, value: crate::datadogV2::model::TeamRelationshipsLinks) -> Self {
-        self.links = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -56,20 +46,14 @@ impl RelationshipToUserTeamPermission {
     }
 }
 
-impl Default for RelationshipToUserTeamPermission {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<'de> Deserialize<'de> for RelationshipToUserTeamPermission {
+impl<'de> Deserialize<'de> for TeamHierarchyLinkCreate {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RelationshipToUserTeamPermissionVisitor;
-        impl<'a> Visitor<'a> for RelationshipToUserTeamPermissionVisitor {
-            type Value = RelationshipToUserTeamPermission;
+        struct TeamHierarchyLinkCreateVisitor;
+        impl<'a> Visitor<'a> for TeamHierarchyLinkCreateVisitor {
+            type Value = TeamHierarchyLinkCreate;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -79,10 +63,10 @@ impl<'de> Deserialize<'de> for RelationshipToUserTeamPermission {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<
-                    Option<crate::datadogV2::model::RelationshipToUserTeamPermissionData>,
+                let mut relationships: Option<
+                    crate::datadogV2::model::TeamHierarchyLinkCreateRelationships,
                 > = None;
-                let mut links: Option<crate::datadogV2::model::TeamRelationshipsLinks> = None;
+                let mut type_: Option<crate::datadogV2::model::TeamHierarchyLinkType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -91,14 +75,20 @@ impl<'de> Deserialize<'de> for RelationshipToUserTeamPermission {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "data" => {
-                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "relationships" => {
+                            relationships =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "links" => {
-                            if v.is_null() {
-                                continue;
+                        "type" => {
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _type_) = type_ {
+                                match _type_ {
+                                    crate::datadogV2::model::TeamHierarchyLinkType::UnparsedObject(_type_) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
                             }
-                            links = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -107,10 +97,13 @@ impl<'de> Deserialize<'de> for RelationshipToUserTeamPermission {
                         }
                     }
                 }
+                let relationships =
+                    relationships.ok_or_else(|| M::Error::missing_field("relationships"))?;
+                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = RelationshipToUserTeamPermission {
-                    data,
-                    links,
+                let content = TeamHierarchyLinkCreate {
+                    relationships,
+                    type_,
                     additional_properties,
                     _unparsed,
                 };
@@ -119,6 +112,6 @@ impl<'de> Deserialize<'de> for RelationshipToUserTeamPermission {
             }
         }
 
-        deserializer.deserialize_any(RelationshipToUserTeamPermissionVisitor)
+        deserializer.deserialize_any(TeamHierarchyLinkCreateVisitor)
     }
 }

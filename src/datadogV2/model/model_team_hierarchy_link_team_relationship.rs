@@ -6,17 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Relationship between a user team permission and a team
+/// Team hierarchy link team relationship
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RelationshipToUserTeamPermission {
-    /// Related user team permission data
-    #[serde(rename = "data", default, with = "::serde_with::rust::double_option")]
-    pub data: Option<Option<crate::datadogV2::model::RelationshipToUserTeamPermissionData>>,
-    /// Links attributes.
-    #[serde(rename = "links")]
-    pub links: Option<crate::datadogV2::model::TeamRelationshipsLinks>,
+pub struct TeamHierarchyLinkTeamRelationship {
+    /// Team hierarchy links connect different teams. This represents team objects that are connected by the team hierarchy link.
+    #[serde(rename = "data")]
+    pub data: crate::datadogV2::model::TeamHierarchyLinkTeam,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,27 +21,15 @@ pub struct RelationshipToUserTeamPermission {
     pub(crate) _unparsed: bool,
 }
 
-impl RelationshipToUserTeamPermission {
-    pub fn new() -> RelationshipToUserTeamPermission {
-        RelationshipToUserTeamPermission {
-            data: None,
-            links: None,
+impl TeamHierarchyLinkTeamRelationship {
+    pub fn new(
+        data: crate::datadogV2::model::TeamHierarchyLinkTeam,
+    ) -> TeamHierarchyLinkTeamRelationship {
+        TeamHierarchyLinkTeamRelationship {
+            data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn data(
-        mut self,
-        value: Option<crate::datadogV2::model::RelationshipToUserTeamPermissionData>,
-    ) -> Self {
-        self.data = Some(value);
-        self
-    }
-
-    pub fn links(mut self, value: crate::datadogV2::model::TeamRelationshipsLinks) -> Self {
-        self.links = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -56,20 +41,14 @@ impl RelationshipToUserTeamPermission {
     }
 }
 
-impl Default for RelationshipToUserTeamPermission {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<'de> Deserialize<'de> for RelationshipToUserTeamPermission {
+impl<'de> Deserialize<'de> for TeamHierarchyLinkTeamRelationship {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RelationshipToUserTeamPermissionVisitor;
-        impl<'a> Visitor<'a> for RelationshipToUserTeamPermissionVisitor {
-            type Value = RelationshipToUserTeamPermission;
+        struct TeamHierarchyLinkTeamRelationshipVisitor;
+        impl<'a> Visitor<'a> for TeamHierarchyLinkTeamRelationshipVisitor {
+            type Value = TeamHierarchyLinkTeamRelationship;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -79,10 +58,7 @@ impl<'de> Deserialize<'de> for RelationshipToUserTeamPermission {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<
-                    Option<crate::datadogV2::model::RelationshipToUserTeamPermissionData>,
-                > = None;
-                let mut links: Option<crate::datadogV2::model::TeamRelationshipsLinks> = None;
+                let mut data: Option<crate::datadogV2::model::TeamHierarchyLinkTeam> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -94,12 +70,6 @@ impl<'de> Deserialize<'de> for RelationshipToUserTeamPermission {
                         "data" => {
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "links" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            links = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -107,10 +77,10 @@ impl<'de> Deserialize<'de> for RelationshipToUserTeamPermission {
                         }
                     }
                 }
+                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = RelationshipToUserTeamPermission {
+                let content = TeamHierarchyLinkTeamRelationship {
                     data,
-                    links,
                     additional_properties,
                     _unparsed,
                 };
@@ -119,6 +89,6 @@ impl<'de> Deserialize<'de> for RelationshipToUserTeamPermission {
             }
         }
 
-        deserializer.deserialize_any(RelationshipToUserTeamPermissionVisitor)
+        deserializer.deserialize_any(TeamHierarchyLinkTeamRelationshipVisitor)
     }
 }
