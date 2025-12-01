@@ -31,8 +31,15 @@ pub struct TeamAttributes {
     #[serde(rename = "handle")]
     pub handle: String,
     /// Collection of hidden modules for the team
-    #[serde(rename = "hidden_modules")]
-    pub hidden_modules: Option<Vec<String>>,
+    #[serde(
+        rename = "hidden_modules",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub hidden_modules: Option<Option<Vec<String>>>,
+    /// Whether the team is managed from an external source
+    #[serde(rename = "is_managed")]
+    pub is_managed: Option<bool>,
     /// The number of links belonging to the team
     #[serde(rename = "link_count")]
     pub link_count: Option<i32>,
@@ -53,8 +60,12 @@ pub struct TeamAttributes {
     #[serde(rename = "user_count")]
     pub user_count: Option<i32>,
     /// Collection of visible modules for the team
-    #[serde(rename = "visible_modules")]
-    pub visible_modules: Option<Vec<String>>,
+    #[serde(
+        rename = "visible_modules",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub visible_modules: Option<Option<Vec<String>>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -71,6 +82,7 @@ impl TeamAttributes {
             description: None,
             handle,
             hidden_modules: None,
+            is_managed: None,
             link_count: None,
             modified_at: None,
             name,
@@ -102,8 +114,13 @@ impl TeamAttributes {
         self
     }
 
-    pub fn hidden_modules(mut self, value: Vec<String>) -> Self {
+    pub fn hidden_modules(mut self, value: Option<Vec<String>>) -> Self {
         self.hidden_modules = Some(value);
+        self
+    }
+
+    pub fn is_managed(mut self, value: bool) -> Self {
+        self.is_managed = Some(value);
         self
     }
 
@@ -127,7 +144,7 @@ impl TeamAttributes {
         self
     }
 
-    pub fn visible_modules(mut self, value: Vec<String>) -> Self {
+    pub fn visible_modules(mut self, value: Option<Vec<String>>) -> Self {
         self.visible_modules = Some(value);
         self
     }
@@ -163,13 +180,14 @@ impl<'de> Deserialize<'de> for TeamAttributes {
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut description: Option<Option<String>> = None;
                 let mut handle: Option<String> = None;
-                let mut hidden_modules: Option<Vec<String>> = None;
+                let mut hidden_modules: Option<Option<Vec<String>>> = None;
+                let mut is_managed: Option<bool> = None;
                 let mut link_count: Option<i32> = None;
                 let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut name: Option<String> = None;
                 let mut summary: Option<Option<String>> = None;
                 let mut user_count: Option<i32> = None;
-                let mut visible_modules: Option<Vec<String>> = None;
+                let mut visible_modules: Option<Option<Vec<String>>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -198,11 +216,14 @@ impl<'de> Deserialize<'de> for TeamAttributes {
                             handle = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "hidden_modules" => {
+                            hidden_modules =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "is_managed" => {
                             if v.is_null() {
                                 continue;
                             }
-                            hidden_modules =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            is_managed = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "link_count" => {
                             if v.is_null() {
@@ -230,9 +251,6 @@ impl<'de> Deserialize<'de> for TeamAttributes {
                             user_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "visible_modules" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             visible_modules =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -253,6 +271,7 @@ impl<'de> Deserialize<'de> for TeamAttributes {
                     description,
                     handle,
                     hidden_modules,
+                    is_managed,
                     link_count,
                     modified_at,
                     name,

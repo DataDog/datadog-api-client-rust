@@ -12,8 +12,8 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RelationshipToUserTeamPermission {
     /// Related user team permission data
-    #[serde(rename = "data")]
-    pub data: Option<crate::datadogV2::model::RelationshipToUserTeamPermissionData>,
+    #[serde(rename = "data", default, with = "::serde_with::rust::double_option")]
+    pub data: Option<Option<crate::datadogV2::model::RelationshipToUserTeamPermissionData>>,
     /// Links attributes.
     #[serde(rename = "links")]
     pub links: Option<crate::datadogV2::model::TeamRelationshipsLinks>,
@@ -36,7 +36,7 @@ impl RelationshipToUserTeamPermission {
 
     pub fn data(
         mut self,
-        value: crate::datadogV2::model::RelationshipToUserTeamPermissionData,
+        value: Option<crate::datadogV2::model::RelationshipToUserTeamPermissionData>,
     ) -> Self {
         self.data = Some(value);
         self
@@ -80,7 +80,7 @@ impl<'de> Deserialize<'de> for RelationshipToUserTeamPermission {
                 M: MapAccess<'a>,
             {
                 let mut data: Option<
-                    crate::datadogV2::model::RelationshipToUserTeamPermissionData,
+                    Option<crate::datadogV2::model::RelationshipToUserTeamPermissionData>,
                 > = None;
                 let mut links: Option<crate::datadogV2::model::TeamRelationshipsLinks> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -92,9 +92,6 @@ impl<'de> Deserialize<'de> for RelationshipToUserTeamPermission {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "data" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "links" => {

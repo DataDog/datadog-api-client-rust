@@ -1,0 +1,33 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "application/json"
+          ]
+        },
+        "method": "get",
+        "uri": "https://api.datadoghq.com/api/v2/logs/config/restriction_queries/role/malformed_id"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[\"Missing Role malformed_id\"]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Tue, 18 Nov 2025 19:17:08 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
