@@ -35,6 +35,9 @@ pub struct GCPSTSServiceAccountAttributes {
     /// When enabled, Datadog will activate the Cloud Security Monitoring product for this service account. Note: This requires resource_collection_enabled to be set to true.
     #[serde(rename = "is_cspm_enabled")]
     pub is_cspm_enabled: Option<bool>,
+    /// When enabled, metrics, events, and resources where location is explicitly stated as “global” or where location information could not be deduced from GCP labels will be collected.
+    #[serde(rename = "is_global_location_enabled")]
+    pub is_global_location_enabled: Option<bool>,
     /// When enabled, Datadog applies the `X-Goog-User-Project` header, attributing Google Cloud billing and quota usage to the project being monitored rather than the default service account project.
     #[serde(rename = "is_per_project_quota_enabled")]
     pub is_per_project_quota_enabled: Option<bool>,
@@ -51,6 +54,9 @@ pub struct GCPSTSServiceAccountAttributes {
     #[serde(rename = "monitored_resource_configs")]
     pub monitored_resource_configs:
         Option<Vec<crate::datadogV2::model::GCPMonitoredResourceConfig>>,
+    /// Filters to limit metric collection by GCP region. By default Datadog collects from all regions.
+    #[serde(rename = "region_filter_configs")]
+    pub region_filter_configs: Option<Vec<String>>,
     /// When enabled, Datadog scans for all resources in your GCP environment.
     #[serde(rename = "resource_collection_enabled")]
     pub resource_collection_enabled: Option<bool>,
@@ -71,11 +77,13 @@ impl GCPSTSServiceAccountAttributes {
             cloud_run_revision_filters: None,
             host_filters: None,
             is_cspm_enabled: None,
+            is_global_location_enabled: None,
             is_per_project_quota_enabled: None,
             is_resource_change_collection_enabled: None,
             is_security_command_center_enabled: None,
             metric_namespace_configs: None,
             monitored_resource_configs: None,
+            region_filter_configs: None,
             resource_collection_enabled: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -119,6 +127,12 @@ impl GCPSTSServiceAccountAttributes {
     }
 
     #[allow(deprecated)]
+    pub fn is_global_location_enabled(mut self, value: bool) -> Self {
+        self.is_global_location_enabled = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn is_per_project_quota_enabled(mut self, value: bool) -> Self {
         self.is_per_project_quota_enabled = Some(value);
         self
@@ -151,6 +165,12 @@ impl GCPSTSServiceAccountAttributes {
         value: Vec<crate::datadogV2::model::GCPMonitoredResourceConfig>,
     ) -> Self {
         self.monitored_resource_configs = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn region_filter_configs(mut self, value: Vec<String>) -> Self {
+        self.region_filter_configs = Some(value);
         self
     }
 
@@ -198,6 +218,7 @@ impl<'de> Deserialize<'de> for GCPSTSServiceAccountAttributes {
                 let mut cloud_run_revision_filters: Option<Vec<String>> = None;
                 let mut host_filters: Option<Vec<String>> = None;
                 let mut is_cspm_enabled: Option<bool> = None;
+                let mut is_global_location_enabled: Option<bool> = None;
                 let mut is_per_project_quota_enabled: Option<bool> = None;
                 let mut is_resource_change_collection_enabled: Option<bool> = None;
                 let mut is_security_command_center_enabled: Option<bool> = None;
@@ -207,6 +228,7 @@ impl<'de> Deserialize<'de> for GCPSTSServiceAccountAttributes {
                 let mut monitored_resource_configs: Option<
                     Vec<crate::datadogV2::model::GCPMonitoredResourceConfig>,
                 > = None;
+                let mut region_filter_configs: Option<Vec<String>> = None;
                 let mut resource_collection_enabled: Option<bool> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -257,6 +279,13 @@ impl<'de> Deserialize<'de> for GCPSTSServiceAccountAttributes {
                             is_cspm_enabled =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "is_global_location_enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            is_global_location_enabled =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "is_per_project_quota_enabled" => {
                             if v.is_null() {
                                 continue;
@@ -292,6 +321,13 @@ impl<'de> Deserialize<'de> for GCPSTSServiceAccountAttributes {
                             monitored_resource_configs =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "region_filter_configs" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            region_filter_configs =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "resource_collection_enabled" => {
                             if v.is_null() {
                                 continue;
@@ -315,11 +351,13 @@ impl<'de> Deserialize<'de> for GCPSTSServiceAccountAttributes {
                     cloud_run_revision_filters,
                     host_filters,
                     is_cspm_enabled,
+                    is_global_location_enabled,
                     is_per_project_quota_enabled,
                     is_resource_change_collection_enabled,
                     is_security_command_center_enabled,
                     metric_namespace_configs,
                     monitored_resource_configs,
+                    region_filter_configs,
                     resource_collection_enabled,
                     additional_properties,
                     _unparsed,
