@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":[{\"attributes\":{},\"relationships\":{\"case\":{\"data\":{\"id\":\"a7c38bab-ae98-4113-878c-c98799f914c2\",\"type\":\"cases\"}}},\"type\":\"jira_issues\"}],\"included\":[{\"id\":\"a7c38bab-ae98-4113-878c-c98799f914c2\",\"relationships\":{\"findings\":{\"data\":[]},\"project\":{\"data\":{\"id\":\"959a6f71-bac8-4027-b1d3-2264f569296f\",\"type\":\"projects\"}}},\"type\":\"cases\"},{\"id\":\"959a6f71-bac8-4027-b1d3-2264f569296f\",\"type\":\"projects\"}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/security/findings/jira_issues"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"status\":\"400\",\"title\":\"Bad Request\",\"detail\":\"no finding provided\"}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Thu, 20 Nov 2025 12:01:47 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
