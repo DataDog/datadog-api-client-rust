@@ -36,6 +36,8 @@ pub struct GetMonitorOptionalParams {
     pub group_states: Option<String>,
     /// If this argument is set to true, then the returned data includes all current active downtimes for the monitor.
     pub with_downtimes: Option<bool>,
+    /// If this argument is set to `true`, the returned data includes all assets tied to this monitor.
+    pub with_assets: Option<bool>,
 }
 
 impl GetMonitorOptionalParams {
@@ -47,6 +49,11 @@ impl GetMonitorOptionalParams {
     /// If this argument is set to true, then the returned data includes all current active downtimes for the monitor.
     pub fn with_downtimes(mut self, value: bool) -> Self {
         self.with_downtimes = Some(value);
+        self
+    }
+    /// If this argument is set to `true`, the returned data includes all assets tied to this monitor.
+    pub fn with_assets(mut self, value: bool) -> Self {
+        self.with_assets = Some(value);
         self
     }
 }
@@ -1242,6 +1249,7 @@ impl MonitorsAPI {
         // unbox and build optional parameters
         let group_states = params.group_states;
         let with_downtimes = params.with_downtimes;
+        let with_assets = params.with_assets;
 
         let local_client = &self.client;
 
@@ -1260,6 +1268,10 @@ impl MonitorsAPI {
         if let Some(ref local_query_param) = with_downtimes {
             local_req_builder =
                 local_req_builder.query(&[("with_downtimes", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = with_assets {
+            local_req_builder =
+                local_req_builder.query(&[("with_assets", &local_query_param.to_string())]);
         };
 
         // build headers
