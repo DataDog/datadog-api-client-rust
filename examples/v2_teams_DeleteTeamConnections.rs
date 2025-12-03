@@ -1,6 +1,6 @@
 // Delete team connections returns "No Content" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api_team_connections::TeamConnectionsAPI;
+use datadog_api_client::datadogV2::api_teams::TeamsAPI;
 use datadog_api_client::datadogV2::model::TeamConnectionDeleteRequest;
 use datadog_api_client::datadogV2::model::TeamConnectionDeleteRequestDataItem;
 use datadog_api_client::datadogV2::model::TeamConnectionType;
@@ -13,7 +13,7 @@ async fn main() {
     )]);
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.DeleteTeamConnections", true);
-    let api = TeamConnectionsAPI::with_config(configuration);
+    let api = TeamsAPI::with_config(configuration);
     let resp = api.delete_team_connections(body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
