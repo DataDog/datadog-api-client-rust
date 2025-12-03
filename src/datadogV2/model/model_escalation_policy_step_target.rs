@@ -6,11 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Defines a single escalation target within a step for an escalation policy creation request. Contains `id` and `type`.
+/// Defines a single escalation target within a step for an escalation policy creation request. Contains `id`, `type`, and optional `config`.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EscalationPolicyStepTarget {
+    /// Configuration for an escalation target, such as schedule position.
+    #[serde(rename = "config")]
+    pub config: Option<crate::datadogV2::model::EscalationPolicyStepTargetConfig>,
     /// Specifies the unique identifier for this target.
     #[serde(rename = "id")]
     pub id: Option<String>,
@@ -27,11 +30,20 @@ pub struct EscalationPolicyStepTarget {
 impl EscalationPolicyStepTarget {
     pub fn new() -> EscalationPolicyStepTarget {
         EscalationPolicyStepTarget {
+            config: None,
             id: None,
             type_: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn config(
+        mut self,
+        value: crate::datadogV2::model::EscalationPolicyStepTargetConfig,
+    ) -> Self {
+        self.config = Some(value);
+        self
     }
 
     pub fn id(mut self, value: String) -> Self {
@@ -76,6 +88,8 @@ impl<'de> Deserialize<'de> for EscalationPolicyStepTarget {
             where
                 M: MapAccess<'a>,
             {
+                let mut config: Option<crate::datadogV2::model::EscalationPolicyStepTargetConfig> =
+                    None;
                 let mut id: Option<String> = None;
                 let mut type_: Option<crate::datadogV2::model::EscalationPolicyStepTargetType> =
                     None;
@@ -87,6 +101,12 @@ impl<'de> Deserialize<'de> for EscalationPolicyStepTarget {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "config" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            config = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "id" => {
                             if v.is_null() {
                                 continue;
@@ -116,6 +136,7 @@ impl<'de> Deserialize<'de> for EscalationPolicyStepTarget {
                 }
 
                 let content = EscalationPolicyStepTarget {
+                    config,
                     id,
                     type_,
                     additional_properties,

@@ -6,17 +6,23 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Represents a schedule target for an escalation policy step, including its ID and resource type. This is a shortcut for a configured schedule target with position set to 'current'.
+/// Full resource representation of a configured schedule target with position (previous, current, or next).
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ScheduleTarget {
-    /// Specifies the unique identifier of the schedule resource.
+pub struct ConfiguredSchedule {
+    /// Attributes for a configured schedule target, including position.
+    #[serde(rename = "attributes")]
+    pub attributes: crate::datadogV2::model::ConfiguredScheduleTargetAttributes,
+    /// Specifies the unique identifier of the configured schedule target.
     #[serde(rename = "id")]
     pub id: String,
-    /// Indicates that the resource is of type `schedules`.
+    /// Represents the relationships of a configured schedule target.
+    #[serde(rename = "relationships")]
+    pub relationships: crate::datadogV2::model::ConfiguredScheduleTargetRelationships,
+    /// Indicates that the resource is of type `schedule_target`.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::ScheduleTargetType,
+    pub type_: crate::datadogV2::model::ConfiguredScheduleTargetType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,10 +30,17 @@ pub struct ScheduleTarget {
     pub(crate) _unparsed: bool,
 }
 
-impl ScheduleTarget {
-    pub fn new(id: String, type_: crate::datadogV2::model::ScheduleTargetType) -> ScheduleTarget {
-        ScheduleTarget {
+impl ConfiguredSchedule {
+    pub fn new(
+        attributes: crate::datadogV2::model::ConfiguredScheduleTargetAttributes,
+        id: String,
+        relationships: crate::datadogV2::model::ConfiguredScheduleTargetRelationships,
+        type_: crate::datadogV2::model::ConfiguredScheduleTargetType,
+    ) -> ConfiguredSchedule {
+        ConfiguredSchedule {
+            attributes,
             id,
+            relationships,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -43,14 +56,14 @@ impl ScheduleTarget {
     }
 }
 
-impl<'de> Deserialize<'de> for ScheduleTarget {
+impl<'de> Deserialize<'de> for ConfiguredSchedule {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ScheduleTargetVisitor;
-        impl<'a> Visitor<'a> for ScheduleTargetVisitor {
-            type Value = ScheduleTarget;
+        struct ConfiguredScheduleVisitor;
+        impl<'a> Visitor<'a> for ConfiguredScheduleVisitor {
+            type Value = ConfiguredSchedule;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -60,8 +73,14 @@ impl<'de> Deserialize<'de> for ScheduleTarget {
             where
                 M: MapAccess<'a>,
             {
+                let mut attributes: Option<
+                    crate::datadogV2::model::ConfiguredScheduleTargetAttributes,
+                > = None;
                 let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::ScheduleTargetType> = None;
+                let mut relationships: Option<
+                    crate::datadogV2::model::ConfiguredScheduleTargetRelationships,
+                > = None;
+                let mut type_: Option<crate::datadogV2::model::ConfiguredScheduleTargetType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -70,18 +89,23 @@ impl<'de> Deserialize<'de> for ScheduleTarget {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "attributes" => {
+                            attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "relationships" => {
+                            relationships =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::ScheduleTargetType::UnparsedObject(
-                                        _type_,
-                                    ) => {
+                                    crate::datadogV2::model::ConfiguredScheduleTargetType::UnparsedObject(_type_) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
@@ -93,11 +117,16 @@ impl<'de> Deserialize<'de> for ScheduleTarget {
                         }
                     }
                 }
+                let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
+                let relationships =
+                    relationships.ok_or_else(|| M::Error::missing_field("relationships"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = ScheduleTarget {
+                let content = ConfiguredSchedule {
+                    attributes,
                     id,
+                    relationships,
                     type_,
                     additional_properties,
                     _unparsed,
@@ -107,6 +136,6 @@ impl<'de> Deserialize<'de> for ScheduleTarget {
             }
         }
 
-        deserializer.deserialize_any(ScheduleTargetVisitor)
+        deserializer.deserialize_any(ConfiguredScheduleVisitor)
     }
 }
