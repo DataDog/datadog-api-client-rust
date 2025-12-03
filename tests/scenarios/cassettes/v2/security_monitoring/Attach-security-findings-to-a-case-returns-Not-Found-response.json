@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"id\":\"wrong-case-id\",\"relationships\":{\"findings\":{\"data\":[{\"id\":\"ZGZhMDI3ZjdjMDM3YjJmNzcxNTlhZGMwMjdmZWNiNTZ-MTVlYTNmYWU3NjNlOTNlYTE2YjM4N2JmZmI4Yjk5N2Y=\",\"type\":\"findings\"}]}},\"type\":\"cases\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "patch",
+        "uri": "https://api.datadoghq.com/api/v2/security/findings/cases/wrong-case-id"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"status\":\"404\",\"title\":\"Not Found\",\"detail\":\"failed to get case: case not found\"}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 404,
+          "message": "Not Found"
+        }
+      },
+      "recorded_at": "Wed, 19 Nov 2025 16:17:49 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
