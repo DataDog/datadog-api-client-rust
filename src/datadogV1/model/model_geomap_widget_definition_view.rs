@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct GeomapWidgetDefinitionView {
-    /// The 2-letter ISO code of a country to focus the map on. Or `WORLD`.
+    /// The 2-letter ISO code of a country to focus the map on, or `WORLD` for global view, or a region (`EMEA`, `APAC`, `LATAM`), or a continent (`NORTH_AMERICA`, `SOUTH_AMERICA`, `EUROPE`, `AFRICA`, `ASIA`, `OCEANIA`).
     #[serde(rename = "focus")]
     pub focus: String,
     #[serde(flatten)]

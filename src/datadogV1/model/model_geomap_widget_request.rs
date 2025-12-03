@@ -14,6 +14,9 @@ pub struct GeomapWidgetRequest {
     /// Widget columns.
     #[serde(rename = "columns")]
     pub columns: Option<Vec<crate::datadogV1::model::ListStreamColumn>>,
+    /// Threshold (numeric) conditional formatting rules may be used by the regions layer.
+    #[serde(rename = "conditional_formats")]
+    pub conditional_formats: Option<Vec<crate::datadogV1::model::WidgetConditionalFormat>>,
     /// List of formulas that operate on queries.
     #[serde(rename = "formulas")]
     pub formulas: Option<Vec<crate::datadogV1::model::WidgetFormula>>,
@@ -41,6 +44,9 @@ pub struct GeomapWidgetRequest {
     /// The controls for sorting the widget.
     #[serde(rename = "sort")]
     pub sort: Option<crate::datadogV1::model::WidgetSortBy>,
+    /// Text formatting rules may be used by the points layer.
+    #[serde(rename = "text_formats")]
+    pub text_formats: Option<Vec<crate::datadogV1::model::TableWidgetTextFormatRule>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -52,6 +58,7 @@ impl GeomapWidgetRequest {
     pub fn new() -> GeomapWidgetRequest {
         GeomapWidgetRequest {
             columns: None,
+            conditional_formats: None,
             formulas: None,
             log_query: None,
             q: None,
@@ -61,6 +68,7 @@ impl GeomapWidgetRequest {
             rum_query: None,
             security_query: None,
             sort: None,
+            text_formats: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -68,6 +76,14 @@ impl GeomapWidgetRequest {
 
     pub fn columns(mut self, value: Vec<crate::datadogV1::model::ListStreamColumn>) -> Self {
         self.columns = Some(value);
+        self
+    }
+
+    pub fn conditional_formats(
+        mut self,
+        value: Vec<crate::datadogV1::model::WidgetConditionalFormat>,
+    ) -> Self {
+        self.conditional_formats = Some(value);
         self
     }
 
@@ -122,6 +138,14 @@ impl GeomapWidgetRequest {
         self
     }
 
+    pub fn text_formats(
+        mut self,
+        value: Vec<crate::datadogV1::model::TableWidgetTextFormatRule>,
+    ) -> Self {
+        self.text_formats = Some(value);
+        self
+    }
+
     pub fn additional_properties(
         mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
@@ -155,6 +179,9 @@ impl<'de> Deserialize<'de> for GeomapWidgetRequest {
                 M: MapAccess<'a>,
             {
                 let mut columns: Option<Vec<crate::datadogV1::model::ListStreamColumn>> = None;
+                let mut conditional_formats: Option<
+                    Vec<crate::datadogV1::model::WidgetConditionalFormat>,
+                > = None;
                 let mut formulas: Option<Vec<crate::datadogV1::model::WidgetFormula>> = None;
                 let mut log_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
                 let mut q: Option<String> = None;
@@ -168,6 +195,9 @@ impl<'de> Deserialize<'de> for GeomapWidgetRequest {
                 let mut rum_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
                 let mut security_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
                 let mut sort: Option<crate::datadogV1::model::WidgetSortBy> = None;
+                let mut text_formats: Option<
+                    Vec<crate::datadogV1::model::TableWidgetTextFormatRule>,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -181,6 +211,13 @@ impl<'de> Deserialize<'de> for GeomapWidgetRequest {
                                 continue;
                             }
                             columns = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "conditional_formats" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            conditional_formats =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "formulas" => {
                             if v.is_null() {
@@ -246,6 +283,13 @@ impl<'de> Deserialize<'de> for GeomapWidgetRequest {
                             }
                             sort = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "text_formats" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            text_formats =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -256,6 +300,7 @@ impl<'de> Deserialize<'de> for GeomapWidgetRequest {
 
                 let content = GeomapWidgetRequest {
                     columns,
+                    conditional_formats,
                     formulas,
                     log_query,
                     q,
@@ -265,6 +310,7 @@ impl<'de> Deserialize<'de> for GeomapWidgetRequest {
                     rum_query,
                     security_query,
                     sort,
+                    text_formats,
                     additional_properties,
                     _unparsed,
                 };
