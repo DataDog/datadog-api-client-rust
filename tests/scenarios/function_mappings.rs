@@ -152,7 +152,6 @@ pub struct ApiInstances {
     pub v2_api_static_analysis: Option<datadogV2::api_static_analysis::StaticAnalysisAPI>,
     pub v2_api_synthetics: Option<datadogV2::api_synthetics::SyntheticsAPI>,
     pub v2_api_teams: Option<datadogV2::api_teams::TeamsAPI>,
-    pub v2_api_team_connections: Option<datadogV2::api_team_connections::TeamConnectionsAPI>,
     pub v2_api_incident_teams: Option<datadogV2::api_incident_teams::IncidentTeamsAPI>,
     pub v2_api_test_optimization: Option<datadogV2::api_test_optimization::TestOptimizationAPI>,
     pub v2_api_users: Option<datadogV2::api_users::UsersAPI>,
@@ -970,14 +969,6 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ));
-        }
-        "TeamConnections" => {
-            world.api_instances.v2_api_team_connections = Some(
-                datadogV2::api_team_connections::TeamConnectionsAPI::with_client_and_config(
-                    world.config.clone(),
-                    world.http_client.as_ref().unwrap().clone(),
-                ),
-            );
         }
         "IncidentTeams" => {
             world.api_instances.v2_api_incident_teams = Some(
@@ -4340,6 +4331,22 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.GetTeamHierarchyLink".into(),
         test_v2_get_team_hierarchy_link,
     );
+    world.function_mappings.insert(
+        "v2.DeleteTeamConnections".into(),
+        test_v2_delete_team_connections,
+    );
+    world.function_mappings.insert(
+        "v2.ListTeamConnections".into(),
+        test_v2_list_team_connections,
+    );
+    world.function_mappings.insert(
+        "v2.ListTeamConnectionsWithPagination".into(),
+        test_v2_list_team_connections_with_pagination,
+    );
+    world.function_mappings.insert(
+        "v2.CreateTeamConnections".into(),
+        test_v2_create_team_connections,
+    );
     world
         .function_mappings
         .insert("v2.GetTeamSync".into(), test_v2_get_team_sync);
@@ -4413,22 +4420,6 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.GetUserMemberships".into(), test_v2_get_user_memberships);
-    world.function_mappings.insert(
-        "v2.DeleteTeamConnections".into(),
-        test_v2_delete_team_connections,
-    );
-    world.function_mappings.insert(
-        "v2.ListTeamConnections".into(),
-        test_v2_list_team_connections,
-    );
-    world.function_mappings.insert(
-        "v2.ListTeamConnectionsWithPagination".into(),
-        test_v2_list_team_connections_with_pagination,
-    );
-    world.function_mappings.insert(
-        "v2.CreateTeamConnections".into(),
-        test_v2_create_team_connections,
-    );
     world
         .function_mappings
         .insert("v2.ListIncidentTeams".into(), test_v2_list_incident_teams);
@@ -33458,6 +33449,166 @@ fn test_v2_get_team_hierarchy_link(world: &mut DatadogWorld, _parameters: &HashM
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_delete_team_connections(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_teams
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_team_connections_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_team_connections(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_teams
+        .as_ref()
+        .expect("api instance not found");
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_sources = _parameters
+        .get("filter[sources]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_team_ids = _parameters
+        .get("filter[team_ids]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_connected_team_ids = _parameters
+        .get("filter[connected_team_ids]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_connection_ids = _parameters
+        .get("filter[connection_ids]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_teams::ListTeamConnectionsOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    params.filter_sources = filter_sources;
+    params.filter_team_ids = filter_team_ids;
+    params.filter_connected_team_ids = filter_connected_team_ids;
+    params.filter_connection_ids = filter_connection_ids;
+    let response = match block_on(api.list_team_connections_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+fn test_v2_list_team_connections_with_pagination(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_teams
+        .as_ref()
+        .expect("api instance not found");
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_sources = _parameters
+        .get("filter[sources]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_team_ids = _parameters
+        .get("filter[team_ids]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_connected_team_ids = _parameters
+        .get("filter[connected_team_ids]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_connection_ids = _parameters
+        .get("filter[connection_ids]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_teams::ListTeamConnectionsOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    params.filter_sources = filter_sources;
+    params.filter_team_ids = filter_team_ids;
+    params.filter_connected_team_ids = filter_connected_team_ids;
+    params.filter_connection_ids = filter_connection_ids;
+    let response = api.list_team_connections_with_pagination(params);
+    let mut result = Vec::new();
+
+    block_on(async {
+        pin_mut!(response);
+
+        while let Some(resp) = response.next().await {
+            match resp {
+                Ok(response) => {
+                    result.push(response);
+                }
+                Err(error) => {
+                    return match error {
+                        Error::ResponseError(e) => {
+                            if let Some(entity) = e.entity {
+                                world.response.object = serde_json::to_value(entity).unwrap();
+                            }
+                        }
+                        _ => panic!("error parsing response: {}", error),
+                    };
+                }
+            }
+        }
+    });
+    world.response.object = serde_json::to_value(result).unwrap();
+    world.response.code = 200;
+}
+
+fn test_v2_create_team_connections(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_teams
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_team_connections_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_get_team_sync(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
@@ -34104,166 +34255,6 @@ fn test_v2_get_user_memberships(world: &mut DatadogWorld, _parameters: &HashMap<
         .expect("api instance not found");
     let user_uuid = serde_json::from_value(_parameters.get("user_uuid").unwrap().clone()).unwrap();
     let response = match block_on(api.get_user_memberships_with_http_info(user_uuid)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_delete_team_connections(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_team_connections
-        .as_ref()
-        .expect("api instance not found");
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.delete_team_connections_with_http_info(body)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_list_team_connections(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_team_connections
-        .as_ref()
-        .expect("api instance not found");
-    let page_size = _parameters
-        .get("page[size]")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let page_number = _parameters
-        .get("page[number]")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let filter_sources = _parameters
-        .get("filter[sources]")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let filter_team_ids = _parameters
-        .get("filter[team_ids]")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let filter_connected_team_ids = _parameters
-        .get("filter[connected_team_ids]")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let filter_connection_ids = _parameters
-        .get("filter[connection_ids]")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let mut params = datadogV2::api_team_connections::ListTeamConnectionsOptionalParams::default();
-    params.page_size = page_size;
-    params.page_number = page_number;
-    params.filter_sources = filter_sources;
-    params.filter_team_ids = filter_team_ids;
-    params.filter_connected_team_ids = filter_connected_team_ids;
-    params.filter_connection_ids = filter_connection_ids;
-    let response = match block_on(api.list_team_connections_with_http_info(params)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-fn test_v2_list_team_connections_with_pagination(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
-    let api = world
-        .api_instances
-        .v2_api_team_connections
-        .as_ref()
-        .expect("api instance not found");
-    let page_size = _parameters
-        .get("page[size]")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let page_number = _parameters
-        .get("page[number]")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let filter_sources = _parameters
-        .get("filter[sources]")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let filter_team_ids = _parameters
-        .get("filter[team_ids]")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let filter_connected_team_ids = _parameters
-        .get("filter[connected_team_ids]")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let filter_connection_ids = _parameters
-        .get("filter[connection_ids]")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let mut params = datadogV2::api_team_connections::ListTeamConnectionsOptionalParams::default();
-    params.page_size = page_size;
-    params.page_number = page_number;
-    params.filter_sources = filter_sources;
-    params.filter_team_ids = filter_team_ids;
-    params.filter_connected_team_ids = filter_connected_team_ids;
-    params.filter_connection_ids = filter_connection_ids;
-    let response = api.list_team_connections_with_pagination(params);
-    let mut result = Vec::new();
-
-    block_on(async {
-        pin_mut!(response);
-
-        while let Some(resp) = response.next().await {
-            match resp {
-                Ok(response) => {
-                    result.push(response);
-                }
-                Err(error) => {
-                    return match error {
-                        Error::ResponseError(e) => {
-                            if let Some(entity) = e.entity {
-                                world.response.object = serde_json::to_value(entity).unwrap();
-                            }
-                        }
-                        _ => panic!("error parsing response: {}", error),
-                    };
-                }
-            }
-        }
-    });
-    world.response.object = serde_json::to_value(result).unwrap();
-    world.response.code = 200;
-}
-
-fn test_v2_create_team_connections(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_team_connections
-        .as_ref()
-        .expect("api instance not found");
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.create_team_connections_with_http_info(body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
