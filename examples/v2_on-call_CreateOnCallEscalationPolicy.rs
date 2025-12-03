@@ -13,7 +13,10 @@ use datadog_api_client::datadogV2::model::EscalationPolicyCreateRequestDataRelat
 use datadog_api_client::datadogV2::model::EscalationPolicyCreateRequestDataType;
 use datadog_api_client::datadogV2::model::EscalationPolicyStepAttributesAssignment;
 use datadog_api_client::datadogV2::model::EscalationPolicyStepTarget;
+use datadog_api_client::datadogV2::model::EscalationPolicyStepTargetConfig;
+use datadog_api_client::datadogV2::model::EscalationPolicyStepTargetConfigSchedule;
 use datadog_api_client::datadogV2::model::EscalationPolicyStepTargetType;
+use datadog_api_client::datadogV2::model::ScheduleTargetPosition;
 
 #[tokio::main]
 async fn main() {
@@ -35,6 +38,15 @@ async fn main() {
                             .id(user_data_id.clone())
                             .type_(EscalationPolicyStepTargetType::USERS),
                         EscalationPolicyStepTarget::new()
+                            .id(schedule_data_id.clone())
+                            .type_(EscalationPolicyStepTargetType::SCHEDULES),
+                        EscalationPolicyStepTarget::new()
+                            .config(
+                                EscalationPolicyStepTargetConfig::new().schedule(
+                                    EscalationPolicyStepTargetConfigSchedule::new()
+                                        .position(ScheduleTargetPosition::PREVIOUS),
+                                ),
+                            )
                             .id(schedule_data_id.clone())
                             .type_(EscalationPolicyStepTargetType::SCHEDULES),
                         EscalationPolicyStepTarget::new()

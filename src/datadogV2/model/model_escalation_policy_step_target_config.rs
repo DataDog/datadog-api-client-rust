@@ -6,17 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Represents a schedule target for an escalation policy step, including its ID and resource type. This is a shortcut for a configured schedule target with position set to 'current'.
+/// Configuration for an escalation target, such as schedule position.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ScheduleTarget {
-    /// Specifies the unique identifier of the schedule resource.
-    #[serde(rename = "id")]
-    pub id: String,
-    /// Indicates that the resource is of type `schedules`.
-    #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::ScheduleTargetType,
+pub struct EscalationPolicyStepTargetConfig {
+    /// Schedule-specific configuration for an escalation target.
+    #[serde(rename = "schedule")]
+    pub schedule: Option<crate::datadogV2::model::EscalationPolicyStepTargetConfigSchedule>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,14 +21,21 @@ pub struct ScheduleTarget {
     pub(crate) _unparsed: bool,
 }
 
-impl ScheduleTarget {
-    pub fn new(id: String, type_: crate::datadogV2::model::ScheduleTargetType) -> ScheduleTarget {
-        ScheduleTarget {
-            id,
-            type_,
+impl EscalationPolicyStepTargetConfig {
+    pub fn new() -> EscalationPolicyStepTargetConfig {
+        EscalationPolicyStepTargetConfig {
+            schedule: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn schedule(
+        mut self,
+        value: crate::datadogV2::model::EscalationPolicyStepTargetConfigSchedule,
+    ) -> Self {
+        self.schedule = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -43,14 +47,20 @@ impl ScheduleTarget {
     }
 }
 
-impl<'de> Deserialize<'de> for ScheduleTarget {
+impl Default for EscalationPolicyStepTargetConfig {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for EscalationPolicyStepTargetConfig {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ScheduleTargetVisitor;
-        impl<'a> Visitor<'a> for ScheduleTargetVisitor {
-            type Value = ScheduleTarget;
+        struct EscalationPolicyStepTargetConfigVisitor;
+        impl<'a> Visitor<'a> for EscalationPolicyStepTargetConfigVisitor {
+            type Value = EscalationPolicyStepTargetConfig;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -60,8 +70,9 @@ impl<'de> Deserialize<'de> for ScheduleTarget {
             where
                 M: MapAccess<'a>,
             {
-                let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::ScheduleTargetType> = None;
+                let mut schedule: Option<
+                    crate::datadogV2::model::EscalationPolicyStepTargetConfigSchedule,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -70,21 +81,11 @@ impl<'de> Deserialize<'de> for ScheduleTarget {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "id" => {
-                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "type" => {
-                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _type_) = type_ {
-                                match _type_ {
-                                    crate::datadogV2::model::ScheduleTargetType::UnparsedObject(
-                                        _type_,
-                                    ) => {
-                                        _unparsed = true;
-                                    }
-                                    _ => {}
-                                }
+                        "schedule" => {
+                            if v.is_null() {
+                                continue;
                             }
+                            schedule = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -93,12 +94,9 @@ impl<'de> Deserialize<'de> for ScheduleTarget {
                         }
                     }
                 }
-                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
-                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = ScheduleTarget {
-                    id,
-                    type_,
+                let content = EscalationPolicyStepTargetConfig {
+                    schedule,
                     additional_properties,
                     _unparsed,
                 };
@@ -107,6 +105,6 @@ impl<'de> Deserialize<'de> for ScheduleTarget {
             }
         }
 
-        deserializer.deserialize_any(ScheduleTargetVisitor)
+        deserializer.deserialize_any(EscalationPolicyStepTargetConfigVisitor)
     }
 }

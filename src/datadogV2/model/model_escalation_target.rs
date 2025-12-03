@@ -3,7 +3,7 @@
 // Copyright 2019-Present Datadog, Inc.
 use serde::{Deserialize, Deserializer, Serialize};
 
-/// Represents an escalation target, which can be a team, user, or schedule.
+/// Represents an escalation target, which can be a team, user, schedule, or configured schedule target.
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
@@ -11,6 +11,7 @@ pub enum EscalationTarget {
     TeamTarget(Box<crate::datadogV2::model::TeamTarget>),
     UserTarget(Box<crate::datadogV2::model::UserTarget>),
     ScheduleTarget(Box<crate::datadogV2::model::ScheduleTarget>),
+    ConfiguredScheduleTarget(Box<crate::datadogV2::model::ConfiguredScheduleTarget>),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -39,6 +40,14 @@ impl<'de> Deserialize<'de> for EscalationTarget {
         {
             if !_v._unparsed {
                 return Ok(EscalationTarget::ScheduleTarget(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ConfiguredScheduleTarget>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(EscalationTarget::ConfiguredScheduleTarget(_v));
             }
         }
 
