@@ -308,7 +308,7 @@ pub struct UsageSummaryDate {
     /// Shows the 99th percentile of all Heroku dynos over all hours in the current date for all organizations.
     #[serde(rename = "heroku_host_top99p")]
     pub heroku_host_top99p: Option<i64>,
-    /// Shows the high-water mark of incident management monthly active users over all hours in the current date for all organizations.
+    /// Shows the high-water mark of Incident Management monthly active users over all hours in the current date for all organizations.
     #[serde(rename = "incident_management_monthly_active_users_hwm")]
     pub incident_management_monthly_active_users_hwm: Option<i64>,
     /// Shows the high-water mark of Incident Management seats over all hours on the current date for all organizations.
