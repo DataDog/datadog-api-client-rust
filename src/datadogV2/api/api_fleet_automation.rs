@@ -34,6 +34,57 @@ impl GetFleetDeploymentOptionalParams {
     }
 }
 
+/// ListFleetAgentsOptionalParams is a struct for passing parameters to the method [`FleetAutomationAPI::list_fleet_agents`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListFleetAgentsOptionalParams {
+    /// Page number for pagination (must be greater than 0).
+    pub page_number: Option<i64>,
+    /// Number of results per page (must be greater than 0 and less than or equal to 100).
+    pub page_size: Option<i64>,
+    /// Attribute to sort by.
+    pub sort_attribute: Option<String>,
+    /// Sort order (true for descending, false for ascending).
+    pub sort_descending: Option<bool>,
+    /// Comma-separated list of tags to filter agents.
+    pub tags: Option<String>,
+    /// Filter string for narrowing down agent results.
+    pub filter: Option<String>,
+}
+
+impl ListFleetAgentsOptionalParams {
+    /// Page number for pagination (must be greater than 0).
+    pub fn page_number(mut self, value: i64) -> Self {
+        self.page_number = Some(value);
+        self
+    }
+    /// Number of results per page (must be greater than 0 and less than or equal to 100).
+    pub fn page_size(mut self, value: i64) -> Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Attribute to sort by.
+    pub fn sort_attribute(mut self, value: String) -> Self {
+        self.sort_attribute = Some(value);
+        self
+    }
+    /// Sort order (true for descending, false for ascending).
+    pub fn sort_descending(mut self, value: bool) -> Self {
+        self.sort_descending = Some(value);
+        self
+    }
+    /// Comma-separated list of tags to filter agents.
+    pub fn tags(mut self, value: String) -> Self {
+        self.tags = Some(value);
+        self
+    }
+    /// Filter string for narrowing down agent results.
+    pub fn filter(mut self, value: String) -> Self {
+        self.filter = Some(value);
+        self
+    }
+}
+
 /// ListFleetDeploymentsOptionalParams is a struct for passing parameters to the method [`FleetAutomationAPI::list_fleet_deployments`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -97,6 +148,14 @@ pub enum DeleteFleetScheduleError {
     UnknownValue(serde_json::Value),
 }
 
+/// GetFleetAgentInfoError is a struct for typed errors of method [`FleetAutomationAPI::get_fleet_agent_info`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetFleetAgentInfoError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// GetFleetDeploymentError is a struct for typed errors of method [`FleetAutomationAPI::get_fleet_deployment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -117,6 +176,14 @@ pub enum GetFleetScheduleError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListFleetAgentVersionsError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListFleetAgentsError is a struct for typed errors of method [`FleetAutomationAPI::list_fleet_agents`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListFleetAgentsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -1002,6 +1069,133 @@ impl FleetAutomationAPI {
         }
     }
 
+    /// Retrieve detailed information about a specific Datadog Agent.
+    /// This endpoint returns comprehensive information about an agent including:
+    /// - Agent details and metadata
+    /// - Configured integrations organized by status (working, warning, error, missing)
+    /// - Detected integrations
+    /// - Configuration files and layers
+    pub async fn get_fleet_agent_info(
+        &self,
+        agent_key: String,
+    ) -> Result<
+        crate::datadogV2::model::FleetAgentInfoResponse,
+        datadog::Error<GetFleetAgentInfoError>,
+    > {
+        match self.get_fleet_agent_info_with_http_info(agent_key).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Retrieve detailed information about a specific Datadog Agent.
+    /// This endpoint returns comprehensive information about an agent including:
+    /// - Agent details and metadata
+    /// - Configured integrations organized by status (working, warning, error, missing)
+    /// - Detected integrations
+    /// - Configuration files and layers
+    pub async fn get_fleet_agent_info_with_http_info(
+        &self,
+        agent_key: String,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::FleetAgentInfoResponse>,
+        datadog::Error<GetFleetAgentInfoError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_fleet_agent_info";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_fleet_agent_info' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/unstable/fleet/agents/{agent_key}",
+            local_configuration.get_operation_host(operation_id),
+            agent_key = datadog::urlencode(agent_key)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::FleetAgentInfoResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetFleetAgentInfoError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Retrieve detailed information about a specific deployment using its unique identifier.
     /// This endpoint returns comprehensive information about a deployment, including:
     /// - Deployment metadata (ID, type, filter query)
@@ -1354,7 +1548,7 @@ impl FleetAutomationAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/unstable/fleet/agents",
+            "{}/api/unstable/fleet/agent_versions",
             local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
@@ -1416,6 +1610,157 @@ impl FleetAutomationAPI {
             };
         } else {
             let local_entity: Option<ListFleetAgentVersionsError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Retrieve a paginated list of all Datadog Agents.
+    /// This endpoint returns a paginated list of all Datadog Agents with support for pagination, sorting, and filtering.
+    /// Use the `page_number` and `page_size` query parameters to paginate through results.
+    pub async fn list_fleet_agents(
+        &self,
+        params: ListFleetAgentsOptionalParams,
+    ) -> Result<crate::datadogV2::model::FleetAgentsResponse, datadog::Error<ListFleetAgentsError>>
+    {
+        match self.list_fleet_agents_with_http_info(params).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Retrieve a paginated list of all Datadog Agents.
+    /// This endpoint returns a paginated list of all Datadog Agents with support for pagination, sorting, and filtering.
+    /// Use the `page_number` and `page_size` query parameters to paginate through results.
+    pub async fn list_fleet_agents_with_http_info(
+        &self,
+        params: ListFleetAgentsOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::FleetAgentsResponse>,
+        datadog::Error<ListFleetAgentsError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_fleet_agents";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_fleet_agents' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let page_number = params.page_number;
+        let page_size = params.page_size;
+        let sort_attribute = params.sort_attribute;
+        let sort_descending = params.sort_descending;
+        let tags = params.tags;
+        let filter = params.filter;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/unstable/fleet/agents",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = page_number {
+            local_req_builder =
+                local_req_builder.query(&[("page_number", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_size {
+            local_req_builder =
+                local_req_builder.query(&[("page_size", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = sort_attribute {
+            local_req_builder =
+                local_req_builder.query(&[("sort_attribute", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = sort_descending {
+            local_req_builder =
+                local_req_builder.query(&[("sort_descending", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = tags {
+            local_req_builder =
+                local_req_builder.query(&[("tags", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter {
+            local_req_builder =
+                local_req_builder.query(&[("filter", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::FleetAgentsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListFleetAgentsError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,

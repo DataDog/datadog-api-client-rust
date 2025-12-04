@@ -1837,6 +1837,12 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.ListFleetAgentVersions".into(),
         test_v2_list_fleet_agent_versions,
     );
+    world
+        .function_mappings
+        .insert("v2.ListFleetAgents".into(), test_v2_list_fleet_agents);
+    world
+        .function_mappings
+        .insert("v2.GetFleetAgentInfo".into(), test_v2_get_fleet_agent_info);
     world.function_mappings.insert(
         "v2.ListFleetDeployments".into(),
         test_v2_list_fleet_deployments,
@@ -11773,6 +11779,80 @@ fn test_v2_list_fleet_agent_versions(
         .as_ref()
         .expect("api instance not found");
     let response = match block_on(api.list_fleet_agent_versions_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_fleet_agents(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_fleet_automation
+        .as_ref()
+        .expect("api instance not found");
+    let page_number = _parameters
+        .get("page_number")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_size = _parameters
+        .get("page_size")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort_attribute = _parameters
+        .get("sort_attribute")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort_descending = _parameters
+        .get("sort_descending")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let tags = _parameters
+        .get("tags")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter = _parameters
+        .get("filter")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_fleet_automation::ListFleetAgentsOptionalParams::default();
+    params.page_number = page_number;
+    params.page_size = page_size;
+    params.sort_attribute = sort_attribute;
+    params.sort_descending = sort_descending;
+    params.tags = tags;
+    params.filter = filter;
+    let response = match block_on(api.list_fleet_agents_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_fleet_agent_info(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_fleet_automation
+        .as_ref()
+        .expect("api instance not found");
+    let agent_key = serde_json::from_value(_parameters.get("agent_key").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_fleet_agent_info_with_http_info(agent_key)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
