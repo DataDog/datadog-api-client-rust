@@ -320,7 +320,7 @@ pub struct UsageSummaryDateOrg {
     /// The organization id.
     #[serde(rename = "id")]
     pub id: Option<String>,
-    /// Shows the high-water mark of incident management monthly active users over all hours in the current date for the given org.
+    /// Shows the high-water mark of Incident Management monthly active users over all hours in the current date for the given org.
     #[serde(rename = "incident_management_monthly_active_users_hwm")]
     pub incident_management_monthly_active_users_hwm: Option<i64>,
     /// Shows the high-water mark of Incident Management seats over all hours on the current date for the given organization.
