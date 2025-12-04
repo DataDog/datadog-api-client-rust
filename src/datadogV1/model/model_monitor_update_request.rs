@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MonitorUpdateRequest {
+    /// The list of monitor assets tied to a monitor, which represents key links for users to take action on monitor alerts (for example, runbooks).
+    #[serde(rename = "assets", default, with = "::serde_with::rust::double_option")]
+    pub assets: Option<Option<Vec<crate::datadogV1::model::MonitorAsset>>>,
     /// Timestamp of the monitor creation.
     #[serde(rename = "created")]
     pub created: Option<chrono::DateTime<chrono::Utc>>,
@@ -89,6 +92,7 @@ pub struct MonitorUpdateRequest {
 impl MonitorUpdateRequest {
     pub fn new() -> MonitorUpdateRequest {
         MonitorUpdateRequest {
+            assets: None,
             created: None,
             creator: None,
             deleted: None,
@@ -109,6 +113,11 @@ impl MonitorUpdateRequest {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn assets(mut self, value: Option<Vec<crate::datadogV1::model::MonitorAsset>>) -> Self {
+        self.assets = Some(value);
+        self
     }
 
     pub fn created(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
@@ -228,6 +237,7 @@ impl<'de> Deserialize<'de> for MonitorUpdateRequest {
             where
                 M: MapAccess<'a>,
             {
+                let mut assets: Option<Option<Vec<crate::datadogV1::model::MonitorAsset>>> = None;
                 let mut created: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut creator: Option<crate::datadogV1::model::Creator> = None;
                 let mut deleted: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
@@ -253,6 +263,9 @@ impl<'de> Deserialize<'de> for MonitorUpdateRequest {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "assets" => {
+                            assets = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "created" => {
                             if v.is_null() {
                                 continue;
@@ -386,6 +399,7 @@ impl<'de> Deserialize<'de> for MonitorUpdateRequest {
                 }
 
                 let content = MonitorUpdateRequest {
+                    assets,
                     created,
                     creator,
                     deleted,

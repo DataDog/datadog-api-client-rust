@@ -9337,9 +9337,13 @@ fn test_v1_get_monitor(world: &mut DatadogWorld, _parameters: &HashMap<String, V
     let with_downtimes = _parameters
         .get("with_downtimes")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let with_assets = _parameters
+        .get("with_assets")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV1::api_monitors::GetMonitorOptionalParams::default();
     params.group_states = group_states;
     params.with_downtimes = with_downtimes;
+    params.with_assets = with_assets;
     let response = match block_on(api.get_monitor_with_http_info(monitor_id, params)) {
         Ok(response) => response,
         Err(error) => {
