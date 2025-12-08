@@ -6,18 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The response object containing the created or updated incident attachments.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct IncidentAttachmentUpdateResponse {
-    /// An array of incident attachments. Only the attachments that were created or updated by the request are
-    /// returned.
-    #[serde(rename = "data")]
-    pub data: Vec<crate::datadogV2::model::IncidentAttachmentData>,
-    /// Included related resources that the user requested.
-    #[serde(rename = "included")]
-    pub included: Option<Vec<crate::datadogV2::model::IncidentAttachmentsResponseIncludedItem>>,
+pub struct PatchAttachmentRequestDataAttributes {
+    #[serde(rename = "attachment")]
+    pub attachment: Option<crate::datadogV2::model::PatchAttachmentRequestDataAttributesAttachment>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -25,23 +19,20 @@ pub struct IncidentAttachmentUpdateResponse {
     pub(crate) _unparsed: bool,
 }
 
-impl IncidentAttachmentUpdateResponse {
-    pub fn new(
-        data: Vec<crate::datadogV2::model::IncidentAttachmentData>,
-    ) -> IncidentAttachmentUpdateResponse {
-        IncidentAttachmentUpdateResponse {
-            data,
-            included: None,
+impl PatchAttachmentRequestDataAttributes {
+    pub fn new() -> PatchAttachmentRequestDataAttributes {
+        PatchAttachmentRequestDataAttributes {
+            attachment: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn included(
+    pub fn attachment(
         mut self,
-        value: Vec<crate::datadogV2::model::IncidentAttachmentsResponseIncludedItem>,
+        value: crate::datadogV2::model::PatchAttachmentRequestDataAttributesAttachment,
     ) -> Self {
-        self.included = Some(value);
+        self.attachment = Some(value);
         self
     }
 
@@ -54,14 +45,20 @@ impl IncidentAttachmentUpdateResponse {
     }
 }
 
-impl<'de> Deserialize<'de> for IncidentAttachmentUpdateResponse {
+impl Default for PatchAttachmentRequestDataAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for PatchAttachmentRequestDataAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct IncidentAttachmentUpdateResponseVisitor;
-        impl<'a> Visitor<'a> for IncidentAttachmentUpdateResponseVisitor {
-            type Value = IncidentAttachmentUpdateResponse;
+        struct PatchAttachmentRequestDataAttributesVisitor;
+        impl<'a> Visitor<'a> for PatchAttachmentRequestDataAttributesVisitor {
+            type Value = PatchAttachmentRequestDataAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -71,9 +68,8 @@ impl<'de> Deserialize<'de> for IncidentAttachmentUpdateResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<Vec<crate::datadogV2::model::IncidentAttachmentData>> = None;
-                let mut included: Option<
-                    Vec<crate::datadogV2::model::IncidentAttachmentsResponseIncludedItem>,
+                let mut attachment: Option<
+                    crate::datadogV2::model::PatchAttachmentRequestDataAttributesAttachment,
                 > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -83,14 +79,11 @@ impl<'de> Deserialize<'de> for IncidentAttachmentUpdateResponse {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "data" => {
-                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "included" => {
+                        "attachment" => {
                             if v.is_null() {
                                 continue;
                             }
-                            included = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            attachment = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -99,11 +92,9 @@ impl<'de> Deserialize<'de> for IncidentAttachmentUpdateResponse {
                         }
                     }
                 }
-                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = IncidentAttachmentUpdateResponse {
-                    data,
-                    included,
+                let content = PatchAttachmentRequestDataAttributes {
+                    attachment,
                     additional_properties,
                     _unparsed,
                 };
@@ -112,6 +103,6 @@ impl<'de> Deserialize<'de> for IncidentAttachmentUpdateResponse {
             }
         }
 
-        deserializer.deserialize_any(IncidentAttachmentUpdateResponseVisitor)
+        deserializer.deserialize_any(PatchAttachmentRequestDataAttributesVisitor)
     }
 }

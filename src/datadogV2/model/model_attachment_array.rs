@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The incident attachment's relationships.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct IncidentAttachmentRelationships {
-    /// Relationship to user.
-    #[serde(rename = "last_modified_by_user")]
-    pub last_modified_by_user: Option<crate::datadogV2::model::RelationshipToUser>,
+pub struct AttachmentArray {
+    #[serde(rename = "data")]
+    pub data: Vec<crate::datadogV2::model::AttachmentData>,
+    #[serde(rename = "included")]
+    pub included: Option<Vec<crate::datadogV2::model::AttachmentIncluded>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,20 +21,18 @@ pub struct IncidentAttachmentRelationships {
     pub(crate) _unparsed: bool,
 }
 
-impl IncidentAttachmentRelationships {
-    pub fn new() -> IncidentAttachmentRelationships {
-        IncidentAttachmentRelationships {
-            last_modified_by_user: None,
+impl AttachmentArray {
+    pub fn new(data: Vec<crate::datadogV2::model::AttachmentData>) -> AttachmentArray {
+        AttachmentArray {
+            data,
+            included: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn last_modified_by_user(
-        mut self,
-        value: crate::datadogV2::model::RelationshipToUser,
-    ) -> Self {
-        self.last_modified_by_user = Some(value);
+    pub fn included(mut self, value: Vec<crate::datadogV2::model::AttachmentIncluded>) -> Self {
+        self.included = Some(value);
         self
     }
 
@@ -47,20 +45,14 @@ impl IncidentAttachmentRelationships {
     }
 }
 
-impl Default for IncidentAttachmentRelationships {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<'de> Deserialize<'de> for IncidentAttachmentRelationships {
+impl<'de> Deserialize<'de> for AttachmentArray {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct IncidentAttachmentRelationshipsVisitor;
-        impl<'a> Visitor<'a> for IncidentAttachmentRelationshipsVisitor {
-            type Value = IncidentAttachmentRelationships;
+        struct AttachmentArrayVisitor;
+        impl<'a> Visitor<'a> for AttachmentArrayVisitor {
+            type Value = AttachmentArray;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -70,8 +62,8 @@ impl<'de> Deserialize<'de> for IncidentAttachmentRelationships {
             where
                 M: MapAccess<'a>,
             {
-                let mut last_modified_by_user: Option<crate::datadogV2::model::RelationshipToUser> =
-                    None;
+                let mut data: Option<Vec<crate::datadogV2::model::AttachmentData>> = None;
+                let mut included: Option<Vec<crate::datadogV2::model::AttachmentIncluded>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -80,12 +72,14 @@ impl<'de> Deserialize<'de> for IncidentAttachmentRelationships {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "last_modified_by_user" => {
+                        "data" => {
+                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "included" => {
                             if v.is_null() {
                                 continue;
                             }
-                            last_modified_by_user =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            included = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -94,9 +88,11 @@ impl<'de> Deserialize<'de> for IncidentAttachmentRelationships {
                         }
                     }
                 }
+                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = IncidentAttachmentRelationships {
-                    last_modified_by_user,
+                let content = AttachmentArray {
+                    data,
+                    included,
                     additional_properties,
                     _unparsed,
                 };
@@ -105,6 +101,6 @@ impl<'de> Deserialize<'de> for IncidentAttachmentRelationships {
             }
         }
 
-        deserializer.deserialize_any(IncidentAttachmentRelationshipsVisitor)
+        deserializer.deserialize_any(AttachmentArrayVisitor)
     }
 }

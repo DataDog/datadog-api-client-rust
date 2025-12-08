@@ -6,18 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The attributes object for a postmortem attachment.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct IncidentAttachmentPostmortemAttributes {
-    /// The postmortem attachment.
+pub struct CreateAttachmentRequestDataAttributes {
     #[serde(rename = "attachment")]
     pub attachment:
-        crate::datadogV2::model::IncidentAttachmentsPostmortemAttributesAttachmentObject,
-    /// The type of postmortem attachment attributes.
+        Option<crate::datadogV2::model::CreateAttachmentRequestDataAttributesAttachment>,
     #[serde(rename = "attachment_type")]
-    pub attachment_type: crate::datadogV2::model::IncidentAttachmentPostmortemAttachmentType,
+    pub attachment_type: Option<crate::datadogV2::model::AttachmentDataAttributesAttachmentType>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -25,17 +22,30 @@ pub struct IncidentAttachmentPostmortemAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl IncidentAttachmentPostmortemAttributes {
-    pub fn new(
-        attachment: crate::datadogV2::model::IncidentAttachmentsPostmortemAttributesAttachmentObject,
-        attachment_type: crate::datadogV2::model::IncidentAttachmentPostmortemAttachmentType,
-    ) -> IncidentAttachmentPostmortemAttributes {
-        IncidentAttachmentPostmortemAttributes {
-            attachment,
-            attachment_type,
+impl CreateAttachmentRequestDataAttributes {
+    pub fn new() -> CreateAttachmentRequestDataAttributes {
+        CreateAttachmentRequestDataAttributes {
+            attachment: None,
+            attachment_type: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn attachment(
+        mut self,
+        value: crate::datadogV2::model::CreateAttachmentRequestDataAttributesAttachment,
+    ) -> Self {
+        self.attachment = Some(value);
+        self
+    }
+
+    pub fn attachment_type(
+        mut self,
+        value: crate::datadogV2::model::AttachmentDataAttributesAttachmentType,
+    ) -> Self {
+        self.attachment_type = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -47,14 +57,20 @@ impl IncidentAttachmentPostmortemAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for IncidentAttachmentPostmortemAttributes {
+impl Default for CreateAttachmentRequestDataAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for CreateAttachmentRequestDataAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct IncidentAttachmentPostmortemAttributesVisitor;
-        impl<'a> Visitor<'a> for IncidentAttachmentPostmortemAttributesVisitor {
-            type Value = IncidentAttachmentPostmortemAttributes;
+        struct CreateAttachmentRequestDataAttributesVisitor;
+        impl<'a> Visitor<'a> for CreateAttachmentRequestDataAttributesVisitor {
+            type Value = CreateAttachmentRequestDataAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -64,9 +80,11 @@ impl<'de> Deserialize<'de> for IncidentAttachmentPostmortemAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut attachment: Option<crate::datadogV2::model::IncidentAttachmentsPostmortemAttributesAttachmentObject> = None;
+                let mut attachment: Option<
+                    crate::datadogV2::model::CreateAttachmentRequestDataAttributesAttachment,
+                > = None;
                 let mut attachment_type: Option<
-                    crate::datadogV2::model::IncidentAttachmentPostmortemAttachmentType,
+                    crate::datadogV2::model::AttachmentDataAttributesAttachmentType,
                 > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -77,14 +95,20 @@ impl<'de> Deserialize<'de> for IncidentAttachmentPostmortemAttributes {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "attachment" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             attachment = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "attachment_type" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             attachment_type =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _attachment_type) = attachment_type {
                                 match _attachment_type {
-                                    crate::datadogV2::model::IncidentAttachmentPostmortemAttachmentType::UnparsedObject(_attachment_type) => {
+                                    crate::datadogV2::model::AttachmentDataAttributesAttachmentType::UnparsedObject(_attachment_type) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -98,11 +122,8 @@ impl<'de> Deserialize<'de> for IncidentAttachmentPostmortemAttributes {
                         }
                     }
                 }
-                let attachment = attachment.ok_or_else(|| M::Error::missing_field("attachment"))?;
-                let attachment_type =
-                    attachment_type.ok_or_else(|| M::Error::missing_field("attachment_type"))?;
 
-                let content = IncidentAttachmentPostmortemAttributes {
+                let content = CreateAttachmentRequestDataAttributes {
                     attachment,
                     attachment_type,
                     additional_properties,
@@ -113,6 +134,6 @@ impl<'de> Deserialize<'de> for IncidentAttachmentPostmortemAttributes {
             }
         }
 
-        deserializer.deserialize_any(IncidentAttachmentPostmortemAttributesVisitor)
+        deserializer.deserialize_any(CreateAttachmentRequestDataAttributesVisitor)
     }
 }
