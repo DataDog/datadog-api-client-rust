@@ -6,17 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The link attachment.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct IncidentAttachmentLinkAttributesAttachmentObject {
-    /// The URL of this link attachment.
+pub struct PatchAttachmentRequestDataAttributesAttachment {
     #[serde(rename = "documentUrl")]
-    pub document_url: String,
-    /// The title of this link attachment.
+    pub document_url: Option<String>,
     #[serde(rename = "title")]
-    pub title: String,
+    pub title: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,17 +21,24 @@ pub struct IncidentAttachmentLinkAttributesAttachmentObject {
     pub(crate) _unparsed: bool,
 }
 
-impl IncidentAttachmentLinkAttributesAttachmentObject {
-    pub fn new(
-        document_url: String,
-        title: String,
-    ) -> IncidentAttachmentLinkAttributesAttachmentObject {
-        IncidentAttachmentLinkAttributesAttachmentObject {
-            document_url,
-            title,
+impl PatchAttachmentRequestDataAttributesAttachment {
+    pub fn new() -> PatchAttachmentRequestDataAttributesAttachment {
+        PatchAttachmentRequestDataAttributesAttachment {
+            document_url: None,
+            title: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn document_url(mut self, value: String) -> Self {
+        self.document_url = Some(value);
+        self
+    }
+
+    pub fn title(mut self, value: String) -> Self {
+        self.title = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -46,14 +50,20 @@ impl IncidentAttachmentLinkAttributesAttachmentObject {
     }
 }
 
-impl<'de> Deserialize<'de> for IncidentAttachmentLinkAttributesAttachmentObject {
+impl Default for PatchAttachmentRequestDataAttributesAttachment {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for PatchAttachmentRequestDataAttributesAttachment {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct IncidentAttachmentLinkAttributesAttachmentObjectVisitor;
-        impl<'a> Visitor<'a> for IncidentAttachmentLinkAttributesAttachmentObjectVisitor {
-            type Value = IncidentAttachmentLinkAttributesAttachmentObject;
+        struct PatchAttachmentRequestDataAttributesAttachmentVisitor;
+        impl<'a> Visitor<'a> for PatchAttachmentRequestDataAttributesAttachmentVisitor {
+            type Value = PatchAttachmentRequestDataAttributesAttachment;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -74,10 +84,16 @@ impl<'de> Deserialize<'de> for IncidentAttachmentLinkAttributesAttachmentObject 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "documentUrl" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             document_url =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "title" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -87,11 +103,8 @@ impl<'de> Deserialize<'de> for IncidentAttachmentLinkAttributesAttachmentObject 
                         }
                     }
                 }
-                let document_url =
-                    document_url.ok_or_else(|| M::Error::missing_field("document_url"))?;
-                let title = title.ok_or_else(|| M::Error::missing_field("title"))?;
 
-                let content = IncidentAttachmentLinkAttributesAttachmentObject {
+                let content = PatchAttachmentRequestDataAttributesAttachment {
                     document_url,
                     title,
                     additional_properties,
@@ -102,6 +115,6 @@ impl<'de> Deserialize<'de> for IncidentAttachmentLinkAttributesAttachmentObject 
             }
         }
 
-        deserializer.deserialize_any(IncidentAttachmentLinkAttributesAttachmentObjectVisitor)
+        deserializer.deserialize_any(PatchAttachmentRequestDataAttributesAttachmentVisitor)
     }
 }

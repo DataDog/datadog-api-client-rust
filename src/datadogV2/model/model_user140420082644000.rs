@@ -6,23 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A single incident attachment.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct IncidentAttachmentData {
-    /// The attributes object for an attachment.
+pub struct User140420082644000 {
+    /// Attributes of user object returned by the API.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::IncidentAttachmentAttributes,
-    /// A unique identifier that represents the incident attachment.
+    pub attributes: Option<crate::datadogV2::model::UserAttributes>,
     #[serde(rename = "id")]
-    pub id: String,
-    /// The incident attachment's relationships.
-    #[serde(rename = "relationships")]
-    pub relationships: crate::datadogV2::model::IncidentAttachmentRelationships,
-    /// The incident attachment resource type.
+    pub id: Option<String>,
+    /// Users resource type.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::IncidentAttachmentType,
+    pub type_: crate::datadogV2::model::UserType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -30,21 +25,25 @@ pub struct IncidentAttachmentData {
     pub(crate) _unparsed: bool,
 }
 
-impl IncidentAttachmentData {
-    pub fn new(
-        attributes: crate::datadogV2::model::IncidentAttachmentAttributes,
-        id: String,
-        relationships: crate::datadogV2::model::IncidentAttachmentRelationships,
-        type_: crate::datadogV2::model::IncidentAttachmentType,
-    ) -> IncidentAttachmentData {
-        IncidentAttachmentData {
-            attributes,
-            id,
-            relationships,
+impl User140420082644000 {
+    pub fn new(type_: crate::datadogV2::model::UserType) -> User140420082644000 {
+        User140420082644000 {
+            attributes: None,
+            id: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn attributes(mut self, value: crate::datadogV2::model::UserAttributes) -> Self {
+        self.attributes = Some(value);
+        self
+    }
+
+    pub fn id(mut self, value: String) -> Self {
+        self.id = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -56,14 +55,14 @@ impl IncidentAttachmentData {
     }
 }
 
-impl<'de> Deserialize<'de> for IncidentAttachmentData {
+impl<'de> Deserialize<'de> for User140420082644000 {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct IncidentAttachmentDataVisitor;
-        impl<'a> Visitor<'a> for IncidentAttachmentDataVisitor {
-            type Value = IncidentAttachmentData;
+        struct User140420082644000Visitor;
+        impl<'a> Visitor<'a> for User140420082644000Visitor {
+            type Value = User140420082644000;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -73,13 +72,9 @@ impl<'de> Deserialize<'de> for IncidentAttachmentData {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::IncidentAttachmentAttributes> =
-                    None;
+                let mut attributes: Option<crate::datadogV2::model::UserAttributes> = None;
                 let mut id: Option<String> = None;
-                let mut relationships: Option<
-                    crate::datadogV2::model::IncidentAttachmentRelationships,
-                > = None;
-                let mut type_: Option<crate::datadogV2::model::IncidentAttachmentType> = None;
+                let mut type_: Option<crate::datadogV2::model::UserType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -89,30 +84,24 @@ impl<'de> Deserialize<'de> for IncidentAttachmentData {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "attributes" => {
-                            attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _attributes) = attributes {
-                                match _attributes {
-                                    crate::datadogV2::model::IncidentAttachmentAttributes::UnparsedObject(_attributes) => {
-                                        _unparsed = true;
-                                    },
-                                    _ => {}
-                                }
+                            if v.is_null() {
+                                continue;
                             }
+                            attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "id" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "relationships" => {
-                            relationships =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::IncidentAttachmentType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::UserType::UnparsedObject(_type_) => {
                                         _unparsed = true;
-                                    },
+                                    }
                                     _ => {}
                                 }
                             }
@@ -124,16 +113,11 @@ impl<'de> Deserialize<'de> for IncidentAttachmentData {
                         }
                     }
                 }
-                let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
-                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
-                let relationships =
-                    relationships.ok_or_else(|| M::Error::missing_field("relationships"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = IncidentAttachmentData {
+                let content = User140420082644000 {
                     attributes,
                     id,
-                    relationships,
                     type_,
                     additional_properties,
                     _unparsed,
@@ -143,6 +127,6 @@ impl<'de> Deserialize<'de> for IncidentAttachmentData {
             }
         }
 
-        deserializer.deserialize_any(IncidentAttachmentDataVisitor)
+        deserializer.deserialize_any(User140420082644000Visitor)
     }
 }
