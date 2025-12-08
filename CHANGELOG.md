@@ -1,5 +1,30 @@
 # CHANGELOG
 
+## 0.23.0/2025-12-08
+
+### Added
+* On-Call Add positioned schedule policy target [#1051](https://github.com/DataDog/datadog-api-client-rust/pull/1051)
+* Introduced new APIs to manage team hierarchy links [#1042](https://github.com/DataDog/datadog-api-client-rust/pull/1042)
+* Add Row Update Endpoints to Reference Tables API spec [#1031](https://github.com/DataDog/datadog-api-client-rust/pull/1031)
+* Add incident management seats  to spec [#1028](https://github.com/DataDog/datadog-api-client-rust/pull/1028)
+* Support provisioning teams from external sources [#1027](https://github.com/DataDog/datadog-api-client-rust/pull/1027)
+* security_monitoring - Add signalOutput field to ThreatHuntingJobResponseAttributes schema [#1025](https://github.com/DataDog/datadog-api-client-rust/pull/1025)
+* Add filter.scope to Monitor Notification Rules [#1022](https://github.com/DataDog/datadog-api-client-rust/pull/1022)
+* Add suppression tags [#1016](https://github.com/DataDog/datadog-api-client-rust/pull/1016)
+* Add Team Connection API Documentation [#1014](https://github.com/DataDog/datadog-api-client-rust/pull/1014)
+* Add Support for Monitor Assets [#1012](https://github.com/DataDog/datadog-api-client-rust/pull/1012)
+* Add new summary keys for new standalone billing dimensions [#1011](https://github.com/DataDog/datadog-api-client-rust/pull/1011)
+
+### Changed
+* Add Security Finding Ticketing endpoints [#1045](https://github.com/DataDog/datadog-api-client-rust/pull/1045)
+* Flatten file_metadata response schema to avoid OneOf unmarshaling issues [#1030](https://github.com/DataDog/datadog-api-client-rust/pull/1030)
+
+### Fixed
+* obs_pipelines: make google auth optional [#1036](https://github.com/DataDog/datadog-api-client-rust/pull/1036)
+
+### Deprecated
+* [api-spec] Mark PATCH /api/v2/incidents/incident_id/attachments endpoint as deprecated [#1013](https://github.com/DataDog/datadog-api-client-rust/pull/1013)
+
 ## 0.22.0/2025-11-14
 
 ### Added
