@@ -6,17 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A rule version with a list of updates.
+/// Response for getting the suppression version history.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RuleVersions {
-    /// A list of changes.
-    #[serde(rename = "changes")]
-    pub changes: Option<Vec<crate::datadogV2::model::VersionHistoryUpdate>>,
-    /// Create a new rule.
-    #[serde(rename = "rule")]
-    pub rule: Option<crate::datadogV2::model::SecurityMonitoringRuleResponse>,
+pub struct GetSuppressionVersionHistoryResponse {
+    /// Data for the suppression version history.
+    #[serde(rename = "data")]
+    pub data: Option<crate::datadogV2::model::GetSuppressionVersionHistoryData>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,23 +21,20 @@ pub struct RuleVersions {
     pub(crate) _unparsed: bool,
 }
 
-impl RuleVersions {
-    pub fn new() -> RuleVersions {
-        RuleVersions {
-            changes: None,
-            rule: None,
+impl GetSuppressionVersionHistoryResponse {
+    pub fn new() -> GetSuppressionVersionHistoryResponse {
+        GetSuppressionVersionHistoryResponse {
+            data: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn changes(mut self, value: Vec<crate::datadogV2::model::VersionHistoryUpdate>) -> Self {
-        self.changes = Some(value);
-        self
-    }
-
-    pub fn rule(mut self, value: crate::datadogV2::model::SecurityMonitoringRuleResponse) -> Self {
-        self.rule = Some(value);
+    pub fn data(
+        mut self,
+        value: crate::datadogV2::model::GetSuppressionVersionHistoryData,
+    ) -> Self {
+        self.data = Some(value);
         self
     }
 
@@ -53,20 +47,20 @@ impl RuleVersions {
     }
 }
 
-impl Default for RuleVersions {
+impl Default for GetSuppressionVersionHistoryResponse {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for RuleVersions {
+impl<'de> Deserialize<'de> for GetSuppressionVersionHistoryResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RuleVersionsVisitor;
-        impl<'a> Visitor<'a> for RuleVersionsVisitor {
-            type Value = RuleVersions;
+        struct GetSuppressionVersionHistoryResponseVisitor;
+        impl<'a> Visitor<'a> for GetSuppressionVersionHistoryResponseVisitor {
+            type Value = GetSuppressionVersionHistoryResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -76,8 +70,7 @@ impl<'de> Deserialize<'de> for RuleVersions {
             where
                 M: MapAccess<'a>,
             {
-                let mut changes: Option<Vec<crate::datadogV2::model::VersionHistoryUpdate>> = None;
-                let mut rule: Option<crate::datadogV2::model::SecurityMonitoringRuleResponse> =
+                let mut data: Option<crate::datadogV2::model::GetSuppressionVersionHistoryData> =
                     None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -87,25 +80,11 @@ impl<'de> Deserialize<'de> for RuleVersions {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "changes" => {
+                        "data" => {
                             if v.is_null() {
                                 continue;
                             }
-                            changes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "rule" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            rule = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _rule) = rule {
-                                match _rule {
-                                    crate::datadogV2::model::SecurityMonitoringRuleResponse::UnparsedObject(_rule) => {
-                                        _unparsed = true;
-                                    },
-                                    _ => {}
-                                }
-                            }
+                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -115,9 +94,8 @@ impl<'de> Deserialize<'de> for RuleVersions {
                     }
                 }
 
-                let content = RuleVersions {
-                    changes,
-                    rule,
+                let content = GetSuppressionVersionHistoryResponse {
+                    data,
                     additional_properties,
                     _unparsed,
                 };
@@ -126,6 +104,6 @@ impl<'de> Deserialize<'de> for RuleVersions {
             }
         }
 
-        deserializer.deserialize_any(RuleVersionsVisitor)
+        deserializer.deserialize_any(GetSuppressionVersionHistoryResponseVisitor)
     }
 }

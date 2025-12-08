@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RuleVersionUpdate {
+pub struct VersionHistoryUpdate {
     /// The new value of the field.
     #[serde(rename = "change")]
     pub change: Option<String>,
@@ -19,7 +19,7 @@ pub struct RuleVersionUpdate {
     pub field: Option<String>,
     /// The type of change.
     #[serde(rename = "type")]
-    pub type_: Option<crate::datadogV2::model::RuleVersionUpdateType>,
+    pub type_: Option<crate::datadogV2::model::VersionHistoryUpdateType>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,9 +27,9 @@ pub struct RuleVersionUpdate {
     pub(crate) _unparsed: bool,
 }
 
-impl RuleVersionUpdate {
-    pub fn new() -> RuleVersionUpdate {
-        RuleVersionUpdate {
+impl VersionHistoryUpdate {
+    pub fn new() -> VersionHistoryUpdate {
+        VersionHistoryUpdate {
             change: None,
             field: None,
             type_: None,
@@ -48,7 +48,7 @@ impl RuleVersionUpdate {
         self
     }
 
-    pub fn type_(mut self, value: crate::datadogV2::model::RuleVersionUpdateType) -> Self {
+    pub fn type_(mut self, value: crate::datadogV2::model::VersionHistoryUpdateType) -> Self {
         self.type_ = Some(value);
         self
     }
@@ -62,20 +62,20 @@ impl RuleVersionUpdate {
     }
 }
 
-impl Default for RuleVersionUpdate {
+impl Default for VersionHistoryUpdate {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for RuleVersionUpdate {
+impl<'de> Deserialize<'de> for VersionHistoryUpdate {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RuleVersionUpdateVisitor;
-        impl<'a> Visitor<'a> for RuleVersionUpdateVisitor {
-            type Value = RuleVersionUpdate;
+        struct VersionHistoryUpdateVisitor;
+        impl<'a> Visitor<'a> for VersionHistoryUpdateVisitor {
+            type Value = VersionHistoryUpdate;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -87,7 +87,7 @@ impl<'de> Deserialize<'de> for RuleVersionUpdate {
             {
                 let mut change: Option<String> = None;
                 let mut field: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::RuleVersionUpdateType> = None;
+                let mut type_: Option<crate::datadogV2::model::VersionHistoryUpdateType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -115,7 +115,7 @@ impl<'de> Deserialize<'de> for RuleVersionUpdate {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::RuleVersionUpdateType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::VersionHistoryUpdateType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -130,7 +130,7 @@ impl<'de> Deserialize<'de> for RuleVersionUpdate {
                     }
                 }
 
-                let content = RuleVersionUpdate {
+                let content = VersionHistoryUpdate {
                     change,
                     field,
                     type_,
@@ -142,6 +142,6 @@ impl<'de> Deserialize<'de> for RuleVersionUpdate {
             }
         }
 
-        deserializer.deserialize_any(RuleVersionUpdateVisitor)
+        deserializer.deserialize_any(VersionHistoryUpdateVisitor)
     }
 }
