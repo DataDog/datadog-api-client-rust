@@ -38,6 +38,12 @@ pub struct HeatMapWidgetRequest {
     /// List of queries that can be returned directly or used in formulas.
     #[serde(rename = "queries")]
     pub queries: Option<Vec<crate::datadogV1::model::FormulaAndFunctionQueryDefinition>>,
+    /// Query definition for Distribution Widget Histogram Request
+    #[serde(rename = "query")]
+    pub query: Option<crate::datadogV1::model::DistributionWidgetHistogramRequestQuery>,
+    /// Request type for the histogram request.
+    #[serde(rename = "request_type")]
+    pub request_type: Option<crate::datadogV1::model::DistributionWidgetHistogramRequestType>,
     /// Timeseries, scalar, or event list response. Event list response formats are supported by Geomap widgets.
     #[serde(rename = "response_format")]
     pub response_format: Option<crate::datadogV1::model::FormulaAndFunctionResponseFormat>,
@@ -69,6 +75,8 @@ impl HeatMapWidgetRequest {
             profile_metrics_query: None,
             q: None,
             queries: None,
+            query: None,
+            request_type: None,
             response_format: None,
             rum_query: None,
             security_query: None,
@@ -126,6 +134,22 @@ impl HeatMapWidgetRequest {
         value: Vec<crate::datadogV1::model::FormulaAndFunctionQueryDefinition>,
     ) -> Self {
         self.queries = Some(value);
+        self
+    }
+
+    pub fn query(
+        mut self,
+        value: crate::datadogV1::model::DistributionWidgetHistogramRequestQuery,
+    ) -> Self {
+        self.query = Some(value);
+        self
+    }
+
+    pub fn request_type(
+        mut self,
+        value: crate::datadogV1::model::DistributionWidgetHistogramRequestType,
+    ) -> Self {
+        self.request_type = Some(value);
         self
     }
 
@@ -196,6 +220,12 @@ impl<'de> Deserialize<'de> for HeatMapWidgetRequest {
                 let mut q: Option<String> = None;
                 let mut queries: Option<
                     Vec<crate::datadogV1::model::FormulaAndFunctionQueryDefinition>,
+                > = None;
+                let mut query: Option<
+                    crate::datadogV1::model::DistributionWidgetHistogramRequestQuery,
+                > = None;
+                let mut request_type: Option<
+                    crate::datadogV1::model::DistributionWidgetHistogramRequestType,
                 > = None;
                 let mut response_format: Option<
                     crate::datadogV1::model::FormulaAndFunctionResponseFormat,
@@ -269,6 +299,35 @@ impl<'de> Deserialize<'de> for HeatMapWidgetRequest {
                             }
                             queries = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "query" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _query) = query {
+                                match _query {
+                                    crate::datadogV1::model::DistributionWidgetHistogramRequestQuery::UnparsedObject(_query) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "request_type" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            request_type =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _request_type) = request_type {
+                                match _request_type {
+                                    crate::datadogV1::model::DistributionWidgetHistogramRequestType::UnparsedObject(_request_type) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
                         "response_format" => {
                             if v.is_null() {
                                 continue;
@@ -321,6 +380,8 @@ impl<'de> Deserialize<'de> for HeatMapWidgetRequest {
                     profile_metrics_query,
                     q,
                     queries,
+                    query,
+                    request_type,
                     response_format,
                     rum_query,
                     security_query,
