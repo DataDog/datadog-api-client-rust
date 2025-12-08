@@ -6,24 +6,27 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// X Axis controls for the distribution widget.
+/// Y Axis controls for the heat map widget.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct DistributionWidgetXAxis {
-    /// True includes zero.
+pub struct HeatMapWidgetYAxis {
+    /// Set to `true` to include zero.
     #[serde(rename = "include_zero")]
     pub include_zero: Option<bool>,
-    /// Specifies maximum value to show on the x-axis. It takes a number, percentile (p90 === 90th percentile), or auto for default behavior.
+    /// The label of the axis to display on the graph. Only usable on Scatterplot Widgets.
+    #[serde(rename = "label")]
+    pub label: Option<String>,
+    /// Specifies maximum numeric value to show on the axis. Defaults to `auto`.
     #[serde(rename = "max")]
     pub max: Option<String>,
-    /// Specifies minimum value to show on the x-axis. It takes a number, percentile (p90 === 90th percentile), or auto for default behavior.
+    /// Specifies minimum numeric value to show on the axis. Defaults to `auto`.
     #[serde(rename = "min")]
     pub min: Option<String>,
     /// Number of value buckets to target, aka the resolution of the value bins.
     #[serde(rename = "num_buckets")]
     pub num_buckets: Option<i64>,
-    /// Specifies the scale type. Possible values are `linear`.
+    /// Specifies the scale type. Possible values are `linear`, `log`, `sqrt`, and `pow##` (for example `pow2` or `pow0.5`).
     #[serde(rename = "scale")]
     pub scale: Option<String>,
     #[serde(flatten)]
@@ -33,10 +36,11 @@ pub struct DistributionWidgetXAxis {
     pub(crate) _unparsed: bool,
 }
 
-impl DistributionWidgetXAxis {
-    pub fn new() -> DistributionWidgetXAxis {
-        DistributionWidgetXAxis {
+impl HeatMapWidgetYAxis {
+    pub fn new() -> HeatMapWidgetYAxis {
+        HeatMapWidgetYAxis {
             include_zero: None,
+            label: None,
             max: None,
             min: None,
             num_buckets: None,
@@ -48,6 +52,11 @@ impl DistributionWidgetXAxis {
 
     pub fn include_zero(mut self, value: bool) -> Self {
         self.include_zero = Some(value);
+        self
+    }
+
+    pub fn label(mut self, value: String) -> Self {
+        self.label = Some(value);
         self
     }
 
@@ -80,20 +89,20 @@ impl DistributionWidgetXAxis {
     }
 }
 
-impl Default for DistributionWidgetXAxis {
+impl Default for HeatMapWidgetYAxis {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for DistributionWidgetXAxis {
+impl<'de> Deserialize<'de> for HeatMapWidgetYAxis {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct DistributionWidgetXAxisVisitor;
-        impl<'a> Visitor<'a> for DistributionWidgetXAxisVisitor {
-            type Value = DistributionWidgetXAxis;
+        struct HeatMapWidgetYAxisVisitor;
+        impl<'a> Visitor<'a> for HeatMapWidgetYAxisVisitor {
+            type Value = HeatMapWidgetYAxis;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -104,6 +113,7 @@ impl<'de> Deserialize<'de> for DistributionWidgetXAxis {
                 M: MapAccess<'a>,
             {
                 let mut include_zero: Option<bool> = None;
+                let mut label: Option<String> = None;
                 let mut max: Option<String> = None;
                 let mut min: Option<String> = None;
                 let mut num_buckets: Option<i64> = None;
@@ -122,6 +132,12 @@ impl<'de> Deserialize<'de> for DistributionWidgetXAxis {
                             }
                             include_zero =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "label" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            label = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "max" => {
                             if v.is_null() {
@@ -156,8 +172,9 @@ impl<'de> Deserialize<'de> for DistributionWidgetXAxis {
                     }
                 }
 
-                let content = DistributionWidgetXAxis {
+                let content = HeatMapWidgetYAxis {
                     include_zero,
+                    label,
                     max,
                     min,
                     num_buckets,
@@ -170,6 +187,6 @@ impl<'de> Deserialize<'de> for DistributionWidgetXAxis {
             }
         }
 
-        deserializer.deserialize_any(DistributionWidgetXAxisVisitor)
+        deserializer.deserialize_any(HeatMapWidgetYAxisVisitor)
     }
 }
