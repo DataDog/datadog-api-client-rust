@@ -26,6 +26,9 @@ pub struct FormulaAndFunctionMetricQueryDefinition {
     /// Metrics query definition.
     #[serde(rename = "query")]
     pub query: String,
+    /// Semantic mode for metrics queries. This determines how metrics from different sources are combined or displayed.
+    #[serde(rename = "semantic_mode")]
+    pub semantic_mode: Option<crate::datadogV1::model::FormulaAndFunctionMetricSemanticMode>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -45,6 +48,7 @@ impl FormulaAndFunctionMetricQueryDefinition {
             data_source,
             name,
             query,
+            semantic_mode: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -60,6 +64,14 @@ impl FormulaAndFunctionMetricQueryDefinition {
 
     pub fn cross_org_uuids(mut self, value: Vec<String>) -> Self {
         self.cross_org_uuids = Some(value);
+        self
+    }
+
+    pub fn semantic_mode(
+        mut self,
+        value: crate::datadogV1::model::FormulaAndFunctionMetricSemanticMode,
+    ) -> Self {
+        self.semantic_mode = Some(value);
         self
     }
 
@@ -98,6 +110,9 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionMetricQueryDefinition {
                 > = None;
                 let mut name: Option<String> = None;
                 let mut query: Option<String> = None;
+                let mut semantic_mode: Option<
+                    crate::datadogV1::model::FormulaAndFunctionMetricSemanticMode,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -145,6 +160,21 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionMetricQueryDefinition {
                         "query" => {
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "semantic_mode" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            semantic_mode =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _semantic_mode) = semantic_mode {
+                                match _semantic_mode {
+                                    crate::datadogV1::model::FormulaAndFunctionMetricSemanticMode::UnparsedObject(_semantic_mode) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -163,6 +193,7 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionMetricQueryDefinition {
                     data_source,
                     name,
                     query,
+                    semantic_mode,
                     additional_properties,
                     _unparsed,
                 };
