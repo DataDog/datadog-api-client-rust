@@ -8,6 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum SplitGraphSourceWidgetDefinition {
+    BarChartWidgetDefinition(Box<crate::datadogV1::model::BarChartWidgetDefinition>),
     ChangeWidgetDefinition(Box<crate::datadogV1::model::ChangeWidgetDefinition>),
     GeomapWidgetDefinition(Box<crate::datadogV1::model::GeomapWidgetDefinition>),
     QueryValueWidgetDefinition(Box<crate::datadogV1::model::QueryValueWidgetDefinition>),
@@ -26,6 +27,16 @@ impl<'de> Deserialize<'de> for SplitGraphSourceWidgetDefinition {
         D: Deserializer<'de>,
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV1::model::BarChartWidgetDefinition>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(SplitGraphSourceWidgetDefinition::BarChartWidgetDefinition(
+                    _v,
+                ));
+            }
+        }
         if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::ChangeWidgetDefinition>>(
             value.clone(),
         ) {
