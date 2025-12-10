@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A metric-based SLO. **Required if type is `metric`**. Note that Datadog only allows the sum by aggregator
+/// A now deprecated metric SLO. Note that Datadog only allows the sum by aggregator
 /// to be used because this will sum up all request counts instead of averaging them, or taking the max or
 /// min of all of those requests.
 #[non_exhaustive]
