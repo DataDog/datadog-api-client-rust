@@ -107,6 +107,9 @@ pub struct UsageSummaryResponse {
     /// Sum of the host count average for Cloud Cost Management for all cloud providers.
     #[serde(rename = "cloud_cost_management_host_count_avg_sum")]
     pub cloud_cost_management_host_count_avg_sum: Option<i64>,
+    /// Sum of the average host counts for Cloud Cost Management on OCI.
+    #[serde(rename = "cloud_cost_management_oci_host_count_avg_sum")]
+    pub cloud_cost_management_oci_host_count_avg_sum: Option<i64>,
     /// Shows the sum of all Cloud Security Information and Event Management events over all hours in the current month for all organizations.
     #[serde(rename = "cloud_siem_events_agg_sum")]
     pub cloud_siem_events_agg_sum: Option<i64>,
@@ -248,6 +251,9 @@ pub struct UsageSummaryResponse {
     /// Shows the sum of all ephemeral infrastructure hosts for Pro Plus over all hours in the current month for all organizations.
     #[serde(rename = "eph_infra_host_proplus_agg_sum")]
     pub eph_infra_host_proplus_agg_sum: Option<i64>,
+    /// Sum of all ephemeral infrastructure hosts for Proxmox over all hours in the current month for all organizations.
+    #[serde(rename = "eph_infra_host_proxmox_agg_sum")]
+    pub eph_infra_host_proxmox_agg_sum: Option<i64>,
     /// Shows the sum of all Error Tracking APM error events over all hours in the current month for all organizations.
     #[serde(rename = "error_tracking_apm_error_events_agg_sum")]
     pub error_tracking_apm_error_events_agg_sum: Option<i64>,
@@ -436,6 +442,12 @@ pub struct UsageSummaryResponse {
     /// Shows the 99th percentile of all profiled hosts over all hours in the current month for all organizations.
     #[serde(rename = "profiling_host_count_top99p_sum")]
     pub profiling_host_count_top99p_sum: Option<i64>,
+    /// Sum of all Proxmox hosts over all hours in the current month for all organizations.
+    #[serde(rename = "proxmox_host_agg_sum")]
+    pub proxmox_host_agg_sum: Option<i64>,
+    /// Sum of the 99th percentile of all Proxmox hosts over all hours in the current month for all organizations.
+    #[serde(rename = "proxmox_host_top99p_sum")]
+    pub proxmox_host_top99p_sum: Option<i64>,
     /// Shows the high-water mark of all published applications over all hours in the current month for all organizations.
     #[serde(rename = "published_app_hwm_sum")]
     pub published_app_hwm_sum: Option<i64>,
@@ -721,6 +733,7 @@ impl UsageSummaryResponse {
             cloud_cost_management_azure_host_count_avg_sum: None,
             cloud_cost_management_gcp_host_count_avg_sum: None,
             cloud_cost_management_host_count_avg_sum: None,
+            cloud_cost_management_oci_host_count_avg_sum: None,
             cloud_siem_events_agg_sum: None,
             code_analysis_sa_committers_hwm_sum: None,
             code_analysis_sca_committers_hwm_sum: None,
@@ -768,6 +781,7 @@ impl UsageSummaryResponse {
             eph_infra_host_opentelemetry_apm_agg_sum: None,
             eph_infra_host_pro_agg_sum: None,
             eph_infra_host_proplus_agg_sum: None,
+            eph_infra_host_proxmox_agg_sum: None,
             error_tracking_apm_error_events_agg_sum: None,
             error_tracking_error_events_agg_sum: None,
             error_tracking_events_agg_sum: None,
@@ -827,6 +841,8 @@ impl UsageSummaryResponse {
             profiling_aas_count_top99p_sum: None,
             profiling_container_agent_count_avg: None,
             profiling_host_count_top99p_sum: None,
+            proxmox_host_agg_sum: None,
+            proxmox_host_top99p_sum: None,
             published_app_hwm_sum: None,
             rehydrated_indexed_events_agg_sum: None,
             rehydrated_ingested_bytes_agg_sum: None,
@@ -1095,6 +1111,12 @@ impl UsageSummaryResponse {
     #[allow(deprecated)]
     pub fn cloud_cost_management_host_count_avg_sum(mut self, value: i64) -> Self {
         self.cloud_cost_management_host_count_avg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn cloud_cost_management_oci_host_count_avg_sum(mut self, value: i64) -> Self {
+        self.cloud_cost_management_oci_host_count_avg_sum = Some(value);
         self
     }
 
@@ -1377,6 +1399,12 @@ impl UsageSummaryResponse {
     #[allow(deprecated)]
     pub fn eph_infra_host_proplus_agg_sum(mut self, value: i64) -> Self {
         self.eph_infra_host_proplus_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn eph_infra_host_proxmox_agg_sum(mut self, value: i64) -> Self {
+        self.eph_infra_host_proxmox_agg_sum = Some(value);
         self
     }
 
@@ -1734,6 +1762,18 @@ impl UsageSummaryResponse {
     #[allow(deprecated)]
     pub fn profiling_host_count_top99p_sum(mut self, value: i64) -> Self {
         self.profiling_host_count_top99p_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn proxmox_host_agg_sum(mut self, value: i64) -> Self {
+        self.proxmox_host_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn proxmox_host_top99p_sum(mut self, value: i64) -> Self {
+        self.proxmox_host_top99p_sum = Some(value);
         self
     }
 
@@ -2327,6 +2367,7 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                 let mut cloud_cost_management_azure_host_count_avg_sum: Option<i64> = None;
                 let mut cloud_cost_management_gcp_host_count_avg_sum: Option<i64> = None;
                 let mut cloud_cost_management_host_count_avg_sum: Option<i64> = None;
+                let mut cloud_cost_management_oci_host_count_avg_sum: Option<i64> = None;
                 let mut cloud_siem_events_agg_sum: Option<i64> = None;
                 let mut code_analysis_sa_committers_hwm_sum: Option<i64> = None;
                 let mut code_analysis_sca_committers_hwm_sum: Option<i64> = None;
@@ -2374,6 +2415,7 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                 let mut eph_infra_host_opentelemetry_apm_agg_sum: Option<i64> = None;
                 let mut eph_infra_host_pro_agg_sum: Option<i64> = None;
                 let mut eph_infra_host_proplus_agg_sum: Option<i64> = None;
+                let mut eph_infra_host_proxmox_agg_sum: Option<i64> = None;
                 let mut error_tracking_apm_error_events_agg_sum: Option<i64> = None;
                 let mut error_tracking_error_events_agg_sum: Option<i64> = None;
                 let mut error_tracking_events_agg_sum: Option<i64> = None;
@@ -2436,6 +2478,8 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                 let mut profiling_aas_count_top99p_sum: Option<i64> = None;
                 let mut profiling_container_agent_count_avg: Option<i64> = None;
                 let mut profiling_host_count_top99p_sum: Option<i64> = None;
+                let mut proxmox_host_agg_sum: Option<i64> = None;
+                let mut proxmox_host_top99p_sum: Option<i64> = None;
                 let mut published_app_hwm_sum: Option<i64> = None;
                 let mut rehydrated_indexed_events_agg_sum: Option<i64> = None;
                 let mut rehydrated_ingested_bytes_agg_sum: Option<i64> = None;
@@ -2724,6 +2768,12 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                             }
                             cloud_cost_management_host_count_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
+                        "cloud_cost_management_oci_host_count_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cloud_cost_management_oci_host_count_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cloud_siem_events_agg_sum" => {
                             if v.is_null() {
                                 continue;
@@ -3005,6 +3055,12 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                                 continue;
                             }
                             eph_infra_host_proplus_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "eph_infra_host_proxmox_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            eph_infra_host_proxmox_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
                         "error_tracking_apm_error_events_agg_sum" => {
                             if v.is_null() {
@@ -3359,6 +3415,18 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                                 continue;
                             }
                             profiling_host_count_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "proxmox_host_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            proxmox_host_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "proxmox_host_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            proxmox_host_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
                         "published_app_hwm_sum" => {
                             if v.is_null() {
@@ -3881,6 +3949,7 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                     cloud_cost_management_azure_host_count_avg_sum,
                     cloud_cost_management_gcp_host_count_avg_sum,
                     cloud_cost_management_host_count_avg_sum,
+                    cloud_cost_management_oci_host_count_avg_sum,
                     cloud_siem_events_agg_sum,
                     code_analysis_sa_committers_hwm_sum,
                     code_analysis_sca_committers_hwm_sum,
@@ -3928,6 +3997,7 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                     eph_infra_host_opentelemetry_apm_agg_sum,
                     eph_infra_host_pro_agg_sum,
                     eph_infra_host_proplus_agg_sum,
+                    eph_infra_host_proxmox_agg_sum,
                     error_tracking_apm_error_events_agg_sum,
                     error_tracking_error_events_agg_sum,
                     error_tracking_events_agg_sum,
@@ -3987,6 +4057,8 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                     profiling_aas_count_top99p_sum,
                     profiling_container_agent_count_avg,
                     profiling_host_count_top99p_sum,
+                    proxmox_host_agg_sum,
+                    proxmox_host_top99p_sum,
                     published_app_hwm_sum,
                     rehydrated_indexed_events_agg_sum,
                     rehydrated_ingested_bytes_agg_sum,

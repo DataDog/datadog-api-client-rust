@@ -110,6 +110,9 @@ pub struct UsageSummaryDateOrg {
     /// Host count average of Cloud Cost Management for all cloud providers for the given date and given org.
     #[serde(rename = "cloud_cost_management_host_count_avg")]
     pub cloud_cost_management_host_count_avg: Option<i64>,
+    /// Average host count for Cloud Cost Management on OCI for the given date and organization.
+    #[serde(rename = "cloud_cost_management_oci_host_count_avg")]
+    pub cloud_cost_management_oci_host_count_avg: Option<i64>,
     /// Shows the sum of all Cloud Security Information and Event Management events over all hours in the current date for the given org.
     #[serde(rename = "cloud_siem_events_sum")]
     pub cloud_siem_events_sum: Option<i64>,
@@ -248,6 +251,9 @@ pub struct UsageSummaryDateOrg {
     /// Shows the sum of all ephemeral infrastructure hosts for Pro Plus over all hours in the current date for the given org.
     #[serde(rename = "eph_infra_host_proplus_sum")]
     pub eph_infra_host_proplus_sum: Option<i64>,
+    /// Sum of all ephemeral infrastructure hosts for Proxmox over all hours in the current date for the given organization.
+    #[serde(rename = "eph_infra_host_proxmox_sum")]
+    pub eph_infra_host_proxmox_sum: Option<i64>,
     /// Shows the sum of all Error Tracking APM error events over all hours in the current date for the given org.
     #[serde(rename = "error_tracking_apm_error_events_sum")]
     pub error_tracking_apm_error_events_sum: Option<i64>,
@@ -426,6 +432,12 @@ pub struct UsageSummaryDateOrg {
     /// Shows the 99th percentile of all profiled hosts over all hours within the current date for the given org.
     #[serde(rename = "profiling_host_top99p")]
     pub profiling_host_top99p: Option<i64>,
+    /// Sum of all Proxmox hosts over all hours in the current date for the given organization.
+    #[serde(rename = "proxmox_host_sum")]
+    pub proxmox_host_sum: Option<i64>,
+    /// 99th percentile of all Proxmox hosts over all hours in the current date for the given organization.
+    #[serde(rename = "proxmox_host_top99p")]
+    pub proxmox_host_top99p: Option<i64>,
     /// The organization public id.
     #[serde(rename = "public_id")]
     pub public_id: Option<String>,
@@ -705,6 +717,7 @@ impl UsageSummaryDateOrg {
             cloud_cost_management_azure_host_count_avg: None,
             cloud_cost_management_gcp_host_count_avg: None,
             cloud_cost_management_host_count_avg: None,
+            cloud_cost_management_oci_host_count_avg: None,
             cloud_siem_events_sum: None,
             code_analysis_sa_committers_hwm: None,
             code_analysis_sca_committers_hwm: None,
@@ -751,6 +764,7 @@ impl UsageSummaryDateOrg {
             eph_infra_host_opentelemetry_sum: None,
             eph_infra_host_pro_sum: None,
             eph_infra_host_proplus_sum: None,
+            eph_infra_host_proxmox_sum: None,
             error_tracking_apm_error_events_sum: None,
             error_tracking_error_events_sum: None,
             error_tracking_events_sum: None,
@@ -807,6 +821,8 @@ impl UsageSummaryDateOrg {
             product_analytics_sum: None,
             profiling_aas_count_top99p: None,
             profiling_host_top99p: None,
+            proxmox_host_sum: None,
+            proxmox_host_top99p: None,
             public_id: None,
             published_app_hwm: None,
             region: None,
@@ -1083,6 +1099,12 @@ impl UsageSummaryDateOrg {
     }
 
     #[allow(deprecated)]
+    pub fn cloud_cost_management_oci_host_count_avg(mut self, value: i64) -> Self {
+        self.cloud_cost_management_oci_host_count_avg = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn cloud_siem_events_sum(mut self, value: i64) -> Self {
         self.cloud_siem_events_sum = Some(value);
         self
@@ -1355,6 +1377,12 @@ impl UsageSummaryDateOrg {
     #[allow(deprecated)]
     pub fn eph_infra_host_proplus_sum(mut self, value: i64) -> Self {
         self.eph_infra_host_proplus_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn eph_infra_host_proxmox_sum(mut self, value: i64) -> Self {
+        self.eph_infra_host_proxmox_sum = Some(value);
         self
     }
 
@@ -1694,6 +1722,18 @@ impl UsageSummaryDateOrg {
     #[allow(deprecated)]
     pub fn profiling_host_top99p(mut self, value: i64) -> Self {
         self.profiling_host_top99p = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn proxmox_host_sum(mut self, value: i64) -> Self {
+        self.proxmox_host_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn proxmox_host_top99p(mut self, value: i64) -> Self {
+        self.proxmox_host_top99p = Some(value);
         self
     }
 
@@ -2256,6 +2296,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                 let mut cloud_cost_management_azure_host_count_avg: Option<i64> = None;
                 let mut cloud_cost_management_gcp_host_count_avg: Option<i64> = None;
                 let mut cloud_cost_management_host_count_avg: Option<i64> = None;
+                let mut cloud_cost_management_oci_host_count_avg: Option<i64> = None;
                 let mut cloud_siem_events_sum: Option<i64> = None;
                 let mut code_analysis_sa_committers_hwm: Option<i64> = None;
                 let mut code_analysis_sca_committers_hwm: Option<i64> = None;
@@ -2302,6 +2343,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                 let mut eph_infra_host_opentelemetry_sum: Option<i64> = None;
                 let mut eph_infra_host_pro_sum: Option<i64> = None;
                 let mut eph_infra_host_proplus_sum: Option<i64> = None;
+                let mut eph_infra_host_proxmox_sum: Option<i64> = None;
                 let mut error_tracking_apm_error_events_sum: Option<i64> = None;
                 let mut error_tracking_error_events_sum: Option<i64> = None;
                 let mut error_tracking_events_sum: Option<i64> = None;
@@ -2359,6 +2401,8 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                 let mut product_analytics_sum: Option<i64> = None;
                 let mut profiling_aas_count_top99p: Option<i64> = None;
                 let mut profiling_host_top99p: Option<i64> = None;
+                let mut proxmox_host_sum: Option<i64> = None;
+                let mut proxmox_host_top99p: Option<i64> = None;
                 let mut public_id: Option<String> = None;
                 let mut published_app_hwm: Option<i64> = None;
                 let mut region: Option<String> = None;
@@ -2648,6 +2692,12 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                             }
                             cloud_cost_management_host_count_avg = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
+                        "cloud_cost_management_oci_host_count_avg" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cloud_cost_management_oci_host_count_avg = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cloud_siem_events_sum" => {
                             if v.is_null() {
                                 continue;
@@ -2923,6 +2973,12 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                                 continue;
                             }
                             eph_infra_host_proplus_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "eph_infra_host_proxmox_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            eph_infra_host_proxmox_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
                         "error_tracking_apm_error_events_sum" => {
                             if v.is_null() {
@@ -3259,6 +3315,18 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                                 continue;
                             }
                             profiling_host_top99p = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "proxmox_host_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            proxmox_host_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "proxmox_host_top99p" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            proxmox_host_top99p = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
                         "public_id" => {
                             if v.is_null() {
@@ -3770,6 +3838,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                     cloud_cost_management_azure_host_count_avg,
                     cloud_cost_management_gcp_host_count_avg,
                     cloud_cost_management_host_count_avg,
+                    cloud_cost_management_oci_host_count_avg,
                     cloud_siem_events_sum,
                     code_analysis_sa_committers_hwm,
                     code_analysis_sca_committers_hwm,
@@ -3816,6 +3885,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                     eph_infra_host_opentelemetry_sum,
                     eph_infra_host_pro_sum,
                     eph_infra_host_proplus_sum,
+                    eph_infra_host_proxmox_sum,
                     error_tracking_apm_error_events_sum,
                     error_tracking_error_events_sum,
                     error_tracking_events_sum,
@@ -3872,6 +3942,8 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                     product_analytics_sum,
                     profiling_aas_count_top99p,
                     profiling_host_top99p,
+                    proxmox_host_sum,
+                    proxmox_host_top99p,
                     public_id,
                     published_app_hwm,
                     region,
