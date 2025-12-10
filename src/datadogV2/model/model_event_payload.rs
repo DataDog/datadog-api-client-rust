@@ -20,6 +20,9 @@ pub struct EventPayload {
     /// Event category identifying the type of event.
     #[serde(rename = "category")]
     pub category: crate::datadogV2::model::EventCategory,
+    /// Host name to associate with the event. Any tags associated with the host are also applied to this event. Limited to 255 characters.
+    #[serde(rename = "host")]
+    pub host: Option<String>,
     /// Integration ID sourced from integration manifests.
     #[serde(rename = "integration_id")]
     pub integration_id: Option<crate::datadogV2::model::EventPayloadIntegrationId>,
@@ -53,6 +56,7 @@ impl EventPayload {
             aggregation_key: None,
             attributes,
             category,
+            host: None,
             integration_id: None,
             message: None,
             tags: None,
@@ -64,6 +68,11 @@ impl EventPayload {
 
     pub fn aggregation_key(mut self, value: String) -> Self {
         self.aggregation_key = Some(value);
+        self
+    }
+
+    pub fn host(mut self, value: String) -> Self {
+        self.host = Some(value);
         self
     }
 
@@ -111,6 +120,7 @@ impl<'de> Deserialize<'de> for EventPayload {
                 let mut aggregation_key: Option<String> = None;
                 let mut attributes: Option<crate::datadogV2::model::EventPayloadAttributes> = None;
                 let mut category: Option<crate::datadogV2::model::EventCategory> = None;
+                let mut host: Option<String> = None;
                 let mut integration_id: Option<crate::datadogV2::model::EventPayloadIntegrationId> =
                     None;
                 let mut message: Option<String> = None;
@@ -151,6 +161,12 @@ impl<'de> Deserialize<'de> for EventPayload {
                                     _ => {}
                                 }
                             }
+                        }
+                        "host" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            host = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "integration_id" => {
                             if v.is_null() {
@@ -203,6 +219,7 @@ impl<'de> Deserialize<'de> for EventPayload {
                     aggregation_key,
                     attributes,
                     category,
+                    host,
                     integration_id,
                     message,
                     tags,
