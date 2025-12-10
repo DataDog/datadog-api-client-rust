@@ -20,9 +20,6 @@ pub struct PatchTableRequestDataAttributes {
     /// Schema defining the updates to the structure and columns of the reference table. Schema fields cannot be deleted or renamed.
     #[serde(rename = "schema")]
     pub schema: Option<crate::datadogV2::model::PatchTableRequestDataAttributesSchema>,
-    /// Whether this table is synced automatically.
-    #[serde(rename = "sync_enabled")]
-    pub sync_enabled: Option<bool>,
     /// Tags for organizing and filtering reference tables.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
@@ -39,7 +36,6 @@ impl PatchTableRequestDataAttributes {
             description: None,
             file_metadata: None,
             schema: None,
-            sync_enabled: None,
             tags: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -64,11 +60,6 @@ impl PatchTableRequestDataAttributes {
         value: crate::datadogV2::model::PatchTableRequestDataAttributesSchema,
     ) -> Self {
         self.schema = Some(value);
-        self
-    }
-
-    pub fn sync_enabled(mut self, value: bool) -> Self {
-        self.sync_enabled = Some(value);
         self
     }
 
@@ -116,7 +107,6 @@ impl<'de> Deserialize<'de> for PatchTableRequestDataAttributes {
                 let mut schema: Option<
                     crate::datadogV2::model::PatchTableRequestDataAttributesSchema,
                 > = None;
-                let mut sync_enabled: Option<bool> = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -154,13 +144,6 @@ impl<'de> Deserialize<'de> for PatchTableRequestDataAttributes {
                             }
                             schema = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "sync_enabled" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            sync_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "tags" => {
                             if v.is_null() {
                                 continue;
@@ -179,7 +162,6 @@ impl<'de> Deserialize<'de> for PatchTableRequestDataAttributes {
                     description,
                     file_metadata,
                     schema,
-                    sync_enabled,
                     tags,
                     additional_properties,
                     _unparsed,
