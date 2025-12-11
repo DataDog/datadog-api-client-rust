@@ -581,6 +581,7 @@ lazy_static! {
                                         "us3.datadoghq.com".into(),
                                         "us5.datadoghq.com".into(),
                                         "ap1.datadoghq.com".into(),
+                                        "ap2.datadoghq.com".into(),
                                         "datadoghq.eu".into(),
                                         "ddog-gov.com".into(),
                                     ],
