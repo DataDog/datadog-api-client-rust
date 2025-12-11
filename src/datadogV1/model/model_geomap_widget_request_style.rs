@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The view of the world that the map should render.
+/// The style to apply to the request for points layer.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct GeomapWidgetDefinitionView {
-    /// The 2-letter ISO code of a country to focus the map on, or `WORLD` for global view, or a region (`EMEA`, `APAC`, `LATAM`), or a continent (`NORTH_AMERICA`, `SOUTH_AMERICA`, `EUROPE`, `AFRICA`, `ASIA`, `OCEANIA`).
-    #[serde(rename = "focus")]
-    pub focus: String,
+pub struct GeomapWidgetRequestStyle {
+    /// The category to color the points by.
+    #[serde(rename = "color_by")]
+    pub color_by: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,13 +21,18 @@ pub struct GeomapWidgetDefinitionView {
     pub(crate) _unparsed: bool,
 }
 
-impl GeomapWidgetDefinitionView {
-    pub fn new(focus: String) -> GeomapWidgetDefinitionView {
-        GeomapWidgetDefinitionView {
-            focus,
+impl GeomapWidgetRequestStyle {
+    pub fn new() -> GeomapWidgetRequestStyle {
+        GeomapWidgetRequestStyle {
+            color_by: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn color_by(mut self, value: String) -> Self {
+        self.color_by = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -39,14 +44,20 @@ impl GeomapWidgetDefinitionView {
     }
 }
 
-impl<'de> Deserialize<'de> for GeomapWidgetDefinitionView {
+impl Default for GeomapWidgetRequestStyle {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for GeomapWidgetRequestStyle {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct GeomapWidgetDefinitionViewVisitor;
-        impl<'a> Visitor<'a> for GeomapWidgetDefinitionViewVisitor {
-            type Value = GeomapWidgetDefinitionView;
+        struct GeomapWidgetRequestStyleVisitor;
+        impl<'a> Visitor<'a> for GeomapWidgetRequestStyleVisitor {
+            type Value = GeomapWidgetRequestStyle;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -56,7 +67,7 @@ impl<'de> Deserialize<'de> for GeomapWidgetDefinitionView {
             where
                 M: MapAccess<'a>,
             {
-                let mut focus: Option<String> = None;
+                let mut color_by: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -65,8 +76,11 @@ impl<'de> Deserialize<'de> for GeomapWidgetDefinitionView {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "focus" => {
-                            focus = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "color_by" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            color_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -75,10 +89,9 @@ impl<'de> Deserialize<'de> for GeomapWidgetDefinitionView {
                         }
                     }
                 }
-                let focus = focus.ok_or_else(|| M::Error::missing_field("focus"))?;
 
-                let content = GeomapWidgetDefinitionView {
-                    focus,
+                let content = GeomapWidgetRequestStyle {
+                    color_by,
                     additional_properties,
                     _unparsed,
                 };
@@ -87,6 +100,6 @@ impl<'de> Deserialize<'de> for GeomapWidgetDefinitionView {
             }
         }
 
-        deserializer.deserialize_any(GeomapWidgetDefinitionViewVisitor)
+        deserializer.deserialize_any(GeomapWidgetRequestStyleVisitor)
     }
 }
