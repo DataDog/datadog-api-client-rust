@@ -14,14 +14,12 @@ use std::io::Write;
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct CreateHostTagsOptionalParams {
-    /// The source of the tags.
-    /// [Complete list of source attribute values](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>).
+    /// Source to filter. [Complete list of source attribute values](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>). Use "user" source for custom-defined tags.
     pub source: Option<String>,
 }
 
 impl CreateHostTagsOptionalParams {
-    /// The source of the tags.
-    /// [Complete list of source attribute values](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>).
+    /// Source to filter. [Complete list of source attribute values](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>). Use "user" source for custom-defined tags.
     pub fn source(mut self, value: String) -> Self {
         self.source = Some(value);
         self
@@ -32,14 +30,12 @@ impl CreateHostTagsOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct DeleteHostTagsOptionalParams {
-    /// The source of the tags (for example chef, puppet).
-    /// [Complete list of source attribute values](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>).
+    /// Source to filter. [Complete list of source attribute values](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>). Use "user" source for custom-defined tags.
     pub source: Option<String>,
 }
 
 impl DeleteHostTagsOptionalParams {
-    /// The source of the tags (for example chef, puppet).
-    /// [Complete list of source attribute values](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>).
+    /// Source to filter. [Complete list of source attribute values](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>). Use "user" source for custom-defined tags.
     pub fn source(mut self, value: String) -> Self {
         self.source = Some(value);
         self
@@ -50,12 +46,12 @@ impl DeleteHostTagsOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetHostTagsOptionalParams {
-    /// Source to filter.
+    /// Source to filter. [Complete list of source attribute values](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>). Use "user" source for custom-defined tags.
     pub source: Option<String>,
 }
 
 impl GetHostTagsOptionalParams {
-    /// Source to filter.
+    /// Source to filter. [Complete list of source attribute values](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>). Use "user" source for custom-defined tags.
     pub fn source(mut self, value: String) -> Self {
         self.source = Some(value);
         self
@@ -66,12 +62,12 @@ impl GetHostTagsOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListHostTagsOptionalParams {
-    /// When specified, filters host list to those tags with the specified source.
+    /// Source to filter. [Complete list of source attribute values](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>). Use "user" source for custom-defined tags.
     pub source: Option<String>,
 }
 
 impl ListHostTagsOptionalParams {
-    /// When specified, filters host list to those tags with the specified source.
+    /// Source to filter. [Complete list of source attribute values](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>). Use "user" source for custom-defined tags.
     pub fn source(mut self, value: String) -> Self {
         self.source = Some(value);
         self
@@ -82,14 +78,12 @@ impl ListHostTagsOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct UpdateHostTagsOptionalParams {
-    /// The source of the tags (for example chef, puppet).
-    /// [Complete list of source attribute values](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>)
+    /// Source to filter. [Complete list of source attribute values](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>). Use "user" source for custom-defined tags.
     pub source: Option<String>,
 }
 
 impl UpdateHostTagsOptionalParams {
-    /// The source of the tags (for example chef, puppet).
-    /// [Complete list of source attribute values](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>)
+    /// Source to filter. [Complete list of source attribute values](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>). Use "user" source for custom-defined tags.
     pub fn source(mut self, value: String) -> Self {
         self.source = Some(value);
         self
@@ -144,7 +138,7 @@ pub enum UpdateHostTagsError {
 ///
 /// The component of your infrastructure responsible for a tag is identified
 /// by a source. For example, some valid sources include nagios, hudson, jenkins,
-/// users, feed, chef, puppet, git, bitbucket, fabric, capistrano, etc.
+/// users, feed, chef, puppet, git, bitbucket, fabric, capistrano, etc. Find a complete list of source type names under [API Source Attributes](<https://docs.datadoghq.com/integrations/faq/list-of-api-source-attribute-value>).
 ///
 /// Read more about tags on [Getting Started with Tags](<https://docs.datadoghq.com/getting_started/tagging/>).
 #[derive(Debug, Clone)]
@@ -212,13 +206,13 @@ impl TagsAPI {
     }
 
     /// This endpoint allows you to add new tags to a host,
-    /// optionally specifying where these tags come from.
+    /// optionally specifying what source these tags come from.
     pub async fn create_host_tags(
         &self,
         host_name: String,
-        body: crate::datadogV1::model::HostTags,
+        body: crate::datadogV1::model::HostTagsInput,
         params: CreateHostTagsOptionalParams,
-    ) -> Result<crate::datadogV1::model::HostTags, datadog::Error<CreateHostTagsError>> {
+    ) -> Result<crate::datadogV1::model::HostTagsOutput, datadog::Error<CreateHostTagsError>> {
         match self
             .create_host_tags_with_http_info(host_name, body, params)
             .await
@@ -237,14 +231,14 @@ impl TagsAPI {
     }
 
     /// This endpoint allows you to add new tags to a host,
-    /// optionally specifying where these tags come from.
+    /// optionally specifying what source these tags come from.
     pub async fn create_host_tags_with_http_info(
         &self,
         host_name: String,
-        body: crate::datadogV1::model::HostTags,
+        body: crate::datadogV1::model::HostTagsInput,
         params: CreateHostTagsOptionalParams,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV1::model::HostTags>,
+        datadog::ResponseContent<crate::datadogV1::model::HostTagsOutput>,
         datadog::Error<CreateHostTagsError>,
     > {
         let local_configuration = &self.config;
@@ -356,7 +350,7 @@ impl TagsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV1::model::HostTags>(&local_content) {
+            match serde_json::from_str::<crate::datadogV1::model::HostTagsOutput>(&local_content) {
                 Ok(e) => {
                     return Ok(datadog::ResponseContent {
                         status: local_status,
@@ -486,7 +480,7 @@ impl TagsAPI {
         &self,
         host_name: String,
         params: GetHostTagsOptionalParams,
-    ) -> Result<crate::datadogV1::model::HostTags, datadog::Error<GetHostTagsError>> {
+    ) -> Result<crate::datadogV1::model::HostTagsOutput, datadog::Error<GetHostTagsError>> {
         match self.get_host_tags_with_http_info(host_name, params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
@@ -507,7 +501,7 @@ impl TagsAPI {
         host_name: String,
         params: GetHostTagsOptionalParams,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV1::model::HostTags>,
+        datadog::ResponseContent<crate::datadogV1::model::HostTagsOutput>,
         datadog::Error<GetHostTagsError>,
     > {
         let local_configuration = &self.config;
@@ -573,7 +567,7 @@ impl TagsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV1::model::HostTags>(&local_content) {
+            match serde_json::from_str::<crate::datadogV1::model::HostTagsOutput>(&local_content) {
                 Ok(e) => {
                     return Ok(datadog::ResponseContent {
                         status: local_status,
@@ -594,7 +588,7 @@ impl TagsAPI {
         }
     }
 
-    /// Return a mapping of tags to hosts for your whole infrastructure.
+    /// Returns a mapping of tags to hosts. For each tag, the response returns a list of host names that contain this tag. There is a restriction of 10k host names from the org that can be attached to tags and returned.
     pub async fn list_host_tags(
         &self,
         params: ListHostTagsOptionalParams,
@@ -613,7 +607,7 @@ impl TagsAPI {
         }
     }
 
-    /// Return a mapping of tags to hosts for your whole infrastructure.
+    /// Returns a mapping of tags to hosts. For each tag, the response returns a list of host names that contain this tag. There is a restriction of 10k host names from the org that can be attached to tags and returned.
     pub async fn list_host_tags_with_http_info(
         &self,
         params: ListHostTagsOptionalParams,
@@ -709,9 +703,9 @@ impl TagsAPI {
     pub async fn update_host_tags(
         &self,
         host_name: String,
-        body: crate::datadogV1::model::HostTags,
+        body: crate::datadogV1::model::HostTagsInput,
         params: UpdateHostTagsOptionalParams,
-    ) -> Result<crate::datadogV1::model::HostTags, datadog::Error<UpdateHostTagsError>> {
+    ) -> Result<crate::datadogV1::model::HostTagsOutput, datadog::Error<UpdateHostTagsError>> {
         match self
             .update_host_tags_with_http_info(host_name, body, params)
             .await
@@ -734,10 +728,10 @@ impl TagsAPI {
     pub async fn update_host_tags_with_http_info(
         &self,
         host_name: String,
-        body: crate::datadogV1::model::HostTags,
+        body: crate::datadogV1::model::HostTagsInput,
         params: UpdateHostTagsOptionalParams,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV1::model::HostTags>,
+        datadog::ResponseContent<crate::datadogV1::model::HostTagsOutput>,
         datadog::Error<UpdateHostTagsError>,
     > {
         let local_configuration = &self.config;
@@ -849,7 +843,7 @@ impl TagsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV1::model::HostTags>(&local_content) {
+            match serde_json::from_str::<crate::datadogV1::model::HostTagsOutput>(&local_content) {
                 Ok(e) => {
                     return Ok(datadog::ResponseContent {
                         status: local_status,

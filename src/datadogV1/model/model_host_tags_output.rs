@@ -10,11 +10,11 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct HostTags {
+pub struct HostTagsOutput {
     /// Your host name.
     #[serde(rename = "host")]
     pub host: Option<String>,
-    /// A list of tags to apply to the host.
+    /// A list of tags attached to a given host.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
     #[serde(flatten)]
@@ -24,9 +24,9 @@ pub struct HostTags {
     pub(crate) _unparsed: bool,
 }
 
-impl HostTags {
-    pub fn new() -> HostTags {
-        HostTags {
+impl HostTagsOutput {
+    pub fn new() -> HostTagsOutput {
+        HostTagsOutput {
             host: None,
             tags: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -53,20 +53,20 @@ impl HostTags {
     }
 }
 
-impl Default for HostTags {
+impl Default for HostTagsOutput {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for HostTags {
+impl<'de> Deserialize<'de> for HostTagsOutput {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct HostTagsVisitor;
-        impl<'a> Visitor<'a> for HostTagsVisitor {
-            type Value = HostTags;
+        struct HostTagsOutputVisitor;
+        impl<'a> Visitor<'a> for HostTagsOutputVisitor {
+            type Value = HostTagsOutput;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -106,7 +106,7 @@ impl<'de> Deserialize<'de> for HostTags {
                     }
                 }
 
-                let content = HostTags {
+                let content = HostTagsOutput {
                     host,
                     tags,
                     additional_properties,
@@ -117,6 +117,6 @@ impl<'de> Deserialize<'de> for HostTags {
             }
         }
 
-        deserializer.deserialize_any(HostTagsVisitor)
+        deserializer.deserialize_any(HostTagsOutputVisitor)
     }
 }
