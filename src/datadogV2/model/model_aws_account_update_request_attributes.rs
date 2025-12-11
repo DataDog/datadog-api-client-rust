@@ -32,6 +32,9 @@ pub struct AWSAccountUpdateRequestAttributes {
     /// AWS Regions to collect data from. Defaults to `include_all`.
     #[serde(rename = "aws_regions")]
     pub aws_regions: Option<crate::datadogV2::model::AWSRegions>,
+    /// AWS Cloud Cost Management config.
+    #[serde(rename = "ccm_config")]
+    pub ccm_config: Option<crate::datadogV2::model::AWSCCMConfig>,
     /// AWS Logs Collection config.
     #[serde(rename = "logs_config")]
     pub logs_config: Option<crate::datadogV2::model::AWSLogsConfig>,
@@ -59,6 +62,7 @@ impl AWSAccountUpdateRequestAttributes {
             aws_account_id,
             aws_partition: None,
             aws_regions: None,
+            ccm_config: None,
             logs_config: None,
             metrics_config: None,
             resources_config: None,
@@ -85,6 +89,11 @@ impl AWSAccountUpdateRequestAttributes {
 
     pub fn aws_regions(mut self, value: crate::datadogV2::model::AWSRegions) -> Self {
         self.aws_regions = Some(value);
+        self
+    }
+
+    pub fn ccm_config(mut self, value: crate::datadogV2::model::AWSCCMConfig) -> Self {
+        self.ccm_config = Some(value);
         self
     }
 
@@ -139,6 +148,7 @@ impl<'de> Deserialize<'de> for AWSAccountUpdateRequestAttributes {
                 let mut aws_account_id: Option<String> = None;
                 let mut aws_partition: Option<crate::datadogV2::model::AWSAccountPartition> = None;
                 let mut aws_regions: Option<crate::datadogV2::model::AWSRegions> = None;
+                let mut ccm_config: Option<crate::datadogV2::model::AWSCCMConfig> = None;
                 let mut logs_config: Option<crate::datadogV2::model::AWSLogsConfig> = None;
                 let mut metrics_config: Option<crate::datadogV2::model::AWSMetricsConfig> = None;
                 let mut resources_config: Option<crate::datadogV2::model::AWSResourcesConfig> =
@@ -209,6 +219,12 @@ impl<'de> Deserialize<'de> for AWSAccountUpdateRequestAttributes {
                                 }
                             }
                         }
+                        "ccm_config" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ccm_config = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "logs_config" => {
                             if v.is_null() {
                                 continue;
@@ -253,6 +269,7 @@ impl<'de> Deserialize<'de> for AWSAccountUpdateRequestAttributes {
                     aws_account_id,
                     aws_partition,
                     aws_regions,
+                    ccm_config,
                     logs_config,
                     metrics_config,
                     resources_config,

@@ -8,6 +8,7 @@ use datadog_api_client::datadogV2::model::AWSAccountPartition;
 use datadog_api_client::datadogV2::model::AWSAccountType;
 use datadog_api_client::datadogV2::model::AWSAuthConfig;
 use datadog_api_client::datadogV2::model::AWSAuthConfigRole;
+use datadog_api_client::datadogV2::model::AWSCCMConfig;
 use datadog_api_client::datadogV2::model::AWSLambdaForwarderConfig;
 use datadog_api_client::datadogV2::model::AWSLambdaForwarderConfigLogSourceConfig;
 use datadog_api_client::datadogV2::model::AWSLogSourceTagFilter;
@@ -16,6 +17,7 @@ use datadog_api_client::datadogV2::model::AWSMetricsConfig;
 use datadog_api_client::datadogV2::model::AWSNamespaceTagFilter;
 use datadog_api_client::datadogV2::model::AWSResourcesConfig;
 use datadog_api_client::datadogV2::model::AWSTracesConfig;
+use datadog_api_client::datadogV2::model::DataExportConfig;
 
 #[tokio::main]
 async fn main() {
@@ -28,6 +30,14 @@ async fn main() {
             AWSAccountPartition::AWS,
         )
         .account_tags(Some(vec!["key:value".to_string()]))
+        .ccm_config(AWSCCMConfig::new().data_export_configs(vec![
+                                DataExportConfig::new()
+                                    .bucket_name("my-bucket".to_string())
+                                    .bucket_region("us-east-1".to_string())
+                                    .report_name("my-report".to_string())
+                                    .report_prefix("reports".to_string())
+                                    .report_type("CUR2.0".to_string())
+                            ]))
         .logs_config(
             AWSLogsConfig::new().lambda_forwarder(
                 AWSLambdaForwarderConfig::new()
