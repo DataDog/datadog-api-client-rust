@@ -54,6 +54,7 @@ async fn main() {
             "payment_processed feature flag updated".to_string(),
         )
         .aggregation_key("aggregation_key_123".to_string())
+        .host("test-host".to_string())
         .integration_id(EventPayloadIntegrationId::CUSTOM_EVENTS)
         .message("payment_processed feature flag has been enabled".to_string())
         .tags(vec!["env:api_client_test".to_string()]),
