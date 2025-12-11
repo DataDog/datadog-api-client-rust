@@ -6,14 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// In this object, the key is the tag, and the value is a list of host names that are reporting that tag.
+/// Set of tags to associate with your host.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct TagToHosts {
-    /// A mapping of tags to host names
+pub struct HostTagsInput {
+    /// Your host name.
+    #[serde(rename = "host")]
+    pub host: Option<String>,
+    /// A list of tags to apply to the host.
     #[serde(rename = "tags")]
-    pub tags: Option<std::collections::BTreeMap<String, Vec<String>>>,
+    pub tags: Option<Vec<String>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,16 +24,22 @@ pub struct TagToHosts {
     pub(crate) _unparsed: bool,
 }
 
-impl TagToHosts {
-    pub fn new() -> TagToHosts {
-        TagToHosts {
+impl HostTagsInput {
+    pub fn new() -> HostTagsInput {
+        HostTagsInput {
+            host: None,
             tags: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn tags(mut self, value: std::collections::BTreeMap<String, Vec<String>>) -> Self {
+    pub fn host(mut self, value: String) -> Self {
+        self.host = Some(value);
+        self
+    }
+
+    pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
@@ -44,20 +53,20 @@ impl TagToHosts {
     }
 }
 
-impl Default for TagToHosts {
+impl Default for HostTagsInput {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for TagToHosts {
+impl<'de> Deserialize<'de> for HostTagsInput {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct TagToHostsVisitor;
-        impl<'a> Visitor<'a> for TagToHostsVisitor {
-            type Value = TagToHosts;
+        struct HostTagsInputVisitor;
+        impl<'a> Visitor<'a> for HostTagsInputVisitor {
+            type Value = HostTagsInput;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -67,7 +76,8 @@ impl<'de> Deserialize<'de> for TagToHosts {
             where
                 M: MapAccess<'a>,
             {
-                let mut tags: Option<std::collections::BTreeMap<String, Vec<String>>> = None;
+                let mut host: Option<String> = None;
+                let mut tags: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -76,6 +86,12 @@ impl<'de> Deserialize<'de> for TagToHosts {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "host" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            host = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "tags" => {
                             if v.is_null() {
                                 continue;
@@ -90,7 +106,8 @@ impl<'de> Deserialize<'de> for TagToHosts {
                     }
                 }
 
-                let content = TagToHosts {
+                let content = HostTagsInput {
+                    host,
                     tags,
                     additional_properties,
                     _unparsed,
@@ -100,6 +117,6 @@ impl<'de> Deserialize<'de> for TagToHosts {
             }
         }
 
-        deserializer.deserialize_any(TagToHostsVisitor)
+        deserializer.deserialize_any(HostTagsInputVisitor)
     }
 }
