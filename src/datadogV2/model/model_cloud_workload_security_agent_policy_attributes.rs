@@ -41,6 +41,9 @@ pub struct CloudWorkloadSecurityAgentPolicyAttributes {
     /// Whether the policy is pinned
     #[serde(rename = "pinned")]
     pub pinned: Option<bool>,
+    /// The type of the policy
+    #[serde(rename = "policyType")]
+    pub policy_type: Option<String>,
     /// The version of the policy
     #[serde(rename = "policyVersion")]
     pub policy_version: Option<String>,
@@ -82,6 +85,7 @@ impl CloudWorkloadSecurityAgentPolicyAttributes {
             monitoring_rules_count: None,
             name: None,
             pinned: None,
+            policy_type: None,
             policy_version: None,
             priority: None,
             rule_count: None,
@@ -141,6 +145,11 @@ impl CloudWorkloadSecurityAgentPolicyAttributes {
 
     pub fn pinned(mut self, value: bool) -> Self {
         self.pinned = Some(value);
+        self
+    }
+
+    pub fn policy_type(mut self, value: String) -> Self {
+        self.policy_type = Some(value);
         self
     }
 
@@ -227,6 +236,7 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentPolicyAttributes {
                 let mut monitoring_rules_count: Option<i32> = None;
                 let mut name: Option<String> = None;
                 let mut pinned: Option<bool> = None;
+                let mut policy_type: Option<String> = None;
                 let mut policy_version: Option<String> = None;
                 let mut priority: Option<i64> = None;
                 let mut rule_count: Option<i32> = None;
@@ -312,6 +322,13 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentPolicyAttributes {
                             }
                             pinned = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "policyType" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            policy_type =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "policyVersion" => {
                             if v.is_null() {
                                 continue;
@@ -375,6 +392,7 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentPolicyAttributes {
                     monitoring_rules_count,
                     name,
                     pinned,
+                    policy_type,
                     policy_version,
                     priority,
                     rule_count,
