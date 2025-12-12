@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineReduceProcessor {
+    /// Whether this processor is enabled.
+    #[serde(rename = "enabled")]
+    pub enabled: bool,
     /// A list of fields used to group log events for merging.
     #[serde(rename = "group_by")]
     pub group_by: Vec<String>,
@@ -20,9 +23,6 @@ pub struct ObservabilityPipelineReduceProcessor {
     /// A Datadog search query used to determine which logs this processor targets.
     #[serde(rename = "include")]
     pub include: String,
-    /// A list of component IDs whose output is used as the input for this processor.
-    #[serde(rename = "inputs")]
-    pub inputs: Vec<String>,
     /// List of merge strategies defining how values from grouped events should be combined.
     #[serde(rename = "merge_strategies")]
     pub merge_strategies:
@@ -39,20 +39,20 @@ pub struct ObservabilityPipelineReduceProcessor {
 
 impl ObservabilityPipelineReduceProcessor {
     pub fn new(
+        enabled: bool,
         group_by: Vec<String>,
         id: String,
         include: String,
-        inputs: Vec<String>,
         merge_strategies: Vec<
             crate::datadogV2::model::ObservabilityPipelineReduceProcessorMergeStrategy,
         >,
         type_: crate::datadogV2::model::ObservabilityPipelineReduceProcessorType,
     ) -> ObservabilityPipelineReduceProcessor {
         ObservabilityPipelineReduceProcessor {
+            enabled,
             group_by,
             id,
             include,
-            inputs,
             merge_strategies,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
@@ -86,10 +86,10 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineReduceProcessor {
             where
                 M: MapAccess<'a>,
             {
+                let mut enabled: Option<bool> = None;
                 let mut group_by: Option<Vec<String>> = None;
                 let mut id: Option<String> = None;
                 let mut include: Option<String> = None;
-                let mut inputs: Option<Vec<String>> = None;
                 let mut merge_strategies: Option<
                     Vec<crate::datadogV2::model::ObservabilityPipelineReduceProcessorMergeStrategy>,
                 > = None;
@@ -104,6 +104,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineReduceProcessor {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "enabled" => {
+                            enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "group_by" => {
                             group_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -112,9 +115,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineReduceProcessor {
                         }
                         "include" => {
                             include = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "inputs" => {
-                            inputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "merge_strategies" => {
                             merge_strategies =
@@ -138,19 +138,19 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineReduceProcessor {
                         }
                     }
                 }
+                let enabled = enabled.ok_or_else(|| M::Error::missing_field("enabled"))?;
                 let group_by = group_by.ok_or_else(|| M::Error::missing_field("group_by"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let include = include.ok_or_else(|| M::Error::missing_field("include"))?;
-                let inputs = inputs.ok_or_else(|| M::Error::missing_field("inputs"))?;
                 let merge_strategies =
                     merge_strategies.ok_or_else(|| M::Error::missing_field("merge_strategies"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineReduceProcessor {
+                    enabled,
                     group_by,
                     id,
                     include,
-                    inputs,
                     merge_strategies,
                     type_,
                     additional_properties,

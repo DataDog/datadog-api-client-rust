@@ -16,7 +16,7 @@ pub struct ObservabilityPipelineCustomProcessorRemap {
     pub drop_on_error: bool,
     /// Whether this remap rule is enabled.
     #[serde(rename = "enabled")]
-    pub enabled: bool,
+    pub enabled: Option<bool>,
     /// A Datadog search query used to filter events for this specific remap rule.
     #[serde(rename = "include")]
     pub include: String,
@@ -36,20 +36,24 @@ pub struct ObservabilityPipelineCustomProcessorRemap {
 impl ObservabilityPipelineCustomProcessorRemap {
     pub fn new(
         drop_on_error: bool,
-        enabled: bool,
         include: String,
         name: String,
         source: String,
     ) -> ObservabilityPipelineCustomProcessorRemap {
         ObservabilityPipelineCustomProcessorRemap {
             drop_on_error,
-            enabled,
+            enabled: None,
             include,
             name,
             source,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn enabled(mut self, value: bool) -> Self {
+        self.enabled = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -96,6 +100,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineCustomProcessorRemap {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "include" => {
@@ -116,7 +123,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineCustomProcessorRemap {
                 }
                 let drop_on_error =
                     drop_on_error.ok_or_else(|| M::Error::missing_field("drop_on_error"))?;
-                let enabled = enabled.ok_or_else(|| M::Error::missing_field("enabled"))?;
                 let include = include.ok_or_else(|| M::Error::missing_field("include"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let source = source.ok_or_else(|| M::Error::missing_field("source"))?;
