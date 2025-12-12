@@ -6,17 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The versions of the policy
+/// Hash file specified by the field attribute
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct CloudWorkloadSecurityAgentPolicyVersion {
-    /// The date and time the version was created
-    #[serde(rename = "date", default, with = "::serde_with::rust::double_option")]
-    pub date: Option<Option<String>>,
-    /// The version of the policy
-    #[serde(rename = "name")]
-    pub name: Option<String>,
+pub struct CloudWorkloadSecurityAgentRuleActionHash {
+    /// The field of the hash action
+    #[serde(rename = "field")]
+    pub field: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,23 +21,17 @@ pub struct CloudWorkloadSecurityAgentPolicyVersion {
     pub(crate) _unparsed: bool,
 }
 
-impl CloudWorkloadSecurityAgentPolicyVersion {
-    pub fn new() -> CloudWorkloadSecurityAgentPolicyVersion {
-        CloudWorkloadSecurityAgentPolicyVersion {
-            date: None,
-            name: None,
+impl CloudWorkloadSecurityAgentRuleActionHash {
+    pub fn new() -> CloudWorkloadSecurityAgentRuleActionHash {
+        CloudWorkloadSecurityAgentRuleActionHash {
+            field: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn date(mut self, value: Option<String>) -> Self {
-        self.date = Some(value);
-        self
-    }
-
-    pub fn name(mut self, value: String) -> Self {
-        self.name = Some(value);
+    pub fn field(mut self, value: String) -> Self {
+        self.field = Some(value);
         self
     }
 
@@ -53,20 +44,20 @@ impl CloudWorkloadSecurityAgentPolicyVersion {
     }
 }
 
-impl Default for CloudWorkloadSecurityAgentPolicyVersion {
+impl Default for CloudWorkloadSecurityAgentRuleActionHash {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentPolicyVersion {
+impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleActionHash {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct CloudWorkloadSecurityAgentPolicyVersionVisitor;
-        impl<'a> Visitor<'a> for CloudWorkloadSecurityAgentPolicyVersionVisitor {
-            type Value = CloudWorkloadSecurityAgentPolicyVersion;
+        struct CloudWorkloadSecurityAgentRuleActionHashVisitor;
+        impl<'a> Visitor<'a> for CloudWorkloadSecurityAgentRuleActionHashVisitor {
+            type Value = CloudWorkloadSecurityAgentRuleActionHash;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -76,8 +67,7 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentPolicyVersion {
             where
                 M: MapAccess<'a>,
             {
-                let mut date: Option<Option<String>> = None;
-                let mut name: Option<String> = None;
+                let mut field: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -86,14 +76,11 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentPolicyVersion {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "date" => {
-                            date = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "name" => {
+                        "field" => {
                             if v.is_null() {
                                 continue;
                             }
-                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            field = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -103,9 +90,8 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentPolicyVersion {
                     }
                 }
 
-                let content = CloudWorkloadSecurityAgentPolicyVersion {
-                    date,
-                    name,
+                let content = CloudWorkloadSecurityAgentRuleActionHash {
+                    field,
                     additional_properties,
                     _unparsed,
                 };
@@ -114,6 +100,6 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentPolicyVersion {
             }
         }
 
-        deserializer.deserialize_any(CloudWorkloadSecurityAgentPolicyVersionVisitor)
+        deserializer.deserialize_any(CloudWorkloadSecurityAgentRuleActionHashVisitor)
     }
 }

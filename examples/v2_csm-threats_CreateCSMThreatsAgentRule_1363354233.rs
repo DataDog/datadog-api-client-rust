@@ -22,7 +22,7 @@ async fn main() {
             .actions(Some(vec![CloudWorkloadSecurityAgentRuleAction::new().set(
                 CloudWorkloadSecurityAgentRuleActionSet::new()
                     .default_value("/dev/null".to_string())
-                    .expression("open.file.path".to_string())
+                    .expression("exec.file.path".to_string())
                     .name("test_set".to_string())
                     .scope("process".to_string()),
             )]))
