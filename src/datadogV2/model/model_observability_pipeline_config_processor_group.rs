@@ -6,23 +6,26 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The `filter` processor allows conditional processing of logs based on a Datadog search query. Logs that match the `include` query are passed through; others are discarded.
+/// A group of processors.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ObservabilityPipelineFilterProcessor {
-    /// Whether this processor is enabled.
+pub struct ObservabilityPipelineConfigProcessorGroup {
+    /// Whether this processor group is enabled.
     #[serde(rename = "enabled")]
     pub enabled: bool,
-    /// The unique identifier for this component. Used to reference this component in other parts of the pipeline (for example, as the `input` to downstream components).
+    /// The unique identifier for the processor group.
     #[serde(rename = "id")]
     pub id: String,
-    /// A Datadog search query used to determine which logs should pass through the filter. Logs that match this query continue to downstream components; others are dropped.
+    /// Conditional expression for when this processor group should execute.
     #[serde(rename = "include")]
     pub include: String,
-    /// The processor type. The value should always be `filter`.
-    #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::ObservabilityPipelineFilterProcessorType,
+    /// A list of IDs for components whose output is used as the input for this processor group.
+    #[serde(rename = "inputs")]
+    pub inputs: Vec<String>,
+    /// Processors applied sequentially within this group. Events flow through each processor in order.
+    #[serde(rename = "processors")]
+    pub processors: Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorItem>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -30,18 +33,20 @@ pub struct ObservabilityPipelineFilterProcessor {
     pub(crate) _unparsed: bool,
 }
 
-impl ObservabilityPipelineFilterProcessor {
+impl ObservabilityPipelineConfigProcessorGroup {
     pub fn new(
         enabled: bool,
         id: String,
         include: String,
-        type_: crate::datadogV2::model::ObservabilityPipelineFilterProcessorType,
-    ) -> ObservabilityPipelineFilterProcessor {
-        ObservabilityPipelineFilterProcessor {
+        inputs: Vec<String>,
+        processors: Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorItem>,
+    ) -> ObservabilityPipelineConfigProcessorGroup {
+        ObservabilityPipelineConfigProcessorGroup {
             enabled,
             id,
             include,
-            type_,
+            inputs,
+            processors,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -56,14 +61,14 @@ impl ObservabilityPipelineFilterProcessor {
     }
 }
 
-impl<'de> Deserialize<'de> for ObservabilityPipelineFilterProcessor {
+impl<'de> Deserialize<'de> for ObservabilityPipelineConfigProcessorGroup {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ObservabilityPipelineFilterProcessorVisitor;
-        impl<'a> Visitor<'a> for ObservabilityPipelineFilterProcessorVisitor {
-            type Value = ObservabilityPipelineFilterProcessor;
+        struct ObservabilityPipelineConfigProcessorGroupVisitor;
+        impl<'a> Visitor<'a> for ObservabilityPipelineConfigProcessorGroupVisitor {
+            type Value = ObservabilityPipelineConfigProcessorGroup;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -76,8 +81,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineFilterProcessor {
                 let mut enabled: Option<bool> = None;
                 let mut id: Option<String> = None;
                 let mut include: Option<String> = None;
-                let mut type_: Option<
-                    crate::datadogV2::model::ObservabilityPipelineFilterProcessorType,
+                let mut inputs: Option<Vec<String>> = None;
+                let mut processors: Option<
+                    Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorItem>,
                 > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -96,16 +102,11 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineFilterProcessor {
                         "include" => {
                             include = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "type" => {
-                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _type_) = type_ {
-                                match _type_ {
-                                    crate::datadogV2::model::ObservabilityPipelineFilterProcessorType::UnparsedObject(_type_) => {
-                                        _unparsed = true;
-                                    },
-                                    _ => {}
-                                }
-                            }
+                        "inputs" => {
+                            inputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "processors" => {
+                            processors = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -117,13 +118,15 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineFilterProcessor {
                 let enabled = enabled.ok_or_else(|| M::Error::missing_field("enabled"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let include = include.ok_or_else(|| M::Error::missing_field("include"))?;
-                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
+                let inputs = inputs.ok_or_else(|| M::Error::missing_field("inputs"))?;
+                let processors = processors.ok_or_else(|| M::Error::missing_field("processors"))?;
 
-                let content = ObservabilityPipelineFilterProcessor {
+                let content = ObservabilityPipelineConfigProcessorGroup {
                     enabled,
                     id,
                     include,
-                    type_,
+                    inputs,
+                    processors,
                     additional_properties,
                     _unparsed,
                 };
@@ -132,6 +135,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineFilterProcessor {
             }
         }
 
-        deserializer.deserialize_any(ObservabilityPipelineFilterProcessorVisitor)
+        deserializer.deserialize_any(ObservabilityPipelineConfigProcessorGroupVisitor)
     }
 }
