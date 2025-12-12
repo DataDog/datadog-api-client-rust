@@ -17349,6 +17349,9 @@ fn test_v2_list_vulnerabilities(world: &mut DatadogWorld, _parameters: &HashMap<
     let filter_origin = _parameters
         .get("filter[origin]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_running_kernel = _parameters
+        .get("filter[running_kernel]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let filter_asset_name = _parameters
         .get("filter[asset.name]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
@@ -17423,6 +17426,7 @@ fn test_v2_list_vulnerabilities(world: &mut DatadogWorld, _parameters: &HashMap<
     params.filter_fix_available = filter_fix_available;
     params.filter_repo_digests = filter_repo_digests;
     params.filter_origin = filter_origin;
+    params.filter_running_kernel = filter_running_kernel;
     params.filter_asset_name = filter_asset_name;
     params.filter_asset_type = filter_asset_type;
     params.filter_asset_version_first = filter_asset_version_first;
