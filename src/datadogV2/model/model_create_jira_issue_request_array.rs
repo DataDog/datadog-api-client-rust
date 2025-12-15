@@ -13,8 +13,6 @@ use std::fmt::{self, Formatter};
 pub struct CreateJiraIssueRequestArray {
     #[serde(rename = "data")]
     pub data: Vec<crate::datadogV2::model::CreateJiraIssueRequestData>,
-    #[serde(rename = "included")]
-    pub included: Option<Vec<crate::datadogV2::model::CreateJiraIssueRequestArrayIncluded>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -28,18 +26,9 @@ impl CreateJiraIssueRequestArray {
     ) -> CreateJiraIssueRequestArray {
         CreateJiraIssueRequestArray {
             data,
-            included: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn included(
-        mut self,
-        value: Vec<crate::datadogV2::model::CreateJiraIssueRequestArrayIncluded>,
-    ) -> Self {
-        self.included = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -70,9 +59,6 @@ impl<'de> Deserialize<'de> for CreateJiraIssueRequestArray {
             {
                 let mut data: Option<Vec<crate::datadogV2::model::CreateJiraIssueRequestData>> =
                     None;
-                let mut included: Option<
-                    Vec<crate::datadogV2::model::CreateJiraIssueRequestArrayIncluded>,
-                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -83,12 +69,6 @@ impl<'de> Deserialize<'de> for CreateJiraIssueRequestArray {
                     match k.as_str() {
                         "data" => {
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "included" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            included = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -101,7 +81,6 @@ impl<'de> Deserialize<'de> for CreateJiraIssueRequestArray {
 
                 let content = CreateJiraIssueRequestArray {
                     data,
-                    included,
                     additional_properties,
                     _unparsed,
                 };

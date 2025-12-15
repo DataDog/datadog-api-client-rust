@@ -1687,7 +1687,8 @@ impl SecurityMonitoringAPI {
         Self { config, client }
     }
 
-    /// Attach security findings to a case. You can attach up to 50 security findings per case. Security findings that are already attached to another case will be detached from their previous case and attached to the specified case.
+    /// Attach security findings to a case.
+    /// You can attach up to 50 security findings per case. Security findings that are already attached to another case will be detached from their previous case and attached to the specified case.
     pub async fn attach_case(
         &self,
         case_id: String,
@@ -1707,7 +1708,8 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Attach security findings to a case. You can attach up to 50 security findings per case. Security findings that are already attached to another case will be detached from their previous case and attached to the specified case.
+    /// Attach security findings to a case.
+    /// You can attach up to 50 security findings per case. Security findings that are already attached to another case will be detached from their previous case and attached to the specified case.
     pub async fn attach_case_with_http_info(
         &self,
         case_id: String,
@@ -1840,7 +1842,8 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Attach security findings to a Jira issue by providing the Jira issue URL. You can attach up to 50 security findings per Jira issue. If the Jira issue is not linked to any case, this operation will create a case for the security findings and link the Jira issue to the newly created case. Security findings that are already attached to another Jira issue will be detached from their previous Jira issue and attached to the specified Jira issue.
+    /// Attach security findings to a Jira issue by providing the Jira issue URL.
+    /// You can attach up to 50 security findings per Jira issue. If the Jira issue is not linked to any case, this operation will create a case for the security findings and link the Jira issue to the newly created case. To configure the Jira integration, see [Bidirectional ticket syncing with Jira](<https://docs.datadoghq.com/security/ticketing_integrations/#bidirectional-ticket-syncing-with-jira>). Security findings that are already attached to another Jira issue will be detached from their previous Jira issue and attached to the specified Jira issue.
     pub async fn attach_jira_issue(
         &self,
         body: crate::datadogV2::model::AttachJiraIssueRequest,
@@ -1860,7 +1863,8 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Attach security findings to a Jira issue by providing the Jira issue URL. You can attach up to 50 security findings per Jira issue. If the Jira issue is not linked to any case, this operation will create a case for the security findings and link the Jira issue to the newly created case. Security findings that are already attached to another Jira issue will be detached from their previous Jira issue and attached to the specified Jira issue.
+    /// Attach security findings to a Jira issue by providing the Jira issue URL.
+    /// You can attach up to 50 security findings per Jira issue. If the Jira issue is not linked to any case, this operation will create a case for the security findings and link the Jira issue to the newly created case. To configure the Jira integration, see [Bidirectional ticket syncing with Jira](<https://docs.datadoghq.com/security/ticketing_integrations/#bidirectional-ticket-syncing-with-jira>). Security findings that are already attached to another Jira issue will be detached from their previous Jira issue and attached to the specified Jira issue.
     pub async fn attach_jira_issue_with_http_info(
         &self,
         body: crate::datadogV2::model::AttachJiraIssueRequest,
@@ -2532,7 +2536,8 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Create cases for security findings. You can create up to 50 cases per request and associate up to 50 security findings per case. Security findings that are already attached to another case will be detached from their previous case and attached to the newly created case.
+    /// Create cases for security findings.
+    /// You can create up to 50 cases per request and associate up to 50 security findings per case. Security findings that are already attached to another case will be detached from their previous case and attached to the newly created case.
     pub async fn create_cases(
         &self,
         body: crate::datadogV2::model::CreateCaseRequestArray,
@@ -2552,7 +2557,8 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Create cases for security findings. You can create up to 50 cases per request and associate up to 50 security findings per case. Security findings that are already attached to another case will be detached from their previous case and attached to the newly created case.
+    /// Create cases for security findings.
+    /// You can create up to 50 cases per request and associate up to 50 security findings per case. Security findings that are already attached to another case will be detached from their previous case and attached to the newly created case.
     pub async fn create_cases_with_http_info(
         &self,
         body: crate::datadogV2::model::CreateCaseRequestArray,
@@ -2837,7 +2843,8 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Create Jira issues for security findings. This operation creates a case in Datadog and a Jira issue linked to that case for bidirectional sync between Datadog and Jira. You can create up to 50 Jira issues per request and associate up to 50 security findings per Jira issue. Security findings that are already attached to another Jira issue will be detached from their previous Jira issue and attached to the newly created Jira issue.
+    /// Create Jira issues for security findings.
+    /// This operation creates a case in Datadog and a Jira issue linked to that case for bidirectional sync between Datadog and Jira. To configure the Jira integration, see [Bidirectional ticket syncing with Jira](<https://docs.datadoghq.com/security/ticketing_integrations/#bidirectional-ticket-syncing-with-jira>). You can create up to 50 Jira issues per request and associate up to 50 security findings per Jira issue. Security findings that are already attached to another Jira issue will be detached from their previous Jira issue and attached to the newly created Jira issue.
     pub async fn create_jira_issues(
         &self,
         body: crate::datadogV2::model::CreateJiraIssueRequestArray,
@@ -2859,7 +2866,8 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Create Jira issues for security findings. This operation creates a case in Datadog and a Jira issue linked to that case for bidirectional sync between Datadog and Jira. You can create up to 50 Jira issues per request and associate up to 50 security findings per Jira issue. Security findings that are already attached to another Jira issue will be detached from their previous Jira issue and attached to the newly created Jira issue.
+    /// Create Jira issues for security findings.
+    /// This operation creates a case in Datadog and a Jira issue linked to that case for bidirectional sync between Datadog and Jira. To configure the Jira integration, see [Bidirectional ticket syncing with Jira](<https://docs.datadoghq.com/security/ticketing_integrations/#bidirectional-ticket-syncing-with-jira>). You can create up to 50 Jira issues per request and associate up to 50 security findings per Jira issue. Security findings that are already attached to another Jira issue will be detached from their previous Jira issue and attached to the newly created Jira issue.
     pub async fn create_jira_issues_with_http_info(
         &self,
         body: crate::datadogV2::model::CreateJiraIssueRequestArray,
@@ -4462,7 +4470,8 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Detach security findings from their case. This operation dissociates security findings from their associated cases without deleting the cases themselves. You can detach security findings from multiple different cases in a single request, with a limit of 50 security findings per request. Security findings that are not currently attached to any case will be ignored.
+    /// Detach security findings from their case.
+    /// This operation dissociates security findings from their associated cases without deleting the cases themselves. You can detach security findings from multiple different cases in a single request, with a limit of 50 security findings per request. Security findings that are not currently attached to any case will be ignored.
     pub async fn detach_case(
         &self,
         body: crate::datadogV2::model::DetachCaseRequest,
@@ -4473,7 +4482,8 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Detach security findings from their case. This operation dissociates security findings from their associated cases without deleting the cases themselves. You can detach security findings from multiple different cases in a single request, with a limit of 50 security findings per request. Security findings that are not currently attached to any case will be ignored.
+    /// Detach security findings from their case.
+    /// This operation dissociates security findings from their associated cases without deleting the cases themselves. You can detach security findings from multiple different cases in a single request, with a limit of 50 security findings per request. Security findings that are not currently attached to any case will be ignored.
     pub async fn detach_case_with_http_info(
         &self,
         body: crate::datadogV2::model::DetachCaseRequest,

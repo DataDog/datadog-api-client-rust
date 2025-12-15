@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct FindingData {
-    /// The unique identifier of the security finding.
+    /// Unique identifier of the security finding.
     #[serde(rename = "id")]
     pub id: String,
     /// Security findings resource type.

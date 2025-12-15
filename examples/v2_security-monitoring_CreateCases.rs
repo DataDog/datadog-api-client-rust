@@ -30,7 +30,7 @@ async fn main() {
                             ::new().data(
                                 vec![
                                     FindingData::new(
-                                        "ZGZhMDI3ZjdjMDM3YjJmNzcxNTlhZGMwMjdmZWNiNTZ-MTVlYTNmYWU3NjNlOTNlYTE2YjM4N2JmZmI4Yjk5N2Y=".to_string(),
+                                        "YjdhNDM3N2QyNTFjYmUwYTY3NDdhMTg0YTk2Yjg5MDl-ZjNmMzAwOTFkZDNhNGQzYzI0MzgxNTk4MjRjZmE2NzE=".to_string(),
                                         FindingDataType::FINDINGS,
                                     )
                                 ],
@@ -55,7 +55,7 @@ async fn main() {
                             ::new().data(
                                 vec![
                                     FindingData::new(
-                                        "MzZkNTMxODNmOGZlZmJiYzIyMDg4NzhmM2QyMDExZjB-ZmY5NzUwNDQzYTE0MGIyNDM1MTg4YjkxZDNmMDU4OGU=".to_string(),
+                                        "OGRlMDIwYzk4MjFmZTZiNTQwMzk2ZjUxNzg0MDc0NjR-MTk3Yjk4MDI4ZDQ4YzI2ZGZiMWJmMTNhNDEwZGZkYWI=".to_string(),
                                         FindingDataType::FINDINGS,
                                     )
                                 ],

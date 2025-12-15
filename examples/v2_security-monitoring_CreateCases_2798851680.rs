@@ -15,40 +15,28 @@ use datadog_api_client::datadogV2::model::Findings;
 
 #[tokio::main]
 async fn main() {
-    let body =
-        CreateCaseRequestArray::new(
-            vec![
-                CreateCaseRequestData::new(CaseDataType::CASES)
-                    .attributes(
-                        CreateCaseRequestDataAttributes::new()
-                            .description("A description".to_string())
-                            .title("A title".to_string()),
-                    )
-                    .relationships(
-                        CreateCaseRequestDataRelationships::new(
-                            Findings
-                            ::new().data(
-                                vec![
-                                    FindingData::new(
-                                        "ZGZhMDI3ZjdjMDM3YjJmNzcxNTlhZGMwMjdmZWNiNTZ-MTVlYTNmYWU3NjNlOTNlYTE2YjM4N2JmZmI4Yjk5N2Y=".to_string(),
-                                        FindingDataType::FINDINGS,
-                                    ),
-                                    FindingData::new(
-                                        "MzZkNTMxODNmOGZlZmJiYzIyMDg4NzhmM2QyMDExZjB-ZmY5NzUwNDQzYTE0MGIyNDM1MTg4YjkxZDNmMDU4OGU=".to_string(),
-                                        FindingDataType::FINDINGS,
-                                    )
-                                ],
-                            ),
-                            CaseManagementProject::new(
-                                CaseManagementProjectData::new(
-                                    "959a6f71-bac8-4027-b1d3-2264f569296f".to_string(),
-                                    CaseManagementProjectDataType::PROJECTS,
-                                ),
-                            ),
-                        ),
-                    )
-            ],
-        );
+    let body = CreateCaseRequestArray::new(vec![CreateCaseRequestData::new(CaseDataType::CASES)
+        .attributes(
+            CreateCaseRequestDataAttributes::new()
+                .description("A description".to_string())
+                .title("A title".to_string()),
+        )
+        .relationships(CreateCaseRequestDataRelationships::new(
+            Findings::new().data(vec![
+                FindingData::new(
+                    "ZTd5LWNuYi1seWV-aS0wMjI2NGZjZjRmZWQ5ODMyMg==".to_string(),
+                    FindingDataType::FINDINGS,
+                ),
+                FindingData::new(
+                    "c2FuLXhyaS1kZnN-aS0wODM3MjVhMTM2MDExNzNkOQ==".to_string(),
+                    FindingDataType::FINDINGS,
+                ),
+            ]),
+            CaseManagementProject::new(CaseManagementProjectData::new(
+                "959a6f71-bac8-4027-b1d3-2264f569296f".to_string(),
+                CaseManagementProjectDataType::PROJECTS,
+            )),
+        ))]);
     let configuration = datadog::Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api.create_cases(body).await;

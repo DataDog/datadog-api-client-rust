@@ -11,13 +11,13 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct FindingJiraIssue {
-    /// The error message if the Jira issue creation failed.
+    /// Error message if the Jira issue creation failed.
     #[serde(rename = "error_message")]
     pub error_message: Option<String>,
     /// Result of the Jira issue creation.
     #[serde(rename = "result")]
     pub result: Option<crate::datadogV2::model::FindingJiraIssueResult>,
-    /// The status of the Jira issue creation. Can be "COMPLETED" if the Jira issue was created successfully, or "FAILED" if the Jira issue creation failed.
+    /// Status of the Jira issue creation. Can be "COMPLETED" if the Jira issue was created successfully, or "FAILED" if the Jira issue creation failed.
     #[serde(rename = "status")]
     pub status: Option<String>,
     #[serde(flatten)]

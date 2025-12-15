@@ -11,16 +11,16 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct FindingJiraIssueResult {
-    /// The account ID of the Jira issue.
+    /// Account ID of the Jira issue.
     #[serde(rename = "account_id")]
     pub account_id: Option<String>,
-    /// The unique identifier of the Jira issue.
+    /// Unique identifier of the Jira issue.
     #[serde(rename = "issue_id")]
     pub issue_id: Option<String>,
-    /// The key of the Jira issue.
+    /// Key of the Jira issue.
     #[serde(rename = "issue_key")]
     pub issue_key: Option<String>,
-    /// The URL of the Jira issue.
+    /// URL of the Jira issue.
     #[serde(rename = "issue_url")]
     pub issue_url: Option<String>,
     #[serde(flatten)]

@@ -14,9 +14,6 @@ pub struct CreateJiraIssueRequestData {
     /// Attributes of the Jira issue to create.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::CreateJiraIssueRequestDataAttributes>,
-    /// The unique identifier of the Jira issue creation request.
-    #[serde(rename = "id")]
-    pub id: Option<String>,
     /// Relationships of the Jira issue to create.
     #[serde(rename = "relationships")]
     pub relationships: Option<crate::datadogV2::model::CreateJiraIssueRequestDataRelationships>,
@@ -34,7 +31,6 @@ impl CreateJiraIssueRequestData {
     pub fn new(type_: crate::datadogV2::model::JiraIssuesDataType) -> CreateJiraIssueRequestData {
         CreateJiraIssueRequestData {
             attributes: None,
-            id: None,
             relationships: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
@@ -47,11 +43,6 @@ impl CreateJiraIssueRequestData {
         value: crate::datadogV2::model::CreateJiraIssueRequestDataAttributes,
     ) -> Self {
         self.attributes = Some(value);
-        self
-    }
-
-    pub fn id(mut self, value: String) -> Self {
-        self.id = Some(value);
         self
     }
 
@@ -92,7 +83,6 @@ impl<'de> Deserialize<'de> for CreateJiraIssueRequestData {
                 let mut attributes: Option<
                     crate::datadogV2::model::CreateJiraIssueRequestDataAttributes,
                 > = None;
-                let mut id: Option<String> = None;
                 let mut relationships: Option<
                     crate::datadogV2::model::CreateJiraIssueRequestDataRelationships,
                 > = None;
@@ -110,12 +100,6 @@ impl<'de> Deserialize<'de> for CreateJiraIssueRequestData {
                                 continue;
                             }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "id" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "relationships" => {
                             if v.is_null() {
@@ -148,7 +132,6 @@ impl<'de> Deserialize<'de> for CreateJiraIssueRequestData {
 
                 let content = CreateJiraIssueRequestData {
                     attributes,
-                    id,
                     relationships,
                     type_,
                     additional_properties,

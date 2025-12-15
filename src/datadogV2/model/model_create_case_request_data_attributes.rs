@@ -11,16 +11,16 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreateCaseRequestDataAttributes {
-    /// The unique identifier of the user assigned to the case.
+    /// Unique identifier of the user assigned to the case.
     #[serde(rename = "assignee_id")]
     pub assignee_id: Option<String>,
-    /// The description of the case. If not provided, the description will be automatically generated.
+    /// Description of the case. If not provided, the description will be automatically generated.
     #[serde(rename = "description")]
     pub description: Option<String>,
     /// Case priority
     #[serde(rename = "priority")]
     pub priority: Option<crate::datadogV2::model::CasePriority>,
-    /// The title of the case. If not provided, the title will be automatically generated.
+    /// Title of the case. If not provided, the title will be automatically generated.
     #[serde(rename = "title")]
     pub title: Option<String>,
     #[serde(flatten)]

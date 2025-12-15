@@ -14,9 +14,6 @@ pub struct CreateCaseRequestData {
     /// Attributes of the case to create.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::CreateCaseRequestDataAttributes>,
-    /// The unique identifier of the case.
-    #[serde(rename = "id")]
-    pub id: Option<String>,
     /// Relationships of the case to create.
     #[serde(rename = "relationships")]
     pub relationships: Option<crate::datadogV2::model::CreateCaseRequestDataRelationships>,
@@ -34,7 +31,6 @@ impl CreateCaseRequestData {
     pub fn new(type_: crate::datadogV2::model::CaseDataType) -> CreateCaseRequestData {
         CreateCaseRequestData {
             attributes: None,
-            id: None,
             relationships: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
@@ -47,11 +43,6 @@ impl CreateCaseRequestData {
         value: crate::datadogV2::model::CreateCaseRequestDataAttributes,
     ) -> Self {
         self.attributes = Some(value);
-        self
-    }
-
-    pub fn id(mut self, value: String) -> Self {
-        self.id = Some(value);
         self
     }
 
@@ -92,7 +83,6 @@ impl<'de> Deserialize<'de> for CreateCaseRequestData {
                 let mut attributes: Option<
                     crate::datadogV2::model::CreateCaseRequestDataAttributes,
                 > = None;
-                let mut id: Option<String> = None;
                 let mut relationships: Option<
                     crate::datadogV2::model::CreateCaseRequestDataRelationships,
                 > = None;
@@ -110,12 +100,6 @@ impl<'de> Deserialize<'de> for CreateCaseRequestData {
                                 continue;
                             }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "id" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "relationships" => {
                             if v.is_null() {
@@ -148,7 +132,6 @@ impl<'de> Deserialize<'de> for CreateCaseRequestData {
 
                 let content = CreateCaseRequestData {
                     attributes,
-                    id,
                     relationships,
                     type_,
                     additional_properties,

@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseManagementProjectData {
-    /// The unique identifier of the case management project.
+    /// Unique identifier of the case management project.
     #[serde(rename = "id")]
     pub id: String,
     /// Projects resource type.
