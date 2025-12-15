@@ -14,15 +14,15 @@ pub struct ObservabilityPipelineDatadogTagsProcessor {
     /// The action to take on tags with matching keys.
     #[serde(rename = "action")]
     pub action: crate::datadogV2::model::ObservabilityPipelineDatadogTagsProcessorAction,
+    /// Whether this processor is enabled.
+    #[serde(rename = "enabled")]
+    pub enabled: bool,
     /// The unique identifier for this component. Used to reference this component in other parts of the pipeline (for example, as the `input` to downstream components).
     #[serde(rename = "id")]
     pub id: String,
     /// A Datadog search query used to determine which logs this processor targets.
     #[serde(rename = "include")]
     pub include: String,
-    /// A list of component IDs whose output is used as the `input` for this component.
-    #[serde(rename = "inputs")]
-    pub inputs: Vec<String>,
     /// A list of tag keys.
     #[serde(rename = "keys")]
     pub keys: Vec<String>,
@@ -42,18 +42,18 @@ pub struct ObservabilityPipelineDatadogTagsProcessor {
 impl ObservabilityPipelineDatadogTagsProcessor {
     pub fn new(
         action: crate::datadogV2::model::ObservabilityPipelineDatadogTagsProcessorAction,
+        enabled: bool,
         id: String,
         include: String,
-        inputs: Vec<String>,
         keys: Vec<String>,
         mode: crate::datadogV2::model::ObservabilityPipelineDatadogTagsProcessorMode,
         type_: crate::datadogV2::model::ObservabilityPipelineDatadogTagsProcessorType,
     ) -> ObservabilityPipelineDatadogTagsProcessor {
         ObservabilityPipelineDatadogTagsProcessor {
             action,
+            enabled,
             id,
             include,
-            inputs,
             keys,
             mode,
             type_,
@@ -91,9 +91,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDatadogTagsProcessor {
                 let mut action: Option<
                     crate::datadogV2::model::ObservabilityPipelineDatadogTagsProcessorAction,
                 > = None;
+                let mut enabled: Option<bool> = None;
                 let mut id: Option<String> = None;
                 let mut include: Option<String> = None;
-                let mut inputs: Option<Vec<String>> = None;
                 let mut keys: Option<Vec<String>> = None;
                 let mut mode: Option<
                     crate::datadogV2::model::ObservabilityPipelineDatadogTagsProcessorMode,
@@ -120,14 +120,14 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDatadogTagsProcessor {
                                 }
                             }
                         }
+                        "enabled" => {
+                            enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "include" => {
                             include = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "inputs" => {
-                            inputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "keys" => {
                             keys = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -162,18 +162,18 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDatadogTagsProcessor {
                     }
                 }
                 let action = action.ok_or_else(|| M::Error::missing_field("action"))?;
+                let enabled = enabled.ok_or_else(|| M::Error::missing_field("enabled"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let include = include.ok_or_else(|| M::Error::missing_field("include"))?;
-                let inputs = inputs.ok_or_else(|| M::Error::missing_field("inputs"))?;
                 let keys = keys.ok_or_else(|| M::Error::missing_field("keys"))?;
                 let mode = mode.ok_or_else(|| M::Error::missing_field("mode"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineDatadogTagsProcessor {
                     action,
+                    enabled,
                     id,
                     include,
-                    inputs,
                     keys,
                     mode,
                     type_,
