@@ -14,9 +14,6 @@ pub struct AttachJiraIssueRequestData {
     /// Attributes of the Jira issue to attach security findings to.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::AttachJiraIssueRequestDataAttributes>,
-    /// The unique identifier of the Jira issue attachment request.
-    #[serde(rename = "id")]
-    pub id: Option<String>,
     /// Relationships of the Jira issue to attach security findings to.
     #[serde(rename = "relationships")]
     pub relationships: Option<crate::datadogV2::model::AttachJiraIssueRequestDataRelationships>,
@@ -34,7 +31,6 @@ impl AttachJiraIssueRequestData {
     pub fn new(type_: crate::datadogV2::model::JiraIssuesDataType) -> AttachJiraIssueRequestData {
         AttachJiraIssueRequestData {
             attributes: None,
-            id: None,
             relationships: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
@@ -47,11 +43,6 @@ impl AttachJiraIssueRequestData {
         value: crate::datadogV2::model::AttachJiraIssueRequestDataAttributes,
     ) -> Self {
         self.attributes = Some(value);
-        self
-    }
-
-    pub fn id(mut self, value: String) -> Self {
-        self.id = Some(value);
         self
     }
 
@@ -92,7 +83,6 @@ impl<'de> Deserialize<'de> for AttachJiraIssueRequestData {
                 let mut attributes: Option<
                     crate::datadogV2::model::AttachJiraIssueRequestDataAttributes,
                 > = None;
-                let mut id: Option<String> = None;
                 let mut relationships: Option<
                     crate::datadogV2::model::AttachJiraIssueRequestDataRelationships,
                 > = None;
@@ -110,12 +100,6 @@ impl<'de> Deserialize<'de> for AttachJiraIssueRequestData {
                                 continue;
                             }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "id" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "relationships" => {
                             if v.is_null() {
@@ -148,7 +132,6 @@ impl<'de> Deserialize<'de> for AttachJiraIssueRequestData {
 
                 let content = AttachJiraIssueRequestData {
                     attributes,
-                    id,
                     relationships,
                     type_,
                     additional_properties,

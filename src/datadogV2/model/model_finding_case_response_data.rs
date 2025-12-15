@@ -14,7 +14,7 @@ pub struct FindingCaseResponseData {
     /// Attributes of the case.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::FindingCaseResponseDataAttributes>,
-    /// The unique identifier of the case.
+    /// Unique identifier of the case.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Relationships of the case.

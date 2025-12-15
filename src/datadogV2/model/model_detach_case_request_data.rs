@@ -11,9 +11,6 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DetachCaseRequestData {
-    /// The unique identifier of the detachment request.
-    #[serde(rename = "id")]
-    pub id: Option<String>,
     /// Relationships detaching security findings from their case.
     #[serde(rename = "relationships")]
     pub relationships: Option<crate::datadogV2::model::DetachCaseRequestDataRelationships>,
@@ -30,17 +27,11 @@ pub struct DetachCaseRequestData {
 impl DetachCaseRequestData {
     pub fn new(type_: crate::datadogV2::model::CaseDataType) -> DetachCaseRequestData {
         DetachCaseRequestData {
-            id: None,
             relationships: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn id(mut self, value: String) -> Self {
-        self.id = Some(value);
-        self
     }
 
     pub fn relationships(
@@ -77,7 +68,6 @@ impl<'de> Deserialize<'de> for DetachCaseRequestData {
             where
                 M: MapAccess<'a>,
             {
-                let mut id: Option<String> = None;
                 let mut relationships: Option<
                     crate::datadogV2::model::DetachCaseRequestDataRelationships,
                 > = None;
@@ -90,12 +80,6 @@ impl<'de> Deserialize<'de> for DetachCaseRequestData {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "id" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "relationships" => {
                             if v.is_null() {
                                 continue;
@@ -126,7 +110,6 @@ impl<'de> Deserialize<'de> for DetachCaseRequestData {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = DetachCaseRequestData {
-                    id,
                     relationships,
                     type_,
                     additional_properties,

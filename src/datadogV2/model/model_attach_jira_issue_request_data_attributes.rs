@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AttachJiraIssueRequestDataAttributes {
-    /// The URL of the Jira issue to attach security findings to.
+    /// URL of the Jira issue to attach security findings to.
     #[serde(rename = "jira_issue_url")]
     pub jira_issue_url: String,
     #[serde(flatten)]

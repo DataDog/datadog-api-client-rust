@@ -11,13 +11,13 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseInsightsItems {
-    /// The reference of the insight.
+    /// Reference of the insight.
     #[serde(rename = "ref")]
     pub ref_: Option<String>,
-    /// The unique identifier of the resource. For example, the unique identifier of a security finding.
+    /// Unique identifier of the resource. For example, the unique identifier of a security finding.
     #[serde(rename = "resource_id")]
     pub resource_id: Option<String>,
-    /// The type of the resource. For example, the type of a security finding is "SECURITY_FINDING".
+    /// Type of the resource. For example, the type of a security finding is "SECURITY_FINDING".
     #[serde(rename = "type")]
     pub type_: Option<String>,
     #[serde(flatten)]

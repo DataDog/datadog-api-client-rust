@@ -11,9 +11,12 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreateJiraIssueRequestDataRelationships {
-    /// Case linked to the Jira issue.
-    #[serde(rename = "case")]
-    pub case: crate::datadogV2::model::CreateJiraIssueRequestDataRelationshipsCase,
+    /// A list of security findings.
+    #[serde(rename = "findings")]
+    pub findings: crate::datadogV2::model::Findings,
+    /// Case management project.
+    #[serde(rename = "project")]
+    pub project: crate::datadogV2::model::CaseManagementProject,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -23,10 +26,12 @@ pub struct CreateJiraIssueRequestDataRelationships {
 
 impl CreateJiraIssueRequestDataRelationships {
     pub fn new(
-        case: crate::datadogV2::model::CreateJiraIssueRequestDataRelationshipsCase,
+        findings: crate::datadogV2::model::Findings,
+        project: crate::datadogV2::model::CaseManagementProject,
     ) -> CreateJiraIssueRequestDataRelationships {
         CreateJiraIssueRequestDataRelationships {
-            case,
+            findings,
+            project,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -58,9 +63,8 @@ impl<'de> Deserialize<'de> for CreateJiraIssueRequestDataRelationships {
             where
                 M: MapAccess<'a>,
             {
-                let mut case: Option<
-                    crate::datadogV2::model::CreateJiraIssueRequestDataRelationshipsCase,
-                > = None;
+                let mut findings: Option<crate::datadogV2::model::Findings> = None;
+                let mut project: Option<crate::datadogV2::model::CaseManagementProject> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -69,8 +73,11 @@ impl<'de> Deserialize<'de> for CreateJiraIssueRequestDataRelationships {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "case" => {
-                            case = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "findings" => {
+                            findings = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "project" => {
+                            project = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -79,10 +86,12 @@ impl<'de> Deserialize<'de> for CreateJiraIssueRequestDataRelationships {
                         }
                     }
                 }
-                let case = case.ok_or_else(|| M::Error::missing_field("case"))?;
+                let findings = findings.ok_or_else(|| M::Error::missing_field("findings"))?;
+                let project = project.ok_or_else(|| M::Error::missing_field("project"))?;
 
                 let content = CreateJiraIssueRequestDataRelationships {
-                    case,
+                    findings,
+                    project,
                     additional_properties,
                     _unparsed,
                 };
