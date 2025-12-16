@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum RuleVersionUpdateType {
+pub enum VersionHistoryUpdateType {
     CREATE,
     UPDATE,
     DELETE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for RuleVersionUpdateType {
+impl ToString for VersionHistoryUpdateType {
     fn to_string(&self) -> String {
         match self {
             Self::CREATE => String::from("create"),
@@ -24,7 +24,7 @@ impl ToString for RuleVersionUpdateType {
     }
 }
 
-impl Serialize for RuleVersionUpdateType {
+impl Serialize for VersionHistoryUpdateType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -36,7 +36,7 @@ impl Serialize for RuleVersionUpdateType {
     }
 }
 
-impl<'de> Deserialize<'de> for RuleVersionUpdateType {
+impl<'de> Deserialize<'de> for VersionHistoryUpdateType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,

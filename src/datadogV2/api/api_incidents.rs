@@ -901,6 +901,14 @@ impl IncidentsAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_incident_impact";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.create_incident_impact' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
 
         // unbox and build optional parameters
         let include = params.include;
@@ -1987,6 +1995,14 @@ impl IncidentsAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentImpactError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_incident_impact";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.delete_incident_impact' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
 
         let local_client = &self.client;
 
@@ -3521,6 +3537,14 @@ impl IncidentsAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_incident_impacts";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_incident_impacts' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
 
         // unbox and build optional parameters
         let include = params.include;
