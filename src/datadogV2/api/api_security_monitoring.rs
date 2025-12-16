@@ -628,6 +628,8 @@ pub struct ListVulnerabilitiesOptionalParams {
     pub filter_repo_digests: Option<String>,
     /// Filter by origin.
     pub filter_origin: Option<String>,
+    /// Filter for whether the vulnerability affects a running kernel (for vulnerabilities related to a `Host` asset).
+    pub filter_running_kernel: Option<bool>,
     /// Filter by asset name. This field supports the usage of wildcards (*).
     pub filter_asset_name: Option<String>,
     /// Filter by asset type.
@@ -806,6 +808,11 @@ impl ListVulnerabilitiesOptionalParams {
     /// Filter by origin.
     pub fn filter_origin(mut self, value: String) -> Self {
         self.filter_origin = Some(value);
+        self
+    }
+    /// Filter for whether the vulnerability affects a running kernel (for vulnerabilities related to a `Host` asset).
+    pub fn filter_running_kernel(mut self, value: bool) -> Self {
+        self.filter_running_kernel = Some(value);
         self
     }
     /// Filter by asset name. This field supports the usage of wildcards (*).
@@ -5729,7 +5736,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Returns list of Secrets rules with ID, Pattern, Description, Priority, and SDS ID
+    /// Returns a list of Secrets rules with ID, Pattern, Description, Priority, and SDS ID.
     pub async fn get_secrets_rules(
         &self,
     ) -> Result<crate::datadogV2::model::SecretRuleArray, datadog::Error<GetSecretsRulesError>>
@@ -5748,7 +5755,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Returns list of Secrets rules with ID, Pattern, Description, Priority, and SDS ID
+    /// Returns a list of Secrets rules with ID, Pattern, Description, Priority, and SDS ID.
     pub async fn get_secrets_rules_with_http_info(
         &self,
     ) -> Result<
@@ -9383,6 +9390,7 @@ impl SecurityMonitoringAPI {
         let filter_fix_available = params.filter_fix_available;
         let filter_repo_digests = params.filter_repo_digests;
         let filter_origin = params.filter_origin;
+        let filter_running_kernel = params.filter_running_kernel;
         let filter_asset_name = params.filter_asset_name;
         let filter_asset_type = params.filter_asset_type;
         let filter_asset_version_first = params.filter_asset_version_first;
@@ -9542,6 +9550,10 @@ impl SecurityMonitoringAPI {
         if let Some(ref local_query_param) = filter_origin {
             local_req_builder =
                 local_req_builder.query(&[("filter[origin]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_running_kernel {
+            local_req_builder = local_req_builder
+                .query(&[("filter[running_kernel]", &local_query_param.to_string())]);
         };
         if let Some(ref local_query_param) = filter_asset_name {
             local_req_builder =

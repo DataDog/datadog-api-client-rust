@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct Library {
+    /// Related library or package names (such as child packages or affected binary paths).
+    #[serde(rename = "additional_names")]
+    pub additional_names: Option<Vec<String>>,
     /// Vulnerability library name.
     #[serde(rename = "name")]
     pub name: String,
@@ -27,11 +30,17 @@ pub struct Library {
 impl Library {
     pub fn new(name: String) -> Library {
         Library {
+            additional_names: None,
             name,
             version: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn additional_names(mut self, value: Vec<String>) -> Self {
+        self.additional_names = Some(value);
+        self
     }
 
     pub fn version(mut self, value: String) -> Self {
@@ -65,6 +74,7 @@ impl<'de> Deserialize<'de> for Library {
             where
                 M: MapAccess<'a>,
             {
+                let mut additional_names: Option<Vec<String>> = None;
                 let mut name: Option<String> = None;
                 let mut version: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -75,6 +85,13 @@ impl<'de> Deserialize<'de> for Library {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "additional_names" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            additional_names =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -94,6 +111,7 @@ impl<'de> Deserialize<'de> for Library {
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
 
                 let content = Library {
+                    additional_names,
                     name,
                     version,
                     additional_properties,
