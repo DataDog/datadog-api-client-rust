@@ -15,6 +15,9 @@ pub struct SecurityMonitoringRuleNewValueOptions {
     #[serde(rename = "forgetAfter")]
     pub forget_after:
         Option<crate::datadogV2::model::SecurityMonitoringRuleNewValueOptionsForgetAfter>,
+    /// When set to true, Datadog uses previous values that fall within the defined learning window to construct the baseline, enabling the system to establish an accurate baseline more rapidly rather than relying solely on gradual learning over time.
+    #[serde(rename = "instantaneousBaseline")]
+    pub instantaneous_baseline: Option<bool>,
     /// The duration in days during which values are learned, and after which signals will be generated for values that
     /// weren't learned. If set to 0, a signal will be generated for all new values after the first value is learned.
     #[serde(rename = "learningDuration")]
@@ -39,6 +42,7 @@ impl SecurityMonitoringRuleNewValueOptions {
     pub fn new() -> SecurityMonitoringRuleNewValueOptions {
         SecurityMonitoringRuleNewValueOptions {
             forget_after: None,
+            instantaneous_baseline: None,
             learning_duration: None,
             learning_method: None,
             learning_threshold: None,
@@ -52,6 +56,11 @@ impl SecurityMonitoringRuleNewValueOptions {
         value: crate::datadogV2::model::SecurityMonitoringRuleNewValueOptionsForgetAfter,
     ) -> Self {
         self.forget_after = Some(value);
+        self
+    }
+
+    pub fn instantaneous_baseline(mut self, value: bool) -> Self {
+        self.instantaneous_baseline = Some(value);
         self
     }
 
@@ -114,6 +123,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleNewValueOptions {
                 let mut forget_after: Option<
                     crate::datadogV2::model::SecurityMonitoringRuleNewValueOptionsForgetAfter,
                 > = None;
+                let mut instantaneous_baseline: Option<bool> = None;
                 let mut learning_duration: Option<
                     crate::datadogV2::model::SecurityMonitoringRuleNewValueOptionsLearningDuration,
                 > = None;
@@ -145,6 +155,13 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleNewValueOptions {
                                     _ => {}
                                 }
                             }
+                        }
+                        "instantaneousBaseline" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            instantaneous_baseline =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "learningDuration" => {
                             if v.is_null() {
@@ -201,6 +218,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleNewValueOptions {
 
                 let content = SecurityMonitoringRuleNewValueOptions {
                     forget_after,
+                    instantaneous_baseline,
                     learning_duration,
                     learning_method,
                     learning_threshold,
