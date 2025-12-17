@@ -36,6 +36,8 @@ pub struct ListCatalogEntityOptionalParams {
     pub filter_exclude_snapshot: Option<String>,
     /// Include relationship data.
     pub include: Option<crate::datadogV2::model::IncludeType>,
+    /// If true, includes discovered services from APM and USM that do not have entity definitions.
+    pub include_discovered: Option<bool>,
 }
 
 impl ListCatalogEntityOptionalParams {
@@ -87,6 +89,11 @@ impl ListCatalogEntityOptionalParams {
     /// Include relationship data.
     pub fn include(mut self, value: crate::datadogV2::model::IncludeType) -> Self {
         self.include = Some(value);
+        self
+    }
+    /// If true, includes discovered services from APM and USM that do not have entity definitions.
+    pub fn include_discovered(mut self, value: bool) -> Self {
+        self.include_discovered = Some(value);
         self
     }
 }
@@ -144,6 +151,8 @@ pub struct ListCatalogRelationOptionalParams {
     pub filter_to_ref: Option<String>,
     /// Include relationship data.
     pub include: Option<crate::datadogV2::model::RelationIncludeType>,
+    /// If true, includes relationships discovered by APM and USM.
+    pub include_discovered: Option<bool>,
 }
 
 impl ListCatalogRelationOptionalParams {
@@ -175,6 +184,11 @@ impl ListCatalogRelationOptionalParams {
     /// Include relationship data.
     pub fn include(mut self, value: crate::datadogV2::model::RelationIncludeType) -> Self {
         self.include = Some(value);
+        self
+    }
+    /// If true, includes relationships discovered by APM and USM.
+    pub fn include_discovered(mut self, value: bool) -> Self {
+        self.include_discovered = Some(value);
         self
     }
 }
@@ -563,6 +577,7 @@ impl SoftwareCatalogAPI {
         let filter_relation_type = params.filter_relation_type;
         let filter_exclude_snapshot = params.filter_exclude_snapshot;
         let include = params.include;
+        let include_discovered = params.include_discovered;
 
         let local_client = &self.client;
 
@@ -612,6 +627,10 @@ impl SoftwareCatalogAPI {
         if let Some(ref local_query_param) = include {
             local_req_builder =
                 local_req_builder.query(&[("include", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = include_discovered {
+            local_req_builder =
+                local_req_builder.query(&[("includeDiscovered", &local_query_param.to_string())]);
         };
 
         // build headers
@@ -924,6 +943,7 @@ impl SoftwareCatalogAPI {
         let filter_from_ref = params.filter_from_ref;
         let filter_to_ref = params.filter_to_ref;
         let include = params.include;
+        let include_discovered = params.include_discovered;
 
         let local_client = &self.client;
 
@@ -957,6 +977,10 @@ impl SoftwareCatalogAPI {
         if let Some(ref local_query_param) = include {
             local_req_builder =
                 local_req_builder.query(&[("include", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = include_discovered {
+            local_req_builder =
+                local_req_builder.query(&[("includeDiscovered", &local_query_param.to_string())]);
         };
 
         // build headers
