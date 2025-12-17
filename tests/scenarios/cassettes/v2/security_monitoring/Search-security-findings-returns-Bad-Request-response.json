@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"page\":{\"cursor\":\"invalid_cursor\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/security/findings/search"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"status\":\"400\",\"title\":\"Bad Request\",\"detail\":\"document is missing required top-level members; must have one of: \\\"data\\\", \\\"meta\\\", \\\"errors\\\"\"}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Wed, 17 Dec 2025 16:27:52 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
