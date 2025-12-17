@@ -11,6 +11,10 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SecurityMonitoringRuleOptions {
+    /// Options on anomaly detection method.
+    #[serde(rename = "anomalyDetectionOptions")]
+    pub anomaly_detection_options:
+        Option<crate::datadogV2::model::SecurityMonitoringRuleAnomalyDetectionOptions>,
     /// Options for cloud_configuration rules.
     /// Fields `resourceType` and `regoRule` are mandatory when managing custom `cloud_configuration` rules.
     #[serde(rename = "complianceRuleOptions")]
@@ -66,6 +70,7 @@ pub struct SecurityMonitoringRuleOptions {
 impl SecurityMonitoringRuleOptions {
     pub fn new() -> SecurityMonitoringRuleOptions {
         SecurityMonitoringRuleOptions {
+            anomaly_detection_options: None,
             compliance_rule_options: None,
             decrease_criticality_based_on_env: None,
             detection_method: None,
@@ -80,6 +85,14 @@ impl SecurityMonitoringRuleOptions {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn anomaly_detection_options(
+        mut self,
+        value: crate::datadogV2::model::SecurityMonitoringRuleAnomalyDetectionOptions,
+    ) -> Self {
+        self.anomaly_detection_options = Some(value);
+        self
     }
 
     pub fn compliance_rule_options(
@@ -199,6 +212,9 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleOptions {
             where
                 M: MapAccess<'a>,
             {
+                let mut anomaly_detection_options: Option<
+                    crate::datadogV2::model::SecurityMonitoringRuleAnomalyDetectionOptions,
+                > = None;
                 let mut compliance_rule_options: Option<
                     crate::datadogV2::model::CloudConfigurationComplianceRuleOptions,
                 > = None;
@@ -238,6 +254,13 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleOptions {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "anomalyDetectionOptions" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            anomaly_detection_options =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "complianceRuleOptions" => {
                             if v.is_null() {
                                 continue;
@@ -363,6 +386,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleOptions {
                 }
 
                 let content = SecurityMonitoringRuleOptions {
+                    anomaly_detection_options,
                     compliance_rule_options,
                     decrease_criticality_based_on_env,
                     detection_method,
