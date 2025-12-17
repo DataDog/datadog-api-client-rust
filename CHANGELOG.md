@@ -1,5 +1,54 @@
 # CHANGELOG
 
+## 0.24.0/2025-12-17
+
+### Changed
+* Mark Incident Impact Endpoints stable [#1089](https://github.com/DataDog/datadog-api-client-rust/pull/1089)
+* Vulnerability Management - Update ListVulnerabilities endpoint query params and response schema [#1082](https://github.com/DataDog/datadog-api-client-rust/pull/1082)
+* Update specs for AWS account updates and creation for CCM configs [#1075](https://github.com/DataDog/datadog-api-client-rust/pull/1075)
+* add suppression version history [#1050](https://github.com/DataDog/datadog-api-client-rust/pull/1050)
+* Add Security Finding Ticketing endpoints [#1045](https://github.com/DataDog/datadog-api-client-rust/pull/1045)
+* Flatten file_metadata response schema to avoid OneOf unmarshaling issues [#1030](https://github.com/DataDog/datadog-api-client-rust/pull/1030)
+* Add processors groups to Observability Pipelines [#1010](https://github.com/DataDog/datadog-api-client-rust/pull/1010)
+
+### Added
+* Update security finding triage specs [#1083](https://github.com/DataDog/datadog-api-client-rust/pull/1083)
+* Add routes for managing On-Call user notification channels [#1078](https://github.com/DataDog/datadog-api-client-rust/pull/1078)
+* Add host field to Post an event V2 API [#1076](https://github.com/DataDog/datadog-api-client-rust/pull/1076)
+* Add `GET /api/v2/apm/services` endpoint to public documentation [#1073](https://github.com/DataDog/datadog-api-client-rust/pull/1073)
+* Dashboards - Add semantic_mode support to FormulaAndFunctionMetricQueryDefinition [#1066](https://github.com/DataDog/datadog-api-client-rust/pull/1066)
+* Cloud SIEM - Add instantaneousBaseline feature parameter. [#1063](https://github.com/DataDog/datadog-api-client-rust/pull/1063)
+* Add new fields to usage metering api spec [#1061](https://github.com/DataDog/datadog-api-client-rust/pull/1061)
+* update geomap widget definition about `conditional_format` and `text_formats` and view focus [#1055](https://github.com/DataDog/datadog-api-client-rust/pull/1055)
+* On-Call Add positioned schedule policy target [#1051](https://github.com/DataDog/datadog-api-client-rust/pull/1051)
+* Introduced new APIs to manage team hierarchy links [#1042](https://github.com/DataDog/datadog-api-client-rust/pull/1042)
+* Add new endpoint for listing rules for a gate [#1041](https://github.com/DataDog/datadog-api-client-rust/pull/1041)
+* Add Row Update Endpoints to Reference Tables API spec [#1031](https://github.com/DataDog/datadog-api-client-rust/pull/1031)
+* Add incident management seats  to spec [#1028](https://github.com/DataDog/datadog-api-client-rust/pull/1028)
+* Support provisioning teams from external sources [#1027](https://github.com/DataDog/datadog-api-client-rust/pull/1027)
+* security_monitoring - Add signalOutput field to ThreatHuntingJobResponseAttributes schema [#1025](https://github.com/DataDog/datadog-api-client-rust/pull/1025)
+* Add filter.scope to Monitor Notification Rules [#1022](https://github.com/DataDog/datadog-api-client-rust/pull/1022)
+* Add suppression tags [#1016](https://github.com/DataDog/datadog-api-client-rust/pull/1016)
+* Add Team Connection API Documentation [#1014](https://github.com/DataDog/datadog-api-client-rust/pull/1014)
+* Add Support for Monitor Assets [#1012](https://github.com/DataDog/datadog-api-client-rust/pull/1012)
+* Add new summary keys for new standalone billing dimensions [#1011](https://github.com/DataDog/datadog-api-client-rust/pull/1011)
+* Add Bits AI Investigations and On-Call to  API specs [#1007](https://github.com/DataDog/datadog-api-client-rust/pull/1007)
+* Add `PreviewCatalogEntities` [#1004](https://github.com/DataDog/datadog-api-client-rust/pull/1004)
+* Sync 'audience_management.yaml' files with backend [#1002](https://github.com/DataDog/datadog-api-client-rust/pull/1002)
+* Add api specs for deployment gates [#974](https://github.com/DataDog/datadog-api-client-rust/pull/974)
+* Add last_login_time to Users v2 API [#960](https://github.com/DataDog/datadog-api-client-rust/pull/960)
+
+### Removed
+* Tag security findings Jira endpoints as unstable [#1071](https://github.com/DataDog/datadog-api-client-rust/pull/1071)
+
+### Fixed
+* Add field attribute to the Workload Protection hash action [#1046](https://github.com/DataDog/datadog-api-client-rust/pull/1046)
+* obs_pipelines: make google auth optional [#1036](https://github.com/DataDog/datadog-api-client-rust/pull/1036)
+
+### Deprecated
+* [api-spec] Mark PATCH /api/v2/incidents/incident_id/attachments endpoint as deprecated [#1013](https://github.com/DataDog/datadog-api-client-rust/pull/1013)
+* [METEXP-2068] Deprecate api/v1/search Endpoint [#1008](https://github.com/DataDog/datadog-api-client-rust/pull/1008)
+
 ## 0.23.0/2025-12-08
 
 ### Added
