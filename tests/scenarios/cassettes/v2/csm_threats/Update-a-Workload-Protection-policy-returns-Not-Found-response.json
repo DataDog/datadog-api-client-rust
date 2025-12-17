@@ -19,7 +19,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"errors\":[{\"title\":\"failed to update policy\"}]}\n",
+          "string": "{\"errors\":[{\"title\":\"Not Found\"}]}",
           "encoding": null
         },
         "headers": {
@@ -28,11 +28,11 @@
           ]
         },
         "status": {
-          "code": 400,
-          "message": "Bad Request"
+          "code": 404,
+          "message": "Not Found"
         }
       },
-      "recorded_at": "Fri, 10 Oct 2025 15:21:34 GMT"
+      "recorded_at": "Thu, 11 Dec 2025 16:10:00 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"
