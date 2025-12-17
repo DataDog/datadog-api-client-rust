@@ -11,6 +11,10 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ThreatHuntingJobOptions {
+    /// Options on anomaly detection method.
+    #[serde(rename = "anomalyDetectionOptions")]
+    pub anomaly_detection_options:
+        Option<crate::datadogV2::model::SecurityMonitoringRuleAnomalyDetectionOptions>,
     /// The detection method.
     #[serde(rename = "detectionMethod")]
     pub detection_method: Option<crate::datadogV2::model::SecurityMonitoringRuleDetectionMethod>,
@@ -52,6 +56,7 @@ pub struct ThreatHuntingJobOptions {
 impl ThreatHuntingJobOptions {
     pub fn new() -> ThreatHuntingJobOptions {
         ThreatHuntingJobOptions {
+            anomaly_detection_options: None,
             detection_method: None,
             evaluation_window: None,
             impossible_travel_options: None,
@@ -63,6 +68,14 @@ impl ThreatHuntingJobOptions {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn anomaly_detection_options(
+        mut self,
+        value: crate::datadogV2::model::SecurityMonitoringRuleAnomalyDetectionOptions,
+    ) -> Self {
+        self.anomaly_detection_options = Some(value);
+        self
     }
 
     pub fn detection_method(
@@ -161,6 +174,9 @@ impl<'de> Deserialize<'de> for ThreatHuntingJobOptions {
             where
                 M: MapAccess<'a>,
             {
+                let mut anomaly_detection_options: Option<
+                    crate::datadogV2::model::SecurityMonitoringRuleAnomalyDetectionOptions,
+                > = None;
                 let mut detection_method: Option<
                     crate::datadogV2::model::SecurityMonitoringRuleDetectionMethod,
                 > = None;
@@ -193,6 +209,13 @@ impl<'de> Deserialize<'de> for ThreatHuntingJobOptions {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "anomalyDetectionOptions" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            anomaly_detection_options =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "detectionMethod" => {
                             if v.is_null() {
                                 continue;
@@ -289,6 +312,7 @@ impl<'de> Deserialize<'de> for ThreatHuntingJobOptions {
                 }
 
                 let content = ThreatHuntingJobOptions {
+                    anomaly_detection_options,
                     detection_method,
                     evaluation_window,
                     impossible_travel_options,
