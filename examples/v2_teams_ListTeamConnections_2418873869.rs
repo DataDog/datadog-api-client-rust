@@ -7,8 +7,7 @@ use futures_util::stream::StreamExt;
 
 #[tokio::main]
 async fn main() {
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListTeamConnections", true);
+    let configuration = datadog::Configuration::new();
     let api = TeamsAPI::with_config(configuration);
     let response =
         api.list_team_connections_with_pagination(ListTeamConnectionsOptionalParams::default());

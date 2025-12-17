@@ -1012,14 +1012,6 @@ impl TeamsAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_team_connections";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.create_team_connections' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -1562,14 +1554,6 @@ impl TeamsAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTeamConnectionsError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_team_connections";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.delete_team_connections' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -2609,14 +2593,6 @@ impl TeamsAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_team_sync";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.get_team_sync' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -3052,14 +3028,6 @@ impl TeamsAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_team_connections";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_team_connections' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -3783,14 +3751,6 @@ impl TeamsAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<SyncTeamsError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.sync_teams";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.sync_teams' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 

@@ -5,8 +5,7 @@ use datadog_api_client::datadogV2::api_teams::TeamsAPI;
 
 #[tokio::main]
 async fn main() {
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListTeamConnections", true);
+    let configuration = datadog::Configuration::new();
     let api = TeamsAPI::with_config(configuration);
     let resp = api
         .list_team_connections(ListTeamConnectionsOptionalParams::default())
