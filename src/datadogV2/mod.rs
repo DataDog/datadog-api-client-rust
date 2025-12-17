@@ -7,6 +7,7 @@ pub use self::api::api_action_connection;
 pub use self::api::api_actions_datastores;
 pub use self::api::api_agentless_scanning;
 pub use self::api::api_api_management;
+pub use self::api::api_apm;
 pub use self::api::api_apm_retention_filters;
 pub use self::api::api_app_builder;
 pub use self::api::api_application_security;
