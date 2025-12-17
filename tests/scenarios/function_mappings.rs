@@ -15593,6 +15593,9 @@ fn test_v2_list_catalog_entity(world: &mut DatadogWorld, _parameters: &HashMap<S
     let include = _parameters
         .get("include")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include_discovered = _parameters
+        .get("includeDiscovered")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_software_catalog::ListCatalogEntityOptionalParams::default();
     params.page_offset = page_offset;
     params.page_limit = page_limit;
@@ -15604,6 +15607,7 @@ fn test_v2_list_catalog_entity(world: &mut DatadogWorld, _parameters: &HashMap<S
     params.filter_relation_type = filter_relation_type;
     params.filter_exclude_snapshot = filter_exclude_snapshot;
     params.include = include;
+    params.include_discovered = include_discovered;
     let response = match block_on(api.list_catalog_entity_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -15660,6 +15664,9 @@ fn test_v2_list_catalog_entity_with_pagination(
     let include = _parameters
         .get("include")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include_discovered = _parameters
+        .get("includeDiscovered")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_software_catalog::ListCatalogEntityOptionalParams::default();
     params.page_offset = page_offset;
     params.page_limit = page_limit;
@@ -15671,6 +15678,7 @@ fn test_v2_list_catalog_entity_with_pagination(
     params.filter_relation_type = filter_relation_type;
     params.filter_exclude_snapshot = filter_exclude_snapshot;
     params.include = include;
+    params.include_discovered = include_discovered;
     let response = api.list_catalog_entity_with_pagination(params);
     let mut result = Vec::new();
 
@@ -15944,6 +15952,9 @@ fn test_v2_list_catalog_relation(world: &mut DatadogWorld, _parameters: &HashMap
     let include = _parameters
         .get("include")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include_discovered = _parameters
+        .get("includeDiscovered")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_software_catalog::ListCatalogRelationOptionalParams::default();
     params.page_offset = page_offset;
     params.page_limit = page_limit;
@@ -15951,6 +15962,7 @@ fn test_v2_list_catalog_relation(world: &mut DatadogWorld, _parameters: &HashMap
     params.filter_from_ref = filter_from_ref;
     params.filter_to_ref = filter_to_ref;
     params.include = include;
+    params.include_discovered = include_discovered;
     let response = match block_on(api.list_catalog_relation_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -15995,6 +16007,9 @@ fn test_v2_list_catalog_relation_with_pagination(
     let include = _parameters
         .get("include")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include_discovered = _parameters
+        .get("includeDiscovered")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_software_catalog::ListCatalogRelationOptionalParams::default();
     params.page_offset = page_offset;
     params.page_limit = page_limit;
@@ -16002,6 +16017,7 @@ fn test_v2_list_catalog_relation_with_pagination(
     params.filter_from_ref = filter_from_ref;
     params.filter_to_ref = filter_to_ref;
     params.include = include;
+    params.include_discovered = include_discovered;
     let response = api.list_catalog_relation_with_pagination(params);
     let mut result = Vec::new();
 
