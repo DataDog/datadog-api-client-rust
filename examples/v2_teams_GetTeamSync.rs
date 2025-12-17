@@ -5,8 +5,7 @@ use datadog_api_client::datadogV2::model::TeamSyncAttributesSource;
 
 #[tokio::main]
 async fn main() {
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetTeamSync", true);
+    let configuration = datadog::Configuration::new();
     let api = TeamsAPI::with_config(configuration);
     let resp = api.get_team_sync(TeamSyncAttributesSource::GITHUB).await;
     if let Ok(value) = resp {

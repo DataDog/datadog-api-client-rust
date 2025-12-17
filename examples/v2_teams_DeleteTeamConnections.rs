@@ -11,8 +11,7 @@ async fn main() {
         "12345678-1234-5678-9abc-123456789012".to_string(),
         TeamConnectionType::TEAM_CONNECTION,
     )]);
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.DeleteTeamConnections", true);
+    let configuration = datadog::Configuration::new();
     let api = TeamsAPI::with_config(configuration);
     let resp = api.delete_team_connections(body).await;
     if let Ok(value) = resp {
