@@ -415,6 +415,43 @@ impl ListScannedAssetsMetadataOptionalParams {
     }
 }
 
+/// ListSecurityFindingsOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_security_findings`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListSecurityFindingsOptionalParams {
+    /// The search query following log search syntax.
+    pub filter_query: Option<String>,
+    /// Get the next page of results with a cursor provided in the previous query.
+    pub page_cursor: Option<String>,
+    /// The maximum number of findings in the response.
+    pub page_limit: Option<i64>,
+    /// Sorts by @detection_changed_at.
+    pub sort: Option<crate::datadogV2::model::SecurityFindingsSort>,
+}
+
+impl ListSecurityFindingsOptionalParams {
+    /// The search query following log search syntax.
+    pub fn filter_query(mut self, value: String) -> Self {
+        self.filter_query = Some(value);
+        self
+    }
+    /// Get the next page of results with a cursor provided in the previous query.
+    pub fn page_cursor(mut self, value: String) -> Self {
+        self.page_cursor = Some(value);
+        self
+    }
+    /// The maximum number of findings in the response.
+    pub fn page_limit(mut self, value: i64) -> Self {
+        self.page_limit = Some(value);
+        self
+    }
+    /// Sorts by @detection_changed_at.
+    pub fn sort(mut self, value: crate::datadogV2::model::SecurityFindingsSort) -> Self {
+        self.sort = Some(value);
+        self
+    }
+}
+
 /// ListSecurityMonitoringHistsignalsOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_security_monitoring_histsignals`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -1480,6 +1517,14 @@ pub enum ListSecurityFiltersError {
     UnknownValue(serde_json::Value),
 }
 
+/// ListSecurityFindingsError is a struct for typed errors of method [`SecurityMonitoringAPI::list_security_findings`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListSecurityFindingsError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// ListSecurityMonitoringHistsignalsError is a struct for typed errors of method [`SecurityMonitoringAPI::list_security_monitoring_histsignals`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1568,6 +1613,14 @@ pub enum PatchVulnerabilityNotificationRuleError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum RunThreatHuntingJobError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// SearchSecurityFindingsError is a struct for typed errors of method [`SecurityMonitoringAPI::search_security_findings`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum SearchSecurityFindingsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -8572,6 +8625,203 @@ impl SecurityMonitoringAPI {
         }
     }
 
+    /// Get a list of security findings that match a search query.
+    ///
+    /// This endpoint requires one of the following permissions:
+    /// - `security_monitoring_findings_read`
+    /// - `appsec_vm_read`
+    ///
+    /// ### Query Syntax
+    ///
+    /// This endpoint uses the logs query syntax. Findings attributes (living in the custom. namespace) are prefixed by @ when queried. Tags are queried without a prefix.
+    ///
+    /// Example: `@severity:(critical OR high) @status:open team:platform`
+    pub async fn list_security_findings(
+        &self,
+        params: ListSecurityFindingsOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::ListSecurityFindingsResponse,
+        datadog::Error<ListSecurityFindingsError>,
+    > {
+        match self.list_security_findings_with_http_info(params).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    pub fn list_security_findings_with_pagination(
+        &self,
+        mut params: ListSecurityFindingsOptionalParams,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV2::model::SecurityFindingsData,
+            datadog::Error<ListSecurityFindingsError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 10;
+            if params.page_limit.is_none() {
+                params.page_limit = Some(page_size);
+            } else {
+                page_size = params.page_limit.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_security_findings(params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                let Some(meta) = resp.meta else { break };
+                let Some(page) = meta.page else { break };
+                let Some(after) = page.after else { break };
+
+                params.page_cursor = Some(after);
+            }
+        }
+    }
+
+    /// Get a list of security findings that match a search query.
+    ///
+    /// This endpoint requires one of the following permissions:
+    /// - `security_monitoring_findings_read`
+    /// - `appsec_vm_read`
+    ///
+    /// ### Query Syntax
+    ///
+    /// This endpoint uses the logs query syntax. Findings attributes (living in the custom. namespace) are prefixed by @ when queried. Tags are queried without a prefix.
+    ///
+    /// Example: `@severity:(critical OR high) @status:open team:platform`
+    pub async fn list_security_findings_with_http_info(
+        &self,
+        params: ListSecurityFindingsOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::ListSecurityFindingsResponse>,
+        datadog::Error<ListSecurityFindingsError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_security_findings";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_security_findings' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let filter_query = params.filter_query;
+        let page_cursor = params.page_cursor;
+        let page_limit = params.page_limit;
+        let sort = params.sort;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security/findings",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = filter_query {
+            local_req_builder =
+                local_req_builder.query(&[("filter[query]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_cursor {
+            local_req_builder =
+                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_limit {
+            local_req_builder =
+                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::ListSecurityFindingsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListSecurityFindingsError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// List hist signals.
     pub async fn list_security_monitoring_histsignals(
         &self,
@@ -10728,6 +10978,235 @@ impl SecurityMonitoringAPI {
             };
         } else {
             let local_entity: Option<RunThreatHuntingJobError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get a list of security findings that match a search query.
+    ///
+    /// This endpoint requires one of the following permissions:
+    /// - `security_monitoring_findings_read`
+    /// - `appsec_vm_read`
+    ///
+    /// ### Query Syntax
+    ///
+    /// The API uses the logs query syntax. Findings attributes (living in the custom. namespace) are prefixed by @ when queried. Tags are queried without a prefix.
+    ///
+    /// Example: `@severity:(critical OR high) @status:open team:platform`
+    pub async fn search_security_findings(
+        &self,
+        body: crate::datadogV2::model::SecurityFindingsSearchRequest,
+    ) -> Result<
+        crate::datadogV2::model::ListSecurityFindingsResponse,
+        datadog::Error<SearchSecurityFindingsError>,
+    > {
+        match self.search_security_findings_with_http_info(body).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    pub fn search_security_findings_with_pagination(
+        &self,
+        mut body: crate::datadogV2::model::SecurityFindingsSearchRequest,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV2::model::SecurityFindingsData,
+            datadog::Error<SearchSecurityFindingsError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 10;
+            if body.data.is_none() {
+                body.data = Some(crate::datadogV2::model::SecurityFindingsSearchRequestData::new());
+            }
+            if body.data.as_ref().unwrap().attributes.is_none() {
+                body.data.as_mut().unwrap().attributes = Some(crate::datadogV2::model::SecurityFindingsSearchRequestDataAttributes::new());
+            }
+            if body.data.as_ref().unwrap().attributes.as_ref().unwrap().page.is_none() {
+                body.data.as_mut().unwrap().attributes.as_mut().unwrap().page = Some(crate::datadogV2::model::SecurityFindingsSearchRequestPage::new());
+            }
+            if body.data.as_ref().unwrap().attributes.as_ref().unwrap().page.as_ref().unwrap().limit.is_none() {
+                body.data.as_mut().unwrap().attributes.as_mut().unwrap().page.as_mut().unwrap().limit = Some(page_size);
+            } else {
+                page_size = body.data.as_ref().unwrap().attributes.as_ref().unwrap().page.as_ref().unwrap().limit.unwrap().clone();
+            }
+            loop {
+                let resp = self.search_security_findings( body.clone(),).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+
+                if count < page_size as usize {
+                    break;
+                }
+                let Some(meta) = resp.meta else { break };
+                let Some(page) = meta.page else { break };
+                let Some(after) = page.after else { break };
+
+                body.data.as_mut().unwrap().attributes.as_mut().unwrap().page.as_mut().unwrap().cursor = Some(after);
+            }
+        }
+    }
+
+    /// Get a list of security findings that match a search query.
+    ///
+    /// This endpoint requires one of the following permissions:
+    /// - `security_monitoring_findings_read`
+    /// - `appsec_vm_read`
+    ///
+    /// ### Query Syntax
+    ///
+    /// The API uses the logs query syntax. Findings attributes (living in the custom. namespace) are prefixed by @ when queried. Tags are queried without a prefix.
+    ///
+    /// Example: `@severity:(critical OR high) @status:open team:platform`
+    pub async fn search_security_findings_with_http_info(
+        &self,
+        body: crate::datadogV2::model::SecurityFindingsSearchRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::ListSecurityFindingsResponse>,
+        datadog::Error<SearchSecurityFindingsError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.search_security_findings";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.search_security_findings' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security/findings/search",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::ListSecurityFindingsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<SearchSecurityFindingsError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
