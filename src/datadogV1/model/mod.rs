@@ -380,6 +380,8 @@ pub mod model_event_query_definition;
 pub use self::model_event_query_definition::EventQueryDefinition;
 pub mod model_heat_map_widget_definition_type;
 pub use self::model_heat_map_widget_definition_type::HeatMapWidgetDefinitionType;
+pub mod model_heat_map_widget_x_axis;
+pub use self::model_heat_map_widget_x_axis::HeatMapWidgetXAxis;
 pub mod model_widget_axis;
 pub use self::model_widget_axis::WidgetAxis;
 pub mod model_host_map_widget_definition;
