@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineQuotaProcessor {
+    /// The display name for a component.
+    #[serde(rename = "display_name")]
+    pub display_name: Option<String>,
     /// If set to `true`, logs that matched the quota filter and sent after the quota has been met are dropped; only logs that did not match the filter query continue through the pipeline.
     #[serde(rename = "drop_events")]
     pub drop_events: Option<bool>,
@@ -66,6 +69,7 @@ impl ObservabilityPipelineQuotaProcessor {
         type_: crate::datadogV2::model::ObservabilityPipelineQuotaProcessorType,
     ) -> ObservabilityPipelineQuotaProcessor {
         ObservabilityPipelineQuotaProcessor {
+            display_name: None,
             drop_events: None,
             enabled,
             id,
@@ -80,6 +84,11 @@ impl ObservabilityPipelineQuotaProcessor {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn display_name(mut self, value: String) -> Self {
+        self.display_name = Some(value);
+        self
     }
 
     pub fn drop_events(mut self, value: bool) -> Self {
@@ -139,6 +148,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineQuotaProcessor {
             where
                 M: MapAccess<'a>,
             {
+                let mut display_name: Option<String> = None;
                 let mut drop_events: Option<bool> = None;
                 let mut enabled: Option<bool> = None;
                 let mut id: Option<String> = None;
@@ -166,6 +176,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineQuotaProcessor {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "display_name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            display_name =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "drop_events" => {
                             if v.is_null() {
                                 continue;
@@ -249,6 +266,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineQuotaProcessor {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineQuotaProcessor {
+                    display_name,
                     drop_events,
                     enabled,
                     id,

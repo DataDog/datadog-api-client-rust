@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineConfigProcessorGroup {
+    /// The display name for a component.
+    #[serde(rename = "display_name")]
+    pub display_name: Option<String>,
     /// Whether this processor group is enabled.
     #[serde(rename = "enabled")]
     pub enabled: bool,
@@ -42,6 +45,7 @@ impl ObservabilityPipelineConfigProcessorGroup {
         processors: Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorItem>,
     ) -> ObservabilityPipelineConfigProcessorGroup {
         ObservabilityPipelineConfigProcessorGroup {
+            display_name: None,
             enabled,
             id,
             include,
@@ -50,6 +54,11 @@ impl ObservabilityPipelineConfigProcessorGroup {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn display_name(mut self, value: String) -> Self {
+        self.display_name = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -78,6 +87,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigProcessorGroup {
             where
                 M: MapAccess<'a>,
             {
+                let mut display_name: Option<String> = None;
                 let mut enabled: Option<bool> = None;
                 let mut id: Option<String> = None;
                 let mut include: Option<String> = None;
@@ -93,6 +103,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigProcessorGroup {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "display_name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            display_name =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "enabled" => {
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -122,6 +139,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigProcessorGroup {
                 let processors = processors.ok_or_else(|| M::Error::missing_field("processors"))?;
 
                 let content = ObservabilityPipelineConfigProcessorGroup {
+                    display_name,
                     enabled,
                     id,
                     include,
