@@ -1,23 +1,22 @@
-// Create a distribution widget using a histogram request containing a formulas
-// and functions metrics query
+// Create a new dashboard with distribution widget with markers and num_buckets
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api_dashboards::DashboardsAPI;
 use datadog_api_client::datadogV1::model::Dashboard;
 use datadog_api_client::datadogV1::model::DashboardLayoutType;
 use datadog_api_client::datadogV1::model::DistributionWidgetDefinition;
 use datadog_api_client::datadogV1::model::DistributionWidgetDefinitionType;
-use datadog_api_client::datadogV1::model::DistributionWidgetHistogramRequestQuery;
 use datadog_api_client::datadogV1::model::DistributionWidgetRequest;
 use datadog_api_client::datadogV1::model::DistributionWidgetXAxis;
 use datadog_api_client::datadogV1::model::DistributionWidgetYAxis;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionMetricAggregation;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionMetricDataSource;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionMetricQueryDefinition;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionQueryDefinition;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionResponseFormat;
 use datadog_api_client::datadogV1::model::Widget;
-use datadog_api_client::datadogV1::model::WidgetCustomLink;
 use datadog_api_client::datadogV1::model::WidgetDefinition;
-use datadog_api_client::datadogV1::model::WidgetHistogramRequestType;
 use datadog_api_client::datadogV1::model::WidgetLayout;
-use datadog_api_client::datadogV1::model::WidgetStyle;
+use datadog_api_client::datadogV1::model::WidgetMarker;
 use datadog_api_client::datadogV1::model::WidgetTextAlign;
 
 #[tokio::main]
@@ -33,32 +32,32 @@ async fn main() {
                             DistributionWidgetDefinition::new(
                                 vec![
                                     DistributionWidgetRequest::new()
-                                        .query(
-                                            DistributionWidgetHistogramRequestQuery
-                                            ::FormulaAndFunctionMetricQueryDefinition(
-                                                Box::new(
-                                                    FormulaAndFunctionMetricQueryDefinition::new(
-                                                        FormulaAndFunctionMetricDataSource::METRICS,
-                                                        "query1".to_string(),
-                                                        "histogram:trace.Load{*}".to_string(),
+                                        .queries(
+                                            vec![
+                                                FormulaAndFunctionQueryDefinition
+                                                ::FormulaAndFunctionMetricQueryDefinition(
+                                                    Box::new(
+                                                        FormulaAndFunctionMetricQueryDefinition::new(
+                                                            FormulaAndFunctionMetricDataSource::METRICS,
+                                                            "query1".to_string(),
+                                                            "avg:system.cpu.user{*} by {service}".to_string(),
+                                                        ).aggregator(FormulaAndFunctionMetricAggregation::AVG),
                                                     ),
-                                                ),
-                                            ),
+                                                )
+                                            ],
                                         )
-                                        .request_type(WidgetHistogramRequestType::HISTOGRAM)
-                                        .style(WidgetStyle::new().palette("dog_classic".to_string()))
+                                        .response_format(FormulaAndFunctionResponseFormat::SCALAR)
                                 ],
                                 DistributionWidgetDefinitionType::DISTRIBUTION,
                             )
-                                .custom_links(
+                                .markers(
                                     vec![
-                                        WidgetCustomLink::new()
-                                            .label("Example".to_string())
-                                            .link("https://example.org/".to_string())
+                                        WidgetMarker::new("50".to_string()).display_type("percentile".to_string()),
+                                        WidgetMarker::new("99".to_string()).display_type("percentile".to_string()),
+                                        WidgetMarker::new("90".to_string()).display_type("percentile".to_string())
                                     ],
                                 )
-                                .show_legend(false)
-                                .title("Metrics HOP".to_string())
+                                .title("".to_string())
                                 .title_align(WidgetTextAlign::LEFT)
                                 .title_size("16".to_string())
                                 .xaxis(
@@ -66,6 +65,7 @@ async fn main() {
                                         .include_zero(true)
                                         .max("auto".to_string())
                                         .min("auto".to_string())
+                                        .num_buckets(55)
                                         .scale("linear".to_string()),
                                 )
                                 .yaxis(
@@ -77,7 +77,7 @@ async fn main() {
                                 ),
                         ),
                     ),
-                ).layout(WidgetLayout::new(2, 4, 0, 0))
+                ).layout(WidgetLayout::new(4, 4, 0, 0))
             ],
         );
     let configuration = datadog::Configuration::new();

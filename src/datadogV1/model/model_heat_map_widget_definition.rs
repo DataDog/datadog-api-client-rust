@@ -20,6 +20,9 @@ pub struct HeatMapWidgetDefinition {
     /// Available legend sizes for a widget. Should be one of "0", "2", "4", "8", "16", or "auto".
     #[serde(rename = "legend_size")]
     pub legend_size: Option<String>,
+    /// List of markers.
+    #[serde(rename = "markers")]
+    pub markers: Option<Vec<crate::datadogV1::model::WidgetMarker>>,
     /// List of widget types.
     #[serde(rename = "requests")]
     pub requests: Vec<crate::datadogV1::model::HeatMapWidgetRequest>,
@@ -41,6 +44,9 @@ pub struct HeatMapWidgetDefinition {
     /// Type of the heat map widget.
     #[serde(rename = "type")]
     pub type_: crate::datadogV1::model::HeatMapWidgetDefinitionType,
+    /// X Axis controls for the heat map widget.
+    #[serde(rename = "xaxis")]
+    pub xaxis: Option<crate::datadogV1::model::HeatMapWidgetXAxis>,
     /// Axis controls for the widget.
     #[serde(rename = "yaxis")]
     pub yaxis: Option<crate::datadogV1::model::WidgetAxis>,
@@ -60,6 +66,7 @@ impl HeatMapWidgetDefinition {
             custom_links: None,
             events: None,
             legend_size: None,
+            markers: None,
             requests,
             show_legend: None,
             time: None,
@@ -67,6 +74,7 @@ impl HeatMapWidgetDefinition {
             title_align: None,
             title_size: None,
             type_,
+            xaxis: None,
             yaxis: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -85,6 +93,11 @@ impl HeatMapWidgetDefinition {
 
     pub fn legend_size(mut self, value: String) -> Self {
         self.legend_size = Some(value);
+        self
+    }
+
+    pub fn markers(mut self, value: Vec<crate::datadogV1::model::WidgetMarker>) -> Self {
+        self.markers = Some(value);
         self
     }
 
@@ -110,6 +123,11 @@ impl HeatMapWidgetDefinition {
 
     pub fn title_size(mut self, value: String) -> Self {
         self.title_size = Some(value);
+        self
+    }
+
+    pub fn xaxis(mut self, value: crate::datadogV1::model::HeatMapWidgetXAxis) -> Self {
+        self.xaxis = Some(value);
         self
     }
 
@@ -147,6 +165,7 @@ impl<'de> Deserialize<'de> for HeatMapWidgetDefinition {
                 let mut custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>> = None;
                 let mut events: Option<Vec<crate::datadogV1::model::WidgetEvent>> = None;
                 let mut legend_size: Option<String> = None;
+                let mut markers: Option<Vec<crate::datadogV1::model::WidgetMarker>> = None;
                 let mut requests: Option<Vec<crate::datadogV1::model::HeatMapWidgetRequest>> = None;
                 let mut show_legend: Option<bool> = None;
                 let mut time: Option<crate::datadogV1::model::WidgetTime> = None;
@@ -154,6 +173,7 @@ impl<'de> Deserialize<'de> for HeatMapWidgetDefinition {
                 let mut title_align: Option<crate::datadogV1::model::WidgetTextAlign> = None;
                 let mut title_size: Option<String> = None;
                 let mut type_: Option<crate::datadogV1::model::HeatMapWidgetDefinitionType> = None;
+                let mut xaxis: Option<crate::datadogV1::model::HeatMapWidgetXAxis> = None;
                 let mut yaxis: Option<crate::datadogV1::model::WidgetAxis> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -182,6 +202,12 @@ impl<'de> Deserialize<'de> for HeatMapWidgetDefinition {
                             }
                             legend_size =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "markers" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            markers = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "requests" => {
                             requests = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -247,6 +273,12 @@ impl<'de> Deserialize<'de> for HeatMapWidgetDefinition {
                                 }
                             }
                         }
+                        "xaxis" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            xaxis = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "yaxis" => {
                             if v.is_null() {
                                 continue;
@@ -267,6 +299,7 @@ impl<'de> Deserialize<'de> for HeatMapWidgetDefinition {
                     custom_links,
                     events,
                     legend_size,
+                    markers,
                     requests,
                     show_legend,
                     time,
@@ -274,6 +307,7 @@ impl<'de> Deserialize<'de> for HeatMapWidgetDefinition {
                     title_align,
                     title_size,
                     type_,
+                    xaxis,
                     yaxis,
                     additional_properties,
                     _unparsed,
