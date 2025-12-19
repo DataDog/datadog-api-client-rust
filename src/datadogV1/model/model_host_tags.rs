@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Set of tags to associate with your host.
+/// Host name and an array of its tags
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -14,7 +14,7 @@ pub struct HostTags {
     /// Your host name.
     #[serde(rename = "host")]
     pub host: Option<String>,
-    /// A list of tags to apply to the host.
+    /// A list of tags attached to a given host.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
     #[serde(flatten)]
