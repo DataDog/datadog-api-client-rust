@@ -246,6 +246,12 @@ pub struct MonthlyUsageAttributionValues {
     /// The LLM Observability usage by tag(s).
     #[serde(rename = "llm_observability_usage")]
     pub llm_observability_usage: Option<f64>,
+    /// The percentage of LLM Spans usage by tag(s).
+    #[serde(rename = "llm_spans_percentage")]
+    pub llm_spans_percentage: Option<f64>,
+    /// The LLM Spans usage by tag(s).
+    #[serde(rename = "llm_spans_usage")]
+    pub llm_spans_usage: Option<f64>,
     /// The percentage of Indexed Logs (15-day Retention) usage by tag(s).
     #[serde(rename = "logs_indexed_15day_percentage")]
     pub logs_indexed_15day_percentage: Option<f64>,
@@ -556,6 +562,8 @@ impl MonthlyUsageAttributionValues {
             lambda_traced_invocations_usage: None,
             llm_observability_percentage: None,
             llm_observability_usage: None,
+            llm_spans_percentage: None,
+            llm_spans_usage: None,
             logs_indexed_15day_percentage: None,
             logs_indexed_15day_usage: None,
             logs_indexed_180day_percentage: None,
@@ -1022,6 +1030,16 @@ impl MonthlyUsageAttributionValues {
 
     pub fn llm_observability_usage(mut self, value: f64) -> Self {
         self.llm_observability_usage = Some(value);
+        self
+    }
+
+    pub fn llm_spans_percentage(mut self, value: f64) -> Self {
+        self.llm_spans_percentage = Some(value);
+        self
+    }
+
+    pub fn llm_spans_usage(mut self, value: f64) -> Self {
+        self.llm_spans_usage = Some(value);
         self
     }
 
@@ -1505,6 +1523,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                 let mut lambda_traced_invocations_usage: Option<f64> = None;
                 let mut llm_observability_percentage: Option<f64> = None;
                 let mut llm_observability_usage: Option<f64> = None;
+                let mut llm_spans_percentage: Option<f64> = None;
+                let mut llm_spans_usage: Option<f64> = None;
                 let mut logs_indexed_15day_percentage: Option<f64> = None;
                 let mut logs_indexed_15day_usage: Option<f64> = None;
                 let mut logs_indexed_180day_percentage: Option<f64> = None;
@@ -2132,6 +2152,20 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                             llm_observability_usage =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "llm_spans_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            llm_spans_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "llm_spans_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            llm_spans_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "logs_indexed_15day_percentage" => {
                             if v.is_null() {
                                 continue;
@@ -2736,6 +2770,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                     lambda_traced_invocations_usage,
                     llm_observability_percentage,
                     llm_observability_usage,
+                    llm_spans_percentage,
+                    llm_spans_usage,
                     logs_indexed_15day_percentage,
                     logs_indexed_15day_usage,
                     logs_indexed_180day_percentage,

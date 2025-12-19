@@ -1296,6 +1296,8 @@ impl UsageMeteringAPI {
     ///   cursor := response.metadata.pagination.next_record_id
     /// END
     /// ```
+    /// The following values have been **deprecated**:
+    ///     `estimated_indexed_spans_usage`, `estimated_indexed_spans_percentage`, `estimated_ingested_spans_usage`, `estimated_ingested_spans_percentage`, `llm_observability_usage`, `llm_observability_percentage`.
     pub async fn get_hourly_usage_attribution(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -1337,6 +1339,8 @@ impl UsageMeteringAPI {
     ///   cursor := response.metadata.pagination.next_record_id
     /// END
     /// ```
+    /// The following values have been **deprecated**:
+    ///     `estimated_indexed_spans_usage`, `estimated_indexed_spans_percentage`, `estimated_ingested_spans_usage`, `estimated_ingested_spans_percentage`, `llm_observability_usage`, `llm_observability_percentage`.
     pub async fn get_hourly_usage_attribution_with_http_info(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,

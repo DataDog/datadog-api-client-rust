@@ -49,6 +49,7 @@ pub enum HourlyUsageAttributionUsageType {
     INVOCATIONS_USAGE,
     LAMBDA_TRACED_INVOCATIONS_USAGE,
     LLM_OBSERVABILITY_USAGE,
+    LLM_SPANS_USAGE,
     LOGS_INDEXED_15DAY_USAGE,
     LOGS_INDEXED_180DAY_USAGE,
     LOGS_INDEXED_1DAY_USAGE,
@@ -146,6 +147,7 @@ impl ToString for HourlyUsageAttributionUsageType {
                 String::from("lambda_traced_invocations_usage")
             }
             Self::LLM_OBSERVABILITY_USAGE => String::from("llm_observability_usage"),
+            Self::LLM_SPANS_USAGE => String::from("llm_spans_usage"),
             Self::LOGS_INDEXED_15DAY_USAGE => String::from("logs_indexed_15day_usage"),
             Self::LOGS_INDEXED_180DAY_USAGE => String::from("logs_indexed_180day_usage"),
             Self::LOGS_INDEXED_1DAY_USAGE => String::from("logs_indexed_1day_usage"),
@@ -267,6 +269,7 @@ impl<'de> Deserialize<'de> for HourlyUsageAttributionUsageType {
             "invocations_usage" => Self::INVOCATIONS_USAGE,
             "lambda_traced_invocations_usage" => Self::LAMBDA_TRACED_INVOCATIONS_USAGE,
             "llm_observability_usage" => Self::LLM_OBSERVABILITY_USAGE,
+            "llm_spans_usage" => Self::LLM_SPANS_USAGE,
             "logs_indexed_15day_usage" => Self::LOGS_INDEXED_15DAY_USAGE,
             "logs_indexed_180day_usage" => Self::LOGS_INDEXED_180DAY_USAGE,
             "logs_indexed_1day_usage" => Self::LOGS_INDEXED_1DAY_USAGE,
