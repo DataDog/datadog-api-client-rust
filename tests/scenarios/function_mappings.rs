@@ -3127,8 +3127,16 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_list_incident_attachments,
     );
     world.function_mappings.insert(
-        "v2.UpdateIncidentAttachments".into(),
-        test_v2_update_incident_attachments,
+        "v2.CreateIncidentAttachment".into(),
+        test_v2_create_incident_attachment,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteIncidentAttachment".into(),
+        test_v2_delete_incident_attachment,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateIncidentAttachment".into(),
+        test_v2_update_incident_attachment,
     );
     world.function_mappings.insert(
         "v2.ListIncidentImpacts".into(),
@@ -23359,15 +23367,15 @@ fn test_v2_list_incident_attachments(
         .expect("api instance not found");
     let incident_id =
         serde_json::from_value(_parameters.get("incident_id").unwrap().clone()).unwrap();
-    let include = _parameters
-        .get("include")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let filter_attachment_type = _parameters
         .get("filter[attachment_type]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_incidents::ListIncidentAttachmentsOptionalParams::default();
-    params.include = include;
     params.filter_attachment_type = filter_attachment_type;
+    params.include = include;
     let response = match block_on(api.list_incident_attachments_with_http_info(incident_id, params))
     {
         Ok(response) => response,
@@ -23387,7 +23395,7 @@ fn test_v2_list_incident_attachments(
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_update_incident_attachments(
+fn test_v2_create_incident_attachment(
     world: &mut DatadogWorld,
     _parameters: &HashMap<String, Value>,
 ) {
@@ -23402,10 +23410,10 @@ fn test_v2_update_incident_attachments(
     let include = _parameters
         .get("include")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let mut params = datadogV2::api_incidents::UpdateIncidentAttachmentsOptionalParams::default();
+    let mut params = datadogV2::api_incidents::CreateIncidentAttachmentOptionalParams::default();
     params.include = include;
     let response =
-        match block_on(api.update_incident_attachments_with_http_info(incident_id, body, params)) {
+        match block_on(api.create_incident_attachment_with_http_info(incident_id, body, params)) {
             Ok(response) => response,
             Err(error) => {
                 return match error {
@@ -23419,6 +23427,80 @@ fn test_v2_update_incident_attachments(
                 };
             }
         };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_incident_attachment(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_incidents
+        .as_ref()
+        .expect("api instance not found");
+    let incident_id =
+        serde_json::from_value(_parameters.get("incident_id").unwrap().clone()).unwrap();
+    let attachment_id =
+        serde_json::from_value(_parameters.get("attachment_id").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.delete_incident_attachment_with_http_info(incident_id, attachment_id)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_incident_attachment(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_incidents
+        .as_ref()
+        .expect("api instance not found");
+    let incident_id =
+        serde_json::from_value(_parameters.get("incident_id").unwrap().clone()).unwrap();
+    let attachment_id =
+        serde_json::from_value(_parameters.get("attachment_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_incidents::UpdateIncidentAttachmentOptionalParams::default();
+    params.include = include;
+    let response = match block_on(api.update_incident_attachment_with_http_info(
+        incident_id,
+        attachment_id,
+        body,
+        params,
+    )) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }

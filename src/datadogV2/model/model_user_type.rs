@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum IncidentAttachmentRelatedObject {
+pub enum UserType {
     USERS,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for IncidentAttachmentRelatedObject {
+impl ToString for UserType {
     fn to_string(&self) -> String {
         match self {
             Self::USERS => String::from("users"),
@@ -20,7 +20,7 @@ impl ToString for IncidentAttachmentRelatedObject {
     }
 }
 
-impl Serialize for IncidentAttachmentRelatedObject {
+impl Serialize for UserType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -32,7 +32,7 @@ impl Serialize for IncidentAttachmentRelatedObject {
     }
 }
 
-impl<'de> Deserialize<'de> for IncidentAttachmentRelatedObject {
+impl<'de> Deserialize<'de> for UserType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,

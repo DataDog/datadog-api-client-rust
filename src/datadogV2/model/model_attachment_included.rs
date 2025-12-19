@@ -3,29 +3,29 @@
 // Copyright 2019-Present Datadog, Inc.
 use serde::{Deserialize, Deserializer, Serialize};
 
-/// An object related to an attachment that is included in the response.
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
-pub enum IncidentAttachmentsResponseIncludedItem {
-    User(Box<crate::datadogV2::model::User>),
+pub enum AttachmentIncluded {
+    User140420082644000(Box<crate::datadogV2::model::User140420082644000>),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl<'de> Deserialize<'de> for IncidentAttachmentsResponseIncludedItem {
+impl<'de> Deserialize<'de> for AttachmentIncluded {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
-        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::User>>(value.clone())
-        {
+        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::User140420082644000>>(
+            value.clone(),
+        ) {
             if !_v._unparsed {
-                return Ok(IncidentAttachmentsResponseIncludedItem::User(_v));
+                return Ok(AttachmentIncluded::User140420082644000(_v));
             }
         }
 
-        return Ok(IncidentAttachmentsResponseIncludedItem::UnparsedObject(
+        return Ok(AttachmentIncluded::UnparsedObject(
             crate::datadog::UnparsedObject { value },
         ));
     }
