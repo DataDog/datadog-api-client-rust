@@ -10,6 +10,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 pub enum WidgetDefinition {
     AlertGraphWidgetDefinition(Box<crate::datadogV1::model::AlertGraphWidgetDefinition>),
     AlertValueWidgetDefinition(Box<crate::datadogV1::model::AlertValueWidgetDefinition>),
+    BarChartWidgetDefinition(Box<crate::datadogV1::model::BarChartWidgetDefinition>),
     ChangeWidgetDefinition(Box<crate::datadogV1::model::ChangeWidgetDefinition>),
     CheckStatusWidgetDefinition(Box<crate::datadogV1::model::CheckStatusWidgetDefinition>),
     DistributionWidgetDefinition(Box<crate::datadogV1::model::DistributionWidgetDefinition>),
@@ -65,6 +66,14 @@ impl<'de> Deserialize<'de> for WidgetDefinition {
         {
             if !_v._unparsed {
                 return Ok(WidgetDefinition::AlertValueWidgetDefinition(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV1::model::BarChartWidgetDefinition>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(WidgetDefinition::BarChartWidgetDefinition(_v));
             }
         }
         if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::ChangeWidgetDefinition>>(
