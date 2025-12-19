@@ -20,6 +20,9 @@ pub struct DistributionWidgetRequest {
     /// The log query.
     #[serde(rename = "event_query")]
     pub event_query: Option<crate::datadogV1::model::LogQueryDefinition>,
+    /// List of formulas that operate on queries.
+    #[serde(rename = "formulas")]
+    pub formulas: Option<Vec<crate::datadogV1::model::WidgetFormula>>,
     /// The log query.
     #[serde(rename = "log_query")]
     pub log_query: Option<crate::datadogV1::model::LogQueryDefinition>,
@@ -35,12 +38,18 @@ pub struct DistributionWidgetRequest {
     /// Widget query.
     #[serde(rename = "q")]
     pub q: Option<String>,
+    /// List of queries that can be returned directly or used in formulas.
+    #[serde(rename = "queries")]
+    pub queries: Option<Vec<crate::datadogV1::model::FormulaAndFunctionQueryDefinition>>,
     /// Query definition for Distribution Widget Histogram Request
     #[serde(rename = "query")]
     pub query: Option<crate::datadogV1::model::DistributionWidgetHistogramRequestQuery>,
     /// Request type for the histogram request.
     #[serde(rename = "request_type")]
-    pub request_type: Option<crate::datadogV1::model::DistributionWidgetHistogramRequestType>,
+    pub request_type: Option<crate::datadogV1::model::WidgetHistogramRequestType>,
+    /// Timeseries, scalar, or event list response. Event list response formats are supported by Geomap widgets.
+    #[serde(rename = "response_format")]
+    pub response_format: Option<crate::datadogV1::model::FormulaAndFunctionResponseFormat>,
     /// The log query.
     #[serde(rename = "rum_query")]
     pub rum_query: Option<crate::datadogV1::model::LogQueryDefinition>,
@@ -63,13 +72,16 @@ impl DistributionWidgetRequest {
             apm_query: None,
             apm_stats_query: None,
             event_query: None,
+            formulas: None,
             log_query: None,
             network_query: None,
             process_query: None,
             profile_metrics_query: None,
             q: None,
+            queries: None,
             query: None,
             request_type: None,
+            response_format: None,
             rum_query: None,
             security_query: None,
             style: None,
@@ -93,6 +105,11 @@ impl DistributionWidgetRequest {
 
     pub fn event_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.event_query = Some(value);
+        self
+    }
+
+    pub fn formulas(mut self, value: Vec<crate::datadogV1::model::WidgetFormula>) -> Self {
+        self.formulas = Some(value);
         self
     }
 
@@ -124,6 +141,14 @@ impl DistributionWidgetRequest {
         self
     }
 
+    pub fn queries(
+        mut self,
+        value: Vec<crate::datadogV1::model::FormulaAndFunctionQueryDefinition>,
+    ) -> Self {
+        self.queries = Some(value);
+        self
+    }
+
     pub fn query(
         mut self,
         value: crate::datadogV1::model::DistributionWidgetHistogramRequestQuery,
@@ -134,9 +159,17 @@ impl DistributionWidgetRequest {
 
     pub fn request_type(
         mut self,
-        value: crate::datadogV1::model::DistributionWidgetHistogramRequestType,
+        value: crate::datadogV1::model::WidgetHistogramRequestType,
     ) -> Self {
         self.request_type = Some(value);
+        self
+    }
+
+    pub fn response_format(
+        mut self,
+        value: crate::datadogV1::model::FormulaAndFunctionResponseFormat,
+    ) -> Self {
+        self.response_format = Some(value);
         self
     }
 
@@ -191,6 +224,7 @@ impl<'de> Deserialize<'de> for DistributionWidgetRequest {
                 let mut apm_stats_query: Option<crate::datadogV1::model::ApmStatsQueryDefinition> =
                     None;
                 let mut event_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
+                let mut formulas: Option<Vec<crate::datadogV1::model::WidgetFormula>> = None;
                 let mut log_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
                 let mut network_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
                 let mut process_query: Option<crate::datadogV1::model::ProcessQueryDefinition> =
@@ -198,11 +232,16 @@ impl<'de> Deserialize<'de> for DistributionWidgetRequest {
                 let mut profile_metrics_query: Option<crate::datadogV1::model::LogQueryDefinition> =
                     None;
                 let mut q: Option<String> = None;
+                let mut queries: Option<
+                    Vec<crate::datadogV1::model::FormulaAndFunctionQueryDefinition>,
+                > = None;
                 let mut query: Option<
                     crate::datadogV1::model::DistributionWidgetHistogramRequestQuery,
                 > = None;
-                let mut request_type: Option<
-                    crate::datadogV1::model::DistributionWidgetHistogramRequestType,
+                let mut request_type: Option<crate::datadogV1::model::WidgetHistogramRequestType> =
+                    None;
+                let mut response_format: Option<
+                    crate::datadogV1::model::FormulaAndFunctionResponseFormat,
                 > = None;
                 let mut rum_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
                 let mut security_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
@@ -234,6 +273,12 @@ impl<'de> Deserialize<'de> for DistributionWidgetRequest {
                             }
                             event_query =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "formulas" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            formulas = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "log_query" => {
                             if v.is_null() {
@@ -268,6 +313,12 @@ impl<'de> Deserialize<'de> for DistributionWidgetRequest {
                             }
                             q = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "queries" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            queries = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "query" => {
                             if v.is_null() {
                                 continue;
@@ -290,7 +341,22 @@ impl<'de> Deserialize<'de> for DistributionWidgetRequest {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _request_type) = request_type {
                                 match _request_type {
-                                    crate::datadogV1::model::DistributionWidgetHistogramRequestType::UnparsedObject(_request_type) => {
+                                    crate::datadogV1::model::WidgetHistogramRequestType::UnparsedObject(_request_type) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "response_format" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            response_format =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _response_format) = response_format {
+                                match _response_format {
+                                    crate::datadogV1::model::FormulaAndFunctionResponseFormat::UnparsedObject(_response_format) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -328,13 +394,16 @@ impl<'de> Deserialize<'de> for DistributionWidgetRequest {
                     apm_query,
                     apm_stats_query,
                     event_query,
+                    formulas,
                     log_query,
                     network_query,
                     process_query,
                     profile_metrics_query,
                     q,
+                    queries,
                     query,
                     request_type,
+                    response_format,
                     rum_query,
                     security_query,
                     style,
