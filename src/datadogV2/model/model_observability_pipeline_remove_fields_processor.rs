@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineRemoveFieldsProcessor {
+    /// The display name for a component.
+    #[serde(rename = "display_name")]
+    pub display_name: Option<String>,
     /// Whether this processor is enabled.
     #[serde(rename = "enabled")]
     pub enabled: bool,
@@ -42,6 +45,7 @@ impl ObservabilityPipelineRemoveFieldsProcessor {
         type_: crate::datadogV2::model::ObservabilityPipelineRemoveFieldsProcessorType,
     ) -> ObservabilityPipelineRemoveFieldsProcessor {
         ObservabilityPipelineRemoveFieldsProcessor {
+            display_name: None,
             enabled,
             fields,
             id,
@@ -50,6 +54,11 @@ impl ObservabilityPipelineRemoveFieldsProcessor {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn display_name(mut self, value: String) -> Self {
+        self.display_name = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -78,6 +87,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineRemoveFieldsProcessor {
             where
                 M: MapAccess<'a>,
             {
+                let mut display_name: Option<String> = None;
                 let mut enabled: Option<bool> = None;
                 let mut fields: Option<Vec<String>> = None;
                 let mut id: Option<String> = None;
@@ -93,6 +103,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineRemoveFieldsProcessor {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "display_name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            display_name =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "enabled" => {
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -130,6 +147,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineRemoveFieldsProcessor {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineRemoveFieldsProcessor {
+                    display_name,
                     enabled,
                     fields,
                     id,

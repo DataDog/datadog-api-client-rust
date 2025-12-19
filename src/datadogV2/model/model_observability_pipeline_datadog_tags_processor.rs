@@ -14,6 +14,9 @@ pub struct ObservabilityPipelineDatadogTagsProcessor {
     /// The action to take on tags with matching keys.
     #[serde(rename = "action")]
     pub action: crate::datadogV2::model::ObservabilityPipelineDatadogTagsProcessorAction,
+    /// The display name for a component.
+    #[serde(rename = "display_name")]
+    pub display_name: Option<String>,
     /// Whether this processor is enabled.
     #[serde(rename = "enabled")]
     pub enabled: bool,
@@ -51,6 +54,7 @@ impl ObservabilityPipelineDatadogTagsProcessor {
     ) -> ObservabilityPipelineDatadogTagsProcessor {
         ObservabilityPipelineDatadogTagsProcessor {
             action,
+            display_name: None,
             enabled,
             id,
             include,
@@ -60,6 +64,11 @@ impl ObservabilityPipelineDatadogTagsProcessor {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn display_name(mut self, value: String) -> Self {
+        self.display_name = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -91,6 +100,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDatadogTagsProcessor {
                 let mut action: Option<
                     crate::datadogV2::model::ObservabilityPipelineDatadogTagsProcessorAction,
                 > = None;
+                let mut display_name: Option<String> = None;
                 let mut enabled: Option<bool> = None;
                 let mut id: Option<String> = None;
                 let mut include: Option<String> = None;
@@ -119,6 +129,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDatadogTagsProcessor {
                                     _ => {}
                                 }
                             }
+                        }
+                        "display_name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            display_name =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "enabled" => {
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -171,6 +188,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDatadogTagsProcessor {
 
                 let content = ObservabilityPipelineDatadogTagsProcessor {
                     action,
+                    display_name,
                     enabled,
                     id,
                     include,

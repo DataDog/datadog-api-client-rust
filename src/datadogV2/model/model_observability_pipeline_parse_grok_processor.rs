@@ -14,6 +14,9 @@ pub struct ObservabilityPipelineParseGrokProcessor {
     /// If set to `true`, disables the default Grok rules provided by Datadog.
     #[serde(rename = "disable_library_rules")]
     pub disable_library_rules: Option<bool>,
+    /// The display name for a component.
+    #[serde(rename = "display_name")]
+    pub display_name: Option<String>,
     /// Whether this processor is enabled.
     #[serde(rename = "enabled")]
     pub enabled: bool,
@@ -46,6 +49,7 @@ impl ObservabilityPipelineParseGrokProcessor {
     ) -> ObservabilityPipelineParseGrokProcessor {
         ObservabilityPipelineParseGrokProcessor {
             disable_library_rules: None,
+            display_name: None,
             enabled,
             id,
             include,
@@ -58,6 +62,11 @@ impl ObservabilityPipelineParseGrokProcessor {
 
     pub fn disable_library_rules(mut self, value: bool) -> Self {
         self.disable_library_rules = Some(value);
+        self
+    }
+
+    pub fn display_name(mut self, value: String) -> Self {
+        self.display_name = Some(value);
         self
     }
 
@@ -88,6 +97,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineParseGrokProcessor {
                 M: MapAccess<'a>,
             {
                 let mut disable_library_rules: Option<bool> = None;
+                let mut display_name: Option<String> = None;
                 let mut enabled: Option<bool> = None;
                 let mut id: Option<String> = None;
                 let mut include: Option<String> = None;
@@ -110,6 +120,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineParseGrokProcessor {
                                 continue;
                             }
                             disable_library_rules =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "display_name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            display_name =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "enabled" => {
@@ -150,6 +167,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineParseGrokProcessor {
 
                 let content = ObservabilityPipelineParseGrokProcessor {
                     disable_library_rules,
+                    display_name,
                     enabled,
                     id,
                     include,
