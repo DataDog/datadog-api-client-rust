@@ -6,37 +6,36 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The `google_pubsub` destination publishes logs to a Google Cloud Pub/Sub topic.
+/// The `http_client` destination sends data to an HTTP endpoint.
 ///
-/// **Supported pipeline types:** logs
+/// **Supported pipeline types:** logs, metrics
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ObservabilityPipelineGooglePubSubDestination {
-    /// GCP credentials used to authenticate with Google Cloud Storage.
-    #[serde(rename = "auth")]
-    pub auth: Option<crate::datadogV2::model::ObservabilityPipelineGcpAuth>,
+pub struct ObservabilityPipelineHttpClientDestination {
+    /// HTTP authentication strategy.
+    #[serde(rename = "auth_strategy")]
+    pub auth_strategy:
+        Option<crate::datadogV2::model::ObservabilityPipelineHttpClientDestinationAuthStrategy>,
+    /// Compression configuration for HTTP requests.
+    #[serde(rename = "compression")]
+    pub compression:
+        Option<crate::datadogV2::model::ObservabilityPipelineHttpClientDestinationCompression>,
     /// Encoding format for log events.
     #[serde(rename = "encoding")]
-    pub encoding: crate::datadogV2::model::ObservabilityPipelineGooglePubSubDestinationEncoding,
+    pub encoding: crate::datadogV2::model::ObservabilityPipelineHttpClientDestinationEncoding,
     /// The unique identifier for this component.
     #[serde(rename = "id")]
     pub id: String,
-    /// A list of component IDs whose output is used as the `input` for this component.
+    /// A list of component IDs whose output is used as the input for this component.
     #[serde(rename = "inputs")]
     pub inputs: Vec<String>,
-    /// The GCP project ID that owns the Pub/Sub topic.
-    #[serde(rename = "project")]
-    pub project: String,
     /// Configuration for enabling TLS encryption between the pipeline component and external services.
     #[serde(rename = "tls")]
     pub tls: Option<crate::datadogV2::model::ObservabilityPipelineTls>,
-    /// The Pub/Sub topic name to publish logs to.
-    #[serde(rename = "topic")]
-    pub topic: String,
-    /// The destination type. The value should always be `google_pubsub`.
+    /// The destination type. The value should always be `http_client`.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::ObservabilityPipelineGooglePubSubDestinationType,
+    pub type_: crate::datadogV2::model::ObservabilityPipelineHttpClientDestinationType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -44,31 +43,39 @@ pub struct ObservabilityPipelineGooglePubSubDestination {
     pub(crate) _unparsed: bool,
 }
 
-impl ObservabilityPipelineGooglePubSubDestination {
+impl ObservabilityPipelineHttpClientDestination {
     pub fn new(
-        encoding: crate::datadogV2::model::ObservabilityPipelineGooglePubSubDestinationEncoding,
+        encoding: crate::datadogV2::model::ObservabilityPipelineHttpClientDestinationEncoding,
         id: String,
         inputs: Vec<String>,
-        project: String,
-        topic: String,
-        type_: crate::datadogV2::model::ObservabilityPipelineGooglePubSubDestinationType,
-    ) -> ObservabilityPipelineGooglePubSubDestination {
-        ObservabilityPipelineGooglePubSubDestination {
-            auth: None,
+        type_: crate::datadogV2::model::ObservabilityPipelineHttpClientDestinationType,
+    ) -> ObservabilityPipelineHttpClientDestination {
+        ObservabilityPipelineHttpClientDestination {
+            auth_strategy: None,
+            compression: None,
             encoding,
             id,
             inputs,
-            project,
             tls: None,
-            topic,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn auth(mut self, value: crate::datadogV2::model::ObservabilityPipelineGcpAuth) -> Self {
-        self.auth = Some(value);
+    pub fn auth_strategy(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineHttpClientDestinationAuthStrategy,
+    ) -> Self {
+        self.auth_strategy = Some(value);
+        self
+    }
+
+    pub fn compression(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineHttpClientDestinationCompression,
+    ) -> Self {
+        self.compression = Some(value);
         self
     }
 
@@ -86,14 +93,14 @@ impl ObservabilityPipelineGooglePubSubDestination {
     }
 }
 
-impl<'de> Deserialize<'de> for ObservabilityPipelineGooglePubSubDestination {
+impl<'de> Deserialize<'de> for ObservabilityPipelineHttpClientDestination {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ObservabilityPipelineGooglePubSubDestinationVisitor;
-        impl<'a> Visitor<'a> for ObservabilityPipelineGooglePubSubDestinationVisitor {
-            type Value = ObservabilityPipelineGooglePubSubDestination;
+        struct ObservabilityPipelineHttpClientDestinationVisitor;
+        impl<'a> Visitor<'a> for ObservabilityPipelineHttpClientDestinationVisitor {
+            type Value = ObservabilityPipelineHttpClientDestination;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -103,17 +110,20 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGooglePubSubDestination {
             where
                 M: MapAccess<'a>,
             {
-                let mut auth: Option<crate::datadogV2::model::ObservabilityPipelineGcpAuth> = None;
+                let mut auth_strategy: Option<
+                    crate::datadogV2::model::ObservabilityPipelineHttpClientDestinationAuthStrategy,
+                > = None;
+                let mut compression: Option<
+                    crate::datadogV2::model::ObservabilityPipelineHttpClientDestinationCompression,
+                > = None;
                 let mut encoding: Option<
-                    crate::datadogV2::model::ObservabilityPipelineGooglePubSubDestinationEncoding,
+                    crate::datadogV2::model::ObservabilityPipelineHttpClientDestinationEncoding,
                 > = None;
                 let mut id: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
-                let mut project: Option<String> = None;
                 let mut tls: Option<crate::datadogV2::model::ObservabilityPipelineTls> = None;
-                let mut topic: Option<String> = None;
                 let mut type_: Option<
-                    crate::datadogV2::model::ObservabilityPipelineGooglePubSubDestinationType,
+                    crate::datadogV2::model::ObservabilityPipelineHttpClientDestinationType,
                 > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -123,17 +133,33 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGooglePubSubDestination {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "auth" => {
+                        "auth_strategy" => {
                             if v.is_null() {
                                 continue;
                             }
-                            auth = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            auth_strategy =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _auth_strategy) = auth_strategy {
+                                match _auth_strategy {
+                                    crate::datadogV2::model::ObservabilityPipelineHttpClientDestinationAuthStrategy::UnparsedObject(_auth_strategy) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "compression" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            compression =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "encoding" => {
                             encoding = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _encoding) = encoding {
                                 match _encoding {
-                                    crate::datadogV2::model::ObservabilityPipelineGooglePubSubDestinationEncoding::UnparsedObject(_encoding) => {
+                                    crate::datadogV2::model::ObservabilityPipelineHttpClientDestinationEncoding::UnparsedObject(_encoding) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -146,23 +172,17 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGooglePubSubDestination {
                         "inputs" => {
                             inputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "project" => {
-                            project = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "tls" => {
                             if v.is_null() {
                                 continue;
                             }
                             tls = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "topic" => {
-                            topic = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::ObservabilityPipelineGooglePubSubDestinationType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::ObservabilityPipelineHttpClientDestinationType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -179,18 +199,15 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGooglePubSubDestination {
                 let encoding = encoding.ok_or_else(|| M::Error::missing_field("encoding"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let inputs = inputs.ok_or_else(|| M::Error::missing_field("inputs"))?;
-                let project = project.ok_or_else(|| M::Error::missing_field("project"))?;
-                let topic = topic.ok_or_else(|| M::Error::missing_field("topic"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = ObservabilityPipelineGooglePubSubDestination {
-                    auth,
+                let content = ObservabilityPipelineHttpClientDestination {
+                    auth_strategy,
+                    compression,
                     encoding,
                     id,
                     inputs,
-                    project,
                     tls,
-                    topic,
                     type_,
                     additional_properties,
                     _unparsed,
@@ -200,6 +217,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGooglePubSubDestination {
             }
         }
 
-        deserializer.deserialize_any(ObservabilityPipelineGooglePubSubDestinationVisitor)
+        deserializer.deserialize_any(ObservabilityPipelineHttpClientDestinationVisitor)
     }
 }

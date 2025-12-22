@@ -8,6 +8,8 @@ use std::fmt::{self, Formatter};
 
 /// The `splunk_tcp` source receives logs from a Splunk Universal Forwarder over TCP.
 /// TLS is supported for secure transmission.
+///
+/// **Supported pipeline types:** logs
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
