@@ -6,17 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The postmortem attachment.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct IncidentAttachmentsPostmortemAttributesAttachmentObject {
-    /// The URL of this notebook attachment.
+pub struct AttachmentDataAttributesAttachment {
     #[serde(rename = "documentUrl")]
-    pub document_url: String,
-    /// The title of this postmortem attachment.
+    pub document_url: Option<String>,
     #[serde(rename = "title")]
-    pub title: String,
+    pub title: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,17 +21,24 @@ pub struct IncidentAttachmentsPostmortemAttributesAttachmentObject {
     pub(crate) _unparsed: bool,
 }
 
-impl IncidentAttachmentsPostmortemAttributesAttachmentObject {
-    pub fn new(
-        document_url: String,
-        title: String,
-    ) -> IncidentAttachmentsPostmortemAttributesAttachmentObject {
-        IncidentAttachmentsPostmortemAttributesAttachmentObject {
-            document_url,
-            title,
+impl AttachmentDataAttributesAttachment {
+    pub fn new() -> AttachmentDataAttributesAttachment {
+        AttachmentDataAttributesAttachment {
+            document_url: None,
+            title: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn document_url(mut self, value: String) -> Self {
+        self.document_url = Some(value);
+        self
+    }
+
+    pub fn title(mut self, value: String) -> Self {
+        self.title = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -46,14 +50,20 @@ impl IncidentAttachmentsPostmortemAttributesAttachmentObject {
     }
 }
 
-impl<'de> Deserialize<'de> for IncidentAttachmentsPostmortemAttributesAttachmentObject {
+impl Default for AttachmentDataAttributesAttachment {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for AttachmentDataAttributesAttachment {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct IncidentAttachmentsPostmortemAttributesAttachmentObjectVisitor;
-        impl<'a> Visitor<'a> for IncidentAttachmentsPostmortemAttributesAttachmentObjectVisitor {
-            type Value = IncidentAttachmentsPostmortemAttributesAttachmentObject;
+        struct AttachmentDataAttributesAttachmentVisitor;
+        impl<'a> Visitor<'a> for AttachmentDataAttributesAttachmentVisitor {
+            type Value = AttachmentDataAttributesAttachment;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -74,10 +84,16 @@ impl<'de> Deserialize<'de> for IncidentAttachmentsPostmortemAttributesAttachment
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "documentUrl" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             document_url =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "title" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -87,11 +103,8 @@ impl<'de> Deserialize<'de> for IncidentAttachmentsPostmortemAttributesAttachment
                         }
                     }
                 }
-                let document_url =
-                    document_url.ok_or_else(|| M::Error::missing_field("document_url"))?;
-                let title = title.ok_or_else(|| M::Error::missing_field("title"))?;
 
-                let content = IncidentAttachmentsPostmortemAttributesAttachmentObject {
+                let content = AttachmentDataAttributesAttachment {
                     document_url,
                     title,
                     additional_properties,
@@ -102,6 +115,6 @@ impl<'de> Deserialize<'de> for IncidentAttachmentsPostmortemAttributesAttachment
             }
         }
 
-        deserializer.deserialize_any(IncidentAttachmentsPostmortemAttributesAttachmentObjectVisitor)
+        deserializer.deserialize_any(AttachmentDataAttributesAttachmentVisitor)
     }
 }

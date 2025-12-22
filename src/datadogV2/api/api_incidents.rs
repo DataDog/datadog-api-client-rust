@@ -13,6 +13,22 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
+/// CreateIncidentAttachmentOptionalParams is a struct for passing parameters to the method [`IncidentsAPI::create_incident_attachment`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct CreateIncidentAttachmentOptionalParams {
+    /// Resource to include in the response. Supported value: `last_modified_by_user`.
+    pub include: Option<String>,
+}
+
+impl CreateIncidentAttachmentOptionalParams {
+    /// Resource to include in the response. Supported value: `last_modified_by_user`.
+    pub fn include(mut self, value: String) -> Self {
+        self.include = Some(value);
+        self
+    }
+}
+
 /// CreateIncidentImpactOptionalParams is a struct for passing parameters to the method [`IncidentsAPI::create_incident_impact`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -116,28 +132,21 @@ impl GetIncidentNotificationTemplateOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListIncidentAttachmentsOptionalParams {
-    /// Specifies which types of related objects are included in the response.
-    pub include: Option<Vec<crate::datadogV2::model::IncidentAttachmentRelatedObject>>,
-    /// Specifies which types of attachments are included in the response.
-    pub filter_attachment_type:
-        Option<Vec<crate::datadogV2::model::IncidentAttachmentAttachmentType>>,
+    /// Filter attachments by type. Supported values are `1` (`postmortem`) and `2` (`link`).
+    pub filter_attachment_type: Option<String>,
+    /// Resource to include in the response. Supported value: `last_modified_by_user`.
+    pub include: Option<String>,
 }
 
 impl ListIncidentAttachmentsOptionalParams {
-    /// Specifies which types of related objects are included in the response.
-    pub fn include(
-        mut self,
-        value: Vec<crate::datadogV2::model::IncidentAttachmentRelatedObject>,
-    ) -> Self {
-        self.include = Some(value);
+    /// Filter attachments by type. Supported values are `1` (`postmortem`) and `2` (`link`).
+    pub fn filter_attachment_type(mut self, value: String) -> Self {
+        self.filter_attachment_type = Some(value);
         self
     }
-    /// Specifies which types of attachments are included in the response.
-    pub fn filter_attachment_type(
-        mut self,
-        value: Vec<crate::datadogV2::model::IncidentAttachmentAttachmentType>,
-    ) -> Self {
-        self.filter_attachment_type = Some(value);
+    /// Resource to include in the response. Supported value: `last_modified_by_user`.
+    pub fn include(mut self, value: String) -> Self {
+        self.include = Some(value);
         self
     }
 }
@@ -299,20 +308,17 @@ impl UpdateIncidentOptionalParams {
     }
 }
 
-/// UpdateIncidentAttachmentsOptionalParams is a struct for passing parameters to the method [`IncidentsAPI::update_incident_attachments`]
+/// UpdateIncidentAttachmentOptionalParams is a struct for passing parameters to the method [`IncidentsAPI::update_incident_attachment`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
-pub struct UpdateIncidentAttachmentsOptionalParams {
-    /// Specifies which types of related objects are included in the response.
-    pub include: Option<Vec<crate::datadogV2::model::IncidentAttachmentRelatedObject>>,
+pub struct UpdateIncidentAttachmentOptionalParams {
+    /// Resource to include in the response. Supported value: `last_modified_by_user`.
+    pub include: Option<String>,
 }
 
-impl UpdateIncidentAttachmentsOptionalParams {
-    /// Specifies which types of related objects are included in the response.
-    pub fn include(
-        mut self,
-        value: Vec<crate::datadogV2::model::IncidentAttachmentRelatedObject>,
-    ) -> Self {
+impl UpdateIncidentAttachmentOptionalParams {
+    /// Resource to include in the response. Supported value: `last_modified_by_user`.
+    pub fn include(mut self, value: String) -> Self {
         self.include = Some(value);
         self
     }
@@ -354,6 +360,14 @@ impl UpdateIncidentNotificationTemplateOptionalParams {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateIncidentError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// CreateIncidentAttachmentError is a struct for typed errors of method [`IncidentsAPI::create_incident_attachment`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum CreateIncidentAttachmentError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -410,6 +424,14 @@ pub enum CreateIncidentTypeError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteIncidentError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// DeleteIncidentAttachmentError is a struct for typed errors of method [`IncidentsAPI::delete_incident_attachment`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeleteIncidentAttachmentError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -590,10 +612,10 @@ pub enum UpdateIncidentError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateIncidentAttachmentsError is a struct for typed errors of method [`IncidentsAPI::update_incident_attachments`]
+/// UpdateIncidentAttachmentError is a struct for typed errors of method [`IncidentsAPI::update_incident_attachment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum UpdateIncidentAttachmentsError {
+pub enum UpdateIncidentAttachmentError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -852,6 +874,180 @@ impl IncidentsAPI {
             };
         } else {
             let local_entity: Option<CreateIncidentError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Create an incident attachment.
+    pub async fn create_incident_attachment(
+        &self,
+        incident_id: String,
+        body: crate::datadogV2::model::CreateAttachmentRequest,
+        params: CreateIncidentAttachmentOptionalParams,
+    ) -> Result<crate::datadogV2::model::Attachment, datadog::Error<CreateIncidentAttachmentError>>
+    {
+        match self
+            .create_incident_attachment_with_http_info(incident_id, body, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Create an incident attachment.
+    pub async fn create_incident_attachment_with_http_info(
+        &self,
+        incident_id: String,
+        body: crate::datadogV2::model::CreateAttachmentRequest,
+        params: CreateIncidentAttachmentOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::Attachment>,
+        datadog::Error<CreateIncidentAttachmentError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.create_incident_attachment";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.create_incident_attachment' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let include = params.include;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/incidents/{incident_id}/attachments",
+            local_configuration.get_operation_host(operation_id),
+            incident_id = datadog::urlencode(incident_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = include {
+            local_req_builder =
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::Attachment>(&local_content) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<CreateIncidentAttachmentError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -1954,6 +2150,106 @@ impl IncidentsAPI {
             })
         } else {
             let local_entity: Option<DeleteIncidentError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    pub async fn delete_incident_attachment(
+        &self,
+        incident_id: String,
+        attachment_id: serde_json::Value,
+    ) -> Result<(), datadog::Error<DeleteIncidentAttachmentError>> {
+        match self
+            .delete_incident_attachment_with_http_info(incident_id, attachment_id)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    pub async fn delete_incident_attachment_with_http_info(
+        &self,
+        incident_id: String,
+        attachment_id: serde_json::Value,
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentAttachmentError>> {
+        let local_configuration = &self.config;
+        let operation_id = "v2.delete_incident_attachment";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.delete_incident_attachment' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/incidents/{incident_id}/attachments/{attachment_id}",
+            local_configuration.get_operation_host(operation_id),
+            incident_id = datadog::urlencode(incident_id),
+            attachment_id = attachment_id
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<DeleteIncidentAttachmentError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -3335,13 +3631,13 @@ impl IncidentsAPI {
         }
     }
 
-    /// Get all attachments for a given incident.
+    /// List incident attachments.
     pub async fn list_incident_attachments(
         &self,
         incident_id: String,
         params: ListIncidentAttachmentsOptionalParams,
     ) -> Result<
-        crate::datadogV2::model::IncidentAttachmentsResponse,
+        crate::datadogV2::model::AttachmentArray,
         datadog::Error<ListIncidentAttachmentsError>,
     > {
         match self
@@ -3361,13 +3657,13 @@ impl IncidentsAPI {
         }
     }
 
-    /// Get all attachments for a given incident.
+    /// List incident attachments.
     pub async fn list_incident_attachments_with_http_info(
         &self,
         incident_id: String,
         params: ListIncidentAttachmentsOptionalParams,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentAttachmentsResponse>,
+        datadog::ResponseContent<crate::datadogV2::model::AttachmentArray>,
         datadog::Error<ListIncidentAttachmentsError>,
     > {
         let local_configuration = &self.config;
@@ -3382,8 +3678,8 @@ impl IncidentsAPI {
         }
 
         // unbox and build optional parameters
-        let include = params.include;
         let filter_attachment_type = params.filter_attachment_type;
+        let include = params.include;
 
         let local_client = &self.client;
 
@@ -3395,27 +3691,13 @@ impl IncidentsAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local) = include {
-            local_req_builder = local_req_builder.query(&[(
-                "include",
-                &local
-                    .iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .to_string(),
-            )]);
+        if let Some(ref local_query_param) = filter_attachment_type {
+            local_req_builder = local_req_builder
+                .query(&[("filter[attachment_type]", &local_query_param.to_string())]);
         };
-        if let Some(ref local) = filter_attachment_type {
-            local_req_builder = local_req_builder.query(&[(
-                "filter[attachment_type]",
-                &local
-                    .iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .to_string(),
-            )]);
+        if let Some(ref local_query_param) = include {
+            local_req_builder =
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
         };
 
         // build headers
@@ -3460,9 +3742,7 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentAttachmentsResponse>(
-                &local_content,
-            ) {
+            match serde_json::from_str::<crate::datadogV2::model::AttachmentArray>(&local_content) {
                 Ok(e) => {
                     return Ok(datadog::ResponseContent {
                         status: local_status,
@@ -4771,18 +5051,16 @@ impl IncidentsAPI {
         }
     }
 
-    /// The bulk update endpoint for creating, updating, and deleting attachments for a given incident.
-    pub async fn update_incident_attachments(
+    pub async fn update_incident_attachment(
         &self,
         incident_id: String,
-        body: crate::datadogV2::model::IncidentAttachmentUpdateRequest,
-        params: UpdateIncidentAttachmentsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::IncidentAttachmentUpdateResponse,
-        datadog::Error<UpdateIncidentAttachmentsError>,
-    > {
+        attachment_id: serde_json::Value,
+        body: crate::datadogV2::model::PatchAttachmentRequest,
+        params: UpdateIncidentAttachmentOptionalParams,
+    ) -> Result<crate::datadogV2::model::Attachment, datadog::Error<UpdateIncidentAttachmentError>>
+    {
         match self
-            .update_incident_attachments_with_http_info(incident_id, body, params)
+            .update_incident_attachment_with_http_info(incident_id, attachment_id, body, params)
             .await
         {
             Ok(response_content) => {
@@ -4798,23 +5076,23 @@ impl IncidentsAPI {
         }
     }
 
-    /// The bulk update endpoint for creating, updating, and deleting attachments for a given incident.
-    pub async fn update_incident_attachments_with_http_info(
+    pub async fn update_incident_attachment_with_http_info(
         &self,
         incident_id: String,
-        body: crate::datadogV2::model::IncidentAttachmentUpdateRequest,
-        params: UpdateIncidentAttachmentsOptionalParams,
+        attachment_id: serde_json::Value,
+        body: crate::datadogV2::model::PatchAttachmentRequest,
+        params: UpdateIncidentAttachmentOptionalParams,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentAttachmentUpdateResponse>,
-        datadog::Error<UpdateIncidentAttachmentsError>,
+        datadog::ResponseContent<crate::datadogV2::model::Attachment>,
+        datadog::Error<UpdateIncidentAttachmentError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_incident_attachments";
+        let operation_id = "v2.update_incident_attachment";
         if local_configuration.is_unstable_operation_enabled(operation_id) {
             warn!("Using unstable operation {operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.update_incident_attachments' is not enabled".to_string(),
+                msg: "Operation 'v2.update_incident_attachment' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
@@ -4825,23 +5103,17 @@ impl IncidentsAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/incidents/{incident_id}/attachments",
+            "{}/api/v2/incidents/{incident_id}/attachments/{attachment_id}",
             local_configuration.get_operation_host(operation_id),
-            incident_id = datadog::urlencode(incident_id)
+            incident_id = datadog::urlencode(incident_id),
+            attachment_id = attachment_id
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
-        if let Some(ref local) = include {
-            local_req_builder = local_req_builder.query(&[(
-                "include",
-                &local
-                    .iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .to_string(),
-            )]);
+        if let Some(ref local_query_param) = include {
+            local_req_builder =
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
         };
 
         // build headers
@@ -4932,9 +5204,7 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentAttachmentUpdateResponse>(
-                &local_content,
-            ) {
+            match serde_json::from_str::<crate::datadogV2::model::Attachment>(&local_content) {
                 Ok(e) => {
                     return Ok(datadog::ResponseContent {
                         status: local_status,
@@ -4945,7 +5215,7 @@ impl IncidentsAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateIncidentAttachmentsError> =
+            let local_entity: Option<UpdateIncidentAttachmentError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,

@@ -6,18 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The attributes object for a link attachment.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct IncidentAttachmentLinkAttributes {
-    /// The link attachment.
+pub struct AttachmentDataAttributes {
     #[serde(rename = "attachment")]
-    pub attachment: crate::datadogV2::model::IncidentAttachmentLinkAttributesAttachmentObject,
-    /// The type of link attachment attributes.
+    pub attachment: Option<crate::datadogV2::model::AttachmentDataAttributesAttachment>,
     #[serde(rename = "attachment_type")]
-    pub attachment_type: crate::datadogV2::model::IncidentAttachmentLinkAttachmentType,
-    /// Timestamp when the incident attachment link was last modified.
+    pub attachment_type: Option<crate::datadogV2::model::AttachmentDataAttributesAttachmentType>,
     #[serde(rename = "modified")]
     pub modified: Option<chrono::DateTime<chrono::Utc>>,
     #[serde(flatten)]
@@ -27,18 +23,31 @@ pub struct IncidentAttachmentLinkAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl IncidentAttachmentLinkAttributes {
-    pub fn new(
-        attachment: crate::datadogV2::model::IncidentAttachmentLinkAttributesAttachmentObject,
-        attachment_type: crate::datadogV2::model::IncidentAttachmentLinkAttachmentType,
-    ) -> IncidentAttachmentLinkAttributes {
-        IncidentAttachmentLinkAttributes {
-            attachment,
-            attachment_type,
+impl AttachmentDataAttributes {
+    pub fn new() -> AttachmentDataAttributes {
+        AttachmentDataAttributes {
+            attachment: None,
+            attachment_type: None,
             modified: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn attachment(
+        mut self,
+        value: crate::datadogV2::model::AttachmentDataAttributesAttachment,
+    ) -> Self {
+        self.attachment = Some(value);
+        self
+    }
+
+    pub fn attachment_type(
+        mut self,
+        value: crate::datadogV2::model::AttachmentDataAttributesAttachmentType,
+    ) -> Self {
+        self.attachment_type = Some(value);
+        self
     }
 
     pub fn modified(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
@@ -55,14 +64,20 @@ impl IncidentAttachmentLinkAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for IncidentAttachmentLinkAttributes {
+impl Default for AttachmentDataAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for AttachmentDataAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct IncidentAttachmentLinkAttributesVisitor;
-        impl<'a> Visitor<'a> for IncidentAttachmentLinkAttributesVisitor {
-            type Value = IncidentAttachmentLinkAttributes;
+        struct AttachmentDataAttributesVisitor;
+        impl<'a> Visitor<'a> for AttachmentDataAttributesVisitor {
+            type Value = AttachmentDataAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -73,10 +88,10 @@ impl<'de> Deserialize<'de> for IncidentAttachmentLinkAttributes {
                 M: MapAccess<'a>,
             {
                 let mut attachment: Option<
-                    crate::datadogV2::model::IncidentAttachmentLinkAttributesAttachmentObject,
+                    crate::datadogV2::model::AttachmentDataAttributesAttachment,
                 > = None;
                 let mut attachment_type: Option<
-                    crate::datadogV2::model::IncidentAttachmentLinkAttachmentType,
+                    crate::datadogV2::model::AttachmentDataAttributesAttachmentType,
                 > = None;
                 let mut modified: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -88,14 +103,20 @@ impl<'de> Deserialize<'de> for IncidentAttachmentLinkAttributes {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "attachment" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             attachment = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "attachment_type" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             attachment_type =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _attachment_type) = attachment_type {
                                 match _attachment_type {
-                                    crate::datadogV2::model::IncidentAttachmentLinkAttachmentType::UnparsedObject(_attachment_type) => {
+                                    crate::datadogV2::model::AttachmentDataAttributesAttachmentType::UnparsedObject(_attachment_type) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -115,11 +136,8 @@ impl<'de> Deserialize<'de> for IncidentAttachmentLinkAttributes {
                         }
                     }
                 }
-                let attachment = attachment.ok_or_else(|| M::Error::missing_field("attachment"))?;
-                let attachment_type =
-                    attachment_type.ok_or_else(|| M::Error::missing_field("attachment_type"))?;
 
-                let content = IncidentAttachmentLinkAttributes {
+                let content = AttachmentDataAttributes {
                     attachment,
                     attachment_type,
                     modified,
@@ -131,6 +149,6 @@ impl<'de> Deserialize<'de> for IncidentAttachmentLinkAttributes {
             }
         }
 
-        deserializer.deserialize_any(IncidentAttachmentLinkAttributesVisitor)
+        deserializer.deserialize_any(AttachmentDataAttributesVisitor)
     }
 }

@@ -6,20 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A single incident attachment.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct IncidentAttachmentUpdateData {
-    /// Incident attachment attributes.
-    #[serde(rename = "attributes")]
-    pub attributes: Option<crate::datadogV2::model::IncidentAttachmentUpdateAttributes>,
-    /// A unique identifier that represents the incident attachment.
+pub struct AttachmentDataRelationshipsLastModifiedByUserData {
     #[serde(rename = "id")]
-    pub id: Option<String>,
-    /// The incident attachment resource type.
+    pub id: String,
+    /// Users resource type.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::IncidentAttachmentType,
+    pub type_: crate::datadogV2::model::UserType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,30 +22,17 @@ pub struct IncidentAttachmentUpdateData {
     pub(crate) _unparsed: bool,
 }
 
-impl IncidentAttachmentUpdateData {
+impl AttachmentDataRelationshipsLastModifiedByUserData {
     pub fn new(
-        type_: crate::datadogV2::model::IncidentAttachmentType,
-    ) -> IncidentAttachmentUpdateData {
-        IncidentAttachmentUpdateData {
-            attributes: None,
-            id: None,
+        id: String,
+        type_: crate::datadogV2::model::UserType,
+    ) -> AttachmentDataRelationshipsLastModifiedByUserData {
+        AttachmentDataRelationshipsLastModifiedByUserData {
+            id,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn attributes(
-        mut self,
-        value: crate::datadogV2::model::IncidentAttachmentUpdateAttributes,
-    ) -> Self {
-        self.attributes = Some(value);
-        self
-    }
-
-    pub fn id(mut self, value: String) -> Self {
-        self.id = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -62,14 +44,14 @@ impl IncidentAttachmentUpdateData {
     }
 }
 
-impl<'de> Deserialize<'de> for IncidentAttachmentUpdateData {
+impl<'de> Deserialize<'de> for AttachmentDataRelationshipsLastModifiedByUserData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct IncidentAttachmentUpdateDataVisitor;
-        impl<'a> Visitor<'a> for IncidentAttachmentUpdateDataVisitor {
-            type Value = IncidentAttachmentUpdateData;
+        struct AttachmentDataRelationshipsLastModifiedByUserDataVisitor;
+        impl<'a> Visitor<'a> for AttachmentDataRelationshipsLastModifiedByUserDataVisitor {
+            type Value = AttachmentDataRelationshipsLastModifiedByUserData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -79,11 +61,8 @@ impl<'de> Deserialize<'de> for IncidentAttachmentUpdateData {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<
-                    crate::datadogV2::model::IncidentAttachmentUpdateAttributes,
-                > = None;
                 let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::IncidentAttachmentType> = None;
+                let mut type_: Option<crate::datadogV2::model::UserType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -92,33 +71,16 @@ impl<'de> Deserialize<'de> for IncidentAttachmentUpdateData {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "attributes" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _attributes) = attributes {
-                                match _attributes {
-                                    crate::datadogV2::model::IncidentAttachmentUpdateAttributes::UnparsedObject(_attributes) => {
-                                        _unparsed = true;
-                                    },
-                                    _ => {}
-                                }
-                            }
-                        }
                         "id" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::IncidentAttachmentType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::UserType::UnparsedObject(_type_) => {
                                         _unparsed = true;
-                                    },
+                                    }
                                     _ => {}
                                 }
                             }
@@ -130,10 +92,10 @@ impl<'de> Deserialize<'de> for IncidentAttachmentUpdateData {
                         }
                     }
                 }
+                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = IncidentAttachmentUpdateData {
-                    attributes,
+                let content = AttachmentDataRelationshipsLastModifiedByUserData {
                     id,
                     type_,
                     additional_properties,
@@ -144,6 +106,6 @@ impl<'de> Deserialize<'de> for IncidentAttachmentUpdateData {
             }
         }
 
-        deserializer.deserialize_any(IncidentAttachmentUpdateDataVisitor)
+        deserializer.deserialize_any(AttachmentDataRelationshipsLastModifiedByUserDataVisitor)
     }
 }
