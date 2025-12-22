@@ -8,6 +8,8 @@ use std::fmt::{self, Formatter};
 
 /// The `generate_datadog_metrics` processor creates custom metrics from logs and sends them to Datadog.
 /// Metrics can be counters, gauges, or distributions and optionally grouped by log fields.
+///
+/// **Supported pipeline types:** logs
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]

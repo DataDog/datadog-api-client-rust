@@ -8,6 +8,8 @@ use std::fmt::{self, Formatter};
 
 /// The `amazon_s3` source ingests logs from an Amazon S3 bucket.
 /// It supports AWS authentication and TLS encryption.
+///
+/// **Supported pipeline types:** logs
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
