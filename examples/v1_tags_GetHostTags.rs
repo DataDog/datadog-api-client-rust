@@ -1,4 +1,4 @@
-// Get host tags returns "OK" response
+// Get Host Tags returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api_tags::GetHostTagsOptionalParams;
 use datadog_api_client::datadogV1::api_tags::TagsAPI;
