@@ -15,7 +15,7 @@
           ]
         },
         "method": "post",
-        "uri": "https://api.datadoghq.com/api/v2/remote_config/products/obs_pipelines/pipelines"
+        "uri": "https://api.datadoghq.com/api/v2/obs-pipelines/pipelines"
       },
       "response": {
         "body": {
@@ -32,7 +32,7 @@
           "message": "Bad Request"
         }
       },
-      "recorded_at": "Thu, 18 Dec 2025 16:15:15 GMT"
+      "recorded_at": "Tue, 23 Dec 2025 13:57:28 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"
