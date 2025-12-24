@@ -1,0 +1,131 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"handle\":\"test-handle-129c4638a0cbf5ab\",\"name\":\"test-name-129c4638a0cbf5ab\"},\"type\":\"team\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/team"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":{\"id\":\"b103bc00-af0b-48ee-ad0a-2cae69341320\",\"type\":\"team\",\"attributes\":{\"avatar\":null,\"banner\":8,\"created_at\":\"2025-12-23T15:30:20.131472+00:00\",\"description\":null,\"handle\":\"test-handle-129c4638a0cbf5ab\",\"hidden_modules\":null,\"is_managed\":false,\"link_count\":0,\"modified_at\":\"2025-12-23T15:30:20.131472+00:00\",\"name\":\"test-name-129c4638a0cbf5ab\",\"summary\":null,\"user_count\":0,\"visible_modules\":null},\"relationships\":{\"team_links\":{\"data\":[],\"links\":{\"related\":\"/api/v2/team/b103bc00-af0b-48ee-ad0a-2cae69341320/links\"}},\"user_team_permissions\":{\"data\":null,\"links\":{\"related\":\"/api/v2/team/b103bc00-af0b-48ee-ad0a-2cae69341320/permission-settings\"}}}}}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 201,
+          "message": "Created"
+        }
+      },
+      "recorded_at": "Tue, 23 Dec 2025 15:30:20 GMT"
+    },
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"email\":{\"enabled\":true},\"slack\":{\"channel\":\"aaa-omg-ops\",\"workspace\":\"Datadog\"}},\"type\":\"team_notification_rules\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/team/b103bc00-af0b-48ee-ad0a-2cae69341320/notification-rules"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":{\"id\":\"5bff55f5-6777-4494-a2bd-23e0a6a3d751\",\"type\":\"team_notification_rules\",\"attributes\":{\"email\":{\"enabled\":true},\"slack\":{\"workspace\":\"Datadog\",\"channel\":\"aaa-omg-ops\"}}}}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 201,
+          "message": "Created"
+        }
+      },
+      "recorded_at": "Tue, 23 Dec 2025 15:30:20 GMT"
+    },
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"pagerduty\":{\"service_name\":\"Datadog-prod\"},\"slack\":{\"channel\":\"aaa-governance-ops\",\"workspace\":\"Datadog\"}},\"id\":\"5bff55f5-6777-4494-a2bd-23e0a6a3d751\",\"type\":\"team_notification_rules\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "put",
+        "uri": "https://api.datadoghq.com/api/v2/team/b103bc00-af0b-48ee-ad0a-2cae69341320/notification-rules/5bff55f5-6777-4494-a2bd-23e0a6a3d751"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":{\"id\":\"5bff55f5-6777-4494-a2bd-23e0a6a3d751\",\"type\":\"team_notification_rules\",\"attributes\":{\"pagerduty\":{\"service_name\":\"Datadog-prod\"},\"slack\":{\"workspace\":\"Datadog\",\"channel\":\"aaa-governance-ops\"}}}}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Tue, 23 Dec 2025 15:30:20 GMT"
+    },
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "*/*"
+          ]
+        },
+        "method": "delete",
+        "uri": "https://api.datadoghq.com/api/v2/team/b103bc00-af0b-48ee-ad0a-2cae69341320"
+      },
+      "response": {
+        "body": {
+          "string": "",
+          "encoding": null
+        },
+        "headers": {},
+        "status": {
+          "code": 204,
+          "message": "No Content"
+        }
+      },
+      "recorded_at": "Tue, 23 Dec 2025 15:30:20 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

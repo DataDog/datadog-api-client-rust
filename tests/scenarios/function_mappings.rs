@@ -4485,6 +4485,26 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_update_team_membership,
     );
     world.function_mappings.insert(
+        "v2.GetTeamNotificationRules".into(),
+        test_v2_get_team_notification_rules,
+    );
+    world.function_mappings.insert(
+        "v2.CreateTeamNotificationRule".into(),
+        test_v2_create_team_notification_rule,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteTeamNotificationRule".into(),
+        test_v2_delete_team_notification_rule,
+    );
+    world.function_mappings.insert(
+        "v2.GetTeamNotificationRule".into(),
+        test_v2_get_team_notification_rule,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateTeamNotificationRule".into(),
+        test_v2_update_team_notification_rule,
+    );
+    world.function_mappings.insert(
         "v2.GetTeamPermissionSettings".into(),
         test_v2_get_team_permission_settings,
     );
@@ -34861,6 +34881,153 @@ fn test_v2_update_team_membership(world: &mut DatadogWorld, _parameters: &HashMa
             };
         }
     };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_team_notification_rules(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_teams
+        .as_ref()
+        .expect("api instance not found");
+    let team_id = serde_json::from_value(_parameters.get("team_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_team_notification_rules_with_http_info(team_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_team_notification_rule(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_teams
+        .as_ref()
+        .expect("api instance not found");
+    let team_id = serde_json::from_value(_parameters.get("team_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_team_notification_rule_with_http_info(team_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_team_notification_rule(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_teams
+        .as_ref()
+        .expect("api instance not found");
+    let team_id = serde_json::from_value(_parameters.get("team_id").unwrap().clone()).unwrap();
+    let rule_id = serde_json::from_value(_parameters.get("rule_id").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.delete_team_notification_rule_with_http_info(team_id, rule_id)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_team_notification_rule(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_teams
+        .as_ref()
+        .expect("api instance not found");
+    let team_id = serde_json::from_value(_parameters.get("team_id").unwrap().clone()).unwrap();
+    let rule_id = serde_json::from_value(_parameters.get("rule_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_team_notification_rule_with_http_info(team_id, rule_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_team_notification_rule(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_teams
+        .as_ref()
+        .expect("api instance not found");
+    let team_id = serde_json::from_value(_parameters.get("team_id").unwrap().clone()).unwrap();
+    let rule_id = serde_json::from_value(_parameters.get("rule_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.update_team_notification_rule_with_http_info(team_id, rule_id, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
