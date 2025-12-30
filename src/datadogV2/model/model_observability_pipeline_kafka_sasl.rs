@@ -10,11 +10,10 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ObservabilityPipelineKafkaSourceSasl {
+pub struct ObservabilityPipelineKafkaSasl {
     /// SASL mechanism used for Kafka authentication.
     #[serde(rename = "mechanism")]
-    pub mechanism:
-        Option<crate::datadogV2::model::ObservabilityPipelinePipelineKafkaSourceSaslMechanism>,
+    pub mechanism: Option<crate::datadogV2::model::ObservabilityPipelineKafkaSaslMechanism>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -22,9 +21,9 @@ pub struct ObservabilityPipelineKafkaSourceSasl {
     pub(crate) _unparsed: bool,
 }
 
-impl ObservabilityPipelineKafkaSourceSasl {
-    pub fn new() -> ObservabilityPipelineKafkaSourceSasl {
-        ObservabilityPipelineKafkaSourceSasl {
+impl ObservabilityPipelineKafkaSasl {
+    pub fn new() -> ObservabilityPipelineKafkaSasl {
+        ObservabilityPipelineKafkaSasl {
             mechanism: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -33,7 +32,7 @@ impl ObservabilityPipelineKafkaSourceSasl {
 
     pub fn mechanism(
         mut self,
-        value: crate::datadogV2::model::ObservabilityPipelinePipelineKafkaSourceSaslMechanism,
+        value: crate::datadogV2::model::ObservabilityPipelineKafkaSaslMechanism,
     ) -> Self {
         self.mechanism = Some(value);
         self
@@ -48,20 +47,20 @@ impl ObservabilityPipelineKafkaSourceSasl {
     }
 }
 
-impl Default for ObservabilityPipelineKafkaSourceSasl {
+impl Default for ObservabilityPipelineKafkaSasl {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaSourceSasl {
+impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaSasl {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ObservabilityPipelineKafkaSourceSaslVisitor;
-        impl<'a> Visitor<'a> for ObservabilityPipelineKafkaSourceSaslVisitor {
-            type Value = ObservabilityPipelineKafkaSourceSasl;
+        struct ObservabilityPipelineKafkaSaslVisitor;
+        impl<'a> Visitor<'a> for ObservabilityPipelineKafkaSaslVisitor {
+            type Value = ObservabilityPipelineKafkaSasl;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -72,7 +71,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaSourceSasl {
                 M: MapAccess<'a>,
             {
                 let mut mechanism: Option<
-                    crate::datadogV2::model::ObservabilityPipelinePipelineKafkaSourceSaslMechanism,
+                    crate::datadogV2::model::ObservabilityPipelineKafkaSaslMechanism,
                 > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -89,7 +88,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaSourceSasl {
                             mechanism = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _mechanism) = mechanism {
                                 match _mechanism {
-                                    crate::datadogV2::model::ObservabilityPipelinePipelineKafkaSourceSaslMechanism::UnparsedObject(_mechanism) => {
+                                    crate::datadogV2::model::ObservabilityPipelineKafkaSaslMechanism::UnparsedObject(_mechanism) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -104,7 +103,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaSourceSasl {
                     }
                 }
 
-                let content = ObservabilityPipelineKafkaSourceSasl {
+                let content = ObservabilityPipelineKafkaSasl {
                     mechanism,
                     additional_properties,
                     _unparsed,
@@ -114,6 +113,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaSourceSasl {
             }
         }
 
-        deserializer.deserialize_any(ObservabilityPipelineKafkaSourceSaslVisitor)
+        deserializer.deserialize_any(ObservabilityPipelineKafkaSaslVisitor)
     }
 }
