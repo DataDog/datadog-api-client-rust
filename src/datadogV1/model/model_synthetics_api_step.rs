@@ -10,6 +10,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 pub enum SyntheticsAPIStep {
     SyntheticsAPITestStep(Box<crate::datadogV1::model::SyntheticsAPITestStep>),
     SyntheticsAPIWaitStep(Box<crate::datadogV1::model::SyntheticsAPIWaitStep>),
+    SyntheticsAPISubtestStep(Box<crate::datadogV1::model::SyntheticsAPISubtestStep>),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -31,6 +32,14 @@ impl<'de> Deserialize<'de> for SyntheticsAPIStep {
         ) {
             if !_v._unparsed {
                 return Ok(SyntheticsAPIStep::SyntheticsAPIWaitStep(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV1::model::SyntheticsAPISubtestStep>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(SyntheticsAPIStep::SyntheticsAPISubtestStep(_v));
             }
         }
 
