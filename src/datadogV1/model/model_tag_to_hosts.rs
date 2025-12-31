@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// In this object, the key is the tag, the value is a list of host names that are reporting that tag.
+/// In this object, the key is the tag, and the value is a list of host names that are reporting that tag.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TagToHosts {
-    /// A list of tags to apply to the host.
+    /// A mapping of tags to host names
     #[serde(rename = "tags")]
     pub tags: Option<std::collections::BTreeMap<String, Vec<String>>>,
     #[serde(flatten)]
