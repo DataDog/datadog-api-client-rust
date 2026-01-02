@@ -6,15 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Specifies the SASL mechanism for authenticating with a Kafka cluster.
+/// Configuration for a single array split operation.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ObservabilityPipelineKafkaSourceSasl {
-    /// SASL mechanism used for Kafka authentication.
-    #[serde(rename = "mechanism")]
-    pub mechanism:
-        Option<crate::datadogV2::model::ObservabilityPipelinePipelineKafkaSourceSaslMechanism>,
+pub struct ObservabilityPipelineSplitArrayProcessorArrayConfig {
+    /// The path to the array field to split.
+    #[serde(rename = "field")]
+    pub field: String,
+    /// A Datadog search query used to determine which logs this array split operation targets.
+    #[serde(rename = "include")]
+    pub include: String,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -22,21 +24,17 @@ pub struct ObservabilityPipelineKafkaSourceSasl {
     pub(crate) _unparsed: bool,
 }
 
-impl ObservabilityPipelineKafkaSourceSasl {
-    pub fn new() -> ObservabilityPipelineKafkaSourceSasl {
-        ObservabilityPipelineKafkaSourceSasl {
-            mechanism: None,
+impl ObservabilityPipelineSplitArrayProcessorArrayConfig {
+    pub fn new(
+        field: String,
+        include: String,
+    ) -> ObservabilityPipelineSplitArrayProcessorArrayConfig {
+        ObservabilityPipelineSplitArrayProcessorArrayConfig {
+            field,
+            include,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn mechanism(
-        mut self,
-        value: crate::datadogV2::model::ObservabilityPipelinePipelineKafkaSourceSaslMechanism,
-    ) -> Self {
-        self.mechanism = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -48,20 +46,14 @@ impl ObservabilityPipelineKafkaSourceSasl {
     }
 }
 
-impl Default for ObservabilityPipelineKafkaSourceSasl {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaSourceSasl {
+impl<'de> Deserialize<'de> for ObservabilityPipelineSplitArrayProcessorArrayConfig {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ObservabilityPipelineKafkaSourceSaslVisitor;
-        impl<'a> Visitor<'a> for ObservabilityPipelineKafkaSourceSaslVisitor {
-            type Value = ObservabilityPipelineKafkaSourceSasl;
+        struct ObservabilityPipelineSplitArrayProcessorArrayConfigVisitor;
+        impl<'a> Visitor<'a> for ObservabilityPipelineSplitArrayProcessorArrayConfigVisitor {
+            type Value = ObservabilityPipelineSplitArrayProcessorArrayConfig;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -71,9 +63,8 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaSourceSasl {
             where
                 M: MapAccess<'a>,
             {
-                let mut mechanism: Option<
-                    crate::datadogV2::model::ObservabilityPipelinePipelineKafkaSourceSaslMechanism,
-                > = None;
+                let mut field: Option<String> = None;
+                let mut include: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -82,19 +73,11 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaSourceSasl {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "mechanism" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            mechanism = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _mechanism) = mechanism {
-                                match _mechanism {
-                                    crate::datadogV2::model::ObservabilityPipelinePipelineKafkaSourceSaslMechanism::UnparsedObject(_mechanism) => {
-                                        _unparsed = true;
-                                    },
-                                    _ => {}
-                                }
-                            }
+                        "field" => {
+                            field = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "include" => {
+                            include = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -103,9 +86,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaSourceSasl {
                         }
                     }
                 }
+                let field = field.ok_or_else(|| M::Error::missing_field("field"))?;
+                let include = include.ok_or_else(|| M::Error::missing_field("include"))?;
 
-                let content = ObservabilityPipelineKafkaSourceSasl {
-                    mechanism,
+                let content = ObservabilityPipelineSplitArrayProcessorArrayConfig {
+                    field,
+                    include,
                     additional_properties,
                     _unparsed,
                 };
@@ -114,6 +100,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaSourceSasl {
             }
         }
 
-        deserializer.deserialize_any(ObservabilityPipelineKafkaSourceSaslVisitor)
+        deserializer.deserialize_any(ObservabilityPipelineSplitArrayProcessorArrayConfigVisitor)
     }
 }

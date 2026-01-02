@@ -6,17 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Options for defining a custom regex pattern.
+/// Specifies the SASL mechanism for authenticating with a Kafka cluster.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ObservabilityPipelineSensitiveDataScannerProcessorCustomPatternOptions {
-    /// Human-readable description providing context about a sensitive data scanner rule
-    #[serde(rename = "description")]
-    pub description: Option<String>,
-    /// A regular expression used to detect sensitive values. Must be a valid regex.
-    #[serde(rename = "rule")]
-    pub rule: String,
+pub struct ObservabilityPipelineKafkaSasl {
+    /// SASL mechanism used for Kafka authentication.
+    #[serde(rename = "mechanism")]
+    pub mechanism: Option<crate::datadogV2::model::ObservabilityPipelineKafkaSaslMechanism>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,20 +21,20 @@ pub struct ObservabilityPipelineSensitiveDataScannerProcessorCustomPatternOption
     pub(crate) _unparsed: bool,
 }
 
-impl ObservabilityPipelineSensitiveDataScannerProcessorCustomPatternOptions {
-    pub fn new(
-        rule: String,
-    ) -> ObservabilityPipelineSensitiveDataScannerProcessorCustomPatternOptions {
-        ObservabilityPipelineSensitiveDataScannerProcessorCustomPatternOptions {
-            description: None,
-            rule,
+impl ObservabilityPipelineKafkaSasl {
+    pub fn new() -> ObservabilityPipelineKafkaSasl {
+        ObservabilityPipelineKafkaSasl {
+            mechanism: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn description(mut self, value: String) -> Self {
-        self.description = Some(value);
+    pub fn mechanism(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineKafkaSaslMechanism,
+    ) -> Self {
+        self.mechanism = Some(value);
         self
     }
 
@@ -50,18 +47,20 @@ impl ObservabilityPipelineSensitiveDataScannerProcessorCustomPatternOptions {
     }
 }
 
-impl<'de> Deserialize<'de>
-    for ObservabilityPipelineSensitiveDataScannerProcessorCustomPatternOptions
-{
+impl Default for ObservabilityPipelineKafkaSasl {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaSasl {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ObservabilityPipelineSensitiveDataScannerProcessorCustomPatternOptionsVisitor;
-        impl<'a> Visitor<'a>
-            for ObservabilityPipelineSensitiveDataScannerProcessorCustomPatternOptionsVisitor
-        {
-            type Value = ObservabilityPipelineSensitiveDataScannerProcessorCustomPatternOptions;
+        struct ObservabilityPipelineKafkaSaslVisitor;
+        impl<'a> Visitor<'a> for ObservabilityPipelineKafkaSaslVisitor {
+            type Value = ObservabilityPipelineKafkaSasl;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -71,8 +70,9 @@ impl<'de> Deserialize<'de>
             where
                 M: MapAccess<'a>,
             {
-                let mut description: Option<String> = None;
-                let mut rule: Option<String> = None;
+                let mut mechanism: Option<
+                    crate::datadogV2::model::ObservabilityPipelineKafkaSaslMechanism,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -81,15 +81,19 @@ impl<'de> Deserialize<'de>
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "description" => {
+                        "mechanism" => {
                             if v.is_null() {
                                 continue;
                             }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "rule" => {
-                            rule = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            mechanism = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _mechanism) = mechanism {
+                                match _mechanism {
+                                    crate::datadogV2::model::ObservabilityPipelineKafkaSaslMechanism::UnparsedObject(_mechanism) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -98,22 +102,17 @@ impl<'de> Deserialize<'de>
                         }
                     }
                 }
-                let rule = rule.ok_or_else(|| M::Error::missing_field("rule"))?;
 
-                let content =
-                    ObservabilityPipelineSensitiveDataScannerProcessorCustomPatternOptions {
-                        description,
-                        rule,
-                        additional_properties,
-                        _unparsed,
-                    };
+                let content = ObservabilityPipelineKafkaSasl {
+                    mechanism,
+                    additional_properties,
+                    _unparsed,
+                };
 
                 Ok(content)
             }
         }
 
-        deserializer.deserialize_any(
-            ObservabilityPipelineSensitiveDataScannerProcessorCustomPatternOptionsVisitor,
-        )
+        deserializer.deserialize_any(ObservabilityPipelineKafkaSaslVisitor)
     }
 }

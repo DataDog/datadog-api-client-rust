@@ -6,33 +6,26 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The `kafka` source ingests data from Apache Kafka topics.
+/// The `opentelemetry` source receives telemetry data using the OpenTelemetry Protocol (OTLP) over gRPC and HTTP.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ObservabilityPipelineKafkaSource {
-    /// Consumer group ID used by the Kafka client.
-    #[serde(rename = "group_id")]
-    pub group_id: String,
+pub struct ObservabilityPipelineOpentelemetrySource {
+    /// Environment variable name containing the gRPC server address for receiving OTLP data. Must be a valid environment variable name (alphanumeric characters and underscores only).
+    #[serde(rename = "grpc_address_key")]
+    pub grpc_address_key: Option<String>,
+    /// Environment variable name containing the HTTP server address for receiving OTLP data. Must be a valid environment variable name (alphanumeric characters and underscores only).
+    #[serde(rename = "http_address_key")]
+    pub http_address_key: Option<String>,
     /// The unique identifier for this component. Used to reference this component in other parts of the pipeline (e.g., as input to downstream components).
     #[serde(rename = "id")]
     pub id: String,
-    /// Optional list of advanced Kafka client configuration options, defined as key-value pairs.
-    #[serde(rename = "librdkafka_options")]
-    pub librdkafka_options:
-        Option<Vec<crate::datadogV2::model::ObservabilityPipelineKafkaLibrdkafkaOption>>,
-    /// Specifies the SASL mechanism for authenticating with a Kafka cluster.
-    #[serde(rename = "sasl")]
-    pub sasl: Option<crate::datadogV2::model::ObservabilityPipelineKafkaSasl>,
     /// Configuration for enabling TLS encryption between the pipeline component and external services.
     #[serde(rename = "tls")]
     pub tls: Option<crate::datadogV2::model::ObservabilityPipelineTls>,
-    /// A list of Kafka topic names to subscribe to. The source ingests messages from each topic specified.
-    #[serde(rename = "topics")]
-    pub topics: Vec<String>,
-    /// The source type. The value should always be `kafka`.
+    /// The source type. The value should always be `opentelemetry`.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::ObservabilityPipelineKafkaSourceType,
+    pub type_: crate::datadogV2::model::ObservabilityPipelineOpentelemetrySourceType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -40,36 +33,29 @@ pub struct ObservabilityPipelineKafkaSource {
     pub(crate) _unparsed: bool,
 }
 
-impl ObservabilityPipelineKafkaSource {
+impl ObservabilityPipelineOpentelemetrySource {
     pub fn new(
-        group_id: String,
         id: String,
-        topics: Vec<String>,
-        type_: crate::datadogV2::model::ObservabilityPipelineKafkaSourceType,
-    ) -> ObservabilityPipelineKafkaSource {
-        ObservabilityPipelineKafkaSource {
-            group_id,
+        type_: crate::datadogV2::model::ObservabilityPipelineOpentelemetrySourceType,
+    ) -> ObservabilityPipelineOpentelemetrySource {
+        ObservabilityPipelineOpentelemetrySource {
+            grpc_address_key: None,
+            http_address_key: None,
             id,
-            librdkafka_options: None,
-            sasl: None,
             tls: None,
-            topics,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn librdkafka_options(
-        mut self,
-        value: Vec<crate::datadogV2::model::ObservabilityPipelineKafkaLibrdkafkaOption>,
-    ) -> Self {
-        self.librdkafka_options = Some(value);
+    pub fn grpc_address_key(mut self, value: String) -> Self {
+        self.grpc_address_key = Some(value);
         self
     }
 
-    pub fn sasl(mut self, value: crate::datadogV2::model::ObservabilityPipelineKafkaSasl) -> Self {
-        self.sasl = Some(value);
+    pub fn http_address_key(mut self, value: String) -> Self {
+        self.http_address_key = Some(value);
         self
     }
 
@@ -87,14 +73,14 @@ impl ObservabilityPipelineKafkaSource {
     }
 }
 
-impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaSource {
+impl<'de> Deserialize<'de> for ObservabilityPipelineOpentelemetrySource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ObservabilityPipelineKafkaSourceVisitor;
-        impl<'a> Visitor<'a> for ObservabilityPipelineKafkaSourceVisitor {
-            type Value = ObservabilityPipelineKafkaSource;
+        struct ObservabilityPipelineOpentelemetrySourceVisitor;
+        impl<'a> Visitor<'a> for ObservabilityPipelineOpentelemetrySourceVisitor {
+            type Value = ObservabilityPipelineOpentelemetrySource;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -104,17 +90,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaSource {
             where
                 M: MapAccess<'a>,
             {
-                let mut group_id: Option<String> = None;
+                let mut grpc_address_key: Option<String> = None;
+                let mut http_address_key: Option<String> = None;
                 let mut id: Option<String> = None;
-                let mut librdkafka_options: Option<
-                    Vec<crate::datadogV2::model::ObservabilityPipelineKafkaLibrdkafkaOption>,
-                > = None;
-                let mut sasl: Option<crate::datadogV2::model::ObservabilityPipelineKafkaSasl> =
-                    None;
                 let mut tls: Option<crate::datadogV2::model::ObservabilityPipelineTls> = None;
-                let mut topics: Option<Vec<String>> = None;
                 let mut type_: Option<
-                    crate::datadogV2::model::ObservabilityPipelineKafkaSourceType,
+                    crate::datadogV2::model::ObservabilityPipelineOpentelemetrySourceType,
                 > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -124,24 +105,22 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaSource {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "group_id" => {
-                            group_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "grpc_address_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            grpc_address_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "http_address_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            http_address_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "librdkafka_options" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            librdkafka_options =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "sasl" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            sasl = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "tls" => {
                             if v.is_null() {
@@ -149,14 +128,11 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaSource {
                             }
                             tls = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "topics" => {
-                            topics = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::ObservabilityPipelineKafkaSourceType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::ObservabilityPipelineOpentelemetrySourceType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -170,18 +146,14 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaSource {
                         }
                     }
                 }
-                let group_id = group_id.ok_or_else(|| M::Error::missing_field("group_id"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
-                let topics = topics.ok_or_else(|| M::Error::missing_field("topics"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = ObservabilityPipelineKafkaSource {
-                    group_id,
+                let content = ObservabilityPipelineOpentelemetrySource {
+                    grpc_address_key,
+                    http_address_key,
                     id,
-                    librdkafka_options,
-                    sasl,
                     tls,
-                    topics,
                     type_,
                     additional_properties,
                     _unparsed,
@@ -191,6 +163,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaSource {
             }
         }
 
-        deserializer.deserialize_any(ObservabilityPipelineKafkaSourceVisitor)
+        deserializer.deserialize_any(ObservabilityPipelineOpentelemetrySourceVisitor)
     }
 }

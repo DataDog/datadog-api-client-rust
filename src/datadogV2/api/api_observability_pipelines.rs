@@ -189,7 +189,7 @@ impl ObservabilityPipelinesAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/remote_config/products/obs_pipelines/pipelines",
+            "{}/api/v2/obs-pipelines/pipelines",
             local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
@@ -563,7 +563,7 @@ impl ObservabilityPipelinesAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/remote_config/products/obs_pipelines/pipelines",
+            "{}/api/v2/obs-pipelines/pipelines",
             local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
@@ -851,7 +851,7 @@ impl ObservabilityPipelinesAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/remote_config/products/obs_pipelines/pipelines/validate",
+            "{}/api/v2/obs-pipelines/pipelines/validate",
             local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
