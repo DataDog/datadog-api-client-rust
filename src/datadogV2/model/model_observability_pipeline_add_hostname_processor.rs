@@ -6,32 +6,26 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The `sample` processor allows probabilistic sampling of logs at a fixed rate.
+/// The `add_hostname` processor adds the hostname to log events.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ObservabilityPipelineSampleProcessor {
+pub struct ObservabilityPipelineAddHostnameProcessor {
     /// The display name for a component.
     #[serde(rename = "display_name")]
     pub display_name: Option<String>,
     /// Whether this processor is enabled.
     #[serde(rename = "enabled")]
     pub enabled: bool,
-    /// Optional list of fields to group events by. Each group is sampled independently.
-    #[serde(rename = "group_by")]
-    pub group_by: Option<Vec<String>>,
     /// The unique identifier for this component. Used to reference this component in other parts of the pipeline (for example, as the `input` to downstream components).
     #[serde(rename = "id")]
     pub id: String,
     /// A Datadog search query used to determine which logs this processor targets.
     #[serde(rename = "include")]
     pub include: String,
-    /// The percentage of logs to sample.
-    #[serde(rename = "percentage")]
-    pub percentage: f64,
-    /// The processor type. The value should always be `sample`.
+    /// The processor type. The value should always be `add_hostname`.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::ObservabilityPipelineSampleProcessorType,
+    pub type_: crate::datadogV2::model::ObservabilityPipelineAddHostnameProcessorType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -39,21 +33,18 @@ pub struct ObservabilityPipelineSampleProcessor {
     pub(crate) _unparsed: bool,
 }
 
-impl ObservabilityPipelineSampleProcessor {
+impl ObservabilityPipelineAddHostnameProcessor {
     pub fn new(
         enabled: bool,
         id: String,
         include: String,
-        percentage: f64,
-        type_: crate::datadogV2::model::ObservabilityPipelineSampleProcessorType,
-    ) -> ObservabilityPipelineSampleProcessor {
-        ObservabilityPipelineSampleProcessor {
+        type_: crate::datadogV2::model::ObservabilityPipelineAddHostnameProcessorType,
+    ) -> ObservabilityPipelineAddHostnameProcessor {
+        ObservabilityPipelineAddHostnameProcessor {
             display_name: None,
             enabled,
-            group_by: None,
             id,
             include,
-            percentage,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -62,11 +53,6 @@ impl ObservabilityPipelineSampleProcessor {
 
     pub fn display_name(mut self, value: String) -> Self {
         self.display_name = Some(value);
-        self
-    }
-
-    pub fn group_by(mut self, value: Vec<String>) -> Self {
-        self.group_by = Some(value);
         self
     }
 
@@ -79,14 +65,14 @@ impl ObservabilityPipelineSampleProcessor {
     }
 }
 
-impl<'de> Deserialize<'de> for ObservabilityPipelineSampleProcessor {
+impl<'de> Deserialize<'de> for ObservabilityPipelineAddHostnameProcessor {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ObservabilityPipelineSampleProcessorVisitor;
-        impl<'a> Visitor<'a> for ObservabilityPipelineSampleProcessorVisitor {
-            type Value = ObservabilityPipelineSampleProcessor;
+        struct ObservabilityPipelineAddHostnameProcessorVisitor;
+        impl<'a> Visitor<'a> for ObservabilityPipelineAddHostnameProcessorVisitor {
+            type Value = ObservabilityPipelineAddHostnameProcessor;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -98,12 +84,10 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSampleProcessor {
             {
                 let mut display_name: Option<String> = None;
                 let mut enabled: Option<bool> = None;
-                let mut group_by: Option<Vec<String>> = None;
                 let mut id: Option<String> = None;
                 let mut include: Option<String> = None;
-                let mut percentage: Option<f64> = None;
                 let mut type_: Option<
-                    crate::datadogV2::model::ObservabilityPipelineSampleProcessorType,
+                    crate::datadogV2::model::ObservabilityPipelineAddHostnameProcessorType,
                 > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -123,26 +107,17 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSampleProcessor {
                         "enabled" => {
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "group_by" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            group_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "include" => {
                             include = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "percentage" => {
-                            percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::ObservabilityPipelineSampleProcessorType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::ObservabilityPipelineAddHostnameProcessorType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -159,16 +134,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSampleProcessor {
                 let enabled = enabled.ok_or_else(|| M::Error::missing_field("enabled"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let include = include.ok_or_else(|| M::Error::missing_field("include"))?;
-                let percentage = percentage.ok_or_else(|| M::Error::missing_field("percentage"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = ObservabilityPipelineSampleProcessor {
+                let content = ObservabilityPipelineAddHostnameProcessor {
                     display_name,
                     enabled,
-                    group_by,
                     id,
                     include,
-                    percentage,
                     type_,
                     additional_properties,
                     _unparsed,
@@ -178,6 +150,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSampleProcessor {
             }
         }
 
-        deserializer.deserialize_any(ObservabilityPipelineSampleProcessorVisitor)
+        deserializer.deserialize_any(ObservabilityPipelineAddHostnameProcessorVisitor)
     }
 }
