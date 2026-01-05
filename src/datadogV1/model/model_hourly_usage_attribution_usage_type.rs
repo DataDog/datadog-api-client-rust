@@ -40,6 +40,7 @@ pub enum HourlyUsageAttributionUsageType {
     ESTIMATED_INDEXED_SPANS_USAGE,
     ESTIMATED_INGESTED_SPANS_USAGE,
     FARGATE_USAGE,
+    FLEX_STORED_LOGS,
     FUNCTIONS_USAGE,
     INCIDENT_MANAGEMENT_MONTHLY_ACTIVE_USERS_USAGE,
     INDEXED_SPANS_USAGE,
@@ -134,6 +135,7 @@ impl ToString for HourlyUsageAttributionUsageType {
             Self::ESTIMATED_INDEXED_SPANS_USAGE => String::from("estimated_indexed_spans_usage"),
             Self::ESTIMATED_INGESTED_SPANS_USAGE => String::from("estimated_ingested_spans_usage"),
             Self::FARGATE_USAGE => String::from("fargate_usage"),
+            Self::FLEX_STORED_LOGS => String::from("flex_stored_logs"),
             Self::FUNCTIONS_USAGE => String::from("functions_usage"),
             Self::INCIDENT_MANAGEMENT_MONTHLY_ACTIVE_USERS_USAGE => {
                 String::from("incident_management_monthly_active_users_usage")
@@ -258,6 +260,7 @@ impl<'de> Deserialize<'de> for HourlyUsageAttributionUsageType {
             "estimated_indexed_spans_usage" => Self::ESTIMATED_INDEXED_SPANS_USAGE,
             "estimated_ingested_spans_usage" => Self::ESTIMATED_INGESTED_SPANS_USAGE,
             "fargate_usage" => Self::FARGATE_USAGE,
+            "flex_stored_logs" => Self::FLEX_STORED_LOGS,
             "functions_usage" => Self::FUNCTIONS_USAGE,
             "incident_management_monthly_active_users_usage" => {
                 Self::INCIDENT_MANAGEMENT_MONTHLY_ACTIVE_USERS_USAGE
