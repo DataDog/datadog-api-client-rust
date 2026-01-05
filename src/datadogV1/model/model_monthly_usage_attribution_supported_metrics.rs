@@ -63,6 +63,8 @@ pub enum MonthlyUsageAttributionSupportedMetrics {
     ESTIMATED_INGESTED_SPANS_PERCENTAGE,
     FARGATE_USAGE,
     FARGATE_PERCENTAGE,
+    FLEX_STORED_LOGS_USAGE,
+    FLEX_STORED_LOGS_PERCENTAGE,
     FUNCTIONS_USAGE,
     FUNCTIONS_PERCENTAGE,
     INCIDENT_MANAGEMENT_MONTHLY_ACTIVE_USERS_USAGE,
@@ -244,6 +246,8 @@ impl ToString for MonthlyUsageAttributionSupportedMetrics {
             }
             Self::FARGATE_USAGE => String::from("fargate_usage"),
             Self::FARGATE_PERCENTAGE => String::from("fargate_percentage"),
+            Self::FLEX_STORED_LOGS_USAGE => String::from("flex_stored_logs_usage"),
+            Self::FLEX_STORED_LOGS_PERCENTAGE => String::from("flex_stored_logs_percentage"),
             Self::FUNCTIONS_USAGE => String::from("functions_usage"),
             Self::FUNCTIONS_PERCENTAGE => String::from("functions_percentage"),
             Self::INCIDENT_MANAGEMENT_MONTHLY_ACTIVE_USERS_USAGE => {
@@ -473,6 +477,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionSupportedMetrics {
             "estimated_ingested_spans_percentage" => Self::ESTIMATED_INGESTED_SPANS_PERCENTAGE,
             "fargate_usage" => Self::FARGATE_USAGE,
             "fargate_percentage" => Self::FARGATE_PERCENTAGE,
+            "flex_stored_logs_usage" => Self::FLEX_STORED_LOGS_USAGE,
+            "flex_stored_logs_percentage" => Self::FLEX_STORED_LOGS_PERCENTAGE,
             "functions_usage" => Self::FUNCTIONS_USAGE,
             "functions_percentage" => Self::FUNCTIONS_PERCENTAGE,
             "incident_management_monthly_active_users_usage" => {

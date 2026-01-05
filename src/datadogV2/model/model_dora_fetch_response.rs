@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response for fetching a single deployment event.
+/// Response for the DORA fetch endpoints.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct DORADeploymentFetchResponse {
-    /// A DORA deployment event.
+pub struct DORAFetchResponse {
+    /// A DORA event.
     #[serde(rename = "data")]
-    pub data: Option<crate::datadogV2::model::DORADeploymentObject>,
+    pub data: Option<crate::datadogV2::model::DORAEvent>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,16 +21,16 @@ pub struct DORADeploymentFetchResponse {
     pub(crate) _unparsed: bool,
 }
 
-impl DORADeploymentFetchResponse {
-    pub fn new() -> DORADeploymentFetchResponse {
-        DORADeploymentFetchResponse {
+impl DORAFetchResponse {
+    pub fn new() -> DORAFetchResponse {
+        DORAFetchResponse {
             data: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn data(mut self, value: crate::datadogV2::model::DORADeploymentObject) -> Self {
+    pub fn data(mut self, value: crate::datadogV2::model::DORAEvent) -> Self {
         self.data = Some(value);
         self
     }
@@ -44,20 +44,20 @@ impl DORADeploymentFetchResponse {
     }
 }
 
-impl Default for DORADeploymentFetchResponse {
+impl Default for DORAFetchResponse {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for DORADeploymentFetchResponse {
+impl<'de> Deserialize<'de> for DORAFetchResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct DORADeploymentFetchResponseVisitor;
-        impl<'a> Visitor<'a> for DORADeploymentFetchResponseVisitor {
-            type Value = DORADeploymentFetchResponse;
+        struct DORAFetchResponseVisitor;
+        impl<'a> Visitor<'a> for DORAFetchResponseVisitor {
+            type Value = DORAFetchResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -67,7 +67,7 @@ impl<'de> Deserialize<'de> for DORADeploymentFetchResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::DORADeploymentObject> = None;
+                let mut data: Option<crate::datadogV2::model::DORAEvent> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -90,7 +90,7 @@ impl<'de> Deserialize<'de> for DORADeploymentFetchResponse {
                     }
                 }
 
-                let content = DORADeploymentFetchResponse {
+                let content = DORAFetchResponse {
                     data,
                     additional_properties,
                     _unparsed,
@@ -100,6 +100,6 @@ impl<'de> Deserialize<'de> for DORADeploymentFetchResponse {
             }
         }
 
-        deserializer.deserialize_any(DORADeploymentFetchResponseVisitor)
+        deserializer.deserialize_any(DORAFetchResponseVisitor)
     }
 }
