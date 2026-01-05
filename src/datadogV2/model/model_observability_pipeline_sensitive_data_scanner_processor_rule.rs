@@ -30,7 +30,7 @@ pub struct ObservabilityPipelineSensitiveDataScannerProcessorRule {
     pub scope: crate::datadogV2::model::ObservabilityPipelineSensitiveDataScannerProcessorScope,
     /// Tags assigned to this rule for filtering and classification.
     #[serde(rename = "tags")]
-    pub tags: Vec<String>,
+    pub tags: Option<Vec<String>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -44,7 +44,6 @@ impl ObservabilityPipelineSensitiveDataScannerProcessorRule {
         on_match: crate::datadogV2::model::ObservabilityPipelineSensitiveDataScannerProcessorAction,
         pattern: crate::datadogV2::model::ObservabilityPipelineSensitiveDataScannerProcessorPattern,
         scope: crate::datadogV2::model::ObservabilityPipelineSensitiveDataScannerProcessorScope,
-        tags: Vec<String>,
     ) -> ObservabilityPipelineSensitiveDataScannerProcessorRule {
         ObservabilityPipelineSensitiveDataScannerProcessorRule {
             keyword_options: None,
@@ -52,7 +51,7 @@ impl ObservabilityPipelineSensitiveDataScannerProcessorRule {
             on_match,
             pattern,
             scope,
-            tags,
+            tags: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -63,6 +62,11 @@ impl ObservabilityPipelineSensitiveDataScannerProcessorRule {
         value: crate::datadogV2::model::ObservabilityPipelineSensitiveDataScannerProcessorKeywordOptions,
     ) -> Self {
         self.keyword_options = Some(value);
+        self
+    }
+
+    pub fn tags(mut self, value: Vec<String>) -> Self {
+        self.tags = Some(value);
         self
     }
 
@@ -150,6 +154,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSensitiveDataScannerProcesso
                             }
                         }
                         "tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -163,7 +170,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSensitiveDataScannerProcesso
                 let on_match = on_match.ok_or_else(|| M::Error::missing_field("on_match"))?;
                 let pattern = pattern.ok_or_else(|| M::Error::missing_field("pattern"))?;
                 let scope = scope.ok_or_else(|| M::Error::missing_field("scope"))?;
-                let tags = tags.ok_or_else(|| M::Error::missing_field("tags"))?;
 
                 let content = ObservabilityPipelineSensitiveDataScannerProcessorRule {
                     keyword_options,
