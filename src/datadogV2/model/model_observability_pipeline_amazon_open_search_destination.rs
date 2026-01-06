@@ -15,6 +15,9 @@ pub struct ObservabilityPipelineAmazonOpenSearchDestination {
     /// The `strategy` field determines whether basic or AWS-based authentication is used.
     #[serde(rename = "auth")]
     pub auth: crate::datadogV2::model::ObservabilityPipelineAmazonOpenSearchDestinationAuth,
+    /// Configuration for buffer settings on destination components.
+    #[serde(rename = "buffer")]
+    pub buffer: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptions>,
     /// The index to write logs to.
     #[serde(rename = "bulk_index")]
     pub bulk_index: Option<String>,
@@ -43,6 +46,7 @@ impl ObservabilityPipelineAmazonOpenSearchDestination {
     ) -> ObservabilityPipelineAmazonOpenSearchDestination {
         ObservabilityPipelineAmazonOpenSearchDestination {
             auth,
+            buffer: None,
             bulk_index: None,
             id,
             inputs,
@@ -50,6 +54,14 @@ impl ObservabilityPipelineAmazonOpenSearchDestination {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn buffer(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineBufferOptions,
+    ) -> Self {
+        self.buffer = Some(value);
+        self
     }
 
     pub fn bulk_index(mut self, value: String) -> Self {
@@ -86,6 +98,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonOpenSearchDestination 
                 let mut auth: Option<
                     crate::datadogV2::model::ObservabilityPipelineAmazonOpenSearchDestinationAuth,
                 > = None;
+                let mut buffer: Option<
+                    crate::datadogV2::model::ObservabilityPipelineBufferOptions,
+                > = None;
                 let mut bulk_index: Option<String> = None;
                 let mut id: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
@@ -102,6 +117,20 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonOpenSearchDestination 
                     match k.as_str() {
                         "auth" => {
                             auth = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "buffer" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            buffer = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _buffer) = buffer {
+                                match _buffer {
+                                    crate::datadogV2::model::ObservabilityPipelineBufferOptions::UnparsedObject(_buffer) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "bulk_index" => {
                             if v.is_null() {
@@ -140,6 +169,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonOpenSearchDestination 
 
                 let content = ObservabilityPipelineAmazonOpenSearchDestination {
                     auth,
+                    buffer,
                     bulk_index,
                     id,
                     inputs,
