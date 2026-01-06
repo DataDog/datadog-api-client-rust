@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineSocketDestination {
+    /// Configuration for buffer settings on destination components.
+    #[serde(rename = "buffer")]
+    pub buffer: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptions>,
     /// Encoding format for log events.
     #[serde(rename = "encoding")]
     pub encoding: crate::datadogV2::model::ObservabilityPipelineSocketDestinationEncoding,
@@ -49,6 +52,7 @@ impl ObservabilityPipelineSocketDestination {
         type_: crate::datadogV2::model::ObservabilityPipelineSocketDestinationType,
     ) -> ObservabilityPipelineSocketDestination {
         ObservabilityPipelineSocketDestination {
+            buffer: None,
             encoding,
             framing,
             id,
@@ -59,6 +63,14 @@ impl ObservabilityPipelineSocketDestination {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn buffer(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineBufferOptions,
+    ) -> Self {
+        self.buffer = Some(value);
+        self
     }
 
     pub fn tls(mut self, value: crate::datadogV2::model::ObservabilityPipelineTls) -> Self {
@@ -92,6 +104,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSocketDestination {
             where
                 M: MapAccess<'a>,
             {
+                let mut buffer: Option<
+                    crate::datadogV2::model::ObservabilityPipelineBufferOptions,
+                > = None;
                 let mut encoding: Option<
                     crate::datadogV2::model::ObservabilityPipelineSocketDestinationEncoding,
                 > = None;
@@ -115,6 +130,20 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSocketDestination {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "buffer" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            buffer = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _buffer) = buffer {
+                                match _buffer {
+                                    crate::datadogV2::model::ObservabilityPipelineBufferOptions::UnparsedObject(_buffer) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
                         "encoding" => {
                             encoding = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _encoding) = encoding {
@@ -186,6 +215,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSocketDestination {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineSocketDestination {
+                    buffer,
                     encoding,
                     framing,
                     id,

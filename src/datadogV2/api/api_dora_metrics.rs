@@ -808,8 +808,10 @@ impl DORAMetricsAPI {
     pub async fn get_dora_deployment(
         &self,
         deployment_id: String,
-    ) -> Result<crate::datadogV2::model::DORAFetchResponse, datadog::Error<GetDORADeploymentError>>
-    {
+    ) -> Result<
+        crate::datadogV2::model::DORADeploymentFetchResponse,
+        datadog::Error<GetDORADeploymentError>,
+    > {
         match self.get_dora_deployment_with_http_info(deployment_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
@@ -829,7 +831,7 @@ impl DORAMetricsAPI {
         &self,
         deployment_id: String,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::DORAFetchResponse>,
+        datadog::ResponseContent<crate::datadogV2::model::DORADeploymentFetchResponse>,
         datadog::Error<GetDORADeploymentError>,
     > {
         let local_configuration = &self.config;
@@ -887,8 +889,9 @@ impl DORAMetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::DORAFetchResponse>(&local_content)
-            {
+            match serde_json::from_str::<crate::datadogV2::model::DORADeploymentFetchResponse>(
+                &local_content,
+            ) {
                 Ok(e) => {
                     return Ok(datadog::ResponseContent {
                         status: local_status,
@@ -914,8 +917,10 @@ impl DORAMetricsAPI {
     pub async fn get_dora_failure(
         &self,
         failure_id: String,
-    ) -> Result<crate::datadogV2::model::DORAFetchResponse, datadog::Error<GetDORAFailureError>>
-    {
+    ) -> Result<
+        crate::datadogV2::model::DORAFailureFetchResponse,
+        datadog::Error<GetDORAFailureError>,
+    > {
         match self.get_dora_failure_with_http_info(failure_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
@@ -935,7 +940,7 @@ impl DORAMetricsAPI {
         &self,
         failure_id: String,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::DORAFetchResponse>,
+        datadog::ResponseContent<crate::datadogV2::model::DORAFailureFetchResponse>,
         datadog::Error<GetDORAFailureError>,
     > {
         let local_configuration = &self.config;
@@ -993,8 +998,9 @@ impl DORAMetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::DORAFetchResponse>(&local_content)
-            {
+            match serde_json::from_str::<crate::datadogV2::model::DORAFailureFetchResponse>(
+                &local_content,
+            ) {
                 Ok(e) => {
                     return Ok(datadog::ResponseContent {
                         status: local_status,
@@ -1020,8 +1026,10 @@ impl DORAMetricsAPI {
     pub async fn list_dora_deployments(
         &self,
         body: crate::datadogV2::model::DORAListDeploymentsRequest,
-    ) -> Result<crate::datadogV2::model::DORAListResponse, datadog::Error<ListDORADeploymentsError>>
-    {
+    ) -> Result<
+        crate::datadogV2::model::DORADeploymentsListResponse,
+        datadog::Error<ListDORADeploymentsError>,
+    > {
         match self.list_dora_deployments_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
@@ -1041,7 +1049,7 @@ impl DORAMetricsAPI {
         &self,
         body: crate::datadogV2::model::DORAListDeploymentsRequest,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::DORAListResponse>,
+        datadog::ResponseContent<crate::datadogV2::model::DORADeploymentsListResponse>,
         datadog::Error<ListDORADeploymentsError>,
     > {
         let local_configuration = &self.config;
@@ -1144,8 +1152,9 @@ impl DORAMetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::DORAListResponse>(&local_content)
-            {
+            match serde_json::from_str::<crate::datadogV2::model::DORADeploymentsListResponse>(
+                &local_content,
+            ) {
                 Ok(e) => {
                     return Ok(datadog::ResponseContent {
                         status: local_status,
@@ -1171,8 +1180,10 @@ impl DORAMetricsAPI {
     pub async fn list_dora_failures(
         &self,
         body: crate::datadogV2::model::DORAListFailuresRequest,
-    ) -> Result<crate::datadogV2::model::DORAListResponse, datadog::Error<ListDORAFailuresError>>
-    {
+    ) -> Result<
+        crate::datadogV2::model::DORAFailuresListResponse,
+        datadog::Error<ListDORAFailuresError>,
+    > {
         match self.list_dora_failures_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
@@ -1192,7 +1203,7 @@ impl DORAMetricsAPI {
         &self,
         body: crate::datadogV2::model::DORAListFailuresRequest,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::DORAListResponse>,
+        datadog::ResponseContent<crate::datadogV2::model::DORAFailuresListResponse>,
         datadog::Error<ListDORAFailuresError>,
     > {
         let local_configuration = &self.config;
@@ -1295,8 +1306,9 @@ impl DORAMetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::DORAListResponse>(&local_content)
-            {
+            match serde_json::from_str::<crate::datadogV2::model::DORAFailuresListResponse>(
+                &local_content,
+            ) {
                 Ok(e) => {
                     return Ok(datadog::ResponseContent {
                         status: local_status,

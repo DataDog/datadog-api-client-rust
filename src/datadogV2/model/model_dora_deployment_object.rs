@@ -6,20 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A DORA event.
+/// A DORA deployment event.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct DORAEvent {
-    /// The attributes of the event.
+pub struct DORADeploymentObject {
+    /// The attributes of the deployment event.
     #[serde(rename = "attributes")]
-    pub attributes: Option<std::collections::BTreeMap<String, serde_json::Value>>,
-    /// The ID of the event.
+    pub attributes: Option<crate::datadogV2::model::DORADeploymentObjectAttributes>,
+    /// The ID of the deployment event.
     #[serde(rename = "id")]
     pub id: Option<String>,
-    /// The type of the event.
+    /// JSON:API type for DORA deployment events.
     #[serde(rename = "type")]
-    pub type_: Option<String>,
+    pub type_: Option<crate::datadogV2::model::DORADeploymentType>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,9 +27,9 @@ pub struct DORAEvent {
     pub(crate) _unparsed: bool,
 }
 
-impl DORAEvent {
-    pub fn new() -> DORAEvent {
-        DORAEvent {
+impl DORADeploymentObject {
+    pub fn new() -> DORADeploymentObject {
+        DORADeploymentObject {
             attributes: None,
             id: None,
             type_: None,
@@ -40,7 +40,7 @@ impl DORAEvent {
 
     pub fn attributes(
         mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
+        value: crate::datadogV2::model::DORADeploymentObjectAttributes,
     ) -> Self {
         self.attributes = Some(value);
         self
@@ -51,7 +51,7 @@ impl DORAEvent {
         self
     }
 
-    pub fn type_(mut self, value: String) -> Self {
+    pub fn type_(mut self, value: crate::datadogV2::model::DORADeploymentType) -> Self {
         self.type_ = Some(value);
         self
     }
@@ -65,20 +65,20 @@ impl DORAEvent {
     }
 }
 
-impl Default for DORAEvent {
+impl Default for DORADeploymentObject {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for DORAEvent {
+impl<'de> Deserialize<'de> for DORADeploymentObject {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct DORAEventVisitor;
-        impl<'a> Visitor<'a> for DORAEventVisitor {
-            type Value = DORAEvent;
+        struct DORADeploymentObjectVisitor;
+        impl<'a> Visitor<'a> for DORADeploymentObjectVisitor {
+            type Value = DORADeploymentObject;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -88,10 +88,11 @@ impl<'de> Deserialize<'de> for DORAEvent {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                    None;
+                let mut attributes: Option<
+                    crate::datadogV2::model::DORADeploymentObjectAttributes,
+                > = None;
                 let mut id: Option<String> = None;
-                let mut type_: Option<String> = None;
+                let mut type_: Option<crate::datadogV2::model::DORADeploymentType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -117,6 +118,16 @@ impl<'de> Deserialize<'de> for DORAEvent {
                                 continue;
                             }
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _type_) = type_ {
+                                match _type_ {
+                                    crate::datadogV2::model::DORADeploymentType::UnparsedObject(
+                                        _type_,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -126,7 +137,7 @@ impl<'de> Deserialize<'de> for DORAEvent {
                     }
                 }
 
-                let content = DORAEvent {
+                let content = DORADeploymentObject {
                     attributes,
                     id,
                     type_,
@@ -138,6 +149,6 @@ impl<'de> Deserialize<'de> for DORAEvent {
             }
         }
 
-        deserializer.deserialize_any(DORAEventVisitor)
+        deserializer.deserialize_any(DORADeploymentObjectVisitor)
     }
 }
