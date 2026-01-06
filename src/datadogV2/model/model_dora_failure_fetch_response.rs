@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response for the DORA list endpoints.
+/// Response for fetching a single failure event.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct DORAListResponse {
-    /// The list of DORA events.
+pub struct DORAFailureFetchResponse {
+    /// A DORA incident event.
     #[serde(rename = "data")]
-    pub data: Option<Vec<crate::datadogV2::model::DORAEvent>>,
+    pub data: Option<crate::datadogV2::model::DORAIncidentObject>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,16 +21,16 @@ pub struct DORAListResponse {
     pub(crate) _unparsed: bool,
 }
 
-impl DORAListResponse {
-    pub fn new() -> DORAListResponse {
-        DORAListResponse {
+impl DORAFailureFetchResponse {
+    pub fn new() -> DORAFailureFetchResponse {
+        DORAFailureFetchResponse {
             data: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn data(mut self, value: Vec<crate::datadogV2::model::DORAEvent>) -> Self {
+    pub fn data(mut self, value: crate::datadogV2::model::DORAIncidentObject) -> Self {
         self.data = Some(value);
         self
     }
@@ -44,20 +44,20 @@ impl DORAListResponse {
     }
 }
 
-impl Default for DORAListResponse {
+impl Default for DORAFailureFetchResponse {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for DORAListResponse {
+impl<'de> Deserialize<'de> for DORAFailureFetchResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct DORAListResponseVisitor;
-        impl<'a> Visitor<'a> for DORAListResponseVisitor {
-            type Value = DORAListResponse;
+        struct DORAFailureFetchResponseVisitor;
+        impl<'a> Visitor<'a> for DORAFailureFetchResponseVisitor {
+            type Value = DORAFailureFetchResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -67,7 +67,7 @@ impl<'de> Deserialize<'de> for DORAListResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<Vec<crate::datadogV2::model::DORAEvent>> = None;
+                let mut data: Option<crate::datadogV2::model::DORAIncidentObject> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -90,7 +90,7 @@ impl<'de> Deserialize<'de> for DORAListResponse {
                     }
                 }
 
-                let content = DORAListResponse {
+                let content = DORAFailureFetchResponse {
                     data,
                     additional_properties,
                     _unparsed,
@@ -100,6 +100,6 @@ impl<'de> Deserialize<'de> for DORAListResponse {
             }
         }
 
-        deserializer.deserialize_any(DORAListResponseVisitor)
+        deserializer.deserialize_any(DORAFailureFetchResponseVisitor)
     }
 }
