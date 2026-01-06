@@ -10,7 +10,6 @@ pub enum CustomAttributeType {
     URL,
     TEXT,
     NUMBER,
-    SELECT,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -20,7 +19,6 @@ impl ToString for CustomAttributeType {
             Self::URL => String::from("URL"),
             Self::TEXT => String::from("TEXT"),
             Self::NUMBER => String::from("NUMBER"),
-            Self::SELECT => String::from("SELECT"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -48,7 +46,6 @@ impl<'de> Deserialize<'de> for CustomAttributeType {
             "URL" => Self::URL,
             "TEXT" => Self::TEXT,
             "NUMBER" => Self::NUMBER,
-            "SELECT" => Self::SELECT,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

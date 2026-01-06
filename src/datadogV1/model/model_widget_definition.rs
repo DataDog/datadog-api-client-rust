@@ -33,6 +33,7 @@ pub enum WidgetDefinition {
     SLOListWidgetDefinition(Box<crate::datadogV1::model::SLOListWidgetDefinition>),
     SLOWidgetDefinition(Box<crate::datadogV1::model::SLOWidgetDefinition>),
     ScatterPlotWidgetDefinition(Box<crate::datadogV1::model::ScatterPlotWidgetDefinition>),
+    SankeyWidgetDefinition(Box<crate::datadogV1::model::SankeyWidgetDefinition>),
     ServiceMapWidgetDefinition(Box<crate::datadogV1::model::ServiceMapWidgetDefinition>),
     ServiceSummaryWidgetDefinition(Box<crate::datadogV1::model::ServiceSummaryWidgetDefinition>),
     SplitGraphWidgetDefinition(Box<crate::datadogV1::model::SplitGraphWidgetDefinition>),
@@ -241,6 +242,13 @@ impl<'de> Deserialize<'de> for WidgetDefinition {
         {
             if !_v._unparsed {
                 return Ok(WidgetDefinition::ScatterPlotWidgetDefinition(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::SankeyWidgetDefinition>>(
+            value.clone(),
+        ) {
+            if !_v._unparsed {
+                return Ok(WidgetDefinition::SankeyWidgetDefinition(_v));
             }
         }
         if let Ok(_v) = serde_json::from_value::<
