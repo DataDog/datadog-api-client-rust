@@ -1,0 +1,67 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"description\":\"\",\"layout_type\":\"free\",\"notify_list\":[],\"template_variables\":[],\"title\":\"Test-Create_a_new_dashboard_with_sankey_widget_and_network_data_source-1767367605\",\"widgets\":[{\"definition\":{\"requests\":[{\"query\":{\"data_source\":\"network\",\"group_by\":[\"source\",\"destination\"],\"limit\":100,\"query_string\":\"*\"},\"request_type\":\"netflow_sankey\"}],\"title\":\"\",\"title_align\":\"left\",\"title_size\":\"16\",\"type\":\"sankey\"},\"layout\":{\"height\":15,\"width\":47,\"x\":0,\"y\":0}}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v1/dashboard"
+      },
+      "response": {
+        "body": {
+          "string": "{\"id\":\"ngh-vn6-nqq\",\"title\":\"Test-Create_a_new_dashboard_with_sankey_widget_and_network_data_source-1767367605\",\"description\":\"\",\"author_handle\":\"sophie.cao@datadoghq.com\",\"author_name\":\"Sophie Cao\",\"layout_type\":\"free\",\"url\":\"/dashboard/ngh-vn6-nqq/test-createanewdashboardwithsankeywidgetandnetworkdatasource-1767367605\",\"template_variables\":[],\"widgets\":[{\"definition\":{\"requests\":[{\"query\":{\"data_source\":\"network\",\"group_by\":[\"source\",\"destination\"],\"limit\":100,\"query_string\":\"*\"},\"request_type\":\"netflow_sankey\"}],\"title\":\"\",\"title_align\":\"left\",\"title_size\":\"16\",\"type\":\"sankey\"},\"layout\":{\"height\":15,\"width\":47,\"x\":0,\"y\":0},\"id\":4009219214466684}],\"notify_list\":[],\"created_at\":\"2026-01-02T15:26:46.118136+00:00\",\"modified_at\":\"2026-01-02T15:26:46.118136+00:00\",\"restricted_roles\":[]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Fri, 02 Jan 2026 15:26:45 GMT"
+    },
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "application/json"
+          ]
+        },
+        "method": "delete",
+        "uri": "https://api.datadoghq.com/api/v1/dashboard/ngh-vn6-nqq"
+      },
+      "response": {
+        "body": {
+          "string": "{\"deleted_dashboard_id\":\"ngh-vn6-nqq\"}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Fri, 02 Jan 2026 15:26:45 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

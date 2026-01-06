@@ -11,10 +11,6 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseCreateAttributes {
-    /// Case custom attributes
-    #[serde(rename = "custom_attributes")]
-    pub custom_attributes:
-        Option<std::collections::BTreeMap<String, crate::datadogV2::model::CustomAttributeValue>>,
     /// Description
     #[serde(rename = "description")]
     pub description: Option<String>,
@@ -37,7 +33,6 @@ pub struct CaseCreateAttributes {
 impl CaseCreateAttributes {
     pub fn new(title: String, type_id: String) -> CaseCreateAttributes {
         CaseCreateAttributes {
-            custom_attributes: None,
             description: None,
             priority: None,
             title,
@@ -45,14 +40,6 @@ impl CaseCreateAttributes {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn custom_attributes(
-        mut self,
-        value: std::collections::BTreeMap<String, crate::datadogV2::model::CustomAttributeValue>,
-    ) -> Self {
-        self.custom_attributes = Some(value);
-        self
     }
 
     pub fn description(mut self, value: String) -> Self {
@@ -91,12 +78,6 @@ impl<'de> Deserialize<'de> for CaseCreateAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut custom_attributes: Option<
-                    std::collections::BTreeMap<
-                        String,
-                        crate::datadogV2::model::CustomAttributeValue,
-                    >,
-                > = None;
                 let mut description: Option<String> = None;
                 let mut priority: Option<crate::datadogV2::model::CasePriority> = None;
                 let mut title: Option<String> = None;
@@ -109,13 +90,6 @@ impl<'de> Deserialize<'de> for CaseCreateAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "custom_attributes" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            custom_attributes =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "description" => {
                             if v.is_null() {
                                 continue;
@@ -156,7 +130,6 @@ impl<'de> Deserialize<'de> for CaseCreateAttributes {
                 let type_id = type_id.ok_or_else(|| M::Error::missing_field("type_id"))?;
 
                 let content = CaseCreateAttributes {
-                    custom_attributes,
                     description,
                     priority,
                     title,
