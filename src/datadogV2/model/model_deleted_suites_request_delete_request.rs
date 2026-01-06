@@ -6,14 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response for the DORA list endpoints.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct DORAListResponse {
-    /// The list of DORA events.
+pub struct DeletedSuitesRequestDeleteRequest {
     #[serde(rename = "data")]
-    pub data: Option<Vec<crate::datadogV2::model::DORAEvent>>,
+    pub data: crate::datadogV2::model::DeletedSuitesRequestDelete,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,18 +19,15 @@ pub struct DORAListResponse {
     pub(crate) _unparsed: bool,
 }
 
-impl DORAListResponse {
-    pub fn new() -> DORAListResponse {
-        DORAListResponse {
-            data: None,
+impl DeletedSuitesRequestDeleteRequest {
+    pub fn new(
+        data: crate::datadogV2::model::DeletedSuitesRequestDelete,
+    ) -> DeletedSuitesRequestDeleteRequest {
+        DeletedSuitesRequestDeleteRequest {
+            data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn data(mut self, value: Vec<crate::datadogV2::model::DORAEvent>) -> Self {
-        self.data = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -44,20 +39,14 @@ impl DORAListResponse {
     }
 }
 
-impl Default for DORAListResponse {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<'de> Deserialize<'de> for DORAListResponse {
+impl<'de> Deserialize<'de> for DeletedSuitesRequestDeleteRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct DORAListResponseVisitor;
-        impl<'a> Visitor<'a> for DORAListResponseVisitor {
-            type Value = DORAListResponse;
+        struct DeletedSuitesRequestDeleteRequestVisitor;
+        impl<'a> Visitor<'a> for DeletedSuitesRequestDeleteRequestVisitor {
+            type Value = DeletedSuitesRequestDeleteRequest;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -67,7 +56,7 @@ impl<'de> Deserialize<'de> for DORAListResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<Vec<crate::datadogV2::model::DORAEvent>> = None;
+                let mut data: Option<crate::datadogV2::model::DeletedSuitesRequestDelete> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -77,9 +66,6 @@ impl<'de> Deserialize<'de> for DORAListResponse {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "data" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -89,8 +75,9 @@ impl<'de> Deserialize<'de> for DORAListResponse {
                         }
                     }
                 }
+                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = DORAListResponse {
+                let content = DeletedSuitesRequestDeleteRequest {
                     data,
                     additional_properties,
                     _unparsed,
@@ -100,6 +87,6 @@ impl<'de> Deserialize<'de> for DORAListResponse {
             }
         }
 
-        deserializer.deserialize_any(DORAListResponseVisitor)
+        deserializer.deserialize_any(DeletedSuitesRequestDeleteRequestVisitor)
     }
 }
