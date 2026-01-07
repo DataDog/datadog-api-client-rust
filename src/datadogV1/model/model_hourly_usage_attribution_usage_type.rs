@@ -15,6 +15,7 @@ pub enum HourlyUsageAttributionUsageType {
     APPSEC_USAGE,
     ASM_SERVERLESS_TRACED_INVOCATIONS_USAGE,
     ASM_SERVERLESS_TRACED_INVOCATIONS_PERCENTAGE,
+    BITS_AI_INVESTIGATIONS_USAGE,
     BROWSER_USAGE,
     CI_PIPELINE_INDEXED_SPANS_USAGE,
     CI_TEST_INDEXED_SPANS_USAGE,
@@ -106,6 +107,7 @@ impl ToString for HourlyUsageAttributionUsageType {
             Self::ASM_SERVERLESS_TRACED_INVOCATIONS_PERCENTAGE => {
                 String::from("asm_serverless_traced_invocations_percentage")
             }
+            Self::BITS_AI_INVESTIGATIONS_USAGE => String::from("bits_ai_investigations_usage"),
             Self::BROWSER_USAGE => String::from("browser_usage"),
             Self::CI_PIPELINE_INDEXED_SPANS_USAGE => {
                 String::from("ci_pipeline_indexed_spans_usage")
@@ -235,6 +237,7 @@ impl<'de> Deserialize<'de> for HourlyUsageAttributionUsageType {
             "asm_serverless_traced_invocations_percentage" => {
                 Self::ASM_SERVERLESS_TRACED_INVOCATIONS_PERCENTAGE
             }
+            "bits_ai_investigations_usage" => Self::BITS_AI_INVESTIGATIONS_USAGE,
             "browser_usage" => Self::BROWSER_USAGE,
             "ci_pipeline_indexed_spans_usage" => Self::CI_PIPELINE_INDEXED_SPANS_USAGE,
             "ci_test_indexed_spans_usage" => Self::CI_TEST_INDEXED_SPANS_USAGE,

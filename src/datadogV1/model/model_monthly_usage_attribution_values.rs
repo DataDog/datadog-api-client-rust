@@ -54,6 +54,12 @@ pub struct MonthlyUsageAttributionValues {
     /// The Application Security Monitoring Serverless traced invocations usage by tag(s).
     #[serde(rename = "asm_serverless_traced_invocations_usage")]
     pub asm_serverless_traced_invocations_usage: Option<f64>,
+    /// The percentage of Bits AI `SRE` investigation usage by tag(s).
+    #[serde(rename = "bits_ai_investigations_percentage")]
+    pub bits_ai_investigations_percentage: Option<f64>,
+    /// The Bits AI `SRE` investigation usage by tag(s).
+    #[serde(rename = "bits_ai_investigations_usage")]
+    pub bits_ai_investigations_usage: Option<f64>,
     /// The percentage of synthetic browser test usage by tag(s).
     #[serde(rename = "browser_percentage")]
     pub browser_percentage: Option<f64>,
@@ -504,6 +510,8 @@ impl MonthlyUsageAttributionValues {
             appsec_usage: None,
             asm_serverless_traced_invocations_percentage: None,
             asm_serverless_traced_invocations_usage: None,
+            bits_ai_investigations_percentage: None,
+            bits_ai_investigations_usage: None,
             browser_percentage: None,
             browser_usage: None,
             ci_pipeline_indexed_spans_percentage: None,
@@ -718,6 +726,16 @@ impl MonthlyUsageAttributionValues {
 
     pub fn asm_serverless_traced_invocations_usage(mut self, value: f64) -> Self {
         self.asm_serverless_traced_invocations_usage = Some(value);
+        self
+    }
+
+    pub fn bits_ai_investigations_percentage(mut self, value: f64) -> Self {
+        self.bits_ai_investigations_percentage = Some(value);
+        self
+    }
+
+    pub fn bits_ai_investigations_usage(mut self, value: f64) -> Self {
+        self.bits_ai_investigations_usage = Some(value);
         self
     }
 
@@ -1477,6 +1495,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                 let mut appsec_usage: Option<f64> = None;
                 let mut asm_serverless_traced_invocations_percentage: Option<f64> = None;
                 let mut asm_serverless_traced_invocations_usage: Option<f64> = None;
+                let mut bits_ai_investigations_percentage: Option<f64> = None;
+                let mut bits_ai_investigations_usage: Option<f64> = None;
                 let mut browser_percentage: Option<f64> = None;
                 let mut browser_usage: Option<f64> = None;
                 let mut ci_pipeline_indexed_spans_percentage: Option<f64> = None;
@@ -1722,6 +1742,20 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                                 continue;
                             }
                             asm_serverless_traced_invocations_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "bits_ai_investigations_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            bits_ai_investigations_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "bits_ai_investigations_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            bits_ai_investigations_usage =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "browser_percentage" => {
@@ -2740,6 +2774,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                     appsec_usage,
                     asm_serverless_traced_invocations_percentage,
                     asm_serverless_traced_invocations_usage,
+                    bits_ai_investigations_percentage,
+                    bits_ai_investigations_usage,
                     browser_percentage,
                     browser_usage,
                     ci_pipeline_indexed_spans_percentage,
