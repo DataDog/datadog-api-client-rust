@@ -21,6 +21,8 @@ pub enum MonthlyUsageAttributionSupportedMetrics {
     APPSEC_PERCENTAGE,
     ASM_SERVERLESS_TRACED_INVOCATIONS_USAGE,
     ASM_SERVERLESS_TRACED_INVOCATIONS_PERCENTAGE,
+    BITS_AI_INVESTIGATIONS_USAGE,
+    BITS_AI_INVESTIGATIONS_PERCENTAGE,
     BROWSER_USAGE,
     BROWSER_PERCENTAGE,
     CI_VISIBILITY_ITR_USAGE,
@@ -189,6 +191,10 @@ impl ToString for MonthlyUsageAttributionSupportedMetrics {
             }
             Self::ASM_SERVERLESS_TRACED_INVOCATIONS_PERCENTAGE => {
                 String::from("asm_serverless_traced_invocations_percentage")
+            }
+            Self::BITS_AI_INVESTIGATIONS_USAGE => String::from("bits_ai_investigations_usage"),
+            Self::BITS_AI_INVESTIGATIONS_PERCENTAGE => {
+                String::from("bits_ai_investigations_percentage")
             }
             Self::BROWSER_USAGE => String::from("browser_usage"),
             Self::BROWSER_PERCENTAGE => String::from("browser_percentage"),
@@ -435,6 +441,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionSupportedMetrics {
             "asm_serverless_traced_invocations_percentage" => {
                 Self::ASM_SERVERLESS_TRACED_INVOCATIONS_PERCENTAGE
             }
+            "bits_ai_investigations_usage" => Self::BITS_AI_INVESTIGATIONS_USAGE,
+            "bits_ai_investigations_percentage" => Self::BITS_AI_INVESTIGATIONS_PERCENTAGE,
             "browser_usage" => Self::BROWSER_USAGE,
             "browser_percentage" => Self::BROWSER_PERCENTAGE,
             "ci_visibility_itr_usage" => Self::CI_VISIBILITY_ITR_USAGE,
