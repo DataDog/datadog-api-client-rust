@@ -5,12 +5,14 @@ use datadog_api_client::datadogV2::api_incidents::ListIncidentAttachmentsOptiona
 
 #[tokio::main]
 async fn main() {
+    // there is a valid "incident" in the system
+    let incident_data_id = std::env::var("INCIDENT_DATA_ID").unwrap();
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.ListIncidentAttachments", true);
     let api = IncidentsAPI::with_config(configuration);
     let resp = api
         .list_incident_attachments(
-            "incident_id".to_string(),
+            incident_data_id.clone(),
             ListIncidentAttachmentsOptionalParams::default(),
         )
         .await;

@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The updated attachment object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct PatchAttachmentRequestDataAttributesAttachment {
+    /// The updated URL for the attachment.
     #[serde(rename = "documentUrl")]
     pub document_url: Option<String>,
+    /// The updated title for the attachment.
     #[serde(rename = "title")]
     pub title: Option<String>,
     #[serde(flatten)]
