@@ -126,6 +126,7 @@ pub struct ApiInstances {
     pub v2_api_roles: Option<datadogV2::api_roles::RolesAPI>,
     pub v2_api_powerpack: Option<datadogV2::api_powerpack::PowerpackAPI>,
     pub v2_api_processes: Option<datadogV2::api_processes::ProcessesAPI>,
+    pub v2_api_product_analytics: Option<datadogV2::api_product_analytics::ProductAnalyticsAPI>,
     pub v2_api_rum_audience_management:
         Option<datadogV2::api_rum_audience_management::RumAudienceManagementAPI>,
     pub v2_api_reference_tables: Option<datadogV2::api_reference_tables::ReferenceTablesAPI>,
@@ -841,6 +842,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "Processes" => {
             world.api_instances.v2_api_processes = Some(
                 datadogV2::api_processes::ProcessesAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+        }
+        "ProductAnalytics" => {
+            world.api_instances.v2_api_product_analytics = Some(
+                datadogV2::api_product_analytics::ProductAnalyticsAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -3925,6 +3934,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.ListProcessesWithPagination".into(),
         test_v2_list_processes_with_pagination,
+    );
+    world.function_mappings.insert(
+        "v2.SubmitProductAnalyticsEvent".into(),
+        test_v2_submit_product_analytics_event,
     );
     world.function_mappings.insert(
         "v2.GetAccountFacetInfo".into(),
@@ -30039,6 +30052,34 @@ fn test_v2_list_processes_with_pagination(
     });
     world.response.object = serde_json::to_value(result).unwrap();
     world.response.code = 200;
+}
+
+fn test_v2_submit_product_analytics_event(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_product_analytics
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.submit_product_analytics_event_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
 }
 
 fn test_v2_get_account_facet_info(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
