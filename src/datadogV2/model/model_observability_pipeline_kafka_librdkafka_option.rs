@@ -6,11 +6,11 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Represents a key-value pair used to configure low-level `librdkafka` client options for Kafka sources, such as timeouts, buffer sizes, and security settings.
+/// Represents a key-value pair used to configure low-level `librdkafka` client options for Kafka source and destination, such as timeouts, buffer sizes, and security settings.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ObservabilityPipelineKafkaSourceLibrdkafkaOption {
+pub struct ObservabilityPipelineKafkaLibrdkafkaOption {
     /// The name of the `librdkafka` configuration option to set.
     #[serde(rename = "name")]
     pub name: String,
@@ -24,9 +24,9 @@ pub struct ObservabilityPipelineKafkaSourceLibrdkafkaOption {
     pub(crate) _unparsed: bool,
 }
 
-impl ObservabilityPipelineKafkaSourceLibrdkafkaOption {
-    pub fn new(name: String, value: String) -> ObservabilityPipelineKafkaSourceLibrdkafkaOption {
-        ObservabilityPipelineKafkaSourceLibrdkafkaOption {
+impl ObservabilityPipelineKafkaLibrdkafkaOption {
+    pub fn new(name: String, value: String) -> ObservabilityPipelineKafkaLibrdkafkaOption {
+        ObservabilityPipelineKafkaLibrdkafkaOption {
             name,
             value,
             additional_properties: std::collections::BTreeMap::new(),
@@ -43,14 +43,14 @@ impl ObservabilityPipelineKafkaSourceLibrdkafkaOption {
     }
 }
 
-impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaSourceLibrdkafkaOption {
+impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaLibrdkafkaOption {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ObservabilityPipelineKafkaSourceLibrdkafkaOptionVisitor;
-        impl<'a> Visitor<'a> for ObservabilityPipelineKafkaSourceLibrdkafkaOptionVisitor {
-            type Value = ObservabilityPipelineKafkaSourceLibrdkafkaOption;
+        struct ObservabilityPipelineKafkaLibrdkafkaOptionVisitor;
+        impl<'a> Visitor<'a> for ObservabilityPipelineKafkaLibrdkafkaOptionVisitor {
+            type Value = ObservabilityPipelineKafkaLibrdkafkaOption;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -86,7 +86,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaSourceLibrdkafkaOption 
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let value = value.ok_or_else(|| M::Error::missing_field("value"))?;
 
-                let content = ObservabilityPipelineKafkaSourceLibrdkafkaOption {
+                let content = ObservabilityPipelineKafkaLibrdkafkaOption {
                     name,
                     value,
                     additional_properties,
@@ -97,6 +97,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaSourceLibrdkafkaOption 
             }
         }
 
-        deserializer.deserialize_any(ObservabilityPipelineKafkaSourceLibrdkafkaOptionVisitor)
+        deserializer.deserialize_any(ObservabilityPipelineKafkaLibrdkafkaOptionVisitor)
     }
 }
