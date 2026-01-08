@@ -6,11 +6,11 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Object containing details about your Synthetic test.
+/// Object containing details about your Synthetic test, without test steps.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct SyntheticsTestDetails {
+pub struct SyntheticsTestDetailsWithoutSteps {
     /// Configuration object for a Synthetic test.
     #[serde(rename = "config")]
     pub config: Option<crate::datadogV1::model::SyntheticsTestConfig>,
@@ -39,9 +39,6 @@ pub struct SyntheticsTestDetails {
     /// Synthetic test.
     #[serde(rename = "status")]
     pub status: Option<crate::datadogV1::model::SyntheticsTestPauseStatus>,
-    /// The steps of the test if they exist.
-    #[serde(rename = "steps")]
-    pub steps: Option<Vec<crate::datadogV1::model::SyntheticsStep>>,
     /// The subtype of the Synthetic API test, `http`, `ssl`, `tcp`,
     /// `dns`, `icmp`, `udp`, `websocket`, `grpc` or `multi`.
     #[serde(rename = "subtype")]
@@ -59,9 +56,9 @@ pub struct SyntheticsTestDetails {
     pub(crate) _unparsed: bool,
 }
 
-impl SyntheticsTestDetails {
-    pub fn new() -> SyntheticsTestDetails {
-        SyntheticsTestDetails {
+impl SyntheticsTestDetailsWithoutSteps {
+    pub fn new() -> SyntheticsTestDetailsWithoutSteps {
+        SyntheticsTestDetailsWithoutSteps {
             config: None,
             creator: None,
             locations: None,
@@ -71,7 +68,6 @@ impl SyntheticsTestDetails {
             options: None,
             public_id: None,
             status: None,
-            steps: None,
             subtype: None,
             tags: None,
             type_: None,
@@ -125,11 +121,6 @@ impl SyntheticsTestDetails {
         self
     }
 
-    pub fn steps(mut self, value: Vec<crate::datadogV1::model::SyntheticsStep>) -> Self {
-        self.steps = Some(value);
-        self
-    }
-
     pub fn subtype(mut self, value: crate::datadogV1::model::SyntheticsTestDetailsSubType) -> Self {
         self.subtype = Some(value);
         self
@@ -154,20 +145,20 @@ impl SyntheticsTestDetails {
     }
 }
 
-impl Default for SyntheticsTestDetails {
+impl Default for SyntheticsTestDetailsWithoutSteps {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for SyntheticsTestDetails {
+impl<'de> Deserialize<'de> for SyntheticsTestDetailsWithoutSteps {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct SyntheticsTestDetailsVisitor;
-        impl<'a> Visitor<'a> for SyntheticsTestDetailsVisitor {
-            type Value = SyntheticsTestDetails;
+        struct SyntheticsTestDetailsWithoutStepsVisitor;
+        impl<'a> Visitor<'a> for SyntheticsTestDetailsWithoutStepsVisitor {
+            type Value = SyntheticsTestDetailsWithoutSteps;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -186,7 +177,6 @@ impl<'de> Deserialize<'de> for SyntheticsTestDetails {
                 let mut options: Option<crate::datadogV1::model::SyntheticsTestOptions> = None;
                 let mut public_id: Option<String> = None;
                 let mut status: Option<crate::datadogV1::model::SyntheticsTestPauseStatus> = None;
-                let mut steps: Option<Vec<crate::datadogV1::model::SyntheticsStep>> = None;
                 let mut subtype: Option<crate::datadogV1::model::SyntheticsTestDetailsSubType> =
                     None;
                 let mut tags: Option<Vec<String>> = None;
@@ -261,12 +251,6 @@ impl<'de> Deserialize<'de> for SyntheticsTestDetails {
                                 }
                             }
                         }
-                        "steps" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            steps = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "subtype" => {
                             if v.is_null() {
                                 continue;
@@ -309,7 +293,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestDetails {
                     }
                 }
 
-                let content = SyntheticsTestDetails {
+                let content = SyntheticsTestDetailsWithoutSteps {
                     config,
                     creator,
                     locations,
@@ -319,7 +303,6 @@ impl<'de> Deserialize<'de> for SyntheticsTestDetails {
                     options,
                     public_id,
                     status,
-                    steps,
                     subtype,
                     tags,
                     type_,
@@ -331,6 +314,6 @@ impl<'de> Deserialize<'de> for SyntheticsTestDetails {
             }
         }
 
-        deserializer.deserialize_any(SyntheticsTestDetailsVisitor)
+        deserializer.deserialize_any(SyntheticsTestDetailsWithoutStepsVisitor)
     }
 }

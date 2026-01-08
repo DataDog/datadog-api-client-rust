@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct SyntheticsListTestsResponse {
     /// Array of Synthetic tests configuration.
     #[serde(rename = "tests")]
-    pub tests: Option<Vec<crate::datadogV1::model::SyntheticsTestDetails>>,
+    pub tests: Option<Vec<crate::datadogV1::model::SyntheticsTestDetailsWithoutSteps>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -30,7 +30,10 @@ impl SyntheticsListTestsResponse {
         }
     }
 
-    pub fn tests(mut self, value: Vec<crate::datadogV1::model::SyntheticsTestDetails>) -> Self {
+    pub fn tests(
+        mut self,
+        value: Vec<crate::datadogV1::model::SyntheticsTestDetailsWithoutSteps>,
+    ) -> Self {
         self.tests = Some(value);
         self
     }
@@ -67,7 +70,9 @@ impl<'de> Deserialize<'de> for SyntheticsListTestsResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut tests: Option<Vec<crate::datadogV1::model::SyntheticsTestDetails>> = None;
+                let mut tests: Option<
+                    Vec<crate::datadogV1::model::SyntheticsTestDetailsWithoutSteps>,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,

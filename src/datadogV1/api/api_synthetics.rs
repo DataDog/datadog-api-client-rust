@@ -3171,7 +3171,10 @@ impl SyntheticsAPI {
     pub async fn get_test(
         &self,
         public_id: String,
-    ) -> Result<crate::datadogV1::model::SyntheticsTestDetails, datadog::Error<GetTestError>> {
+    ) -> Result<
+        crate::datadogV1::model::SyntheticsTestDetailsWithoutSteps,
+        datadog::Error<GetTestError>,
+    > {
         match self.get_test_with_http_info(public_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
@@ -3191,7 +3194,7 @@ impl SyntheticsAPI {
         &self,
         public_id: String,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV1::model::SyntheticsTestDetails>,
+        datadog::ResponseContent<crate::datadogV1::model::SyntheticsTestDetailsWithoutSteps>,
         datadog::Error<GetTestError>,
     > {
         let local_configuration = &self.config;
@@ -3249,7 +3252,7 @@ impl SyntheticsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV1::model::SyntheticsTestDetails>(
+            match serde_json::from_str::<crate::datadogV1::model::SyntheticsTestDetailsWithoutSteps>(
                 &local_content,
             ) {
                 Ok(e) => {
@@ -3510,7 +3513,7 @@ impl SyntheticsAPI {
         mut params: ListTestsOptionalParams,
     ) -> impl Stream<
         Item = Result<
-            crate::datadogV1::model::SyntheticsTestDetails,
+            crate::datadogV1::model::SyntheticsTestDetailsWithoutSteps,
             datadog::Error<ListTestsError>,
         >,
     > + '_ {
