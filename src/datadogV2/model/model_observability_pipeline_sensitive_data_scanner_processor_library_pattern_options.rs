@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineSensitiveDataScannerProcessorLibraryPatternOptions {
+    /// Human-readable description providing context about a sensitive data scanner rule
+    #[serde(rename = "description")]
+    pub description: Option<String>,
     /// Identifier for a predefined pattern from the sensitive data scanner pattern library.
     #[serde(rename = "id")]
     pub id: String,
@@ -29,11 +32,17 @@ impl ObservabilityPipelineSensitiveDataScannerProcessorLibraryPatternOptions {
         id: String,
     ) -> ObservabilityPipelineSensitiveDataScannerProcessorLibraryPatternOptions {
         ObservabilityPipelineSensitiveDataScannerProcessorLibraryPatternOptions {
+            description: None,
             id,
             use_recommended_keywords: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
+        self
     }
 
     pub fn use_recommended_keywords(mut self, value: bool) -> Self {
@@ -71,6 +80,7 @@ impl<'de> Deserialize<'de>
             where
                 M: MapAccess<'a>,
             {
+                let mut description: Option<String> = None;
                 let mut id: Option<String> = None;
                 let mut use_recommended_keywords: Option<bool> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -81,6 +91,13 @@ impl<'de> Deserialize<'de>
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            description =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -102,6 +119,7 @@ impl<'de> Deserialize<'de>
 
                 let content =
                     ObservabilityPipelineSensitiveDataScannerProcessorLibraryPatternOptions {
+                        description,
                         id,
                         use_recommended_keywords,
                         additional_properties,

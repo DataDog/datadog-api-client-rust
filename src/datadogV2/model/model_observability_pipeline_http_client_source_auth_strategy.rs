@@ -7,6 +7,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ObservabilityPipelineHttpClientSourceAuthStrategy {
+    NONE,
     BASIC,
     BEARER,
     UnparsedObject(crate::datadog::UnparsedObject),
@@ -15,6 +16,7 @@ pub enum ObservabilityPipelineHttpClientSourceAuthStrategy {
 impl ToString for ObservabilityPipelineHttpClientSourceAuthStrategy {
     fn to_string(&self) -> String {
         match self {
+            Self::NONE => String::from("none"),
             Self::BASIC => String::from("basic"),
             Self::BEARER => String::from("bearer"),
             Self::UnparsedObject(v) => v.value.to_string(),
@@ -41,6 +43,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineHttpClientSourceAuthStrategy
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
+            "none" => Self::NONE,
             "basic" => Self::BASIC,
             "bearer" => Self::BEARER,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {

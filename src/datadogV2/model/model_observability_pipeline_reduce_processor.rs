@@ -7,6 +7,8 @@ use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
 /// The `reduce` processor aggregates and merges logs based on matching keys and merge strategies.
+///
+/// **Supported pipeline types:** logs
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]

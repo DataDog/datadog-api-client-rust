@@ -7,6 +7,8 @@ use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
 /// The `kafka` source ingests data from Apache Kafka topics.
+///
+/// **Supported pipeline types:** logs
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -20,10 +22,10 @@ pub struct ObservabilityPipelineKafkaSource {
     /// Optional list of advanced Kafka client configuration options, defined as key-value pairs.
     #[serde(rename = "librdkafka_options")]
     pub librdkafka_options:
-        Option<Vec<crate::datadogV2::model::ObservabilityPipelineKafkaSourceLibrdkafkaOption>>,
+        Option<Vec<crate::datadogV2::model::ObservabilityPipelineKafkaLibrdkafkaOption>>,
     /// Specifies the SASL mechanism for authenticating with a Kafka cluster.
     #[serde(rename = "sasl")]
-    pub sasl: Option<crate::datadogV2::model::ObservabilityPipelineKafkaSourceSasl>,
+    pub sasl: Option<crate::datadogV2::model::ObservabilityPipelineKafkaSasl>,
     /// Configuration for enabling TLS encryption between the pipeline component and external services.
     #[serde(rename = "tls")]
     pub tls: Option<crate::datadogV2::model::ObservabilityPipelineTls>,
@@ -62,16 +64,13 @@ impl ObservabilityPipelineKafkaSource {
 
     pub fn librdkafka_options(
         mut self,
-        value: Vec<crate::datadogV2::model::ObservabilityPipelineKafkaSourceLibrdkafkaOption>,
+        value: Vec<crate::datadogV2::model::ObservabilityPipelineKafkaLibrdkafkaOption>,
     ) -> Self {
         self.librdkafka_options = Some(value);
         self
     }
 
-    pub fn sasl(
-        mut self,
-        value: crate::datadogV2::model::ObservabilityPipelineKafkaSourceSasl,
-    ) -> Self {
+    pub fn sasl(mut self, value: crate::datadogV2::model::ObservabilityPipelineKafkaSasl) -> Self {
         self.sasl = Some(value);
         self
     }
@@ -110,11 +109,10 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaSource {
                 let mut group_id: Option<String> = None;
                 let mut id: Option<String> = None;
                 let mut librdkafka_options: Option<
-                    Vec<crate::datadogV2::model::ObservabilityPipelineKafkaSourceLibrdkafkaOption>,
+                    Vec<crate::datadogV2::model::ObservabilityPipelineKafkaLibrdkafkaOption>,
                 > = None;
-                let mut sasl: Option<
-                    crate::datadogV2::model::ObservabilityPipelineKafkaSourceSasl,
-                > = None;
+                let mut sasl: Option<crate::datadogV2::model::ObservabilityPipelineKafkaSasl> =
+                    None;
                 let mut tls: Option<crate::datadogV2::model::ObservabilityPipelineTls> = None;
                 let mut topics: Option<Vec<String>> = None;
                 let mut type_: Option<
