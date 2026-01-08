@@ -4389,6 +4389,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.SetOnDemandConcurrencyCap".into(),
         test_v2_set_on_demand_concurrency_cap,
     );
+    world.function_mappings.insert(
+        "v2.PatchGlobalVariable".into(),
+        test_v2_patch_global_variable,
+    );
     world
         .function_mappings
         .insert("v2.ListTeams".into(), test_v2_list_teams);
@@ -33852,6 +33856,33 @@ fn test_v2_set_on_demand_concurrency_cap(
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.set_on_demand_concurrency_cap_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_patch_global_variable(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_synthetics
+        .as_ref()
+        .expect("api instance not found");
+    let variable_id =
+        serde_json::from_value(_parameters.get("variable_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.patch_global_variable_with_http_info(variable_id, body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
