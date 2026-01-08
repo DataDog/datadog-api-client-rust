@@ -27,7 +27,7 @@ pub struct DORADeploymentRequestAttributes {
     /// Git info for DORA Metrics events.
     #[serde(rename = "git")]
     pub git: Option<crate::datadogV2::model::DORAGitInfo>,
-    /// Deployment ID.
+    /// Deployment ID. Must be 16-128 characters and contain only alphanumeric characters, hyphens, underscores, periods, and colons (a-z, A-Z, 0-9, -, _, ., :).
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Service name.

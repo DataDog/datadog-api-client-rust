@@ -27,7 +27,7 @@ pub struct DORAFailureRequestAttributes {
     /// Git info for DORA Metrics events.
     #[serde(rename = "git")]
     pub git: Option<crate::datadogV2::model::DORAGitInfo>,
-    /// Failure ID. Must have at least 16 characters. Required to update a previously sent failure.
+    /// Failure ID. Must be 16-128 characters and contain only alphanumeric characters, hyphens, underscores, periods, and colons (a-z, A-Z, 0-9, -, _, ., :).
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Failure name.
