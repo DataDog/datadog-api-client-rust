@@ -32,9 +32,6 @@ pub struct AWSAccountResponseAttributes {
     /// AWS Regions to collect data from. Defaults to `include_all`.
     #[serde(rename = "aws_regions")]
     pub aws_regions: Option<crate::datadogV2::model::AWSRegions>,
-    /// AWS Cloud Cost Management config.
-    #[serde(rename = "ccm_config")]
-    pub ccm_config: Option<crate::datadogV2::model::AWSCCMConfig>,
     /// Timestamp of when the account integration was created.
     #[serde(rename = "created_at")]
     pub created_at: Option<chrono::DateTime<chrono::Utc>>,
@@ -68,7 +65,6 @@ impl AWSAccountResponseAttributes {
             aws_account_id,
             aws_partition: None,
             aws_regions: None,
-            ccm_config: None,
             created_at: None,
             logs_config: None,
             metrics_config: None,
@@ -97,11 +93,6 @@ impl AWSAccountResponseAttributes {
 
     pub fn aws_regions(mut self, value: crate::datadogV2::model::AWSRegions) -> Self {
         self.aws_regions = Some(value);
-        self
-    }
-
-    pub fn ccm_config(mut self, value: crate::datadogV2::model::AWSCCMConfig) -> Self {
-        self.ccm_config = Some(value);
         self
     }
 
@@ -166,7 +157,6 @@ impl<'de> Deserialize<'de> for AWSAccountResponseAttributes {
                 let mut aws_account_id: Option<String> = None;
                 let mut aws_partition: Option<crate::datadogV2::model::AWSAccountPartition> = None;
                 let mut aws_regions: Option<crate::datadogV2::model::AWSRegions> = None;
-                let mut ccm_config: Option<crate::datadogV2::model::AWSCCMConfig> = None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut logs_config: Option<crate::datadogV2::model::AWSLogsConfig> = None;
                 let mut metrics_config: Option<crate::datadogV2::model::AWSMetricsConfig> = None;
@@ -239,12 +229,6 @@ impl<'de> Deserialize<'de> for AWSAccountResponseAttributes {
                                 }
                             }
                         }
-                        "ccm_config" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            ccm_config = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "created_at" => {
                             if v.is_null() {
                                 continue;
@@ -302,7 +286,6 @@ impl<'de> Deserialize<'de> for AWSAccountResponseAttributes {
                     aws_account_id,
                     aws_partition,
                     aws_regions,
-                    ccm_config,
                     created_at,
                     logs_config,
                     metrics_config,

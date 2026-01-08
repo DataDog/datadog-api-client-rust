@@ -8,7 +8,6 @@ use datadog_api_client::datadogV2::model::AWSAccountUpdateRequestAttributes;
 use datadog_api_client::datadogV2::model::AWSAccountUpdateRequestData;
 use datadog_api_client::datadogV2::model::AWSAuthConfig;
 use datadog_api_client::datadogV2::model::AWSAuthConfigRole;
-use datadog_api_client::datadogV2::model::AWSCCMConfig;
 use datadog_api_client::datadogV2::model::AWSLambdaForwarderConfig;
 use datadog_api_client::datadogV2::model::AWSLambdaForwarderConfigLogSourceConfig;
 use datadog_api_client::datadogV2::model::AWSLogSourceTagFilter;
@@ -17,7 +16,6 @@ use datadog_api_client::datadogV2::model::AWSMetricsConfig;
 use datadog_api_client::datadogV2::model::AWSNamespaceTagFilter;
 use datadog_api_client::datadogV2::model::AWSResourcesConfig;
 use datadog_api_client::datadogV2::model::AWSTracesConfig;
-use datadog_api_client::datadogV2::model::DataExportConfig;
 
 #[tokio::main]
 async fn main() {
@@ -34,19 +32,6 @@ async fn main() {
                         ),
                     )
                     .aws_partition(AWSAccountPartition::AWS)
-                    .ccm_config(
-                        AWSCCMConfig
-                        ::new().data_export_configs(
-                            vec![
-                                DataExportConfig::new()
-                                    .bucket_name("updated-bucket".to_string())
-                                    .bucket_region("us-west-2".to_string())
-                                    .report_name("updated-report".to_string())
-                                    .report_prefix("cost-reports".to_string())
-                                    .report_type("CUR2.0".to_string())
-                            ],
-                        ),
-                    )
                     .logs_config(
                         AWSLogsConfig
                         ::new().lambda_forwarder(
