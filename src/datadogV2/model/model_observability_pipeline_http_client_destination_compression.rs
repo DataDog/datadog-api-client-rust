@@ -6,19 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The `sumo_logic` source receives logs from Sumo Logic collectors.
-///
-/// **Supported pipeline types:** logs
+/// Compression configuration for HTTP requests.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ObservabilityPipelineSumoLogicSource {
-    /// The unique identifier for this component. Used to reference this component in other parts of the pipeline (e.g., as input to downstream components).
-    #[serde(rename = "id")]
-    pub id: String,
-    /// The source type. The value should always be `sumo_logic`.
-    #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::ObservabilityPipelineSumoLogicSourceType,
+pub struct ObservabilityPipelineHttpClientDestinationCompression {
+    /// Compression algorithm.
+    #[serde(rename = "algorithm")]
+    pub algorithm:
+        crate::datadogV2::model::ObservabilityPipelineHttpClientDestinationCompressionAlgorithm,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -26,14 +22,12 @@ pub struct ObservabilityPipelineSumoLogicSource {
     pub(crate) _unparsed: bool,
 }
 
-impl ObservabilityPipelineSumoLogicSource {
+impl ObservabilityPipelineHttpClientDestinationCompression {
     pub fn new(
-        id: String,
-        type_: crate::datadogV2::model::ObservabilityPipelineSumoLogicSourceType,
-    ) -> ObservabilityPipelineSumoLogicSource {
-        ObservabilityPipelineSumoLogicSource {
-            id,
-            type_,
+        algorithm: crate::datadogV2::model::ObservabilityPipelineHttpClientDestinationCompressionAlgorithm,
+    ) -> ObservabilityPipelineHttpClientDestinationCompression {
+        ObservabilityPipelineHttpClientDestinationCompression {
+            algorithm,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -48,14 +42,14 @@ impl ObservabilityPipelineSumoLogicSource {
     }
 }
 
-impl<'de> Deserialize<'de> for ObservabilityPipelineSumoLogicSource {
+impl<'de> Deserialize<'de> for ObservabilityPipelineHttpClientDestinationCompression {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ObservabilityPipelineSumoLogicSourceVisitor;
-        impl<'a> Visitor<'a> for ObservabilityPipelineSumoLogicSourceVisitor {
-            type Value = ObservabilityPipelineSumoLogicSource;
+        struct ObservabilityPipelineHttpClientDestinationCompressionVisitor;
+        impl<'a> Visitor<'a> for ObservabilityPipelineHttpClientDestinationCompressionVisitor {
+            type Value = ObservabilityPipelineHttpClientDestinationCompression;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -65,10 +59,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSumoLogicSource {
             where
                 M: MapAccess<'a>,
             {
-                let mut id: Option<String> = None;
-                let mut type_: Option<
-                    crate::datadogV2::model::ObservabilityPipelineSumoLogicSourceType,
-                > = None;
+                let mut algorithm: Option<crate::datadogV2::model::ObservabilityPipelineHttpClientDestinationCompressionAlgorithm> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -77,14 +68,11 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSumoLogicSource {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "id" => {
-                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "type" => {
-                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _type_) = type_ {
-                                match _type_ {
-                                    crate::datadogV2::model::ObservabilityPipelineSumoLogicSourceType::UnparsedObject(_type_) => {
+                        "algorithm" => {
+                            algorithm = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _algorithm) = algorithm {
+                                match _algorithm {
+                                    crate::datadogV2::model::ObservabilityPipelineHttpClientDestinationCompressionAlgorithm::UnparsedObject(_algorithm) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -98,12 +86,10 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSumoLogicSource {
                         }
                     }
                 }
-                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
-                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
+                let algorithm = algorithm.ok_or_else(|| M::Error::missing_field("algorithm"))?;
 
-                let content = ObservabilityPipelineSumoLogicSource {
-                    id,
-                    type_,
+                let content = ObservabilityPipelineHttpClientDestinationCompression {
+                    algorithm,
                     additional_properties,
                     _unparsed,
                 };
@@ -112,6 +98,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSumoLogicSource {
             }
         }
 
-        deserializer.deserialize_any(ObservabilityPipelineSumoLogicSourceVisitor)
+        deserializer.deserialize_any(ObservabilityPipelineHttpClientDestinationCompressionVisitor)
     }
 }

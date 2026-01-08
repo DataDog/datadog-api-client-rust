@@ -7,6 +7,8 @@ use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
 /// The `amazon_data_firehose` source ingests logs from AWS Data Firehose.
+///
+/// **Supported pipeline types:** logs
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]

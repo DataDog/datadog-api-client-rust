@@ -7,6 +7,8 @@ use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
 /// The `syslog_ng` source listens for logs over TCP or UDP from a `syslog-ng` server using the syslog protocol.
+///
+/// **Supported pipeline types:** logs
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]

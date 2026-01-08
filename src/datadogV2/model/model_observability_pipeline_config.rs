@@ -14,6 +14,9 @@ pub struct ObservabilityPipelineConfig {
     /// A list of destination components where processed logs are sent.
     #[serde(rename = "destinations")]
     pub destinations: Vec<crate::datadogV2::model::ObservabilityPipelineConfigDestinationItem>,
+    /// The type of data being ingested. Defaults to `logs` if not specified.
+    #[serde(rename = "pipeline_type")]
+    pub pipeline_type: Option<crate::datadogV2::model::ObservabilityPipelineConfigPipelineType>,
     /// A list of processor groups that transform or enrich log data.
     #[serde(rename = "processors")]
     pub processors: Option<Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorGroup>>,
@@ -34,11 +37,20 @@ impl ObservabilityPipelineConfig {
     ) -> ObservabilityPipelineConfig {
         ObservabilityPipelineConfig {
             destinations,
+            pipeline_type: None,
             processors: None,
             sources,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn pipeline_type(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineConfigPipelineType,
+    ) -> Self {
+        self.pipeline_type = Some(value);
+        self
     }
 
     pub fn processors(
@@ -78,6 +90,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfig {
                 let mut destinations: Option<
                     Vec<crate::datadogV2::model::ObservabilityPipelineConfigDestinationItem>,
                 > = None;
+                let mut pipeline_type: Option<
+                    crate::datadogV2::model::ObservabilityPipelineConfigPipelineType,
+                > = None;
                 let mut processors: Option<
                     Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorGroup>,
                 > = None;
@@ -95,6 +110,21 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfig {
                         "destinations" => {
                             destinations =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "pipeline_type" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            pipeline_type =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _pipeline_type) = pipeline_type {
+                                match _pipeline_type {
+                                    crate::datadogV2::model::ObservabilityPipelineConfigPipelineType::UnparsedObject(_pipeline_type) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "processors" => {
                             if v.is_null() {
@@ -118,6 +148,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfig {
 
                 let content = ObservabilityPipelineConfig {
                     destinations,
+                    pipeline_type,
                     processors,
                     sources,
                     additional_properties,
